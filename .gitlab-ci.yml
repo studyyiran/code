@@ -1,6 +1,6 @@
 stages:
   - release
-  - fat
+  - staging
   
 release:
     stage: release
@@ -13,16 +13,16 @@ release:
          curl 'https://oapi.dingtalk.com/robot/send?access_token=9586e21e95d59e2fc3579d27997450694fcaaa0b10da01a4f0cd73ccfd68f456' -H 'Content-Type: application/json'  -d '{"msgtype": "text",  "text": {"content": "playground production 已部署"}}'
     only:
      - release
-fat:
-    stage: fat
+staging:
+    stage: staging
     script:
-      - npm install
-      - npm run uat
-      - mv ./build ./dist_playground_fat
-      - cp -R ./dist_playground_fat /var/www/
+      - yarn
+      - yarn run uat
+      - mv ./build ./avril
+      - cp -R ./avril /var/www/
       - |-
-         curl 'https://oapi.dingtalk.com/robot/send?access_token=9586e21e95d59e2fc3579d27997450694fcaaa0b10da01a4f0cd73ccfd68f456' -H 'Content-Type: application/json'  -d '{"msgtype": "text",  "text": {"content": "playground fat 已部署"}}'
+         curl 'https://oapi.dingtalk.com/robot/send?access_token=9586e21e95d59e2fc3579d27997450694fcaaa0b10da01a4f0cd73ccfd68f456' -H 'Content-Type: application/json'  -d '{"msgtype": "text",  "text": {"content": "美国帮卖宝 前台页面 avril 已部署"}}'
     only:
-      - fat
+      - staging
     tags:
       - shell
