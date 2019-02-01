@@ -23,6 +23,7 @@
     "suppressImplicitAnyIndexErrors": true,
     "noUnusedLocals": true,
     "experimentalDecorators": true,
+    "skipLibCheck": true,
     "paths": {
       // 设着alias别名，相似webpack，相对上面设置的基础路径      
       "@/*": [

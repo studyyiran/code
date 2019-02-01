@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { TITLE_CONFIG } from 'config';
-// import Loading from '@/components/Loading'
+import { message } from 'antd';
 import * as PropTypes from 'prop-types';
-
 import './index.less';
+import { ECommonText } from '@/language/common';
+import Header from './header';
+import Footer from './footer';
 
 
 export default class LayoutIndex extends React.Component {
@@ -15,7 +17,7 @@ export default class LayoutIndex extends React.Component {
   }
 
   public componentDidMount() {
-    // Loading.open();
+    message.loading(ECommonText.LOADING, 1);
     window['__history__'] = this.context.router.history;
     // 获取title 配置 以及拿到所有的title key
     const titles = TITLE_CONFIG;
@@ -24,7 +26,7 @@ export default class LayoutIndex extends React.Component {
     this.onMappingTitles(titlesKey, titles);
     // listen 路由改变，重新匹配一次
     this.context.router.history.listen(() => {
-      // Loading.open();
+      message.loading(ECommonText.LOADING, 1);
       this.onMappingTitles(titlesKey, titles);
     });
   }
@@ -39,7 +41,11 @@ export default class LayoutIndex extends React.Component {
   public render() {
     return (
       <div className="layout-container">
-        {this.props.children}
+        <Header />
+        <div className="layout-content">
+          {this.props.children}
+        </div>
+        <Footer />
       </div>
     );
   }
