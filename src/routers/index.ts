@@ -14,6 +14,19 @@ export default [
         path: '/sell/brand',
       },
     ]
+  }, {
+    component: asyncComponent(() => import('@/containers/order')),
+    path: '/order',
+    // children: [
+    //   {
+    //     component: asyncComponent(() => import('@/containers/aboutyou')),
+    //     path: '/order/account',
+    //   },
+    //   {
+    //     component: asyncComponent(() => import('@/containers/brand')),
+    //     path: '/order/brand',
+    //   },
+    // ]
   },
   {
     // 首页
