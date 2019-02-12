@@ -1,0 +1,21 @@
+@import (reference) '~@/styles/index.less';
+
+.comp-selllayout-guaranteedprice-container {
+  height: 166px;
+  background-color: #404456;
+  text-align: center;
+  .main-title {
+    margin: 30px 0 23px;
+    .set-font-color(16px, #fff, bold);
+    line-height: 26px;
+  }
+
+  .price {
+    .set-font-color(40px, #00CFFF, bold);
+    line-height: 40px;
+    &::before {
+      content: '$ ';
+      .set-font-color(20px, #00CFFF);
+    }
+  }
+}

@@ -1,4 +1,57 @@
+@import (reference) "~@/styles/index.less";
 .comp-header-container {
-  height:190px;
-  background: #fff;
+  margin: 0 auto;
+  width: 1280px;
+  overflow: hidden;
+  .content-wrapper {
+    padding:  31px 142px 0 150px;
+    height: 85px;
+    display: flex;
+    background-color: #fff;
+    span {
+      margin-top: 6px;
+      display: inline-block;
+      .set-font-color(16px, #000);
+      cursor: pointer;
+    }
+    .home_btn {
+      margin-right: 110px;
+      width: 97px;
+      height: 24px;
+      background: url("~@/images/logo.png") no-repeat;
+      background-size: 100%;
+    }
+
+    .how_it_works_btn {
+      width: 137px;
+    }
+
+    .about_us_btn {
+      margin-right: 139px;
+      width: 124px;
+    }
+
+    .check_your_order_btn {
+      width: 158px;
+      margin-right: 23px;
+    }
+
+    .sell_your_phone_btn {
+      margin-top: 0;
+      width:200px;
+      height:40px;
+      text-align: center;
+      line-height: 40px;
+      color: #00cfff;
+      background:rgba(255,255,255,1);
+      box-shadow:0px 2px 4px 0px rgba(0,207,255,0.35);
+      border-radius:4px;
+      border:1px solid rgba(0,207,255,1);
+    }
+  } 
+  .header-bg {
+    height: 85px;
+    background: url("~@/images/header_bg.png") no-repeat;
+    background-size: 100% 100%;
+  }
 }
