@@ -1,0 +1,95 @@
+@import (reference) '~@/styles/index.less';
+.page-home-container {
+  margin: 0 auto;
+  width: @main-wrapper-width;
+  
+  .sell-your-phone-wrapper {
+    overflow: hidden;
+    position: relative;
+    padding-left: 142px;
+    height: 702px;
+    background:linear-gradient(180deg,rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
+    
+    .main-title {
+      padding-top: 54px;
+      margin-bottom: 35px;
+      .set-font-color(68px, #000, bold);
+      line-height: 72px;
+    }
+    .content-text {
+      margin-bottom: 202px;
+      .set-font-color(20px, #000);
+      line-height: 28px;
+    }
+    .main_bg1 {
+      position: absolute;
+      top: 35px;
+      right: 119px;
+    }
+  }
+
+  .how-it-works-wrapper {
+    overflow: hidden;
+    box-sizing: border-box;
+    padding: 70px 213px 0;
+    // height: 1404px;
+    background-color: #ECFBFD;
+    text-align: center;
+    .main-title {
+      .set-font-color(68px, #000, bold);
+      line-height: 72px;
+    }
+    .sub-title {
+      margin: 51px 0 24px;
+      .set-font-color(22px, #000);
+      line-height: 28px;
+    }
+
+    .sub-content {
+      .set-font-color(22px, #9B9B9B);
+      line-height: 28px;
+    }
+
+    .works-steps-wrapper {
+      .step-group {
+        padding-top: 169px;
+        .step-item {
+          position: relative;
+          display: inline-block;
+          vertical-align: top;
+          width: 375px;
+          .icon-group {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translate(-50%, -100%);
+            .number {
+              position: absolute;
+              left: 0;
+              bottom: 0;
+              transform: translateX(-100%);
+              display: inline-block;
+              width: 46px;
+              line-height: 72px;
+              .set-font-color(38px, #000, bold);
+            }
+          }
+          .glance {
+            padding-top: 25px;
+            margin-bottom: 24px;
+            .set-font-color(22px, #000);
+            line-height: 28px;
+          }
+          .description {
+            .set-font-color(22px, #9B9B9B);
+            line-height: 28px;
+          }
+        }
+
+        .step-item + .step-item {
+          margin-left: 104px;
+        }
+      }
+    }
+  }
+}
