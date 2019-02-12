@@ -3,12 +3,13 @@ export interface IOrderProps {
 }
 
 export interface IOrderStore {
-    progressType: IProgressType; // 进度条
+    progressType: IProgressData; // 进度条
     machineInfo: IMachineInfo;
     userInformation: IUserInformation;
+    getOrderDetail: () => void;
 }
 // 订单进度
-enum IProgressType {
+export enum IProgressType {
     orderPlaced = "orderPlaced",
     packageSent = "packageSent",
     packageReceived = "packageReceived",
@@ -45,4 +46,8 @@ interface IProgressDot {
     name: string;
     date?: string;
     img?: string;
+}
+export interface IDeliverSatus {
+    loading: boolean;
+    visible: boolean;
 }

@@ -150,23 +150,20 @@
     ]
   },
   "proxy": {
-    "/uat-api-gateway": {
-      "target": "http://47.96.53.33:8080",
-      "ws": true
-    },
-    "/bmb-server": {
-      "target": "https://staging.bangmaibao.net/",
-      "ws": true,
-      "secure": true,
-      "changeOrigin": true,
-      "pathRewrite": {}
-    },
-    "/mock": {
-      "target": " http://staging-mock.aihuishou.com",
+    "/up-api": {
+      "target": "http://120.55.138.130",
       "ws": true,
       "changeOrigin": true,
       "pathRewrite": {
-        "mock": "/mock/5bcefc0c7c67157c40797247/api-gateway"
+        "/up-api": ""
+      }
+    },
+    "/mock": {
+      "target": "http://staging-mock.aihuishou.com/mock/5c60eef60d75f12b20535a6f/uptradeit/crm",
+      "ws": true,
+      "changeOrigin": true,
+      "pathRewrite": {
+        "/mock": ""
       }
     }
   }

@@ -1,8 +1,16 @@
 import * as React from 'react';
+import { IOrderProps, IDeliverSatus } from '@/containers/order/interface/order.inerface';
 import UPSICON from '@/images/order/upsIcon.png';
 import './deliverSatus.less';
 
-class DeliverSatus extends React.Component {
+class DeliverSatus extends React.Component<IOrderProps, IDeliverSatus> {
+    constructor(props: IOrderProps) {
+        super(props);
+        this.state = {
+            loading: false,
+            visible: false
+        }
+    }
     public render() {
         return (
             <div className="comp-order-deliverSatus">

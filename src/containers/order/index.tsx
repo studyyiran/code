@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { inject, observer } from 'mobx-react';
+import { IOrderProps } from '@/containers/order/interface/order.inerface';
 // import OrderPlaced from "@/containers/order/orderPlaced";
 // import PackageSent from '@/containers/order/packageSent';
 // import EL from '@/containers/order/packageReceived';
@@ -7,12 +9,19 @@ import * as React from 'react';
 import EL from '@/containers/order/orderCompleted';
 import './index.less';
 
-export default class Order extends React.Component<{ route: { [key: string]: any } }> {
+@inject("order")
+@observer
+class Order extends React.Component<IOrderProps> {
+  public componentDidMount() {
+    this.props.order.getOrderDetail();
+  }
   public render() {
     return (
       <div className="page-order-container">
-        <EL />
+        <EL {...this.props} />
       </div>
     )
   }
 }
+
+export default Order;

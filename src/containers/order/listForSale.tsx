@@ -3,7 +3,7 @@ import ProgressBar from '@/containers/order/components/progressBar';
 import MachineInfo from '@/containers/order/components/machineInfo';
 import UserInfo from '@/containers/order/components/userInfo';
 import DeliverSatus from '@/containers/order/components/deliverSatus';
-import { IProgressData } from '@/containers/order/interface/order.inerface';
+import { IOrderProps, IProgressData } from '@/containers/order/interface/order.inerface';
 import ListSaleIcon from '@/images/order/listForSale.png';
 import './packageSent.less';
 
@@ -32,12 +32,12 @@ const MockProgressData: IProgressData = {
         name: "Order Completed"
     }]
 };
-export default class ListSale extends React.Component<{}> {
+export default class ListSale extends React.Component<IOrderProps> {
     public render() {
         return (
             <section className="comp-order-packageReceived">
                 <ProgressBar data={MockProgressData} />
-                <DeliverSatus />
+                <DeliverSatus {...this.props} />
                 <p>Order Summary</p>
                 <div className="info-container">
                     <MachineInfo model={`iPhone Xs Max 128G`} carrier={`AT&T`} condition={`Power On, No Cracks, Scratches: Clearly Visible`} guaranteedPrice={710} />
