@@ -18,11 +18,16 @@ class Order extends React.Component<IOrderProps> {
     const alreadyLoadData = !!this.props.order.orderDetail.orderNo;
     // 组件展示对象
     const ReactNodeConfig = {
-      deliver: false
+      deliver: false,
+      inspected: false
     }
     // 是否展示物流(已发货未收货，已收货未质检)
     if ((this.props.order.orderDetail.status === IProgressType.TO_BE_RECEIVED) || (this.props.order.orderDetail.status === IProgressType.TO_BE_INSPECTED)) {
       ReactNodeConfig.deliver = true;
+    }
+    // 是否展示质检模块
+    if (this.props.order.orderDetail.status === IProgressType.DIFFERENCE_INSPECTED) {
+      ReactNodeConfig.inspected = true;
     }
     return (
       <div className="page-order-container">
