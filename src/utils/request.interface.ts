@@ -6,10 +6,11 @@ export interface IOpts {
   headers?: object,
   timeout?: number,
   whitecode?: number[] | null,
+  notBasePath?: boolean,
   loading?: boolean,
   getAll?: boolean,
+  proxyName?: string,
   isMock?: boolean,
-  noBase?: boolean,
 }
 
 export interface IRequestRes<T> {
@@ -21,13 +22,13 @@ export interface IRequestRes<T> {
 
 export interface IRequestResWithPage<T> extends IRequestRes<T> {
   totalCount: number,
-  page: number,
+  pageIndex: number,
   pageSize: number,
 }
-
-export enum ERequestCode {
-  Success = 200,
-  Unauthorized = 401,
-  Forbidden = 403,
-  Notfound = 404
+export interface IRequestResWithPageV2<T> extends IRequestRes<T> {
+  pagination: {
+    page: number
+    size: number
+    total: number
+  }
 }

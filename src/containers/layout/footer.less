@@ -1,5 +1,60 @@
+@import (reference) '~@/styles/index.less';
 .comp-footer-container {
-  height:480px;
-  background: #444962;
   color:#fff;
+
+  .content-wrapper {
+    margin: 0 auto;
+    width: @main-wrapper-width;
+    .wave-bg {
+      height: 40px;
+      background: url("~@/images/footer_bg.png") no-repeat;
+    }
+    .links-group-wrapper {
+      padding-left: 147px;
+      padding-top: 48px;
+      padding-bottom: 29px;
+      background: #444962;
+      .links-group {
+        .item {
+          &:first-child {
+            margin-top: 0;
+            font-weight: bold;
+          }
+          margin-top: 16px;
+          .set-font-color(14px, #fff);
+          line-height: 24px;
+          cursor: pointer;
+        }
+      }
+  
+      .email-group {
+        .title {
+          .set-font-color(14px, #fff, bold);
+          line-height: 26px;
+        }
+      }
+    }
+    .copyright {
+      height: 63px;
+      border-top: 1px solid #383D50;
+      background: #444962;
+
+      .item {
+        display: inline-block;
+        .set-font-color(11px, #000);
+        line-height: 63px;
+        cursor: pointer;
+
+        &--copy {
+          width: 191px;
+          margin-left: 410px;
+          font-size: 10px;
+        }
+        &--policy {
+          margin: 0 10px 0 33px;
+          width: 92px;
+        }
+      }
+    }
+  }
 }

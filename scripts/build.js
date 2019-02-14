@@ -3,9 +3,12 @@
 // Do this as the first thing so that any code reading it knows the right env.
 process.env.BABEL_ENV = 'production';
 process.env.NODE_ENV = 'production';
-if(process.env.REACT_APP_SERVER_ENV === 'PUB') {
-  process.env.PUBLIC_URL = 'https://static.bangmaibao.net';
+if (process.env.REACT_APP_SERVER_ENV === 'UAT') {
+  process.env.PUBLIC_URL = 'https://static-www-staging-uptradeit.aihuishou.com';
 }
+// if(process.env.REACT_APP_SERVER_ENV === 'PUB') {
+//   process.env.PUBLIC_URL = 'https://static.bangmaibao.net';
+// }
 process.env.GENERATE_SOURCEMAP = 'false';
 
 // Makes the script crash on unhandled rejections instead of silently
@@ -62,13 +65,13 @@ measureFileSizesBeforeBuild(paths.appBuild)
         console.log(warnings.join('\n\n'));
         console.log(
           '\nSearch for the ' +
-            chalk.underline(chalk.yellow('keywords')) +
-            ' to learn more about each warning.'
+          chalk.underline(chalk.yellow('keywords')) +
+          ' to learn more about each warning.'
         );
         console.log(
           'To ignore, add ' +
-            chalk.cyan('// eslint-disable-next-line') +
-            ' to the line before.\n'
+          chalk.cyan('// eslint-disable-next-line') +
+          ' to the line before.\n'
         );
       } else {
         console.log(chalk.green('Compiled successfully.\n'));
@@ -131,7 +134,7 @@ function build(previousFileSizes) {
         console.log(
           chalk.yellow(
             '\nTreating warnings as errors because process.env.CI = true.\n' +
-              'Most CI servers set it automatically.\n'
+            'Most CI servers set it automatically.\n'
           )
         );
         return reject(new Error(messages.warnings.join('\n\n')));

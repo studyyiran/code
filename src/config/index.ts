@@ -1,6 +1,8 @@
 import TITLE_CONFIG from './title.config';
 import {EOrderStatus} from './order.status.config';
+import NAVIGATOR from './navigator.config';
 export {
   TITLE_CONFIG,
-  EOrderStatus
+  EOrderStatus,
+  NAVIGATOR
 }

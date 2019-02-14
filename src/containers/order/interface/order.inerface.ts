@@ -1,0 +1,184 @@
+/**
+ * 订单组件的Props
+ * @property order
+ */
+export interface IOrderProps {
+    order: IOrderStore;
+}
+/**
+ * 订单模块的Store
+ * @property orderDetail 订单数据
+ * @computed progressType 进度条数据
+ * @computed machineInfo 机器基本属性
+ * @computed userInformation 用户信息
+ * @action getOrderDetail 获取订单数据
+ * 
+ */
+export interface IOrderStore {
+    orderDetail: IOrderDetail;
+    progressType: IProgressData;
+    machineInfo: IMachineInfo;
+    userInformation: IUserInformation;
+    getOrderDetail: (orderNo: string) => Promise<boolean>;
+}
+
+/** 
+ * 订单详情数据（原始版）
+ * @property status 订单状态，枚举值
+ * @property payment 支付方式 "PAYPAL" | "CHECK"
+ * @property checkInfo 支票付款的信息
+ * @property paypalInfo paypal付款信息
+ * @property orderNo 订单号
+ * @property orderItem 询价和质检内容
+ * @property trackingNo 物流单号
+ * @property updatedDt 更新日期
+ * @property userEmail 用户邮箱
+ * @property userName 用户名
+ */
+export interface IOrderDetail {
+    status: IProgressType;
+    payment: "PAYPAL" | "CHECK";
+    checkInfo: ICheckInfo;
+    paypalInfo: IPaypalInfo;
+    orderNo: string;
+    orderItem: IOrderInspected;
+    trackingNo: string;
+    updatedDt: string;
+    userName: string;
+    userEmail: string;
+}
+/**
+ * 订单质检
+ * @property actualAmount 质检金额, 单位分
+ * @property actualProductName 质检机型
+ * @property actualSkuName 质检SKU
+ * @property amount 用户询价金额, 单位分
+ * @property<Array> inspectItems 物品实际质检属性列表
+ * @property inspectedDt 质检时间
+ * @property orderItemNo 物品编号
+ * @property productId 用户提交机型ID
+ * @property productName 用户提交机型
+ * @property skuName 用户提交SKU
+ * @property<Array> submitItems 用户选择的机器属性列表
+ */
+export interface IOrderInspected {
+    actualAmount: number;
+    actualProductName: string;
+    actualSkuName: string;
+    amount: number;
+    inspectItems: IInspectItems[];
+    inspectedDt: string;
+    orderItemNo: string;
+    productId: string;
+    productName: string;
+    skuName: string;
+    submitItems: IInspectItems[];
+}
+/**
+ * 机器单个属性内容
+ * @protected id 属性id
+ * @property isSkuProperty 是否为sku属性
+ * @property name 属性名称
+ */
+export interface IInspectItems {
+    id: number;
+    isSkuProperty: boolean;
+    name: string;
+}
+/**
+ * 支票信息，只有支票付款才有
+ * @property card 卡号
+ */
+export interface ICheckInfo {
+    card: string;
+}
+/**
+ * paypal信息，只有paypal付款才有
+ * @property email paypal账号
+ */
+export interface IPaypalInfo {
+    email: string;
+}
+/**
+ * 订单状态枚举
+ * @enum(TO_BE_SHIPPED) 等待寄出
+ * @enum(TRANSACTION_SUCCEED) 货物已经寄出，物流获取成功
+ * @enum(TRANSACTION_FAILED) 货物已经寄出，物流获取失败
+ * @enum(TO_BE_RECEIVED) 货物已经收到
+ * @enum(TO_BE_INSPECTED) 等待质检
+ * @enum(DIFFERENCE_INSPECTED) 质检差异
+ * @enum(TO_BE_RETURNED) 等待退货
+ * @enum(LISTED_FOR_SALE) 等待拍卖
+ */
+export enum IProgressType {
+    TO_BE_SHIPPED = "TO_BE_SHIPPED",
+    TRANSACTION_SUCCEED = "TRANSACTION_SUCCEED",
+    TRANSACTION_FAILED = "TRANSACTION_FAILED",
+    TO_BE_RECEIVED = "TO_BE_RECEIVED",
+    TO_BE_INSPECTED = "TO_BE_INSPECTED",
+    DIFFERENCE_INSPECTED = "DIFFERENCE_INSPECTED",
+    TO_BE_RETURNED = "TO_BE_RETURNED",
+    LISTED_FOR_SALE = "LISTED_FOR_SALE"
+}
+
+// 机器属性
+export interface IMachineInfo {
+    model: string;
+    carrier: string;
+    condition: string;
+    guaranteedPrice: number | string;
+}
+
+/**
+ * 用户信息
+ * @property shippingAddress 物流地址信息列表
+ * @property telAndEmail 电话和email的数组
+ * @property paymentType 支付方式
+ * @property paymentAccount 支付账号
+ * @property paymentMethod Array<paymentType,paymentAccount>
+ * @property orderNumber 订单编号
+ * @property orderDate 订单日期
+ */
+export interface IUserInformation {
+    shippingAddress: string[];
+    telAndEmail: string[];
+    paymentType?: string;
+    paymentAccount?: string;
+    paymentMethod: string[];
+    orderNumber: string;
+    orderDate: string;
+}
+// 进度条数据
+export interface IProgressData {
+    currentIndex: number;
+    dataList: IProgressDot[];
+}
+
+// 进度条单个点属性
+interface IProgressDot {
+    name: string;
+    date?: string;
+    img?: string;
+}
+/**
+ * 物流信息
+ */
+export interface IDeliverData {
+    shippingAddress: IShippingAddress[];
+}
+/**
+ * 物流信息
+ * @property date 物流更新日期
+ * @property listData 物流更新记录
+ */
+interface IShippingAddress {
+    date: string;
+    listData: Array<{
+        time: string;
+        listData: string[]
+    }>;
+}
+export interface IDeliverSatus {
+    loading: boolean;
+    visible: boolean;
+}
