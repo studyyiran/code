@@ -1,0 +1,36 @@
+@import (reference) '~@/styles/index.less';
+.comp-condition-item-container {
+  display: flex;
+  .left-wrapper {
+    flex: 1;
+    .condition {
+      margin-bottom: 11px;
+      .set-font-color(20px, #000);
+      line-height: 20px;
+    }
+    .detail {
+      .set-font-color(14px, #9B9B9B);
+      line-height: 14px;
+    }
+  }
+
+  .right-wrapper {
+    margin-left: 20px;
+    width: 335px;
+    .option {
+      display: inline-block;
+      margin-left: 15px;
+      margin-bottom: 10px;
+      width:160px;
+      height:50px;
+      line-height: 50px;
+      text-align: center;
+      background:rgba(255,255,255,1);
+      cursor: pointer;
+      .outline-shadow-highlight();
+      &:nth-of-type(2n + 1) {
+        margin-left: 0;
+      }
+    }
+  }
+}
