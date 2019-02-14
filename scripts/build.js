@@ -4,7 +4,7 @@
 process.env.BABEL_ENV = 'production';
 process.env.NODE_ENV = 'production';
 if (process.env.REACT_APP_SERVER_ENV === 'UAT') {
-  process.env.PUBLIC_URL = 'static-www-staging-uptradeit.aihuishou.com';
+  process.env.PUBLIC_URL = 'https://static-www-staging-uptradeit.aihuishou.com';
 }
 // if(process.env.REACT_APP_SERVER_ENV === 'PUB') {
 //   process.env.PUBLIC_URL = 'https://static.bangmaibao.net';
