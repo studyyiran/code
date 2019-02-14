@@ -4,8 +4,9 @@ import { IBrandsProps, ICarrier } from './interface/index.interface';
 import LayOut from '@/containers/aboutphone/layout';
 import CarrierItem from '@/containers/aboutphone/components/carrieritem';
 import './carriers.less';
+import { IPreOrder } from '@/store/interface/user.interface';
 
-@inject('yourphone')
+@inject('yourphone', 'user')
 @observer
 export default class Brands extends React.Component<IBrandsProps> {
 
@@ -27,6 +28,14 @@ export default class Brands extends React.Component<IBrandsProps> {
   }
 
   private onCarrierItemClick = (carrier: ICarrier) => {
+    try {
+      const newPreOrder: IPreOrder = {
+        ...this.props.user.preOrder
+      };
+      newPreOrder.productInfo!.carrier = carrier.name;
+      this.props.user.preOrder = newPreOrder; // 更新preOrder触发autorun
+    } catch (error) {console.warn(error)}
+
     this.props.history.push('/sell/yourphone/model');
   }
 }

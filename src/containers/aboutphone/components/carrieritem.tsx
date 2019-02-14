@@ -8,7 +8,7 @@ const CarrierItem = (props: ICarrierItemProps) => (
     <div className={classnames('img-wrapper', { active: props.activeCarrierName === props.carrier.name })} onClick={props.onCarrierClick.bind(null, props.carrier)}>
       <img src={props.carrier.iconUrl} />
     </div>
-    <p className="name">APPLE</p>
+    <p className="name">{props.carrier.name}</p>
   </div>
 );
 

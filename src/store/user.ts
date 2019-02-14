@@ -3,7 +3,7 @@ import { IUserStoreNew, IPreOrder } from './interface/user.interface';
 import { action, autorun, observable } from 'mobx';
 
 class User implements IUserStoreNew {
-  public canUpdatePreOrder = false;
+  @observable public canUpdatePreOrder = false;
   @observable public preOrder: IPreOrder = {};
 
   constructor() {

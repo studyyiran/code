@@ -46,6 +46,7 @@ const Request = <T>(opts: IOpts, code?: number[]): Promise<T> => {
   if (opts.isMock) {
     defaultProxyName = '/mock'
   }
+  console.log(opts)
   // headers 增加slug
   opts.headers = {
     ...opts.headers,
@@ -70,6 +71,7 @@ const Request = <T>(opts: IOpts, code?: number[]): Promise<T> => {
   if (opts.loading) {
     hide = message.loading('加载中，请稍后..', 0);
   }
+  console.log(opts.url);
   // 返回一个promise 用来 await调用
   return new Promise((resolve, reject) => {
     Axios(opts).then((res: AxiosResponse<IRequestRes<T>>) => {

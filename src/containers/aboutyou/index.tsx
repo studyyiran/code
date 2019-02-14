@@ -19,7 +19,7 @@ class AboutYou extends React.Component<IAboutYouProps, IAboutYouState> {
           <p className="description">We just need an email address to send you a shipping label.</p>
         </div>
         <div className="form-submit-wrapper">
-          <Form layout="vertical" onSubmit={this.handleValidate}>
+          <Form layout="vertical">
             <Form.Item
               label="Email address"
               required={true}
@@ -40,6 +40,7 @@ class AboutYou extends React.Component<IAboutYouProps, IAboutYouState> {
                     autoFocus={true}
                     autoComplete="off"
                     onChange={this.handleValidate}
+                    onPressEnter={this.handleSubmit}
                   />
                 )
               }
