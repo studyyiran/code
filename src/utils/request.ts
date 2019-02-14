@@ -7,8 +7,7 @@ import { IRequestRes, IOpts } from '@/utils/request.interface';
 
 // 基础路径
 const basePath: string = '/up-trade-it/api';
-// 代理名
-let defaultProxyName: string = '/up-api';
+
 // 默认的参数
 const defaultopts = {
   timeout: 8000,
@@ -43,6 +42,8 @@ Axios.interceptors.response.use((res: AxiosResponse<IRequestRes<IOAuthData>>) =>
 
 
 const Request = <T>(opts: IOpts, code?: number[]): Promise<T> => {
+  // 代理名
+  let defaultProxyName: string = '/up-api';
   if (opts.isMock) {
     defaultProxyName = '/mock'
   }
