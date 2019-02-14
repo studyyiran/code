@@ -58,6 +58,12 @@ export default [
   },
   {
     // 首页
+    component: asyncComponent(() => import('@/containers/notfound')),
+    exact: true,
+    path: '/:any',
+  },
+  {
+    // 首页
     component: asyncComponent(() => import('@/containers/home')),
     exact: true,
     path: '/',
