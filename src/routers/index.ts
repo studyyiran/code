@@ -44,7 +44,7 @@ export default [
     ]
   }, {
     component: asyncComponent(() => import('@/containers/order')),
-    path: '/order',
+    path: '/order/:id',
     // children: [
     //   {
     //     component: asyncComponent(() => import('@/containers/aboutyou')),

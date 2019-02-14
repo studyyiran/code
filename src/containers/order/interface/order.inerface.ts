@@ -1,25 +1,39 @@
 /**
  * 订单组件的Props
- * @property order
+ * @property order 订单store
  */
 export interface IOrderProps {
     order: IOrderStore;
 }
 /**
+ * 订单summary组件的State
+ * @property normal 订单summary不需要收起功能
+ * @property isOpen 订单summary是否展开
+ */
+export interface IOrderSummaryState {
+    isOpen: boolean;
+    normal: boolean
+}
+/**
  * 订单模块的Store
+ * @property orderNo 订单编号
  * @property orderDetail 订单数据
  * @computed progressType 进度条数据
  * @computed machineInfo 机器基本属性
  * @computed userInformation 用户信息
  * @action getOrderDetail 获取订单数据
- * 
+ * @action approveRevisedPrice 同意质检报价
+ * @action returnProduct 不同意报价，退回手机
  */
 export interface IOrderStore {
+    orderNo: string;
     orderDetail: IOrderDetail;
     progressType: IProgressData;
     machineInfo: IMachineInfo;
     userInformation: IUserInformation;
     getOrderDetail: (orderNo: string) => Promise<boolean>;
+    approveRevisedPrice: () => Promise<boolean>;
+    returnProduct: () => Promise<boolean>;
 }
 
 /** 
