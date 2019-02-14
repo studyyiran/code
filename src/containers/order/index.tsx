@@ -1,17 +1,22 @@
 import * as React from 'react';
+import { RouteComponentProps } from 'react-router';
 import { inject, observer } from 'mobx-react';
 import { IOrderProps, IProgressType } from '@/containers/order/interface/order.inerface';
 import ProgressBar from '@/containers/order/components/progressBar';
-import MachineInfo from '@/containers/order/components/machineInfo';
 import DeliverSatus from '@/containers/order/components/deliverSatus';
-import UserInfo from '@/containers/order/components/userInfo';
+import OrderSummary from '@/containers/order/components/orderSummary';
+import Inspection from '@/containers/order/components/inspection';
+import ToBeReturn from '@/containers/order/components/toBeReturn';
 import './index.less';
 
 @inject("order")
 @observer
-class Order extends React.Component<IOrderProps> {
+class Order extends React.Component<IOrderProps & RouteComponentProps<{ id: string }>> {
   public componentDidMount() {
-    this.props.order.getOrderDetail("1001");
+    // 如果store的订单详情存在就不重新获取
+    if (this.props.order.orderDetail.orderNo !== this.props.match.params.id) {
+      this.props.order.getOrderDetail(this.props.match.params.id);
+    }
   }
   public render() {
     // 根据订单状态展示不同页面
@@ -19,30 +24,38 @@ class Order extends React.Component<IOrderProps> {
     // 组件展示对象
     const ReactNodeConfig = {
       deliver: false,
-      inspected: false
+      inspected: false,
+      orderSummary: true,
+      isToBeReturn: false
     }
     // 是否展示物流(已发货未收货，已收货未质检)
     if ((this.props.order.orderDetail.status === IProgressType.TO_BE_RECEIVED) || (this.props.order.orderDetail.status === IProgressType.TO_BE_INSPECTED)) {
       ReactNodeConfig.deliver = true;
+      ReactNodeConfig.orderSummary = false;
     }
     // 是否展示质检模块
     if (this.props.order.orderDetail.status === IProgressType.DIFFERENCE_INSPECTED) {
       ReactNodeConfig.inspected = true;
+      ReactNodeConfig.orderSummary = false;
+    }
+    // 是否展示退货模块
+    if (this.props.order.orderDetail.status === IProgressType.TO_BE_RETURNED || this.props.order.orderDetail.status === IProgressType.TRANSACTION_FAILED) {
+      ReactNodeConfig.isToBeReturn = true;
+      ReactNodeConfig.orderSummary = false;
     }
     return (
       <div className="page-order-container">
         <section>
           <ProgressBar data={this.props.order.progressType} />
-          {ReactNodeConfig.deliver && <DeliverSatus {...this.props} />}
-          {
-            alreadyLoadData && (<>
-              <p>Order Summary</p>
-              <div className="info-container">
-                <MachineInfo {...this.props.order.machineInfo} />
-                <UserInfo {...this.props.order.userInformation} />
-              </div>
-            </>)
-          }
+          <div className="page-order-body">
+            {ReactNodeConfig.deliver && <DeliverSatus {...this.props} />}
+            {ReactNodeConfig.inspected && <Inspection {...this.props} />}
+            {ReactNodeConfig.isToBeReturn && <ToBeReturn {...this.props} />}
+            {
+              alreadyLoadData && (<OrderSummary order={this.props.order} normal={ReactNodeConfig.orderSummary} />)
+            }
+          </div>
+
         </section>
       </div>
     )
