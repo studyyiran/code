@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IProgressProps } from '@/containers/order/interface/order.inerface';
+import { IProgressData } from '@/containers/order/interface/order.inerface';
 import "./progressBar.less";
 
 interface IDot {
@@ -28,7 +28,7 @@ class Dot extends React.Component<IDot>{
     }
 }
 
-class ProgressBar extends React.Component<IProgressProps>{
+class ProgressBar extends React.Component<{ data: IProgressData }>{
     public render() {
         const props = this.props.data;
         return (
