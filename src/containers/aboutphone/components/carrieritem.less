@@ -1,0 +1,25 @@
+@import (reference) '~@/styles/index.less';
+
+.comp-carrier-item-container {
+  display: inline-block;
+  cursor: pointer;
+  .img-wrapper {
+    width: 230px;
+    height: 145px;
+    text-align: center;
+    line-height: 145px;
+    overflow: hidden;
+    .outline-shadow-highlight();
+    img {
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+
+  .name {
+    text-align: center;
+    margin-top: 28px;
+    .set-font-color(18px, #333, bold);
+    line-height: 18px;
+  }
+}

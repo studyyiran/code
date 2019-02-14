@@ -1,0 +1,36 @@
+@import (reference) '~@/styles/index.less';
+.border-boxshadow() {
+
+}
+.comp-brand-item-container {
+  display: inline-block;
+  cursor: pointer;
+  .img-wrapper {
+    width: 170px;
+    height: 145px;
+    border-radius:4px;
+    border:2px solid rgba(245,245,245,1);
+    text-align: center;
+    line-height: 145px;
+    overflow: hidden;
+    &:hover {
+      box-shadow:0px 2px 8px 0px rgba(208,208,208,0.8);
+      border:2px solid rgba(204,204,204,1);
+    }
+    &.active {
+      box-shadow:0px 2px 4px 0px rgba(0,207,255,0.35);
+      border:2px solid rgba(0,207,255,1);
+    }
+    img {
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+
+  .name {
+    text-align: center;
+    margin-top: 28px;
+    .set-font-color(18px, #333, bold);
+    line-height: 18px;
+  }
+}

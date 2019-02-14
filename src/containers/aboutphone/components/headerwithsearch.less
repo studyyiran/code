@@ -1,0 +1,23 @@
+@import (reference) '~@/styles/index.less';
+
+.comp-brand-header-container {
+  display: flex;
+  padding: 0 40px 0 35px;
+  align-items: center;
+  border-bottom: 2px solid rgba(245, 245, 245);
+  .left-wrapper {
+    flex: 1;
+    .main-text {
+      .set-font-color(20px, #00CFFF);
+      line-height: 20px;
+    }
+    .sub-text {
+      margin-top: 9px;
+      .set-font-color(14px, #9B9B9B);
+      line-height: 16px;
+    }
+  }
+  .right-wrapper {
+    width: 220px;
+  }
+}

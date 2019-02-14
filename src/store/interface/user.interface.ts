@@ -40,3 +40,45 @@ export enum ECaptchaErrCode {
   ImgCodeErr = 11701006, // 图形验证码输入错误
   ShouldImage = 11701007, // 需要图形验证码
 }
+
+export interface IUserStoreNew {
+  canUpdatePreOrder: boolean;
+  preOrder: IPreOrder;
+  getPreOrderKey: (userEmail: string) => Promise<boolean>;
+  updatePreOrder: (preOrder: IPreOrder) => Promise<boolean>;
+}
+
+export interface IPreOrder {
+  addressInfo?: IAddressInfo;
+  checkInfo?: ICheckInfo;
+  inquiryKey?: string; // 询价key
+  key?: string; // 唯一key
+  payment?: string;
+  paypalInfo?: IPaypalInfo;
+  productInfo?: Partial<IProductInfo>;
+  userEmail?: string;
+}
+
+interface IAddressInfo {
+  addressLine: string; // 必须地址
+  addressLineOptional: string; // 可选地址
+  city: string;
+  country: string;
+  firstName: string;
+  lastName: string;
+  mobile: string;
+  state: string; // 州
+  zipCode: string;
+}
+interface ICheckInfo {
+  card: string;
+}
+interface IPaypalInfo {
+  email: string;
+}
+interface IProductInfo {
+  brandId: number; // 品牌ID
+  carrier: string; // 运营商
+  priceUnit: number[];
+  productId: number; // 机型ID
+}
