@@ -1,16 +1,17 @@
 import * as React from 'react';
+import classnames from 'classnames';
 import './modelitem.less';
-export default () => (
-  <div className="comp-model-item-container">
-    <p className="title">iPhone XS MAX</p>
+import { IProductModel } from '../interface/index.interface';
+export default (props: IProductModel) => (
+  <div className={classnames('comp-model-item-container', { active: props.activeProductId === props.id })}>
+    <p className="title">{props.name}</p>
     <div className="property-wrapper">
       <div className="left-wrapper">
-        <span className="memory-item">16GB</span>
-        <span className="memory-item">16GB</span>
-        <span className="memory-item">16GB</span>
-        <span className="memory-item">16GB</span>
+        {
+          props.skuPricePropertyValues.map((sku, index) => (<span className={classnames('memory-item', { active: props.activeModelId === sku.id })} key={index}>{sku.name}</span>))
+        }
       </div>
-      <img width="80" height="80" src={require('@/images/noprice.png')} />
+      <img width="80" height="80" src={props.image} />
     </div>
   </div>
 )

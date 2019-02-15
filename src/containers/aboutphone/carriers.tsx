@@ -35,7 +35,8 @@ export default class Brands extends React.Component<IBrandsProps> {
       newPreOrder.productInfo!.carrier = carrier.name;
       this.props.user.preOrder = newPreOrder; // 更新preOrder触发autorun
     } catch (error) {console.warn(error)}
-
+    
+    this.props.yourphone.activeCarrierName = carrier.name;
     this.props.history.push('/sell/yourphone/model');
   }
 }
