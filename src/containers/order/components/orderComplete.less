@@ -1,0 +1,77 @@
+.comp-order-lisedForSale {
+    margin-top: 37px;
+    padding: 0 30px;
+    display: flex;
+
+    .table {
+        flex: 1;
+        border-radius: 4px;
+        border: 1px solid rgba(245, 245, 245, 1);
+        padding-bottom: 44px;
+
+        &>* {
+            padding: 0 17px;
+        }
+
+        p {
+            height: 44px;
+            background: rgba(248, 249, 251, 1);
+            border-radius: 2px;
+            font-size: 12px;
+            font-family: HelveticaNeue-Bold;
+            font-weight: bold;
+            color: rgba(102, 102, 102, 1);
+            line-height: 44px;
+        }
+
+        &>div {
+            padding-top: 26px;
+
+            div:nth-of-type(odd) {
+                font-size: 14px;
+                font-family: HelveticaNeue-Medium;
+                font-weight: 500;
+                color: rgba(187, 187, 187, 1);
+                line-height: 17px;
+                margin-top: 20px;
+            }
+
+            div:nth-of-type(even) {
+                font-size: 14px;
+                font-family: HelveticaNeue-Bold;
+                font-weight: bold;
+                color: rgba(51, 51, 51, 1);
+                line-height: 17px;
+                margin-top: 10px;
+            }
+
+            div:first-child {
+                margin-top: 0;
+            }
+        }
+
+        & {
+            margin-left: 20px;
+
+            &:first-child {
+                margin-left: 0;
+            }
+        }
+
+    }
+
+    .table-table {
+        margin-top: 17px;
+        display: flex;
+        height: 44px;
+
+        &>div {
+            margin: 0 !important;
+            flex: 1;
+        }
+    }
+
+    .inspect-title-tag {
+        margin-left: 25px;
+    }
+}

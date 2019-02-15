@@ -1,6 +1,6 @@
 import { IOrderStore, IOrderDetail, IProgressType } from '@/containers/order/interface/order.inerface';
 import { computed, action, observable } from 'mobx';
-import { getOrderDetail } from '../api/order.api';
+import * as OrderApi from '../api/order.api';
 import OrderPlacedIcon from '@/images/order/orderPlaced.png';
 import PackageSentIcon from '@/images/order/packageSent.png';
 import PackageReceivedIcon from '@/images/order/packageReceived.png';
@@ -11,6 +11,7 @@ import ReturnRequestIcon from '@/images/order/returnRequest.png';
 
 
 class Store implements IOrderStore {
+    @observable public orderNo = "";
     @observable public orderDetail = {} as IOrderDetail;
 
     // 用户信息
@@ -129,8 +130,29 @@ class Store implements IOrderStore {
     }
     @action public getOrderDetail = async (orderNo: string) => {
         try {
-            const res = await getOrderDetail<IOrderDetail>(orderNo);
+            this.orderNo = orderNo;
+            const res = await OrderApi.getOrderDetail<IOrderDetail>(orderNo);
             this.orderDetail = res;
+            return true;
+        } catch (e) {
+            console.error(e);
+            return false;
+        }
+    }
+    @action public approveRevisedPrice = async () => {
+        try {
+            const res = await OrderApi.approveRevisedPrice<{}>(this.orderNo);
+            console.log(res);
+            return true;
+        } catch (e) {
+            console.error(e);
+            return false;
+        }
+    }
+    @action public returnProduct = async () => {
+        try {
+            const res = await OrderApi.returnProduct<{}>(this.orderNo);
+            console.log(res);
             return true;
         } catch (e) {
             console.error(e);

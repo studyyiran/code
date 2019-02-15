@@ -1,4 +1,5 @@
 import * as H from 'history';
+import { IUserStoreNew } from '@/store/interface/user.interface';
 
 export interface IYourPhoneStore {
   carriers: ICarrier[];
@@ -24,6 +25,7 @@ export interface IBrandLayoutProps {
 export interface IBrandsProps {
   history: H.History;
   yourphone: IYourPhoneStore;
+  user: IUserStoreNew;
 }
 
 export interface IModelsProps extends IBrandsProps {

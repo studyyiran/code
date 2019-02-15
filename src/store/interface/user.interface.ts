@@ -55,7 +55,7 @@ export interface IPreOrder {
   key?: string; // 唯一key
   payment?: string;
   paypalInfo?: IPaypalInfo;
-  productInfo?: IProductInfo;
+  productInfo?: Partial<IProductInfo>;
   userEmail?: string;
 }
 
