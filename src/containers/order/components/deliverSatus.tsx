@@ -23,57 +23,57 @@ class DeliverSatus extends React.Component<IOrderProps, IDeliverSatus> {
         });
     }
     public render() {
+        // 条数大于1，只显示第一条
+        const deliverInfos = [];
+        const deliverInfosProps = this.props.order.deliverInfos;
+        if (deliverInfosProps.length > 0) {
+            deliverInfos.push(deliverInfosProps[0]);
+        }
+        // 有没有多条
+        let hasMuch = false;
+        if (deliverInfosProps.length > 1) {
+            hasMuch = true;
+        }
         return (
             <div className="comp-order-deliverSatus">
                 <p className="title">Delivery Status</p>
                 <div className="deliverSatus-body">
                     <div className="col-1">
-                        <div className="list-item">
-                            <div className="date">Jan 14</div>
-                            <div className="date-list">
-                                <div className="date-item">
-                                    <div className="time">01:32 PM</div>
-                                    <div className="desc">
-                                        <p className="info">A mechanical failure has delayed. We’re adjusting plans to deliver your package as quickly as possible.</p>
-                                        <p className="pos">Paris, France</p>
+                        {deliverInfos.map((t, i) => {
+                            return (
+                                <div key={i}>
+                                    {i !== 0 && <div className="line" />}
+                                    <div className="list-item">
+                                        <div className="date">{t.date}</div>
+                                        <div className="date-list">
+                                            {t.listData.map((v, j) => (
+                                                <div className="date-item" key={i + "_" + j}>
+                                                    <div className="time">{v.time}</div>
+                                                    <div className="desc">
+                                                        {v.listData[0] && <p className="info">{v.listData[0]}</p>}
+                                                        {v.listData[1] && <p className="pos">{v.listData[1]}</p>}
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div className="line" />
-                        <div className="list-item">
-                            <div className="date">Jan 14</div>
-                            <div className="date-list">
-                                <div className="date-item">
-                                    <div className="time">01:32 PM</div>
-                                    <div className="desc">
-                                        <p className="info">A mechanical failure has delayed. We’re adjusting plans to deliver your package as quickly as possible.</p>
-                                        <p className="pos">Paris, France</p>
-                                    </div>
-                                </div>
-                                <div className="date-item">
-                                    <div className="time">01:32 PM</div>
-                                    <div className="desc">
-                                        <p className="info">A mechanical failure has delayed. We’re adjusting plans to deliver your package as quickly as possible.</p>
-                                        <p className="pos">Paris, France</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                            )
+                        })}
                     </div>
                     <div className="col-2">
                         <div>
                             <img src={UPSICON} alt="" />
                             <div>
                                 <p className="name">UPS</p>
-                                <p className="tel">XY1303918832FR</p>
+                                <p className="orderNo">XY1303918832FR</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className="footer">
+                {hasMuch && <div className="footer">
                     <div onClick={this.showModal}>Check Detail ></div>
-                </div>
+                </div>}
                 <Modal
                     visible={this.state.visible}
                     title=""
@@ -88,43 +88,32 @@ class DeliverSatus extends React.Component<IOrderProps, IDeliverSatus> {
                                 <img src={UPSICON} alt="" />
                                 <div>
                                     <p className="name">UPS</p>
-                                    <p className="tel">XY1303918832FR</p>
+                                    <p className="orderNo">XY1303918832FR</p>
                                 </div>
                             </div>
                         </div>
                         <div className="col-1">
-                            <div className="list-item">
-                                <div className="date">Jan 14</div>
-                                <div className="date-list">
-                                    <div className="date-item">
-                                        <div className="time">01:32 PM</div>
-                                        <div className="desc">
-                                            <p className="info">A mechanical failure has delayed. We’re adjusting plans to deliver your package as quickly as possible.</p>
-                                            <p className="pos">Paris, France</p>
+                            {deliverInfosProps.map((t, i) => {
+                                return (
+                                    <div key={i}>
+                                        {i !== 0 && <div className="line" />}
+                                        <div className="list-item">
+                                            <div className="date">{t.date}</div>
+                                            <div className="date-list">
+                                                {t.listData.map((v, j) => (
+                                                    <div className="date-item" key={i + "_" + j}>
+                                                        <div className="time">{v.time}</div>
+                                                        <div className="desc">
+                                                            {v.listData[0] && <p className="info">{v.listData[0]}</p>}
+                                                            {v.listData[1] && <p className="pos">{v.listData[1]}</p>}
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div className="line" />
-                            <div className="list-item">
-                                <div className="date">Jan 14</div>
-                                <div className="date-list">
-                                    <div className="date-item">
-                                        <div className="time">01:32 PM</div>
-                                        <div className="desc">
-                                            <p className="info">A mechanical failure has delayed. We’re adjusting plans to deliver your package as quickly as possible.</p>
-                                            <p className="pos">Paris, France</p>
-                                        </div>
-                                    </div>
-                                    <div className="date-item">
-                                        <div className="time">01:32 PM</div>
-                                        <div className="desc">
-                                            <p className="info">A mechanical failure has delayed. We’re adjusting plans to deliver your package as quickly as possible.</p>
-                                            <p className="pos">Paris, France</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                )
+                            })}
                         </div>
                     </div>
                 </Modal>

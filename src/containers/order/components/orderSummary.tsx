@@ -25,7 +25,6 @@ class OrderSummary extends React.Component<IOrderProps & { normal?: boolean }, I
         })
     }
     public render() {
-        console.log(this.props.normal);
         return (
             <div className={"comp-order-summary" + ((this.state.isOpen || this.state.normal) ? " isOpened" : "")}>
                 <p>Order Summary</p>
