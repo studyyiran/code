@@ -1,10 +1,15 @@
 import * as React from 'react';
+import { inject, observer } from 'mobx-react';
 import { renderRoutes } from 'react-router-config';
 import { NAVIGATOR } from 'config';
 import './index.less';
 import LeftSide from './components/leftside';
 import GuaranteedPrice from './components/guaranteedprice';
-export default class SellLayout extends React.Component<{ route: { [key: string]: any } }, { stepIndex: number }> {
+import { IYourPhoneStore } from '../aboutphone/interface/index.interface';
+
+@inject('yourphone')
+@observer
+export default class SellLayout extends React.Component<{ route: { [key: string]: any }, yourphone: IYourPhoneStore }, { stepIndex: number }> {
 
   public readonly state = {
     stepIndex: -1
@@ -27,12 +32,13 @@ export default class SellLayout extends React.Component<{ route: { [key: string]
   }
 
   public render() {
+    const price = this.props.yourphone.inquiryDetail !== null ? this.props.yourphone.inquiryDetail.price : '';
     const children = this.props.route.children;
     return (
       <div className="page-sell-layout-container">
         <div className="sell-layout-left">
           <LeftSide stepIndex={this.state.stepIndex} />
-          <GuaranteedPrice />
+          <GuaranteedPrice price={price} />
         </div>
         <div className="sell-layout-right">
           {renderRoutes(children)}

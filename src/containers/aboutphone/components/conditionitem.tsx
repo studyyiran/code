@@ -1,16 +1,33 @@
 import * as React from 'react';
+import classnames from 'classnames';
 import './conditionitem.less';
-export default () => (
+import { IProductPPVN } from '../interface/index.interface';
+const isMatch = (activeConditions: object | null, conditionId: number, ppvnValueId: number): boolean => {
+  if (activeConditions === null) {
+    return false;
+  }
+  return activeConditions[conditionId] === ppvnValueId;
+};
+export default (props: IProductPPVN & { onConditionItemClick: (conditionId: number, ppvnValueId: number) => void; activeConditions: object | null }) => (
   <div className="comp-condition-item-container">
     <div className="left-wrapper">
-      <p className="condition">Is the battery dead?</p>
-      <p className="detail">A dead battery means that the phone cannot power on the device.</p>
+      <p className="condition">{props.name}</p>
+      <p className="detail">{props.illustrationContent.propertyIllustrationContentText}</p>
     </div>
     <div className="right-wrapper">
-      <span className="option">Turns on</span>
-      <span className="option">Turns on</span>
-      <span className="option">Turns on</span>
-      <span className="option">Turns on</span>
+      {
+        props.pricePropertyValues.map((property, index) => {
+          const isActive = isMatch(props.activeConditions, props.id, property.id);
+          console.log(isActive, 'xxx');
+          return (
+            <span
+              key={index}
+              className={classnames('option', { active: isActive })}
+              onClick={props.onConditionItemClick.bind(null, props.id, property.id)}
+            >{property.value}</span>
+          )
+        })
+      }
     </div>
   </div>
 )

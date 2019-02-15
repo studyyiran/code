@@ -6,6 +6,7 @@ import { INavigatorObj } from '@/containers/aboutphone/interface/index.interface
 interface IProps {
   nextPath?: string;
   progress?: number;
+  nextCb?: () => void;
 }
 
 interface IStates {
@@ -79,6 +80,12 @@ export default class NavigatorWithBar extends React.Component<IProps, IStates> {
   }
 
   private goNext = () => {
+
+    if (typeof this.props.nextCb === 'function') {
+      this.props.nextCb();
+      return;
+    }
+
     if (this.props.nextPath) {
       window['__history__'].push(this.props.nextPath!);
     }

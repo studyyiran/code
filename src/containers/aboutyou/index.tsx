@@ -29,7 +29,7 @@ class AboutYou extends React.Component<IAboutYouProps, IAboutYouState> {
                   rules: [
                     {
                       required: true,
-                      pattern: /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/ig,
+                      pattern: /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,})$/,
                       message: <p><Icon type="close-circle" /> Please enter a valid email address</p>
                     }
                   ],

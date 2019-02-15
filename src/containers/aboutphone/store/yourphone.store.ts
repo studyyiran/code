@@ -1,6 +1,6 @@
-import { IQueryParams, IInquiryDetail } from './../interface/index.interface';
+import { IQueryParams, IInquiryDetail, IAddressInfo } from './../interface/index.interface';
 import * as Api from '../api/index.api';
-import { action, observable, autorun } from 'mobx';
+import { action, observable, autorun, computed } from 'mobx';
 import { IYourPhoneStore, ICarrier, IBrands, IAmericaState, IProductModel, IProductPPVN } from '../interface/index.interface';
 
 class YourPhone implements IYourPhoneStore {
@@ -11,11 +11,23 @@ class YourPhone implements IYourPhoneStore {
   @observable public inquiryKey = '';
   @observable public inquiryDetail = null;
 
+  @observable public addressInfo: IAddressInfo = { // 用户填写的信息
+    addressLine: '',
+    addressLineOptional: '',
+    city: '',
+    country: 'United States',
+    firstName: '',
+    lastName: '',
+    mobile: '',
+    state: '',
+    zipCode: ''
+  };
 
   @observable public activeBrandsId = -1; // 选择的品牌
   @observable public activeCarrierName = ''; // 选择的运营商
   @observable public activeProductId = -1; // 选择的机型的id
   @observable public activeModelId = -1; // 选择的机型的内存id
+  @observable public activeConditions = null; // 选择的ppvn
 
   @observable public americaStates: IAmericaState;
 
@@ -26,6 +38,11 @@ class YourPhone implements IYourPhoneStore {
       }
     });
   }
+
+  @computed get isAllConditionSelected() { // 是否全选了ppvn
+    return this.activeConditions !== null && Object.keys(this.activeConditions!).length === this.productPPVNS.length;
+  }
+
 
   @action public getBrandsByCid = async () => {
     let res: IBrands[] = [];
@@ -94,7 +111,17 @@ class YourPhone implements IYourPhoneStore {
   }
 
   // 创建订单
-  @action public createInquiry = async (inquiry: IQueryParams) => {
+  @action public createInquiry = async () => {
+    // const inquiry: IQueryParams = {
+    //   agentCode
+    //   priceUnits: Object.values(this.activeConditions!),
+    //   productId: this.activeProductId
+    // }
+    const inquiry: IQueryParams = {
+      agentCode: 1,
+      productId: 25827,
+      priceUnits: [6437, 2023, 2014, 2453, 2072]
+    }
     let res: string;
     try {
       res = await Api.createInquiry<string>(inquiry);

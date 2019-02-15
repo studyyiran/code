@@ -50,7 +50,6 @@ export const getProductDetail = <T>(id: number) => {
 export const getProductPPVN = <T>(productId: number) => {
   const opts: IOpts = {
     url: `/products/${productId}/price_properties`,
-    method: 'post',
     isMock: true
   };
 
@@ -62,7 +61,7 @@ export const createInquiry = <T>(inquiry: IQueryParams) => {
   const opts: IOpts = {
     url: '/inquiries',
     method: 'post',
-    isMock: true
+    params: inquiry
   };
 
   return Request<T>(opts)
@@ -72,8 +71,6 @@ export const createInquiry = <T>(inquiry: IQueryParams) => {
 export const getInquiryDetail = <T>(key: string) => {
   const opts: IOpts = {
     url: `/inquiries/${key}`,
-    method: 'post',
-    isMock: true
   };
 
   return Request<T>(opts);
@@ -84,8 +81,7 @@ export const getInquiryDetail = <T>(key: string) => {
 // 根据zipCode获取美国对应的州
 export const getStateByCode = <T>(zipCode: number) => {
   const opts: IOpts = {
-    url: '/USPS/state/${zipCode}',
-    isMock: true
+    url: `/USPS/state/${zipCode}`,
   };
 
   return Request<T>(opts);
