@@ -32,6 +32,7 @@ export interface IOrderStore {
     machineInfo: IMachineInfo;
     userInformation: IUserInformation;
     deliverInfos: IShippingAddress[];
+    inspectionInfo: IInspectionData;
     getOrderDetail: (orderNo: string) => Promise<boolean>;
     approveRevisedPrice: () => Promise<boolean>;
     returnProduct: () => Promise<boolean>;
@@ -237,4 +238,18 @@ export interface IShippingAddress {
 export interface IDeliverSatus {
     loading: boolean;
     visible: boolean;
+}
+/**
+ * 质检信息,
+ * @property status 是否存在之间差异
+ * @property amount 用户询价金额
+ * @property revisedPrice 质检修订之后价格
+ * @property differentCondition 质检差异结果
+ * 
+ */
+export interface IInspectionData {
+    status: boolean;
+    amount: number;
+    revisedPrice: number;
+    differentCondition: string[];
 }

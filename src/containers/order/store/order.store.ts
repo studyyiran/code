@@ -1,4 +1,4 @@
-import { IOrderStore, IOrderDetail, IProgressType, IShippingAddress } from '@/containers/order/interface/order.inerface';
+import { IOrderStore, IOrderDetail, IProgressType, IShippingAddress, IInspectionData } from '@/containers/order/interface/order.inerface';
 import { computed, action, observable } from 'mobx';
 import * as OrderApi from '../api/order.api';
 import { getMonthEn, getHourBy12 } from '@/utils/function';
@@ -95,6 +95,23 @@ class Store implements IOrderStore {
             });
         }
         return infos;
+    }
+    // 质检结果
+    @computed get inspectionInfo() {
+        const data: IInspectionData = {
+            status: false,
+            amount: 0,
+            revisedPrice: 0,
+            differentCondition: []
+        }
+        const orderDetail = this.orderDetail;
+        if (orderDetail.orderNo) {
+            const orderItem = orderDetail.orderItem;
+            data.revisedPrice = orderItem.actualAmount;
+            data.amount = orderItem.amount;
+            data.differentCondition = orderItem.inspectItems.map(v => v.name);
+        }
+        return data;
     }
     // 构建进度条需要的数据
     @computed get progressType() {
