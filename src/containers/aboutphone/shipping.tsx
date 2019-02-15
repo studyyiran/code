@@ -8,7 +8,7 @@ export default class ShippingAddress extends React.Component {
     return (
       <div className="page-shipping-container">
         <Layout nextPath="/sell/yourphone/payment">
-          <Form layout="vertical" style={{paddingTop: '59px'}}>
+          <Form layout="vertical" style={{ paddingTop: '59px' }}>
             <Row gutter={32}>
               <Col span={11}>
                 <Form.Item label="First name">
@@ -68,6 +68,7 @@ export default class ShippingAddress extends React.Component {
               <Col span={11}>
                 <Form.Item
                   label="Country"
+                  // validateStatus="validating"
                   help="We currently only support trades in the United States"
                 >
                   <Input value="United States" disabled={true} />

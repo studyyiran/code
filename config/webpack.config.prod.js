@@ -171,7 +171,7 @@ module.exports = {
                     before: [tsImportPluginFactory({
                       libraryDirectory: 'es',
                       libraryName: 'antd',
-                      style: 'css',
+                      style: true,
                     })]
                   })
                 },
@@ -235,7 +235,11 @@ module.exports = {
                       },
                     },
                     {
-                      loader: require.resolve('less-loader') // compiles Less to CSS
+                      loader: require.resolve('less-loader'), // compiles Less to CSS
+                      options: {
+                        modifyVars: packagejson.theme,
+                        javascriptEnabled: true
+                      }
                     }
                   ],
                 },
