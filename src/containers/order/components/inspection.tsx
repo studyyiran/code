@@ -11,24 +11,25 @@ class Inspection extends React.Component<IOrderProps> {
         this.props.order.returnProduct();
     }
     public render() {
-        // const tag = {
-        //     type: "success",
-        //     text: "Matched"
-        // }
-        const tag = {
-            type: "fail",
-            text: "Wrong Condition"
-        }
+        const inspectionInfo = this.props.order.inspectionInfo;
+        // 是否match
+        const tag = inspectionInfo.status ? {
+            type: "success",
+            text: "Matched"
+        } : {
+                type: "fail",
+                text: "Wrong Condition"
+            };
         return (
             <div className="comp-order-inspection">
                 <p className="inspection-title">
                     <span>Inspection Result</span>
                     <Tag className="inspect-title-tag" {...tag} />
                 </p>
-                <div className="inspected-success-body" style={{ display: "none" }}>
+                {inspectionInfo.status && (<div className="inspected-success-body" style={{ display: "none" }}>
                     <div className="col-1">
                         <div>Price Guarantee</div>
-                        <div>$710</div>
+                        <div>${inspectionInfo.amount}</div>
                     </div>
                     <div className="col-2">
                         <p>
@@ -37,21 +38,22 @@ class Inspection extends React.Component<IOrderProps> {
                             The condition you selected matches our inspection result.
                         </p>
                     </div>
-                </div>
-                <div className="inspected-fail-body">
+                </div>)}
+                {!inspectionInfo.status && (<div className="inspected-fail-body">
                     <div className="col-1">
                         <p>Difference</p>
-                        <p>64G, Power Off, Cracks, Power Off, Cracks, Power Off, Cracks, Power Off…</p>
+                        <p>{inspectionInfo.differentCondition.join(",")}</p>
                     </div>
                     <div className="col-2">
                         <p>Revised Price Guarantee</p>
-                        <p>$710 </p>
+                        <p>${inspectionInfo.revisedPrice} </p>
                     </div>
                     <div className="col-3">
                         <div className="approve-btn" onClick={this.handleApprove}>APPROVE REVISED PRICE</div>
                         <div className="unapprove-btn" onClick={this.handleReturnProduct}>Return Product</div>
                     </div>
-                </div>
+                </div>)
+                }
             </div>
         );
     }

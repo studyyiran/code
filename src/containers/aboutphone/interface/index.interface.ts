@@ -1,3 +1,4 @@
+import { FormComponentProps } from 'antd/lib/form';
 import * as H from 'history';
 import { IUserStoreNew } from '@/store/interface/user.interface';
 
@@ -7,18 +8,21 @@ export interface IYourPhoneStore {
   products: IProductModel[];
   productPPVNS: IProductPPVN[];
   inquiryDetail: IInquiryDetail | null;
+  addressInfo: IAddressInfo;
   inquiryKey: string;
   activeBrandsId: number;
   activeCarrierName: string;
   activeProductId: number;
   activeModelId: number;
+  activeConditions: object | null;
   americaStates: IAmericaState;
+  isAllConditionSelected: boolean; // computed
   getBrandsByCid: (categoryId?: number) => Promise<boolean>;
   getCarrier: () => Promise<boolean>;
   getProductsList: () => Promise<boolean>;
   getProductDetail: (id: number) => Promise<boolean>;
   getProductPPVN: () => Promise<boolean>;
-  createInquiry: (inquiry: IQueryParams) => Promise<boolean>;
+  createInquiry: () => Promise<boolean>;
   getInquiryDetail: () => Promise<boolean>;
   getAmericaState: (zipCode: number) => Promise<boolean>;
 }
@@ -26,6 +30,7 @@ export interface IYourPhoneStore {
 export interface ILayOutProps {
   nextPath?: string;
   hideBottom?: boolean;
+  nextCb?: () => void;
 }
 
 export interface IBrandLayoutProps {
@@ -43,7 +48,11 @@ export interface IModelsProps extends IBrandsProps {
   onModelItemClick(): void;
 }
 
+export type IConditionsProps = IBrandsProps;
+
 export type IDoneProps = IBrandsProps;
+
+export type IShippingProps = IBrandsProps & FormComponentProps & { history: H.History };
 
 export interface ICarrier {
   description: string;
@@ -109,8 +118,7 @@ export interface INavigatorObj {
 }
 
 export interface IQueryParams {
-  agencyId: number;
-  agentId: number;
+  agentCode: number;
   priceUnits: number[];
   productId: number;
 }
@@ -124,6 +132,7 @@ export interface IProductModel {
   activeModelId: number;
   activeProductId: number;
   skuPricePropertyValues: ISkuPricePropertyValues[];
+  onModelItemClick(productId: number, skuId: number): void;
 }
 
 export interface IProductPPVN {
@@ -132,8 +141,23 @@ export interface IProductPPVN {
   illustrationContent: {
     propertyIllustrationContentText: string;
   }
-  pricePropertyValues: {
-    value: string;
-    id: number; // 项中选中的属性的id
-  }
+  pricePropertyValues: ISubSkuPricePropertyValues[];
+}
+
+interface ISubSkuPricePropertyValues {
+  value: string;
+  id: number;
+}
+
+export interface IAddressInfo {
+  [k: string]: string;
+  addressLine: string;
+  addressLineOptional: string;
+  city: string;
+  country: string;
+  firstName: string;
+  lastName: string;
+  mobile: string;
+  state: string;
+  zipCode: string;
 }

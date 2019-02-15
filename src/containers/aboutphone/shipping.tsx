@@ -1,58 +1,153 @@
 import * as React from 'react';
-import { Form, Col, Row, Input, Select } from 'antd';
+import { inject, observer } from 'mobx-react';
+import { Form, Col, Row, Input } from 'antd';
 import Layout from '@/containers/aboutphone/layout';
 import './shipping.less';
-const { Option } = Select;
-export default class ShippingAddress extends React.Component {
+import { IShippingProps } from './interface/index.interface';
+@inject('yourphone')
+@observer
+class ShippingAddress extends React.Component<IShippingProps> {
+
+  public componentDidMount() {
+    this.props.yourphone.createInquiry();
+    this.props.form.validateFields(['zipCode'], (errors, values) => {
+      if (!errors) { console.log('ininiin'); }
+    });
+  }
+
   public render() {
+    const { getFieldDecorator } = this.props.form;
+    const { addressInfo } = this.props.yourphone;
     return (
       <div className="page-shipping-container">
-        <Layout nextPath="/sell/yourphone/payment">
+        <Layout nextCb={this.goNextCb} >
           <Form layout="vertical" style={{ paddingTop: '59px' }}>
             <Row gutter={32}>
               <Col span={11}>
-                <Form.Item label="First name">
-                  <Input />
+                <Form.Item label="First name" required={true}>
+                  {
+                    getFieldDecorator('firstName', {
+                      rules: [
+                        {
+                          required: true,
+                          pattern: /\w+/,
+                          message: "Please enter a valid first name."
+                        }
+                      ],
+                      initialValue: addressInfo.firstName,
+                    })(
+                      <Input />
+                    )
+                  }
                 </Form.Item>
               </Col>
               <Col span={11}>
                 <Form.Item label="Last name">
-                  <Input />
+                  {
+                    getFieldDecorator('lastName', {
+                      rules: [
+                        {
+                          required: true,
+                          pattern: /\w+/,
+                          message: "Please enter a valid last name."
+                        }
+                      ],
+                      initialValue: addressInfo.lastName
+                    })(
+                      <Input />
+                    )
+                  }
                 </Form.Item>
               </Col>
             </Row>
             <Row gutter={32}>
               <Col span={11}>
                 <Form.Item label="Address Line 1">
-                  <Input />
+                  {
+                    getFieldDecorator('addressLine', {
+                      rules: [
+                        {
+                          required: true,
+                          pattern: /\w+/,
+                          message: "Please enter a valid address."
+                        }
+                      ],
+                      initialValue: addressInfo.addressLine
+                    })(
+                      <Input />
+                    )
+                  }
                 </Form.Item>
               </Col>
               <Col span={11}>
                 <Form.Item label="Address Line 2(Optional)">
-                  <Input />
+                  {
+                    getFieldDecorator('addressLineOptional', {
+                      rules: [
+                        {
+                          pattern: /\w+/,
+                          message: "Please enter a valid address."
+                        }
+                      ],
+                      initialValue: addressInfo.addressLineOptional
+                    })(
+                      <Input />
+                    )
+                  }
                 </Form.Item>
               </Col>
             </Row>
             <Row gutter={32}>
               <Col span={7}>
                 <Form.Item label="Zip Code">
-                  <Input />
+                  {
+                    getFieldDecorator('zipCode', {
+                      rules: [
+                        {
+                          required: true,
+                          validator: this.handleZipCode
+                        }
+                      ],
+                      initialValue: addressInfo.zipCode,
+                    })(
+                      <Input />
+                    )
+                  }
                 </Form.Item>
               </Col>
               <Col span={7}>
                 <Form.Item label="State">
-                  <Select placeholder="Please select state">
-                    <Option value="DC" >DC</Option>
-                    <Option value="Seattle" >Seattle</Option>
-                  </Select>
+                  {
+                    getFieldDecorator('state', {
+                      rules: [
+                        {
+                          message: "Please enter a valid state.",
+                          whitespace: true
+                        }
+                      ],
+                      initialValue: addressInfo.state,
+                    })(
+                      <Input disabled={true} />
+                    )
+                  }
                 </Form.Item>
               </Col>
               <Col span={8}>
                 <Form.Item label="City">
-                  <Select placeholder="Please select city" disabled={true}>
-                    <Option value="DC" >DC</Option>
-                    <Option value="Seattle" >Seattle</Option>
-                  </Select>
+                  {
+                    getFieldDecorator('city', {
+                      rules: [
+                        {
+                          required: true,
+                          pattern: /\w+/,
+                          message: "Please enter a valid city."
+                        }
+                      ],
+                      initialValue: addressInfo.city
+                    })(
+                      <Input />
+                    )
+                  }
                 </Form.Item>
               </Col>
             </Row>
@@ -62,7 +157,19 @@ export default class ShippingAddress extends React.Component {
                   label="Phone(optional)"
                   help="We’ll only call you if there is an issue with your sale."
                 >
-                  <Input />
+                  {
+                    getFieldDecorator('mobile', {
+                      rules: [
+                        {
+                          pattern: /\d+/,
+                          message: "Please enter a valid city."
+                        }
+                      ],
+                      initialValue: addressInfo.mobile
+                    })(
+                      <Input />
+                    )
+                  }
                 </Form.Item>
               </Col>
               <Col span={11}>
@@ -80,4 +187,31 @@ export default class ShippingAddress extends React.Component {
       </div>
     );
   }
+
+  private handleZipCode = async (rule: any, value: any, callback: any) => {
+    const { setFieldsValue } = this.props.form;
+
+    if (!/\d{5,5}/.test(value)) {
+      callback('Please enter a valid zipCode.');
+      return;
+    }
+
+    await this.props.yourphone.getAmericaState(value);
+    if (this.props.yourphone.americaStates) {
+      setFieldsValue({ 'state': this.props.yourphone.americaStates.state });
+      setFieldsValue({ 'city': this.props.yourphone.americaStates.city });
+    }
+    callback();
+  }
+
+  private goNextCb = () => {
+    this.props.form.validateFields((err, values) => {
+      if (err) { return; }
+
+      this.props.yourphone.addressInfo = { ...this.props.yourphone.addressInfo, ...values };
+      this.props.history.push('/sell/yourphone/payment');
+    });
+  }
 }
+
+export default Form.create()(ShippingAddress);
