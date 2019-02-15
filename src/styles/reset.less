@@ -13,10 +13,13 @@ li,ol,ul {
 }
 
 a,button {
-	color: #000;
 	text-decoration: none;
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
+}
+
+button {
+	color: #000;
 }
 
 a,button,div,label,span {
@@ -121,14 +124,49 @@ h1,h2,h3,h4,h5,h6,strong {font-weight: bold}
 	font-size:16px;
 }
 
-a {
-	color:#1890ff;
-}
-
 
 //全局
 .ant-select-enabled.placeholder {
 	.ant-select-selection__placeholder {
 		display: block !important;
+	}
+}
+
+
+
+// antd 样式重置，非less 变量部分
+.ant-btn-lg {
+	font-weight: 500;
+}
+
+.ant-btn {
+	box-shadow: none;
+	&:hover {
+		background: @primary-color;
+		color:#fff;
+	}
+}
+
+.ant-form-item {
+	.ant-form-item-control {
+		.ant-form-explain {
+			margin-top:5px;
+			font-size:12px; // pc 最小12
+		}
+		&.has-error {
+			.ant-input,.ant-input:hover {
+				border-width: 2px;
+			}
+			.ant-form-explain {
+				font-size:13px;
+			}
+		}
+	}
+
+	.ant-form-item-label {
+		label {
+			color:#666;
+			font-size:12px;
+		}
 	}
 }
