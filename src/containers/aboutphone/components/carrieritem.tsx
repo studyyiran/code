@@ -6,9 +6,10 @@ import { ICarrierItemProps } from '../interface/index.interface';
 const CarrierItem = (props: ICarrierItemProps) => (
   <div className="comp-carrier-item-container">
     <div className={classnames('img-wrapper', { active: props.activeCarrierName === props.carrier.name })} onClick={props.onCarrierClick.bind(null, props.carrier)}>
-      <img src={props.carrier.iconUrl} />
+      {/* <img src={props.carrier.iconUrl} /> */}
+      <span className={classnames('carrier-icon', props.carrier.name)} />
     </div>
-    <p className="name">{props.carrier.name}</p>
+    <p className="name">{props.carrier.description}</p>
   </div>
 );
 

@@ -9,14 +9,25 @@ import { IModelsProps } from './interface/index.interface';
 @observer
 export default class Models extends React.Component<IModelsProps> {
 
+  public componentDidMount() {
+    this.props.yourphone.getProductsList();
+  }
+
   public render() {
     return (
       <div className="page-models-container">
         <LayOut>
           <div onClick={this.onModelItemClick}>
-            <ModelItem />
-            <ModelItem />
-            <ModelItem />
+            {
+              this.props.yourphone.products.map((phone, index) => (
+                <ModelItem
+                  key={index}
+                  {...phone}
+                  activeProductId={this.props.yourphone.activeProductId}
+                  activeModelId={this.props.yourphone.activeModelId}
+                />
+              ))
+            }
           </div>
         </LayOut>
       </div>

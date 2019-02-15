@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Icon } from 'antd';
 import { IOrderProps } from '@/containers/order/interface/order.inerface';
 import Tag from '@/components/tag';
 import './listedForSale.less';
@@ -20,7 +21,12 @@ class ListedForSale extends React.Component<IOrderProps> {
                     <div>
                         <div>Final Sale Price</div>
                         <div>Pending</div>
-                        <div>Price Guarantee <span>Paid</span></div>
+                        <div>Price Guarantee
+                            <span className="paid">
+                                Paid
+                                <Icon className="paid-check" type="check" />
+                            </span>
+                        </div>
                         <div>$610</div>
                     </div>
                 </div>
@@ -29,10 +35,18 @@ class ListedForSale extends React.Component<IOrderProps> {
                         <span>Inspection Result</span>
                         <Tag className="inspect-title-tag" {...tag} />
                     </p>
-                    <div>
+                    {/* match */}
+                    {tag.type === "success" && (<div>
                         <div>Price Guarantee</div>
                         <div>$710 </div>
-                    </div>
+                    </div>)}
+                    {/* wrong condition */}
+                    {tag.type === "fail" && (<div>
+                        <div>Revised Price Guarantee</div>
+                        <div style={{ color: "#FF5858" }}>$710 </div>
+                        <div>Difference</div>
+                        <div style={{ height: "auto" }}>iPhone Xs 64G Power Off,CracksiPhone Xs 64G Power Off,CracksiPhone Xs 64G Power Off,CracksiPhone Xs 64G Power Off,CracksiPhone Xs 64G Power Off,CracksiPhone Xs 64G Power Off,CracksiPhone Xs 64G Power Off,CracksiPhone Xs 64G Power Off,CracksiPhone Xs 64G Power Off,CracksiPhone Xs 64G Power Off,CracksiPhone Xs 64G Power Off,Cracks </div>
+                    </div>)}
                 </div>
             </div>
         );
