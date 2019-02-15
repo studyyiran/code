@@ -3,7 +3,7 @@ import './footer.less';
 import { Row, Col, Input, Button } from 'antd';
 import { IFooterState } from './interface/index.interface';
 
-export default class Footer extends React.Component<object, IFooterState> {
+export default class Footer extends React.Component<{ router: any }, IFooterState> {
   public readonly state = {
     links: [
       [
@@ -29,7 +29,7 @@ export default class Footer extends React.Component<object, IFooterState> {
         },
         {
           text: 'FAQ',
-          href: ''
+          href: '/faq'
         }
       ],
       [
@@ -48,7 +48,7 @@ export default class Footer extends React.Component<object, IFooterState> {
     const linksGroup = this.state.links.map((group, key) => (
       <Col span={4} key={key} className="links-group">
         {
-          group.map((link, index) => <p key={index} className="item" data-href={link.href}>{link.text}</p>)
+          group.map((link, index) => <p key={index} className="item" onClick={this.handleLink.bind(this, link)} data-href={link.href}>{link.text}</p>)
         }
       </Col>
     ))
@@ -84,5 +84,13 @@ export default class Footer extends React.Component<object, IFooterState> {
         </div>
       </div>
     )
+  }
+
+  private handleLink = (link: { [key: string]: string }) => {
+    if (!link.href) {
+      return false;
+    }
+    this.props.router.history.push(link.href);
+    return true;
   }
 } 

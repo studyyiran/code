@@ -1,7 +1,15 @@
 import * as React from 'react';
-import { Input, Button } from 'antd';
+import { RouteComponentProps } from 'react-router';
+import { Input, Button, Form } from 'antd';
+import { DEFAULT } from 'config';
 import './index.less';
-export default class InvationCode extends React.Component {
+export default class InvationCode extends React.Component<RouteComponentProps> {
+  public state = {
+    btnHasDisabled: true,
+    code: '',
+    validateStatus: undefined,
+    help: ''
+  }
   public render() {
     return (
       <div className="page-invation-code-container">
@@ -13,11 +21,55 @@ export default class InvationCode extends React.Component {
           <a className="link-out" href="https://mailchi.mp/dc6bcab117d9/uptrade-access-code">Request invite code to get early access ></a>
           <div className="input-group">
             <label>I already have an invite code</label>
-            <Input placeholder="Please input" size="large" />
+            <Form>
+              <Form.Item
+                validateStatus={this.state.validateStatus}
+                help={this.state.help}
+              >
+                <Input
+                  value={this.state.code}
+                  onChange={this.handleChangeCode}
+                  placeholder="Please input"
+                  size="large"
+                />
+              </Form.Item>
+            </Form>
           </div>
-          <Button size="large" style={{ width: 400 }} >Submit</Button>
+          <Button
+            size="large"
+            type="primary"
+            style={{ width: 400 }}
+            disabled={this.state.btnHasDisabled}
+            onClick={this.onSubmit}
+          >SUBMIT</Button>
         </div>
       </div>
     )
+  }
+  private handleChangeCode = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const state = {
+      code: e.target.value,
+      validateStatus: undefined,
+      help: '',
+      btnHasDisabled: true
+    }
+    if (e.target.value) {
+      state.btnHasDisabled = false
+    }
+    this.setState(state)
+  }
+
+  private onSubmit = () => {
+    const state = {
+      validateStatus: 'error',
+      help: 'Please enter a valid invite code.',
+    }
+
+    if (this.state.code !== DEFAULT.invatationCode) {
+      this.setState(state)
+      return;
+    }
+    sessionStorage.setItem('invitationCode', '1');
+    this.props.history.push('/');
   }
 }

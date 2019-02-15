@@ -6,5 +6,16 @@ export default [
     component: asyncComponent(() => import('@/containers/invitation_code')),
     exact: true,
     path: '/invitationcode',
+  },
+  {
+    // faq
+    component: asyncComponent(() => import('@/containers/faq')),
+    exact: true,
+    path: '/faq',
+  },
+  {
+    component: asyncComponent(() => import('@/containers/contact')),
+    exact: true,
+    path: '/contact',
   }
 ]

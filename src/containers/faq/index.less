@@ -1,0 +1,116 @@
+.page-faq-container {
+  width:1024px;
+  background: #fff;
+  margin: 51px auto 80px;
+  padding:54px 30px 40px;
+  box-sizing: border-box;
+  h1.title {
+    color:@primary-color;
+    font-size:42px;
+    text-indent: 25px;
+    margin-bottom:10px;
+    height:42px;
+  }
+
+  dl {
+    margin-top:30px;
+    dt {
+      font-size:24px;
+      font-weight:bold;
+    }
+    dd {
+      margin-top:17px;
+      border-radius:4px;
+      border:1px solid rgba(51,51,51,1);
+      position: relative;
+      padding:0 20px;
+      box-sizing: border-box;
+
+      &:hover {
+        box-shadow:0px 2px 8px 0px rgba(208,208,208,0.8);
+        border-radius:4px;
+        border:2px solid rgba(208,208,208,0.8);
+        margin-top:16px;
+        margin-bottom:-1px;
+        margin-left:-1px;
+        margin-right:-1px;
+
+        .default-h2 .anticon-plus {
+          color:@primary-color;
+        }
+      }
+      
+      input[type="checkbox"] {
+        width:0;
+        height:0;
+        position: absolute;
+        opacity: 0;
+
+        &:checked {
+          & ~ p {
+            max-height:800px;
+            padding-bottom:20px;
+            opacity: 1;
+          }
+          & ~label h2 {
+            &.default-h2 {
+              height:0;
+              opacity: 0;
+              padding:0;
+            }
+            .anticon-plus {
+              transform: rotate(45deg);
+            }
+          }
+          & ~ h2.noevent-h2 {
+            height:auto;
+            opacity: 1;
+            padding:20px 0;
+
+            .anticon-plus {
+              transform: rotate(45deg);
+            }
+          }
+
+        }
+      }
+      h2 {
+        font-size:20px;
+        padding:20px 0;
+        overflow: hidden;
+        .anticon-plus {
+          display: block;
+          float:right;
+          position: relative;
+          top:1px;
+          transform: rotate(0);
+          transition:transform .2s .1s;
+        }
+
+        &.noevent-h2 {
+          height:0;
+          opacity: 0;
+          padding:0;
+          width: 100%;
+
+          .anticon-plus {
+            &:hover {
+              color:@primary-color;
+            }
+          }
+        }
+      }
+      p {
+        width:100%;
+        font-size:16px;
+        color:#111;
+        line-height:24px;
+        overflow: hidden;
+        max-height: 0;
+        opacity: 0;
+        padding-bottom:0;
+        transition: max-height .3s, opacity .6s, padding-bottom .5s;
+      }
+    }
+  }
+}

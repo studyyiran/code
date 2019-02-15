@@ -17,6 +17,12 @@ export default class LayoutIndex extends React.Component {
   }
 
   public componentDidMount() {
+    // 是否输入国 invatation code
+
+    if (!sessionStorage.getItem('invitationCode')) {
+      this.context.router.history.push('/invitationCode')
+    }
+
     message.loading(ECommonText.LOADING, 1);
     window['__history__'] = this.context.router.history;
     // 获取title 配置 以及拿到所有的title key
@@ -45,7 +51,7 @@ export default class LayoutIndex extends React.Component {
         <div className="layout-content">
           {this.props.children}
         </div>
-        <Footer />
+        <Footer router={this.context.router} />
       </div>
     );
   }
