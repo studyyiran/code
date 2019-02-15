@@ -25,10 +25,10 @@ export default class SellLayout extends React.Component<{ route: { [key: string]
   }
 
   public onMappingIndex = (navigatorKey: string[], navigator: object) => {
-    const arr = navigatorKey.filter(v => new RegExp(v).test(window['__history__'].location.pathname));
-    this.setState({
-      stepIndex: navigator[arr[arr.length - 1]]['step']
-    });
+    // const arr = navigatorKey.filter(v => new RegExp(v).test(window['__history__'].location.pathname));
+    // this.setState({
+    //   stepIndex: navigator[arr[arr.length - 1]]['step']
+    // });
   }
 
   public render() {

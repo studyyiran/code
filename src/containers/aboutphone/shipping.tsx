@@ -175,6 +175,7 @@ class ShippingAddress extends React.Component<IShippingProps> {
               <Col span={11}>
                 <Form.Item
                   label="Country"
+                  // validateStatus="validating"
                   help="We currently only support trades in the United States"
                 >
                   <Input value="United States" disabled={true} />
@@ -189,7 +190,7 @@ class ShippingAddress extends React.Component<IShippingProps> {
 
   private handleZipCode = async (rule: any, value: any, callback: any) => {
     const { setFieldsValue } = this.props.form;
-    
+
     if (!/\d{5,5}/.test(value)) {
       callback('Please enter a valid zipCode.');
       return;

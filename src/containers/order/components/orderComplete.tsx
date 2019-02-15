@@ -6,14 +6,15 @@ import './orderComplete.less';
 
 class ListedForSale extends React.Component<IOrderProps> {
     public render() {
-        const tag = {
-            type: "fail",
-            text: "Wrong Condition"
-        }
-        // const tag = {
-        //     type: "success",
-        //     text: "Matched"
-        // }
+        const inspectionInfo = this.props.order.inspectionInfo;
+        // 是否match
+        const tag = inspectionInfo.status ? {
+            type: "success",
+            text: "Matched"
+        } : {
+                type: "fail",
+                text: "Wrong Condition"
+            };
         return (
             <div className="comp-order-orderComplete">
                 <div className="auction-result table">
@@ -53,14 +54,16 @@ class ListedForSale extends React.Component<IOrderProps> {
                     {/* match */}
                     {tag.type === "success" && (<div>
                         <div>Price Guarantee</div>
-                        <div>$710 </div>
+                        <div>${inspectionInfo.amount} </div>
                     </div>)}
                     {/* wrong condition */}
                     {tag.type === "fail" && (<div>
                         <div>Revised Price Guarantee</div>
-                        <div style={{ color: "#FF5858" }}>$710 </div>
+                        <div style={{ color: "#FF5858" }}>${inspectionInfo.revisedPrice} </div>
                         <div>Difference</div>
-                        <div style={{ height: "auto" }}>iPhone Xs 64G Power Off,CracksiPhone Xs 64G Power Off,CracksiPhone Xs 64G Power Off,CracksiPhone Xs 64G Power Off,CracksiPhone Xs 64G Power Off,CracksiPhone Xs 64G Power Off,CracksiPhone Xs 64G Power Off,CracksiPhone Xs 64G Power Off,CracksiPhone Xs 64G Power Off,CracksiPhone Xs 64G Power Off,CracksiPhone Xs 64G Power Off,Cracks </div>
+                        <div style={{ height: "auto" }}>
+                            {inspectionInfo.differentCondition.join(",")}
+                        </div>
                     </div>)}
                 </div>
             </div>

@@ -1,9 +1,11 @@
 @import './reset.less';
 @import './class.less';
 @import './components.less';
+
 body {
-  background: url("~@/images/global_wave_bg.png") repeat;
+    background: url("~@/images/global_wave_bg.png") repeat;
 }
+
 // antd 模态框挂载在root下，得全局注入样式
 .antd-modal-deliverSatus-body {
     box-sizing: border-box;
@@ -17,7 +19,7 @@ body {
             display: flex;
 
             .date {
-                width: 60px;
+                width: 100px;
                 font-size: 14px;
                 font-family: HelveticaNeue-Medium;
                 font-weight: 500;
@@ -26,7 +28,6 @@ body {
             }
 
             .time {
-                width: 88px;
                 font-size: 12px;
                 font-family: HelveticaNeue;
                 color: rgba(128, 128, 128, 1);
@@ -36,6 +37,7 @@ body {
 
             .desc {
                 flex: 1;
+                margin-left: 36px;
 
                 .info {
                     font-size: 14px;
