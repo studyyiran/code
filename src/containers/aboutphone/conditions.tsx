@@ -13,22 +13,26 @@ export default class Conditions extends React.Component<IConditionsProps> {
   }
 
   public render() {
+
+    const conditionList: React.ReactNode = (
+      this.props.yourphone.productPPVNS.map((ppvn, index) => (
+        <ConditionItem
+          key={index}
+          {...ppvn}
+          activeConditions={this.props.yourphone.activeConditions}
+          onConditionItemClick={this.onConditionItemClick}
+        />
+      ))
+    );
+
     return (
       <div className="page-conditions-container">
-        <Layout nextPath={this.props.yourphone.isAllConditionSelected ? '/sell/yourphone/shipping' : ''}>
-          <>
-            {
-              this.props.yourphone.productPPVNS.map((ppvn, index) => (
-                <ConditionItem
-                  key={index}
-                  {...ppvn}
-                  activeConditions={this.props.yourphone.activeConditions}
-                  onConditionItemClick={this.onConditionItemClick}
-                />
-              ))
-            }
-          </>
-        </Layout>
+        {
+          !this.props.hideLayout
+            ? <Layout nextPath={this.props.yourphone.isAllConditionSelected ? '/sell/yourphone/shipping' : ''}>{conditionList}</Layout>
+            : (conditionList)
+        }
+
       </div>
     )
   }
