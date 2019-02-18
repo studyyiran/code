@@ -66,6 +66,12 @@ export type IPaymentProps = IBrandsProps & FormComponentProps;
 export type IDoneProps = IBrandsProps;
 
 export type ICheckOutProps = IBrandsProps;
+
+export interface IPaymentStates {
+  isLeftOnEdit: boolean;
+  isRightOnEdit: boolean;
+  activeSide: string;
+}
 export interface IDoneStates {
   isChecked: boolean;
   showEditModal: boolean;

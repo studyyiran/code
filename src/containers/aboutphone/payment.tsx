@@ -3,17 +3,18 @@ import { inject, observer } from 'mobx-react';
 import { Row, Col, Collapse, Form, Input } from 'antd';
 import Layout from '@/containers/aboutphone/layout';
 import './payment.less';
-import { IPaymentProps } from './interface/index.interface';
+import { IPaymentProps, IPaymentStates } from './interface/index.interface';
 
 const Panel = Collapse.Panel;
 const leftHeader = <div className='paypal-bg' />;
 @inject('yourphone')
 @observer
-class YourPayment extends React.Component<IPaymentProps> {
+class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
 
-  public readonly state = {
+  public readonly state: Readonly<IPaymentStates> = {
     isLeftOnEdit: false,
-    isRightOnEdit: false
+    isRightOnEdit: false,
+    activeSide: ''
   }
 
   public render() {
@@ -22,7 +23,7 @@ class YourPayment extends React.Component<IPaymentProps> {
 
     const { getFieldDecorator } = this.props.form;
 
-    const { paypal } = this.props.yourphone;
+    const { paypal, echeck } = this.props.yourphone;
 
     // paypal的结构
     switch (this.state.isLeftOnEdit) {
@@ -69,12 +70,12 @@ class YourPayment extends React.Component<IPaymentProps> {
             <p className="name">
               <span className="title">Name</span>
               <br />
-              <span className="address">xxxx</span>
+              <span className="address">{`${echeck.firstName} ${echeck.lastName}`}</span>
             </p>
             <p className="email">
               <span className="title">eCheck email address</span>
               <br />
-              <span className="address">uuuu</span>
+              <span className="address">{echeck.email}</span>
             </p>
             <p className="difference" onClick={this.changeEditState.bind(this, 'check')} >The name and email for eCheck is not the same as contact information</p>
           </div>
@@ -95,7 +96,7 @@ class YourPayment extends React.Component<IPaymentProps> {
                           message: "Please enter a valid first name."
                         }
                       ],
-                      initialValue: 'xxxa',
+                      initialValue: echeck.firstName,
                     })(
                       <Input />
                     )
@@ -111,7 +112,7 @@ class YourPayment extends React.Component<IPaymentProps> {
                           message: "Please enter a valid last name."
                         }
                       ],
-                      initialValue: 'bxxx'
+                      initialValue: echeck.lastName
                     })(
                       <Input />
                     )
@@ -127,7 +128,7 @@ class YourPayment extends React.Component<IPaymentProps> {
                           message: "Please enter a valid email."
                         }
                       ],
-                      initialValue: 'a@qq.com'
+                      initialValue: echeck.email
                     })(
                       <Input />
                     )
@@ -143,7 +144,7 @@ class YourPayment extends React.Component<IPaymentProps> {
                           message: "Please enter a valid email."
                         }
                       ],
-                      initialValue: 'b@qq.com'
+                      initialValue: echeck.email
                     })(
                       <Input />
                     )
@@ -213,7 +214,7 @@ class YourPayment extends React.Component<IPaymentProps> {
       }
 
       // 判断两次输入的email是否一致
-      const { email, email_confirm } = values;
+      const { email, email_confirm, firstName, lastName } = values;
       if (email !== email_confirm) {
         this.props.form.setFields({
           email_confirm: {
@@ -224,9 +225,21 @@ class YourPayment extends React.Component<IPaymentProps> {
         return;
       }
 
-      // this.props.history.push('/sell/yourphone/done')
-    });
+      switch (this.state.activeSide) {
+        case 'left':
+          this.props.yourphone.paypal = { email: email };
+          break;
+        case 'right':
+          this.props.yourphone.echeck = {
+            firstName,
+            lastName,
+            email
+          }
+          break;
+      }
 
+      this.props.history.push('/sell/yourphone/done');
+    });
   }
 }
 
