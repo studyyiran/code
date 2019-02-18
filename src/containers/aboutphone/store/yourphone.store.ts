@@ -80,10 +80,10 @@ class YourPhone implements IYourPhoneStore {
     return true;
   }
 
-  @action public getProductsList = async () => {
+  @action public getProductsList = async (keyword: string = '') => {
     let res: IProductModel[] = [];
     try {
-      res = await Api.getProductsList<IProductModel[]>(this.activeBrandsId);
+      res = await Api.getProductsList<IProductModel[]>(this.activeBrandsId, keyword);
     } catch (error) {
       console.warn(error, 'in brand store getProductsList');
       return false;
