@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
+import { Link } from 'react-router-dom';
 import { DEFAULT } from 'config';
 import Layout from '@/containers/aboutphone/layout';
 import './checkorder.less';
@@ -23,6 +24,7 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
   }
 
   public render() {
+    const { activeBrandsId } = this.props.yourphone; // 选中的品牌， 苹果为52
     return (
       <div className="page-checkorder-container">
         <Layout hideBottom={true}>
@@ -31,9 +33,7 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
               <div className="step">
                 <p className="name">Prepare Your Phone</p>
                 <p className="detail" dangerouslySetInnerHTML={{ __html: this.state.brandText[this.state.brand] }} />
-                <p className="tips">How to Prepare Your Phone</p>
-                {/* TODO: 基于ios或安卓，链到两个新增页面，分别对应ios和安卓的数据清除说明  */}
-
+                <Link to={activeBrandsId === 52 ? '/iphone' : '/android'} className="tips">How to Prepare Your Phone</Link>
               </div>
               <div className="step">
                 <p className="name">Pack and Send</p>
@@ -84,6 +84,6 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
   }
 
   private hanleCheckOrder = () => {
-    this.props.history.push('/order');
+    this.props.history.push('/order/check');
   }
 }

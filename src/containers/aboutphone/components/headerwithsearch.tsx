@@ -8,8 +8,6 @@ import yourphoneStore from '@/containers/aboutphone/store/yourphone.store';
 interface IStates {
   navigatorObj: INavigatorObj | null
 }
-
-let timer: any;
 export default class BrandHeader extends React.Component<object, IStates> {
 
   public readonly state: Readonly<IStates> = {
@@ -62,11 +60,6 @@ export default class BrandHeader extends React.Component<object, IStates> {
   }
 
   private handleSearch = (value: string) => {
-    console.log('inin');
-    clearTimeout(timer);
-
-    timer = setTimeout(() => {
-      yourphoneStore.getProductsList(value.trim());
-    }, 300);
+    yourphoneStore.getProductsList(value.trim());
   }
 }

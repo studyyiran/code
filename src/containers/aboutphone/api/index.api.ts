@@ -52,8 +52,7 @@ export const getProductDetail = <T>(id: number) => {
 // 获取机型ppvn
 export const getProductPPVN = <T>(productId: number) => {
   const opts: IOpts = {
-    url: `/products/${productId}/price_properties`,
-    isMock: true
+    url: `/products/${productId}/price-properties`,
   };
 
   return Request<T>(opts);

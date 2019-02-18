@@ -9,7 +9,7 @@ const Panel = Collapse.Panel;
 const leftHeader = <div className='paypal-bg' />;
 @inject('yourphone')
 @observer
-export default class YourPayment extends React.Component<IPaymentProps> {
+class YourPayment extends React.Component<IPaymentProps> {
 
   public readonly state = {
     isLeftOnEdit: false,
@@ -20,7 +20,11 @@ export default class YourPayment extends React.Component<IPaymentProps> {
     let leftContent: React.ReactNode;
     let rightContent: React.ReactNode;
 
-    const { paypal, echeck } = this.props.yourphone;
+    const { getFieldDecorator } = this.props.form;
+
+    const { paypal } = this.props.yourphone;
+
+    // paypal的结构
     switch (this.state.isLeftOnEdit) {
       case false:
         leftContent = (
@@ -31,7 +35,7 @@ export default class YourPayment extends React.Component<IPaymentProps> {
               <br />
               <span className="address">{paypal.email}</span>
             </p>
-            <p className="difference" onClick={this.changeEditState.bind(this, 'paypal')} >My email for Paypal is not the same as contact email ></p>
+            <p className="difference" onClick={this.changeEditState.bind(this, 'paypal')} >My email for Paypal is not the same as contact email</p>
           </div>
         );
         break;
@@ -50,24 +54,29 @@ export default class YourPayment extends React.Component<IPaymentProps> {
                 </Form.Item>
               </Form>
             </div>
-            <p className="difference" onClick={this.changeEditState.bind(this, 'paypal')} >My email for Paypal is the same as contact email ></p>
+            <p className="difference" onClick={this.changeEditState.bind(this, 'paypal')} >My email for Paypal is the same as contact email</p>
           </div>
         );
         break;
     }
 
-
+    // eCheck的结构
     switch (this.state.isRightOnEdit) {
       case false:
         rightContent = (
           <div className="right-wrapper">
             <p className="description">Confirm your address so we can send you the check of your phone.</p>
-            <p className="email">
-              <span className="title">Address</span>
+            <p className="name">
+              <span className="title">Name</span>
               <br />
-              <span className="address">{echeck.lastName}</span>
+              <span className="address">xxxx</span>
             </p>
-            <p className="difference" onClick={this.changeEditState.bind(this, 'check')} >My check address is not the same as contact address></p>
+            <p className="email">
+              <span className="title">eCheck email address</span>
+              <br />
+              <span className="address">uuuu</span>
+            </p>
+            <p className="difference" onClick={this.changeEditState.bind(this, 'check')} >The name and email for eCheck is not the same as contact information</p>
           </div>
         );
         break;
@@ -77,15 +86,72 @@ export default class YourPayment extends React.Component<IPaymentProps> {
             <p className="description">Confirm your address so we can send you the check of your phone.</p>
             <div className="form-wrapper">
               <Form layout="vertical">
-                <Form.Item label="Address Line 1 ">
-                  <Input />
+                <Form.Item label="First Name">
+                  {
+                    getFieldDecorator('firstName', {
+                      rules: [
+                        {
+                          required: true,
+                          message: "Please enter a valid first name."
+                        }
+                      ],
+                      initialValue: 'xxxa',
+                    })(
+                      <Input />
+                    )
+                  }
                 </Form.Item>
-                <Form.Item label="Address Line 2 (Optional)">
-                  <Input />
+                <Form.Item label="Last Name">
+                  {
+                    getFieldDecorator('lastName', {
+                      rules: [
+                        {
+                          required: true,
+                          pattern: /\w+/,
+                          message: "Please enter a valid last name."
+                        }
+                      ],
+                      initialValue: 'bxxx'
+                    })(
+                      <Input />
+                    )
+                  }
+                </Form.Item>
+                <Form.Item label="eCheck email address">
+                  {
+                    getFieldDecorator('email', {
+                      rules: [
+                        {
+                          required: true,
+                          type: 'email',
+                          message: "Please enter a valid email."
+                        }
+                      ],
+                      initialValue: 'a@qq.com'
+                    })(
+                      <Input />
+                    )
+                  }
+                </Form.Item>
+                <Form.Item label="confirm eCheck email address">
+                  {
+                    getFieldDecorator('email_confirm', {
+                      rules: [
+                        {
+                          required: true,
+                          type: 'email',
+                          message: "Please enter a valid email."
+                        }
+                      ],
+                      initialValue: 'b@qq.com'
+                    })(
+                      <Input />
+                    )
+                  }
                 </Form.Item>
               </Form>
             </div>
-            <p className="difference" onClick={this.changeEditState.bind(this, 'check')}>My check address is the same as contact address></p>
+            <p className="difference" onClick={this.changeEditState.bind(this, 'check')}>The name and email for eCheck is the same as contact information</p>
           </div>
         );
         break;
@@ -107,7 +173,7 @@ export default class YourPayment extends React.Component<IPaymentProps> {
         <Col span={12}>
           <Collapse>
             <Panel
-              header={<h3>Check</h3>}
+              header={<h3>eCheck</h3>}
               showArrow={false}
               key="1"
             >
@@ -119,10 +185,11 @@ export default class YourPayment extends React.Component<IPaymentProps> {
     )
 
     return (
+
       <div className="page-payment-container">
         {
           !this.props.hideLayout
-            ? <Layout nextPath="/sell/yourphone/done">{paymentHTML}</Layout>
+            ? <Layout nextCb={this.handleNext} >{paymentHTML}</Layout>
             : (paymentHTML)
         }
       </div>
@@ -138,4 +205,29 @@ export default class YourPayment extends React.Component<IPaymentProps> {
       this.setState({ isRightOnEdit: !this.state.isRightOnEdit });
     }
   }
+
+  private handleNext = () => {
+    this.props.form.validateFields((err, values) => {
+      if (err) {
+        return;
+      }
+
+      // 判断两次输入的email是否一致
+      const { email, email_confirm } = values;
+      if (email !== email_confirm) {
+        this.props.form.setFields({
+          email_confirm: {
+            value: email_confirm,
+            errors: [new Error("The emails don't matach.")]
+          }
+        });
+        return;
+      }
+
+      // this.props.history.push('/sell/yourphone/done')
+    });
+
+  }
 }
+
+export default Form.create()(YourPayment);

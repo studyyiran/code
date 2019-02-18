@@ -22,7 +22,7 @@ export interface IYourPhoneStore {
   activeCarrierName: string;
   activeProductId: number;
   activeModelId: number;
-  activeConditions: object | null;
+  activeConditions: object;
   americaStates: IAmericaState;
   isAllConditionSelected: boolean; // computed
   getBrandsByCid: (categoryId?: number) => Promise<boolean>;
@@ -61,7 +61,7 @@ export type IConditionsProps = IBrandsProps;
 
 export type IShippingProps = IBrandsProps & FormComponentProps & { history: H.History };
 
-export type IPaymentProps = IBrandsProps;
+export type IPaymentProps = IBrandsProps & FormComponentProps;
 
 export type IDoneProps = IBrandsProps;
 
@@ -111,7 +111,7 @@ export interface IBrandListProps {
 
 export interface IInquiryDetail {
   key: string; // 询价key
-  ppvs: ISkuPricePropertyValues[];
+  ppvs: ISkuPricePropertyNames[];
   price: number; // 询价价格
   product: IProductDetail;
 }
@@ -121,10 +121,10 @@ export interface IProductDetail {
   categoryId: number;
   id: number;
   name: string;
-  skuPricePropertyValues: ISkuPricePropertyValues;
+  skuPricePropertyValues: ISkuPricePropertyNames;
 }
 
-export interface ISkuPricePropertyValues {
+export interface ISkuPricePropertyNames {
   id: number;
   name: string;
 }
@@ -143,7 +143,7 @@ export interface INavigatorObj {
 }
 
 export interface IQueryParams {
-  agentCode: number;
+  agentCode: string;
   priceUnits: number[];
   productId: number;
 }
@@ -154,9 +154,9 @@ export interface IProductModel {
   id: number;
   imageUrl: string;
   name: string;
+  skuPricePropertyNames: ISkuPricePropertyNames[];
   activeModelId: number;
   activeProductId: number;
-  skuPricePropertyValues: ISkuPricePropertyValues[];
   onModelItemClick(productId: number, skuId: number): void;
 }
 
