@@ -15,7 +15,7 @@ export default class Why extends React.Component<IContactProps> {
           <div className="left">
             <h1>We Reinvented<br /> The Way <br />You Sell Your Phone</h1>
             <p>Top reasons why we are not your ordinary trade in program.</p>
-            <Button type="primary" style={{ width: 166 }} size="large" >SEZLL IT NOW</Button>
+            <Button type="primary" style={{ width: 166 }} size="large" onClick={this.onGoToSell}>SELL IT NOW</Button>
           </div>
           <img src={require('@/images/single/why_banner.png')} height="100%" alt="" className="right" />
         </div>
@@ -62,7 +62,7 @@ export default class Why extends React.Component<IContactProps> {
             </dd>
           </dt>
           <div className="button-group">
-            <Button size="large" type="primary" style={{ width: 232, height: 64 }}>SELL IT NOW</Button>
+            <Button size="large" type="primary" style={{ width: 232, height: 64 }} onClick={this.onGoToSell}>SELL IT NOW</Button>
           </div>
         </div>
 
@@ -78,5 +78,9 @@ export default class Why extends React.Component<IContactProps> {
 
   private handleOk = (item: IContact) => {
     this.props.contact.onSubmit(item);
+  }
+
+  private onGoToSell = () => {
+    this.props.history.push('/sell/account')
   }
 }
