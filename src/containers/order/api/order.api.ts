@@ -2,11 +2,12 @@ import { Request } from "utils";
 import { IOpts } from '@/utils/request.interface';
 
 // 获取订单详情
-export function getOrderDetail<T>(orderNo: string): Promise<T> {
+export function getOrderDetail<T>(email: string, orderNo: string): Promise<T> {
     const opts: IOpts = {
         method: "POST",
         url: `/orders/check`,
         params: {
+            email,
             orderNo
         },
         loading: true,

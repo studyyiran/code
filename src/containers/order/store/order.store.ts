@@ -13,6 +13,7 @@ import ReturnRequestIcon from '@/images/order/returnRequest.png';
 
 class Store implements IOrderStore {
     @observable public orderNo = "";
+    @observable public email = "";
     @observable public orderDetail = {} as IOrderDetail;
 
     // 用户信息
@@ -178,15 +179,15 @@ class Store implements IOrderStore {
             dataList
         }
     }
-    @action public getOrderDetail = async (orderNo: string) => {
+    @action public getOrderDetail = async (email: string, orderNo: string) => {
         try {
             this.orderNo = orderNo;
-            const res = await OrderApi.getOrderDetail<IOrderDetail>(orderNo);
-            this.orderDetail = res;
-            return true;
+            this.email = email;
+            const res = await OrderApi.getOrderDetail<IOrderDetail>(email, orderNo);
+            return res;
         } catch (e) {
             console.error(e);
-            return false;
+            return {} as IOrderDetail;
         }
     }
     @action public approveRevisedPrice = async () => {
