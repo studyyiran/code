@@ -19,7 +19,7 @@ export default class Layout extends React.Component<ILayOutProps> {
         {
           !this.props.hideBottom &&
           <div className="bottom-wrapper">
-            <NavigatorWithBar nextPath={this.props.nextPath} />
+            <NavigatorWithBar nextPath={this.props.nextPath} nextCb={this.props.nextCb} />
           </div>
         }
       </div>

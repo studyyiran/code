@@ -1,14 +1,24 @@
 @import (reference) '~@/styles/index.less';
 .comp-footer-container {
   color:#fff;
+  min-width: 1280px;
+  height:338px;
+  position: relative;
+  .wave-bg {
+    height: 40px;
+    background: url("~@/images/footer_bg.png") no-repeat center 2px;
+    background-size: 2560px 40px;
+    width:100%;
+  }
 
+  .section-box {
+    width:100%;
+    background: #444962;
+  }
   .content-wrapper {
     margin: 0 auto;
     width: @main-wrapper-width;
-    .wave-bg {
-      height: 40px;
-      background: url("~@/images/footer_bg.png") no-repeat;
-    }
+    position: relative;
     .links-group-wrapper {
       padding-left: 147px;
       padding-top: 48px;
@@ -46,7 +56,7 @@
         cursor: pointer;
 
         &--copy {
-          width: 191px;
+          width: 200px;
           margin-left: 410px;
           font-size: 10px;
         }

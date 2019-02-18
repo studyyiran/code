@@ -117,7 +117,7 @@
               .edit-bg {
                 position: absolute;
                 bottom: 1px;
-                right: -20px;
+                right: -40px;
                 width: 20px;
                 height: 20px;
                 background: url("~@/images/edit--normal.png") no-repeat;
@@ -137,6 +137,25 @@
     .terms-of-service {
       margin-top: 51px;
       .set-font-color(16px, #333);
+      .text-with-icon {
+        &::before {
+          content: "";
+          display: inline-block;
+          vertical-align: top;
+          width: 20px;
+          height: 20px;
+          margin-right: 10px;
+          background: url("~@/images/yourphone/check_icon--normal.png") no-repeat;
+          background-size: 100%;
+          cursor: pointer;
+        }
+        &.checked {
+          &::before {
+            background: url("~@/images/yourphone/check_icon--active.png") no-repeat;
+            background-size: 100%;
+          }
+        }
+      }
       .highlight {
         color: #00BAE5;
         cursor: pointer;
@@ -151,6 +170,10 @@
       .set-font-color(18px, #000);
       text-align: center;
       cursor: pointer;
+      &.active {
+        background: #00CFFF;
+        color: #fff;
+      }
     }
   }
 }

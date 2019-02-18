@@ -15,8 +15,9 @@
       .set-font-color(14px, #9B9B9B);
       line-height: 18px;
     }
-    .email {
-      margin-top: 22px;
+    .email,
+    .name {
+      margin-top: 17px;
       .title {
         .set-font-color(12px, #666);
         line-height: 12px;
@@ -31,6 +32,28 @@
       margin-top: 18px;
       .set-font-color(12px, #00BAE5);
       line-height: 18px;
+      cursor: pointer;
+      &::before {
+        content: "";
+        display: inline-block;
+        margin-right: 4px;
+        width: 10px;
+        height: 10px;
+        background: url("~@/images/yourphone/circle-arrow.png") no-repeat;
+        background-size: 100%;
+      }
+    }
+
+    .form-wrapper {
+      .ant-form-item {
+        margin-bottom: 6px;
+      }
     }
   }
+
+  // 覆盖antd的样式
+  .ant-collapse-header {
+    background-color: #fff;
+  }
+
 }

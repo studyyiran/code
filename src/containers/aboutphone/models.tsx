@@ -9,21 +9,36 @@ import { IModelsProps } from './interface/index.interface';
 @observer
 export default class Models extends React.Component<IModelsProps> {
 
+  public componentDidMount() {
+    this.props.yourphone.getProductsList();
+  }
+
   public render() {
+    const { products } = this.props.yourphone;
     return (
       <div className="page-models-container">
         <LayOut>
-          <div onClick={this.onModelItemClick}>
-            <ModelItem />
-            <ModelItem />
-            <ModelItem />
-          </div>
+          {
+            products.length > 0
+              ? products.map((phone, index) => (
+                <ModelItem
+                  key={index}
+                  {...phone}
+                  onModelItemClick={this.onModelItemClick}
+                  activeProductId={this.props.yourphone.activeProductId}
+                  activeModelId={this.props.yourphone.activeModelId}
+                />
+              ))
+              : null
+          }
         </LayOut>
       </div>
     );
   }
 
-  private onModelItemClick = () => {
+  private onModelItemClick = (productId: number, skuId: number) => {
+    this.props.yourphone.activeProductId = productId;
+    this.props.yourphone.activeModelId = skuId;
     this.props.history.push('/sell/yourphone/condition');
   }
 }

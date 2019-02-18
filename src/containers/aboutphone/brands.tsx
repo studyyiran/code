@@ -4,7 +4,7 @@ import { IBrandsProps, IBrands } from './interface/index.interface';
 import LayOut from '@/containers/aboutphone/layout';
 import BrandItem from '@/containers/aboutphone/components/branditem';
 import './brands.less';
-import { IPreOrder } from '@/store/interface/user.interface';
+// import { IPreOrder } from '@/store/interface/user.interface';
 
 @inject('yourphone', 'user')
 @observer
@@ -19,21 +19,23 @@ export default class Brands extends React.Component<IBrandsProps> {
     return (
       <div className="page-brans-container">
         <LayOut>
-          {
-            brands.map((brand, index) => <BrandItem key={index} brand={brand} activeBrandsId={activeBrandsId} onBrandClick={this.onBrandItemClick} />)
-          }
+          <div style={{paddingBottom: '32px'}}>
+            {
+              brands.map((brand, index) => <BrandItem key={index} brand={brand} activeBrandsId={activeBrandsId} onBrandClick={this.onBrandItemClick} />)
+            }
+          </div>
         </LayOut>
       </div>
     );
   }
 
   private onBrandItemClick = (brand: IBrands) => {
-    const newPreOrder: IPreOrder = {
-      ...this.props.user.preOrder,
-      productInfo: { brandId: brand.id }
-    };
-    this.props.user.preOrder = newPreOrder; // 更新preOrder触发autorun
-
+    // const newPreOrder: IPreOrder = {
+    //   ...this.props.user.preOrder,
+    //   productInfo: { brandId: brand.id }
+    // };
+    // this.props.user.preOrder = newPreOrder; // 更新preOrder触发autorun
+    this.props.yourphone.activeBrandsId = brand.id;
     this.props.history.push('/sell/yourphone/carrier');
   }
 }

@@ -34,7 +34,7 @@ export default class LeftSide extends React.Component<{ stepIndex: number }, ILe
         {
           this.state.steps.map((step, index) => (
             <div className="step" key={index}>
-              <p className={classnames('main-content', {active: index === this.props.stepIndex})}>{step.main}</p>
+              <p className={classnames('main-content', { active: index === this.props.stepIndex, done: index < this.props.stepIndex })}>{step.main}</p>
               <p className="sub-content">{step.sub}</p>
             </div>
           ))

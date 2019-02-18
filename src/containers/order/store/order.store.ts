@@ -1,6 +1,7 @@
-import { IOrderStore, IOrderDetail, IProgressType } from '@/containers/order/interface/order.inerface';
+import { IOrderStore, IOrderDetail, IProgressType, IShippingAddress, IInspectionData } from '@/containers/order/interface/order.inerface';
 import { computed, action, observable } from 'mobx';
 import * as OrderApi from '../api/order.api';
+import { getMonthEn, getHourBy12 } from '@/utils/function';
 import OrderPlacedIcon from '@/images/order/orderPlaced.png';
 import PackageSentIcon from '@/images/order/packageSent.png';
 import PackageReceivedIcon from '@/images/order/packageReceived.png';
@@ -12,6 +13,7 @@ import ReturnRequestIcon from '@/images/order/returnRequest.png';
 
 class Store implements IOrderStore {
     @observable public orderNo = "";
+    @observable public email = "";
     @observable public orderDetail = {} as IOrderDetail;
 
     // 用户信息
@@ -21,10 +23,17 @@ class Store implements IOrderStore {
         const paymentMethod: string[] = [];
         if (this.orderDetail.orderNo) {
             // 缺少物流目的地
-            console.error("缺少物流目的地");
+            const addressInfo = this.orderDetail.addressInfo;
+            shippingAddress.push(addressInfo.firstName + " " + addressInfo.lastName);
+            if (addressInfo.addressLineOptional && addressInfo.addressLineOptional !== "") {
+                shippingAddress.push(addressInfo.addressLineOptional);
+            }
+            shippingAddress.push(addressInfo.addressLine);
+            shippingAddress.push(addressInfo.city + "," + addressInfo.country);
+            shippingAddress.push(addressInfo.zipCode);
+            // 电话和email
+            telAndEmail.push(addressInfo.mobile);
             telAndEmail.push(this.orderDetail.userEmail);
-            // 缺少tel，请找后台
-            console.error("缺少tel，请找后台");
             if (this.orderDetail.payment === "PAYPAL") {
                 paymentMethod.push("PayPal");
                 paymentMethod.push(this.orderDetail.paypalInfo.email);
@@ -50,11 +59,11 @@ class Store implements IOrderStore {
         let condition = '';
         let guaranteedPrice = '';
         if (this.orderDetail.orderNo) {
-            model = this.orderDetail.orderItem.productName;
-            carrier = "缺少运营商字段";
-            console.error("缺少运营商字段");
-            condition = this.orderDetail.orderItem.submitItems.map(t => t.isSkuProperty === true && t.name).join(",");
-            guaranteedPrice = (this.orderDetail.orderItem.amount / 100).toString();
+            const orderItem = this.orderDetail.orderItem;
+            model = orderItem.productName;
+            carrier = orderItem.carrier === "ATT" ? "ATT&T" : orderItem.carrier;
+            condition = orderItem.submitItems.map(t => t.isSkuProperty === true && t.name).join(",");
+            guaranteedPrice = (orderItem.amount / 100).toString();
         }
         return {
             model,
@@ -62,6 +71,48 @@ class Store implements IOrderStore {
             condition,
             guaranteedPrice,
         }
+    }
+    // 物流信息
+    @computed get deliverInfos() {
+        const infos: IShippingAddress[] = [];
+        if (this.orderDetail.orderNo) {
+            this.orderDetail.deliveryInfos.map(t => {
+                const time = new Date(t.createdDt);
+                const now = new Date();
+                let dateStr = "";
+                if (time.getFullYear() !== now.getFullYear()) {
+                    dateStr += time.getFullYear() + " ";
+                }
+                dateStr = dateStr + getMonthEn(time) + " " + time.getDate();
+                const timeBy12 = getHourBy12(time);
+                infos.push({
+                    date: dateStr,
+                    listData: [{
+                        time: timeBy12.hour + " " + timeBy12.part,
+                        listData: [t.description, t.location]
+                    }]
+                });
+                return true;
+            });
+        }
+        return infos;
+    }
+    // 质检结果
+    @computed get inspectionInfo() {
+        const data: IInspectionData = {
+            status: false,
+            amount: 0,
+            revisedPrice: 0,
+            differentCondition: []
+        }
+        const orderDetail = this.orderDetail;
+        if (orderDetail.orderNo) {
+            const orderItem = orderDetail.orderItem;
+            data.revisedPrice = orderItem.actualAmount;
+            data.amount = orderItem.amount;
+            data.differentCondition = orderItem.inspectItems.map(v => v.name);
+        }
+        return data;
     }
     // 构建进度条需要的数据
     @computed get progressType() {
@@ -128,21 +179,22 @@ class Store implements IOrderStore {
             dataList
         }
     }
-    @action public getOrderDetail = async (orderNo: string) => {
+    @action public getOrderDetail = async (email: string, orderNo: string) => {
         try {
             this.orderNo = orderNo;
-            const res = await OrderApi.getOrderDetail<IOrderDetail>(orderNo);
-            this.orderDetail = res;
-            return true;
+            this.email = email;
+            const res = await OrderApi.getOrderDetail<IOrderDetail>(email, orderNo);
+            return res;
         } catch (e) {
             console.error(e);
-            return false;
+            return {} as IOrderDetail;
         }
     }
     @action public approveRevisedPrice = async () => {
         try {
-            const res = await OrderApi.approveRevisedPrice<{}>(this.orderNo);
-            console.log(res);
+            const res = await OrderApi.approveRevisedPrice<IOrderDetail>(this.orderNo);
+            // 更新订单详情
+            this.orderDetail = res;
             return true;
         } catch (e) {
             console.error(e);
@@ -151,8 +203,9 @@ class Store implements IOrderStore {
     }
     @action public returnProduct = async () => {
         try {
-            const res = await OrderApi.returnProduct<{}>(this.orderNo);
-            console.log(res);
+            const res = await OrderApi.returnProduct<IOrderDetail>(this.orderNo);
+            // 更新订单详情
+            this.orderDetail = res;
             return true;
         } catch (e) {
             console.error(e);

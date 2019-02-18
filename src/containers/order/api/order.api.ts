@@ -2,11 +2,12 @@ import { Request } from "utils";
 import { IOpts } from '@/utils/request.interface';
 
 // 获取订单详情
-export function getOrderDetail<T>(orderNo: string): Promise<T> {
+export function getOrderDetail<T>(email: string, orderNo: string): Promise<T> {
     const opts: IOpts = {
         method: "POST",
         url: `/orders/check`,
         params: {
+            email,
             orderNo
         },
         loading: true,
@@ -18,10 +19,9 @@ export function getOrderDetail<T>(orderNo: string): Promise<T> {
 
 // 接受质检报价
 export function approveRevisedPrice<T>(orderNo: string): Promise<T> {
-    console.error("接受质检报价的接口暂未提供");
     const opts: IOpts = {
         method: "POST",
-        url: `/orders/check`,
+        url: `/orders/confirm`,
         params: {
             orderNo
         },
@@ -34,10 +34,9 @@ export function approveRevisedPrice<T>(orderNo: string): Promise<T> {
 
 // 退回商品
 export function returnProduct<T>(orderNo: string): Promise<T> {
-    console.error("商品退货的接口暂未提供");
     const opts: IOpts = {
         method: "POST",
-        url: `/orders/check`,
+        url: `/orders/applyReturn`,
         params: {
             orderNo
         },

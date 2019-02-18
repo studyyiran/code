@@ -26,12 +26,15 @@ export interface IOrderSummaryState {
  * @action returnProduct 不同意报价，退回手机
  */
 export interface IOrderStore {
+    email: string;
     orderNo: string;
     orderDetail: IOrderDetail;
     progressType: IProgressData;
     machineInfo: IMachineInfo;
     userInformation: IUserInformation;
-    getOrderDetail: (orderNo: string) => Promise<boolean>;
+    deliverInfos: IShippingAddress[];
+    inspectionInfo: IInspectionData;
+    getOrderDetail: (email: string, orderNo: string) => Promise<IOrderDetail>;
     approveRevisedPrice: () => Promise<boolean>;
     returnProduct: () => Promise<boolean>;
 }
@@ -45,9 +48,11 @@ export interface IOrderStore {
  * @property orderNo 订单号
  * @property orderItem 询价和质检内容
  * @property trackingNo 物流单号
+ * @property createdDt 创建日期
  * @property updatedDt 更新日期
  * @property userEmail 用户邮箱
  * @property userName 用户名
+ * @property addressInfo 邮寄目的地
  */
 export interface IOrderDetail {
     status: IProgressType;
@@ -57,12 +62,15 @@ export interface IOrderDetail {
     orderNo: string;
     orderItem: IOrderInspected;
     trackingNo: string;
+    createdDt: string;
     updatedDt: string;
     userName: string;
     userEmail: string;
+    addressInfo: IAddressInfo;
+    deliveryInfos: IDeliverInfoItem[];
 }
 /**
- * 订单质检
+ * 订单属性
  * @property actualAmount 质检金额, 单位分
  * @property actualProductName 质检机型
  * @property actualSkuName 质检SKU
@@ -74,6 +82,7 @@ export interface IOrderDetail {
  * @property productName 用户提交机型
  * @property skuName 用户提交SKU
  * @property<Array> submitItems 用户选择的机器属性列表
+ * @property carrier 运营商
  */
 export interface IOrderInspected {
     actualAmount: number;
@@ -87,6 +96,30 @@ export interface IOrderInspected {
     productName: string;
     skuName: string;
     submitItems: IInspectItems[];
+    carrier: string;
+}
+/**
+ * 邮寄信息
+ * @property addressLine 用户填写地址(必填部分)
+ * @property addressLineOptional 用户填写地址(选填部分)
+ * @property city 城市
+ * @property country 国家
+ * @property firstName 姓氏
+ * @property lastName 名字
+ * @property mobile 手机号
+ * @property state 州
+ * @property zipCode 邮编
+ */
+export interface IAddressInfo {
+    addressLine: string;
+    addressLineOptional?: string;
+    city: string;
+    country: string;
+    firstName: string;
+    lastName: string;
+    mobile: string;
+    state: string;
+    zipCode: string;
 }
 /**
  * 机器单个属性内容
@@ -162,6 +195,17 @@ export interface IUserInformation {
     orderNumber: string;
     orderDate: string;
 }
+/**
+ * 单条物流信息
+ * @property createdDt 物流信息更新日期
+ * @property description 描述
+ * @property location 物流更新地区
+ */
+export interface IDeliverInfoItem {
+    createdDt: string;
+    description: string;
+    location: string;
+}
 // 进度条数据
 export interface IProgressData {
     currentIndex: number;
@@ -185,7 +229,7 @@ export interface IDeliverData {
  * @property date 物流更新日期
  * @property listData 物流更新记录
  */
-interface IShippingAddress {
+export interface IShippingAddress {
     date: string;
     listData: Array<{
         time: string;
@@ -195,4 +239,18 @@ interface IShippingAddress {
 export interface IDeliverSatus {
     loading: boolean;
     visible: boolean;
+}
+/**
+ * 质检信息,
+ * @property status 是否存在之间差异
+ * @property amount 用户询价金额
+ * @property revisedPrice 质检修订之后价格
+ * @property differentCondition 质检差异结果
+ * 
+ */
+export interface IInspectionData {
+    status: boolean;
+    amount: number;
+    revisedPrice: number;
+    differentCondition: string[];
 }

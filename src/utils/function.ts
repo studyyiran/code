@@ -107,3 +107,22 @@ export const getWeek = (date: string) => {
   };
   return weekMap[new Date(date).getDay()];
 };
+
+// 月份转换为英文月份
+export const getMonthEn = (d: Date) => {
+  const MonthArray = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
+
+  return MonthArray[d.getMonth()];
+}
+
+// 24小时转换为12小时记录
+export const getHourBy12 = (d: Date) => {
+  const dhour = d.getHours();
+  const hour12 = dhour > 12 ? (dhour - 12) : dhour;
+  return {
+    hour: formatNumberFixTwo(hour12) + ":" + formatNumberFixTwo(d.getMinutes()),
+    part: dhour > 12 ? "PM" : "AM"
+  };
+}
+// 1 => 01
+export const formatNumberFixTwo = (n: number) => (n < 10 ? "0" + n : n.toString());

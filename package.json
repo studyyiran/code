@@ -151,7 +151,7 @@
   },
   "proxy": {
     "/up-api": {
-      "target": "http://120.55.138.130",
+      "target": "http://47.96.53.33",
       "ws": true,
       "changeOrigin": true,
       "pathRewrite": {
@@ -166,5 +166,24 @@
         "/mock": ""
       }
     }
+  },
+  "theme": {
+    "primary-color": "#00CFFF",
+    "btn-height-lg": "48px",
+    "btn-font-size-lg": "18px",
+    "btn-height-base": "38px",
+    "btn-font-size-base": "12px",
+    "btn-height-sm": "34px",
+    "btn-font-size-sm": "12px",
+    "input-height-lg": "50px",
+    "input-height-base": "40px",
+    "btn-border-radius-base": "0",
+    "btn-border-radius-sm": "0",
+    "btn-disable-color": "#000000",
+    "btn-disable-bg": "#F3F3F3",
+    "btn-disable-border": "transparent",
+    "btn-default-color": "#D8D8D8",
+    "btn-default-border": "#F5F5F5",
+    "btn-shadow": "0 0 0 rgba(0, 0, 0, 0)"
   }
 }
