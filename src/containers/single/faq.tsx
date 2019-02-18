@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Icon } from 'antd';
-import './index.less';
+import './faq.less';
 
 export default class Faq extends React.Component {
   public render() {
