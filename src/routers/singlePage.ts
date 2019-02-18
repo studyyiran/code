@@ -17,5 +17,10 @@ export default [
     component: asyncComponent(() => import('@/containers/contact')),
     exact: true,
     path: '/contact',
+  },
+  {
+    component: asyncComponent(() => import('@/containers/single/why')),
+    exact: true,
+    path: '/why',
   }
 ]
