@@ -4,6 +4,8 @@
   .banner {
     height:590px;
     display: flex;
+    box-shadow:0px 4px 14px 0px rgba(0,0,0,0.1);
+    position: relative;
     .left {
       margin-top:127px;
       width:457px;
@@ -19,6 +21,73 @@
         margin-bottom:14px;
         line-height:28px;
       }
+    }
+  }
+
+  .section-box {
+    background: #ECFBFD;
+    padding:100px 174px 110px;
+    box-shadow:0px 4px 14px 0px rgba(0,0,0,0.1);
+    position: relative;
+    dd {
+      display: flex;
+      margin-bottom:80px;
+      img {
+        width: 140px;
+        height:145px;
+      }
+  
+      .box {
+        flex: 1;
+        h2 {
+          font-size:22px;
+          color:#000;
+          line-height: 28px;
+        }
+        p {
+          margin-top:15px;
+          line-height:28px;
+          font-size:22px;
+          color:#9b9b9b;
+        }
+      }
+
+      &:nth-of-type(2n) {
+        .box {
+          order:0;
+        }
+        img {
+          order: 1;
+          margin-left:98px;
+        }
+      }
+      &:nth-of-type(2n-1) {
+        .box {
+          margin-left:98px;
+        }
+
+      }
+    }
+
+    .button-group {
+      width:232px;
+      margin:0 auto;
+    }
+  }
+
+  .contact-us-box {
+    background: #fff;
+    padding:80px 0;
+
+    h2 {
+      font-size:60px;
+      color:rgba(0,0,0,1);
+      line-height:74px;
+      text-align: center;
+    }
+
+    .form-box {
+      margin:0 128px;
     }
   }
 }

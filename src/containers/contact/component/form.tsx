@@ -81,7 +81,7 @@ class ContactForm extends React.Component<IContactFormProps> {
           </Row>
         </Form>
         <div className="button-group">
-          <Button style={{ width: '100%' }} htmlType="submit" onClick={this.handleOk} type="primary">SEND</Button>
+          <Button style={{ width: '100%' }} htmlType="submit" onClick={this.handleOk} type="primary" size="large">SEND</Button>
         </div>
       </div>
     )
