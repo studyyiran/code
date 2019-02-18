@@ -14,19 +14,22 @@ export default class Models extends React.Component<IModelsProps> {
   }
 
   public render() {
+    const { products } = this.props.yourphone;
     return (
       <div className="page-models-container">
         <LayOut>
           {
-            this.props.yourphone.products.map((phone, index) => (
-              <ModelItem
-                key={index}
-                {...phone}
-                onModelItemClick={this.onModelItemClick}
-                activeProductId={this.props.yourphone.activeProductId}
-                activeModelId={this.props.yourphone.activeModelId}
-              />
-            ))
+            products.length > 0
+              ? products.map((phone, index) => (
+                <ModelItem
+                  key={index}
+                  {...phone}
+                  onModelItemClick={this.onModelItemClick}
+                  activeProductId={this.props.yourphone.activeProductId}
+                  activeModelId={this.props.yourphone.activeModelId}
+                />
+              ))
+              : null
           }
         </LayOut>
       </div>

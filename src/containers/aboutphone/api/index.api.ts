@@ -21,8 +21,8 @@ export const getCarrier = <T>() => {
   return Request<T>(opts)
 }
 
-// 获取机型列表
-export const getProductsList = <T>(brand: number, categoryIds: number[] = [1]) => {
+// 获取机型列表, 以及根据关键字搜索机型
+export const getProductsList = <T>(brand: number, keyword: string = '', categoryIds: number[] = [1]) => {
   const opts: IOpts = {
     url: '/products/search',
     method: 'post',
@@ -31,6 +31,10 @@ export const getProductsList = <T>(brand: number, categoryIds: number[] = [1]) =
       categoryIds
     }
   };
+
+  if (keyword !== '') {
+    opts.params!['keyword'] = keyword;
+  }
 
   return Request<T>(opts);
 }

@@ -27,7 +27,7 @@ export interface IYourPhoneStore {
   isAllConditionSelected: boolean; // computed
   getBrandsByCid: (categoryId?: number) => Promise<boolean>;
   getCarrier: () => Promise<boolean>;
-  getProductsList: () => Promise<boolean>;
+  getProductsList: (keyword?: string) => Promise<boolean>;
   getProductDetail: (id: number) => Promise<boolean>;
   getProductPPVN: () => Promise<boolean>;
   createInquiry: () => Promise<boolean>;
@@ -152,7 +152,7 @@ export interface IProductModel {
   brandId: number;
   categoryId: number;
   id: number;
-  image: string;
+  imageUrl: string;
   name: string;
   activeModelId: number;
   activeProductId: number;
