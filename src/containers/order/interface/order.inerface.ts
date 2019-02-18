@@ -26,6 +26,7 @@ export interface IOrderSummaryState {
  * @action returnProduct 不同意报价，退回手机
  */
 export interface IOrderStore {
+    email: string;
     orderNo: string;
     orderDetail: IOrderDetail;
     progressType: IProgressData;
@@ -33,7 +34,7 @@ export interface IOrderStore {
     userInformation: IUserInformation;
     deliverInfos: IShippingAddress[];
     inspectionInfo: IInspectionData;
-    getOrderDetail: (orderNo: string) => Promise<boolean>;
+    getOrderDetail: (email: string, orderNo: string) => Promise<IOrderDetail>;
     approveRevisedPrice: () => Promise<boolean>;
     returnProduct: () => Promise<boolean>;
 }

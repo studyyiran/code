@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
 import { inject, observer } from 'mobx-react';
 import { IOrderProps, IProgressType } from '@/containers/order/interface/order.inerface';
 import ProgressBar from '@/containers/order/components/progressBar';
@@ -13,13 +12,7 @@ import './index.less';
 
 @inject("order")
 @observer
-class Order extends React.Component<IOrderProps & RouteComponentProps<{ id: string }>> {
-  public componentDidMount() {
-    // 如果store的订单详情存在就不重新获取
-    if (this.props.order.orderDetail.orderNo !== this.props.match.params.id) {
-      this.props.order.getOrderDetail(this.props.match.params.id);
-    }
-  }
+class Order extends React.Component<IOrderProps> {
   public render() {
     // 根据订单状态展示不同页面
     const alreadyLoadData = !!this.props.order.orderDetail.orderNo;

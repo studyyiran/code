@@ -6,6 +6,11 @@ export default [
   ...sell,
   ...singlePage,
   {
+    component: asyncComponent(() => import('@/containers/order/checkOrderNo')),
+    path: '/order/check',
+    exact: true,
+  },
+  {
     component: asyncComponent(() => import('@/containers/order')),
     path: '/order/:id',
     // children: [
