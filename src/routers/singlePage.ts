@@ -30,5 +30,13 @@ export default [
   {
     component: asyncComponent(() => import('@/containers/single/howmuch')),
     path: '/howmuch',
+  },
+  {
+    component: asyncComponent(() => import('@/containers/single/android')),
+    path: '/android',
+  },
+  {
+    component: asyncComponent(() => import('@/containers/single/iphone')),
+    path: '/iphone',
   }
 ]
