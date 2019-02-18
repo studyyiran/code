@@ -10,6 +10,14 @@ export interface IYourPhoneStore {
   inquiryDetail: IInquiryDetail | null;
   addressInfo: IAddressInfo;
   inquiryKey: string;
+  paypal: {
+    email: string;
+  }
+  echeck: {
+    firstName: string;
+    lastName: string;
+    email: string;
+  }
   activeBrandsId: number;
   activeCarrierName: string;
   activeProductId: number;
@@ -42,6 +50,7 @@ export interface IBrandsProps {
   history: H.History;
   yourphone: IYourPhoneStore;
   user: IUserStoreNew;
+  hideLayout?: boolean; // 用于隐藏布局标题头和导航脚，用于在done页面当modal的组件
 }
 
 export interface IModelsProps extends IBrandsProps {
@@ -50,9 +59,25 @@ export interface IModelsProps extends IBrandsProps {
 
 export type IConditionsProps = IBrandsProps;
 
+export type IShippingProps = IBrandsProps & FormComponentProps & { history: H.History };
+
+export type IPaymentProps = IBrandsProps;
+
 export type IDoneProps = IBrandsProps;
 
-export type IShippingProps = IBrandsProps & FormComponentProps & { history: H.History };
+export type ICheckOutProps = IBrandsProps;
+export interface IDoneStates {
+  isChecked: boolean;
+  showEditModal: boolean;
+  pageType: 'shipping' | 'payment' | 'condition' | '';
+}
+
+export interface ICheckOutStates {
+  brand: number;
+  payment: number;
+  brandText: string[];
+  payText: string[];
+}
 
 export interface ICarrier {
   description: string;
@@ -160,4 +185,25 @@ export interface IAddressInfo {
   mobile: string;
   state: string;
   zipCode: string;
+}
+
+export interface IChangeModalProps {
+  type: 'shipping' | 'payment' | 'condition' | '';
+  onSave: () => void;
+}
+
+export enum EChangeType {
+  SHIPPING = 'shipping',
+  PAYMENT = 'payment',
+  CONDITION = 'condition'
+}
+
+export enum EBrandType {
+  IPHONE = 0,
+  ANDROID = 1
+}
+
+export enum EPayType {
+  PAYPAL = 0,
+  ECHECK = 1
 }

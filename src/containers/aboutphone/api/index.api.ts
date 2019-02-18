@@ -1,12 +1,12 @@
 import { Request } from 'utils';
 import { IOpts } from '@/utils/request.interface';
 import { IQueryParams } from '../interface/index.interface';
+import { DEFAULT } from 'config';
 
 // 根据类目获取品牌列表
 export const getBrandsByCid = <T>(categoryId = 1) => {
   const opts: IOpts = {
     url: `/brands/category/${categoryId}`,
-    isMock: true
   };
 
   return Request<T>(opts);
@@ -29,8 +29,7 @@ export const getProductsList = <T>(brand: number, categoryIds: number[] = [1]) =
     params: {
       brand,
       categoryIds
-    },
-    isMock: true
+    }
   };
 
   return Request<T>(opts);
@@ -68,9 +67,12 @@ export const createInquiry = <T>(inquiry: IQueryParams) => {
 }
 
 // 获取询价详情
-export const getInquiryDetail = <T>(key: string) => {
+export const getInquiryDetail = <T>(key: string, agentCode: string = DEFAULT['agentCode']) => {
   const opts: IOpts = {
     url: `/inquiries/${key}`,
+    params: {
+      agentCode
+    }
   };
 
   return Request<T>(opts);
