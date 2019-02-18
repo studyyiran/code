@@ -2,7 +2,7 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Input, Button, Form } from 'antd';
 import { DEFAULT } from 'config';
-import './index.less';
+import './invitation_code.less';
 export default class InvationCode extends React.Component<RouteComponentProps> {
   public state = {
     btnHasDisabled: true,

@@ -18,7 +18,6 @@ export default (props: IProductPPVN & { onConditionItemClick: (conditionId: numb
       {
         props.pricePropertyValues.map((property, index) => {
           const isActive = isMatch(props.activeConditions, props.id, property.id);
-          console.log(isActive, 'xxx');
           return (
             <span
               key={index}

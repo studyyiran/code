@@ -23,6 +23,16 @@ class YourPhone implements IYourPhoneStore {
     zipCode: ''
   };
 
+  // paypal和echeck的信息有可能和contact information不同
+  @observable public paypal: IYourPhoneStore['paypal'] = {
+    email: ''
+  }
+  @observable public echeck: IYourPhoneStore['echeck'] = {
+    firstName: '',
+    lastName: '',
+    email: ''
+  }
+
   @observable public activeBrandsId = -1; // 选择的品牌
   @observable public activeCarrierName = ''; // 选择的运营商
   @observable public activeProductId = -1; // 选择的机型的id
@@ -70,10 +80,10 @@ class YourPhone implements IYourPhoneStore {
     return true;
   }
 
-  @action public getProductsList = async () => {
+  @action public getProductsList = async (keyword: string = '') => {
     let res: IProductModel[] = [];
     try {
-      res = await Api.getProductsList<IProductModel[]>(this.activeBrandsId);
+      res = await Api.getProductsList<IProductModel[]>(this.activeBrandsId, keyword);
     } catch (error) {
       console.warn(error, 'in brand store getProductsList');
       return false;

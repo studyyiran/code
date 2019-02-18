@@ -22,9 +22,20 @@
           line-height: 18px;
         }
         .tips {
+          display: block;
           margin-top: 10px;
           .set-font-color(12px, #00BAE5);
           cursor: pointer;
+          &::before {
+            content: "";
+            display: inline-block;
+            vertical-align: -1px;
+            margin-right: 4px;
+            width: 10px;
+            height: 10px;
+            background: url("~@/images/yourphone/circle-arrow.png")no-repeat;
+            background-size: 100%;
+          }
         }
       }
     }

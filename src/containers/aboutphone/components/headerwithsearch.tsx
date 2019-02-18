@@ -3,12 +3,13 @@ import './headerwithsearch.less';
 import { NAVIGATOR } from 'config';
 import { Input } from 'antd';
 import { INavigatorObj } from '@/containers/aboutphone/interface/index.interface';
+import yourphoneStore from '@/containers/aboutphone/store/yourphone.store';
 
 interface IStates {
   navigatorObj: INavigatorObj | null
-
 }
 
+let timer: any;
 export default class BrandHeader extends React.Component<object, IStates> {
 
   public readonly state: Readonly<IStates> = {
@@ -53,6 +54,7 @@ export default class BrandHeader extends React.Component<object, IStates> {
               onSearch={this.handleSearch}
               enterButton={true}
             />
+            <div className="results-wrapper" />
           </div>
         }
       </div>
@@ -60,6 +62,11 @@ export default class BrandHeader extends React.Component<object, IStates> {
   }
 
   private handleSearch = (value: string) => {
-    console.log(value);
+    console.log('inin');
+    clearTimeout(timer);
+
+    timer = setTimeout(() => {
+      yourphoneStore.getProductsList(value.trim());
+    }, 300);
   }
 }

@@ -13,23 +13,45 @@ export default class Footer extends React.Component<{ router: any }, IFooterStat
         },
         {
           text: 'How it Works',
-          href: ''
+          href: '' // todo
         },
         {
           text: 'Prepare to Ship',
-          href: ''
+          href: '' // todo
         },
         {
           text: 'Return Promise',
-          href: ''
+          href: '' // todo
         },
         {
           text: 'Device Grades',
-          href: ''
+          href: '' // todo 
         },
         {
           text: 'FAQ',
           href: '/faq'
+        }
+      ],
+      [
+        {
+          text: 'ABOUT US',
+          href: ''
+        },
+        {
+          text: 'Who We Are',
+          href: '' // todo
+        },
+        {
+          text: 'Why Up Trade',
+          href: '' // todo
+        },
+        {
+          text: 'Contact Us',
+          href: '/contact'
+        },
+        {
+          text: 'Blog',
+          href: '' // todo
         }
       ],
       [
@@ -39,7 +61,7 @@ export default class Footer extends React.Component<{ router: any }, IFooterStat
         },
         {
           text: 'Blog',
-          href: ''
+          href: '' // todo
         }
       ]
     ]
@@ -62,10 +84,6 @@ export default class Footer extends React.Component<{ router: any }, IFooterStat
               {
                 linksGroup
               }
-              <Col span={4} className="links-group">
-                <p className="item">PRESS</p>
-                <p className="item">Blog</p>
-              </Col>
               <Col span={4} className="email-group">
                 <p className="title">CONNECT WITH US!</p>
                 <Input
