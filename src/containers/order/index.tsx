@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
+import { RouteComponentProps } from 'react-router';
 import { IOrderProps, IProgressType } from '@/containers/order/interface/order.inerface';
 import ProgressBar from '@/containers/order/components/progressBar';
 import DeliverSatus from '@/containers/order/components/deliverSatus';
@@ -12,7 +13,20 @@ import './index.less';
 
 @inject("order")
 @observer
-class Order extends React.Component<IOrderProps> {
+class Order extends React.Component<IOrderProps & RouteComponentProps> {
+  public componentDidMount = async () => {
+    const order = this.props.order;
+    if (order.orderNo === "") {
+      const email = window.sessionStorage.getItem("bmb-us-email");
+      const orderNo = window.sessionStorage.getItem("bmb-us-orderNo");
+      if (email && orderNo) {
+        const b = await order.getOrderDetail(email, orderNo);
+        this.props.order.orderDetail = b;
+      } else {
+        this.props.history.replace('/order/check');
+      }
+    }
+  }
   public render() {
     // 根据订单状态展示不同页面
     const alreadyLoadData = !!this.props.order.orderDetail.orderNo;
