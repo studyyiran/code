@@ -100,7 +100,7 @@ class CheckOrderNo extends React.Component<IOrderProps & RouteComponentProps> {
                 emailInputHelp: 'Please enter a valid email address'
             });
         }
-        if (this.state.orderNo === "") {
+        if (!/^[0-9]*$/.test(this.state.orderNo)) {
             canSubmit = false;
             this.setState({
                 validateOrderNo: 'error',
@@ -113,6 +113,9 @@ class CheckOrderNo extends React.Component<IOrderProps & RouteComponentProps> {
                 this.props.order.orderDetail = b;
                 // 需要处理订单取消
                 console.error("这里需要处理订单取消的");
+                // email, orderNo 存入缓存
+                window.sessionStorage.setItem("bmb-us-email", this.state.email);
+                window.sessionStorage.setItem("bmb-us-orderNo", this.state.orderNo);
                 this.props.history.push(`/order/${this.state.orderNo}`);
             } else {
                 this.setState({
