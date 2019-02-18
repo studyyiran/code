@@ -22,5 +22,13 @@ export default [
     component: asyncComponent(() => import('@/containers/single/why')),
     exact: true,
     path: '/why',
+  },
+  {
+    component: asyncComponent(() => import('@/containers/single/broken')),
+    path: '/broken',
+  },
+  {
+    component: asyncComponent(() => import('@/containers/single/howmuch')),
+    path: '/howmuch',
   }
 ]

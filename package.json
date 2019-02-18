@@ -151,7 +151,7 @@
   },
   "proxy": {
     "/up-api": {
-      "target": "http://120.55.138.130",
+      "target": "http://47.96.53.33",
       "ws": true,
       "changeOrigin": true,
       "pathRewrite": {
