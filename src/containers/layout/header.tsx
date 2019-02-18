@@ -12,7 +12,7 @@ export default class Header extends React.Component {
           <span className="how_it_works_btn">How it Works</span>
           <span className="about_us_btn">About Us</span>
           <Link to={'/order'}><span className="check_your_order_btn">Check Your Order</span></Link>
-          <Button type="primary">Sell Your Phone Now</Button>
+          <Link to={'/sell/account'}><Button type="primary">Sell Your Phone Now</Button></Link>
         </div>
         <div className="header-bg" />
       </div>

@@ -21,22 +21,22 @@ export default [
   {
     component: asyncComponent(() => import('@/containers/single/why')),
     exact: true,
-    path: '/why',
+    path: '/help/why',
   },
   {
     component: asyncComponent(() => import('@/containers/single/broken')),
-    path: '/broken',
+    path: '/blog/broken',
   },
   {
     component: asyncComponent(() => import('@/containers/single/howmuch')),
-    path: '/howmuch',
+    path: '/blog/howmuch',
   },
   {
     component: asyncComponent(() => import('@/containers/single/android')),
-    path: '/android',
+    path: '/help/android',
   },
   {
     component: asyncComponent(() => import('@/containers/single/iphone')),
-    path: '/iphone',
+    path: '/help/iphone',
   }
 ]
