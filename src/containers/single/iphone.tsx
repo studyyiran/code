@@ -24,7 +24,7 @@ export default class Broken extends React.Component {
           <div className="list">
             <div className="header">
               <span className="number">1</span>
-              <span>Unpair Apple Watch</span>
+              <span className="text">Unpair Apple Watch</span>
             </div>
             <img src={require('@/images/single/iphone_1.png')} alt="" />
 
@@ -37,7 +37,7 @@ export default class Broken extends React.Component {
           <div className="list">
             <div className="header">
               <span className="number">2</span>
-              <span>Backup iPhone Data</span>
+              <span className="text">Backup iPhone Data</span>
             </div>
             <p>
               <a href="https://support.apple.com/en-us/HT203977">Backup iPhone Data</a>
@@ -48,7 +48,7 @@ export default class Broken extends React.Component {
           <div className="list">
             <div className="header">
               <span className="number">3</span>
-              <span>Factory Reset iPhone</span>
+              <span className="text">Factory Reset iPhone</span>
             </div>
             <dl>
               <dt>Sign out of iCloud</dt>
@@ -57,13 +57,13 @@ export default class Broken extends React.Component {
               <dt>Erase All Content and Settings</dt>
               <dd>Go to Settings > General > Reset > Erase All Content and Settings. If you turned on Find My iPhone, you might need to enter your Apple ID and password. For more in depth instructions follow Apple’s <a href="https://support.apple.com/en-us/HT201351">factory reset iPhone</a> instructions.</dd>
             </dl>
-            <img src={require('@/images/single/iphone_2.png')} alt="" />
+            <img className="img-270" src={require('@/images/single/iphone_2.png')} alt="" />
           </div>
 
           <div className="list">
             <div className="header">
               <span className="number">4</span>
-              <span>Pack iPhone and Accessories.</span>
+              <span className="text">Pack iPhone and Accessories.</span>
             </div>
             <p>Pack your iPhone and relevant accessories like fragile items. To ensure that you receive your price guarantee, you will want to protect your iPhone in the condition that you specified. Don’t forget to also send us your original box, phone charger, and/or other accessories with the iPhone. Including these items along with your shipment can increase your iPhone’s sale price.</p>
           </div>
