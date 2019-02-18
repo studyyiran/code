@@ -1,4 +1,4 @@
-import { IOrderStore, IOrderDetail, IProgressType, IShippingAddress, IInspectionData } from '@/containers/order/interface/order.inerface';
+import { IOrderStore, IOrderDetail, IProgressType, IShippingAddress, IInspectionData, ITrackingModel } from '@/containers/order/interface/order.inerface';
 import { computed, action, observable } from 'mobx';
 import * as OrderApi from '../api/order.api';
 import { getMonthEn, getHourBy12 } from '@/utils/function';
@@ -12,9 +12,14 @@ import ReturnRequestIcon from '@/images/order/returnRequest.png';
 
 
 class Store implements IOrderStore {
+    // 订单编号
     @observable public orderNo = "";
+    // 订单email
     @observable public email = "";
+    // 订单详情
     @observable public orderDetail = {} as IOrderDetail;
+    // 订单物流
+    @observable public trackingInfo: ITrackingModel | null = null;
 
     // 用户信息
     @computed get userInformation() {
@@ -75,9 +80,9 @@ class Store implements IOrderStore {
     // 物流信息
     @computed get deliverInfos() {
         const infos: IShippingAddress[] = [];
-        if (this.orderDetail.orderNo) {
-            this.orderDetail.deliveryInfos.map(t => {
-                const time = new Date(t.createdDt);
+        if (this.trackingInfo) {
+            this.trackingInfo.trackingHistory.map(t => {
+                const time = new Date(t.objectUpdated || t.objectCreated);
                 const now = new Date();
                 let dateStr = "";
                 if (time.getFullYear() !== now.getFullYear()) {
@@ -89,7 +94,7 @@ class Store implements IOrderStore {
                     date: dateStr,
                     listData: [{
                         time: timeBy12.hour + " " + timeBy12.part,
-                        listData: [t.description, t.location]
+                        listData: [t.statusDetails, t.location.city + "," + t.location.country]
                     }]
                 });
                 return true;
@@ -100,7 +105,9 @@ class Store implements IOrderStore {
     // 质检结果
     @computed get inspectionInfo() {
         const data: IInspectionData = {
-            status: false,
+            diffStatus: "success",
+            productName: "",
+            differenceText: "Matched",
             amount: 0,
             revisedPrice: 0,
             differentCondition: []
@@ -110,7 +117,18 @@ class Store implements IOrderStore {
             const orderItem = orderDetail.orderItem;
             data.revisedPrice = orderItem.actualAmount;
             data.amount = orderItem.amount;
-            data.differentCondition = orderItem.inspectItems.map(v => v.name);
+            if (orderItem.inspectResult && orderItem.inspectResult.result !== "MATCHED") {
+                data.diffStatus = "fail";
+                data.differenceText = orderItem.inspectResult.result === "WRONG_CONDITION" ? "Wrong Condition" : "Wrong Product";
+                orderItem.inspectResult.diffs.map(v => {
+                    if (!v.matched) {
+                        data.differentCondition.push(v.actualValueName);
+                    }
+                });
+                if (orderItem.inspectResult.result === "WRONG_PRODUCT") {
+                    data.productName = orderItem.actualProductName;
+                }
+            }
         }
         return data;
     }
@@ -184,6 +202,16 @@ class Store implements IOrderStore {
             this.orderNo = orderNo;
             this.email = email;
             const res = await OrderApi.getOrderDetail<IOrderDetail>(email, orderNo);
+            // 查看是否需要获取物流信息
+            if (res.shippoTransaction) {
+                if (res.status === IProgressType.TO_BE_INSPECTED || res.status === IProgressType.TO_BE_RECEIVED) {
+                    const shippoTransaction = res.shippoTransaction;
+                    const trans = await OrderApi.getTranshipping<ITrackingModel>(shippoTransaction.carrier, shippoTransaction.trackingNumber);
+                    if (trans.trackingNumber) {
+                        this.trackingInfo = trans;
+                    }
+                }
+            }
             return res;
         } catch (e) {
             console.error(e);

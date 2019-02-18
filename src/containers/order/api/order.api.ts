@@ -17,6 +17,21 @@ export function getOrderDetail<T>(email: string, orderNo: string): Promise<T> {
     return Request<T>(opts);
 }
 
+// 获取物流
+export function getTranshipping<T>(carrier: string, trackingNumber: string): Promise<T> {
+    const opts: IOpts = {
+        url: `/shippo/track`,
+        params: {
+            carrier,
+            trackingNumber
+        },
+        loading: true,
+        isMock: true
+    };
+
+    return Request<T>(opts);
+}
+
 // 接受质检报价
 export function approveRevisedPrice<T>(orderNo: string): Promise<T> {
     const opts: IOpts = {

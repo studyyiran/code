@@ -34,6 +34,7 @@ export interface IOrderStore {
     userInformation: IUserInformation;
     deliverInfos: IShippingAddress[];
     inspectionInfo: IInspectionData;
+    trackingInfo: ITrackingModel | null;
     getOrderDetail: (email: string, orderNo: string) => Promise<IOrderDetail>;
     approveRevisedPrice: () => Promise<boolean>;
     returnProduct: () => Promise<boolean>;
@@ -67,7 +68,34 @@ export interface IOrderDetail {
     userName: string;
     userEmail: string;
     addressInfo: IAddressInfo;
-    deliveryInfos: IDeliverInfoItem[];
+    shippoTransaction: IShippingTran;
+}
+/**
+ * 订单中物流id
+ */
+export interface IShippingTran {
+    carrier: string;
+    trackingNumber: string;
+}
+/**
+ * 物流信息接口返回
+ */
+export interface ITrackingModel {
+    trackingNumber: string;
+    trackingHistory: ITrackHistoryItem[];
+    trackingStatus: ITrackHistoryItem
+}
+/**
+ * 单个物流记录
+ */
+export interface ITrackHistoryItem {
+    location: {
+        city: string;
+        country: string;
+    },
+    objectCreated: string;
+    objectUpdated: string;
+    statusDetails: string;
 }
 /**
  * 订单属性
@@ -97,6 +125,17 @@ export interface IOrderInspected {
     skuName: string;
     submitItems: IInspectItems[];
     carrier: string;
+    inspectResult: IInsepectResult;
+}
+/**
+ * 
+ */
+export interface IInsepectResult {
+    diffs: Array<{
+        actualValueName: string;
+        matched: boolean;
+    }>;
+    result: "MATCHED" | "WRONG_PRODUCT" | "WRONG_CONDITION"
 }
 /**
  * 邮寄信息
@@ -149,8 +188,8 @@ export interface IPaypalInfo {
 /**
  * 订单状态枚举
  * @enum(TO_BE_SHIPPED) 等待寄出
- * @enum(TRANSACTION_SUCCEED) 货物已经寄出，物流获取成功
- * @enum(TRANSACTION_FAILED) 货物已经寄出，物流获取失败
+ * @enum(TRANSACTION_SUCCEED) 交易成功
+ * @enum(TRANSACTION_FAILED) 交易失败
  * @enum(TO_BE_RECEIVED) 货物已经收到
  * @enum(TO_BE_INSPECTED) 等待质检
  * @enum(DIFFERENCE_INSPECTED) 质检差异
@@ -242,14 +281,17 @@ export interface IDeliverSatus {
 }
 /**
  * 质检信息,
- * @property status 是否存在之间差异
+ * @property diffStatus 是否存在之间差异
+ * @property differenceText 存在何种差异
  * @property amount 用户询价金额
  * @property revisedPrice 质检修订之后价格
  * @property differentCondition 质检差异结果
- * 
+ * @property productName 产品名 当质检产品不一致的时候存在，否则为""
  */
 export interface IInspectionData {
-    status: boolean;
+    diffStatus: "success" | "fail";
+    productName: string;
+    differenceText: string;
     amount: number;
     revisedPrice: number;
     differentCondition: string[];
