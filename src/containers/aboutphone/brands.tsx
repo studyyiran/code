@@ -19,9 +19,11 @@ export default class Brands extends React.Component<IBrandsProps> {
     return (
       <div className="page-brans-container">
         <LayOut>
-          {
-            brands.map((brand, index) => <BrandItem key={index} brand={brand} activeBrandsId={activeBrandsId} onBrandClick={this.onBrandItemClick} />)
-          }
+          <div style={{paddingBottom: '32px'}}>
+            {
+              brands.map((brand, index) => <BrandItem key={index} brand={brand} activeBrandsId={activeBrandsId} onBrandClick={this.onBrandItemClick} />)
+            }
+          </div>
         </LayOut>
       </div>
     );

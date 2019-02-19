@@ -12,7 +12,11 @@ export default (props: IProductPPVN & { onConditionItemClick: (conditionId: numb
   <div className="comp-condition-item-container">
     <div className="left-wrapper">
       <p className="condition">{props.name}</p>
-      <p className="detail">{props.illustrationContent.propertyIllustrationContentText}</p>
+      {
+        props.illustrationContent && props.illustrationContent.propertyIllustrationContentText &&
+        <p className="detail">{props.illustrationContent.propertyIllustrationContentText}</p>
+      }
+
     </div>
     <div className="right-wrapper">
       {

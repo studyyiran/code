@@ -43,15 +43,11 @@ export default class Footer extends React.Component<{ router: any }, IFooterStat
         },
         {
           text: 'Why Up Trade',
-          href: '/why'
+          href: '/help/why'
         },
         {
           text: 'Contact Us',
           href: '/contact'
-        },
-        {
-          text: 'Sell Broken iPhone',
-          href: '/broken'
         }
       ],
       [
@@ -61,7 +57,11 @@ export default class Footer extends React.Component<{ router: any }, IFooterStat
         },
         {
           text: 'How Much Is My Phone Worth',
-          href: '/howmuch'
+          href: '/blog/howmuch'
+        },
+        {
+          text: 'Sell Broken iPhone',
+          href: '/blog/broken'
         }
       ]
     ]
@@ -76,30 +76,33 @@ export default class Footer extends React.Component<{ router: any }, IFooterStat
     ))
     return (
       <div className="comp-footer-container">
-        <div className="content-wrapper">
-          <div className="wave-bg" />
-          <div className="links-group-wrapper">
-            <Row gutter={48}>
-              <Col span={3}><img src={require('@/images/logo.png')} /></Col>
-              {
-                linksGroup
-              }
-              <Col span={4} className="email-group">
-                <p className="title">CONNECT WITH US!</p>
-                <Input
-                  placeholder="Enter your email"
-                  style={{ margin: '10px 0 14px 0' }}
-                />
-                <Button type="primary">Subscribe</Button>
-              </Col>
-            </Row>
-          </div>
-          <div className="copyright">
-            <span className="item item--copy">&#169; 2019 UpTrade Technologies, Inc.</span>
-            <span className="item item--policy">Privacy Policy</span>
-            <span className="item item--terms">Terms of Use</span>
+        <div className="wave-bg" />
+        <div className="section-box">
+          <div className="content-wrapper">
+            <div className="links-group-wrapper">
+              <Row gutter={48}>
+                <Col span={3}><img src={require('@/images/logo.png')} /></Col>
+                {
+                  linksGroup
+                }
+                <Col span={4} className="email-group">
+                  <p className="title">CONNECT WITH US!</p>
+                  <Input
+                    placeholder="Enter your email"
+                    style={{ margin: '10px 0 14px 0' }}
+                  />
+                  <Button type="primary">Subscribe</Button>
+                </Col>
+              </Row>
+            </div>
+            <div className="copyright">
+              <span className="item item--copy">&#169; 2019 UpTrade Technologies, Inc.</span>
+              <span className="item item--policy">Privacy Policy</span>
+              <span className="item item--terms">Terms of Use</span>
+            </div>
           </div>
         </div>
+
       </div>
     )
   }
