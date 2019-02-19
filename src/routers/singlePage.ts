@@ -21,22 +21,22 @@ export default [
   {
     component: asyncComponent(() => import('@/containers/single/why')),
     exact: true,
-    path: '/help/why',
+    path: '/why-uptrade',
   },
   {
     component: asyncComponent(() => import('@/containers/single/broken')),
-    path: '/blog/broken',
+    path: '/sell-broken-iphone',
   },
   {
     component: asyncComponent(() => import('@/containers/single/howmuch')),
-    path: '/blog/howmuch',
+    path: '/how-much-is-my-phone-worth',
   },
   {
     component: asyncComponent(() => import('@/containers/single/android')),
-    path: '/help/android',
+    path: '/how-to-factory-reset-android-phone',
   },
   {
     component: asyncComponent(() => import('@/containers/single/iphone')),
-    path: '/help/iphone',
+    path: '/how-to-factory-reset-iphone',
   }
 ]

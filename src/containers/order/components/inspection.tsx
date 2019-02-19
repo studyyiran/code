@@ -12,21 +12,19 @@ class Inspection extends React.Component<IOrderProps> {
     }
     public render() {
         const inspectionInfo = this.props.order.inspectionInfo;
+        const tag = {
+            type: inspectionInfo.diffStatus,
+            text: inspectionInfo.differenceText
+        };
         // 是否match
-        const tag = inspectionInfo.status ? {
-            type: "success",
-            text: "Matched"
-        } : {
-                type: "fail",
-                text: "Wrong Condition"
-            };
+        const isMatch = inspectionInfo.diffStatus === "success";
         return (
             <div className="comp-order-inspection">
                 <p className="inspection-title">
                     <span>Inspection Result</span>
                     <Tag className="inspect-title-tag" {...tag} />
                 </p>
-                {inspectionInfo.status && (<div className="inspected-success-body" style={{ display: "none" }}>
+                {isMatch && (<div className="inspected-success-body" style={{ display: "none" }}>
                     <div className="col-1">
                         <div>Price Guarantee</div>
                         <div>${inspectionInfo.amount}</div>
@@ -39,10 +37,18 @@ class Inspection extends React.Component<IOrderProps> {
                         </p>
                     </div>
                 </div>)}
-                {!inspectionInfo.status && (<div className="inspected-fail-body">
+                {!isMatch && (<div className="inspected-fail-body">
                     <div className="col-1">
                         <p>Difference</p>
-                        <p>{inspectionInfo.differentCondition.join(",")}</p>
+                        <p>
+                            {inspectionInfo.productName !== "" && (
+                                <>
+                                    {inspectionInfo.productName}
+                                    <br />
+                                </>
+                            )}
+                            {inspectionInfo.differentCondition.join(",")}
+                        </p>
                     </div>
                     <div className="col-2">
                         <p>Revised Price Guarantee</p>
