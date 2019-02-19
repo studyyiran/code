@@ -17,11 +17,11 @@ export default class LayoutIndex extends React.Component {
   }
 
   public componentDidMount() {
+    console.log(this.context.router.route.match.path);
     // 是否输入国 invatation code
-
-    // if (!sessionStorage.getItem('invitationCode')) {
-    //   this.context.router.history.push('/invitationCode')
-    // }
+    if (!sessionStorage.getItem('invitationCode') && this.context.router.route.match.path !== '/invitationCode') {
+      this.context.router.history.push('/invitationCode')
+    }
 
     message.loading(ECommonText.LOADING, 1);
     window['__history__'] = this.context.router.history;
@@ -34,6 +34,10 @@ export default class LayoutIndex extends React.Component {
     this.context.router.history.listen(() => {
       message.loading(ECommonText.LOADING, 1);
       this.onMappingTitles(titlesKey, titles);
+
+      if (!sessionStorage.getItem('invitationCode') && location.pathname !== '/invitationCode') {
+        this.context.router.history.push('/invitationCode')
+      }
     });
   }
 

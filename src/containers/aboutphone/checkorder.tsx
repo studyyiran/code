@@ -17,14 +17,14 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
       'Turn off “Find My iPhone”. <br /> Deactivate your service. <br /> Remove your Data&SIM Card.',
       'Delete your Google account. <br /> Deactivate your service. <br /> Remove your Data & SIM Card.'
     ],
-    payText: [
-      'After your device arrives, it <br /> typically takes a week for your <br /> PayPal funds to be deposited.',
-      'After your device arrives, your <br /> eCheck is typically sent within a <br /> week.'
-    ]
+    payText: {
+      [EPayType.PAYPAL]: 'After your device arrives, it <br /> typically takes a week for your <br /> PayPal funds to be deposited.',
+      [EPayType.ECHECK]: 'After your device arrives, your <br /> eCheck is typically sent within a <br /> week.'
+    }
   }
 
   public render() {
-    const { activeBrandsId } = this.props.yourphone; // 选中的品牌， 苹果为52
+    const { activeBrandsId, inquiryDetail, orderDetail } = this.props.yourphone; // 选中的品牌， 苹果为52
     return (
       <div className="page-checkorder-container">
         <Layout hideBottom={true}>
@@ -33,7 +33,7 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
               <div className="step">
                 <p className="name">Prepare Your Phone</p>
                 <p className="detail" dangerouslySetInnerHTML={{ __html: this.state.brandText[this.state.brand] }} />
-                <Link to={activeBrandsId === 52 ? '/iphone' : '/android'} className="tips">How to Prepare Your Phone</Link>
+                <Link to={activeBrandsId === 52 ? '/help/iphone' : '/help/android'} className="tips">How to Prepare Your Phone</Link>
               </div>
               <div className="step">
                 <p className="name">Pack and Send</p>
@@ -57,20 +57,20 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
                   <div className="info-wrapper">
                     <div className="info-item">
                       <span className="label">Model</span>
-                      <p className="content">iPhone Xs Max 128G</p>
+                      <p className="content">{inquiryDetail && inquiryDetail.product.name}</p>
                     </div>
                     <div className="info-item">
                       <span className="label">Order Number</span>
-                      <p className="content">063746374682374</p>
+                      <p className="content">{orderDetail && orderDetail.orderNo}</p>
                     </div>
                     <div className="info-item">
                       <span className="label">Order Date</span>
-                      <p className="content">2019-12-12 14: 24 PM</p>
+                      <p className="content">{orderDetail && orderDetail.createdDt}</p>
                     </div>
                   </div>
                   <p className="guaranteed-price">
                     <span className="text">Guaranteed Price</span>
-                    <span className="price">$710</span>
+                    <span className="price">${inquiryDetail && inquiryDetail.price}</span>
                   </p>
                 </div>
               </div>

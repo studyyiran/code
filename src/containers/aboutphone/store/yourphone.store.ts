@@ -3,7 +3,8 @@ import { IQueryParams, IInquiryDetail, IAddressInfo } from './../interface/index
 import * as Api from '../api/index.api';
 import { action, observable, autorun, computed } from 'mobx';
 import { IYourPhoneStore, ICarrier, IBrands, IAmericaState, IProductModel, IProductPPVN } from '../interface/index.interface';
-
+import { IPreOrder } from '@/store/interface/user.interface';
+import UserStore from '@/store/user';
 class YourPhone implements IYourPhoneStore {
   @observable public carriers: ICarrier[] = [];
   @observable public brands: IBrands[] = [];
@@ -11,7 +12,7 @@ class YourPhone implements IYourPhoneStore {
   @observable public productPPVNS: IProductPPVN[] = [];
   @observable public inquiryKey = '';
   @observable public inquiryDetail = null;
-
+  @observable public orderDetail = null; // 订单详情
   @observable public addressInfo: IAddressInfo = { // 用户填写的信息
     addressLine: '',
     addressLineOptional: '',
@@ -25,6 +26,7 @@ class YourPhone implements IYourPhoneStore {
   };
 
   // paypal和echeck的信息有可能和contact information不同
+  @observable public payment: string = ''; // 选择的支付方式, 必须为PAYPAL 或 CHECK，否则无法下一步
   @observable public paypal: IYourPhoneStore['paypal'] = {
     email: ''
   }
@@ -117,17 +119,19 @@ class YourPhone implements IYourPhoneStore {
       return false;
     }
 
-    this.productPPVNS = res;
+    // 根据isSkuProperty进行筛选，只要值为false的
+    this.productPPVNS = res.filter(ppvitem => !ppvitem.isSkuProperty);
     return true;
   }
 
-  // 创建订单
+  // 创建询价
   @action public createInquiry = async () => {
-    const inquiry: IQueryParams = {
-      agentCode: DEFAULT.agentCode,
-      priceUnits: Object.values(this.activeConditions!),
-      productId: this.activeProductId
-    }
+    // const inquiry: IQueryParams = {
+    //   agentCode: DEFAULT.agentCode,
+    //   priceUnits: Object.values(this.activeConditions!),
+    //   productId: this.activeProductId
+    // }
+    const inquiry: IQueryParams = { "agentCode": 'ahs_android', "productId": 25827, "priceUnits": [6437, 2023, 2014, 2453, 2072] }
     let res: string;
     try {
       res = await Api.createInquiry<string>(inquiry);
@@ -156,6 +160,29 @@ class YourPhone implements IYourPhoneStore {
       this.americaStates = await Api.getStateByCode<IAmericaState>(zipCode);
     } catch (error) {
       console.warn(error, 'in brand store');
+      return false;
+    }
+
+    return true;
+  }
+
+  // 创建订单
+  @action public createOrder = async () => {
+    const orderParams: IPreOrder = {
+      addressInfo: this.addressInfo,
+      agentCode: DEFAULT.agentCode,
+      carrier: this.activeCarrierName,
+      checkInfo: this.echeck,
+      inquiryKey: this.inquiryKey,
+      payment: this.payment,
+      paypalInfo: this.paypal,
+      userEmail: UserStore.preOrder.userEmail
+    }
+
+    try {
+      this.orderDetail = await Api.createOrder<any>(orderParams);
+    } catch (error) {
+      console.warn(error, 'in yourphone store createOrder');
       return false;
     }
 

@@ -1,11 +1,20 @@
 import * as React from 'react';
 import { Icon } from 'antd';
+import { getQueryString } from 'utils'
 import './faq.less';
 
 export default class Faq extends React.Component {
+  private boxRef: React.RefObject<HTMLDivElement> = React.createRef();
+  public componentDidMount() {
+    if (getQueryString('index')) {
+      setTimeout(() => {
+        this.switchScrollAndOpen(parseInt(getQueryString('index') || '', 10));
+      }, 500);
+    }
+  }
   public render() {
     return (
-      <div className="page-faq-container">
+      <div className="page-faq-container" ref={this.boxRef}>
         <h1 className="title">Frequently Asked Questions</h1>
         <dl>
           <dt>General</dt>
@@ -97,5 +106,25 @@ export default class Faq extends React.Component {
         </dl>
       </div>
     )
+  }
+
+  private switchScrollAndOpen = (index: number) => {
+    if (!this.boxRef || !this.boxRef.current) {
+      return;
+    }
+    const current = this.boxRef ? this.boxRef.current : null;
+    const dd = current ? current.querySelectorAll('dd')[index - 1] : null;
+    const checkbox: HTMLInputElement | null = dd ? dd.querySelector('input[type="checkbox"]') : null;
+
+    if (checkbox) {
+      console.log(2)
+      checkbox.checked = true;
+    }
+
+    if (dd) {
+      console.log(31231231312)
+      console.log(dd.offsetTop)
+      window.scrollTo(0, dd.offsetTop - 30)
+    }
   }
 }
