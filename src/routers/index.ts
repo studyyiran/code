@@ -12,7 +12,7 @@ export default [
   },
   {
     component: asyncComponent(() => import('@/containers/order')),
-    path: '/order/:id',
+    path: '/order'
     // children: [
     //   {
     //     component: asyncComponent(() => import('@/containers/aboutyou')),

@@ -65,8 +65,8 @@ class DeliverSatus extends React.Component<IOrderProps, IDeliverSatus> {
                         <div>
                             <img src={UPSICON} alt="" />
                             <div>
-                                <p className="name">UPS</p>
-                                <p className="orderNo">XY1303918832FR</p>
+                                <p className="name">{this.props.order.orderDetail.shippoTransaction.carrier}</p>
+                                <p className="orderNo">{this.props.order.orderDetail.shippoTransaction.trackingNumber}</p>
                             </div>
                         </div>
                     </div>
@@ -87,8 +87,8 @@ class DeliverSatus extends React.Component<IOrderProps, IDeliverSatus> {
                             <div>
                                 <img src={UPSICON} alt="" />
                                 <div>
-                                    <p className="name">UPS</p>
-                                    <p className="orderNo">XY1303918832FR</p>
+                                    <p className="name">{this.props.order.orderDetail.shippoTransaction.carrier}</p>
+                                    <p className="orderNo">{this.props.order.orderDetail.shippoTransaction.trackingNumber}</p>
                                 </div>
                             </div>
                         </div>

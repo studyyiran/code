@@ -7,14 +7,10 @@ import './listedForSale.less';
 class ListedForSale extends React.Component<IOrderProps> {
     public render() {
         const inspectionInfo = this.props.order.inspectionInfo;
-        // 是否match
-        const tag = inspectionInfo.status ? {
-            type: "success",
-            text: "Matched"
-        } : {
-                type: "fail",
-                text: "Wrong Condition"
-            };
+        const tag = {
+            type: inspectionInfo.diffStatus,
+            text: inspectionInfo.differenceText
+        };
         return (
             <div className="comp-order-lisedForSale">
                 <div className="auction-result table">
@@ -47,6 +43,12 @@ class ListedForSale extends React.Component<IOrderProps> {
                         <div style={{ color: "#FF5858" }}>${inspectionInfo.revisedPrice}</div>
                         <div>Difference</div>
                         <div style={{ height: "auto" }}>
+                            {inspectionInfo.productName !== "" && (
+                                <>
+                                    {inspectionInfo.productName}
+                                    <br />
+                                </>
+                            )}
                             {inspectionInfo.differentCondition.join(",")}
                         </div>
                     </div>)}

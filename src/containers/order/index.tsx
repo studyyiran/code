@@ -17,12 +17,10 @@ class Order extends React.Component<IOrderProps & RouteComponentProps> {
   public componentDidMount = async () => {
     const order = this.props.order;
     if (order.orderNo === "") {
-      const email = window.sessionStorage.getItem("bmb-us-email");
-      const orderNo = window.sessionStorage.getItem("bmb-us-orderNo");
-      if (email && orderNo) {
-        const b = await order.getOrderDetail(email, orderNo);
-        this.props.order.orderDetail = b;
-      } else {
+      // 自动登陆
+      const isLogined = await order.autoLogin();
+      // 登录失败
+      if (!isLogined) {
         this.props.history.replace('/order/check');
       }
     }
