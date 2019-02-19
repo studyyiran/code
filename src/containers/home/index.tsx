@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 import './index.less';
 import { Button } from 'antd';
@@ -57,7 +58,7 @@ export default class Home extends React.Component<object, IHomeState> {
             Phone for More.
           </p>
           <p className="content-text">UpTrade helps you sell your phone, so you can get paid <br /> for what your device is actually worth.</p>
-          <Button type="primary" style={{ boxShadow: '0px 2px 4px 0px rgba(0,207,255,0.35)' }}>Sell It Now</Button>
+          <Link to="/sell/account"><Button type="primary" size="large" style={{ boxShadow: '0px 2px 4px 0px rgba(0,207,255,0.35)' }}>Sell It Now</Button></Link>
           <img src={require('@/images/home/main_bg1.png')} className="main_bg1" />
         </div>
 
@@ -89,7 +90,97 @@ export default class Home extends React.Component<object, IHomeState> {
             }
           </div>
         </div>
-      </div>
+
+        <div className="section-payback">
+          <div className="top">
+            <div className="left">
+              <h2>Finally, <br />High Payback</h2>
+              <p>Your phone will be listed on multiple markets<br /> at the same time, so you get the best possible<br /> payout.</p>
+            </div>
+            <img src={require('@/images/home/main_bg2.png')} alt="" />
+          </div>
+          <div className="bottom">
+            <img src={require('@/images/home/progress_bar.png')} alt="" />
+            <ul>
+              <li>
+                <h3>Trade In Programs</h3>
+                <p>Most services that buy used phones <br />offer a small credit towards your next<br /> purchase.</p>
+              </li>
+              <li>
+                <h3>Peer to Peer Marketplaces</h3>
+                <p>You might get more on 3rd party <br />marketplaces, but it could take <br />weeks to get your money.</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="section-sell">
+          <h2>Sell With Confidence</h2>
+          <dl>
+            <dd>
+              <div>
+                <span className="number">1</span>
+                <img src={require('@/images/home/icon_1.png')} alt="" />
+              </div>
+              <h4>Risk Free</h4>
+              <p>Our price guarantee means you get paid <br />for the quoted price based on the<br /> condition of your phone or we send your <br />phone back for FREE!</p>
+            </dd>
+
+            <dd>
+              <div>
+                <span className="number">2</span>
+                <img src={require('@/images/home/icon_6.png')} alt="" />
+              </div>
+              <h4>Data Protection</h4>
+              <p>Your personal information is our priority.<br /> We send you worry free instructions on <br />how to properly reset your phone for sale.</p>
+            </dd>
+
+            <dd>
+              <div>
+                <span className="number">3</span>
+                <img src={require('@/images/home/icon_3--left.png')} alt="" />
+              </div>
+              <h4>Hassle Free Shipping</h4>
+              <p>Free shipping label sent to your home.<br /> Then drop it off so you can carry on with <br />more important things.</p>
+            </dd>
+
+            <dd>
+              <div>
+                <span className="number">4</span>
+                <img src={require('@/images/home/icon_4_2.png')} alt="" />
+              </div>
+              <h4>Fast Payment</h4>
+              <p>No more waiting for your cash. We issue <br />our price guarantee payment the next <br />business day after your phone is received.</p>
+            </dd>
+
+            <dd>
+              <div>
+                <span className="number">5</span>
+                <img src={require('@/images/home/icon_7.png')} alt="" />
+              </div>
+              <h4>100% Customer Satisfaction</h4>
+              <p>The best value and service. Honest and <br />transparent communication every step of <br />the way.</p>
+            </dd>
+
+            <dd>
+              <div>
+                <span className="number">6</span>
+                <img src={require('@/images/home/icon_8.png')} alt="" />
+              </div>
+              <h4>Eco-Friendly</h4>
+              <p>We accept any phone. If we can’t sell it for <br />you, we will recycle it to prevent it from <br />ending up in a landfill.</p>
+            </dd>
+          </dl>
+        </div>
+
+        <div className="section-just">
+          <h2>Just Two Steps. Ship and Paid.</h2>
+          <p>Quick, easy, and safe. Don’t settle for less.</p>
+          <Link className="button-group" to={'/sell/account'}>
+            <Button type="primary" size="large" style={{ height: 64, width: 232 }}>SELL IT NOW</Button>
+          </Link>
+        </div>
+      </div >
     )
   }
 }

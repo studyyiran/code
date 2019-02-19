@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import './footer.less';
 import { Row, Col, Input, Button } from 'antd';
 import { IFooterState } from './interface/index.interface';
@@ -17,15 +18,7 @@ export default class Footer extends React.Component<{ router: any }, IFooterStat
         },
         {
           text: 'Prepare to Ship',
-          href: '' // todo
-        },
-        {
-          text: 'Return Promise',
-          href: '' // todo
-        },
-        {
-          text: 'Device Grades',
-          href: '' // todo 
+          href: '/faq?index=9'
         },
         {
           text: 'FAQ',
@@ -43,32 +36,26 @@ export default class Footer extends React.Component<{ router: any }, IFooterStat
         },
         {
           text: 'Why Up Trade',
-          href: '/help/why'
+          href: '/why-uptrade'
         },
         {
           text: 'Contact Us',
           href: '/contact'
-        }
-      ],
-      [
-        {
-          text: 'PRESS',
-          href: ''
         },
         {
           text: 'How Much Is My Phone Worth',
-          href: '/blog/howmuch'
+          href: '/how-much-is-my-phone-worth'
         },
         {
           text: 'Sell Broken iPhone',
-          href: '/blog/broken'
+          href: '/sell-broken-iphone'
         }
-      ]
+      ],
     ]
   }
   public render() {
     const linksGroup = this.state.links.map((group, key) => (
-      <Col span={4} key={key} className="links-group">
+      <Col span={6} key={key} className="links-group">
         {
           group.map((link, index) => <p key={index} className="item" onClick={this.handleLink.bind(this, link)} data-href={link.href}>{link.text}</p>)
         }
@@ -80,12 +67,12 @@ export default class Footer extends React.Component<{ router: any }, IFooterStat
         <div className="section-box">
           <div className="content-wrapper">
             <div className="links-group-wrapper">
-              <Row gutter={48}>
+              <Row gutter={56}>
                 <Col span={3}><img src={require('@/images/logo.png')} /></Col>
                 {
                   linksGroup
                 }
-                <Col span={4} className="email-group">
+                <Col span={6} offset={3} className="email-group">
                   <p className="title">CONNECT WITH US!</p>
                   <Input
                     placeholder="Enter your email"
@@ -97,8 +84,8 @@ export default class Footer extends React.Component<{ router: any }, IFooterStat
             </div>
             <div className="copyright">
               <span className="item item--copy">&#169; 2019 UpTrade Technologies, Inc.</span>
-              <span className="item item--policy">Privacy Policy</span>
-              <span className="item item--terms">Terms of Use</span>
+              <Link to="/privacy-policy"><span className="item item--policy">Privacy Policy</span></Link>
+              <Link to="/terms"><span className="item item--terms">Terms of Use</span></Link>
             </div>
           </div>
         </div>

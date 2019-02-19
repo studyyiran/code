@@ -3,6 +3,7 @@ import { inject, observer } from 'mobx-react';
 import { Divider, Input, Button, Form } from 'antd';
 import { IOrderProps } from '@/containers/order/interface/order.inerface';
 import { RouteComponentProps } from 'react-router';
+import { getQueryString } from '@/utils/function';
 import './checkOrderNo.less';
 
 @inject("order")
@@ -16,6 +17,21 @@ class CheckOrderNo extends React.Component<IOrderProps & RouteComponentProps> {
         validateOrderNo: undefined,
         orderInputHelp: '',
         formError: ''
+    }
+    public componentDidMount = async () => {
+        const token = getQueryString("token");
+        // 存在token
+        if (token) {
+            // 如果可以获取到订单信息则跳转，否则停留当前页面
+            const order = this.props.order
+            const getOrderDetail = await order.getOrderDetailByToken(token);
+            if (getOrderDetail) {
+                // saveloginmes
+                order.autoSaveLoginMes();
+                // 自动定向到订单详情去
+                this.props.history.push(`/order`);
+            }
+        }
     }
     public render() {
         return (
@@ -109,14 +125,14 @@ class CheckOrderNo extends React.Component<IOrderProps & RouteComponentProps> {
         }
         if (canSubmit) {
             const b = await this.props.order.getOrderDetail(this.state.email, this.state.orderNo);
+            console.error("这里需要处理订单取消的");
             if (b.orderNo) {
-                this.props.order.orderDetail = b;
-                // 需要处理订单取消
-                console.error("这里需要处理订单取消的");
+                // 保存订单数据
+                this.props.order.setOrderDetail(b);
                 // email, orderNo 存入缓存
-                window.sessionStorage.setItem("bmb-us-email", this.state.email);
-                window.sessionStorage.setItem("bmb-us-orderNo", this.state.orderNo);
-                this.props.history.push(`/order/${this.state.orderNo}`);
+                this.props.order.autoSaveLoginMes();
+                // 跳转订单详情
+                this.props.history.push(`/order`);
             } else {
                 this.setState({
                     formError: "just a error"

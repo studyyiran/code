@@ -1,16 +1,22 @@
 .layout-container {
   position: absolute;
-  top:0;
-  left:0;
-  right:0;
-  bottom:0;
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+  // overflow: auto;
+  // -webkit-overflow-scrolling: touch;
 
+  .layout-content-wrapper {
+    
+  }
   .layout-content {
-    margin-top: -190px;
-    margin-bottom:-404px;
-    padding-top:190px;
-    padding-bottom: 364px;
+    min-height:100%;
+    margin-top: -170px;
+    margin-bottom:-344px;
+    box-sizing: border-box;
+    padding-top:170px;
+    padding-bottom: 304px;
+    background: url("~@/images/global_wave_bg.png") repeat;
   }
 }
