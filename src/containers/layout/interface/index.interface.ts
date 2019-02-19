@@ -4,10 +4,11 @@ export interface IProps {
 }
 
 export interface IFooterState {
-  links: Ilinks[][]
+  links: Ilinks[][],
+  email: string
 }
 
-interface Ilinks  {
+interface Ilinks {
   text: string;
   href: string;
 }
