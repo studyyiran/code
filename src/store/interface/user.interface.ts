@@ -1,3 +1,4 @@
+
 export interface IUserInfo {
   identityChecked: boolean, // 是否实名
   mobile: string,
@@ -57,6 +58,9 @@ export interface IPreOrder {
   paypalInfo?: IPaypalInfo;
   productInfo?: Partial<IProductInfo>;
   userEmail?: string;
+
+  carrier?: string;
+  agentCode?: string;
 }
 
 interface IAddressInfo {
@@ -71,7 +75,9 @@ interface IAddressInfo {
   zipCode: string;
 }
 interface ICheckInfo {
-  card: string;
+  firstName: string;
+  lastName: string;
+  email: string;
 }
 interface IPaypalInfo {
   email: string;

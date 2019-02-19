@@ -2,6 +2,7 @@ import { Request } from 'utils';
 import { IOpts } from '@/utils/request.interface';
 import { IQueryParams } from '../interface/index.interface';
 import { DEFAULT } from 'config';
+import { IPreOrder } from '@/store/interface/user.interface';
 
 // 根据类目获取品牌列表
 export const getBrandsByCid = <T>(categoryId = 1) => {
@@ -87,6 +88,16 @@ export const getInquiryDetail = <T>(key: string, agentCode: string = DEFAULT['ag
 export const getStateByCode = <T>(zipCode: number) => {
   const opts: IOpts = {
     url: `/USPS/state/${zipCode}`,
+  };
+
+  return Request<T>(opts);
+}
+
+export const createOrder = <T>(orderParams: IPreOrder) => {
+  const opts: IOpts = {
+    url: `/orders`,
+    method: 'post',
+    params: orderParams
   };
 
   return Request<T>(opts);
