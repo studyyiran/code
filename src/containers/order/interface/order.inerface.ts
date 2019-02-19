@@ -24,6 +24,9 @@ export interface IOrderSummaryState {
  * @action getOrderDetail 获取订单数据
  * @action approveRevisedPrice 同意质检报价
  * @action returnProduct 不同意报价，退回手机
+ * @action autoSaveLoginMes 保存登陆信息
+ * @action autoLogin 自动查找信息登陆
+ * @action setOrderDetail 保存订单详情
  */
 export interface IOrderStore {
     email: string;
@@ -36,8 +39,12 @@ export interface IOrderStore {
     inspectionInfo: IInspectionData;
     trackingInfo: ITrackingModel | null;
     getOrderDetail: (email: string, orderNo: string) => Promise<IOrderDetail>;
+    getOrderDetailByToken: (token: string) => Promise<boolean>;
     approveRevisedPrice: () => Promise<boolean>;
     returnProduct: () => Promise<boolean>;
+    autoSaveLoginMes: () => void;
+    autoLogin: () => Promise<boolean>;
+    setOrderDetail: (d: IOrderDetail) => void;
 }
 
 /** 

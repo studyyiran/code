@@ -199,9 +199,10 @@ class Store implements IOrderStore {
     }
     @action public getOrderDetail = async (email: string, orderNo: string) => {
         try {
+            const res = await OrderApi.getOrderDetail<IOrderDetail>(email, orderNo);
+            // 存储orderNo,email
             this.orderNo = orderNo;
             this.email = email;
-            const res = await OrderApi.getOrderDetail<IOrderDetail>(email, orderNo);
             // 查看是否需要获取物流信息
             if (res.shippoTransaction) {
                 if (res.status === IProgressType.TO_BE_INSPECTED || res.status === IProgressType.TO_BE_RECEIVED) {
@@ -216,6 +217,62 @@ class Store implements IOrderStore {
         } catch (e) {
             console.error(e);
             return {} as IOrderDetail;
+        }
+    }
+    // 采用一次性token兑换订单详情
+    @action public getOrderDetailByToken = async (token: string) => {
+        try {
+            const res = await OrderApi.getOrderDetailByToken<IOrderDetail>(token);
+            // 保存订单详情
+            this.setOrderDetail(res);
+            // 存储orderNo,email
+            this.orderNo = res.orderNo;
+            this.email = res.userEmail;
+            // 查看是否需要获取物流信息
+            if (res.shippoTransaction) {
+                if (res.status === IProgressType.TO_BE_INSPECTED || res.status === IProgressType.TO_BE_RECEIVED) {
+                    const shippoTransaction = res.shippoTransaction;
+                    const trans = await OrderApi.getTranshipping<ITrackingModel>(shippoTransaction.carrier, shippoTransaction.trackingNumber);
+                    if (trans.trackingNumber) {
+                        this.trackingInfo = trans;
+                    }
+                }
+            }
+            // 保存登陆信息
+            this.autoSaveLoginMes();
+            return true;
+        } catch (e) {
+            console.log(e);
+            return false;
+        }
+    }
+    // 保存登陆信息
+    @action public autoSaveLoginMes = () => {
+        window.sessionStorage.setItem("bmb-us-email", this.email);
+        window.sessionStorage.setItem("bmb-us-orderNo", this.orderNo);
+    }
+    // 自动登陆
+    @action public autoLogin = async () => {
+        const email = window.sessionStorage.getItem("bmb-us-email");
+        const orderNo = window.sessionStorage.getItem("bmb-us-orderNo");
+        if (email && orderNo) {
+            const bOrder = await this.getOrderDetail(email, orderNo);
+            this.setOrderDetail(bOrder);
+            // 自动登陆失败
+            if (!bOrder.orderNo) {
+                return false;
+            }
+            return true;
+        } else {
+            // 没有自动登录用户
+            return false;
+        }
+    }
+    // 保存订单详情
+    @action public setOrderDetail = (b: IOrderDetail) => {
+        // 检测是否为空对象的兼容数据
+        if (b.orderNo) {
+            this.orderDetail = b;
         }
     }
     @action public approveRevisedPrice = async () => {
