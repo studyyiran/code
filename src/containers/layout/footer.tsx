@@ -17,7 +17,11 @@ export default class Footer extends React.Component<{ router: any }, IFooterStat
         },
         {
           text: 'Prepare to Ship',
-          href: '/faq?index=9' // todo
+          href: '/faq?index=9'
+        },
+        {
+          text: 'Privacy Policy',
+          href: '/privacy-policy'
         },
         {
           text: 'FAQ',
@@ -54,7 +58,7 @@ export default class Footer extends React.Component<{ router: any }, IFooterStat
   }
   public render() {
     const linksGroup = this.state.links.map((group, key) => (
-      <Col span={4} key={key} className="links-group">
+      <Col span={6} key={key} className="links-group">
         {
           group.map((link, index) => <p key={index} className="item" onClick={this.handleLink.bind(this, link)} data-href={link.href}>{link.text}</p>)
         }
@@ -66,12 +70,12 @@ export default class Footer extends React.Component<{ router: any }, IFooterStat
         <div className="section-box">
           <div className="content-wrapper">
             <div className="links-group-wrapper">
-              <Row gutter={48}>
+              <Row gutter={56}>
                 <Col span={3}><img src={require('@/images/logo.png')} /></Col>
                 {
                   linksGroup
                 }
-                <Col span={4} className="email-group">
+                <Col span={6} offset={3} className="email-group">
                   <p className="title">CONNECT WITH US!</p>
                   <Input
                     placeholder="Enter your email"

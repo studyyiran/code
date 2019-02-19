@@ -38,5 +38,13 @@ export default [
   {
     component: asyncComponent(() => import('@/containers/single/iphone')),
     path: '/how-to-factory-reset-iphone',
+  },
+  {
+    component: asyncComponent(() => import('@/containers/single/privacypolicy')),
+    path: '/privacy-policy',
+  },
+  {
+    component: asyncComponent(() => import('@/containers/single/terms')),
+    path: '/terms',
   }
 ]
