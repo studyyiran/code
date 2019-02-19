@@ -8,8 +8,10 @@ export interface IYourPhoneStore {
   products: IProductModel[];
   productPPVNS: IProductPPVN[];
   inquiryDetail: IInquiryDetail | null;
+  orderDetail: any;
   addressInfo: IAddressInfo;
   inquiryKey: string;
+  payment: string; // 选择的支付方式
   paypal: {
     email: string;
   }
@@ -33,6 +35,7 @@ export interface IYourPhoneStore {
   createInquiry: () => Promise<boolean>;
   getInquiryDetail: () => Promise<boolean>;
   getAmericaState: (zipCode: number) => Promise<boolean>;
+  createOrder: () => Promise<boolean>;
 }
 
 export interface ILayOutProps {
@@ -80,9 +83,9 @@ export interface IDoneStates {
 
 export interface ICheckOutStates {
   brand: number;
-  payment: number;
+  payment: string;
   brandText: string[];
-  payText: string[];
+  payText: object;
 }
 
 export interface ICarrier {
@@ -173,6 +176,7 @@ export interface IProductPPVN {
     propertyIllustrationContentText: string;
   }
   pricePropertyValues: ISubSkuPricePropertyValues[];
+  isSkuProperty: boolean;
 }
 
 interface ISubSkuPricePropertyValues {
@@ -210,6 +214,6 @@ export enum EBrandType {
 }
 
 export enum EPayType {
-  PAYPAL = 0,
-  ECHECK = 1
+  PAYPAL = 'PAYPAL',
+  ECHECK = 'CHECK'
 }

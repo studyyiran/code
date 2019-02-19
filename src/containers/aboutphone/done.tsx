@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 import classnames from 'classnames';
 import { Modal } from 'antd';
@@ -8,7 +9,7 @@ import PaymentPage from '@/containers/aboutphone/payment';
 import ConditionPage from '@/containers/aboutphone/conditions';
 import ChangeModal from '@/containers/aboutphone/components/changemodal';
 import './done.less';
-import { IDoneProps, IDoneStates, EChangeType } from './interface/index.interface';
+import { IDoneProps, IDoneStates, EChangeType, EPayType } from './interface/index.interface';
 
 @inject('yourphone', 'user')
 @observer
@@ -21,8 +22,10 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
   }
 
   public render() {
-
     let page: React.ReactNode | null = null;
+    let payment: React.ReactNode | null = null;
+
+    const { yourphone, user } = this.props;
 
     switch (this.state.pageType) {
       case EChangeType.SHIPPING:
@@ -33,6 +36,38 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
         break;
       case EChangeType.CONDITION:
         page = <ConditionPage {...this.props} hideLayout={true} />;
+        break;
+    }
+
+    // payment
+    switch (yourphone.payment) {
+      case EPayType.PAYPAL:
+        payment = (
+          <>
+            <img src={require('@/images/paypal.png')} />
+            <p className="email-info">
+              <span className="label">E-mail</span>
+              <span className="address">{yourphone.paypal.email}</span>
+            </p>
+            <p className="tips">Cash will be deposited directly to your PayPal account as soon as we recieve your phone. Please make sure it is correct!</p>
+          </>
+        );
+        break;
+      case EPayType.ECHECK:
+        payment = (
+          <>
+            <p className="echeck-title">eCheck</p>
+            <p className="email-info">
+              <span className="label">Name</span>
+              <span className="address">{`${yourphone.echeck.lastName} ${yourphone.echeck.firstName}`}</span>
+            </p>
+            <p className="email-info">
+              <span className="label">E-mail</span>
+              <span className="address">{`${yourphone.echeck.email}`}</span>
+            </p>
+            <p className="tips">You will get paid by eCheck. Please make sure the name and email is correct!</p>
+          </>
+        );
         break;
     }
 
@@ -47,12 +82,7 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
                   <span className="edit-bg" onClick={this.handlePageChoose.bind(this, EChangeType.PAYMENT)} />
                 </div>
                 <div className="show-content">
-                  <img src={require('@/images/paypal.png')} />
-                  <p className="email-info">
-                    <span className="label">E-mail</span>
-                    <span className="address">Thomas.Paine@gmail.com</span>
-                  </p>
-                  <p className="tips">Cash will be deposited directly to your PayPal account as soon as we recieve your phone. Please make sure it is correct!</p>
+                  {payment}
                 </div>
               </div>
               <div className="show-module">
@@ -63,19 +93,19 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
                 <div className="show-content">
                   <p className="info-item">
                     <span className="label">E-mail</span>
-                    <span className="content">Thomas.Paine@gmail.com</span>
+                    <span className="content">{user.preOrder.userEmail}</span>
                   </p>
                   <p className="info-item">
                     <span className="label">Name</span>
-                    <span className="content">Thomas Paine</span>
+                    <span className="content">{`${yourphone.addressInfo.firstName} ${yourphone.addressInfo.lastName}`}</span>
                   </p>
                   <p className="info-item">
                     <span className="label">Address</span>
-                    <span className="content">123 Main Street South San Francisco California, 94105</span>
+                    <span className="content">{yourphone.addressInfo.addressLine}</span>
                   </p>
                   <p className="info-item">
                     <span className="label">Phone No. </span>
-                    <span className="content">+1 415 222-9191</span>
+                    <span className="content">+1 {yourphone.addressInfo.mobile}</span>
                   </p>
                 </div>
               </div>
@@ -87,22 +117,22 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
                 <div className="info-wrapper">
                   <p className="info-item">
                     <span className="label">Your Phone</span>
-                    <span className="content">iPhone 8 Plus</span>
+                    <span className="content">{yourphone.inquiryDetail && yourphone.inquiryDetail.product.name}</span>
                   </p>
                   <p className="info-item">
                     <span className="label">Carrier</span>
-                    <span className="content">AT&T</span>
+                    <span className="content">{yourphone.activeCarrierName}</span>
                   </p>
                   <p className="info-item">
                     <span className="label">Condition</span>
-                    <span className="content">No Cracks, No Scratchs, Screen is Bright, Turns On, Buttons Brokend No Cracks, No Scratchs, Screen is Bright, Turns On, Buttons Brokend <span className="edit-bg" onClick={this.handlePageChoose.bind(this, EChangeType.CONDITION)} /></span>
+                    <span className="content">{yourphone.inquiryDetail && yourphone.inquiryDetail.ppvs.map(ppv => ppv.name).join(',')}<span className="edit-bg" onClick={this.handlePageChoose.bind(this, EChangeType.CONDITION)} /></span>
                   </p>
                 </div>
               </div>
             </div>
             <div className="terms-of-service">
               <span onClick={this.handleServiceCheck} className={classnames('text-with-icon', { checked: this.state.isChecked })} >By checking this box, you agree to our </span>
-              <span className="highlight">Terms of Service </span>
+              <Link to='/terms' className="highlight">Terms of Service </Link>
             </div>
             <p className={classnames('ship-btn', { active: this.state.isChecked })} onClick={this.handleShip}>ALL GOOD. Let’s Ship It!</p>
           </div>
@@ -136,11 +166,16 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
     this.setState({ showEditModal: false });
   }
 
-  private handleShip = () => {
+  private handleShip = async () => {
     if (!this.state.isChecked) {
       return;
     }
-    this.props.history.push('/sell/yourphone/checkorder');
+
+    // 开始创建订单
+    const isOrderCreated = await this.props.yourphone.createOrder();
+    if (isOrderCreated) {
+      this.props.history.push('/sell/yourphone/checkorder');
+    }
   }
 
   private onSave = () => {
