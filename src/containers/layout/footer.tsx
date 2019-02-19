@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import './footer.less';
 import { Row, Col, Input, Button } from 'antd';
 import { IFooterState } from './interface/index.interface';
@@ -18,10 +19,6 @@ export default class Footer extends React.Component<{ router: any }, IFooterStat
         {
           text: 'Prepare to Ship',
           href: '/faq?index=9'
-        },
-        {
-          text: 'Privacy Policy',
-          href: '/privacy-policy'
         },
         {
           text: 'FAQ',
@@ -87,8 +84,8 @@ export default class Footer extends React.Component<{ router: any }, IFooterStat
             </div>
             <div className="copyright">
               <span className="item item--copy">&#169; 2019 UpTrade Technologies, Inc.</span>
-              <span className="item item--policy">Privacy Policy</span>
-              <span className="item item--terms">Terms of Use</span>
+              <Link to="/privacy-policy"><span className="item item--policy">Privacy Policy</span></Link>
+              <Link to="/terms"><span className="item item--terms">Terms of Use</span></Link>
             </div>
           </div>
         </div>
