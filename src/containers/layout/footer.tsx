@@ -17,15 +17,7 @@ export default class Footer extends React.Component<{ router: any }, IFooterStat
         },
         {
           text: 'Prepare to Ship',
-          href: '' // todo
-        },
-        {
-          text: 'Return Promise',
-          href: '' // todo
-        },
-        {
-          text: 'Device Grades',
-          href: '' // todo 
+          href: '/faq?index=9' // todo
         },
         {
           text: 'FAQ',
@@ -43,27 +35,21 @@ export default class Footer extends React.Component<{ router: any }, IFooterStat
         },
         {
           text: 'Why Up Trade',
-          href: '/help/why'
+          href: '/why-uptrade'
         },
         {
           text: 'Contact Us',
           href: '/contact'
-        }
-      ],
-      [
-        {
-          text: 'PRESS',
-          href: ''
         },
         {
           text: 'How Much Is My Phone Worth',
-          href: '/blog/howmuch'
+          href: '/how-much-is-my-phone-worth'
         },
         {
           text: 'Sell Broken iPhone',
-          href: '/blog/broken'
+          href: '/sell-broken-iphone'
         }
-      ]
+      ],
     ]
   }
   public render() {
