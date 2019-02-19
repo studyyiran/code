@@ -19,9 +19,9 @@ export default class LayoutIndex extends React.Component {
   public componentDidMount() {
     // 是否输入国 invatation code
 
-    if (!sessionStorage.getItem('invitationCode')) {
-      this.context.router.history.push('/invitationCode')
-    }
+    // if (!sessionStorage.getItem('invitationCode')) {
+    //   this.context.router.history.push('/invitationCode')
+    // }
 
     message.loading(ECommonText.LOADING, 1);
     window['__history__'] = this.context.router.history;

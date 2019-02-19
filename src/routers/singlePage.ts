@@ -38,5 +38,9 @@ export default [
   {
     component: asyncComponent(() => import('@/containers/single/iphone')),
     path: '/help/iphone',
-  }
+  },
+  {
+    component: asyncComponent(() => import('@/containers/single/howitworks')),
+    path: '/sell-my-phone',
+  },
 ]

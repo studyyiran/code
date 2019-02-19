@@ -50,6 +50,7 @@ class CheckOrderNo extends React.Component<IOrderProps & RouteComponentProps> {
                                 type="email"
                                 onChange={this.handleChangeEmail}
                                 size="large"
+                                placeholder="john.jones@emails.com"
                             />
                         </Form.Item>
                         <div className="check-label">Order number</div>
@@ -61,6 +62,7 @@ class CheckOrderNo extends React.Component<IOrderProps & RouteComponentProps> {
                                 value={this.state.orderNo}
                                 onChange={this.handleChangeOrderNo}
                                 size="large"
+                                placeholder="0123256863218276"
                             />
                         </Form.Item>
                     </Form>
