@@ -144,7 +144,7 @@ class HowItWorks extends React.Component<RouteComponentProps>{
                         </table>
                     </section>
                     <div className="button-group">
-                        <Button className="sell-it-now" size="large" type="primary" style={{ width: 232, height: 64 }} onClick={this.onGoToSell}>SELL IT NOW</Button>
+                        <Button className="sell-it-now" size="large" type="primary" style={{ width: 232, height: 64 }} onClick={this.onGoToSell}>Sell It Now</Button>
                     </div>
                 </section>
             </section>

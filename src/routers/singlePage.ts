@@ -51,4 +51,8 @@ export default [
     component: asyncComponent(() => import('@/containers/single/howitworks')),
     path: '/sell-my-phone',
   },
+  {
+    component: asyncComponent(() => import('@/containers/single/aboutUs')),
+    path: '/who-we-are',
+  },
 ]
