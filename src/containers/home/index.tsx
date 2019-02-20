@@ -28,8 +28,8 @@ export default class Home extends React.Component<object, IHomeState> {
         {
           index: 3,
           img: require("@/images/home/icon_3.png"),
-          title: 'Home Pickup or Dropoff',
-          content: 'You don’t even need to leave your home. A prepaid shipping label and box will be sent to you for mailing your phone to us.'
+          title: 'Ship for Free',
+          content: 'Shipping is on us. A prepaid shipping label will be sent to you for mailing your phone to us.'
         }
       ],
       [
@@ -37,7 +37,7 @@ export default class Home extends React.Component<object, IHomeState> {
           index: 4,
           img: require('@/images/home/icon_4.png'),
           title: 'You Get Paid Fast',
-          content: 'Multiple payment options to get cash how you want. For next day payment choose Paypal.'
+          content: 'Multiple payment options to get cash how you want.'
         },
         {
           index: 5,
@@ -104,11 +104,11 @@ export default class Home extends React.Component<object, IHomeState> {
             <ul>
               <li>
                 <h3>Trade In Programs</h3>
-                <p>Most services that buy used phones <br />offer a small credit towards your next<br /> purchase.</p>
+                <p>UpTrade pays 36% more on average. <br />Most services that buy used phones <br /> offer a small credit towards your next purchase.</p>
               </li>
               <li>
                 <h3>Peer to Peer Marketplaces</h3>
-                <p>You might get more on 3rd party <br />marketplaces, but it could take <br />weeks to get your money.</p>
+                <p>You might get more on 3rd party <br />marketplaces, but it could take weeks<br /> to get your money.</p>
               </li>
             </ul>
           </div>

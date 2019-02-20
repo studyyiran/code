@@ -20,7 +20,7 @@ export default class HowMuch extends React.Component {
         <p> If you want or need to get a new phone, this guide should help you determine how much your iPhone, Samsung or other type of phone is worth. Taking care of the phone while you’re using it and taking time to prepare it for sale should also help you get maximum resale value. Also, remember, even if you aren’t able to sell your phone, there are many ways to recycle old phones.</p>
 
         <h2>How Much is My Phone Worth?</h2>
-        <p>At UpTradeIt.com, our <Link to="/sell/account">price calculator</Link> can tell you how much your Phone is worth automatically. We provide a price guarantee which tells you how much we would pay you if you decide to let us sell your phone for you. </p>
+        <p>At UpTradeIt.com, our <Link to="/sell/account">price calculator</Link> can tell you how much your Phone is worth automatically. We provide a <em>price guarantee</em> which tells you how much we would pay you if you decide to let us sell your phone for you. </p>
         <p>Here are the main factors that affect the value of your phone:</p>
         <ul>
           <li>Phone Manufacturer: Certain brands of phones command premium prices. These are your Apple iPhones and Samsungs. These companies (and others) are known for creating advanced and durable technology. </li>
@@ -33,14 +33,16 @@ export default class HowMuch extends React.Component {
         <p>One way to ensure you get the maximum resale value for your phone is to protect it while you are using it. Keeping it in a protective case can help avoid scratches and cracks. Be mindful where you place it, so it doesn’t fall onto the ground or into the toilet. Periodically wipe the screen clean with a dry cloth to help avoid dirt buildup. Don’t use harsh chemicals to clean the outside of the phone as this could damage the screen or case.</p>
         <h2>How to Prepare Your Phone for Sale</h2>
         <p>Once you’re ready to sell your phone, there are a few things you need to do to get it ready for sale. </p>
-        <p>1.Clean It: Follow the manufacturer’s recommendations on how to clean the outside of the phone. Don’t use typical household cleaners or abrasive cloths. However, try to get it as clean as possible, so it looks almost like new. </p>
-        <p>2.Wipe It: Since you’ll be selling the phone to a new user, you’ll want to remove all your private data and pictures first. You’ll need to remove the SIM card too, but this won’t wipe the data. While the process of wiping the data may vary by manufacturer, here are some general steps.</p>
-        <ul>
-          <li>Backup all of your contacts, photos and other data </li>
-          <li>Encrypt your data </li>
-          <li>Perform a factory reset</li>
-        </ul>
-        <p>3.Pack It: For the best resale value, pack your phone in its original box, along with the original accessories or whatever else you plan on selling. If you don’t have the original box, be sure to pack it carefully so it doesn’t break during shipment.</p>
+        <ol className="indent">
+          <li>Clean It: Follow the manufacturer’s recommendations on how to clean the outside of the phone. Don’t use typical household cleaners or abrasive cloths. However, try to get it as clean as possible, so it looks almost like new. </li>
+          <li>Wipe It: Since you’ll be selling the phone to a new user, you’ll want to remove all your private data and pictures first. You’ll need to remove the SIM card too, but this won’t wipe the data. While the process of wiping the data may vary by manufacturer, here are some general steps.</li>
+          <ul>
+            <li>Backup all of your contacts, photos and other data </li>
+            <li>Encrypt your data </li>
+            <li>Perform a factory reset</li>
+          </ul>
+          <li>Pack It: For the best resale value, pack your phone in its original box, along with the original accessories or whatever else you plan on selling. If you don’t have the original box, be sure to pack it carefully so it doesn’t break during shipment.</li>
+        </ol>
         <h2>What if an Old Phone Has No Resale Value?</h2>
         <p>If your phone is too old or too broken and has no resale value, don’t just throw it into the trash. Old electronics make up approximately 70% of the toxic waste in landfills. Please don’t add to this environmental problem. Instead, research companies in your area that recycle phones. Here are some options for recycling:</p>
         <ul>

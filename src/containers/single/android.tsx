@@ -6,8 +6,8 @@ export default class Broken extends React.Component {
       <div className="page-single-android-container">
         <h1>How to Factory Reset Android and Prepare for Sell</h1>
         <div className="small">
-          <span>29 May 2019</span>
-          <span>By Up Trade</span>
+          <span>21 Feb 2019</span>
+          <span>by UpTrade</span>
           <div className="right">
             <em />
             <em />
@@ -34,7 +34,7 @@ export default class Broken extends React.Component {
               <div className="number">2</div>
               <div className="title">
                 <p>Select</p>
-                <span>Settings<em>(Gear Icon)</em></span>
+                <span>Settings<em> (Gear Icon) </em></span>
               </div>
             </div>
             <img src={require('@/images/single/android_2.png')} alt="" />
