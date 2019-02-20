@@ -37,7 +37,7 @@ class DeliverSatus extends React.Component<IOrderProps, IDeliverSatus> {
         if (deliverInfosProps.length > 1) {
             hasMuch = true;
         }
-        const shippoTransaction = this.props.order.orderDetail.shippoTransaction;
+        const shippoTransaction = this.props.order.deliverNoInfo;
         return (
             <div className="comp-order-deliverSatus">
                 <p className="title">Delivery Status</p>

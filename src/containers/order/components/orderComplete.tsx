@@ -11,33 +11,56 @@ class ListedForSale extends React.Component<IOrderProps> {
             type: inspectionInfo.diffStatus,
             text: inspectionInfo.differenceText
         };
+        const paymentInfo = this.props.order.paymentInfo;
         return (
             <div className="comp-order-orderComplete">
                 <div className="auction-result table">
                     <p>Auction Result</p>
                     <div>
                         <div>Final Sale Price</div>
-                        <div>$660</div>
+                        <div>${paymentInfo.finalSalePrice}</div>
                         <div className="flex">
                             <div className="col">
                                 <div>
                                     <span>Price Guarantee</span>
-                                    <span className="paid">
-                                        Paid
+                                    {
+                                        paymentInfo.priceGuaranteeStatus && (
+                                            <span className="paid">
+                                                Paid
                                         <Icon className="paid-check" type="check" />
+                                            </span>
+                                        )
+                                    }
+                                    {
+                                        !paymentInfo.priceGuaranteeStatus && (
+                                            <span className="not-paid">
+                                                To Be Paid
                                     </span>
+                                        )
+                                    }
                                 </div>
-                                <div>$610</div>
+                                <div>${paymentInfo.priceGuarantee}</div>
                             </div>
                             <div className="col">
                                 <div>
                                     <span>Bonus</span>
-                                    <span className="paid">
-                                        Paid
+                                    {
+                                        paymentInfo.bonusStatus && (
+                                            <span className="paid">
+                                                Paid
                                         <Icon className="paid-check" type="check" />
+                                            </span>
+                                        )
+                                    }
+                                    {
+                                        !paymentInfo.bonusStatus && (
+                                            <span className="not-paid">
+                                                To Be Paid
                                     </span>
+                                        )
+                                    }
                                 </div>
-                                <div>$50</div>
+                                <div>${paymentInfo.bonus}</div>
                             </div>
                         </div>
                     </div>
