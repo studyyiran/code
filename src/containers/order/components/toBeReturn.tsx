@@ -4,31 +4,24 @@ import './toBeReturn.less';
 import Tag from '@/components/tag';
 
 class ToBeReturn extends React.Component<IOrderProps> {
-    public handleApprove = () => {
-        this.props.order.approveRevisedPrice();
-    }
-    public handleReturnProduct = () => {
-        this.props.order.returnProduct();
-    }
     public render() {
-        // const tag = {
-        //     type: "success",
-        //     text: "Matched"
-        // }
+        const inspectionInfo = this.props.order.inspectionInfo;
         const tag = {
-            type: "fail",
-            text: "Wrong Condition"
-        }
+            type: inspectionInfo.diffStatus,
+            text: inspectionInfo.differenceText
+        };
+        // 是否match
+        const isMatch = inspectionInfo.diffStatus === "success";
         return (
             <div className="comp-order-inspection">
                 <p className="inspection-title">
                     <span>Inspection Result</span>
                     <Tag className="inspect-title-tag" {...tag} />
                 </p>
-                <div className="inspected-success-body" style={{ display: "none" }}>
+                {isMatch && (<div className="inspected-success-body" style={{ display: "none" }}>
                     <div className="col-1">
                         <div>Price Guarantee</div>
-                        <div>$710</div>
+                        <div>${inspectionInfo.amount}</div>
                     </div>
                     <div className="col-2">
                         <p>
@@ -37,17 +30,26 @@ class ToBeReturn extends React.Component<IOrderProps> {
                             The condition you selected matches our inspection result.
                         </p>
                     </div>
-                </div>
-                <div className="inspected-fail-body">
+                </div>)}
+                {!isMatch && (<div className="inspected-fail-body">
                     <div className="col-1">
                         <p>Difference</p>
-                        <p>64G, Power Off, Cracks, Power Off, Cracks, Power Off, Cracks, Power Off…</p>
+                        <p>
+                            {inspectionInfo.productName !== "" && (
+                                <>
+                                    {inspectionInfo.productName}
+                                    <br />
+                                </>
+                            )}
+                            {inspectionInfo.differentCondition.join(",")}
+                        </p>
                     </div>
                     <div className="col-2">
                         <p>Revised Price Guarantee</p>
-                        <p>$710 </p>
+                        <p>${inspectionInfo.revisedPrice} </p>
                     </div>
-                </div>
+                </div>)
+                }
             </div>
         );
     }

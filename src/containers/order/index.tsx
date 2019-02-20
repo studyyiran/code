@@ -32,8 +32,9 @@ class Order extends React.Component<IOrderProps & RouteComponentProps> {
     const ReactNodeConfig = {
       deliver: false,
       inspected: false,
-      orderSummary: true,
+      orderSummary: true, // false 表示订单一览折叠， true 表示展开
       isToBeReturn: false,
+      productDispatch: false,
       listedForSale: false,
       orderComplete: false
     }
@@ -48,10 +49,16 @@ class Order extends React.Component<IOrderProps & RouteComponentProps> {
       ReactNodeConfig.orderSummary = false;
     }
     // 是否展示退货模块
-    if (this.props.order.orderDetail.status === IProgressType.TO_BE_RETURNED || this.props.order.orderDetail.status === IProgressType.TRANSACTION_FAILED) {
+    if (this.props.order.orderDetail.status === IProgressType.TO_BE_RETURNED) {
       ReactNodeConfig.isToBeReturn = true;
       ReactNodeConfig.orderSummary = false;
     }
+    // 是否退货发货
+    if (this.props.order.orderDetail.status === IProgressType.TRANSACTION_FAILED) {
+      ReactNodeConfig.productDispatch = true;
+      ReactNodeConfig.orderSummary = false;
+    }
+
     // 展示拍卖模块
     if (this.props.order.orderDetail.status === IProgressType.LISTED_FOR_SALE) {
       ReactNodeConfig.listedForSale = true;
@@ -70,6 +77,7 @@ class Order extends React.Component<IOrderProps & RouteComponentProps> {
             {ReactNodeConfig.deliver && <DeliverSatus {...this.props} />}
             {ReactNodeConfig.inspected && <Inspection {...this.props} />}
             {ReactNodeConfig.isToBeReturn && <ToBeReturn {...this.props} />}
+            {ReactNodeConfig.productDispatch && <DeliverSatus {...this.props} />}
             {ReactNodeConfig.listedForSale && < ListedForSale {...this.props} />}
             {ReactNodeConfig.orderComplete && <OrderComplete {...this.props} />}
             {
