@@ -9,7 +9,7 @@ export default class HowMuch extends React.Component {
         <h1>How Much Is My Phone Worth?</h1>
         <div className="small">
           <span>21 Feb 2019</span>
-          <span>By UpTradeIt.com</span>
+          <span>By UpTradeIt</span>
           <div className="right">
             <em />
             <em />

@@ -8,7 +8,7 @@ export default class Broken extends React.Component {
         <h1>Sell Broken iPhone</h1>
         <div className="small">
           <span>21 Feb 2019</span>
-          <span>By UpTradeIt.com</span>
+          <span>By UpTradeIt</span>
           <div className="right">
             <em />
             <em />
