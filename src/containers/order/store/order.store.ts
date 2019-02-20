@@ -356,7 +356,7 @@ class Store implements IOrderStore {
     }
     @action public approveRevisedPrice = async () => {
         try {
-            const res = await OrderApi.approveRevisedPrice<IOrderDetail>(this.orderNo);
+            const res = await OrderApi.approveRevisedPrice<IOrderDetail>(this.email, this.orderNo);
             // 更新订单详情
             this.orderDetail = res;
             return true;
@@ -367,7 +367,7 @@ class Store implements IOrderStore {
     }
     @action public returnProduct = async () => {
         try {
-            const res = await OrderApi.returnProduct<IOrderDetail>(this.orderNo);
+            const res = await OrderApi.returnProduct<IOrderDetail>(this.email, this.orderNo);
             // 更新订单详情
             this.orderDetail = res;
             return true;
