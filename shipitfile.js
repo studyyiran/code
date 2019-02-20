@@ -6,33 +6,33 @@ module.exports = shipit => {
     shipit.initConfig({
         default: {
             branch: 'master',
-            deployTo: '/var/bmb/',
-            dirToCopy: '/tmp/bmb/build',
+            deployTo: '/var/www/avril',
+            dirToCopy: '/tmp/avril/build',
             ignores: ['.DS_Store', '.git', 'node_modules'],
             keepReleases: 2,
-            repositoryUrl: 'git@code.aihuishou.com:cooperation/bdbm.git',
+            repositoryUrl: 'git@lab.aihuishou.com:uptradeit/avril.git',
             rsync: ['--del'],
             shallowClone: false,
-            workspace: '/tmp/bmb'
+            workspace: '/tmp/avril'
         },
         prod: {
-            servers: 'deploy@10.80.221.155',
+            servers: 'root@47.56.40.75',
         },
     });
 
     shipit.on('init', () => {
-        return shipit.local('mkdir -p /tmp/bmb');
+        return shipit.local('mkdir -p /tmp/avril');
     });
 
     // npm install & build
     shipit.blTask('npm-install', () => {
         shipit.log('npm install.');
-        return shipit.local('npm install', { cwd: '/tmp/bmb' });
+        return shipit.local('npm install', { cwd: '/tmp/avril' });
     });
 
     shipit.blTask('npm-build', () => {
         shipit.log('npm build start.');
-        return shipit.local('npm run pub', { cwd: '/tmp/bmb' });
+        return shipit.local('npm run pub', { cwd: '/tmp/avril' });
     });
 
     shipit.on('fetched', () => {
