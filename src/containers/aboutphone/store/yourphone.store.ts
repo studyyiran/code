@@ -53,7 +53,11 @@ class YourPhone implements IYourPhoneStore {
   }
 
   @computed get isAllConditionSelected() { // 是否全选了ppvn
-    return JSON.stringify(this.activeConditions) !== '{}' && Object.keys(this.activeConditions!).length === this.productPPVNS.length;
+    return JSON.stringify(this.activeConditions) !== '{}' && Object.keys(this.activeConditions).length === this.productPPVNS.length;
+  }
+
+  @computed get isTBD() {
+    return this.activeBrandsId === DEFAULT.otherBrandsId;
   }
 
 
@@ -131,6 +135,7 @@ class YourPhone implements IYourPhoneStore {
     //   priceUnits: Object.values(this.activeConditions!),
     //   productId: this.activeProductId
     // }
+    // TODO: 接口问题，先写死
     const inquiry: IQueryParams = { "agentCode": 'ahs_android', "productId": 25827, "priceUnits": [6437, 2023, 2014, 2453, 2072] }
     let res: string;
     try {

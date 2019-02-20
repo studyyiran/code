@@ -9,6 +9,9 @@ class AboutYou extends React.Component<IAboutYouProps, IAboutYouState> {
   public readonly state = {
     isValidate: false
   }
+  public componentDidMount() {
+    // TODO
+  }
   public render() {
     const { getFieldDecorator } = this.props.form;
     const { isValidate } = this.state;
@@ -48,7 +51,10 @@ class AboutYou extends React.Component<IAboutYouProps, IAboutYouState> {
             <Form.Item>
               <Button
                 block={true}
-                style={{ background: isValidate ? '#00CFFF' : '#f3f3f3', fontSize: '18px', color: isValidate ? '#fff' : '#000', fontWeight: 'bold', height: '48px' }}
+                disabled={!isValidate}
+                size="large"
+                type="primary"
+                // style={{ background: isValidate ? '#00CFFF' : '#f3f3f3', fontSize: '18px', color: isValidate ? '#fff' : '#000', fontWeight: 'bold', height: '48px' }}
                 onClick={this.handleSubmit}
               >GET STARTED</Button>
             </Form.Item>

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import { Divider, Input, Button, Form } from 'antd';
-import { IOrderProps } from '@/containers/order/interface/order.inerface';
+import { IOrderProps, IProgressType } from '@/containers/order/interface/order.inerface';
 import { RouteComponentProps } from 'react-router';
 import { getQueryString } from '@/utils/function';
 import './checkOrderNo.less';
@@ -127,8 +127,14 @@ class CheckOrderNo extends React.Component<IOrderProps & RouteComponentProps> {
         }
         if (canSubmit) {
             const b = await this.props.order.getOrderDetail(this.state.email, this.state.orderNo);
-            console.error("这里需要处理订单取消的");
             if (b.orderNo) {
+                // 交易失败
+                if (b.status === IProgressType.TRANSACTION_FAILED) {
+                    this.setState({
+                        formError: "This order has been cancelled"
+                    });
+                    return;
+                }
                 // 保存订单数据
                 this.props.order.setOrderDetail(b);
                 // email, orderNo 存入缓存
@@ -137,7 +143,7 @@ class CheckOrderNo extends React.Component<IOrderProps & RouteComponentProps> {
                 this.props.history.push(`/order`);
             } else {
                 this.setState({
-                    formError: "just a error"
+                    formError: "The email address does not match the order number"
                 });
             }
         }

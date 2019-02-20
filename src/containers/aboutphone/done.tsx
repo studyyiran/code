@@ -14,28 +14,44 @@ import { IDoneProps, IDoneStates, EChangeType, EPayType } from './interface/inde
 @inject('yourphone', 'user')
 @observer
 export default class YoureDone extends React.Component<IDoneProps, IDoneStates> {
-
+  // public pageRef: React.RefObject<React.Component<IShippingProps>>;
+  // public pageRef2: React.RefObject<React.Component<IPaymentProps>>;
+  // public pageRef3: React.RefObject<React.Component<IConditionsProps>>;
+  public pageRef: React.Component;
   public readonly state: Readonly<IDoneStates> = {
     isChecked: false, // 勾选协议
     showEditModal: false, // 展示弹窗
-    pageType: '' // 弹窗内置的页面组件
+    pageType: '', // 弹窗内置的页面组件
   }
 
+  public constructor(props: IDoneProps) {
+    super(props);
+    // this.pageRef = React.createRef();
+    // this.pageRef2 = React.createRef();
+    // this.pageRef3 = React.createRef();
+  }
+
+  public handleOnRef = (child: React.Component) => {
+    this.pageRef = child;
+  }
+
+
   public render() {
-    let page: React.ReactNode | null = null;
+    let Page: React.ReactNode | null = null;
     let payment: React.ReactNode | null = null;
+    let phoneNode: React.ReactNode | null = null;
 
     const { yourphone, user } = this.props;
 
     switch (this.state.pageType) {
       case EChangeType.SHIPPING:
-        page = <ShippingPage {...this.props} hideLayout={true} />;
+        Page = <ShippingPage {...this.props} hideLayout={true} onRef={this.handleOnRef} />;
         break;
       case EChangeType.PAYMENT:
-        page = <PaymentPage {...this.props} hideLayout={true} />;
+        Page = <PaymentPage {...this.props} hideLayout={true} onRef={this.handleOnRef} />;
         break;
       case EChangeType.CONDITION:
-        page = <ConditionPage {...this.props} hideLayout={true} />;
+        Page = <ConditionPage {...this.props} hideLayout={true} onRef={this.handleOnRef} />;
         break;
     }
 
@@ -66,6 +82,36 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
               <span className="address">{`${yourphone.echeck.email}`}</span>
             </p>
             <p className="tips">You will get paid by eCheck. Please make sure the name and email is correct!</p>
+          </>
+        );
+        break;
+    }
+
+    // isTBD
+    switch (yourphone.isTBD) {
+      case true:
+        phoneNode = (
+          <p className="info-item">
+            <span className="label">Your Phone</span>
+            <span className="content">Other Phone</span>
+          </p>
+        );
+        break;
+      case false:
+        phoneNode = (
+          <>
+            <p className="info-item">
+              <span className="label">Your Phone</span>
+              <span className="content">{yourphone.inquiryDetail && yourphone.inquiryDetail.product.name}</span>
+            </p>
+            <p className="info-item">
+              <span className="label">Carrier</span>
+              <span className="content">{yourphone.activeCarrierName}</span>
+            </p>
+            <p className="info-item">
+              <span className="label">Condition</span>
+              <span className="content">{yourphone.inquiryDetail && yourphone.inquiryDetail.ppvs.map(ppv => ppv.name).join(',')}<span className="edit-bg" onClick={this.handlePageChoose.bind(this, EChangeType.CONDITION)} /></span>
+            </p>
           </>
         );
         break;
@@ -115,18 +161,7 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
               <div className="phone-info-wrapper">
                 <img className="img" src={require('@/images/noprice.png')} />
                 <div className="info-wrapper">
-                  <p className="info-item">
-                    <span className="label">Your Phone</span>
-                    <span className="content">{yourphone.inquiryDetail && yourphone.inquiryDetail.product.name}</span>
-                  </p>
-                  <p className="info-item">
-                    <span className="label">Carrier</span>
-                    <span className="content">{yourphone.activeCarrierName}</span>
-                  </p>
-                  <p className="info-item">
-                    <span className="label">Condition</span>
-                    <span className="content">{yourphone.inquiryDetail && yourphone.inquiryDetail.ppvs.map(ppv => ppv.name).join(',')}<span className="edit-bg" onClick={this.handlePageChoose.bind(this, EChangeType.CONDITION)} /></span>
-                  </p>
+                  {phoneNode}
                 </div>
               </div>
             </div>
@@ -144,7 +179,7 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
           onCancel={this.toggleChangeModal}
         >
           <ChangeModal type={this.state.pageType} onSave={this.onSave} >
-            {page}
+            {Page}
           </ChangeModal>
         </Modal>
       </div>
@@ -178,7 +213,10 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
     }
   }
 
-  private onSave = () => {
-    this.setState({ showEditModal: false });
+  private onSave = async () => {
+    const isOk = await (this.pageRef as any).validateData();
+    if (isOk) {
+      this.setState({ showEditModal: false });
+    }
   }
 }

@@ -1,6 +1,6 @@
 import * as Api from './api/user.api';
 import { IUserStoreNew, IPreOrder } from './interface/user.interface';
-import { action, autorun, observable } from 'mobx';
+import { action, observable, autorun } from 'mobx';
 
 class User implements IUserStoreNew {
   @observable public canUpdatePreOrder = false;
@@ -36,7 +36,14 @@ class User implements IUserStoreNew {
       return false;
     }
 
+    this.updateSession();
     return true;
+  }
+
+  @action private updateSession = () => {
+    if (this.preOrder && Object.keys(this.preOrder).length !== 0) {
+      sessionStorage.setItem('preOrder', JSON.stringify(this.preOrder));
+    }
   }
 }
 

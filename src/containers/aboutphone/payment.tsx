@@ -8,6 +8,11 @@ import './payment.less';
 
 const Panel = Collapse.Panel;
 const leftHeader = <div className='paypal-bg' />;
+
+/** 
+ * 根据yourphone的payment来判断用户选择哪种收款方式： PAYPAL | ECHECK
+ */
+
 @inject('yourphone')
 @observer
 class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
@@ -16,6 +21,71 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
     isLeftOnEdit: false,
     isRightOnEdit: false,
     activeSide: this.props.yourphone.payment
+  }
+
+  public componentDidMount() {
+    if (typeof this.props.onRef === 'function') {
+      this.props.onRef!(this); // 让done page里获取到这个组件实例，调用其validateData方法
+    }
+  }
+
+  public validateData = (): Promise<boolean> => {
+    return new Promise((resolve) => {
+      // 必须要选中一种支付方式
+      const { payment } = this.props.yourphone;
+      if (payment === '') {
+        message.info('how would you like to pay?');
+        resolve(false);
+      }
+
+      // 用户并没有修改有关的支付信息，不需要执行下面的校验
+      if (!this.state.isLeftOnEdit && !this.state.isRightOnEdit) {
+        resolve(true);
+      }
+
+      this.props.form.validateFields((err, values) => {
+        if (err) {
+          resolve(false);
+        }
+
+        const { email, email_confirm, firstName, lastName, paypal_email, paypal_email_confirm } = values;
+
+        // 判断两次输入echeck的email是否一致
+        if (email !== email_confirm) {
+          this.props.form.setFields({
+            email_confirm: {
+              value: email_confirm,
+              errors: [new Error("The emails don't matach.")]
+            }
+          });
+          resolve(false);
+        }
+        // 判断两次输入paypal的email是否一致
+        if (paypal_email !== paypal_email_confirm) {
+          this.props.form.setFields({
+            paypal_email_confirm: {
+              value: paypal_email_confirm,
+              errors: [new Error("The emails don't matach.")]
+            }
+          });
+          resolve(false);
+        }
+
+        switch (this.props.yourphone.payment) {
+          case EPayType.PAYPAL:
+            this.props.yourphone.paypal = { email: paypal_email };
+            break;
+          case EPayType.ECHECK:
+            this.props.yourphone.echeck = {
+              firstName,
+              lastName,
+              email
+            }
+            break;
+        }
+        resolve(true);
+      });
+    });
   }
 
   public render() {
@@ -49,10 +119,36 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
             <div className="form-wrapper">
               <Form layout="vertical">
                 <Form.Item label="Paypal email address">
-                  <Input />
+                  {
+                    getFieldDecorator('paypal_email', {
+                      rules: [
+                        {
+                          required: true,
+                          type: 'email',
+                          message: "Please enter a valid email."
+                        }
+                      ],
+                      initialValue: paypal.email,
+                    })(
+                      <Input />
+                    )
+                  }
                 </Form.Item>
                 <Form.Item label="Confirm Paypal email address">
-                  <Input />
+                  {
+                    getFieldDecorator('paypal_email_confirm', {
+                      rules: [
+                        {
+                          required: true,
+                          type: 'email',
+                          message: "Please enter a valid email."
+                        }
+                      ],
+                      initialValue: paypal.email,
+                    })(
+                      <Input />
+                    )
+                  }
                 </Form.Item>
               </Form>
             </div>
@@ -231,46 +327,11 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
     }
   }
 
-  private handleNext = () => {
-    // 必须要选中一种支付方式
-    const { payment } = this.props.yourphone;
-    if (payment === '') {
-      message.info('how would you like to pay?');
-      return;
-    }
-
-    this.props.form.validateFields(async (err, values) => {
-      if (err) {
-        return;
-      }
-
-      // 判断两次输入的email是否一致
-      const { email, email_confirm, firstName, lastName } = values;
-      if (email !== email_confirm) {
-        this.props.form.setFields({
-          email_confirm: {
-            value: email_confirm,
-            errors: [new Error("The emails don't matach.")]
-          }
-        });
-        return;
-      }
-
-      switch (this.state.activeSide) {
-        case 'left':
-          this.props.yourphone.paypal = { email: email };
-          break;
-        case 'right':
-          this.props.yourphone.echeck = {
-            firstName,
-            lastName,
-            email
-          }
-          break;
-      }
-      
+  private handleNext = async () => {
+    const isOk = await this.validateData();
+    if (isOk) {
       this.props.history.push('/sell/yourphone/done');
-    });
+    }
   }
 }
 
