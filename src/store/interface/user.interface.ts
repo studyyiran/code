@@ -69,14 +69,14 @@ export interface IUserStoreNew {
 // }
 
 export interface IPreOrder {
-  addressInfo?: IYourPhoneStore['addressInfo'];
-  checkInfo?: IYourPhoneStore['echeck']; // echeck支付信息
-  inquiryKey?: IYourPhoneStore['inquiryKey'];
-  key?: string; // preOrder的key
-  payment?: IYourPhoneStore['payment'];
-  paypalInfo?: IYourPhoneStore['paypal']; // paypal支付信息
-  productInfo?: Partial<IProductInfo>;
-  userEmail?: string; // 用户邮箱
+  addressInfo: IYourPhoneStore['addressInfo'];
+  checkInfo: IYourPhoneStore['echeck']; // echeck支付信息
+  inquiryKey: IYourPhoneStore['inquiryKey'];
+  key: string; // preOrder的key
+  payment: IYourPhoneStore['payment'];
+  paypalInfo: IYourPhoneStore['paypal']; // paypal支付信息
+  productInfo: IProductInfo;
+  userEmail: string; // 用户邮箱
   agentCode?: string; // 应用渠道名字
   carrier?: string; // 选中的运营商的名称
   yourphoneStore?: IYourPhoneStore; // 存储store的属性

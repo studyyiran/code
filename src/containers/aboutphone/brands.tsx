@@ -10,7 +10,6 @@ import { DEFAULT } from '@/config';
 @inject('yourphone', 'user')
 @observer
 export default class Brands extends React.Component<IBrandsProps> {
-  // TODO: 尚未添加TBD情况，因为other brand的id未知
   public componentDidMount() {
     this.props.yourphone.getBrandsByCid();
   }
@@ -32,11 +31,10 @@ export default class Brands extends React.Component<IBrandsProps> {
 
   private onBrandItemClick = (brand: IBrands) => {
     try {
+      const productInfo = {...this.props.user.preOrder.productInfo, brand: brand.id};
       this.props.user.preOrder = {
         ...this.props.user.preOrder,
-        productInfo: {
-          brandId: brand.id
-        },
+        productInfo,
         yourphoneStore: { ...this.props.yourphone }
       };
     } catch (error) { console.warn(error, 'in brands page updatePreorder') }
