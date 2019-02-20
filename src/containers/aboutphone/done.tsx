@@ -56,7 +56,7 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
     }
 
     // payment
-    switch (yourphone.payment) {
+    switch (this.props.yourphone.payment) {
       case EPayType.PAYPAL:
         payment = (
           <>
@@ -88,7 +88,7 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
     }
 
     // isTBD
-    switch (yourphone.isTBD) {
+    switch (this.props.yourphone.isTBD) {
       case true:
         phoneNode = (
           <p className="info-item">

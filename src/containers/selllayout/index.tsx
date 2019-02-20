@@ -10,36 +10,38 @@ import { IUserStoreNew } from '@/store/interface/user.interface';
 
 @inject('yourphone', 'user')
 @observer
-export default class SellLayout extends React.Component<{ route: { [key: string]: any }, yourphone: IYourPhoneStore, user: IUserStoreNew }, { stepIndex: number }> {
+export default class SellLayout extends React.Component<{ route: { [key: string]: any }, yourphone: IYourPhoneStore, user: IUserStoreNew }, { stepIndex: number, isSetedPreOrder: boolean }> {
 
   public readonly state = {
-    stepIndex: -1
+    stepIndex: -1,
+    isSetedPreOrder: false
   }
 
   public componentDidMount() {
-    // 对 session 寸的数据做处理
-    const preOrder = sessionStorage.getItem('preOrder');
-    if (preOrder) {
-      this.props.user.preOrder = JSON.parse(preOrder);
-      const preOrderInUser = this.props.user.preOrder;
-      const yourphone = this.props.yourphone;
-      yourphone.addressInfo = preOrderInUser.addressInfo!;
-      yourphone.inquiryKey = preOrderInUser.inquiryKey!;
-      yourphone.payment = preOrderInUser.payment!;
-      yourphone.echeck = preOrderInUser.checkInfo!;
-      yourphone.paypal = preOrderInUser.paypalInfo!;
-      yourphone.activeBrandsId = preOrderInUser.productInfo!.brandId!;
-      yourphone.activeModelId = preOrderInUser.productInfo!.modelId!;
-      yourphone.activeCarrierName = preOrderInUser.productInfo!.carrier!;
-      yourphone.activeProductId = preOrderInUser.productInfo!.productId!;
-    }
-
     const navigator = NAVIGATOR;
     const navigatorKey = Object.keys(navigator);
     this.onMappingIndex(navigatorKey, navigator);
     window['__history__'].listen(() => {
       this.onMappingIndex(navigatorKey, navigator);
     });
+
+    // 对 session 寸的数据做处理
+    const preOrder = sessionStorage.getItem('preOrder');
+    if (preOrder) {
+      this.props.user.preOrder = JSON.parse(preOrder);
+
+      this.props.yourphone.addressInfo = this.props.user.preOrder.addressInfo;
+      this.props.yourphone.inquiryKey = this.props.user.preOrder.inquiryKey;
+      this.props.yourphone.payment = this.props.user.preOrder.payment;
+      this.props.yourphone.echeck = this.props.user.preOrder.checkInfo;
+      this.props.yourphone.paypal = this.props.user.preOrder.paypalInfo;
+      this.props.yourphone.activeBrandsId = this.props.user.preOrder.productInfo.brandId;
+      this.props.yourphone.activeModelId = this.props.user.preOrder.productInfo.modelId;
+      this.props.yourphone.activeCarrierName = this.props.user.preOrder.productInfo.carrier;
+      this.props.yourphone.activeProductId = this.props.user.preOrder.productInfo.productId;
+    }
+
+    this.setState({ isSetedPreOrder: true });
   }
 
   public onMappingIndex = (navigatorKey: string[], navigator: object) => {
@@ -53,6 +55,9 @@ export default class SellLayout extends React.Component<{ route: { [key: string]
   }
 
   public render() {
+    if (!this.state.isSetedPreOrder) {
+      return null;
+    }
     const price = this.props.yourphone.inquiryDetail !== null ? this.props.yourphone.inquiryDetail.price : '';
     const children = this.props.route.children;
     return (
@@ -62,7 +67,11 @@ export default class SellLayout extends React.Component<{ route: { [key: string]
           <GuaranteedPrice price={price} isTBD={this.props.yourphone.isTBD} />
         </div>
         <div className="sell-layout-right">
-          {renderRoutes(children)}
+          {
+            this.state.isSetedPreOrder
+              ? renderRoutes(children)
+              : null
+          }
         </div>
       </div>
     )
