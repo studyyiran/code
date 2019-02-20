@@ -4,7 +4,7 @@ import { IBrandsProps, ICarrier } from './interface/index.interface';
 import LayOut from '@/containers/aboutphone/layout';
 import CarrierItem from '@/containers/aboutphone/components/carrieritem';
 import './carriers.less';
-import { IPreOrder } from '@/store/interface/user.interface';
+// import { IPreOrder } from '@/store/interface/user.interface';
 
 @inject('yourphone', 'user')
 @observer
@@ -29,13 +29,15 @@ export default class Brands extends React.Component<IBrandsProps> {
 
   private onCarrierItemClick = (carrier: ICarrier) => {
     try {
-      const newPreOrder: IPreOrder = {
-        ...this.props.user.preOrder
+      const productInfo = { ...this.props.user.preOrder.productInfo, carrier: carrier.name }
+      this.props.user.preOrder = {
+        ...this.props.user.preOrder,
+        productInfo,
+        yourphoneStore: {...this.props.yourphone}
       };
-      newPreOrder.productInfo!.carrier = carrier.name;
-      this.props.user.preOrder = newPreOrder; // 更新preOrder触发autorun
-    } catch (error) {console.warn(error)}
-    
+    } catch (error) { console.warn(error, 'in carriers page updatePreorder') }
+
+
     this.props.yourphone.activeCarrierName = carrier.name;
     this.props.history.push('/sell/yourphone/model');
   }
