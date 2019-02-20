@@ -36,8 +36,13 @@ export interface IOrderStore {
     machineInfo: IMachineInfo;
     userInformation: IUserInformation;
     deliverInfos: IShippingAddress[];
+    deliverNoInfo: {
+        carrier: null | string;
+        trackingNumber: null | string;
+    };
     inspectionInfo: IInspectionData;
     trackingInfo: ITrackingModel | null;
+    paymentInfo: IPayment;
     getOrderDetail: (email: string, orderNo: string) => Promise<IOrderDetail>;
     getOrderDetailByToken: (token: string) => Promise<boolean>;
     approveRevisedPrice: () => Promise<boolean>;
@@ -61,6 +66,8 @@ export interface IOrderStore {
  * @property userEmail 用户邮箱
  * @property userName 用户名
  * @property addressInfo 邮寄目的地
+ * @property shippoTransaction 快递信息
+ * @property orderPaymentBills 支付信息
  */
 export interface IOrderDetail {
     status: IProgressType;
@@ -76,6 +83,7 @@ export interface IOrderDetail {
     userEmail: string;
     addressInfo: IAddressInfo;
     shippoTransaction: IShippingTran;
+    orderPaymentBills: IPaymentInfo[];
 }
 /**
  * 订单中物流id
@@ -137,6 +145,13 @@ export interface IOrderInspected {
     product: {
         id: string;
         name: string;
+        isTBD: boolean;
+    };
+    ext: {
+        carrier: string;
+        autoCancelledDt: string;
+        returnDt: string;
+        receivedDt: string;
     }
 }
 /**
@@ -314,4 +329,25 @@ export interface IInspectionData {
     amount: number;
     revisedPrice: number;
     differentCondition: string[];
+}
+
+/**
+ * 支付信息
+ */
+interface IPaymentInfo {
+    account: string;
+    amount: number;
+    status: "PENDING" | "PAYING" | "SUCCESS" | "FAILED",
+    payFor: "RESERVE_PRICE" | "HAMMER_ADDITIONAL"
+}
+
+/**
+ * 支付结果
+ */
+interface IPayment {
+    finalSalePrice: number;
+    priceGuarantee: number;
+    priceGuaranteeStatus: boolean; // 支付状态
+    bonus: number;
+    bonusStatus: boolean;
 }

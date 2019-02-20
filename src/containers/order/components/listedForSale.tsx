@@ -11,6 +11,7 @@ class ListedForSale extends React.Component<IOrderProps> {
             type: inspectionInfo.diffStatus,
             text: inspectionInfo.differenceText
         };
+        const paymentInfo = this.props.order.paymentInfo;
         return (
             <div className="comp-order-lisedForSale">
                 <div className="auction-result table">
@@ -19,12 +20,23 @@ class ListedForSale extends React.Component<IOrderProps> {
                         <div>Final Sale Price</div>
                         <div>Pending</div>
                         <div>Price Guarantee
-                            <span className="paid">
-                                Paid
-                                <Icon className="paid-check" type="check" />
-                            </span>
+                            {
+                                paymentInfo.priceGuaranteeStatus && (
+                                    <span className="paid">
+                                        Paid
+                                        <Icon className="paid-check" type="check" />
+                                    </span>
+                                )
+                            }
+                            {
+                                !paymentInfo.priceGuaranteeStatus && (
+                                    <span className="not-paid">
+                                        To Be Paid
+                                    </span>
+                                )
+                            }
                         </div>
-                        <div>$610</div>
+                        <div>${paymentInfo.priceGuarantee}</div>
                     </div>
                 </div>
                 <div className="inspection-success-result table">
