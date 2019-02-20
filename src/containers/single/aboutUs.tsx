@@ -75,7 +75,7 @@ class AboutUs extends React.Component<RouteComponentProps>{
                     <div className="col-1">
                         <p>Mission</p>
                         <p>Statement</p>
-                        <p>Our vision is to make today better so the world will be brighter tomorrow by committing to reuse, recycle, and UpTrade your life. We do this by offering a premium value for your used electronics while delivering fast, easy, safe, and trustworthy service for individuals and organizations.</p>
+                        <p>Our vision is to make today better so that the world will be brighter tomorrow; to build a company where the life of used electronics is extended through the hands of others or recycled to help reduce carbon footprint. We are committed to providing a fast, easy, safe, and trustworthy service for everyone.</p>
                     </div>
                     <div className="col-2">
                         <img src={require('@/images/single/aboutusbanner.png')} alt="" />

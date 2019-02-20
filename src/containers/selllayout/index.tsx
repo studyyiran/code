@@ -21,6 +21,17 @@ export default class SellLayout extends React.Component<{ route: { [key: string]
     const preOrder = sessionStorage.getItem('preOrder');
     if (preOrder) {
       this.props.user.preOrder = JSON.parse(preOrder);
+      const preOrderInUser = this.props.user.preOrder;
+      const yourphone = this.props.yourphone;
+      yourphone.addressInfo = preOrderInUser.addressInfo!;
+      yourphone.inquiryKey = preOrderInUser.inquiryKey!;
+      yourphone.payment = preOrderInUser.payment!;
+      yourphone.echeck = preOrderInUser.checkInfo!;
+      yourphone.paypal = preOrderInUser.paypalInfo!;
+      yourphone.activeBrandsId = preOrderInUser.productInfo!.brandId!;
+      yourphone.activeModelId = preOrderInUser.productInfo!.modelId!;
+      yourphone.activeCarrierName = preOrderInUser.productInfo!.carrier!;
+      yourphone.activeProductId = preOrderInUser.productInfo!.productId!;
     }
 
     const navigator = NAVIGATOR;

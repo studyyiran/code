@@ -107,4 +107,5 @@ interface IProductInfo {
   carrier: string; // 运营商
   priceUnits: number[];
   productId: number; // 机型ID
+  modelId: number; // 选中的内存属性skuid
 }

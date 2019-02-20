@@ -36,16 +36,21 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
       if (payment === '') {
         message.info('how would you like to pay?');
         resolve(false);
+        return;
       }
 
       // 用户并没有修改有关的支付信息，不需要执行下面的校验
       if (!this.state.isLeftOnEdit && !this.state.isRightOnEdit) {
         resolve(true);
+        console.warn('不执行娇艳');
+        return;
       }
 
+      console.warn('执行校验');
       this.props.form.validateFields((err, values) => {
         if (err) {
           resolve(false);
+          return;
         }
 
         const { email, email_confirm, firstName, lastName, paypal_email, paypal_email_confirm } = values;
@@ -59,6 +64,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
             }
           });
           resolve(false);
+          return;
         }
         // 判断两次输入paypal的email是否一致
         if (paypal_email !== paypal_email_confirm) {
@@ -69,6 +75,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
             }
           });
           resolve(false);
+          return;
         }
 
         switch (this.props.yourphone.payment) {
@@ -329,6 +336,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
 
   private handleNext = async () => {
     const isOk = await this.validateData();
+    console.warn(isOk, '结果');
     if (isOk) {
       try {
         this.props.user.preOrder = {
