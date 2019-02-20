@@ -28,12 +28,16 @@ class DeliverSatus extends React.Component<IOrderProps, IDeliverSatus> {
         const deliverInfosProps = this.props.order.deliverInfos;
         if (deliverInfosProps.length > 0) {
             deliverInfos.push(deliverInfosProps[0]);
+        } else {
+            // 没有物流信息，不展示此模块
+            return null;
         }
         // 有没有多条
         let hasMuch = false;
         if (deliverInfosProps.length > 1) {
             hasMuch = true;
         }
+        const shippoTransaction = this.props.order.orderDetail.shippoTransaction;
         return (
             <div className="comp-order-deliverSatus">
                 <p className="title">Delivery Status</p>
@@ -64,10 +68,10 @@ class DeliverSatus extends React.Component<IOrderProps, IDeliverSatus> {
                     <div className="col-2">
                         <div>
                             <img src={UPSICON} alt="" />
-                            <div>
-                                <p className="name">{this.props.order.orderDetail.shippoTransaction.carrier}</p>
-                                <p className="orderNo">{this.props.order.orderDetail.shippoTransaction.trackingNumber}</p>
-                            </div>
+                            {shippoTransaction && (<div>
+                                <p className="name">{shippoTransaction.carrier}</p>
+                                <p className="orderNo">{shippoTransaction.trackingNumber}</p>
+                            </div>)}
                         </div>
                     </div>
                 </div>
@@ -86,10 +90,10 @@ class DeliverSatus extends React.Component<IOrderProps, IDeliverSatus> {
                         <div className="col-2">
                             <div>
                                 <img src={UPSICON} alt="" />
-                                <div>
-                                    <p className="name">{this.props.order.orderDetail.shippoTransaction.carrier}</p>
-                                    <p className="orderNo">{this.props.order.orderDetail.shippoTransaction.trackingNumber}</p>
-                                </div>
+                                {shippoTransaction && (<div>
+                                    <p className="name">{shippoTransaction.carrier}</p>
+                                    <p className="orderNo">{shippoTransaction.trackingNumber}</p>
+                                </div>)}
                             </div>
                         </div>
                         <div className="col-1">
