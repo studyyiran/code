@@ -10,21 +10,29 @@ class MachineInfo extends React.Component<IMachineInfo>{
                 <div className="properties">
                     <div>
                         <div>Model</div>
-                        <div>{this.props.model}</div>
+                        <div style={{ fontWeight: "bold" }}>{this.props.model}</div>
                     </div>
-                    <div>
-                        <div>Carrier</div>
-                        <div>{this.props.carrier}</div>
-                    </div>
-                    <div>
-                        <div>Condition</div>
-                        <div>{this.props.condition}</div>
-                    </div>
+                    {
+                        this.props.carrier !== "" && (
+                            <div>
+                                <div>Carrier</div>
+                                <div>{this.props.carrier}</div>
+                            </div>
+                        )
+                    }
+                    {
+                        this.props.condition !== "" && (
+                            <div>
+                                <div>Condition</div>
+                                <div>{this.props.condition}</div>
+                            </div>
+                        )
+                    }
                 </div>
                 <div className="line" />
                 <p className="total">
                     <span>Guaranteed Price</span>
-                    <span>${this.props.guaranteedPrice}</span>
+                    <span>{this.props.guaranteedPrice}</span>
                 </p>
             </div>
         );

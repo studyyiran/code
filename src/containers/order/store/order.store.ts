@@ -65,10 +65,16 @@ class Store implements IOrderStore {
         let guaranteedPrice = '';
         if (this.orderDetail.orderNo) {
             const orderItem = this.orderDetail.orderItem;
-            model = orderItem.product.name;
-            carrier = orderItem.carrier === "ATT" ? "ATT&T" : orderItem.carrier;
-            condition = orderItem.pricePropertyValues.map(t => t.value).join(",");
-            guaranteedPrice = (orderItem.amount / 100).toString();
+            if (orderItem.product && !orderItem.product.isTBD) {
+                model = orderItem.product.name;
+                carrier = orderItem.carrier === "ATT" ? "ATT&T" : orderItem.carrier;
+                condition = orderItem.pricePropertyValues.map(t => t.value).join(",");
+                guaranteedPrice = `$${orderItem.amount}`;
+            } else {
+                // TBD
+                model = "Other Phone";
+                guaranteedPrice = "TBD"
+            }
         }
         return {
             model,
@@ -99,8 +105,51 @@ class Store implements IOrderStore {
                 });
                 return true;
             });
+        } else {
+            // 判断是否为退货
+            if (this.orderDetail.status === IProgressType.TRANSACTION_FAILED) {
+                const time = new Date();
+                const now = new Date();
+                let dateStr = "";
+                if (time.getFullYear() !== now.getFullYear()) {
+                    dateStr += time.getFullYear() + " ";
+                }
+                dateStr = dateStr + getMonthEn(time) + " " + time.getDate();
+                const timeBy12 = getHourBy12(time);
+                infos.push({
+                    date: dateStr,
+                    listData: [{
+                        time: timeBy12.hour + " " + timeBy12.part,
+                        listData: ["Shipment order placed"]
+                    }, {
+                        time: timeBy12.hour + " " + timeBy12.part,
+                        listData: ["Package is picked up"]
+                    }]
+                });
+            }
         }
         return infos;
+    }
+    // 物流单号
+    @computed get deliverNoInfo() {
+        let carrier = null;
+        let trackingNumber = null;
+        if (this.orderDetail.orderNo) {
+            if (this.orderDetail.shippoTransaction) {
+                carrier = this.orderDetail.shippoTransaction.carrier;
+                trackingNumber = this.orderDetail.shippoTransaction.trackingNumber;
+            }
+            // 是否为物品退还
+            if (this.orderDetail.status === IProgressType.TRANSACTION_FAILED) {
+                carrier = this.orderDetail.orderItem.ext.carrier;
+                trackingNumber = this.orderDetail.orderItem.ext.carrier;
+                console.error("退货快递单号缺少字段");
+            }
+        }
+        return {
+            carrier,
+            trackingNumber
+        }
     }
     // 质检结果
     @computed get inspectionInfo() {
@@ -131,6 +180,36 @@ class Store implements IOrderStore {
             }
         }
         return data;
+    }
+    @computed get paymentInfo() {
+        const payment = {
+            finalSalePrice: 0,
+            priceGuarantee: 0,
+            priceGuaranteeStatus: false, // 支付状态
+            bonus: 0,
+            bonusStatus: false
+        }
+        const orderPaymentBills = this.orderDetail.orderPaymentBills;
+        if (orderPaymentBills.length > 0) {
+            orderPaymentBills.map(t => {
+                if (t.payFor === "RESERVE_PRICE") {
+                    payment.priceGuarantee = t.amount;
+                    if (t.status === "SUCCESS") {
+                        payment.priceGuaranteeStatus = true;
+                    }
+                }
+                if (t.payFor === "HAMMER_ADDITIONAL") {
+                    payment.bonus = t.amount;
+                    if (t.status === "SUCCESS") {
+                        payment.priceGuaranteeStatus = true;
+                        payment.bonusStatus = true
+                    }
+                }
+            })
+
+        }
+        payment.finalSalePrice = payment.priceGuarantee + payment.bonus;
+        return payment;
     }
     // 构建进度条需要的数据
     @computed get progressType() {
