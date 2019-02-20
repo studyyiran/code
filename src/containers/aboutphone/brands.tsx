@@ -31,11 +31,16 @@ export default class Brands extends React.Component<IBrandsProps> {
   }
 
   private onBrandItemClick = (brand: IBrands) => {
-    // const newPreOrder: IPreOrder = {
-    //   ...this.props.user.preOrder,
-    //   productInfo: { brandId: brand.id }
-    // };
-    // this.props.user.preOrder = newPreOrder; // 更新preOrder触发autorun
+    try {
+      this.props.user.preOrder = {
+        ...this.props.user.preOrder,
+        productInfo: {
+          brandId: brand.id
+        },
+        yourphoneStore: { ...this.props.yourphone }
+      };
+    } catch (error) { console.warn(error, 'in brands page updatePreorder') }
+
     this.props.yourphone.activeBrandsId = brand.id;
     // 是否为TBD机型
     brand.id === DEFAULT.otherBrandsId ? this.props.history.push('/sell/yourphone/shipping') : this.props.history.push('/sell/yourphone/carrier');

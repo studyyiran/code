@@ -5,7 +5,7 @@ import ModelItem from '@/containers/aboutphone/components/modelitem';
 import './models.less';
 import { IModelsProps } from './interface/index.interface';
 
-@inject('yourphone')
+@inject('yourphone', 'user')
 @observer
 export default class Models extends React.Component<IModelsProps> {
 
@@ -37,6 +37,15 @@ export default class Models extends React.Component<IModelsProps> {
   }
 
   private onModelItemClick = (productId: number, skuId: number) => {
+    try {
+      const productInfo = { ...this.props.user.preOrder.productInfo, productId: productId }
+      this.props.user.preOrder = {
+        ...this.props.user.preOrder,
+        productInfo,
+        yourphoneStore: { ...this.props.yourphone }
+      };
+    } catch (error) { console.warn(error, 'in models page preOrder') }
+
     this.props.yourphone.activeProductId = productId;
     this.props.yourphone.activeModelId = skuId;
     this.props.history.push('/sell/yourphone/condition');

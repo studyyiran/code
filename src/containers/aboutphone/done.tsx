@@ -209,6 +209,16 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
     // 开始创建订单
     const isOrderCreated = await this.props.yourphone.createOrder();
     if (isOrderCreated) {
+      try {
+        this.props.user.preOrder = {
+          ...this.props.user.preOrder,
+          addressInfo: { ...this.props.yourphone.addressInfo },
+          checkInfo: { ...this.props.yourphone.echeck },
+          payment: this.props.yourphone.payment,
+          paypalInfo: { ...this.props.yourphone.paypal },
+          yourphoneStore: this.props.yourphone
+        }
+      } catch (error) { console.warn(error, 'in done page preOrder') }
       this.props.history.push('/sell/yourphone/checkorder');
     }
   }

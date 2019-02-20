@@ -236,6 +236,13 @@ class ShippingAddress extends React.Component<IShippingProps> {
   private handleNext = async () => {
     const isOk = await this.validateData();
     if (isOk) {
+      try {
+        this.props.user.preOrder = {
+          ...this.props.user.preOrder,
+          addressInfo: { ...this.props.yourphone.addressInfo },
+          yourphoneStore: this.props.yourphone
+        }
+      } catch (error) { console.warn(error, 'in shipping page preOrder') }
       this.props.history.push('/sell/yourphone/payment');
     }
   }
