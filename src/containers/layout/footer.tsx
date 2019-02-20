@@ -1,11 +1,13 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import './footer.less';
-import { Row, Col, Input, Button } from 'antd';
+import { Row, Col, Input, Button, notification } from 'antd';
 import { IFooterState } from './interface/index.interface';
+import commonStore from '@/store/common'
 
 export default class Footer extends React.Component<{ router: any }, IFooterState> {
   public readonly state = {
+    email: '',
     links: [
       [
         {
@@ -14,7 +16,7 @@ export default class Footer extends React.Component<{ router: any }, IFooterStat
         },
         {
           text: 'How it Works',
-          href: '' // todo
+          href: '/sell-my-phone'
         },
         {
           text: 'Prepare to Ship',
@@ -32,7 +34,7 @@ export default class Footer extends React.Component<{ router: any }, IFooterStat
         },
         {
           text: 'Who We Are',
-          href: '' // todo
+          href: '/who-we-are'
         },
         {
           text: 'Why Up Trade',
@@ -77,8 +79,9 @@ export default class Footer extends React.Component<{ router: any }, IFooterStat
                   <Input
                     placeholder="Enter your email"
                     style={{ margin: '10px 0 14px 0' }}
+                    onChange={this.handChangeInput}
                   />
-                  <Button type="primary">Subscribe</Button>
+                  <Button htmlType="submit" type="primary" onClick={this.handleSubscribe}>Subscribe</Button>
                 </Col>
               </Row>
             </div>
@@ -100,5 +103,28 @@ export default class Footer extends React.Component<{ router: any }, IFooterStat
     }
     this.props.router.history.push(link.href);
     return true;
+  }
+
+
+  private handChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({
+      email: e.target.value
+    })
+  }
+
+  private handleSubscribe = async () => {
+    if (!this.state.email || !/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,})$/.test(this.state.email)) {
+      return;
+    }
+    const result = await commonStore.onSubscribe(this.state.email);
+
+    if (result) {
+      notification.success({
+        message: 'Successfly subscribe',
+      });
+      this.setState({
+        email: ''
+      })
+    }
   }
 } 

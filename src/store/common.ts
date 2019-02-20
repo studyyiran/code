@@ -29,6 +29,16 @@ class Common implements ICommonStore {
     console.log(result);
     return true;
   }
+
+  @action public onSubscribe = async (email: string) => {
+    try {
+      await Api.onSubscribe<boolean>(email);
+    } catch (e) {
+      return false;
+    }
+
+    return true;
+  }
 }
 
 // 外部使用require

@@ -130,12 +130,24 @@ export interface IOrderInspected {
     productId: string;
     productName: string;
     skuName: string;
-    submitItems: IInspectItems[];
+    // submitItems: IInspectItems[];
     carrier: string;
     inspectResult: IInsepectResult;
+    pricePropertyValues: IInquiryPropertity[];
+    product: {
+        id: string;
+        name: string;
+    }
 }
 /**
- * 
+ * 询价数据
+ */
+export interface IInquiryPropertity {
+    id: string;
+    value: string;
+}
+/**
+ * 质检结果
  */
 export interface IInsepectResult {
     diffs: Array<{
