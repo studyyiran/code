@@ -57,7 +57,16 @@ class YourPhone implements IYourPhoneStore {
   }
 
   @computed get isTBD() {
-    return this.activeBrandsId === DEFAULT.otherBrandsId;
+    if (this.activeBrandsId !== DEFAULT.otherBrandsId) {
+      return false;
+    }
+
+    this.activeCarrierName = ''; // TBD的情况下，运营商不选，赋默认值为'' | 'other'
+    this.activeProductId = -1;
+    this.activeModelId = -1;
+    this.activeConditions = {};
+    this.payment = '';
+    return true;
   }
 
 

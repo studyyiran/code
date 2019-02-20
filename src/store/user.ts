@@ -4,7 +4,37 @@ import { action, observable, autorun } from 'mobx';
 
 class User implements IUserStoreNew {
   @observable public canUpdatePreOrder = false;
-  @observable public preOrder: IPreOrder = {};
+  @observable public preOrder: IPreOrder = {
+    addressInfo: {
+      addressLine: '',
+      addressLineOptional: '',
+      city: '',
+      country: 'United States',
+      firstName: '',
+      lastName: '',
+      mobile: '',
+      state: '',
+      zipCode: ''
+    },
+    checkInfo: {
+      firstName: '',
+      lastName: '',
+      email: ''
+    },
+    inquiryKey: '',
+    key: '',
+    payment: '',
+    paypalInfo: {
+      email: ''
+    },
+    productInfo: {
+      brandId: -1,
+      carrier: '',
+      priceUnits: [],
+      productId: -1,
+      modelId: -1
+    }
+  };
 
   constructor() {
     autorun(() => {
