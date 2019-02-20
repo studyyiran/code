@@ -1,4 +1,5 @@
 import asyncComponent from '@/components/asyncComponent';
+import redirectComponent from '@/components/redirectComponent';
 
 export default [
   {
@@ -40,6 +41,10 @@ export default [
       {
         component: asyncComponent(() => import('@/containers/aboutphone/checkorder')),
         path: '/sell/yourphone/checkorder'
+      },
+      {
+        component: redirectComponent('/notfound'),
+        path: '/sell/:any'
       }
     ]
   }]
