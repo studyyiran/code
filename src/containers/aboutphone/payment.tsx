@@ -13,7 +13,7 @@ const leftHeader = <div className='paypal-bg' />;
  * 根据yourphone的payment来判断用户选择哪种收款方式： PAYPAL | ECHECK
  */
 
-@inject('yourphone')
+@inject('yourphone', 'user')
 @observer
 class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
 
@@ -330,6 +330,15 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
   private handleNext = async () => {
     const isOk = await this.validateData();
     if (isOk) {
+      try {
+        this.props.user.preOrder = {
+          ...this.props.user.preOrder,
+          checkInfo: { ...this.props.yourphone.echeck },
+          payment: this.props.yourphone.payment,
+          paypalInfo: { ...this.props.yourphone.paypal },
+          yourphoneStore: { ...this.props.yourphone }
+        }
+      } catch (error) { console.warn(error, 'in payment page preOrder') }
       this.props.history.push('/sell/yourphone/done');
     }
   }

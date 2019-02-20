@@ -10,7 +10,12 @@ class AboutYou extends React.Component<IAboutYouProps, IAboutYouState> {
     isValidate: false
   }
   public componentDidMount() {
-    // TODO
+    // 当有userEmail时，校验是否为邮箱格式，并高亮
+    const userEmail = this.props.user.preOrder.userEmail;
+    const regExp = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,})$/;
+    if (userEmail && regExp.test(userEmail)) {
+      this.setState({ isValidate: true });
+    }
   }
   public render() {
     const { getFieldDecorator } = this.props.form;
@@ -32,7 +37,7 @@ class AboutYou extends React.Component<IAboutYouProps, IAboutYouState> {
                   rules: [
                     {
                       required: true,
-                      pattern: /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,})$/,
+                      type: 'email',
                       message: <p><Icon type="close-circle" /> Please enter a valid email address</p>
                     }
                   ],
@@ -54,7 +59,6 @@ class AboutYou extends React.Component<IAboutYouProps, IAboutYouState> {
                 disabled={!isValidate}
                 size="large"
                 type="primary"
-                // style={{ background: isValidate ? '#00CFFF' : '#f3f3f3', fontSize: '18px', color: isValidate ? '#fff' : '#000', fontWeight: 'bold', height: '48px' }}
                 onClick={this.handleSubmit}
               >GET STARTED</Button>
             </Form.Item>

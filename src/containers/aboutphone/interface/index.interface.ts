@@ -140,6 +140,7 @@ export interface IProductDetail {
 export interface ISkuPricePropertyNames {
   id: number;
   name: string;
+  pricePropertyValues: ISubSkuPricePropertyValues[];
 }
 
 export interface IAmericaState {
@@ -183,7 +184,7 @@ export interface IProductPPVN {
   isSkuProperty: boolean;
 }
 
-interface ISubSkuPricePropertyValues {
+export interface ISubSkuPricePropertyValues {
   value: string;
   id: number;
 }

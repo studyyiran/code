@@ -130,13 +130,16 @@ class YourPhone implements IYourPhoneStore {
 
   // 创建询价
   @action public createInquiry = async () => {
-    // const inquiry: IQueryParams = {
-    //   agentCode: DEFAULT.agentCode,
-    //   priceUnits: Object.values(this.activeConditions!),
-    //   productId: this.activeProductId
-    // }
+    const priceUnits: number[] = Object.values(this.activeConditions);
+    priceUnits.push(this.activeModelId); // priceUnits包括在model选择的ppv，以及condition选的非sku属性
+
+    const inquiry: IQueryParams = {
+      agentCode: DEFAULT.agentCode,
+      priceUnits: priceUnits,
+      productId: this.activeProductId
+    }
     // TODO: 接口问题，先写死
-    const inquiry: IQueryParams = { "agentCode": 'ahs_android', "productId": 25827, "priceUnits": [6437, 2023, 2014, 2453, 2072] }
+    // const inquiry: IQueryParams = { "agentCode": 'ahs_android', "productId": 25827, "priceUnits": [6437, 2023, 2014, 2453, 2072] }
     let res: string;
     try {
       res = await Api.createInquiry<string>(inquiry);

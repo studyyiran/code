@@ -1,4 +1,6 @@
 
+import { IYourPhoneStore } from "@/containers/aboutphone/interface/index.interface";
+
 export interface IUserInfo {
   identityChecked: boolean, // 是否实名
   mobile: string,
@@ -49,42 +51,60 @@ export interface IUserStoreNew {
   updatePreOrder: (preOrder: IPreOrder) => Promise<boolean>;
 }
 
+// export interface IPreOrder {
+//   addressInfo?: IAddressInfo;
+//   checkInfo?: ICheckInfo;
+//   inquiryKey?: string; // 询价key
+//   key?: string; // 唯一key
+//   payment?: string;
+//   paypalInfo?: IPaypalInfo;
+//   productInfo?: Partial<IProductInfo>;
+//   userEmail?: string;
+
+//   carrier?: string;
+//   agentCode?: string;
+//   brands?: IBrands[]; // 品牌
+//   products?: IProductModel[];
+//   productPPVNS?: IProductPPVN[];
+// }
+
 export interface IPreOrder {
-  addressInfo?: IAddressInfo;
-  checkInfo?: ICheckInfo;
-  inquiryKey?: string; // 询价key
-  key?: string; // 唯一key
-  payment?: string;
-  paypalInfo?: IPaypalInfo;
+  addressInfo?: IYourPhoneStore['addressInfo'];
+  checkInfo?: IYourPhoneStore['echeck']; // echeck支付信息
+  inquiryKey?: IYourPhoneStore['inquiryKey'];
+  key?: string; // preOrder的key
+  payment?: IYourPhoneStore['payment'];
+  paypalInfo?: IYourPhoneStore['paypal']; // paypal支付信息
   productInfo?: Partial<IProductInfo>;
-  userEmail?: string;
-
-  carrier?: string;
-  agentCode?: string;
+  userEmail?: string; // 用户邮箱
+  agentCode?: string; // 应用渠道名字
+  carrier?: string; // 选中的运营商的名称
+  yourphoneStore?: IYourPhoneStore; // 存储store的属性
+  
 }
 
-interface IAddressInfo {
-  addressLine: string; // 必须地址
-  addressLineOptional: string; // 可选地址
-  city: string;
-  country: string;
-  firstName: string;
-  lastName: string;
-  mobile: string;
-  state: string; // 州
-  zipCode: string;
-}
-interface ICheckInfo {
-  firstName: string;
-  lastName: string;
-  email: string;
-}
-interface IPaypalInfo {
-  email: string;
-}
+// interface IAddressInfo {
+//   addressLine: string; // 必须地址
+//   addressLineOptional: string; // 可选地址
+//   city: string;
+//   country: string;
+//   firstName: string;
+//   lastName: string;
+//   mobile: string;
+//   state: string; // 州
+//   zipCode: string;
+// }
+// interface ICheckInfo {
+//   firstName: string;
+//   lastName: string;
+//   email: string;
+// }
+// interface IPaypalInfo {
+//   email: string;
+// }
 interface IProductInfo {
   brandId: number; // 品牌ID
   carrier: string; // 运营商
-  priceUnit: number[];
+  priceUnits: number[];
   productId: number; // 机型ID
 }

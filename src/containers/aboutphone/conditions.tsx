@@ -5,7 +5,7 @@ import ConditionItem from '@/containers/aboutphone/components/conditionitem';
 import './conditions.less';
 import { IConditionsProps } from './interface/index.interface';
 import { message } from 'antd';
-@inject('yourphone')
+@inject('yourphone', 'user')
 @observer
 export default class Conditions extends React.Component<IConditionsProps> {
 
@@ -58,10 +58,19 @@ export default class Conditions extends React.Component<IConditionsProps> {
     this.props.yourphone.activeConditions = { ...this.props.yourphone.activeConditions, [conditionId]: ppvnValueId };
   }
 
-  private handleNext = async() => {
+  private handleNext = async () => {
     const isInquiryKeyCreated = await this.validateData();
 
     if (isInquiryKeyCreated) {
+      try {
+        const productInfo = { ...this.props.user.preOrder.productInfo, priceUnits: [...Object.values(this.props.yourphone.activeConditions), this.props.yourphone.activeModelId] }
+        this.props.user.preOrder = {
+          ...this.props.user.preOrder,
+          productInfo,
+          yourphoneStore: { ...this.props.yourphone }
+        };
+      } catch (error) { console.warn(error, 'in conditions page preOrder') }
+
       this.props.history.push('/sell/yourphone/shipping');
     }
   }
