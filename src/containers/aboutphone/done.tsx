@@ -39,6 +39,7 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
   public render() {
     let Page: React.ReactNode | null = null;
     let payment: React.ReactNode | null = null;
+    let phoneNode: React.ReactNode | null = null;
 
     const { yourphone, user } = this.props;
 
@@ -81,6 +82,36 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
               <span className="address">{`${yourphone.echeck.email}`}</span>
             </p>
             <p className="tips">You will get paid by eCheck. Please make sure the name and email is correct!</p>
+          </>
+        );
+        break;
+    }
+
+    // isTBD
+    switch (yourphone.isTBD) {
+      case true:
+        phoneNode = (
+          <p className="info-item">
+            <span className="label">Your Phone</span>
+            <span className="content">Other Phone</span>
+          </p>
+        );
+        break;
+      case false:
+        phoneNode = (
+          <>
+            <p className="info-item">
+              <span className="label">Your Phone</span>
+              <span className="content">{yourphone.inquiryDetail && yourphone.inquiryDetail.product.name}</span>
+            </p>
+            <p className="info-item">
+              <span className="label">Carrier</span>
+              <span className="content">{yourphone.activeCarrierName}</span>
+            </p>
+            <p className="info-item">
+              <span className="label">Condition</span>
+              <span className="content">{yourphone.inquiryDetail && yourphone.inquiryDetail.ppvs.map(ppv => ppv.name).join(',')}<span className="edit-bg" onClick={this.handlePageChoose.bind(this, EChangeType.CONDITION)} /></span>
+            </p>
           </>
         );
         break;
@@ -130,18 +161,7 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
               <div className="phone-info-wrapper">
                 <img className="img" src={require('@/images/noprice.png')} />
                 <div className="info-wrapper">
-                  <p className="info-item">
-                    <span className="label">Your Phone</span>
-                    <span className="content">{yourphone.inquiryDetail && yourphone.inquiryDetail.product.name}</span>
-                  </p>
-                  <p className="info-item">
-                    <span className="label">Carrier</span>
-                    <span className="content">{yourphone.activeCarrierName}</span>
-                  </p>
-                  <p className="info-item">
-                    <span className="label">Condition</span>
-                    <span className="content">{yourphone.inquiryDetail && yourphone.inquiryDetail.ppvs.map(ppv => ppv.name).join(',')}<span className="edit-bg" onClick={this.handlePageChoose.bind(this, EChangeType.CONDITION)} /></span>
-                  </p>
+                  {phoneNode}
                 </div>
               </div>
             </div>

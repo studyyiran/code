@@ -57,7 +57,7 @@ class YourPhone implements IYourPhoneStore {
   }
 
   @computed get isTBD() {
-    return this.activeBrandsId === 9999; // TODO: 先假设TBD的id为9999
+    return this.activeBrandsId === DEFAULT.otherBrandsId;
   }
 
 

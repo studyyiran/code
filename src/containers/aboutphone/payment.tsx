@@ -25,7 +25,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
 
   public componentDidMount() {
     if (typeof this.props.onRef === 'function') {
-      this.props.onRef!(this);
+      this.props.onRef!(this); // 让done page里获取到这个组件实例，调用其validateData方法
     }
   }
 
@@ -36,6 +36,11 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
       if (payment === '') {
         message.info('how would you like to pay?');
         resolve(false);
+      }
+
+      // 用户并没有修改有关的支付信息，不需要执行下面的校验
+      if (!this.state.isLeftOnEdit && !this.state.isRightOnEdit) {
+        resolve(true);
       }
 
       this.props.form.validateFields((err, values) => {
