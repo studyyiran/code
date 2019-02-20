@@ -9,7 +9,7 @@ import './brands.less';
 @inject('yourphone', 'user')
 @observer
 export default class Brands extends React.Component<IBrandsProps> {
-
+  // TODO: 尚未添加TBD情况，因为other brand的id未知
   public componentDidMount() {
     this.props.yourphone.getBrandsByCid();
   }

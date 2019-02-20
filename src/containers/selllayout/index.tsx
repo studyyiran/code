@@ -41,7 +41,7 @@ export default class SellLayout extends React.Component<{ route: { [key: string]
       <div className="page-sell-layout-container">
         <div className="sell-layout-left">
           <LeftSide stepIndex={this.state.stepIndex} />
-          <GuaranteedPrice price={price} />
+          <GuaranteedPrice price={price} isTBD={this.props.yourphone.isTBD} />
         </div>
         <div className="sell-layout-right">
           {renderRoutes(children)}

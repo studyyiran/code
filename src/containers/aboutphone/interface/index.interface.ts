@@ -1,4 +1,5 @@
 import { FormComponentProps } from 'antd/lib/form';
+import * as React from 'react';
 import * as H from 'history';
 import { IUserStoreNew } from '@/store/interface/user.interface';
 
@@ -26,6 +27,7 @@ export interface IYourPhoneStore {
   activeModelId: number;
   activeConditions: object;
   americaStates: IAmericaState;
+  isTBD: boolean; // 选中的品牌是否为other
   isAllConditionSelected: boolean; // computed
   getBrandsByCid: (categoryId?: number) => Promise<boolean>;
   getCarrier: () => Promise<boolean>;
@@ -54,6 +56,8 @@ export interface IBrandsProps {
   yourphone: IYourPhoneStore;
   user: IUserStoreNew;
   hideLayout?: boolean; // 用于隐藏布局标题头和导航脚，用于在done页面当modal的组件
+  // ref?: React.RefObject<React.Component<IShippingProps | IPaymentProps | IConditionsProps>>;
+  onRef?: (child: React.Component) => void;
 }
 
 export interface IModelsProps extends IBrandsProps {
@@ -62,7 +66,7 @@ export interface IModelsProps extends IBrandsProps {
 
 export type IConditionsProps = IBrandsProps;
 
-export type IShippingProps = IBrandsProps & FormComponentProps & { history: H.History };
+export type IShippingProps = IBrandsProps & FormComponentProps
 
 export type IPaymentProps = IBrandsProps & FormComponentProps;
 

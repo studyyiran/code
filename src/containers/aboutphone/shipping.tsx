@@ -9,10 +9,33 @@ import { IShippingProps } from './interface/index.interface';
 class ShippingAddress extends React.Component<IShippingProps> {
 
   public componentDidMount() {
-    this.props.yourphone.createInquiry();
+    // this.props.yourphone.createInquiry();
     // this.props.form.validateFields(['zipCode'], (errors, values) => {
     //   if (!errors) { console.log('ininiin'); }
     // });
+    if (typeof this.props.onRef === 'function') {
+      this.props.onRef!(this);
+    }
+  }
+
+  public validateData = (): Promise<boolean> => {
+    return new Promise((resolve) => {
+      this.props.form.validateFields((err, values) => {
+        if (err) {
+          resolve(false);
+        }
+
+        this.props.yourphone.addressInfo = { ...this.props.yourphone.addressInfo, ...values };
+
+        // 给store里的paypal和echeck填入contact infomation作为默认，供payment页面初始化用
+        // TODO:
+        this.props.yourphone.paypal.email = this.props.user.preOrder.userEmail ? this.props.user.preOrder.userEmail : '';
+        this.props.yourphone.echeck.firstName = this.props.yourphone.addressInfo.firstName;
+        this.props.yourphone.echeck.lastName = this.props.yourphone.addressInfo.lastName;
+        this.props.yourphone.echeck.email = this.props.user.preOrder.userEmail ? this.props.user.preOrder.userEmail : '';
+        resolve(true);
+      });
+    });
   }
 
   public render() {
@@ -187,7 +210,7 @@ class ShippingAddress extends React.Component<IShippingProps> {
 
         {
           !this.props.hideLayout
-            ? <Layout nextCb={this.goNextCb} >{infomationHTML}</Layout>
+            ? <Layout nextCb={this.handleNext} >{infomationHTML}</Layout>
             : (infomationHTML)
         }
       </div>
@@ -210,20 +233,11 @@ class ShippingAddress extends React.Component<IShippingProps> {
     callback();
   }
 
-  private goNextCb = () => {
-    this.props.form.validateFields((err, values) => {
-      if (err) { return; }
-
-      this.props.yourphone.addressInfo = { ...this.props.yourphone.addressInfo, ...values };
-
-      // 给store里的paypal和echeck填入contact infomation作为默认，供payment页面初始化用
-      // TODO:
-      this.props.yourphone.paypal.email = this.props.user.preOrder.userEmail ? this.props.user.preOrder.userEmail : '';
-      this.props.yourphone.echeck.firstName = this.props.yourphone.addressInfo.firstName;
-      this.props.yourphone.echeck.lastName = this.props.yourphone.addressInfo.lastName;
-      this.props.yourphone.echeck.email = this.props.user.preOrder.userEmail ? this.props.user.preOrder.userEmail : '';
+  private handleNext = async () => {
+    const isOk = await this.validateData();
+    if (isOk) {
       this.props.history.push('/sell/yourphone/payment');
-    });
+    }
   }
 }
 
