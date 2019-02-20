@@ -58,7 +58,7 @@ export default class Home extends React.Component<object, IHomeState> {
             Phone for More.
           </p>
           <p className="content-text">UpTrade helps you sell your phone, so you can get paid <br /> for what your device is actually worth.</p>
-          <Button type="primary" size="large" style={{ boxShadow: '0px 2px 4px 0px rgba(0,207,255,0.35)' }}>Sell It Now</Button>
+          <Link to="/sell/account"><Button type="primary" size="large" style={{ boxShadow: '0px 2px 4px 0px rgba(0,207,255,0.35)' }}>Sell It Now</Button></Link>
           <img src={require('@/images/home/main_bg1.png')} className="main_bg1" />
         </div>
 
@@ -180,7 +180,7 @@ export default class Home extends React.Component<object, IHomeState> {
             <Button type="primary" size="large" style={{ height: 64, width: 232 }}>SELL IT NOW</Button>
           </Link>
         </div>
-      </div>
+      </div >
     )
   }
 }

@@ -1,9 +1,10 @@
 import * as React from 'react';
+import classnames from 'classnames';
 import { inject, observer } from 'mobx-react';
-import { Row, Col, Collapse, Form, Input } from 'antd';
+import { Row, Col, Collapse, Form, Input, message } from 'antd';
 import Layout from '@/containers/aboutphone/layout';
+import { IPaymentProps, IPaymentStates, EPayType } from './interface/index.interface';
 import './payment.less';
-import { IPaymentProps, IPaymentStates } from './interface/index.interface';
 
 const Panel = Collapse.Panel;
 const leftHeader = <div className='paypal-bg' />;
@@ -14,7 +15,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
   public readonly state: Readonly<IPaymentStates> = {
     isLeftOnEdit: false,
     isRightOnEdit: false,
-    activeSide: ''
+    activeSide: this.props.yourphone.payment
   }
 
   public render() {
@@ -161,22 +162,22 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
     const paymentHTML = (
       <Row gutter={30} style={{ paddingTop: '42px' }}>
         <Col span={12}>
-          <Collapse>
+          <Collapse onChange={this.handlePaypalCollapseExtend} className={classnames({ active: this.props.yourphone.payment === EPayType.PAYPAL })}>
             <Panel
               header={leftHeader}
               showArrow={false}
-              key="1"
+              key={EPayType.PAYPAL}
             >
               {leftContent}
             </Panel>
           </Collapse>
         </Col>
         <Col span={12}>
-          <Collapse>
+          <Collapse onChange={this.handleEcheckCollapseExtend} className={classnames({ active: this.props.yourphone.payment === EPayType.ECHECK })}>
             <Panel
               header={<h3>eCheck</h3>}
               showArrow={false}
-              key="1"
+              key={EPayType.ECHECK}
             >
               {rightContent}
             </Panel>
@@ -186,7 +187,6 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
     )
 
     return (
-
       <div className="page-payment-container">
         {
           !this.props.hideLayout
@@ -197,7 +197,31 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
     );
   }
 
-  private changeEditState = (type: string): void => {
+  private handlePaypalCollapseExtend = (type: string[]) => {
+    if (this.props.yourphone.payment === EPayType.PAYPAL && !type.length) {
+      this.props.yourphone.payment = '';
+    }
+
+    if (!type.length) {
+      return;
+    }
+
+    this.props.yourphone.payment = type[0];
+  }
+
+  private handleEcheckCollapseExtend = (type: string[]) => {
+    if (this.props.yourphone.payment === EPayType.ECHECK && !type.length) {
+      this.props.yourphone.payment = '';
+    }
+
+    if (!type.length) {
+      return;
+    }
+
+    this.props.yourphone.payment = type[0];
+  }
+
+  private changeEditState = (type: string): void => { // 切换成可编辑状态
     if (type === 'paypal') {
       this.setState({ isLeftOnEdit: !this.state.isLeftOnEdit });
     }
@@ -208,7 +232,14 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
   }
 
   private handleNext = () => {
-    this.props.form.validateFields((err, values) => {
+    // 必须要选中一种支付方式
+    const { payment } = this.props.yourphone;
+    if (payment === '') {
+      message.info('how would you like to pay?');
+      return;
+    }
+
+    this.props.form.validateFields(async (err, values) => {
       if (err) {
         return;
       }
@@ -237,7 +268,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
           }
           break;
       }
-
+      
       this.props.history.push('/sell/yourphone/done');
     });
   }

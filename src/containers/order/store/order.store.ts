@@ -65,9 +65,9 @@ class Store implements IOrderStore {
         let guaranteedPrice = '';
         if (this.orderDetail.orderNo) {
             const orderItem = this.orderDetail.orderItem;
-            model = orderItem.productName;
+            model = orderItem.product.name;
             carrier = orderItem.carrier === "ATT" ? "ATT&T" : orderItem.carrier;
-            condition = orderItem.submitItems.map(t => t.isSkuProperty === true && t.name).join(",");
+            condition = orderItem.pricePropertyValues.map(t => t.value).join(",");
             guaranteedPrice = (orderItem.amount / 100).toString();
         }
         return {
