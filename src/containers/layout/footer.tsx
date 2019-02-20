@@ -16,7 +16,7 @@ export default class Footer extends React.Component<{ router: any }, IFooterStat
         },
         {
           text: 'How it Works',
-          href: '/sell-my-phone' // todo
+          href: '/sell-my-phone'
         },
         {
           text: 'Prepare to Ship',
@@ -34,7 +34,7 @@ export default class Footer extends React.Component<{ router: any }, IFooterStat
         },
         {
           text: 'Who We Are',
-          href: '/who-we-are' // todo
+          href: '/who-we-are'
         },
         {
           text: 'Why Up Trade',

@@ -9,4 +9,5 @@ interface ISteps {
 
 export interface IGuaranteedPriceProps {
   price?: number | string;
+  isTBD: boolean;
 }
