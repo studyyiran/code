@@ -1,17 +1,23 @@
 .layout-container {
   position: absolute;
-  top:0;
-  left:0;
-  right:0;
-  bottom:0;
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
-  background: #f5f5f5;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+  // overflow: auto;
+  // -webkit-overflow-scrolling: touch;
 
+  .layout-content-wrapper {
+    
+  }
   .layout-content {
-    margin-top: -190px;
-    margin-bottom:-480px;
-    padding-top:190px;
-    padding-bottom: 480px;
+    min-width: 1280px;
+    min-height:100%;
+    margin-top: -170px;
+    margin-bottom:-344px;
+    box-sizing: border-box;
+    padding-top:170px;
+    padding-bottom: 304px;
+    background: url("~@/images/global_wave_bg.png") repeat;
   }
 }

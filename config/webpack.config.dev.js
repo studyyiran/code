@@ -13,6 +13,7 @@ const getClientEnvironment = require('./env');
 const paths = require('./paths');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const tsImportPluginFactory = require('ts-import-plugin');
+const packagejson = require('../package.json');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
@@ -166,7 +167,7 @@ module.exports = {
                     before: [tsImportPluginFactory({
                       libraryDirectory: 'es',
                       libraryName: 'antd',
-                      style: 'css',
+                      style: true,
                     })]
                   })
                 },
@@ -214,6 +215,10 @@ module.exports = {
               },
               {
                 loader: require.resolve('less-loader'), // compiles Less to CSS
+                options: {
+                  modifyVars: packagejson.theme,
+                  javascriptEnabled: true
+                }
               }
             ],
           },

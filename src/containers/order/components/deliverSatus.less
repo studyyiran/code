@@ -1,0 +1,138 @@
+.comp-order-deliverSatus {
+    padding-bottom: 27px;
+    margin: 0 33px;
+    margin-top: 37px;
+    border-radius: 4px;
+    border: 1px solid rgba(245, 245, 245, 1);
+
+    .title {
+        height: 44px;
+        line-height: 44px;
+        background: rgba(248, 249, 251, 1);
+        border-radius: 2px;
+        padding: 0 20px;
+    }
+
+    .deliverSatus-body {
+        box-sizing: border-box;
+        padding: 27px 18px;
+        display: flex;
+
+        .col-1 {
+            flex: 1;
+
+            .list-item {
+                display: flex;
+
+                .date {
+                    font-size: 14px;
+                    font-family: HelveticaNeue-Medium;
+                    font-weight: 500;
+                    color: rgba(51, 51, 51, 1);
+                    line-height: 17px;
+                }
+
+                .time {
+                    font-size: 12px;
+                    font-family: HelveticaNeue;
+                    color: rgba(128, 128, 128, 1);
+                    line-height: 14px;
+                    padding-top: 3px;
+                }
+
+                .desc {
+                    flex: 1;
+                    margin-left: 38px;
+
+                    .info {
+                        font-size: 14px;
+                        font-family: HelveticaNeue;
+                        color: rgba(17, 17, 17, 1);
+                        line-height: 16px;
+                    }
+
+                    .pos {
+                        margin-top: 12px;
+                        font-size: 12px;
+                        font-family: HelveticaNeue;
+                        color: rgba(128, 128, 128, 1);
+                        line-height: 14px;
+                    }
+                }
+
+                .date-list {
+                    flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    margin-left: 17px;
+
+                    .date-item {
+                        flex: 1;
+                        display: flex;
+                        margin-top: 18px;
+
+                        &:first-child {
+                            margin-top: 0;
+                        }
+                    }
+                }
+            }
+
+            .line {
+                margin: 16px 0;
+                height: 1px;
+                background-color: rgba(234, 234, 234, 1);
+            }
+        }
+
+        .col-2 {
+            width: 383px;
+            box-sizing: border-box;
+            padding-left: 109px;
+            display: flex;
+            align-items: center;
+
+            &>div {
+                img {
+                    width: 64px;
+                    height: auto;
+                }
+
+                &>div {
+                    display: inline-block;
+                    height: 64px;
+                    padding-left: 24px;
+
+                    .name {
+                        font-size: 20px;
+                        font-family: HelveticaNeue-Medium;
+                        font-weight: 500;
+                        color: rgba(51, 51, 51, 1);
+                        line-height: 25px;
+                    }
+
+                    .orderNo {
+                        margin-top: 10px;
+                        font-size: 16px;
+                        font-family: HelveticaNeue;
+                        color: rgba(128, 128, 128, 1);
+                        line-height: 18px;
+                    }
+                }
+            }
+        }
+    }
+
+    .footer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        color: rgba(0, 186, 229, 1);
+        font-family: HelveticaNeue;
+
+        &>div {
+            cursor: pointer;
+        }
+    }
+}

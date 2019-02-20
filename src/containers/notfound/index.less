@@ -1,16 +1,35 @@
-.not-found {
-    .body {
-      background-color: #fff;
-      overflow: hidden;
-      img {
-        margin: .88rem auto .6rem;
-        display: block;
-        width:1.6rem;
-      }
-      .info {
-        font-size:.14rem;
-        color:#333;
-        text-align: center;
-      }
+.page-not-found-container {
+  width:1024px;
+  background: #fff;
+  margin:132px auto 90px;  
+  box-shadow:-2px 0px 8px 0px rgba(0,0,0,0.05);
+  border-radius:8px;
+  display: flex;  
+  .left {
+    width:390px;
+    img {
+      width: 100%;
     }
   }
+  .right {
+    padding:92px 40px;
+    flex:1;
+    h1 {
+      font-size: 30px;
+      width:500px;
+      line-height: 36px;
+    }
+    p {
+      font-size:16px;
+      color:#808080;
+      margin-top:23px;
+
+      &:last-child {
+        margin-top:12px;
+      }
+    }
+    .button-box {
+      margin-top:40px;
+    }
+  }
+}

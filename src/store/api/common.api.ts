@@ -1,5 +1,5 @@
-// import { Request } from 'utils'
-// import { IOpts } from '@/utils/request.interface';
+import { Request } from 'utils'
+import { IOpts } from '@/utils/request.interface';
 // import { user } from '@/utils/requestPath';
 // import { ECaptchaErrCode } from '../interface/user.interface';
 export const getPostion = () => {
@@ -34,3 +34,18 @@ export const getPostion = () => {
         }); // 返回定位出错信息
     });
 };
+
+
+export const onSubscribe = <T>(userEmail: string): Promise<T> => {
+    const opts: IOpts = {
+        method: "POST",
+        url: `/subscription/sendMail`,
+        params: {
+            userEmail,
+        },
+        loading: true,
+        isMock: true
+    };
+
+    return Request<T>(opts);
+}

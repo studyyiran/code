@@ -1,0 +1,179 @@
+@import (reference) '~@/styles/index.less';
+
+.page-youredone-container {
+  height: 100%;
+  .content-wrapper {
+    padding-top: 50px;
+    .top-part-wrapper {
+      .show-module {
+        overflow: hidden;
+        display: inline-block;
+        width: 344px;
+        height:220px;
+        box-sizing: border-box;
+        background:rgba(255,255,255,1);
+        border-radius:4px;
+        border:1px solid rgba(245,245,245,1);
+        .show-header {
+          padding: 0 20px;
+          line-height: 44px;
+          background-color: #F8F9FB;
+          .name {
+            .set-font-color(12px, #666);
+          }
+          .edit-bg {
+            margin-top: 12px;
+            float: right;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            background: url("~@/images/edit--normal.png") no-repeat;
+            background-size: 100%;
+            &:hover {
+              background: url("~@/images/edit--active.png") no-repeat;
+              background-size: 100%;
+            }
+          }
+        }
+
+        .show-content {
+          padding: 20px 0 0 20px;
+          .email-info {
+            margin-top: 6px;
+            .label {
+              .set-font-color(12px, #666);
+            }
+            .address {
+              display: inline-block;
+              text-indent: 24px;
+              .set-font-color(16px, #333, bold);
+              line-height: 18px;
+              vertical-align: middle;
+            }
+          }
+          .info-item {
+            margin-bottom: 10px;
+            .label {
+              vertical-align: top;
+              display: inline-block;
+              width: 72px;
+              .set-font-color(12px, #666);
+            }
+            .content {
+              display: inline-block;
+              width: 220px;
+              .set-font-color(15px, #333, bold);
+            }
+          }
+          .tips {
+            margin-top: 11px;
+            margin-left: 63px;
+            width: 240px;
+            .set-font-color(12px, #666);
+          }
+        }
+      }
+
+      .show-module + .show-module {
+        margin-left: 30px;
+      }
+    }
+
+    .bottom-part-wrapper {
+      margin-top: 30px;
+      height:180px;
+      background:rgba(255,255,255,1);
+      border-radius:4px;
+      border:1px solid rgba(245,245,245,1);
+      .phone-name {
+        text-indent: 20px;
+        .set-font-color(12px, #666);
+        line-height: 40px;
+        border-radius: 4px 4px 0 0;
+        background-color: #F8F9FB;
+      }
+      .phone-info-wrapper {
+        padding: 20px 20px 0;
+        .img {
+          margin-right: 20px;
+          float: left;
+          width: 80px;
+          height: 80px;
+        }
+        .info-wrapper {
+          .info-item {
+            margin-bottom: 10px;
+            .label {
+              vertical-align: top;
+              display: inline-block;
+              width: 79px;
+              .set-font-color(12px, #666);
+            }
+            .content {
+              position: relative;
+              display: inline-block;
+              .set-font-color(15px, #333, bold);
+              width: 450px;
+              .edit-bg {
+                position: absolute;
+                bottom: 1px;
+                right: -40px;
+                width: 20px;
+                height: 20px;
+                background: url("~@/images/edit--normal.png") no-repeat;
+                background-size: 100%;
+                cursor: pointer;
+                &:hover {
+                  background: url("~@/images/edit--active.png") no-repeat;
+                  background-size: 100%;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .terms-of-service {
+      margin-top: 51px;
+      .set-font-color(16px, #333);
+      .text-with-icon {
+        &::before {
+          content: "";
+          display: inline-block;
+          vertical-align: top;
+          width: 20px;
+          height: 20px;
+          margin-right: 10px;
+          background: url("~@/images/yourphone/check_icon--normal.png") no-repeat;
+          background-size: 100%;
+          cursor: pointer;
+        }
+        &.checked {
+          &::before {
+            background: url("~@/images/yourphone/check_icon--active.png") no-repeat;
+            background-size: 100%;
+          }
+        }
+      }
+      .highlight {
+        color: #00BAE5;
+        cursor: pointer;
+      }
+    }
+
+    .ship-btn {
+      margin: 31px auto 0;
+      width: 400px;
+      line-height: 48px;
+      background-color: #F3F3F3;
+      .set-font-color(18px, #000);
+      text-align: center;
+      cursor: pointer;
+      &.active {
+        background: #00CFFF;
+        color: #fff;
+      }
+    }
+  }
+}

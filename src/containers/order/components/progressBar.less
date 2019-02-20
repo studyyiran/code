@@ -1,0 +1,144 @@
+.comp-order-progressBar {
+    height: 192px;
+    background-color: #383D50;
+    display: flex;
+    padding: 0 63px;
+    align-items: center;
+
+    .dot {
+        flex: 1;
+        height: 100%;
+        text-align: center;
+        position: relative;
+
+        &::before {
+            content: " ";
+            display: block;
+            height: 2px;
+            width: calc(50% - 7px);
+            background-color: #BBBBBB;
+            top: 76px;
+            position: absolute;
+        }
+
+        &:first-child {
+            &::before {
+                display: none;
+            }
+        }
+
+        &:last-child {
+            &::after {
+                display: none;
+            }
+        }
+
+        &::after {
+            content: " ";
+            display: block;
+            height: 2px;
+            width: calc(50% - 7px);
+            background-color: #BBBBBB;
+            left: calc(50% + 7px);
+            top: 76px;
+            position: absolute;
+        }
+
+        .dot-icon {
+            display: inline-block;
+            vertical-align: top;
+            width: 14px;
+            height: 14px;
+            background-color: #fff;
+            border-radius: 50%;
+            position: absolute;
+            top: 70px;
+            left: 50%;
+            transform: translate(-50%, 0);
+        }
+
+        &.dot-active {
+            .dot-icon {
+                background-color: #00CFFF;
+            }
+
+            &::before,
+            &::after {
+                background-color: #00CFFF;
+            }
+
+            &.dot-current {
+                &::after {
+                    background-color: #BBBBBB !important;
+                }
+            }
+        }
+
+        .currentMark {
+            width: 0;
+            height: 0;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+
+            &::after {
+                content: " ";
+                display: block;
+                width: 0;
+                height: 0;
+                border-width: 0 9px 9px;
+                border-style: solid;
+                border-color: transparent transparent #fff;
+                position: relative;
+                top: -9px;
+                left: -9px;
+            }
+        }
+
+        .child-mark {
+            position: absolute;
+            color: #fff;
+            top: 112px;
+            width: 100%;
+
+            &.child-mark-current {
+                top: 53px;
+                z-index: 10;
+
+                .title {
+                    margin-top: 15px;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+
+    // children css propertities
+    .title {
+        height: 14px;
+        font-size: 14px;
+        font-family: HelveticaNeue;
+        color: rgba(255, 255, 255, 1);
+        line-height: 14px;
+    }
+
+    .date {
+        height: 10px;
+        font-size: 10px;
+        font-family: HelveticaNeue;
+        color: rgba(235, 237, 240, 1);
+        line-height: 10px;
+        margin-top: 11px;
+    }
+
+    .icon {
+        width: 44px;
+        height: 44px;
+        display: inline-block;
+        vertical-align: top;
+
+        &>img {
+            height: 100%;
+        }
+    }
+}

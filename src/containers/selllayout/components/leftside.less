@@ -1,0 +1,36 @@
+@import (reference) '~@/styles/index.less';
+
+.comp-sellayout-leftside-container {
+   .step {
+     .main-content {
+       position: relative;
+       .set-font-color(16px, rgba(255, 255, 255, 0.3));
+       line-height: 26px;
+       &.active {
+         color: #fff;
+         font-weight: bold;
+         &::after {
+          position: absolute;
+          content: "";
+          right: 0;
+          top: 5px;
+          border-top: 8px solid #383D50;
+          border-bottom: 8px solid #383D50;
+          border-left: 8px solid #383D50;
+          border-right: 8px solid #fff;
+         }
+       }
+       &.done {
+         color: #94A4DF;
+       }
+     }
+     .sub-content {
+      .set-font-color(10px, rgba(255, 255, 255, 0.3));
+      line-height: 26px;
+     }
+   }
+
+   .step + .step {
+     margin-top: 12px;
+   }
+}

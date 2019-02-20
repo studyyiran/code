@@ -1,0 +1,57 @@
+@import (reference) '~@/styles/index.less';
+
+.comp-carrier-item-container {
+  display: inline-block;
+  cursor: pointer;
+  .img-wrapper {
+    width: 230px;
+    height: 145px;
+    text-align: center;
+    line-height: 145px;
+    overflow: hidden;
+    .outline-shadow-highlight();
+    .carrier-icon {
+      display: inline-block;
+      width: 100px;
+      height: 100px;
+      vertical-align: middle;
+      &.ATT {
+        background: url("~@/images/yourphone/att.png") no-repeat;
+        background-position: center;
+      }
+
+      &.SPRINT {
+        background: url("~@/images/yourphone/sprint.png") no-repeat;
+        background-position: center;
+      }
+
+      &.TMOBILE {
+        background: url("~@/images/yourphone/tmobile.png") no-repeat;
+        background-position: center;
+      }
+
+      &.VERIZON {
+        background: url("~@/images/yourphone/verizon.png") no-repeat;
+        background-position: center;
+      }
+
+      &.OTHERS {
+        background: url("~@/images/yourphone/other--carrier.png") no-repeat;
+        background-position: center;
+      }
+
+      &.UNLOCKED {
+        background: url("~@/images/yourphone/unlocked--carrier.png") no-repeat;
+        background-position: center;
+      }
+    }
+
+  }
+
+  .name {
+    text-align: center;
+    margin-top: 28px;
+    .set-font-color(18px, #333, bold);
+    line-height: 18px;
+  }
+}

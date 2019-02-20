@@ -1,4 +1,60 @@
+@import (reference) "~@/styles/index.less";
 .comp-header-container {
-  height:190px;
-  background: #fff;
+  margin: 0 auto;
+  height: 85px;
+  position: relative;
+  z-index: 1;
+  background-color: #fff;
+  min-width:1280px;
+  .content-wrapper {
+    width:1024px;
+    margin:0 auto;
+    padding:  31px 22px 0;
+    height: 85px;
+    display: flex;
+    font-size:12px;
+    line-height: 22px;
+
+    .home_btn {
+      margin-right: 110px;
+      width: 97px;
+      height: 24px;
+      background: url("~@/images/logo.png") no-repeat;
+      background-size: 100%;
+      display: inline-block;
+      cursor: pointer;
+      margin-top: 6px;
+    }
+
+    .how_it_works_btn {
+      width: 137px;
+      .set-font-color(16px, #000);
+      margin-top: 6px;
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    .about_us_btn {
+      margin-right: 139px;
+      width: 124px;
+      .set-font-color(16px, #000);
+      margin-top: 6px;
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    .check_your_order_btn {
+      width: 158px;
+      margin-right: 23px;
+      .set-font-color(16px, #000);
+      margin-top: 6px;
+      display: inline-block;
+      cursor: pointer;
+    }
+  } 
+  .header-bg {
+    height: 85px;
+    background: url("~@/images/header_bg.png") no-repeat;
+    background-size: 100% 100%;
+  }
 }
