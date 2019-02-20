@@ -38,7 +38,7 @@ export default class Models extends React.Component<IModelsProps> {
 
   private onModelItemClick = (productId: number, skuId: number) => {
     try {
-      const productInfo = { ...this.props.user.preOrder.productInfo, productId: productId }
+      const productInfo = { ...this.props.user.preOrder.productInfo, productId: productId, modelId: skuId }
       this.props.user.preOrder = {
         ...this.props.user.preOrder,
         productInfo,

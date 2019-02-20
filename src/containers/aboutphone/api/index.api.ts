@@ -88,6 +88,7 @@ export const getInquiryDetail = <T>(key: string, agentCode: string = DEFAULT['ag
 export const getStateByCode = <T>(zipCode: number) => {
   const opts: IOpts = {
     url: `/USPS/state/${zipCode}`,
+    loading: true
   };
 
   return Request<T>(opts);
