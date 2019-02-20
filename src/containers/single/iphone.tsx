@@ -7,8 +7,8 @@ export default class Broken extends React.Component {
       <div className="page-single-iphone-container">
         <h1>How to Factory Reset iPhone and Prepare for Sell</h1>
         <div className="small">
-          <span>29 May 2019</span>
-          <span>By Up Trade</span>
+          <span>21 Feb 2019</span>
+          <span>by UpTrade</span>
           <div className="right">
             <em />
             <em />
@@ -18,7 +18,6 @@ export default class Broken extends React.Component {
         <Link to={'/'} />
         <img src={require('@/images/single/iphone_banner.png')} alt="" className="banner" />
         <p>To prepare your iPhone for shipment to UpTrade you will need to complete the following steps to ensure you keep your personal data safe and the iPhone is fully prepped for us to sell with no issues. You will want to follow Apple’s recommended steps to do so. Links to Apple’s Support page provided below for your convenience. </p>
-        <h2>How to Factory Reset iPhone and Prepare for Sell</h2>
 
         <div className="list-box">
           <div className="list">
@@ -30,7 +29,7 @@ export default class Broken extends React.Component {
 
             <p>
               <a href="https://support.apple.com/en-us/HT204568">Unpair Apple Watch</a>
-              <span>- If you have an Apple Watch paired with your iphone, you must first unpair it.</span>
+              <span>- If you have an Apple Watch paired with your iPhone, you must first unpair it.</span>
             </p>
           </div>
 
