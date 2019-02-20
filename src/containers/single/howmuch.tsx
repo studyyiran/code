@@ -8,8 +8,8 @@ export default class HowMuch extends React.Component {
       <div className="page-howmuch-container">
         <h1>How Much Is My Phone Worth?</h1>
         <div className="small">
-          <span>29 May 2019</span>
-          <span>By Up Trade</span>
+          <span>21 Feb 2019</span>
+          <span>By UpTradeIt.com</span>
           <div className="right">
             <em />
             <em />
