@@ -67,7 +67,7 @@ export default class Why extends React.Component<IContactProps> {
         </div>
 
         <div className="contact-us-box">
-          <h2>Still have questions?<br /> Our friendly staff is standing by</h2>
+          <h2>Still have questions?<br /> Our friendly staff is standing by.</h2>
           <div className="form-box">
             <ContactForm onOk={this.handleOk} />
           </div>
