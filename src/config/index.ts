@@ -7,7 +7,7 @@ import prodConfig from './prod.config';
 
 let ENVCONFIG = devConfig;
 
-if(process.env.REACT_APP_SERVER_ENV === 'PUB') {
+if (process.env.REACT_APP_SERVER_ENV === 'PUB') {
   ENVCONFIG = prodConfig;
 }
 
