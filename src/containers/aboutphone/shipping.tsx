@@ -7,11 +7,30 @@ import { IShippingProps } from './interface/index.interface';
 import { IProductInfo } from '@/store/interface/user.interface';
 import { shippingPageValidate } from '@/containers/aboutphone/pageValidate';
 import yourphoneStore from './store/yourphone.store';
+
+const onValuesChange = (props: any, changedValues: any, allValues: any) => {
+  let disabled = false;
+  Object.keys(allValues).forEach((v: string) => {
+    if (!allValues[v] && v !== 'city' && v !== 'state') {
+
+      disabled = true;
+    }
+  })
+
+  yourphoneStore.isAddressValuesAndDisabled = disabled;
+
+}
+
+
 @inject('yourphone', 'user')
 @observer
 class ShippingAddress extends React.Component<IShippingProps> {
 
   public componentDidMount() {
+    // didmount 的时候校验是否填了字段
+    const { getFieldsValue } = this.props.form;
+    const allValus = getFieldsValue();
+    onValuesChange(false, false, allValus);
     // 显示左侧价格模块
     this.props.user.isShowLeftPrice = true;
     if (!shippingPageValidate()) {
@@ -38,10 +57,10 @@ class ShippingAddress extends React.Component<IShippingProps> {
 
         // 给store里的paypal和echeck填入contact infomation作为默认，供payment页面初始化用
         // TODO:
-        this.props.yourphone.paypal.email = this.props.user.preOrder.userEmail ? this.props.user.preOrder.userEmail : '';
-        this.props.yourphone.echeck.firstName = this.props.yourphone.addressInfo.firstName;
-        this.props.yourphone.echeck.lastName = this.props.yourphone.addressInfo.lastName;
-        this.props.yourphone.echeck.email = this.props.user.preOrder.userEmail ? this.props.user.preOrder.userEmail : '';
+        // this.props.yourphone.paypal.email = this.props.user.preOrder.userEmail ? this.props.user.preOrder.userEmail : '';
+        // this.props.yourphone.echeck.firstName = this.props.yourphone.addressInfo.firstName;
+        // this.props.yourphone.echeck.lastName = this.props.yourphone.addressInfo.lastName;
+        // this.props.yourphone.echeck.email = this.props.user.preOrder.userEmail ? this.props.user.preOrder.userEmail : '';
         resolve(true);
       });
     });
@@ -283,18 +302,5 @@ class ShippingAddress extends React.Component<IShippingProps> {
       setFieldsValue({ 'city': '' });
     }
   }
-}
-
-const onValuesChange = (props: any, changedValues: any, allValues: any) => {
-  let disabled = false;
-  Object.keys(allValues).forEach((v: string) => {
-    if (!allValues[v] && v !== 'city' && v !== 'state') {
-
-      disabled = true;
-    }
-  })
-
-  yourphoneStore.isAddressValuesAndDisabled = disabled;
-
 }
 export default Form.create({ onValuesChange: onValuesChange })(ShippingAddress);
