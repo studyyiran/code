@@ -9,7 +9,7 @@ import yourphoneStore from '@/containers/aboutphone/store/yourphone.store';
 interface IStates {
   navigatorObj: INavigatorObj | null
 }
-let time: any;
+let timer: any = 0;
 @observer
 export default class BrandHeader extends React.Component<object, IStates> {
 
@@ -84,15 +84,19 @@ export default class BrandHeader extends React.Component<object, IStates> {
     }
   }
 
-  private handleKeyWordChange = (event: React.SyntheticEvent<HTMLInputElement>) => {
+  private handleKeyWordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     // TODO: 防抖目前搞不通，死活报warning
     // 获取input dom对象，然后获取里面的值
-    clearTimeout(time);
-    time = window.setTimeout(() => {
-      const value = event.currentTarget.value;
+    const value = event.target.value;
+    if (timer) {
+      clearTimeout(timer);
+      timer = 0;
+    }
+    timer = window.setTimeout(() => {
       if (value.trim()) {
         yourphoneStore.getProductsList(value.trim())
       }
+      timer = 0;
     }, 300)
   }
 
