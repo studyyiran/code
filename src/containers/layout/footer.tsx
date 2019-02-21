@@ -70,7 +70,7 @@ export default class Footer extends React.Component<{ router: any }, IFooterStat
           <div className="content-wrapper">
             <div className="links-group-wrapper">
               <Row gutter={56}>
-                <Col span={3}><img src={require('@/images/logo.png')} /></Col>
+                <Col span={3}><img src={require('@/images/logo.png')} className="logo" /></Col>
                 {
                   linksGroup
                 }
@@ -99,6 +99,11 @@ export default class Footer extends React.Component<{ router: any }, IFooterStat
 
   private handleLink = (link: { [key: string]: string }) => {
     if (!link.href) {
+      return false;
+    }
+    console.log(this.props.router.history)
+    if (/\/faq/.test(link.href) && this.props.router.history.location.pathname === '/faq') {
+      window.location.href = location.origin + link.href;
       return false;
     }
     this.props.router.history.push(link.href);
