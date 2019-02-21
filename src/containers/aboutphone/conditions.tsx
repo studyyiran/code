@@ -7,6 +7,7 @@ import { IConditionsProps } from './interface/index.interface';
 import { message } from 'antd';
 import { IProductInfo } from '@/store/interface/user.interface';
 import { conditionPageValidate } from '@/containers/aboutphone/pageValidate';
+import Breadcrumb from '@/containers/aboutphone/components/breadcrumb';
 @inject('yourphone', 'user')
 @observer
 export default class Conditions extends React.Component<IConditionsProps> {
@@ -58,7 +59,18 @@ export default class Conditions extends React.Component<IConditionsProps> {
       <div className="page-conditions-container">
         {
           !this.props.hideLayout
-            ? <Layout nextCb={this.handleNext} progress={this.state.progress}>{conditionList}</Layout>
+            ? (
+              <Layout nextCb={this.handleNext} progress={this.state.progress}>
+                <>
+                  <Breadcrumb
+                    brandName={this.props.yourphone.activeBrandsName}
+                    carrierName={this.props.yourphone.activeCarrierName}
+                    modelName={`${this.props.yourphone.activeProductName} ${this.props.yourphone.activeModelName}`}
+                  />
+                  {conditionList}
+                </>
+              </Layout>
+            )
             : (conditionList)
         }
       </div>

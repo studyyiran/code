@@ -28,6 +28,7 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
     // 隐藏左侧价格模块
     this.props.user.isShowLeftPrice = false;
     if (!checkOrderPageValidate()) {
+      debugger;
       this.props.history.push('/sell/account');
       return;
     }
@@ -80,7 +81,7 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
                   </div>
                   <p className="guaranteed-price">
                     <span className="text">Guaranteed Price</span>
-                    <span className="price">${inquiryDetail && inquiryDetail.price}</span>
+                    <span className="price">${inquiryDetail && inquiryDetail.priceDollar}</span>
                   </p>
                 </div>
               </div>

@@ -33,7 +33,7 @@ class ShippingAddress extends React.Component<IShippingProps> {
           resolve(false);
         }
 
-        this.props.yourphone.addressInfo = { ...this.props.yourphone.addressInfo, ...values };
+        this.props.yourphone.addressInfo = { ...this.props.yourphone.addressInfo, ...values, 'country': 'United States' };
 
         // 给store里的paypal和echeck填入contact infomation作为默认，供payment页面初始化用
         // TODO:

@@ -23,9 +23,12 @@ export interface IYourPhoneStore {
     email: string;
   }
   activeBrandsId: number;
+  activeBrandsName: string;
   activeCarrierName: string;
   activeProductId: number;
+  activeProductName: string;
   activeModelId: number;
+  activeModelName: string;
   activeConditions: object;
   americaStates: IAmericaState;
   isTBD: boolean; // 选中的品牌是否为other
@@ -127,7 +130,8 @@ export interface IBrandListProps {
 export interface IInquiryDetail {
   key: string; // 询价key
   ppvs: ISkuPricePropertyNames[];
-  price: number; // 询价价格
+  price: number; // 询价价格--美分
+  priceDollar: number; // 询价价格--美元
   product: IProductDetail;
 }
 
@@ -141,7 +145,8 @@ export interface IProductDetail {
 
 export interface ISkuPricePropertyNames {
   id: number;
-  name: string;
+  // name: string;
+  value: string;
   pricePropertyValues: ISubSkuPricePropertyValues[];
 }
 
@@ -173,7 +178,7 @@ export interface IProductModel {
   skuPricePropertyNames: ISkuPricePropertyNames[];
   activeModelId: number;
   activeProductId: number;
-  onModelItemClick(productId: number, skuId: number): void;
+  onModelItemClick(productId: number, productName: string, skuId: number, skuName: string): void;
 }
 
 export interface IProductPPVN {
@@ -223,4 +228,11 @@ export enum EBrandType {
 export enum EPayType {
   PAYPAL = 'PAYPAL',
   ECHECK = 'CHECK'
+}
+
+export interface IBreadCrumb {
+  style: object;
+  brandName: string;
+  carrierName: string;
+  modelName: string;
 }

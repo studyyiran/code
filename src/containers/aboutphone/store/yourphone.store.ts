@@ -37,10 +37,13 @@ class YourPhone implements IYourPhoneStore {
     email: ''
   }
 
-  @observable public activeBrandsId = -1; // 选择的品牌
+  @observable public activeBrandsId = -1; // 选择的品牌Id
+  @observable public activeBrandsName = ''; // 选择的品牌的名称
   @observable public activeCarrierName = ''; // 选择的运营商
   @observable public activeProductId = -1; // 选择的机型的id
+  @observable public activeProductName = '' // 选择的机型的名称
   @observable public activeModelId = -1; // 选择的机型的内存id
+  @observable public activeModelName = ''; // 选择的内存名称
   @observable public activeConditions = {}; // 选择的ppvn
 
   @observable public americaStates: IAmericaState;
