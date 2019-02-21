@@ -33,6 +33,7 @@ export interface IYourPhoneStore {
   americaStates: IAmericaState;
   isTBD: boolean; // 选中的品牌是否为other
   isAllConditionSelected: boolean; // computed
+  isAddressValuesAndDisabled: boolean;
   getBrandsByCid: (categoryId?: number) => Promise<boolean>;
   getCarrier: () => Promise<boolean>;
   getProductsList: (keyword?: string) => Promise<boolean>;
@@ -48,6 +49,8 @@ export interface ILayOutProps {
   nextPath?: string;
   hideBottom?: boolean;
   nextCb?: () => void;
+  progress?: number;
+  disabled?: boolean
 }
 
 export interface IBrandLayoutProps {
@@ -76,7 +79,7 @@ export type IPaymentProps = IBrandsProps & FormComponentProps;
 
 export type IDoneProps = IBrandsProps;
 
-export type ICheckOutProps = IBrandsProps;
+export type ICheckOutProps = IBrandsProps & { user: IUserStoreNew };
 
 export interface IPaymentStates {
   isLeftOnEdit: boolean;
@@ -129,7 +132,8 @@ export interface IBrandListProps {
 export interface IInquiryDetail {
   key: string; // 询价key
   ppvs: ISkuPricePropertyNames[];
-  price: number; // 询价价格
+  price: number; // 询价价格--美分
+  priceDollar: number; // 询价价格--美元
   product: IProductDetail;
 }
 
@@ -143,7 +147,8 @@ export interface IProductDetail {
 
 export interface ISkuPricePropertyNames {
   id: number;
-  name: string;
+  // name: string;
+  value: string;
   pricePropertyValues: ISubSkuPricePropertyValues[];
 }
 
@@ -158,6 +163,7 @@ export interface INavigatorObj {
   subText: string;
   hasSearch: boolean;
   progress: number; // 底部导航, 值为-1表示不需要展示
+  isInCheckOrder?: boolean;
 }
 
 export interface IQueryParams {

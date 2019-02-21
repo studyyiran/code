@@ -45,6 +45,7 @@ export enum ECaptchaErrCode {
 }
 
 export interface IUserStoreNew {
+  isShowLeftPrice: boolean,
   canUpdatePreOrder: boolean;
   preOrder: Partial<IPreOrder>;
   getPreOrderKey: (userEmail: string) => Promise<boolean>;
@@ -80,7 +81,7 @@ export interface IPreOrder {
   agentCode?: string; // 应用渠道名字
   carrier?: string; // 选中的运营商的名称
   // yourphoneStore?: IYourPhoneStore; // 存储store的属性
-  
+
 }
 
 // interface IAddressInfo {

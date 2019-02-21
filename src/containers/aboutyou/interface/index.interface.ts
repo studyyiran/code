@@ -9,4 +9,7 @@ export interface IAboutYouProps extends FormComponentProps {
 
 export interface IAboutYouState {
   isValidate: boolean;
+  validateStatus: string | undefined,
+  help: React.ReactNode | undefined,
+  value?: string
 }

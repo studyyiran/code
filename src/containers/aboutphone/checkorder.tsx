@@ -8,7 +8,7 @@ import { Button } from 'antd';
 import { ICheckOutProps, ICheckOutStates, EBrandType, EPayType } from './interface/index.interface';
 import { checkOrderPageValidate } from '@/containers/aboutphone/pageValidate';
 
-@inject('yourphone')
+@inject('yourphone', 'user')
 @observer
 export default class FinalStep extends React.Component<ICheckOutProps, ICheckOutStates> {
   public readonly state: Readonly<ICheckOutStates> = {
@@ -25,7 +25,10 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
   }
 
   public componentDidMount() {
+    // 隐藏左侧价格模块
+    this.props.user.isShowLeftPrice = false;
     if (!checkOrderPageValidate()) {
+      debugger;
       this.props.history.push('/sell/account');
       return;
     }
@@ -78,7 +81,7 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
                   </div>
                   <p className="guaranteed-price">
                     <span className="text">Guaranteed Price</span>
-                    <span className="price">${inquiryDetail && inquiryDetail.price}</span>
+                    <span className="price">${inquiryDetail && inquiryDetail.priceDollar}</span>
                   </p>
                 </div>
               </div>

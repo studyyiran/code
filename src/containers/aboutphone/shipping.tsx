@@ -6,11 +6,14 @@ import './shipping.less';
 import { IShippingProps } from './interface/index.interface';
 import { IProductInfo } from '@/store/interface/user.interface';
 import { shippingPageValidate } from '@/containers/aboutphone/pageValidate';
+import yourphoneStore from './store/yourphone.store';
 @inject('yourphone', 'user')
 @observer
 class ShippingAddress extends React.Component<IShippingProps> {
 
   public componentDidMount() {
+    // 显示左侧价格模块
+    this.props.user.isShowLeftPrice = true;
     if (!shippingPageValidate()) {
       this.props.history.push('/sell/account');
       return;
@@ -31,7 +34,7 @@ class ShippingAddress extends React.Component<IShippingProps> {
           resolve(false);
         }
 
-        this.props.yourphone.addressInfo = { ...this.props.yourphone.addressInfo, ...values };
+        this.props.yourphone.addressInfo = { ...this.props.yourphone.addressInfo, ...values, };
 
         // 给store里的paypal和echeck填入contact infomation作为默认，供payment页面初始化用
         // TODO:
@@ -132,12 +135,13 @@ class ShippingAddress extends React.Component<IShippingProps> {
                   rules: [
                     {
                       required: true,
-                      validator: this.handleZipCode
+                      validator: this.handleZipCode,
                     }
                   ],
+                  validateTrigger: 'onBlur',
                   initialValue: addressInfo.zipCode,
                 })(
-                  <Input />
+                  <Input onChange={this.handleZipCodeChange} />
                 )
               }
             </Form.Item>
@@ -188,11 +192,12 @@ class ShippingAddress extends React.Component<IShippingProps> {
                 getFieldDecorator('mobile', {
                   rules: [
                     {
-                      pattern: /\d+/,
-                      message: "Please enter a valid city."
+                      pattern: /\d{11,11}/,
+                      message: "Please enter a valid mobile."
                     }
                   ],
-                  initialValue: addressInfo.mobile
+                  initialValue: addressInfo.mobile,
+                  validateTrigger: 'onBlur'
                 })(
                   <Input />
                 )
@@ -205,7 +210,20 @@ class ShippingAddress extends React.Component<IShippingProps> {
               // validateStatus="validating"
               help="We currently only support trades in the United States"
             >
-              <Input value="United States" disabled={true} />
+              {
+                getFieldDecorator('country', {
+                  rules: [
+                    {
+                      pattern: /\w+/,
+                      message: "Please enter a valid Country."
+                    }
+                  ],
+                  initialValue: addressInfo.country,
+                  validateTrigger: 'onBlur'
+                })(
+                  <Input value="United States" disabled={true} />
+                )
+              }
             </Form.Item>
           </Col>
         </Row>
@@ -216,7 +234,7 @@ class ShippingAddress extends React.Component<IShippingProps> {
 
         {
           !this.props.hideLayout
-            ? <Layout nextCb={this.handleNext} >{infomationHTML}</Layout>
+            ? <Layout nextCb={this.handleNext} disabled={this.props.yourphone.isAddressValuesAndDisabled}>{infomationHTML}</Layout>
             : (infomationHTML)
         }
       </div>
@@ -256,6 +274,27 @@ class ShippingAddress extends React.Component<IShippingProps> {
       this.props.history.push('/sell/yourphone/payment');
     }
   }
+
+  private handleZipCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { setFieldsValue } = this.props.form;
+    const value = e.target.value;
+    if (!value) {
+      setFieldsValue({ 'state': '' });
+      setFieldsValue({ 'city': '' });
+    }
+  }
 }
 
-export default Form.create()(ShippingAddress);
+const onValuesChange = (props: any, changedValues: any, allValues: any) => {
+  let disabled = false;
+  Object.keys(allValues).forEach((v: string) => {
+    if (!allValues[v] && v !== 'city' && v !== 'state') {
+
+      disabled = true;
+    }
+  })
+
+  yourphoneStore.isAddressValuesAndDisabled = disabled;
+
+}
+export default Form.create({ onValuesChange: onValuesChange })(ShippingAddress);

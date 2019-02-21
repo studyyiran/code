@@ -12,6 +12,8 @@ import Breadcrumb from './components/breadcrumb';
 export default class Brands extends React.Component<IBrandsProps> {
 
   public componentDidMount() {
+    // 显示左侧价格模块
+    this.props.user.isShowLeftPrice = true;
     // 检验是否获取到页面需要到必须数据
     if (!userEmailValidate()) {
       this.props.history.push('/sell/account');
