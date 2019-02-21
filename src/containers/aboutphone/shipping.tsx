@@ -34,7 +34,7 @@ class ShippingAddress extends React.Component<IShippingProps> {
           resolve(false);
         }
 
-        this.props.yourphone.addressInfo = { ...this.props.yourphone.addressInfo, ...values, 'country': 'United States' };
+        this.props.yourphone.addressInfo = { ...this.props.yourphone.addressInfo, ...values, };
 
         // 给store里的paypal和echeck填入contact infomation作为默认，供payment页面初始化用
         // TODO:
@@ -192,11 +192,12 @@ class ShippingAddress extends React.Component<IShippingProps> {
                 getFieldDecorator('mobile', {
                   rules: [
                     {
-                      pattern: /\d+/,
-                      message: "Please enter a valid city."
+                      pattern: /\d{11,11}/,
+                      message: "Please enter a valid mobile."
                     }
                   ],
-                  initialValue: addressInfo.mobile
+                  initialValue: addressInfo.mobile,
+                  validateTrigger: 'onBlur'
                 })(
                   <Input />
                 )
@@ -209,7 +210,20 @@ class ShippingAddress extends React.Component<IShippingProps> {
               // validateStatus="validating"
               help="We currently only support trades in the United States"
             >
-              <Input value="United States" disabled={true} />
+              {
+                getFieldDecorator('country', {
+                  rules: [
+                    {
+                      pattern: /\w+/,
+                      message: "Please enter a valid Country."
+                    }
+                  ],
+                  initialValue: addressInfo.country,
+                  validateTrigger: 'onBlur'
+                })(
+                  <Input value="United States" disabled={true} />
+                )
+              }
             </Form.Item>
           </Col>
         </Row>
