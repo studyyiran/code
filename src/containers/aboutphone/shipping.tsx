@@ -6,6 +6,7 @@ import './shipping.less';
 import { IShippingProps } from './interface/index.interface';
 import { IProductInfo } from '@/store/interface/user.interface';
 import { shippingPageValidate } from '@/containers/aboutphone/pageValidate';
+import yourphoneStore from './store/yourphone.store';
 @inject('yourphone', 'user')
 @observer
 class ShippingAddress extends React.Component<IShippingProps> {
@@ -219,7 +220,7 @@ class ShippingAddress extends React.Component<IShippingProps> {
 
         {
           !this.props.hideLayout
-            ? <Layout nextCb={this.handleNext} >{infomationHTML}</Layout>
+            ? <Layout nextCb={this.handleNext} disabled={this.props.yourphone.isAddressValuesAndDisabled}>{infomationHTML}</Layout>
             : (infomationHTML)
         }
       </div>
@@ -270,4 +271,16 @@ class ShippingAddress extends React.Component<IShippingProps> {
   }
 }
 
-export default Form.create()(ShippingAddress);
+const onValuesChange = (props: any, changedValues: any, allValues: any) => {
+  let disabled = false;
+  Object.keys(allValues).forEach((v: string) => {
+    if (!allValues[v] && v !== 'city' && v !== 'state') {
+
+      disabled = true;
+    }
+  })
+
+  yourphoneStore.isAddressValuesAndDisabled = disabled;
+
+}
+export default Form.create({ onValuesChange: onValuesChange })(ShippingAddress);

@@ -12,7 +12,8 @@ import Breadcrumb from '@/containers/aboutphone/components/breadcrumb';
 @observer
 export default class Conditions extends React.Component<IConditionsProps> {
   public state = {
-    progress: 3
+    progress: 3,
+    disabled: true
   }
   public componentDidMount() {
     // 显示左侧价格模块
@@ -60,7 +61,7 @@ export default class Conditions extends React.Component<IConditionsProps> {
         {
           !this.props.hideLayout
             ? (
-              <Layout nextCb={this.handleNext} progress={this.state.progress}>
+              <Layout nextCb={this.handleNext} progress={this.state.progress} disabled={this.state.disabled}>
                 <>
                   <Breadcrumb
                     brandName={this.props.yourphone.activeBrandsName}
@@ -81,7 +82,8 @@ export default class Conditions extends React.Component<IConditionsProps> {
     this.props.yourphone.activeConditions = { ...this.props.yourphone.activeConditions, [conditionId]: ppvnValueId };
     if (this.props.yourphone.isAllConditionSelected) {
       this.setState({
-        progress: 4
+        progress: 4,
+        disabled: false
       })
     }
   }

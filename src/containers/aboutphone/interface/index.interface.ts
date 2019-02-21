@@ -33,6 +33,7 @@ export interface IYourPhoneStore {
   americaStates: IAmericaState;
   isTBD: boolean; // 选中的品牌是否为other
   isAllConditionSelected: boolean; // computed
+  isAddressValuesAndDisabled: boolean;
   getBrandsByCid: (categoryId?: number) => Promise<boolean>;
   getCarrier: () => Promise<boolean>;
   getProductsList: (keyword?: string) => Promise<boolean>;
@@ -49,6 +50,7 @@ export interface ILayOutProps {
   hideBottom?: boolean;
   nextCb?: () => void;
   progress?: number;
+  disabled?: boolean
 }
 
 export interface IBrandLayoutProps {

@@ -45,7 +45,7 @@ class YourPhone implements IYourPhoneStore {
   @observable public activeModelId = -1; // 选择的机型的内存id
   @observable public activeModelName = ''; // 选择的内存名称
   @observable public activeConditions = {}; // 选择的ppvn
-
+  @observable public isAddressValuesAndDisabled: boolean = true;
   @observable public americaStates: IAmericaState;
 
   constructor() {
