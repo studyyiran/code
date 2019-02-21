@@ -7,6 +7,7 @@ export interface IYourPhoneStore {
   carriers: ICarrier[];
   brands: IBrands[];
   products: IProductModel[];
+  products4Search: IProductModel[] ,
   productPPVNS: IProductPPVN[];
   inquiryDetail: IInquiryDetail | null;
   orderDetail: any;

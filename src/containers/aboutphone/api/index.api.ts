@@ -94,7 +94,7 @@ export const getStateByCode = <T>(zipCode: number) => {
   return Request<T>(opts);
 }
 
-export const createOrder = <T>(orderParams: IPreOrder) => {
+export const createOrder = <T>(orderParams: Pick<IPreOrder, Exclude<keyof IPreOrder, 'key' | 'productInfo'>>) => {
   const opts: IOpts = {
     url: `/orders`,
     method: 'post',

@@ -11,7 +11,6 @@ export function getOrderDetail<T>(userEmail: string, orderNo: string): Promise<T
             orderNo
         },
         loading: true,
-        // isMock: true
     };
     return Request<T>(opts);
 }
@@ -22,7 +21,6 @@ export function getOrderDetailByToken<T>(token: string): Promise<T> {
         method: "GET",
         url: `/orders/token/${token}`,
         loading: true,
-        isMock: true
     };
     return Request<T>(opts, [201]); // 201表示token已经被使用过了
 }
@@ -36,14 +34,13 @@ export function getTranshipping<T>(carrier: string, trackingNumber: string): Pro
             trackingNumber
         },
         loading: true,
-        isMock: true
     };
 
     return Request<T>(opts);
 }
 
 // 接受质检报价
-export function approveRevisedPrice<T>(orderNo: string): Promise<T> {
+export function approveRevisedPrice<T>(userEmail: string, orderNo: string): Promise<T> {
     const opts: IOpts = {
         method: "POST",
         url: `/orders/confirm`,
@@ -51,22 +48,20 @@ export function approveRevisedPrice<T>(orderNo: string): Promise<T> {
             orderNo
         },
         loading: true,
-        isMock: true
     };
 
     return Request<T>(opts);
 }
 
 // 退回商品
-export function returnProduct<T>(orderNo: string): Promise<T> {
+export function returnProduct<T>(userEmail: string, orderNo: string): Promise<T> {
     const opts: IOpts = {
         method: "POST",
         url: `/orders/applyReturn`,
         params: {
             orderNo
         },
-        loading: true,
-        isMock: true
+        loading: true
     };
 
     return Request<T>(opts);
