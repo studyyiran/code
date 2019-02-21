@@ -56,8 +56,16 @@ export default class SellLayout extends React.Component<{ route: { [key: string]
           this.props.yourphone.activeBrandsId = this.props.user.preOrder.productInfo.brandId;
         }
 
+        if (this.props.user.preOrder.productInfo.brandName) {
+          this.props.yourphone.activeBrandsName = this.props.user.preOrder.productInfo.brandName;
+        }
+
         if (this.props.user.preOrder.productInfo.modelId) {
           this.props.yourphone.activeModelId = this.props.user.preOrder.productInfo.modelId;
+        }
+
+        if (this.props.user.preOrder.productInfo.modelName) {
+          this.props.yourphone.activeModelName = this.props.user.preOrder.productInfo.modelName;
         }
 
         if (this.props.user.preOrder.productInfo.carrier) {
@@ -66,6 +74,10 @@ export default class SellLayout extends React.Component<{ route: { [key: string]
 
         if (this.props.user.preOrder.productInfo.productId) {
           this.props.yourphone.activeProductId = this.props.user.preOrder.productInfo.productId;
+        }
+
+        if (this.props.user.preOrder.productInfo.productName) {
+          this.props.yourphone.activeProductName = this.props.user.preOrder.productInfo.productName;
         }
 
         if (this.props.user.preOrder.productInfo.inquiryDetail) {
@@ -91,13 +103,13 @@ export default class SellLayout extends React.Component<{ route: { [key: string]
     if (!this.state.isSetedPreOrder) {
       return null;
     }
-    const price = this.props.yourphone.inquiryDetail !== null ? this.props.yourphone.inquiryDetail.price : '';
+    const price = this.props.yourphone.inquiryDetail !== null ? this.props.yourphone.inquiryDetail.priceDollar : '';
     const children = this.props.route.children;
     return (
       <div className="page-sell-layout-container">
         <div className="sell-layout-left">
           <LeftSide stepIndex={this.state.stepIndex} />
-          <GuaranteedPrice price={price} isTBD={this.props.yourphone.isTBD} />
+          <GuaranteedPrice price={price} isTBD={this.props.yourphone.isTBD} user={this.props.user} />
         </div>
         <div className="sell-layout-right">
           {

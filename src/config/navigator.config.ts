@@ -58,7 +58,8 @@ export default {
   '/sell/yourphone/checkorder': {
     step: 4,
     mainText: 'All done! Now ship the phone.',
-    subText: 'We will send a confirmation email to xxx@hotmail.com',
+    subText: 'We will send a confirmation email to ',
+    isInCheckOrder: true,
     hasSearch: false,
     progress: -1
   }

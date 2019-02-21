@@ -45,6 +45,7 @@ export enum ECaptchaErrCode {
 }
 
 export interface IUserStoreNew {
+  isShowLeftPrice: boolean,
   canUpdatePreOrder: boolean;
   preOrder: Partial<IPreOrder>;
   getPreOrderKey: (userEmail: string) => Promise<boolean>;
@@ -80,7 +81,7 @@ export interface IPreOrder {
   agentCode?: string; // 应用渠道名字
   carrier?: string; // 选中的运营商的名称
   // yourphoneStore?: IYourPhoneStore; // 存储store的属性
-  
+
 }
 
 // interface IAddressInfo {
@@ -104,9 +105,12 @@ export interface IPreOrder {
 // }
 export interface IProductInfo {
   brandId: number; // 品牌ID
+  brandName: string; // 品牌名称
   carrier: string; // 运营商
   priceUnits: number[];
   productId: number; // 机型ID
+  productName: string; // 机型名称
   modelId: number; // 选中的内存属性skuid
+  modelName: string; // 内存名称
   inquiryDetail?: IYourPhoneStore['inquiryDetail']
 }

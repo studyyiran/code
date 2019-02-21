@@ -5,17 +5,18 @@ import { NAVIGATOR } from 'config';
 import { Input } from 'antd';
 import { INavigatorObj, IProductModel } from '@/containers/aboutphone/interface/index.interface';
 import yourphoneStore from '@/containers/aboutphone/store/yourphone.store';
+import userStore from '@/store/user';
 import EventHandler from '@/utils/event';
 
 interface IStates {
-  navigatorObj: INavigatorObj | null
+  navigatorObj: INavigatorObj | null;
 }
 let timer: number = 0;
 @observer
 export default class BrandHeader extends React.Component<object, IStates> {
 
   public readonly state: Readonly<IStates> = {
-    navigatorObj: null
+    navigatorObj: null,
   }
 
   public componentDidMount() {
@@ -42,13 +43,13 @@ export default class BrandHeader extends React.Component<object, IStates> {
     }
     const Search = Input.Search;
     const { navigatorObj } = this.state;
-
+    const extraText = navigatorObj.isInCheckOrder ? userStore.preOrder.userEmail : ''; // checkorder页面需要添加用户邮箱展示
     return (
       <div className="comp-brand-header-container" style={{ height: navigatorObj.subText ? '110px' : '90px' }}>
         <div className="left-wrapper">
           <p className="main-text">{navigatorObj.mainText}</p>
           {
-            navigatorObj.subText && <p className="sub-text">{navigatorObj.subText}</p>
+            navigatorObj.subText && <p className="sub-text">{`${navigatorObj.subText} ${extraText}`}</p>
           }
         </div>
         {

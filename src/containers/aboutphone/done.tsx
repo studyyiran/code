@@ -27,6 +27,8 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
   }
 
   public componentDidMount() {
+    // 显示左侧价格模块
+    this.props.user.isShowLeftPrice = true;
     if (!donePageValidate()) {
       this.props.history.push('/sell/account');
       return;
@@ -112,7 +114,7 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
             </p>
             <p className="info-item">
               <span className="label">Condition</span>
-              <span className="content">{yourphone.inquiryDetail && yourphone.inquiryDetail.ppvs.map(ppv => ppv.name).join(',')}<span className="edit-bg" onClick={this.handlePageChoose.bind(this, EChangeType.CONDITION)} /></span>
+              <span className="content">{yourphone.inquiryDetail && yourphone.inquiryDetail.ppvs.map(ppv => ppv.value).join(',')}<span className="edit-bg" onClick={this.handlePageChoose.bind(this, EChangeType.CONDITION)} /></span>
             </p>
           </>
         );

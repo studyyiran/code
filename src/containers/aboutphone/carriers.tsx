@@ -5,12 +5,15 @@ import LayOut from '@/containers/aboutphone/layout';
 import CarrierItem from '@/containers/aboutphone/components/carrieritem';
 import './carriers.less';
 import { userEmailValidate } from '@/containers/aboutphone/pageValidate';
+import Breadcrumb from './components/breadcrumb';
 
 @inject('yourphone', 'user')
 @observer
 export default class Brands extends React.Component<IBrandsProps> {
 
   public componentDidMount() {
+    // 显示左侧价格模块
+    this.props.user.isShowLeftPrice = true;
     // 检验是否获取到页面需要到必须数据
     if (!userEmailValidate()) {
       this.props.history.push('/sell/account');
@@ -25,9 +28,15 @@ export default class Brands extends React.Component<IBrandsProps> {
     return (
       <div className="page-carriers-container">
         <LayOut>
-          {
-            carriers.map((carrier, index) => <CarrierItem key={index} carrier={carrier} activeCarrierName={activeCarrierName} onCarrierClick={this.onCarrierItemClick} />)
-          }
+          <>
+            <Breadcrumb
+              style={{ marginLeft: '15px' }}
+              brandName={this.props.yourphone.activeBrandsName}
+            />
+            {
+              carriers.map((carrier, index) => <CarrierItem key={index} carrier={carrier} activeCarrierName={activeCarrierName} onCarrierClick={this.onCarrierItemClick} />)
+            }
+          </>
         </LayOut>
       </div>
     );
@@ -41,6 +50,7 @@ export default class Brands extends React.Component<IBrandsProps> {
         ...this.props.user.preOrder,
         productInfo: {
           brandId: this.props.yourphone.activeBrandsId,
+          brandName: this.props.yourphone.activeBrandsName,
           carrier: carrier.name
         }
       };

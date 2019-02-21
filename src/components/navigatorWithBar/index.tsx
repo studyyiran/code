@@ -7,6 +7,7 @@ interface IProps {
   nextPath?: string;
   progress?: number;
   nextCb?: () => void;
+  disabled?: boolean
 }
 
 interface IStates {
@@ -38,6 +39,7 @@ export default class NavigatorWithBar extends React.Component<IProps, IStates> {
     if (this.state.navigatorObj === null) {
       return null;
     }
+    console.log(this.props.disabled)
 
     const { navigatorObj } = this.state;
     return (
@@ -66,6 +68,8 @@ export default class NavigatorWithBar extends React.Component<IProps, IStates> {
             <Button
               style={{ width: '130px', height: '50px' }}
               onClick={this.goNext}
+              type="primary"
+              disabled={this.props.disabled}
             >
               NEXT <Icon type="arrow-right" />
             </Button>

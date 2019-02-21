@@ -69,7 +69,7 @@ class Store implements IOrderStore {
                 model = orderItem.product.name;
                 carrier = this.referenceEnumToCarrier(orderItem.carrier);
                 condition = orderItem.pricePropertyValues.map(t => t.value).join(",");
-                guaranteedPrice = `$${orderItem.amount}`;
+                guaranteedPrice = `$${orderItem.amountDollar}`;
             } else {
                 // TBD
                 model = "Other Phone";
@@ -164,8 +164,8 @@ class Store implements IOrderStore {
         const orderDetail = this.orderDetail;
         if (orderDetail.orderNo) {
             const orderItem = orderDetail.orderItem;
-            data.revisedPrice = orderItem.actualAmount;
-            data.amount = orderItem.amount;
+            data.revisedPrice = orderItem.actualAmountDollar;
+            data.amount = orderItem.amountDollar;
             if (orderItem.inspectResult && orderItem.inspectResult.result !== "MATCHED") {
                 data.diffStatus = "fail";
                 data.differenceText = orderItem.inspectResult.result === "WRONG_CONDITION" ? "Wrong Condition" : "Wrong Product";

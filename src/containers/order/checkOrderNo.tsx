@@ -50,6 +50,7 @@ class CheckOrderNo extends React.Component<IOrderProps & RouteComponentProps> {
                                 type="email"
                                 onChange={this.handleChangeEmail}
                                 size="large"
+                                onBlur={this.checkFormat}
                             />
                         </Form.Item>
                         <div className="check-label">Order number</div>
@@ -74,6 +75,7 @@ class CheckOrderNo extends React.Component<IOrderProps & RouteComponentProps> {
                         type="primary"
                         style={{ width: 400 }}
                         onClick={this.onSubmit}
+                        disabled={this.state.email === "" || this.state.orderNo === ""}
                     >CHECK ORDER</Button>
                 </div>
             </div>
@@ -103,6 +105,15 @@ class CheckOrderNo extends React.Component<IOrderProps & RouteComponentProps> {
             orderInputHelp: ''
         }
         this.setState(state);
+    }
+    private checkFormat = () => {
+        const email = /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/;
+        if (!email.test(this.state.email) && this.state.email !== "") {
+            this.setState({
+                validateEmail: 'error',
+                emailInputHelp: 'Please enter a valid email address'
+            });
+        }
     }
 
     private onSubmit = async () => {
