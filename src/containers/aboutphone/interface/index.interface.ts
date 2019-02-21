@@ -161,6 +161,7 @@ export interface INavigatorObj {
   subText: string;
   hasSearch: boolean;
   progress: number; // 底部导航, 值为-1表示不需要展示
+  isInCheckOrder?: boolean;
 }
 
 export interface IQueryParams {
