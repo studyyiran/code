@@ -8,7 +8,7 @@ import { Button } from 'antd';
 import { ICheckOutProps, ICheckOutStates, EBrandType, EPayType } from './interface/index.interface';
 import { checkOrderPageValidate } from '@/containers/aboutphone/pageValidate';
 
-@inject('yourphone')
+@inject('yourphone', 'user')
 @observer
 export default class FinalStep extends React.Component<ICheckOutProps, ICheckOutStates> {
   public readonly state: Readonly<ICheckOutStates> = {
@@ -25,6 +25,8 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
   }
 
   public componentDidMount() {
+    // 隐藏左侧价格模块
+    this.props.user.isShowLeftPrice = false;
     if (!checkOrderPageValidate()) {
       this.props.history.push('/sell/account');
       return;

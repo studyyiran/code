@@ -11,6 +11,8 @@ import { shippingPageValidate } from '@/containers/aboutphone/pageValidate';
 class ShippingAddress extends React.Component<IShippingProps> {
 
   public componentDidMount() {
+    // 显示左侧价格模块
+    this.props.user.isShowLeftPrice = true;
     if (!shippingPageValidate()) {
       this.props.history.push('/sell/account');
       return;
@@ -132,12 +134,13 @@ class ShippingAddress extends React.Component<IShippingProps> {
                   rules: [
                     {
                       required: true,
-                      validator: this.handleZipCode
+                      validator: this.handleZipCode,
                     }
                   ],
+                  validateTrigger: 'onBlur',
                   initialValue: addressInfo.zipCode,
                 })(
-                  <Input />
+                  <Input onChange={this.handleZipCodeChange} />
                 )
               }
             </Form.Item>
@@ -254,6 +257,15 @@ class ShippingAddress extends React.Component<IShippingProps> {
         }
       } catch (error) { console.warn(error, 'in shipping page preOrder') }
       this.props.history.push('/sell/yourphone/payment');
+    }
+  }
+
+  private handleZipCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { setFieldsValue } = this.props.form;
+    const value = e.target.value;
+    if (!value) {
+      setFieldsValue({ 'state': '' });
+      setFieldsValue({ 'city': '' });
     }
   }
 }

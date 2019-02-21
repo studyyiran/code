@@ -7,7 +7,7 @@ export interface IYourPhoneStore {
   carriers: ICarrier[];
   brands: IBrands[];
   products: IProductModel[];
-  products4Search: IProductModel[] ,
+  products4Search: IProductModel[],
   productPPVNS: IProductPPVN[];
   inquiryDetail: IInquiryDetail | null;
   orderDetail: any;
@@ -45,6 +45,7 @@ export interface ILayOutProps {
   nextPath?: string;
   hideBottom?: boolean;
   nextCb?: () => void;
+  progress?: number;
 }
 
 export interface IBrandLayoutProps {
@@ -73,7 +74,7 @@ export type IPaymentProps = IBrandsProps & FormComponentProps;
 
 export type IDoneProps = IBrandsProps;
 
-export type ICheckOutProps = IBrandsProps;
+export type ICheckOutProps = IBrandsProps & { user: IUserStoreNew };
 
 export interface IPaymentStates {
   isLeftOnEdit: boolean;

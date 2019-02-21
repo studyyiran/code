@@ -25,6 +25,8 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
   }
 
   public componentDidMount() {
+    // 显示左侧价格模块
+    this.props.user.isShowLeftPrice = true;
     if (!paymentPageValidate()) {
       this.props.history.push('/sell/account');
       return;

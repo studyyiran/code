@@ -27,6 +27,8 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
   }
 
   public componentDidMount() {
+    // 显示左侧价格模块
+    this.props.user.isShowLeftPrice = true;
     if (!donePageValidate()) {
       this.props.history.push('/sell/account');
       return;

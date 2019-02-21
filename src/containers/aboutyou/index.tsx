@@ -7,18 +7,26 @@ import { IAboutYouProps, IAboutYouState } from './interface/index.interface';
 @observer
 class AboutYou extends React.Component<IAboutYouProps, IAboutYouState> {
   public readonly state = {
-    isValidate: false
+    isValidate: false,
+    validateStatus: undefined,
+    help: undefined,
+    value: ''
   }
   public componentDidMount() {
+    // 隐藏左侧价格模块
+    this.props.user.isShowLeftPrice = false;
     // 当有userEmail时，校验是否为邮箱格式，并高亮
     const userEmail = this.props.user.preOrder.userEmail;
     const regExp = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,})$/;
     if (userEmail && regExp.test(userEmail)) {
+      this.setState({
+        value: userEmail
+      })
       this.setState({ isValidate: true });
     }
   }
   public render() {
-    const { getFieldDecorator } = this.props.form;
+    // const { getFieldDecorator } = this.props.form;
     return (
       <div className="page-aboutyou-container">
         <div className="header-wrapper">
@@ -30,27 +38,37 @@ class AboutYou extends React.Component<IAboutYouProps, IAboutYouState> {
             <Form.Item
               label="Email address"
               required={true}
+              validateStatus={this.state.validateStatus}
+              help={this.state.help}
             >
-              {
+              {/* {
                 getFieldDecorator("email", {
                   rules: [
                     {
                       required: true,
-                      type: 'email',
+                      // type: 'email',
                       message: <p><Icon type="close-circle" /> Please enter a valid email address</p>
                     }
                   ],
                   initialValue: this.props.user.preOrder.userEmail
                 })(
                   <Input
-                    placeholder="example@gmail.com"
                     autoFocus={true}
                     autoComplete="off"
                     onChange={this.handleValidate}
                     onPressEnter={this.handleSubmit}
                   />
                 )
-              }
+              } */}
+              <Input
+                autoFocus={true}
+                autoComplete="off"
+                onChange={this.handleValidate}
+                onPressEnter={this.handleSubmit}
+                onBlur={this.handleValidateBlur}
+                defaultValue={this.props.user.preOrder.userEmail}
+                value={this.state.value}
+              />
             </Form.Item>
             <Form.Item>
               <Button
@@ -68,27 +86,37 @@ class AboutYou extends React.Component<IAboutYouProps, IAboutYouState> {
   }
 
   private handleSubmit = () => {
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        this.props.user.getPreOrderKey(values.email);
-        this.props.history.push('/sell/yourphone/brand');
-      }
-    })
+    if (!this.state.validateStatus) {
+      this.props.user.getPreOrderKey(this.state.value);
+      this.props.history.push('/sell/yourphone/brand');
+    }
   }
 
   private handleValidate = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // this.props.form.validateFields((err, values) => {
-    //   this.setState({ isValidate: !err ? true : false });
-    //   console.log(this.state.isValidate);
-    // });
-    console.log(e.target.value)
-    if (/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,})$/.test(e.target.value)) {
-      this.setState({ isValidate: true });
-      return true;
+    console.log(222)
+    const value = e.target.value;
+    const state = {
+      isValidate: false,
+      value: value
     }
+    if (value.trim()) {
+      state.isValidate = true;
+    }
+    this.setState(state);
+  }
 
-    this.setState({ isValidate: false });
-    return false;
+  private handleValidateBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    console.log(111)
+    const state: IAboutYouState = {
+      isValidate: this.state.isValidate,
+      help: undefined,
+      validateStatus: undefined,
+    }
+    if (!/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,})$/.test(e.target.value)) {
+      state.help = <><Icon type="close-circle" />Please enter a valid email address</>;
+      state.validateStatus = 'error';
+    }
+    this.setState(state);
   }
 }
 

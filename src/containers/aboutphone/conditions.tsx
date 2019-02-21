@@ -10,8 +10,12 @@ import { conditionPageValidate } from '@/containers/aboutphone/pageValidate';
 @inject('yourphone', 'user')
 @observer
 export default class Conditions extends React.Component<IConditionsProps> {
-
+  public state = {
+    progress: 3
+  }
   public componentDidMount() {
+    // 显示左侧价格模块
+    this.props.user.isShowLeftPrice = true;
     if (!conditionPageValidate()) {
       this.props.history.push('/sell/account');
       return;
@@ -54,7 +58,7 @@ export default class Conditions extends React.Component<IConditionsProps> {
       <div className="page-conditions-container">
         {
           !this.props.hideLayout
-            ? <Layout nextCb={this.handleNext} >{conditionList}</Layout>
+            ? <Layout nextCb={this.handleNext} progress={this.state.progress}>{conditionList}</Layout>
             : (conditionList)
         }
       </div>
@@ -63,6 +67,11 @@ export default class Conditions extends React.Component<IConditionsProps> {
 
   private onConditionItemClick = (conditionId: number, ppvnValueId: number) => {
     this.props.yourphone.activeConditions = { ...this.props.yourphone.activeConditions, [conditionId]: ppvnValueId };
+    if (this.props.yourphone.isAllConditionSelected) {
+      this.setState({
+        progress: 4
+      })
+    }
   }
 
   private handleNext = async () => {

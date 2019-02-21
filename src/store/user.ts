@@ -36,7 +36,7 @@ class User implements IUserStoreNew {
   //   },
   //   userEmail: ''
   // };
-
+  @observable public isShowLeftPrice: boolean = false;
 
   @observable public preOrder: Partial<IPreOrder> = {
     userEmail: '',
