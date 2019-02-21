@@ -1,9 +1,7 @@
 import * as React from 'react';
 import { TITLE_CONFIG } from 'config';
-import { message } from 'antd';
 import * as PropTypes from 'prop-types';
 import './index.less';
-import { ECommonText } from '@/language/common';
 import Header from './header';
 import Footer from './footer';
 
