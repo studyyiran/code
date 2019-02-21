@@ -198,7 +198,7 @@ class YourPhone implements IYourPhoneStore {
       inquiryKey: this.inquiryKey,
       payment: this.payment,
       paypalInfo: this.paypal,
-      userEmail: UserStore.preOrder.userEmail
+      userEmail: UserStore.preOrder.userEmail!
     }
 
     try {

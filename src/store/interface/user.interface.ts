@@ -46,7 +46,7 @@ export enum ECaptchaErrCode {
 
 export interface IUserStoreNew {
   canUpdatePreOrder: boolean;
-  preOrder: IPreOrder;
+  preOrder: Partial<IPreOrder>;
   getPreOrderKey: (userEmail: string) => Promise<boolean>;
   updatePreOrder: (preOrder: IPreOrder) => Promise<boolean>;
 }
@@ -75,11 +75,11 @@ export interface IPreOrder {
   key: string; // preOrder的key
   payment: IYourPhoneStore['payment'];
   paypalInfo: IYourPhoneStore['paypal']; // paypal支付信息
-  productInfo: IProductInfo;
+  productInfo: Partial<IProductInfo>;
   userEmail: string; // 用户邮箱
   agentCode?: string; // 应用渠道名字
   carrier?: string; // 选中的运营商的名称
-  yourphoneStore?: IYourPhoneStore; // 存储store的属性
+  // yourphoneStore?: IYourPhoneStore; // 存储store的属性
   
 }
 
@@ -102,10 +102,11 @@ export interface IPreOrder {
 // interface IPaypalInfo {
 //   email: string;
 // }
-interface IProductInfo {
+export interface IProductInfo {
   brandId: number; // 品牌ID
   carrier: string; // 运营商
   priceUnits: number[];
   productId: number; // 机型ID
   modelId: number; // 选中的内存属性skuid
+  inquiryDetail?: IYourPhoneStore['inquiryDetail']
 }

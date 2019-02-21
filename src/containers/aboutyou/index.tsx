@@ -19,7 +19,6 @@ class AboutYou extends React.Component<IAboutYouProps, IAboutYouState> {
   }
   public render() {
     const { getFieldDecorator } = this.props.form;
-    const { isValidate } = this.state;
     return (
       <div className="page-aboutyou-container">
         <div className="header-wrapper">
@@ -56,7 +55,7 @@ class AboutYou extends React.Component<IAboutYouProps, IAboutYouState> {
             <Form.Item>
               <Button
                 block={true}
-                disabled={!isValidate}
+                disabled={!this.state.isValidate}
                 size="large"
                 type="primary"
                 onClick={this.handleSubmit}
@@ -77,10 +76,19 @@ class AboutYou extends React.Component<IAboutYouProps, IAboutYouState> {
     })
   }
 
-  private handleValidate = () => {
-    this.props.form.validateFields((err, values) => {
-      this.setState({ isValidate: !err ? true : false });
-    });
+  private handleValidate = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // this.props.form.validateFields((err, values) => {
+    //   this.setState({ isValidate: !err ? true : false });
+    //   console.log(this.state.isValidate);
+    // });
+    console.log(e.target.value)
+    if (/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,})$/.test(e.target.value)) {
+      this.setState({ isValidate: true });
+      return true;
+    }
+
+    this.setState({ isValidate: false });
+    return false;
   }
 }
 

@@ -32,8 +32,7 @@ export default class Brands extends React.Component<IBrandsProps> {
       const productInfo = { ...this.props.user.preOrder.productInfo, carrier: carrier.name }
       this.props.user.preOrder = {
         ...this.props.user.preOrder,
-        productInfo,
-        yourphoneStore: {...this.props.yourphone}
+        productInfo
       };
     } catch (error) { console.warn(error, 'in carriers page updatePreorder') }
 
