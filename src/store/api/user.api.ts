@@ -3,7 +3,7 @@ import { IOpts } from "@/utils/request.interface";
 import { Request } from 'utils';
 
 // 第一次生成PreOrder
-export const getPreOrderKey = (preOrder: Partial<IPreOrder>) => {
+export const getPreOrderKey = <T>(preOrder: Partial<IPreOrder>) => {
   const opts: IOpts = {
     url: '/pre_orders/generate',
     method: 'post',
@@ -11,7 +11,7 @@ export const getPreOrderKey = (preOrder: Partial<IPreOrder>) => {
     loading: true
   };
 
-  return Request(opts);
+  return Request<T>(opts);
 }
 
 // 根据第一次生成的PreOrder得到的key来更新PreOrder

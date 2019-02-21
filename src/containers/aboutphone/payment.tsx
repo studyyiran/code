@@ -4,6 +4,8 @@ import { inject, observer } from 'mobx-react';
 import { Row, Col, Collapse, Form, Input, message } from 'antd';
 import Layout from '@/containers/aboutphone/layout';
 import { IPaymentProps, IPaymentStates, EPayType } from './interface/index.interface';
+import { paymentPageValidate } from '@/containers/aboutphone/pageValidate';
+import yourphoneStore from './store/yourphone.store';
 import './payment.less';
 
 const Panel = Collapse.Panel;
@@ -13,17 +15,22 @@ const leftHeader = <div className='paypal-bg' />;
  * 根据yourphone的payment来判断用户选择哪种收款方式： PAYPAL | ECHECK
  */
 
-@inject('yourphone')
+@inject('yourphone', 'user')
 @observer
 class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
 
   public readonly state: Readonly<IPaymentStates> = {
-    isLeftOnEdit: false,
-    isRightOnEdit: false,
     activeSide: this.props.yourphone.payment
   }
 
   public componentDidMount() {
+    // 显示左侧价格模块
+    this.props.user.isShowLeftPrice = true;
+    if (!paymentPageValidate()) {
+      this.props.history.push('/sell/account');
+      return;
+    }
+
     if (typeof this.props.onRef === 'function') {
       this.props.onRef!(this); // 让done page里获取到这个组件实例，调用其validateData方法
     }
@@ -36,16 +43,31 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
       if (payment === '') {
         message.info('how would you like to pay?');
         resolve(false);
+        return;
       }
 
       // 用户并没有修改有关的支付信息，不需要执行下面的校验
-      if (!this.state.isLeftOnEdit && !this.state.isRightOnEdit) {
+      if (!this.props.yourphone.isLeftOnEdit && !this.props.yourphone.isRightOnEdit) {
+        switch (this.props.yourphone.payment) {
+          case EPayType.PAYPAL:
+            this.props.yourphone.paypal = { email: this.props.user.preOrder.userEmail || '' };
+            break;
+          case EPayType.ECHECK:
+            this.props.yourphone.echeck = {
+              firstName: this.props.yourphone.addressInfo.firstName,
+              lastName: this.props.yourphone.addressInfo.lastName,
+              email: this.props.user.preOrder.userEmail || ''
+            }
+            break;
+        }
         resolve(true);
+        return;
       }
 
       this.props.form.validateFields((err, values) => {
         if (err) {
           resolve(false);
+          return;
         }
 
         const { email, email_confirm, firstName, lastName, paypal_email, paypal_email_confirm } = values;
@@ -59,6 +81,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
             }
           });
           resolve(false);
+          return;
         }
         // 判断两次输入paypal的email是否一致
         if (paypal_email !== paypal_email_confirm) {
@@ -69,6 +92,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
             }
           });
           resolve(false);
+          return;
         }
 
         switch (this.props.yourphone.payment) {
@@ -97,7 +121,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
     const { paypal, echeck } = this.props.yourphone;
 
     // paypal的结构
-    switch (this.state.isLeftOnEdit) {
+    switch (this.props.yourphone.isLeftOnEdit) {
       case false:
         leftContent = (
           <div className="left-wrapper">
@@ -105,7 +129,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
             <p className="email">
               <span className="title">Paypal email address</span>
               <br />
-              <span className="address">{paypal.email}</span>
+              <span className="address">{this.props.user.preOrder.userEmail}</span>
             </p>
             <p className="difference" onClick={this.changeEditState.bind(this, 'paypal')} >My email for Paypal is not the same as contact email</p>
           </div>
@@ -129,6 +153,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
                         }
                       ],
                       initialValue: paypal.email,
+                      validateTrigger: 'onBlur',
                     })(
                       <Input />
                     )
@@ -144,6 +169,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
                           message: "Please enter a valid email."
                         }
                       ],
+                      validateTrigger: 'onBlur',
                       initialValue: paypal.email,
                     })(
                       <Input />
@@ -159,7 +185,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
     }
 
     // eCheck的结构
-    switch (this.state.isRightOnEdit) {
+    switch (this.props.yourphone.isRightOnEdit) {
       case false:
         rightContent = (
           <div className="right-wrapper">
@@ -167,12 +193,12 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
             <p className="name">
               <span className="title">Name</span>
               <br />
-              <span className="address">{`${echeck.firstName} ${echeck.lastName}`}</span>
+              <span className="address">{`${this.props.yourphone.addressInfo.firstName} ${this.props.yourphone.addressInfo.lastName}`}</span>
             </p>
             <p className="email">
               <span className="title">eCheck email address</span>
               <br />
-              <span className="address">{echeck.email}</span>
+              <span className="address">{this.props.user.preOrder.userEmail}</span>
             </p>
             <p className="difference" onClick={this.changeEditState.bind(this, 'check')} >The name and email for eCheck is not the same as contact information</p>
           </div>
@@ -193,6 +219,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
                           message: "Please enter a valid first name."
                         }
                       ],
+                      validateTrigger: 'onBlur',
                       initialValue: echeck.firstName,
                     })(
                       <Input />
@@ -209,6 +236,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
                           message: "Please enter a valid last name."
                         }
                       ],
+                      validateTrigger: 'onBlur',
                       initialValue: echeck.lastName
                     })(
                       <Input />
@@ -225,6 +253,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
                           message: "Please enter a valid email."
                         }
                       ],
+                      validateTrigger: 'onBlur',
                       initialValue: echeck.email
                     })(
                       <Input />
@@ -241,6 +270,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
                           message: "Please enter a valid email."
                         }
                       ],
+                      validateTrigger: 'onBlur',
                       initialValue: echeck.email
                     })(
                       <Input />
@@ -258,7 +288,11 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
     const paymentHTML = (
       <Row gutter={30} style={{ paddingTop: '42px' }}>
         <Col span={12}>
-          <Collapse onChange={this.handlePaypalCollapseExtend} className={classnames({ active: this.props.yourphone.payment === EPayType.PAYPAL })}>
+          <Collapse
+            onChange={this.handlePaypalCollapseExtend}
+            activeKey={this.props.yourphone.payment}
+            // defaultActiveKey={[this.props.yourphone.payment]}
+            className={classnames({ active: this.props.yourphone.payment === EPayType.PAYPAL })}>
             <Panel
               header={leftHeader}
               showArrow={false}
@@ -269,7 +303,11 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
           </Collapse>
         </Col>
         <Col span={12}>
-          <Collapse onChange={this.handleEcheckCollapseExtend} className={classnames({ active: this.props.yourphone.payment === EPayType.ECHECK })}>
+          <Collapse
+            onChange={this.handleEcheckCollapseExtend}
+            activeKey={this.props.yourphone.payment}
+            // defaultActiveKey={[this.props.yourphone.payment]}
+            className={classnames({ active: this.props.yourphone.payment === EPayType.ECHECK })}>
             <Panel
               header={<h3>eCheck</h3>}
               showArrow={false}
@@ -286,7 +324,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
       <div className="page-payment-container">
         {
           !this.props.hideLayout
-            ? <Layout nextCb={this.handleNext} >{paymentHTML}</Layout>
+            ? <Layout nextCb={this.handleNext} disabled={!this.props.yourphone.isDonePayment}>{paymentHTML}</Layout>
             : (paymentHTML)
         }
       </div>
@@ -294,6 +332,8 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
   }
 
   private handlePaypalCollapseExtend = (type: string[]) => {
+    console.log(type)
+    console.log(this.props.yourphone.payment)
     if (this.props.yourphone.payment === EPayType.PAYPAL && !type.length) {
       this.props.yourphone.payment = '';
     }
@@ -302,10 +342,13 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
       return;
     }
 
-    this.props.yourphone.payment = type[0];
+    this.props.yourphone.payment = type[1] ? type[1] : type[0];
+    this.props.yourphone.isRightOnEdit = false;
   }
 
   private handleEcheckCollapseExtend = (type: string[]) => {
+    console.log(type)
+    console.log(this.props.yourphone.payment)
     if (this.props.yourphone.payment === EPayType.ECHECK && !type.length) {
       this.props.yourphone.payment = '';
     }
@@ -314,25 +357,73 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
       return;
     }
 
-    this.props.yourphone.payment = type[0];
+    this.props.yourphone.payment = type[1] ? type[1] : type[0];
+    this.props.yourphone.isLeftOnEdit = false;
   }
 
   private changeEditState = (type: string): void => { // 切换成可编辑状态
     if (type === 'paypal') {
-      this.setState({ isLeftOnEdit: !this.state.isLeftOnEdit });
+      this.props.yourphone.isLeftOnEdit = !this.props.yourphone.isLeftOnEdit;
+      this.props.yourphone.paypal = {
+        email: ''
+      }
+      onValuesChange(false, false, this.props.yourphone.paypal);
     }
 
     if (type === 'check') {
-      this.setState({ isRightOnEdit: !this.state.isRightOnEdit });
+      this.props.yourphone.isRightOnEdit = !this.props.yourphone.isRightOnEdit;
+      this.props.yourphone.echeck = {
+        email: '',
+        firstName: '',
+        lastName: ''
+      }
+      onValuesChange(false, false, this.props.yourphone.echeck);
     }
   }
 
   private handleNext = async () => {
     const isOk = await this.validateData();
+    // console.warn(isOk, '结果');
     if (isOk) {
+      try {
+        this.props.user.preOrder = {
+          ...this.props.user.preOrder,
+          checkInfo: { ...this.props.yourphone.echeck },
+          payment: this.props.yourphone.payment,
+          paypalInfo: { ...this.props.yourphone.paypal },
+        }
+      } catch (error) { console.warn(error, 'in payment page preOrder') }
       this.props.history.push('/sell/yourphone/done');
     }
   }
 }
 
-export default Form.create()(YourPayment);
+const onValuesChange = (props: any, changedValues: any, allValues: any) => {
+  console.log(allValues);
+  if (yourphoneStore.payment === EPayType.PAYPAL) {
+    console.log(4)
+    if (allValues.paypal_email && allValues.paypal_email_confirm && yourphoneStore.isLeftOnEdit) {
+      console.log(5)
+      yourphoneStore.isPaymentFormFilled = true;
+      return false;
+    }
+
+    console.log(6)
+    yourphoneStore.isPaymentFormFilled = false;
+    // false
+    return false;
+  }
+
+  console.log(1)
+  if (allValues.firstName && allValues.lastName && allValues.email && allValues.email_confirm && yourphoneStore.isRightOnEdit) {
+    console.log(2)
+    yourphoneStore.isPaymentFormFilled = true;
+    return false;
+  }
+
+  console.log(3)
+  yourphoneStore.isPaymentFormFilled = false;
+  return true;
+}
+
+export default Form.create({ onValuesChange: onValuesChange })(YourPayment);

@@ -94,7 +94,7 @@ export default class Faq extends React.Component {
             <input type="checkbox" id="10" />
             <label htmlFor="10"><h2 className="default-h2">How and when do I get paid?<Icon type="plus" /></h2></label>
             <h2 className="noevent-h2">How and when do I get paid?<label htmlFor="10"><Icon type="plus" /></label></h2>
-            <p>Once we receive your device, we will perform a quality inspection of your device. This is normally completed the same day that it is received. If everything matches up to the original description, we will process your payment the next business day through the payment option of your choice. Keep in mind that choosing the traditional check option will delay your payment as it will need to be mailed to your home address.</p>
+            <p>Once we receive your device, we will perform a quality inspection of your device. This is normally completed the same day that it is received. If everything matches up to the original description, we will process your payment the next business day through the payment option of your choice.</p>
           </dd>
 
           <dd>

@@ -4,27 +4,67 @@ import { action, observable, autorun } from 'mobx';
 
 class User implements IUserStoreNew {
   @observable public canUpdatePreOrder = false;
-  @observable public preOrder: IPreOrder = {};
+  // @observable public preOrder: Partial<IPreOrder> = {
+  //   addressInfo: {
+  //     addressLine: '',
+  //     addressLineOptional: '',
+  //     city: '',
+  //     country: 'United States',
+  //     firstName: '',
+  //     lastName: '',
+  //     mobile: '',
+  //     state: '',
+  //     zipCode: ''
+  //   },
+  //   checkInfo: {
+  //     firstName: '',
+  //     lastName: '',
+  //     email: ''
+  //   },
+  //   inquiryKey: '',
+  //   key: '',
+  //   payment: '',
+  //   paypalInfo: {
+  //     email: ''
+  //   },
+  //   productInfo: {
+  //     brandId: -1,
+  //     carrier: '',
+  //     priceUnits: [],
+  //     productId: -1,
+  //     modelId: -1
+  //   },
+  //   userEmail: ''
+  // };
+  @observable public isShowLeftPrice: boolean = false;
+
+  @observable public preOrder: Partial<IPreOrder> = {
+    userEmail: '',
+  };
 
   constructor() {
     autorun(() => {
-      if (this.canUpdatePreOrder) { // 第一次获取key，不需要更新
+      if (this.preOrder.userEmail && this.preOrder.key) {
         this.updatePreOrder(this.preOrder);
       }
     });
   }
 
   @action public async getPreOrderKey(userEmail: string) {
-    let res: Partial<IPreOrder> = {};
+    this.preOrder = { // 存在这代码的原因是避免切到brand页面时，接口还在请求，导致userEmail没能赋值给preOrder,brand 页面拿不到userEmail，会重新定向到/sell/accout 页面
+      userEmail
+    };
+
+    const params = {
+      userEmail
+    }
     try {
-      res = await Api.getPreOrderKey({ userEmail });
+      this.preOrder = await Api.getPreOrderKey<IPreOrder>(params);
     } catch (error) {
-      console.warn(error, 'in user store');
+      console.warn(error, 'in user store getPreOrderKey');
       return false;
     }
 
-    this.preOrder = res;
-    this.canUpdatePreOrder = true;
     return true;
   }
 

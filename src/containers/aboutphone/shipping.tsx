@@ -4,11 +4,39 @@ import { Form, Col, Row, Input } from 'antd';
 import Layout from '@/containers/aboutphone/layout';
 import './shipping.less';
 import { IShippingProps } from './interface/index.interface';
+import { IProductInfo } from '@/store/interface/user.interface';
+import { shippingPageValidate } from '@/containers/aboutphone/pageValidate';
+import yourphoneStore from './store/yourphone.store';
+
+const onValuesChange = (props: any, changedValues: any, allValues: any) => {
+  let disabled = false;
+  Object.keys(allValues).forEach((v: string) => {
+    if (!allValues[v] && v !== 'city' && v !== 'state') {
+
+      disabled = true;
+    }
+  })
+
+  yourphoneStore.isAddressValuesAndDisabled = disabled;
+
+}
+
+
 @inject('yourphone', 'user')
 @observer
 class ShippingAddress extends React.Component<IShippingProps> {
 
   public componentDidMount() {
+    // didmount 的时候校验是否填了字段
+    const { getFieldsValue } = this.props.form;
+    const allValus = getFieldsValue();
+    onValuesChange(false, false, allValus);
+    // 显示左侧价格模块
+    this.props.user.isShowLeftPrice = true;
+    if (!shippingPageValidate()) {
+      this.props.history.push('/sell/account');
+      return;
+    }
     // this.props.yourphone.createInquiry();
     // this.props.form.validateFields(['zipCode'], (errors, values) => {
     //   if (!errors) { console.log('ininiin'); }
@@ -25,14 +53,20 @@ class ShippingAddress extends React.Component<IShippingProps> {
           resolve(false);
         }
 
-        this.props.yourphone.addressInfo = { ...this.props.yourphone.addressInfo, ...values };
+        this.props.yourphone.addressInfo = { ...this.props.yourphone.addressInfo, ...values, };
 
         // 给store里的paypal和echeck填入contact infomation作为默认，供payment页面初始化用
         // TODO:
-        this.props.yourphone.paypal.email = this.props.user.preOrder.userEmail ? this.props.user.preOrder.userEmail : '';
-        this.props.yourphone.echeck.firstName = this.props.yourphone.addressInfo.firstName;
-        this.props.yourphone.echeck.lastName = this.props.yourphone.addressInfo.lastName;
-        this.props.yourphone.echeck.email = this.props.user.preOrder.userEmail ? this.props.user.preOrder.userEmail : '';
+        // this.props.yourphone.paypal.email = this.props.user.preOrder.userEmail ? this.props.user.preOrder.userEmail : '';
+        // this.props.yourphone.echeck.firstName = this.props.yourphone.addressInfo.firstName;
+        // this.props.yourphone.echeck.lastName = this.props.yourphone.addressInfo.lastName;
+        // this.props.yourphone.echeck.email = this.props.user.preOrder.userEmail ? this.props.user.preOrder.userEmail : '';
+        if (this.props.hideLayout) { // 弹窗检验额外添加
+          this.props.user.preOrder = {
+            ...this.props.user.preOrder,
+            userEmail: values.userEmail
+          }
+        }
         resolve(true);
       });
     });
@@ -42,7 +76,32 @@ class ShippingAddress extends React.Component<IShippingProps> {
     const { getFieldDecorator } = this.props.form;
     const { addressInfo } = this.props.yourphone;
     const infomationHTML = (
-      <Form layout="vertical" style={{ paddingTop: '59px' }}>
+      <Form layout="vertical" style={{ paddingTop: '40px' }}>
+        {/* 在弹窗时才有 */}
+        {
+          this.props.hideLayout &&
+          <Row>
+            <Col span={11}>
+              <Form.Item label="Email address">
+                {
+                  getFieldDecorator('userEmail', {
+                    rules: [
+                      {
+                        required: true,
+                        type: 'email',
+                        message: "Please enter a valid email."
+                      }
+                    ],
+                    initialValue: this.props.user.preOrder.userEmail,
+                    validateTrigger: 'onBlur',
+                  })(
+                    <Input />
+                  )
+                }
+              </Form.Item>
+            </Col>
+          </Row>
+        }
         <Row gutter={32}>
           <Col span={11}>
             <Form.Item label="First name" required={true}>
@@ -126,12 +185,13 @@ class ShippingAddress extends React.Component<IShippingProps> {
                   rules: [
                     {
                       required: true,
-                      validator: this.handleZipCode
+                      validator: this.handleZipCode,
                     }
                   ],
+                  validateTrigger: 'onBlur',
                   initialValue: addressInfo.zipCode,
                 })(
-                  <Input />
+                  <Input onChange={this.handleZipCodeChange} />
                 )
               }
             </Form.Item>
@@ -182,11 +242,12 @@ class ShippingAddress extends React.Component<IShippingProps> {
                 getFieldDecorator('mobile', {
                   rules: [
                     {
-                      pattern: /\d+/,
-                      message: "Please enter a valid city."
+                      pattern: /\d{11,11}/,
+                      message: "Please enter a valid mobile."
                     }
                   ],
-                  initialValue: addressInfo.mobile
+                  initialValue: addressInfo.mobile,
+                  validateTrigger: 'onBlur'
                 })(
                   <Input />
                 )
@@ -199,7 +260,20 @@ class ShippingAddress extends React.Component<IShippingProps> {
               // validateStatus="validating"
               help="We currently only support trades in the United States"
             >
-              <Input value="United States" disabled={true} />
+              {
+                getFieldDecorator('country', {
+                  rules: [
+                    {
+                      pattern: /\w+/,
+                      message: "Please enter a valid Country."
+                    }
+                  ],
+                  initialValue: addressInfo.country,
+                  validateTrigger: 'onBlur'
+                })(
+                  <Input value="United States" disabled={true} />
+                )
+              }
             </Form.Item>
           </Col>
         </Row>
@@ -210,7 +284,7 @@ class ShippingAddress extends React.Component<IShippingProps> {
 
         {
           !this.props.hideLayout
-            ? <Layout nextCb={this.handleNext} >{infomationHTML}</Layout>
+            ? <Layout nextCb={this.handleNext} disabled={this.props.yourphone.isAddressValuesAndDisabled}>{infomationHTML}</Layout>
             : (infomationHTML)
         }
       </div>
@@ -236,9 +310,28 @@ class ShippingAddress extends React.Component<IShippingProps> {
   private handleNext = async () => {
     const isOk = await this.validateData();
     if (isOk) {
+      try {
+        const productInfo: Partial<IProductInfo> = {
+          ...this.props.user.preOrder.productInfo,
+          inquiryDetail: this.props.yourphone.inquiryDetail
+        }
+        this.props.user.preOrder = {
+          ...this.props.user.preOrder,
+          addressInfo: { ...this.props.yourphone.addressInfo },
+          productInfo
+        }
+      } catch (error) { console.warn(error, 'in shipping page preOrder') }
       this.props.history.push('/sell/yourphone/payment');
     }
   }
-}
 
-export default Form.create()(ShippingAddress);
+  private handleZipCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { setFieldsValue } = this.props.form;
+    const value = e.target.value;
+    if (!value) {
+      setFieldsValue({ 'state': '' });
+      setFieldsValue({ 'city': '' });
+    }
+  }
+}
+export default Form.create({ onValuesChange: onValuesChange })(ShippingAddress);

@@ -10,7 +10,7 @@ const basePath: string = '/up-trade-it/api';
 
 // 默认的参数
 const defaultopts = {
-  timeout: 8000,
+  timeout: 30000,
 };
 
 

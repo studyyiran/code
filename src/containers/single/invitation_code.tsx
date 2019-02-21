@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
-import { Input, Button, Form } from 'antd';
+import { Input, Button, Form, Icon } from 'antd';
 import { DEFAULT } from 'config';
 import './invitation_code.less';
 export default class InvationCode extends React.Component<RouteComponentProps> {
@@ -24,11 +24,12 @@ export default class InvationCode extends React.Component<RouteComponentProps> {
             <Form>
               <Form.Item
                 validateStatus={this.state.validateStatus}
-                help={this.state.help}
+                help={<p className="def-close-circle-p-node">{this.state.help}</p>}
               >
                 <Input
                   value={this.state.code}
                   onChange={this.handleChangeCode}
+                  onPressEnter={this.onSubmit}
                   placeholder="Please input"
                   size="large"
                 />
@@ -60,9 +61,12 @@ export default class InvationCode extends React.Component<RouteComponentProps> {
   }
 
   private onSubmit = () => {
+    if (this.state.btnHasDisabled) {
+      return false;
+    }
     const state = {
       validateStatus: 'error',
-      help: 'Please enter a valid invite code.',
+      help: <><Icon className="def-close-circle" type="close-circle" /><span>Please enter a valid invite code.</span></>,
     }
 
     if (this.state.code !== DEFAULT.invatationCode) {
@@ -71,5 +75,6 @@ export default class InvationCode extends React.Component<RouteComponentProps> {
     }
     sessionStorage.setItem('invitationCode', '1');
     this.props.history.push('/');
+    return true;
   }
 }

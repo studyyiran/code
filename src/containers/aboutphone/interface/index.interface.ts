@@ -7,6 +7,7 @@ export interface IYourPhoneStore {
   carriers: ICarrier[];
   brands: IBrands[];
   products: IProductModel[];
+  products4Search: IProductModel[],
   productPPVNS: IProductPPVN[];
   inquiryDetail: IInquiryDetail | null;
   orderDetail: any;
@@ -22,13 +23,21 @@ export interface IYourPhoneStore {
     email: string;
   }
   activeBrandsId: number;
+  activeBrandsName: string;
   activeCarrierName: string;
   activeProductId: number;
+  activeProductName: string;
   activeModelId: number;
+  activeModelName: string;
   activeConditions: object;
   americaStates: IAmericaState;
   isTBD: boolean; // 选中的品牌是否为other
   isAllConditionSelected: boolean; // computed
+  isAddressValuesAndDisabled: boolean;
+  isDonePayment: boolean;
+  isLeftOnEdit: boolean;
+  isRightOnEdit: boolean;
+  isPaymentFormFilled: boolean;
   getBrandsByCid: (categoryId?: number) => Promise<boolean>;
   getCarrier: () => Promise<boolean>;
   getProductsList: (keyword?: string) => Promise<boolean>;
@@ -44,6 +53,8 @@ export interface ILayOutProps {
   nextPath?: string;
   hideBottom?: boolean;
   nextCb?: () => void;
+  progress?: number;
+  disabled?: boolean
 }
 
 export interface IBrandLayoutProps {
@@ -72,11 +83,11 @@ export type IPaymentProps = IBrandsProps & FormComponentProps;
 
 export type IDoneProps = IBrandsProps;
 
-export type ICheckOutProps = IBrandsProps;
+export type ICheckOutProps = IBrandsProps & { user: IUserStoreNew };
 
 export interface IPaymentStates {
-  isLeftOnEdit: boolean;
-  isRightOnEdit: boolean;
+  // isLeftOnEdit: boolean;
+  // isRightOnEdit: boolean;
   activeSide: string;
 }
 export interface IDoneStates {
@@ -125,7 +136,8 @@ export interface IBrandListProps {
 export interface IInquiryDetail {
   key: string; // 询价key
   ppvs: ISkuPricePropertyNames[];
-  price: number; // 询价价格
+  price: number; // 询价价格--美分
+  priceDollar: number; // 询价价格--美元
   product: IProductDetail;
 }
 
@@ -139,7 +151,9 @@ export interface IProductDetail {
 
 export interface ISkuPricePropertyNames {
   id: number;
-  name: string;
+  // name: string;
+  value: string;
+  pricePropertyValues: ISubSkuPricePropertyValues[];
 }
 
 export interface IAmericaState {
@@ -153,6 +167,7 @@ export interface INavigatorObj {
   subText: string;
   hasSearch: boolean;
   progress: number; // 底部导航, 值为-1表示不需要展示
+  isInCheckOrder?: boolean;
 }
 
 export interface IQueryParams {
@@ -170,7 +185,7 @@ export interface IProductModel {
   skuPricePropertyNames: ISkuPricePropertyNames[];
   activeModelId: number;
   activeProductId: number;
-  onModelItemClick(productId: number, skuId: number): void;
+  onModelItemClick(productId: number, productName: string, skuId: number, skuName: string): void;
 }
 
 export interface IProductPPVN {
@@ -183,7 +198,7 @@ export interface IProductPPVN {
   isSkuProperty: boolean;
 }
 
-interface ISubSkuPricePropertyValues {
+export interface ISubSkuPricePropertyValues {
   value: string;
   id: number;
 }
@@ -220,4 +235,11 @@ export enum EBrandType {
 export enum EPayType {
   PAYPAL = 'PAYPAL',
   ECHECK = 'CHECK'
+}
+
+export interface IBreadCrumb {
+  style: object;
+  brandName: string;
+  carrierName: string;
+  modelName: string;
 }

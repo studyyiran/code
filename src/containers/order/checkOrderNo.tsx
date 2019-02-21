@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import { Divider, Input, Button, Form } from 'antd';
-import { IOrderProps, IProgressType } from '@/containers/order/interface/order.inerface';
+import { IOrderProps } from '@/containers/order/interface/order.inerface';
 import { RouteComponentProps } from 'react-router';
 import { getQueryString } from '@/utils/function';
 import './checkOrderNo.less';
@@ -50,7 +50,7 @@ class CheckOrderNo extends React.Component<IOrderProps & RouteComponentProps> {
                                 type="email"
                                 onChange={this.handleChangeEmail}
                                 size="large"
-                                placeholder="john.jones@emails.com"
+                                onBlur={this.checkFormat}
                             />
                         </Form.Item>
                         <div className="check-label">Order number</div>
@@ -62,7 +62,6 @@ class CheckOrderNo extends React.Component<IOrderProps & RouteComponentProps> {
                                 value={this.state.orderNo}
                                 onChange={this.handleChangeOrderNo}
                                 size="large"
-                                placeholder="0123256863218276"
                             />
                         </Form.Item>
                     </Form>
@@ -76,6 +75,7 @@ class CheckOrderNo extends React.Component<IOrderProps & RouteComponentProps> {
                         type="primary"
                         style={{ width: 400 }}
                         onClick={this.onSubmit}
+                        disabled={this.state.email === "" || this.state.orderNo === ""}
                     >CHECK ORDER</Button>
                 </div>
             </div>
@@ -106,6 +106,15 @@ class CheckOrderNo extends React.Component<IOrderProps & RouteComponentProps> {
         }
         this.setState(state);
     }
+    private checkFormat = () => {
+        const email = /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/;
+        if (!email.test(this.state.email) && this.state.email !== "") {
+            this.setState({
+                validateEmail: 'error',
+                emailInputHelp: 'Please enter a valid email address'
+            });
+        }
+    }
 
     private onSubmit = async () => {
         let canSubmit = true;
@@ -129,12 +138,12 @@ class CheckOrderNo extends React.Component<IOrderProps & RouteComponentProps> {
             const b = await this.props.order.getOrderDetail(this.state.email, this.state.orderNo);
             if (b.orderNo) {
                 // 交易失败
-                if (b.status === IProgressType.TRANSACTION_FAILED) {
-                    this.setState({
-                        formError: "This order has been cancelled"
-                    });
-                    return;
-                }
+                // if (b.status === IProgressType.TRANSACTION_FAILED) {
+                //     this.setState({
+                //         formError: "This order has been cancelled"
+                //     });
+                //     return;
+                // }
                 // 保存订单数据
                 this.props.order.setOrderDetail(b);
                 // email, orderNo 存入缓存

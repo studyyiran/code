@@ -1,7 +1,7 @@
 import { Request } from 'utils';
 import { IOpts } from '@/utils/request.interface';
 import { IQueryParams } from '../interface/index.interface';
-import { DEFAULT } from 'config';
+import { ENVCONFIG } from 'config';
 import { IPreOrder } from '@/store/interface/user.interface';
 
 // 根据类目获取品牌列表
@@ -28,6 +28,8 @@ export const getProductsList = <T>(brand: number, keyword: string = '', category
     url: '/products/search',
     method: 'post',
     params: {
+      pageIndex: 0,
+      pageSize: 9999,
       brand,
       categoryIds
     }
@@ -71,7 +73,7 @@ export const createInquiry = <T>(inquiry: IQueryParams) => {
 }
 
 // 获取询价详情
-export const getInquiryDetail = <T>(key: string, agentCode: string = DEFAULT['agentCode']) => {
+export const getInquiryDetail = <T>(key: string, agentCode: string = ENVCONFIG['agentCode']) => {
   const opts: IOpts = {
     url: `/inquiries/${key}`,
     params: {
@@ -88,12 +90,13 @@ export const getInquiryDetail = <T>(key: string, agentCode: string = DEFAULT['ag
 export const getStateByCode = <T>(zipCode: number) => {
   const opts: IOpts = {
     url: `/USPS/state/${zipCode}`,
+    loading: true
   };
 
   return Request<T>(opts);
 }
 
-export const createOrder = <T>(orderParams: IPreOrder) => {
+export const createOrder = <T>(orderParams: Pick<IPreOrder, Exclude<keyof IPreOrder, 'key' | 'productInfo'>>) => {
   const opts: IOpts = {
     url: `/orders`,
     method: 'post',

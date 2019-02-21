@@ -1,4 +1,4 @@
-import { IOrderStore, IOrderDetail, IProgressType, IShippingAddress, IInspectionData, ITrackingModel } from '@/containers/order/interface/order.inerface';
+import { IOrderStore, IOrderDetail, IProgressType, IShippingAddress, IInspectionData, ITrackingModel, IProgressDot, IOrderRecord } from '@/containers/order/interface/order.inerface';
 import { computed, action, observable } from 'mobx';
 import * as OrderApi from '../api/order.api';
 import { getMonthEn, getHourBy12 } from '@/utils/function';
@@ -45,7 +45,7 @@ class Store implements IOrderStore {
             }
             if (this.orderDetail.payment === "CHECK") {
                 paymentMethod.push("Check");
-                paymentMethod.push(this.orderDetail.checkInfo.card);
+                paymentMethod.push(this.orderDetail.checkInfo.email);
             }
         }
         return {
@@ -65,10 +65,16 @@ class Store implements IOrderStore {
         let guaranteedPrice = '';
         if (this.orderDetail.orderNo) {
             const orderItem = this.orderDetail.orderItem;
-            model = orderItem.product.name;
-            carrier = orderItem.carrier === "ATT" ? "ATT&T" : orderItem.carrier;
-            condition = orderItem.pricePropertyValues.map(t => t.value).join(",");
-            guaranteedPrice = (orderItem.amount / 100).toString();
+            if (orderItem.product && !orderItem.product.isTBD) {
+                model = orderItem.product.name;
+                carrier = this.referenceEnumToCarrier(orderItem.carrier);
+                condition = orderItem.pricePropertyValues.map(t => t.value).join(",");
+                guaranteedPrice = `$${orderItem.amountDollar}`;
+            } else {
+                // TBD
+                model = "Other Phone";
+                guaranteedPrice = "TBD"
+            }
         }
         return {
             model,
@@ -99,8 +105,51 @@ class Store implements IOrderStore {
                 });
                 return true;
             });
+        } else {
+            // 判断是否为退货
+            if (this.orderDetail.status === IProgressType.TRANSACTION_FAILED) {
+                const time = new Date();
+                const now = new Date();
+                let dateStr = "";
+                if (time.getFullYear() !== now.getFullYear()) {
+                    dateStr += time.getFullYear() + " ";
+                }
+                dateStr = dateStr + getMonthEn(time) + " " + time.getDate();
+                const timeBy12 = getHourBy12(time);
+                infos.push({
+                    date: dateStr,
+                    listData: [{
+                        time: timeBy12.hour + " " + timeBy12.part,
+                        listData: ["Shipment order placed"]
+                    }, {
+                        time: timeBy12.hour + " " + timeBy12.part,
+                        listData: ["Package is picked up"]
+                    }]
+                });
+            }
         }
         return infos;
+    }
+    // 物流单号
+    @computed get deliverNoInfo() {
+        let carrier = null;
+        let trackingNumber = null;
+        if (this.orderDetail.orderNo) {
+            if (this.orderDetail.shippoTransaction) {
+                carrier = this.orderDetail.shippoTransaction.carrier;
+                trackingNumber = this.orderDetail.shippoTransaction.trackingNumber;
+            }
+            // 是否为物品退还
+            if (this.orderDetail.status === IProgressType.TRANSACTION_FAILED) {
+                carrier = this.orderDetail.orderItem.ext.carrier;
+                trackingNumber = this.orderDetail.orderItem.ext.carrier;
+                console.error("退货快递单号缺少字段");
+            }
+        }
+        return {
+            carrier,
+            trackingNumber
+        }
     }
     // 质检结果
     @computed get inspectionInfo() {
@@ -115,8 +164,8 @@ class Store implements IOrderStore {
         const orderDetail = this.orderDetail;
         if (orderDetail.orderNo) {
             const orderItem = orderDetail.orderItem;
-            data.revisedPrice = orderItem.actualAmount;
-            data.amount = orderItem.amount;
+            data.revisedPrice = orderItem.actualAmountDollar;
+            data.amount = orderItem.amountDollar;
             if (orderItem.inspectResult && orderItem.inspectResult.result !== "MATCHED") {
                 data.diffStatus = "fail";
                 data.differenceText = orderItem.inspectResult.result === "WRONG_CONDITION" ? "Wrong Condition" : "Wrong Product";
@@ -126,18 +175,48 @@ class Store implements IOrderStore {
                     }
                 });
                 if (orderItem.inspectResult.result === "WRONG_PRODUCT") {
-                    data.productName = orderItem.actualProductName;
+                    data.productName = orderItem.actualSkuName;
                 }
             }
         }
         return data;
     }
+    @computed get paymentInfo() {
+        const payment = {
+            finalSalePrice: 0,
+            priceGuarantee: 0,
+            priceGuaranteeStatus: false, // 支付状态
+            bonus: 0,
+            bonusStatus: false
+        }
+        const orderPaymentBills = this.orderDetail.orderPaymentBills;
+        if (orderPaymentBills.length > 0) {
+            orderPaymentBills.map(t => {
+                if (t.payFor === "RESERVE_PRICE") {
+                    payment.priceGuarantee = t.amount;
+                    if (t.status === "SUCCESS") {
+                        payment.priceGuaranteeStatus = true;
+                    }
+                }
+                if (t.payFor === "HAMMER_ADDITIONAL") {
+                    payment.bonus = t.amount;
+                    if (t.status === "SUCCESS") {
+                        payment.priceGuaranteeStatus = true;
+                        payment.bonusStatus = true
+                    }
+                }
+            })
+
+        }
+        payment.finalSalePrice = payment.priceGuarantee + payment.bonus;
+        return payment;
+    }
     // 构建进度条需要的数据
     @computed get progressType() {
         let currentIndex = 0;
-        const dataList = [{
+        let dataList: IProgressDot[] = [{
             name: "Order Placed",
-            img: OrderPlacedIcon
+            img: OrderPlacedIcon,
         }, {
             name: "Package Sent",
             img: PackageSentIcon
@@ -154,15 +233,45 @@ class Store implements IOrderStore {
             name: "Order Completed",
             img: OrderCompleteIcon
         }];
+        const orderRecords = this.orderDetail.orderRecords;
+        if (orderRecords && orderRecords.length > 0) {
+            dataList = [{
+                name: "Order Placed",
+                img: OrderPlacedIcon,
+                date: this.packageDate(this.orderDetail.createdDt)
+            }, {
+                name: "Package Sent",
+                img: PackageSentIcon,
+                date: this.packageDate(this.findDate(IProgressType.TO_BE_SHIPPED))
+            }, {
+                name: "Package Recived",
+                img: PackageReceivedIcon,
+                date: this.packageDate(this.findDate(IProgressType.TO_BE_RECEIVED))
+            }, {
+                name: "Inspection Completed",
+                img: InspectionCompleteIcon,
+                date: this.packageDate(this.findDate(IProgressType.TO_BE_INSPECTED))
+            }, {
+                name: "Listed For Sale",
+                img: ListSaleIcon,
+                date: this.packageDate(this.findDate(IProgressType.LISTED_FOR_SALE, IProgressType.LISTED_FOR_SALE))
+            }, {
+                name: "Order Completed",
+                img: OrderCompleteIcon,
+                date: this.packageDate(this.findDate(IProgressType.LISTED_FOR_SALE, IProgressType.TRANSACTION_SUCCEED))
+            }];
+        }
         // 退货
         if (this.orderDetail.status === IProgressType.TO_BE_RETURNED || this.orderDetail.status === IProgressType.TRANSACTION_FAILED) {
             dataList[4] = {
                 name: "Return Requested",
-                img: ReturnRequestIcon
+                img: ReturnRequestIcon,
+                date: this.findDate(IProgressType.DIFFERENCE_INSPECTED)
             };
             dataList[5] = {
                 name: "Product Dispatched",
-                img: PackageReceivedIcon
+                img: PackageReceivedIcon,
+                date: this.findDate(IProgressType.TO_BE_RETURNED)
             };
         }
         switch (this.orderDetail.status) {
@@ -277,7 +386,7 @@ class Store implements IOrderStore {
     }
     @action public approveRevisedPrice = async () => {
         try {
-            const res = await OrderApi.approveRevisedPrice<IOrderDetail>(this.orderNo);
+            const res = await OrderApi.approveRevisedPrice<IOrderDetail>(this.email, this.orderNo);
             // 更新订单详情
             this.orderDetail = res;
             return true;
@@ -288,7 +397,7 @@ class Store implements IOrderStore {
     }
     @action public returnProduct = async () => {
         try {
-            const res = await OrderApi.returnProduct<IOrderDetail>(this.orderNo);
+            const res = await OrderApi.returnProduct<IOrderDetail>(this.email, this.orderNo);
             // 更新订单详情
             this.orderDetail = res;
             return true;
@@ -296,6 +405,41 @@ class Store implements IOrderStore {
             console.error(e);
             return false;
         }
+    }
+    private packageDate(b: string | undefined) {
+        if (b) {
+            const date = new Date(b);
+            return getMonthEn(date) + " " + date.getDate()
+        }
+        return b
+    }
+    private findDate(status: IProgressType, afterStatus?: IProgressType) {
+        const orderRecords = this.orderDetail.orderRecords;
+        let target: IOrderRecord | null;
+        if (afterStatus) {
+            target = this.findFirstEleFromTarget(orderRecords, t => (t.beforeStatus === status && t.afterStatus === afterStatus));
+        } else {
+            target = this.findFirstEleFromTarget(orderRecords, t => t.beforeStatus === status);
+        }
+        return target && target.createdDt || undefined;
+    }
+    private findFirstEleFromTarget<T>(b: T[] = [], f: (c: T) => boolean) {
+        const vArray = b.filter(f);
+        if (vArray.length > 0) {
+            return vArray[0];
+        }
+        return null;
+    }
+    private referenceEnumToCarrier(carrer: string) {
+        enum data {
+            ATT = "AT&T",
+            UNLOCKED = "Unlocked",
+            TMOBILE = "T-Mobile",
+            SPRINT = "Sprint",
+            OTHERS = "Others",
+            VERIZON = "Verizon"
+        }
+        return data[carrer]
     }
 }
 

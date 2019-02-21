@@ -1,3 +1,4 @@
+import { IUserStoreNew } from '@/store/interface/user.interface';
 export interface ILeftSideState {
   steps: ISteps[]
 }
@@ -10,4 +11,5 @@ interface ISteps {
 export interface IGuaranteedPriceProps {
   price?: number | string;
   isTBD: boolean;
+  user: IUserStoreNew
 }

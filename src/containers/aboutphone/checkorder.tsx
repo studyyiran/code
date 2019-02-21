@@ -6,8 +6,9 @@ import Layout from '@/containers/aboutphone/layout';
 import './checkorder.less';
 import { Button } from 'antd';
 import { ICheckOutProps, ICheckOutStates, EBrandType, EPayType } from './interface/index.interface';
+import { checkOrderPageValidate } from '@/containers/aboutphone/pageValidate';
 
-@inject('yourphone')
+@inject('yourphone', 'user')
 @observer
 export default class FinalStep extends React.Component<ICheckOutProps, ICheckOutStates> {
   public readonly state: Readonly<ICheckOutStates> = {
@@ -23,6 +24,16 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
     }
   }
 
+  public componentDidMount() {
+    // 隐藏左侧价格模块
+    this.props.user.isShowLeftPrice = false;
+    if (!checkOrderPageValidate()) {
+      debugger;
+      this.props.history.push('/sell/account');
+      return;
+    }
+  }
+
   public render() {
     const { activeBrandsId, inquiryDetail, orderDetail } = this.props.yourphone; // 选中的品牌， 苹果为52
     return (
@@ -33,7 +44,7 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
               <div className="step">
                 <p className="name">Prepare Your Phone</p>
                 <p className="detail" dangerouslySetInnerHTML={{ __html: this.state.brandText[this.state.brand] }} />
-                <Link to={activeBrandsId === 52 ? '/help/iphone' : '/help/android'} className="tips">How to Prepare Your Phone</Link>
+                <Link to={activeBrandsId === 52 ? '/how-to-factory-reset-iphone' : '/how-to-factory-reset-android-phone'} className="tips">How to Prepare Your Phone</Link>
               </div>
               <div className="step">
                 <p className="name">Pack and Send</p>
@@ -70,7 +81,7 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
                   </div>
                   <p className="guaranteed-price">
                     <span className="text">Guaranteed Price</span>
-                    <span className="price">${inquiryDetail && inquiryDetail.price}</span>
+                    <span className="price">${inquiryDetail && inquiryDetail.priceDollar}</span>
                   </p>
                 </div>
               </div>

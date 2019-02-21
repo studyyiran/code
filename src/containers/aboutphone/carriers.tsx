@@ -4,13 +4,22 @@ import { IBrandsProps, ICarrier } from './interface/index.interface';
 import LayOut from '@/containers/aboutphone/layout';
 import CarrierItem from '@/containers/aboutphone/components/carrieritem';
 import './carriers.less';
-import { IPreOrder } from '@/store/interface/user.interface';
+import { userEmailValidate } from '@/containers/aboutphone/pageValidate';
+import Breadcrumb from './components/breadcrumb';
 
 @inject('yourphone', 'user')
 @observer
 export default class Brands extends React.Component<IBrandsProps> {
 
   public componentDidMount() {
+    // 显示左侧价格模块
+    this.props.user.isShowLeftPrice = true;
+    // 检验是否获取到页面需要到必须数据
+    if (!userEmailValidate()) {
+      this.props.history.push('/sell/account');
+      return;
+    }
+
     this.props.yourphone.getCarrier();
   }
 
@@ -19,23 +28,35 @@ export default class Brands extends React.Component<IBrandsProps> {
     return (
       <div className="page-carriers-container">
         <LayOut>
-          {
-            carriers.map((carrier, index) => <CarrierItem key={index} carrier={carrier} activeCarrierName={activeCarrierName} onCarrierClick={this.onCarrierItemClick} />)
-          }
+          <>
+            <Breadcrumb
+              style={{ marginLeft: '15px' }}
+              brandName={this.props.yourphone.activeBrandsName}
+            />
+            {
+              carriers.map((carrier, index) => <CarrierItem key={index} carrier={carrier} activeCarrierName={activeCarrierName} onCarrierClick={this.onCarrierItemClick} />)
+            }
+          </>
         </LayOut>
       </div>
     );
   }
 
   private onCarrierItemClick = (carrier: ICarrier) => {
+    console.log(carrier, 'inin');
     try {
-      const newPreOrder: IPreOrder = {
-        ...this.props.user.preOrder
+      // const productInfo = { ...this.props.user.preOrder.productInfo, carrier: carrier.name }
+      this.props.user.preOrder = {
+        ...this.props.user.preOrder,
+        productInfo: {
+          brandId: this.props.yourphone.activeBrandsId,
+          brandName: this.props.yourphone.activeBrandsName,
+          carrier: carrier.name
+        }
       };
-      newPreOrder.productInfo!.carrier = carrier.name;
-      this.props.user.preOrder = newPreOrder; // 更新preOrder触发autorun
-    } catch (error) {console.warn(error)}
-    
+    } catch (error) { console.warn(error, 'in carriers page updatePreorder') }
+
+
     this.props.yourphone.activeCarrierName = carrier.name;
     this.props.history.push('/sell/yourphone/model');
   }

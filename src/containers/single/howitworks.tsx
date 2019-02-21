@@ -12,10 +12,9 @@ class HowItWorks extends React.Component<RouteComponentProps>{
             <section className="page-help-howitworks">
                 <div className="article">
                     <div className="col-1">
-                        <p>Get Cash</p>
-                        <p>For Your Phone</p>
-                        <p>In Two </p>
-                        <p>Sell your phone for what it’s actually worth. Ship it and get paid. It’s that easy.</p>
+                        <p>Sell My Phone In</p>
+                        <p>Two Simple Steps </p>
+                        <p>Get cash for what it’s actually worth. Ship it and get paid. It’s that easy.</p>
                     </div>
                     <div className="col-2">
                         <img src={require('@/images/single/sell_you_phone_banner.png')} alt="" />
@@ -46,7 +45,7 @@ class HowItWorks extends React.Component<RouteComponentProps>{
                             </div>
                             <div className="content">
                                 <p>Multiple payment options</p>
-                                <p>Choose to get paid via Paypal or Check. For the fastest and easiest way to receive payment, choose Paypal.</p>
+                                <p>Choose to get paid via Paypal or eCheck. For the fastest and easiest way to receive payment, choose Paypal.</p>
                                 <p>Fast payment</p>
                                 <p>We issue payment the next business day after we have received and verified the condition of your phone.</p>
                                 <p>Premium payout</p>
@@ -69,7 +68,7 @@ class HowItWorks extends React.Component<RouteComponentProps>{
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>Minmum Price Guarantee</td>
+                                    <td>Minimum Price Guarantee</td>
                                     <td>
                                         <img className="right" src={Right} alt="" />
                                     </td>
@@ -144,7 +143,7 @@ class HowItWorks extends React.Component<RouteComponentProps>{
                         </table>
                     </section>
                     <div className="button-group">
-                        <Button className="sell-it-now" size="large" type="primary" style={{ width: 232, height: 64 }} onClick={this.onGoToSell}>Sell It Now</Button>
+                        <Button className="sell-it-now" size="large" type="primary" style={{ width: 232, height: 64 }} onClick={this.onGoToSell}>Get Started</Button>
                     </div>
                 </section>
             </section>

@@ -8,15 +8,13 @@ import ShippingPage from '@/containers/aboutphone/shipping';
 import PaymentPage from '@/containers/aboutphone/payment';
 import ConditionPage from '@/containers/aboutphone/conditions';
 import ChangeModal from '@/containers/aboutphone/components/changemodal';
+import { donePageValidate } from '@/containers/aboutphone/pageValidate';
 import './done.less';
 import { IDoneProps, IDoneStates, EChangeType, EPayType } from './interface/index.interface';
 
 @inject('yourphone', 'user')
 @observer
 export default class YoureDone extends React.Component<IDoneProps, IDoneStates> {
-  // public pageRef: React.RefObject<React.Component<IShippingProps>>;
-  // public pageRef2: React.RefObject<React.Component<IPaymentProps>>;
-  // public pageRef3: React.RefObject<React.Component<IConditionsProps>>;
   public pageRef: React.Component;
   public readonly state: Readonly<IDoneStates> = {
     isChecked: false, // 勾选协议
@@ -26,9 +24,15 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
 
   public constructor(props: IDoneProps) {
     super(props);
-    // this.pageRef = React.createRef();
-    // this.pageRef2 = React.createRef();
-    // this.pageRef3 = React.createRef();
+  }
+
+  public componentDidMount() {
+    // 显示左侧价格模块
+    this.props.user.isShowLeftPrice = true;
+    if (!donePageValidate()) {
+      this.props.history.push('/sell/account');
+      return;
+    }
   }
 
   public handleOnRef = (child: React.Component) => {
@@ -56,7 +60,7 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
     }
 
     // payment
-    switch (yourphone.payment) {
+    switch (this.props.yourphone.payment) {
       case EPayType.PAYPAL:
         payment = (
           <>
@@ -75,7 +79,7 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
             <p className="echeck-title">eCheck</p>
             <p className="email-info">
               <span className="label">Name</span>
-              <span className="address">{`${yourphone.echeck.lastName} ${yourphone.echeck.firstName}`}</span>
+              <span className="address">{`${yourphone.echeck.firstName} ${yourphone.echeck.lastName}`}</span>
             </p>
             <p className="email-info">
               <span className="label">E-mail</span>
@@ -88,7 +92,7 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
     }
 
     // isTBD
-    switch (yourphone.isTBD) {
+    switch (this.props.yourphone.isTBD) {
       case true:
         phoneNode = (
           <p className="info-item">
@@ -110,7 +114,7 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
             </p>
             <p className="info-item">
               <span className="label">Condition</span>
-              <span className="content">{yourphone.inquiryDetail && yourphone.inquiryDetail.ppvs.map(ppv => ppv.name).join(',')}<span className="edit-bg" onClick={this.handlePageChoose.bind(this, EChangeType.CONDITION)} /></span>
+              <span className="content">{yourphone.inquiryDetail && yourphone.inquiryDetail.ppvs.map(ppv => ppv.value).join(',')}<span className="edit-bg" onClick={this.handlePageChoose.bind(this, EChangeType.CONDITION)} /></span>
             </p>
           </>
         );
@@ -209,6 +213,15 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
     // 开始创建订单
     const isOrderCreated = await this.props.yourphone.createOrder();
     if (isOrderCreated) {
+      try {
+        this.props.user.preOrder = {
+          ...this.props.user.preOrder,
+          addressInfo: { ...this.props.yourphone.addressInfo },
+          checkInfo: { ...this.props.yourphone.echeck },
+          payment: this.props.yourphone.payment,
+          paypalInfo: { ...this.props.yourphone.paypal },
+        }
+      } catch (error) { console.warn(error, 'in done page preOrder') }
       this.props.history.push('/sell/yourphone/checkorder');
     }
   }
