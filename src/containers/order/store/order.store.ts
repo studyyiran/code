@@ -45,7 +45,7 @@ class Store implements IOrderStore {
             }
             if (this.orderDetail.payment === "CHECK") {
                 paymentMethod.push("Check");
-                paymentMethod.push(this.orderDetail.checkInfo.card);
+                paymentMethod.push(this.orderDetail.checkInfo.email);
             }
         }
         return {

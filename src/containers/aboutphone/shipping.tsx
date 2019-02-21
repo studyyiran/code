@@ -61,6 +61,12 @@ class ShippingAddress extends React.Component<IShippingProps> {
         // this.props.yourphone.echeck.firstName = this.props.yourphone.addressInfo.firstName;
         // this.props.yourphone.echeck.lastName = this.props.yourphone.addressInfo.lastName;
         // this.props.yourphone.echeck.email = this.props.user.preOrder.userEmail ? this.props.user.preOrder.userEmail : '';
+        if (this.props.hideLayout) { // 弹窗检验额外添加
+          this.props.user.preOrder = {
+            ...this.props.user.preOrder,
+            userEmail: values.userEmail
+          }
+        }
         resolve(true);
       });
     });
@@ -70,7 +76,32 @@ class ShippingAddress extends React.Component<IShippingProps> {
     const { getFieldDecorator } = this.props.form;
     const { addressInfo } = this.props.yourphone;
     const infomationHTML = (
-      <Form layout="vertical" style={{ paddingTop: '59px' }}>
+      <Form layout="vertical" style={{ paddingTop: '40px' }}>
+        {/* 在弹窗时才有 */}
+        {
+          this.props.hideLayout &&
+          <Row>
+            <Col span={11}>
+              <Form.Item label="Email address">
+                {
+                  getFieldDecorator('userEmail', {
+                    rules: [
+                      {
+                        required: true,
+                        type: 'email',
+                        message: "Please enter a valid email."
+                      }
+                    ],
+                    initialValue: this.props.user.preOrder.userEmail,
+                    validateTrigger: 'onBlur',
+                  })(
+                    <Input />
+                  )
+                }
+              </Form.Item>
+            </Col>
+          </Row>
+        }
         <Row gutter={32}>
           <Col span={11}>
             <Form.Item label="First name" required={true}>
