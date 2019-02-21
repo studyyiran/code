@@ -29,6 +29,7 @@ export default class InvationCode extends React.Component<RouteComponentProps> {
                 <Input
                   value={this.state.code}
                   onChange={this.handleChangeCode}
+                  onPressEnter={this.onSubmit}
                   placeholder="Please input"
                   size="large"
                 />
@@ -60,6 +61,9 @@ export default class InvationCode extends React.Component<RouteComponentProps> {
   }
 
   private onSubmit = () => {
+    if (this.state.btnHasDisabled) {
+      return false;
+    }
     const state = {
       validateStatus: 'error',
       help: 'Please enter a valid invite code.',
@@ -71,5 +75,6 @@ export default class InvationCode extends React.Component<RouteComponentProps> {
     }
     sessionStorage.setItem('invitationCode', '1');
     this.props.history.push('/');
+    return true;
   }
 }

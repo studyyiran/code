@@ -42,7 +42,6 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
       // 用户并没有修改有关的支付信息，不需要执行下面的校验
       if (!this.state.isLeftOnEdit && !this.state.isRightOnEdit) {
         resolve(true);
-        console.warn('不执行娇艳');
         return;
       }
 

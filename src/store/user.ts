@@ -33,7 +33,8 @@ class User implements IUserStoreNew {
       priceUnits: [],
       productId: -1,
       modelId: -1
-    }
+    },
+    userEmail: ''
   };
 
   constructor() {
@@ -45,15 +46,19 @@ class User implements IUserStoreNew {
   }
 
   @action public async getPreOrderKey(userEmail: string) {
-    let res: Partial<IPreOrder> = {};
+    
+    const params: IPreOrder = {
+      ...this.preOrder
+    }
+    params.userEmail = userEmail;
     try {
-      res = await Api.getPreOrderKey({ userEmail });
+      this.preOrder = await Api.getPreOrderKey<IPreOrder>(params);
     } catch (error) {
       console.warn(error, 'in user store');
       return false;
     }
 
-    this.preOrder = res;
+    // this.preOrder = res;
     this.canUpdatePreOrder = true;
     return true;
   }

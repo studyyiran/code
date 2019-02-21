@@ -9,6 +9,7 @@ class YourPhone implements IYourPhoneStore {
   @observable public carriers: ICarrier[] = [];
   @observable public brands: IBrands[] = [];
   @observable public products: IProductModel[] = [];
+  @observable public products4Search: IProductModel[] = [];
   @observable public productPPVNS: IProductPPVN[] = [];
   @observable public inquiryKey = '';
   @observable public inquiryDetail = null;
@@ -37,7 +38,7 @@ class YourPhone implements IYourPhoneStore {
   }
 
   @observable public activeBrandsId = -1; // 选择的品牌
-  @observable public activeCarrierName = ''; // 选择的运营商
+  @observable public activeCarrierName = 'OTHERS'; // 选择的运营商
   @observable public activeProductId = -1; // 选择的机型的id
   @observable public activeModelId = -1; // 选择的机型的内存id
   @observable public activeConditions = {}; // 选择的ppvn
@@ -65,7 +66,7 @@ class YourPhone implements IYourPhoneStore {
     this.activeProductId = -1;
     this.activeModelId = -1;
     this.activeConditions = {};
-    this.payment = '';
+    this.activeCarrierName = 'OTHERS'
     return true;
   }
 
@@ -105,7 +106,11 @@ class YourPhone implements IYourPhoneStore {
       return false;
     }
 
-    this.products = res;
+    if (keyword) {
+      this.products4Search = res;
+    } else {
+      this.products = res;
+    }
     return true;
   }
 
@@ -142,13 +147,13 @@ class YourPhone implements IYourPhoneStore {
     const priceUnits: number[] = Object.values(this.activeConditions);
     priceUnits.push(this.activeModelId); // priceUnits包括在model选择的ppv，以及condition选的非sku属性
 
-    const inquiry: IQueryParams = {
-      agentCode: DEFAULT.agentCode,
-      priceUnits: priceUnits,
-      productId: this.activeProductId
-    }
+    // const inquiry: IQueryParams = {
+    //   agentCode: DEFAULT.agentCode,
+    //   priceUnits: priceUnits,
+    //   productId: this.activeProductId
+    // }
     // TODO: 接口问题，先写死
-    // const inquiry: IQueryParams = { "agentCode": 'ahs_android', "productId": 25827, "priceUnits": [6437, 2023, 2014, 2453, 2072] }
+    const inquiry: IQueryParams = { "agentCode": 'ahs_android', "productId": 25827, "priceUnits": [6437, 2023, 2014, 2453, 2072] }
     let res: string;
     try {
       res = await Api.createInquiry<string>(inquiry);
@@ -185,7 +190,7 @@ class YourPhone implements IYourPhoneStore {
 
   // 创建订单
   @action public createOrder = async () => {
-    const orderParams: IPreOrder = {
+    const orderParams: Pick<IPreOrder, Exclude<keyof IPreOrder, 'key' | 'productInfo'>> = {
       addressInfo: this.addressInfo,
       agentCode: DEFAULT.agentCode,
       carrier: this.activeCarrierName,
