@@ -129,10 +129,10 @@ export interface ITrackHistoryItem {
  * @property carrier 运营商
  */
 export interface IOrderInspected {
-    actualAmount: number;
+    actualAmountDollar: number;
     actualProductName: string;
     actualSkuName: string;
-    amount: number;
+    amountDollar: number;
     inspectItems: IInspectItems[];
     inspectedDt: string;
     orderItemNo: string;
