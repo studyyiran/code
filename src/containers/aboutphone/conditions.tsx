@@ -4,14 +4,19 @@ import Layout from '@/containers/aboutphone/layout';
 import ConditionItem from '@/containers/aboutphone/components/conditionitem';
 import './conditions.less';
 import { IConditionsProps } from './interface/index.interface';
-
 import { message } from 'antd';
 import { IProductInfo } from '@/store/interface/user.interface';
+import { conditionPageValidate } from '@/containers/aboutphone/pageValidate';
 @inject('yourphone', 'user')
 @observer
 export default class Conditions extends React.Component<IConditionsProps> {
 
   public componentDidMount() {
+    if (!conditionPageValidate()) {
+      this.props.history.push('/sell/account');
+      return;
+    }
+
     this.props.yourphone.getProductPPVN();
     // done页面，允许父组件调用里面的方法
     if (typeof this.props.onRef === 'function') {

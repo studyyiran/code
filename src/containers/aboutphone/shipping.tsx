@@ -5,11 +5,16 @@ import Layout from '@/containers/aboutphone/layout';
 import './shipping.less';
 import { IShippingProps } from './interface/index.interface';
 import { IProductInfo } from '@/store/interface/user.interface';
+import { shippingPageValidate } from '@/containers/aboutphone/pageValidate';
 @inject('yourphone', 'user')
 @observer
 class ShippingAddress extends React.Component<IShippingProps> {
 
   public componentDidMount() {
+    if (!shippingPageValidate()) {
+      this.props.history.push('/sell/account');
+      return;
+    }
     // this.props.yourphone.createInquiry();
     // this.props.form.validateFields(['zipCode'], (errors, values) => {
     //   if (!errors) { console.log('ininiin'); }

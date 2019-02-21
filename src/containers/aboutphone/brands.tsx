@@ -5,12 +5,17 @@ import LayOut from '@/containers/aboutphone/layout';
 import BrandItem from '@/containers/aboutphone/components/branditem';
 import './brands.less';
 import { DEFAULT } from '@/config';
-// import { IPreOrder } from '@/store/interface/user.interface';
+import { userEmailValidate } from '@/containers/aboutphone/pageValidate';
 
 @inject('yourphone', 'user')
 @observer
 export default class Brands extends React.Component<IBrandsProps> {
   public componentDidMount() {
+    // 检验是否获取到页面需要到必须数据
+    if (!userEmailValidate()) {
+      this.props.history.push('/sell/account');
+      return;
+    }
     this.props.yourphone.getBrandsByCid();
   }
 

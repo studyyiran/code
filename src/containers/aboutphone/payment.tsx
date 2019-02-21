@@ -4,6 +4,7 @@ import { inject, observer } from 'mobx-react';
 import { Row, Col, Collapse, Form, Input, message } from 'antd';
 import Layout from '@/containers/aboutphone/layout';
 import { IPaymentProps, IPaymentStates, EPayType } from './interface/index.interface';
+import { paymentPageValidate } from '@/containers/aboutphone/pageValidate';
 import './payment.less';
 
 const Panel = Collapse.Panel;
@@ -24,6 +25,11 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
   }
 
   public componentDidMount() {
+    if (!paymentPageValidate()) {
+      this.props.history.push('/sell/account');
+      return;
+    }
+
     if (typeof this.props.onRef === 'function') {
       this.props.onRef!(this); // 让done page里获取到这个组件实例，调用其validateData方法
     }

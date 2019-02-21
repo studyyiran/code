@@ -6,6 +6,7 @@ import Layout from '@/containers/aboutphone/layout';
 import './checkorder.less';
 import { Button } from 'antd';
 import { ICheckOutProps, ICheckOutStates, EBrandType, EPayType } from './interface/index.interface';
+import { checkOrderPageValidate } from '@/containers/aboutphone/pageValidate';
 
 @inject('yourphone')
 @observer
@@ -20,6 +21,13 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
     payText: {
       [EPayType.PAYPAL]: 'After your device arrives, it <br /> typically takes a week for your <br /> PayPal funds to be deposited.',
       [EPayType.ECHECK]: 'After your device arrives, your <br /> eCheck is typically sent within a <br /> week.'
+    }
+  }
+
+  public componentDidMount() {
+    if (!checkOrderPageValidate()) {
+      this.props.history.push('/sell/account');
+      return;
     }
   }
 
