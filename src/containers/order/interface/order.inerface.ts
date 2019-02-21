@@ -84,6 +84,7 @@ export interface IOrderDetail {
     addressInfo: IAddressInfo;
     shippoTransaction: IShippingTran;
     orderPaymentBills: IPaymentInfo[];
+    orderRecords: IOrderRecord[]
 }
 /**
  * 订单中物流id
@@ -286,10 +287,10 @@ export interface IProgressData {
 }
 
 // 进度条单个点属性
-interface IProgressDot {
+export interface IProgressDot {
     name: string;
     date?: string;
-    img?: string;
+    img?: string | null | undefined;
 }
 /**
  * 物流信息
@@ -350,4 +351,13 @@ interface IPayment {
     priceGuaranteeStatus: boolean; // 支付状态
     bonus: number;
     bonusStatus: boolean;
+}
+
+/**
+ * 操作记录
+ */
+export interface IOrderRecord {
+    afterStatus: IProgressType;
+    beforeStatus: IProgressType;
+    createdDt: string;
 }

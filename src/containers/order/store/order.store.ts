@@ -1,4 +1,4 @@
-import { IOrderStore, IOrderDetail, IProgressType, IShippingAddress, IInspectionData, ITrackingModel } from '@/containers/order/interface/order.inerface';
+import { IOrderStore, IOrderDetail, IProgressType, IShippingAddress, IInspectionData, ITrackingModel, IProgressDot, IOrderRecord } from '@/containers/order/interface/order.inerface';
 import { computed, action, observable } from 'mobx';
 import * as OrderApi from '../api/order.api';
 import { getMonthEn, getHourBy12 } from '@/utils/function';
@@ -175,7 +175,7 @@ class Store implements IOrderStore {
                     }
                 });
                 if (orderItem.inspectResult.result === "WRONG_PRODUCT") {
-                    data.productName = orderItem.actualProductName;
+                    data.productName = orderItem.actualSkuName;
                 }
             }
         }
@@ -214,9 +214,9 @@ class Store implements IOrderStore {
     // 构建进度条需要的数据
     @computed get progressType() {
         let currentIndex = 0;
-        const dataList = [{
+        let dataList: IProgressDot[] = [{
             name: "Order Placed",
-            img: OrderPlacedIcon
+            img: OrderPlacedIcon,
         }, {
             name: "Package Sent",
             img: PackageSentIcon
@@ -233,15 +233,45 @@ class Store implements IOrderStore {
             name: "Order Completed",
             img: OrderCompleteIcon
         }];
+        const orderRecords = this.orderDetail.orderRecords;
+        if (orderRecords && orderRecords.length > 0) {
+            dataList = [{
+                name: "Order Placed",
+                img: OrderPlacedIcon,
+                date: this.packageDate(this.orderDetail.createdDt)
+            }, {
+                name: "Package Sent",
+                img: PackageSentIcon,
+                date: this.packageDate(this.findDate(IProgressType.TO_BE_SHIPPED))
+            }, {
+                name: "Package Recived",
+                img: PackageReceivedIcon,
+                date: this.packageDate(this.findDate(IProgressType.TO_BE_RECEIVED))
+            }, {
+                name: "Inspection Completed",
+                img: InspectionCompleteIcon,
+                date: this.packageDate(this.findDate(IProgressType.TO_BE_INSPECTED))
+            }, {
+                name: "Listed For Sale",
+                img: ListSaleIcon,
+                date: this.packageDate(this.findDate(IProgressType.LISTED_FOR_SALE, IProgressType.LISTED_FOR_SALE))
+            }, {
+                name: "Order Completed",
+                img: OrderCompleteIcon,
+                date: this.packageDate(this.findDate(IProgressType.LISTED_FOR_SALE, IProgressType.TRANSACTION_SUCCEED))
+            }];
+        }
         // 退货
         if (this.orderDetail.status === IProgressType.TO_BE_RETURNED || this.orderDetail.status === IProgressType.TRANSACTION_FAILED) {
             dataList[4] = {
                 name: "Return Requested",
-                img: ReturnRequestIcon
+                img: ReturnRequestIcon,
+                date: this.findDate(IProgressType.DIFFERENCE_INSPECTED)
             };
             dataList[5] = {
                 name: "Product Dispatched",
-                img: PackageReceivedIcon
+                img: PackageReceivedIcon,
+                date: this.findDate(IProgressType.TO_BE_RETURNED)
             };
         }
         switch (this.orderDetail.status) {
@@ -375,6 +405,30 @@ class Store implements IOrderStore {
             console.error(e);
             return false;
         }
+    }
+    private packageDate(b: string | undefined) {
+        if (b) {
+            const date = new Date(b);
+            return getMonthEn(date) + " " + date.getDate()
+        }
+        return b
+    }
+    private findDate(status: IProgressType, afterStatus?: IProgressType) {
+        const orderRecords = this.orderDetail.orderRecords;
+        let target: IOrderRecord | null;
+        if (afterStatus) {
+            target = this.findFirstEleFromTarget(orderRecords, t => (t.beforeStatus === status && t.afterStatus === afterStatus));
+        } else {
+            target = this.findFirstEleFromTarget(orderRecords, t => t.beforeStatus === status);
+        }
+        return target && target.createdDt || undefined;
+    }
+    private findFirstEleFromTarget<T>(b: T[] = [], f: (c: T) => boolean) {
+        const vArray = b.filter(f);
+        if (vArray.length > 0) {
+            return vArray[0];
+        }
+        return null;
     }
 }
 
