@@ -104,9 +104,12 @@ export interface IPreOrder {
 // }
 export interface IProductInfo {
   brandId: number; // 品牌ID
+  brandName: string; // 品牌名称
   carrier: string; // 运营商
   priceUnits: number[];
   productId: number; // 机型ID
+  productName: string; // 机型名称
   modelId: number; // 选中的内存属性skuid
+  modelName: string; // 内存名称
   inquiryDetail?: IYourPhoneStore['inquiryDetail']
 }

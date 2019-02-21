@@ -7,7 +7,7 @@ export interface IYourPhoneStore {
   carriers: ICarrier[];
   brands: IBrands[];
   products: IProductModel[];
-  products4Search: IProductModel[] ,
+  products4Search: IProductModel[],
   productPPVNS: IProductPPVN[];
   inquiryDetail: IInquiryDetail | null;
   orderDetail: any;
@@ -23,9 +23,12 @@ export interface IYourPhoneStore {
     email: string;
   }
   activeBrandsId: number;
+  activeBrandsName: string;
   activeCarrierName: string;
   activeProductId: number;
+  activeProductName: string;
   activeModelId: number;
+  activeModelName: string;
   activeConditions: object;
   americaStates: IAmericaState;
   isTBD: boolean; // 选中的品牌是否为other
@@ -172,7 +175,7 @@ export interface IProductModel {
   skuPricePropertyNames: ISkuPricePropertyNames[];
   activeModelId: number;
   activeProductId: number;
-  onModelItemClick(productId: number, skuId: number): void;
+  onModelItemClick(productId: number, productName: string, skuId: number, skuName: string): void;
 }
 
 export interface IProductPPVN {
@@ -222,4 +225,11 @@ export enum EBrandType {
 export enum EPayType {
   PAYPAL = 'PAYPAL',
   ECHECK = 'CHECK'
+}
+
+export interface IBreadCrumb {
+  style: object;
+  brandName: string;
+  carrierName: string;
+  modelName: string;
 }
