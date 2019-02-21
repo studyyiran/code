@@ -4,7 +4,9 @@ import Layout from '@/containers/aboutphone/layout';
 import ConditionItem from '@/containers/aboutphone/components/conditionitem';
 import './conditions.less';
 import { IConditionsProps } from './interface/index.interface';
+
 import { message } from 'antd';
+import { IProductInfo } from '@/store/interface/user.interface';
 @inject('yourphone', 'user')
 @observer
 export default class Conditions extends React.Component<IConditionsProps> {
@@ -63,11 +65,14 @@ export default class Conditions extends React.Component<IConditionsProps> {
 
     if (isInquiryKeyCreated) {
       try {
-        const productInfo = { ...this.props.user.preOrder.productInfo, priceUnits: [...Object.values(this.props.yourphone.activeConditions), this.props.yourphone.activeModelId] }
+        const productInfo: Partial<IProductInfo> = {
+          ...this.props.user.preOrder.productInfo,
+          priceUnits: [...Object.values(this.props.yourphone.activeConditions), this.props.yourphone.activeModelId],
+        }
         this.props.user.preOrder = {
           ...this.props.user.preOrder,
-          productInfo,
-          yourphoneStore: { ...this.props.yourphone }
+          inquiryKey: this.props.yourphone.inquiryKey,
+          productInfo
         };
       } catch (error) { console.warn(error, 'in conditions page preOrder') }
 

@@ -31,11 +31,12 @@ export default class Brands extends React.Component<IBrandsProps> {
 
   private onBrandItemClick = (brand: IBrands) => {
     try {
-      const productInfo = {...this.props.user.preOrder.productInfo, brand: brand.id};
+      // const productInfo = { ...this.props.user.preOrder.productInfo, brand: brand.id };
       this.props.user.preOrder = {
         ...this.props.user.preOrder,
-        productInfo,
-        yourphoneStore: { ...this.props.yourphone }
+        productInfo: {
+          brandId: brand.id
+        }
       };
     } catch (error) { console.warn(error, 'in brands page updatePreorder') }
 

@@ -41,8 +41,7 @@ export default class Models extends React.Component<IModelsProps> {
       const productInfo = { ...this.props.user.preOrder.productInfo, productId: productId, modelId: skuId }
       this.props.user.preOrder = {
         ...this.props.user.preOrder,
-        productInfo,
-        yourphoneStore: { ...this.props.yourphone }
+        productInfo
       };
     } catch (error) { console.warn(error, 'in models page preOrder') }
 

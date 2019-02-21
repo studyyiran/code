@@ -30,15 +30,48 @@ export default class SellLayout extends React.Component<{ route: { [key: string]
     if (preOrder) {
       this.props.user.preOrder = JSON.parse(preOrder);
 
-      this.props.yourphone.addressInfo = this.props.user.preOrder.addressInfo;
-      this.props.yourphone.inquiryKey = this.props.user.preOrder.inquiryKey;
-      this.props.yourphone.payment = this.props.user.preOrder.payment;
-      this.props.yourphone.echeck = this.props.user.preOrder.checkInfo;
-      this.props.yourphone.paypal = this.props.user.preOrder.paypalInfo;
-      this.props.yourphone.activeBrandsId = this.props.user.preOrder.productInfo.brandId;
-      this.props.yourphone.activeModelId = this.props.user.preOrder.productInfo.modelId;
-      this.props.yourphone.activeCarrierName = this.props.user.preOrder.productInfo.carrier;
-      this.props.yourphone.activeProductId = this.props.user.preOrder.productInfo.productId;
+      if (this.props.user.preOrder.addressInfo) {
+        this.props.yourphone.addressInfo = this.props.user.preOrder.addressInfo;
+      }
+
+      if (this.props.user.preOrder.inquiryKey) {
+        this.props.yourphone.inquiryKey = this.props.user.preOrder.inquiryKey;
+      }
+
+      if (this.props.user.preOrder.payment) {
+        this.props.yourphone.payment = this.props.user.preOrder.payment;
+      }
+
+      if (this.props.user.preOrder.checkInfo) {
+        this.props.yourphone.echeck = this.props.user.preOrder.checkInfo;
+      }
+
+      if (this.props.user.preOrder.paypalInfo) {
+        this.props.yourphone.paypal = this.props.user.preOrder.paypalInfo;
+      }
+
+      // 有关机型的 
+      if (this.props.user.preOrder.productInfo) {
+        if (this.props.user.preOrder.productInfo.brandId) {
+          this.props.yourphone.activeBrandsId = this.props.user.preOrder.productInfo.brandId;
+        }
+
+        if (this.props.user.preOrder.productInfo.modelId) {
+          this.props.yourphone.activeModelId = this.props.user.preOrder.productInfo.modelId;
+        }
+
+        if (this.props.user.preOrder.productInfo.carrier) {
+          this.props.yourphone.activeCarrierName = this.props.user.preOrder.productInfo.carrier;
+        }
+
+        if (this.props.user.preOrder.productInfo.productId) {
+          this.props.yourphone.activeProductId = this.props.user.preOrder.productInfo.productId;
+        }
+
+        if (this.props.user.preOrder.productInfo.inquiryDetail) {
+          this.props.yourphone.inquiryDetail = this.props.user.preOrder.productInfo.inquiryDetail;
+        }
+      }
     }
 
     this.setState({ isSetedPreOrder: true });

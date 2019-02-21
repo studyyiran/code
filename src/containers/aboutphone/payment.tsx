@@ -343,7 +343,6 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
           checkInfo: { ...this.props.yourphone.echeck },
           payment: this.props.yourphone.payment,
           paypalInfo: { ...this.props.yourphone.paypal },
-          yourphoneStore: { ...this.props.yourphone }
         }
       } catch (error) { console.warn(error, 'in payment page preOrder') }
       this.props.history.push('/sell/yourphone/done');

@@ -4,6 +4,7 @@ import { Form, Col, Row, Input } from 'antd';
 import Layout from '@/containers/aboutphone/layout';
 import './shipping.less';
 import { IShippingProps } from './interface/index.interface';
+import { IProductInfo } from '@/store/interface/user.interface';
 @inject('yourphone', 'user')
 @observer
 class ShippingAddress extends React.Component<IShippingProps> {
@@ -237,10 +238,14 @@ class ShippingAddress extends React.Component<IShippingProps> {
     const isOk = await this.validateData();
     if (isOk) {
       try {
+        const productInfo: Partial<IProductInfo> = {
+          ...this.props.user.preOrder.productInfo,
+          inquiryDetail: this.props.yourphone.inquiryDetail
+        }
         this.props.user.preOrder = {
           ...this.props.user.preOrder,
           addressInfo: { ...this.props.yourphone.addressInfo },
-          yourphoneStore: this.props.yourphone
+          productInfo
         }
       } catch (error) { console.warn(error, 'in shipping page preOrder') }
       this.props.history.push('/sell/yourphone/payment');

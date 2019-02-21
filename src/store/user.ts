@@ -4,38 +4,41 @@ import { action, observable, autorun } from 'mobx';
 
 class User implements IUserStoreNew {
   @observable public canUpdatePreOrder = false;
-  @observable public preOrder: IPreOrder = {
-    addressInfo: {
-      addressLine: '',
-      addressLineOptional: '',
-      city: '',
-      country: 'United States',
-      firstName: '',
-      lastName: '',
-      mobile: '',
-      state: '',
-      zipCode: ''
-    },
-    checkInfo: {
-      firstName: '',
-      lastName: '',
-      email: ''
-    },
-    inquiryKey: '',
-    key: '',
-    payment: '',
-    paypalInfo: {
-      email: ''
-    },
-    productInfo: {
-      brandId: -1,
-      carrier: '',
-      priceUnits: [],
-      productId: -1,
-      modelId: -1
-    },
-    userEmail: ''
-  };
+  // @observable public preOrder: Partial<IPreOrder> = {
+  //   addressInfo: {
+  //     addressLine: '',
+  //     addressLineOptional: '',
+  //     city: '',
+  //     country: 'United States',
+  //     firstName: '',
+  //     lastName: '',
+  //     mobile: '',
+  //     state: '',
+  //     zipCode: ''
+  //   },
+  //   checkInfo: {
+  //     firstName: '',
+  //     lastName: '',
+  //     email: ''
+  //   },
+  //   inquiryKey: '',
+  //   key: '',
+  //   payment: '',
+  //   paypalInfo: {
+  //     email: ''
+  //   },
+  //   productInfo: {
+  //     brandId: -1,
+  //     carrier: '',
+  //     priceUnits: [],
+  //     productId: -1,
+  //     modelId: -1
+  //   },
+  //   userEmail: ''
+  // };
+
+
+  @observable public preOrder: Partial<IPreOrder> = {};
 
   constructor() {
     autorun(() => {
@@ -46,19 +49,17 @@ class User implements IUserStoreNew {
   }
 
   @action public async getPreOrderKey(userEmail: string) {
-    
-    const params: IPreOrder = {
-      ...this.preOrder
+
+    const params = {
+      userEmail
     }
-    params.userEmail = userEmail;
     try {
       this.preOrder = await Api.getPreOrderKey<IPreOrder>(params);
     } catch (error) {
-      console.warn(error, 'in user store');
+      console.warn(error, 'in user store getPreOrderKey');
       return false;
     }
 
-    // this.preOrder = res;
     this.canUpdatePreOrder = true;
     return true;
   }
