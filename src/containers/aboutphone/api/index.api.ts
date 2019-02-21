@@ -28,6 +28,8 @@ export const getProductsList = <T>(brand: number, keyword: string = '', category
     url: '/products/search',
     method: 'post',
     params: {
+      pageIndex: 0,
+      pageSize: 9999,
       brand,
       categoryIds
     }

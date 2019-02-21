@@ -38,7 +38,7 @@ class YourPhone implements IYourPhoneStore {
   }
 
   @observable public activeBrandsId = -1; // 选择的品牌
-  @observable public activeCarrierName = 'OTHERS'; // 选择的运营商
+  @observable public activeCarrierName = ''; // 选择的运营商
   @observable public activeProductId = -1; // 选择的机型的id
   @observable public activeModelId = -1; // 选择的机型的内存id
   @observable public activeConditions = {}; // 选择的ppvn
