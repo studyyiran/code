@@ -38,17 +38,22 @@ class User implements IUserStoreNew {
   // };
 
 
-  @observable public preOrder: Partial<IPreOrder> = {};
+  @observable public preOrder: Partial<IPreOrder> = {
+    userEmail: '',
+  };
 
   constructor() {
     autorun(() => {
-      if (this.canUpdatePreOrder) { // 第一次获取key，不需要更新
+      if (this.preOrder.userEmail && this.preOrder.key) {
         this.updatePreOrder(this.preOrder);
       }
     });
   }
 
   @action public async getPreOrderKey(userEmail: string) {
+    this.preOrder = { // 存在这代码的原因是避免切到brand页面时，接口还在请求，导致userEmail没能赋值给preOrder,brand 页面拿不到userEmail，会重新定向到/sell/accout 页面
+      userEmail
+    };
 
     const params = {
       userEmail
@@ -60,7 +65,6 @@ class User implements IUserStoreNew {
       return false;
     }
 
-    this.canUpdatePreOrder = true;
     return true;
   }
 

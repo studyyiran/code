@@ -8,15 +8,13 @@ import ShippingPage from '@/containers/aboutphone/shipping';
 import PaymentPage from '@/containers/aboutphone/payment';
 import ConditionPage from '@/containers/aboutphone/conditions';
 import ChangeModal from '@/containers/aboutphone/components/changemodal';
+import { donePageValidate } from '@/containers/aboutphone/pageValidate';
 import './done.less';
 import { IDoneProps, IDoneStates, EChangeType, EPayType } from './interface/index.interface';
 
 @inject('yourphone', 'user')
 @observer
 export default class YoureDone extends React.Component<IDoneProps, IDoneStates> {
-  // public pageRef: React.RefObject<React.Component<IShippingProps>>;
-  // public pageRef2: React.RefObject<React.Component<IPaymentProps>>;
-  // public pageRef3: React.RefObject<React.Component<IConditionsProps>>;
   public pageRef: React.Component;
   public readonly state: Readonly<IDoneStates> = {
     isChecked: false, // 勾选协议
@@ -26,9 +24,13 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
 
   public constructor(props: IDoneProps) {
     super(props);
-    // this.pageRef = React.createRef();
-    // this.pageRef2 = React.createRef();
-    // this.pageRef3 = React.createRef();
+  }
+
+  public componentDidMount() {
+    if (!donePageValidate()) {
+      this.props.history.push('/sell/account');
+      return;
+    }
   }
 
   public handleOnRef = (child: React.Component) => {

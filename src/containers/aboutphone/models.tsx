@@ -4,12 +4,17 @@ import LayOut from '@/containers/aboutphone/layout';
 import ModelItem from '@/containers/aboutphone/components/modelitem';
 import './models.less';
 import { IModelsProps } from './interface/index.interface';
-
+import { modalPageValidate } from '@/containers/aboutphone/pageValidate';
 @inject('yourphone', 'user')
 @observer
 export default class Models extends React.Component<IModelsProps> {
 
   public componentDidMount() {
+    if (!modalPageValidate()) {
+      this.props.history.push('/sell/account');
+      return;
+    }
+
     this.props.yourphone.getProductsList();
   }
 
