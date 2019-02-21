@@ -61,7 +61,7 @@ export default class InvationCode extends React.Component<RouteComponentProps> {
   }
 
   private onSubmit = () => {
-    if (!this.state.btnHasDisabled) {
+    if (this.state.btnHasDisabled) {
       return false;
     }
     const state = {
