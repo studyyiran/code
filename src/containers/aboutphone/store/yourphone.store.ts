@@ -1,4 +1,4 @@
-import { ENVCONFIG } from 'config';
+import { ENVCONFIG, DEFAULT } from 'config';
 import { IQueryParams, IInquiryDetail, IAddressInfo } from './../interface/index.interface';
 import * as Api from '../api/index.api';
 import { action, observable, autorun, computed } from 'mobx';
