@@ -81,7 +81,7 @@ export default class Footer extends React.Component<{ router: any }, IFooterStat
                     style={{ margin: '10px 0 14px 0' }}
                     onChange={this.handChangeInput}
                   />
-                  <Button htmlType="submit" type="primary" onClick={this.handleSubscribe}>Subscribe</Button>
+                  <Button className="foot-subscribe" htmlType="submit" type="primary" onClick={this.handleSubscribe}>SUBSCRIBE</Button>
                 </Col>
               </Row>
             </div>
