@@ -9,7 +9,7 @@ import yourphoneStore from '@/containers/aboutphone/store/yourphone.store';
 interface IStates {
   navigatorObj: INavigatorObj | null
 }
-let timer: any = 0;
+let timer: number = 0;
 @observer
 export default class BrandHeader extends React.Component<object, IStates> {
 
