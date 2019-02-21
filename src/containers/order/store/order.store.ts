@@ -67,7 +67,7 @@ class Store implements IOrderStore {
             const orderItem = this.orderDetail.orderItem;
             if (orderItem.product && !orderItem.product.isTBD) {
                 model = orderItem.product.name;
-                carrier = orderItem.carrier === "ATT" ? "ATT&T" : orderItem.carrier;
+                carrier = this.referenceEnumToCarrier(orderItem.carrier);
                 condition = orderItem.pricePropertyValues.map(t => t.value).join(",");
                 guaranteedPrice = `$${orderItem.amount}`;
             } else {
@@ -429,6 +429,17 @@ class Store implements IOrderStore {
             return vArray[0];
         }
         return null;
+    }
+    private referenceEnumToCarrier(carrer: string) {
+        enum data {
+            ATT = "AT&T",
+            UNLOCKED = "Unlocked",
+            TMOBILE = "T-Mobile",
+            SPRINT = "Sprint",
+            OTHERS = "Others",
+            VERIZON = "Verizon"
+        }
+        return data[carrer]
     }
 }
 
