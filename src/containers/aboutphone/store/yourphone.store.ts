@@ -9,6 +9,7 @@ class YourPhone implements IYourPhoneStore {
   @observable public carriers: ICarrier[] = [];
   @observable public brands: IBrands[] = [];
   @observable public products: IProductModel[] = [];
+  @observable public products4Search: IProductModel[] = [];
   @observable public productPPVNS: IProductPPVN[] = [];
   @observable public inquiryKey = '';
   @observable public inquiryDetail = null;
@@ -105,7 +106,11 @@ class YourPhone implements IYourPhoneStore {
       return false;
     }
 
-    this.products = res;
+    if (keyword) {
+      this.products4Search = res;
+    } else {
+      this.products = res;
+    }
     return true;
   }
 

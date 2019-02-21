@@ -1,13 +1,15 @@
 import * as React from 'react';
+import { observer } from 'mobx-react';
 import './headerwithsearch.less';
 import { NAVIGATOR } from 'config';
 import { Input } from 'antd';
-import { INavigatorObj } from '@/containers/aboutphone/interface/index.interface';
+import { INavigatorObj, IProductModel } from '@/containers/aboutphone/interface/index.interface';
 import yourphoneStore from '@/containers/aboutphone/store/yourphone.store';
 
 interface IStates {
   navigatorObj: INavigatorObj | null
 }
+@observer
 export default class BrandHeader extends React.Component<object, IStates> {
 
   public readonly state: Readonly<IStates> = {
@@ -50,9 +52,25 @@ export default class BrandHeader extends React.Component<object, IStates> {
             <Search
               placeholder="Search for..."
               onSearch={this.handleSearch}
+              onChange={this.handleKeyWordChange}
               enterButton={true}
             />
-            <div className="results-wrapper" />
+            {
+              yourphoneStore.products4Search.length > 0 &&
+              <div className="results-wrapper">
+                {
+                  yourphoneStore.products4Search.map((product, index) => (
+                    <p
+                      key={index}
+                      className='product'
+                      onClick={this.handleProductSelect.bind(this, product)}
+                    >
+                      {product.name}
+                    </p>
+                  ))
+                }
+              </div>
+            }
           </div>
         }
       </div>
@@ -60,6 +78,22 @@ export default class BrandHeader extends React.Component<object, IStates> {
   }
 
   private handleSearch = (value: string) => {
-    yourphoneStore.getProductsList(value.trim());
+    if (value.trim()) {
+      yourphoneStore.getProductsList(value.trim());
+    }
+  }
+
+  private handleKeyWordChange = (event: React.SyntheticEvent<any>) => {
+    // TODO: 防抖目前搞不通，死活报warning
+    // 获取input dom对象，然后获取里面的值
+    const value = event.currentTarget.value;
+    if (value.trim()) {
+      yourphoneStore.getProductsList(value.trim())
+    }
+  }
+
+  private handleProductSelect = (product: IProductModel) => {
+    yourphoneStore.products = [product];
+    yourphoneStore.products4Search = [];
   }
 }
