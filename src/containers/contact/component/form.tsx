@@ -41,7 +41,7 @@ class ContactForm extends React.Component<IContactFormProps> {
                     message: 'Please input',
                   }],
                 })(
-                  <Input placeholder="Please input" />
+                  <Input />
                 )}
               </Form.Item>
             </Col>
@@ -57,7 +57,7 @@ class ContactForm extends React.Component<IContactFormProps> {
                     message: 'Please input',
                   }],
                 })(
-                  <Input placeholder="Please input" />
+                  <Input />
                 )}
               </Form.Item>
             </Col>
