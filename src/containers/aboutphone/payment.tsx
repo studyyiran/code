@@ -51,7 +51,6 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
         return;
       }
 
-      console.warn('执行校验');
       this.props.form.validateFields((err, values) => {
         if (err) {
           resolve(false);
@@ -141,6 +140,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
                         }
                       ],
                       initialValue: paypal.email,
+                      validateTrigger: 'onBlur',
                     })(
                       <Input />
                     )
@@ -156,6 +156,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
                           message: "Please enter a valid email."
                         }
                       ],
+                      validateTrigger: 'onBlur',
                       initialValue: paypal.email,
                     })(
                       <Input />
@@ -205,6 +206,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
                           message: "Please enter a valid first name."
                         }
                       ],
+                      validateTrigger: 'onBlur',
                       initialValue: echeck.firstName,
                     })(
                       <Input />
@@ -221,6 +223,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
                           message: "Please enter a valid last name."
                         }
                       ],
+                      validateTrigger: 'onBlur',
                       initialValue: echeck.lastName
                     })(
                       <Input />
@@ -237,6 +240,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
                           message: "Please enter a valid email."
                         }
                       ],
+                      validateTrigger: 'onBlur',
                       initialValue: echeck.email
                     })(
                       <Input />
@@ -253,6 +257,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
                           message: "Please enter a valid email."
                         }
                       ],
+                      validateTrigger: 'onBlur',
                       initialValue: echeck.email
                     })(
                       <Input />
@@ -270,7 +275,9 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
     const paymentHTML = (
       <Row gutter={30} style={{ paddingTop: '42px' }}>
         <Col span={12}>
-          <Collapse onChange={this.handlePaypalCollapseExtend} className={classnames({ active: this.props.yourphone.payment === EPayType.PAYPAL })}>
+          <Collapse 
+            onChange={this.handlePaypalCollapseExtend}  
+            className={classnames({ active: this.props.yourphone.payment === EPayType.PAYPAL })}>
             <Panel
               header={leftHeader}
               showArrow={false}
@@ -281,7 +288,9 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
           </Collapse>
         </Col>
         <Col span={12}>
-          <Collapse onChange={this.handleEcheckCollapseExtend} className={classnames({ active: this.props.yourphone.payment === EPayType.ECHECK })}>
+          <Collapse 
+            onChange={this.handleEcheckCollapseExtend}
+            className={classnames({ active: this.props.yourphone.payment === EPayType.ECHECK })}>
             <Panel
               header={<h3>eCheck</h3>}
               showArrow={false}

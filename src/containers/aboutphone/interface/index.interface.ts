@@ -129,7 +129,8 @@ export interface IBrandListProps {
 export interface IInquiryDetail {
   key: string; // 询价key
   ppvs: ISkuPricePropertyNames[];
-  price: number; // 询价价格
+  price: number; // 询价价格--美分
+  priceDollar: number; // 询价价格--美元
   product: IProductDetail;
 }
 
@@ -143,7 +144,8 @@ export interface IProductDetail {
 
 export interface ISkuPricePropertyNames {
   id: number;
-  name: string;
+  // name: string;
+  value: string;
   pricePropertyValues: ISubSkuPricePropertyValues[];
 }
 

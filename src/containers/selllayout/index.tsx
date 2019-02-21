@@ -103,7 +103,7 @@ export default class SellLayout extends React.Component<{ route: { [key: string]
     if (!this.state.isSetedPreOrder) {
       return null;
     }
-    const price = this.props.yourphone.inquiryDetail !== null ? this.props.yourphone.inquiryDetail.price : '';
+    const price = this.props.yourphone.inquiryDetail !== null ? this.props.yourphone.inquiryDetail.priceDollar : '';
     const children = this.props.route.children;
     return (
       <div className="page-sell-layout-container">

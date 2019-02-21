@@ -68,7 +68,7 @@ export const paymentValidate = (): boolean => {
 }
 
 export const orderDetailValidate = (): boolean => {
-  return !!(yourPhoneStore.orderDetail !== null && JSON.stringify(yourPhoneStore.orderDetail) !== '{}');
+  return !!(yourPhoneStore.inquiryDetail !== null && JSON.stringify(yourPhoneStore.orderDetail) !== '{}');
 }
 
 
