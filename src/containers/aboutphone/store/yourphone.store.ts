@@ -1,4 +1,4 @@
-import { DEFAULT } from 'config';
+import { ENVCONFIG, DEFAULT } from 'config';
 import { IQueryParams, IInquiryDetail, IAddressInfo } from './../interface/index.interface';
 import * as Api from '../api/index.api';
 import { action, observable, autorun, computed } from 'mobx';
@@ -36,6 +36,8 @@ class YourPhone implements IYourPhoneStore {
     lastName: '',
     email: ''
   }
+  @observable public isLeftOnEdit: boolean = false;
+  @observable public isRightOnEdit: boolean = false;
 
   @observable public activeBrandsId = -1; // 选择的品牌Id
   @observable public activeBrandsName = ''; // 选择的品牌的名称
@@ -46,6 +48,7 @@ class YourPhone implements IYourPhoneStore {
   @observable public activeModelName = ''; // 选择的内存名称
   @observable public activeConditions = {}; // 选择的ppvn
   @observable public isAddressValuesAndDisabled: boolean = true;
+  @observable public isPaymentFormFilled: boolean = false;
   @observable public americaStates: IAmericaState;
 
   constructor() {
@@ -71,6 +74,24 @@ class YourPhone implements IYourPhoneStore {
     this.activeConditions = {};
     this.activeCarrierName = 'OTHERS'
     return true;
+  }
+
+  @computed get isDonePayment() {
+    if (!this.payment) {
+      return false;
+    }
+    if (this.payment === 'PAYPAL' && !this.isLeftOnEdit) {
+      return true;
+    }
+
+    if (this.payment === 'CHECK' && !this.isRightOnEdit) {
+      return true;
+    }
+
+    if (this.isPaymentFormFilled) {
+      return true;
+    }
+    return false;
   }
 
 
@@ -150,13 +171,13 @@ class YourPhone implements IYourPhoneStore {
     const priceUnits: number[] = Object.values(this.activeConditions);
     priceUnits.push(this.activeModelId); // priceUnits包括在model选择的ppv，以及condition选的非sku属性
 
-    // const inquiry: IQueryParams = {
-    //   agentCode: DEFAULT.agentCode,
-    //   priceUnits: priceUnits,
-    //   productId: this.activeProductId
-    // }
+    const inquiry: IQueryParams = {
+      agentCode: ENVCONFIG.agentCode,
+      priceUnits: priceUnits,
+      productId: this.activeProductId
+    }
     // TODO: 接口问题，先写死
-    const inquiry: IQueryParams = { "agentCode": 'ahs_android', "productId": 25827, "priceUnits": [6437, 2023, 2014, 2453, 2072] }
+    // const inquiry: IQueryParams = { "agentCode": 'ahs_android', "productId": 25827, "priceUnits": [6437, 2023, 2014, 2453, 2072] }
     let res: string;
     try {
       res = await Api.createInquiry<string>(inquiry);
@@ -195,7 +216,7 @@ class YourPhone implements IYourPhoneStore {
   @action public createOrder = async () => {
     const orderParams: Pick<IPreOrder, Exclude<keyof IPreOrder, 'key' | 'productInfo'>> = {
       addressInfo: this.addressInfo,
-      agentCode: DEFAULT.agentCode,
+      agentCode: ENVCONFIG.agentCode,
       carrier: this.activeCarrierName,
       checkInfo: this.echeck,
       inquiryKey: this.inquiryKey,

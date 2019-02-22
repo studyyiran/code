@@ -79,7 +79,7 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
             <p className="echeck-title">eCheck</p>
             <p className="email-info">
               <span className="label">Name</span>
-              <span className="address">{`${yourphone.echeck.lastName} ${yourphone.echeck.firstName}`}</span>
+              <span className="address">{`${yourphone.echeck.firstName} ${yourphone.echeck.lastName}`}</span>
             </p>
             <p className="email-info">
               <span className="label">E-mail</span>

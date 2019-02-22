@@ -34,6 +34,10 @@ export interface IYourPhoneStore {
   isTBD: boolean; // 选中的品牌是否为other
   isAllConditionSelected: boolean; // computed
   isAddressValuesAndDisabled: boolean;
+  isDonePayment: boolean;
+  isLeftOnEdit: boolean;
+  isRightOnEdit: boolean;
+  isPaymentFormFilled: boolean;
   getBrandsByCid: (categoryId?: number) => Promise<boolean>;
   getCarrier: () => Promise<boolean>;
   getProductsList: (keyword?: string) => Promise<boolean>;
@@ -82,8 +86,8 @@ export type IDoneProps = IBrandsProps;
 export type ICheckOutProps = IBrandsProps & { user: IUserStoreNew };
 
 export interface IPaymentStates {
-  isLeftOnEdit: boolean;
-  isRightOnEdit: boolean;
+  // isLeftOnEdit: boolean;
+  // isRightOnEdit: boolean;
   activeSide: string;
 }
 export interface IDoneStates {

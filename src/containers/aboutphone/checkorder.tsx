@@ -44,7 +44,7 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
               <div className="step">
                 <p className="name">Prepare Your Phone</p>
                 <p className="detail" dangerouslySetInnerHTML={{ __html: this.state.brandText[this.state.brand] }} />
-                <Link to={activeBrandsId === 52 ? '/help/iphone' : '/help/android'} className="tips">How to Prepare Your Phone</Link>
+                <Link to={activeBrandsId === 52 ? '/how-to-factory-reset-iphone' : '/how-to-factory-reset-android-phone'} className="tips">How to Prepare Your Phone</Link>
               </div>
               <div className="step">
                 <p className="name">Pack and Send</p>
