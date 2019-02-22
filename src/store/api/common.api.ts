@@ -44,7 +44,6 @@ export const onSubscribe = <T>(userEmail: string): Promise<T> => {
             userEmail,
         },
         loading: true,
-        isMock: true
     };
 
     return Request<T>(opts);

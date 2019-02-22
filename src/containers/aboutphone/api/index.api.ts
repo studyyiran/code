@@ -39,7 +39,6 @@ export const getProductsList = <T>(brandId: number, categoryId: number = 1) => {
 export const getProductDetail = <T>(id: number) => {
   const opts: IOpts = {
     url: `/products/${id}`,
-    isMock: true
   };
 
   return Request<T>(opts);
