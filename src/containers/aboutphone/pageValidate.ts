@@ -2,7 +2,7 @@
  * 用于校验在yourphone流程中，各个页面所必须的关键数据
  * 如果不满足，则跳会about you 页面
  */
-// import { DEFAULT } from 'config';
+import { DEFAULT } from 'config';
 import userStore from '@/store/user';
 import yourPhoneStore from '@/containers/aboutphone/store/yourphone.store';
 import { EPayType } from './interface/index.interface';
@@ -19,7 +19,13 @@ export const conditionPageValidate = (): boolean => {
 
 // shipping 页面的校验
 export const shippingPageValidate = (): boolean => {
-  return !!(conditionPageValidate() && inquiryKeyValidate());
+  // TBD的情况
+  if (isTBDValidate()) {
+    return brandIdValidate();
+  } else {
+    return !!(conditionPageValidate() && inquiryKeyValidate());
+  }
+
 }
 
 // payment 页面的校验
@@ -44,6 +50,10 @@ export const userEmailValidate = (): boolean => {
 
 export const brandIdValidate = (): boolean => {
   return !!(typeof yourPhoneStore.activeBrandsId === 'number' && yourPhoneStore.activeBrandsId !== -1);
+}
+
+export const isTBDValidate = (): boolean => {
+  return !!(yourPhoneStore.activeBrandsId === DEFAULT.otherBrandsId);
 }
 
 export const carrierValidate = (): boolean => {
