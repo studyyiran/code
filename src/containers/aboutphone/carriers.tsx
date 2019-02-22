@@ -51,7 +51,8 @@ export default class Brands extends React.Component<IBrandsProps> {
         productInfo: {
           brandId: this.props.yourphone.activeBrandsId,
           brandName: this.props.yourphone.activeBrandsName,
-          carrier: carrier.name
+          carrier: carrier.name,
+          carrierDescription: carrier.description
         }
       };
     } catch (error) { console.warn(error, 'in carriers page updatePreorder') }

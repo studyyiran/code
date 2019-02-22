@@ -72,6 +72,10 @@ export default class SellLayout extends React.Component<{ route: { [key: string]
           this.props.yourphone.activeCarrierName = this.props.user.preOrder.productInfo.carrier;
         }
 
+        if (this.props.user.preOrder.productInfo.carrierDescription) {
+          this.props.yourphone.activeCarrierDescription = this.props.user.preOrder.productInfo.carrierDescription;
+        }
+
         if (this.props.user.preOrder.productInfo.productId) {
           this.props.yourphone.activeProductId = this.props.user.preOrder.productInfo.productId;
         }
