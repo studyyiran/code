@@ -211,7 +211,7 @@ export interface IInspectItems {
  * @property card 卡号
  */
 export interface ICheckInfo {
-    card: string;
+    email: string;
 }
 /**
  * paypal信息，只有paypal付款才有

@@ -1,7 +1,7 @@
 import { Request } from 'utils';
 import { IOpts } from '@/utils/request.interface';
 import { IQueryParams } from '../interface/index.interface';
-import { DEFAULT } from 'config';
+import { ENVCONFIG } from 'config';
 import { IPreOrder } from '@/store/interface/user.interface';
 
 // 根据类目获取品牌列表
@@ -73,7 +73,7 @@ export const createInquiry = <T>(inquiry: IQueryParams) => {
 }
 
 // 获取询价详情
-export const getInquiryDetail = <T>(key: string, agentCode: string = DEFAULT['agentCode']) => {
+export const getInquiryDetail = <T>(key: string, agentCode: string = ENVCONFIG['agentCode']) => {
   const opts: IOpts = {
     url: `/inquiries/${key}`,
     params: {

@@ -70,7 +70,7 @@ const Request = <T>(opts: IOpts, code?: number[]): Promise<T> => {
 
   let hide: MessageType;
   if (opts.loading) {
-    hide = message.loading('加载中，请稍后..', 0);
+    hide = message.loading('loading...', 0);
   }
   console.log(opts.url);
   // 返回一个promise 用来 await调用
@@ -108,7 +108,7 @@ const Request = <T>(opts: IOpts, code?: number[]): Promise<T> => {
           return;
         }
 
-        message.error("服务器开小差了，请稍后再试");
+        message.error("server error");
         reject(res);
         return;
 
@@ -125,7 +125,7 @@ const Request = <T>(opts: IOpts, code?: number[]): Promise<T> => {
     }).catch((err) => {
       setTimeout(hide, 0);
       // 默认直接弹框报错
-      message.error('网络繁忙，请稍后再试！');
+      message.error('network error');
       reject(err);
     });
   });
