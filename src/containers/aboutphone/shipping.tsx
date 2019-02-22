@@ -11,7 +11,7 @@ import yourphoneStore from './store/yourphone.store';
 const onValuesChange = (props: any, changedValues: any, allValues: any) => {
   let disabled = false;
   Object.keys(allValues).forEach((v: string) => {
-    if (!allValues[v] && v !== 'city' && v !== 'state') {
+    if (!allValues[v] && v !== 'state' && v !== 'addressLineOptional' && v !== 'mobile' && v !== 'country') {
 
       disabled = true;
     }
@@ -27,16 +27,18 @@ const onValuesChange = (props: any, changedValues: any, allValues: any) => {
 class ShippingAddress extends React.Component<IShippingProps> {
 
   public componentDidMount() {
+    // 判断是否页面需要必备数据，分TBD的情况
+    if (!shippingPageValidate()) {
+      this.props.history.push('/sell/account');
+      return;
+    }
+
     // didmount 的时候校验是否填了字段
     const { getFieldsValue } = this.props.form;
     const allValus = getFieldsValue();
     onValuesChange(false, false, allValus);
     // 显示左侧价格模块
     this.props.user.isShowLeftPrice = true;
-    if (!shippingPageValidate()) {
-      this.props.history.push('/sell/account');
-      return;
-    }
     // this.props.yourphone.createInquiry();
     // this.props.form.validateFields(['zipCode'], (errors, values) => {
     //   if (!errors) { console.log('ininiin'); }
@@ -271,7 +273,7 @@ class ShippingAddress extends React.Component<IShippingProps> {
                   initialValue: addressInfo.country,
                   validateTrigger: 'onBlur'
                 })(
-                  <Input value="United States" disabled={true} />
+                  <Input disabled={true} />
                 )
               }
             </Form.Item>
