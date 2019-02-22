@@ -273,7 +273,7 @@ class ShippingAddress extends React.Component<IShippingProps> {
                   initialValue: addressInfo.country,
                   validateTrigger: 'onBlur'
                 })(
-                  <Input value="United States" disabled={true} />
+                  <Input disabled={true} />
                 )
               }
             </Form.Item>

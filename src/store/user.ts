@@ -58,11 +58,18 @@ class User implements IUserStoreNew {
     const params = {
       userEmail
     }
+    let res: IPreOrder;
     try {
-      this.preOrder = await Api.getPreOrderKey<IPreOrder>(params);
+      // this.preOrder = await Api.getPreOrderKey<IPreOrder>(params); // 抛弃耿饭返回的数据
+      res = await Api.getPreOrderKey<IPreOrder>(params);
     } catch (error) {
       console.warn(error, 'in user store getPreOrderKey');
       return false;
+    }
+
+    this.preOrder = {
+      ...this.preOrder,
+      key: res.key
     }
 
     return true;
