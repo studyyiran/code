@@ -193,13 +193,13 @@ class Store implements IOrderStore {
         if (orderPaymentBills.length > 0) {
             orderPaymentBills.map(t => {
                 if (t.payFor === "RESERVE_PRICE") {
-                    payment.priceGuarantee = t.amount;
+                    payment.priceGuarantee = t.amount / 100;
                     if (t.status === "SUCCESS") {
                         payment.priceGuaranteeStatus = true;
                     }
                 }
                 if (t.payFor === "HAMMER_ADDITIONAL") {
-                    payment.bonus = t.amount;
+                    payment.bonus = t.amount / 100;
                     if (t.status === "SUCCESS") {
                         payment.priceGuaranteeStatus = true;
                         payment.bonusStatus = true
