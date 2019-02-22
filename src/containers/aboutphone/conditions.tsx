@@ -65,7 +65,7 @@ export default class Conditions extends React.Component<IConditionsProps> {
                 <>
                   <Breadcrumb
                     brandName={this.props.yourphone.activeBrandsName}
-                    carrierName={this.props.yourphone.activeCarrierName}
+                    carrierName={this.props.yourphone.activeCarrierDescription}
                     modelName={`${this.props.yourphone.activeProductName} ${this.props.yourphone.activeModelName}`}
                   />
                   {conditionList}

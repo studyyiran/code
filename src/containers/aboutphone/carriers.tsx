@@ -58,6 +58,7 @@ export default class Brands extends React.Component<IBrandsProps> {
 
 
     this.props.yourphone.activeCarrierName = carrier.name;
+    this.props.yourphone.activeCarrierDescription = carrier.description;
     this.props.history.push('/sell/yourphone/model');
   }
 }
