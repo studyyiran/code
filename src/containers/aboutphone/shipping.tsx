@@ -11,7 +11,7 @@ import yourphoneStore from './store/yourphone.store';
 const onValuesChange = (props: any, changedValues: any, allValues: any) => {
   let disabled = false;
   Object.keys(allValues).forEach((v: string) => {
-    if (!allValues[v] && v !== 'city' && v !== 'state') {
+    if (!allValues[v] && v !== 'state' && v !== 'addressLineOptional' && v !== 'mobile' && v !== 'country') {
 
       disabled = true;
     }
