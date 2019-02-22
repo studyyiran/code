@@ -42,6 +42,7 @@ class YourPhone implements IYourPhoneStore {
   @observable public activeBrandsId = -1; // 选择的品牌Id
   @observable public activeBrandsName = ''; // 选择的品牌的名称
   @observable public activeCarrierName = ''; // 选择的运营商
+  @observable public activeCarrierDescription = ''; // 运营商的description
   @observable public activeProductId = -1; // 选择的机型的id
   @observable public activeProductName = '' // 选择的机型的名称
   @observable public activeModelId = -1; // 选择的机型的内存id
@@ -124,7 +125,7 @@ class YourPhone implements IYourPhoneStore {
   @action public getProductsList = async (keyword: string = '') => {
     let res: IProductModel[] = [];
     try {
-      res = await Api.getProductsList<IProductModel[]>(this.activeBrandsId, keyword);
+      res = await Api.getProductsList<IProductModel[]>(this.activeBrandsId);
     } catch (error) {
       console.warn(error, 'in brand store getProductsList');
       return false;

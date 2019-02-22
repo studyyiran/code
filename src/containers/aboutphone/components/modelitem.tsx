@@ -8,7 +8,7 @@ export default (props: IProductModel) => (
     <div className="property-wrapper">
       <div className="left-wrapper">
         {
-          props.skuPricePropertyNames.length > 0 &&
+          props.skuPricePropertyNames && props.skuPricePropertyNames.length > 0 &&
           props.skuPricePropertyNames[0]['pricePropertyValues'] !== null && // 测试环境的肮脏数据
           props.skuPricePropertyNames[0]['pricePropertyValues'].map((sku, index) => {
             // 取第一个skuPricePropertyNames下的pricePropertyValues数组所有项

@@ -25,6 +25,7 @@ export interface IYourPhoneStore {
   activeBrandsId: number;
   activeBrandsName: string;
   activeCarrierName: string;
+  activeCarrierDescription: string,
   activeProductId: number;
   activeProductName: string;
   activeModelId: number;
