@@ -11,7 +11,7 @@ import EventHandler from '@/utils/event';
 interface IStates {
   navigatorObj: INavigatorObj | null;
 }
-let timer: number = 0;
+// let timer: number = 0;
 @observer
 export default class BrandHeader extends React.Component<object, IStates> {
 
@@ -97,16 +97,27 @@ export default class BrandHeader extends React.Component<object, IStates> {
     if (value.trim() === '') {
       yourphoneStore.products4Search = [];
     }
-    if (timer) {
-      clearTimeout(timer);
-      timer = 0;
+
+    if (value.trim()) {
+      const arr: IProductModel[] = yourphoneStore.products.filter((v: IProductModel) => {
+        if (v.name.toLocaleLowerCase().indexOf(value.toLocaleLowerCase()) !== -1) {
+          return true;
+        }
+        return false;
+      })
+      yourphoneStore.products4Search = arr;
     }
-    timer = window.setTimeout(() => {
-      if (value.trim()) {
-        yourphoneStore.getProductsList(value.trim())
-      }
-      timer = 0;
-    }, 300)
+
+    // if (timer) {
+    //   clearTimeout(timer);
+    //   timer = 0;
+    // }
+    // timer = window.setTimeout(() => {
+    //   if (value.trim()) {
+    //     yourphoneStore.getProductsList(value.trim())
+    //   }
+    //   timer = 0;
+    // }, 300)
   }
 
   private handleProductSelect = (product: IProductModel) => {
