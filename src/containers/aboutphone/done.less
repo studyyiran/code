@@ -94,12 +94,9 @@
       }
       .phone-info-wrapper {
         padding: 20px 20px 0;
-        height:116px;
+        min-height:116px;
         box-sizing: border-box;
         overflow: hidden;
-        &:hover {
-          height:auto;
-        }
         .img {
           margin-right: 20px;
           float: left;
@@ -116,8 +113,10 @@
                 display: -webkit-box;
                 -webkit-line-clamp: 2;
                 -webkit-box-orient: vertical;
+                height:36px;
                 &:hover {
                   display: inline-block !important;
+                  height:auto;
                 }
               }
             }

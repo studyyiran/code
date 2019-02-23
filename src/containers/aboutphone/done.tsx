@@ -110,7 +110,7 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
             </p>
             <p className="info-item">
               <span className="label">Carrier</span>
-              <span className="content">{yourphone.activeCarrierName}</span>
+              <span className="content">{yourphone.activeCarrierDescription}</span>
             </p>
             <p className="info-item condition">
               <span className="label">Condition</span>
