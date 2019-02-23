@@ -196,7 +196,7 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
                   validateTrigger: 'onBlur',
                   initialValue: addressInfo.zipCode,
                 })(
-                  <Input onChange={this.handleZipCodeChange} />
+                  <Input onChange={this.handleZipCodeChange} maxLength={5} />
                 )
               }
             </Form.Item>

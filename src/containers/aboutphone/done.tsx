@@ -116,6 +116,12 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
               <span className="label">Condition</span>
               <span className="content">{yourphone.inquiryDetail && yourphone.inquiryDetail.ppvs.map(ppv => ppv.value).join(',')}<span className="edit-bg" onClick={this.handlePageChoose.bind(this, EChangeType.CONDITION)} /></span>
             </p>
+            <style>
+              {`.info-wrapper .info-item.condition .content {
+                -webkit-box-orient: vertical;
+              }`
+              }
+            </style>
           </>
         );
         break;
