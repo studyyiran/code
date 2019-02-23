@@ -9,7 +9,7 @@ const Breadcrumb: React.SFC<Partial<IBreadCrumb>> = (props) => (
     <span>&nbsp;&nbsp;/&nbsp;&nbsp;</span>
     <span className={classnames({ active: props.carrierName })}>{props.carrierName ? props.carrierName : 'Carrier'}</span>
     <span>&nbsp;&nbsp;/&nbsp;&nbsp;</span>
-    <span className={classnames({ active: props.modelName })}>{props.modelName ? props.modelName : 'Modal'}</span>
+    <span className={classnames({ active: props.modelName })}>{props.modelName ? props.modelName : 'Model'}</span>
   </div>
 );
 

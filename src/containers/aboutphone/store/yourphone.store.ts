@@ -50,7 +50,7 @@ class YourPhone implements IYourPhoneStore {
   @observable public activeConditions = {}; // 选择的ppvn
   @observable public isAddressValuesAndDisabled: boolean = true;
   @observable public isPaymentFormFilled: boolean = false;
-  @observable public americaStates: IAmericaState;
+  @observable public americaStates: IAmericaState | null;
 
   constructor() {
     autorun(() => {
@@ -203,6 +203,7 @@ class YourPhone implements IYourPhoneStore {
   }
 
   @action public getAmericaState = async (zipCode: number) => {
+    this.americaStates = null;
     try {
       this.americaStates = await Api.getStateByCode<IAmericaState>(zipCode);
     } catch (error) {

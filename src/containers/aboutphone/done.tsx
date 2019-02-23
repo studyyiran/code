@@ -112,7 +112,7 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
               <span className="label">Carrier</span>
               <span className="content">{yourphone.activeCarrierName}</span>
             </p>
-            <p className="info-item">
+            <p className="info-item condition">
               <span className="label">Condition</span>
               <span className="content">{yourphone.inquiryDetail && yourphone.inquiryDetail.ppvs.map(ppv => ppv.value).join(',')}<span className="edit-bg" onClick={this.handlePageChoose.bind(this, EChangeType.CONDITION)} /></span>
             </p>
@@ -120,6 +120,16 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
         );
         break;
     }
+
+    // 缺少物流目的地
+    const shippingAddress = [];
+    const addressInfo = yourphone.addressInfo;
+    if (addressInfo.addressLineOptional && addressInfo.addressLineOptional !== "") {
+      shippingAddress.push(addressInfo.addressLineOptional);
+    }
+    shippingAddress.push(addressInfo.addressLine);
+    shippingAddress.push(addressInfo.city + "," + addressInfo.country);
+    shippingAddress.push(addressInfo.zipCode);
 
     return (
       <div className="page-youredone-container">
@@ -151,12 +161,12 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
                   </p>
                   <p className="info-item">
                     <span className="label">Address</span>
-                    <span className="content">{yourphone.addressInfo.addressLine}</span>
+                    <span className="content">{shippingAddress.join(', ')}</span>
                   </p>
-                  <p className="info-item">
+                  {yourphone.addressInfo.mobile && <p className="info-item">
                     <span className="label">Phone No. </span>
                     <span className="content">+1 {yourphone.addressInfo.mobile}</span>
-                  </p>
+                  </p>}
                 </div>
               </div>
             </div>

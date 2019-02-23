@@ -3,7 +3,7 @@ import { inject, observer } from 'mobx-react';
 import { Form, Col, Row, Input } from 'antd';
 import Layout from '@/containers/aboutphone/layout';
 import './shipping.less';
-import { IShippingProps } from './interface/index.interface';
+import { IShippingProps, IShippingState } from './interface/index.interface';
 import { IProductInfo } from '@/store/interface/user.interface';
 import { shippingPageValidate } from '@/containers/aboutphone/pageValidate';
 import yourphoneStore from './store/yourphone.store';
@@ -24,8 +24,11 @@ const onValuesChange = (props: any, changedValues: any, allValues: any) => {
 
 @inject('yourphone', 'user')
 @observer
-class ShippingAddress extends React.Component<IShippingProps> {
-
+class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
+  public state = {
+    help: 'We’ll only call you if there is an issue with your sale.',
+    validateStatus: undefined
+  }
   public componentDidMount() {
     // 判断是否页面需要必备数据，分TBD的情况
     if (!shippingPageValidate()) {
@@ -238,20 +241,23 @@ class ShippingAddress extends React.Component<IShippingProps> {
           <Col span={11}>
             <Form.Item
               label="Phone(optional)"
-              help="We’ll only call you if there is an issue with your sale."
+              help={this.state.help}
+              validateStatus={this.state.validateStatus}
             >
               {
                 getFieldDecorator('mobile', {
                   rules: [
                     {
                       pattern: /\d{11,11}/,
-                      message: "Please enter a valid mobile."
+                      // message: "Please enter a valid mobile."
                     }
                   ],
                   initialValue: addressInfo.mobile,
                   validateTrigger: 'onBlur'
                 })(
-                  <Input />
+                  <Input
+                    onBlur={this.handleBlurPhone}
+                  />
                 )
               }
             </Form.Item>
@@ -293,20 +299,41 @@ class ShippingAddress extends React.Component<IShippingProps> {
     );
   }
 
+  private handleBlurPhone = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.trim();
+    const state: IShippingState = {
+      help: 'We’ll only call you if there is an issue with your sale.',
+      validateStatus: undefined
+    }
+    if (value && !/\d{11,11}/.test(value)) {
+      state.help = 'Please enter a valid mobile.';
+      state.validateStatus = 'error';
+    }
+
+    this.setState(state);
+  }
+
   private handleZipCode = async (rule: any, value: any, callback: any) => {
     const { setFieldsValue } = this.props.form;
-
     if (!/\d{5,5}/.test(value)) {
       callback('Please enter a valid zipCode.');
       return;
     }
 
     await this.props.yourphone.getAmericaState(value);
-    if (this.props.yourphone.americaStates) {
+    if (this.props.yourphone.americaStates && this.props.yourphone.americaStates.state && this.props.yourphone.americaStates.city) {
       setFieldsValue({ 'state': this.props.yourphone.americaStates.state });
       setFieldsValue({ 'city': this.props.yourphone.americaStates.city });
+      callback();
+    } else {
+      // setFields({
+      //   zipCode: {
+      //     value: value,
+      //     errors: [new Error('Please enter a valid zipCode')],
+      //   }
+      // });
+      callback('Please enter a valid zipCode.');
     }
-    callback();
   }
 
   private handleNext = async () => {
