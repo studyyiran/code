@@ -99,9 +99,6 @@
         overflow: hidden;
         &:hover {
           height:auto;
-          .condition .content {
-            display: inline-block;
-          }
         }
         .img {
           margin-right: 20px;
@@ -119,6 +116,9 @@
                 display: -webkit-box;
                 -webkit-line-clamp: 2;
                 -webkit-box-orient: vertical;
+                &:hover {
+                  display: inline-block !important;
+                }
               }
             }
             .label {
