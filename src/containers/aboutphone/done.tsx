@@ -131,10 +131,10 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
     const shippingAddress = [];
     const addressInfo = yourphone.addressInfo;
     if (addressInfo.addressLineOptional && addressInfo.addressLineOptional !== "") {
-      shippingAddress.push(addressInfo.addressLineOptional);
+      shippingAddress.push(addressInfo.addressLineOptional.trim());
     }
-    shippingAddress.push(addressInfo.addressLine);
-    shippingAddress.push(addressInfo.city + "," + addressInfo.country);
+    shippingAddress.push(addressInfo.addressLine.trim());
+    shippingAddress.push(addressInfo.city + ", " + addressInfo.state);
     shippingAddress.push(addressInfo.zipCode);
 
     return (
