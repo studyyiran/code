@@ -17,6 +17,7 @@ module.exports = shipit => {
         },
         prod: {
             servers: 'root@47.56.40.75',
+            key: '~/.ssh/id_rsa_production',
         },
     });
 
@@ -27,12 +28,16 @@ module.exports = shipit => {
     // npm install & build
     shipit.blTask('npm-install', () => {
         shipit.log('npm install.');
-        return shipit.local('npm install', { cwd: '/tmp/avril' });
+        return shipit.local('npm install', {
+            cwd: '/tmp/avril'
+        });
     });
 
     shipit.blTask('npm-build', () => {
         shipit.log('npm build start.');
-        return shipit.local('npm run pub', { cwd: '/tmp/avril' });
+        return shipit.local('npm run pub', {
+            cwd: '/tmp/avril'
+        });
     });
 
     shipit.on('fetched', () => {
