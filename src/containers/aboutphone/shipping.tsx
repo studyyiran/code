@@ -248,7 +248,7 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
                 getFieldDecorator('mobile', {
                   rules: [
                     {
-                      pattern: /\d{11,11}/,
+                      pattern: /\d{10}/,
                       // message: "Please enter a valid mobile."
                     }
                   ],
@@ -257,6 +257,7 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
                 })(
                   <Input
                     onBlur={this.handleBlurPhone}
+                    maxLength={10}
                   />
                 )
               }
@@ -305,7 +306,7 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
       help: 'We’ll only call you if there is an issue with your sale.',
       validateStatus: undefined
     }
-    if (value && !/\d{11,11}/.test(value)) {
+    if (value && !/\d{10}/.test(value)) {
       state.help = 'Please enter a valid mobile.';
       state.validateStatus = 'error';
     }
