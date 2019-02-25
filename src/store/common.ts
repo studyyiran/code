@@ -4,7 +4,7 @@ import { ICommonStore } from './interface/common.interface';
 import * as Api from './api/common.api';
 class Common implements ICommonStore {
   public positionInfo: any = null;
-
+  public isMobile: boolean = false;
   @action public async initPosition() {
     // Toast('正在获取定位信息');
     // 加载高德地图

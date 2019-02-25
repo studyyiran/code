@@ -5,7 +5,12 @@ import { Provider } from "mobx-react";
 import Layout from './containers/layout/index';
 import routes from './routers';
 import store from './store';
+import { isMobile } from 'utils'
 
+if (isMobile()) {
+  store['common'].isMobile = true;
+  document.body.classList.add('ismobile');
+}
 
 
 export default () => {
