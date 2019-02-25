@@ -5,17 +5,26 @@ import { Provider } from "mobx-react";
 import Layout from './containers/layout/index';
 import routes from './routers';
 import store from './store';
-import { isMobile } from 'utils'
 
-if (isMobile()) {
-  store['common'].isMobile = true;
-  document.body.classList.add('ismobile');
-  const dpr = window.devicePixelRatio || 1;
-  const metaEl = document.querySelector('meta[name="viewport"]');
-  if (metaEl) {
-    metaEl.setAttribute('content', `width=device-width,initial-scale=${1 / dpr}, maximum-scale=${1 / dpr}, minimum-scale=${1 / dpr}, user-scalable=no`);
+const setIsMobile = function () {
+  const clientWidth = document.documentElement.clientWidth;
+  if (clientWidth <= 750) {
+    store['common'].isMobile = true;
+    document.body.classList.add('ismobile');
+    // const dpr = window.devicePixelRatio || 1;
+    // const metaEl = document.querySelector('meta[name="viewport"]');
+    // if (metaEl) {
+    //   metaEl.setAttribute('content', `width=device-width,initial-scale=${1 / dpr}, maximum-scale=${1 / dpr}, minimum-scale=${1 / dpr}, user-scalable=no`);
+    // }
+  } else {
+    store['common'].isMobile = false;
+    document.body.classList.remove('ismobile');
   }
+
 }
+
+setIsMobile();
+window.addEventListener('resize', setIsMobile, false);
 
 
 export default () => {

@@ -33,7 +33,7 @@
         document.getElementsByTagName("html")[0].style.fontSize = fontSize + "px";
       };
       setFontSize();
-      window.onresize = setFontSize;
+      window.addEventListener('resize', setFontSize, false);
     })();
   </script>
 

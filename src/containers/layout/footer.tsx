@@ -4,59 +4,14 @@ import './footer.less';
 import { Row, Col, Input, Button, notification } from 'antd';
 import { IFooterState } from './interface/index.interface';
 import commonStore from '@/store/common'
+import { FOOTERLINKS } from 'config';
 
 export default class Footer extends React.Component<{ router: any }, IFooterState> {
   public readonly state = {
-    email: '',
-    links: [
-      [
-        {
-          text: 'SELL YOUR PHONE',
-          href: ''
-        },
-        {
-          text: 'How it Works',
-          href: '/sell-my-phone'
-        },
-        {
-          text: 'Prepare to Ship',
-          href: '/faq?index=9'
-        },
-        {
-          text: 'FAQ',
-          href: '/faq'
-        }
-      ],
-      [
-        {
-          text: 'ABOUT US',
-          href: ''
-        },
-        {
-          text: 'Who We Are',
-          href: '/who-we-are'
-        },
-        {
-          text: 'Why Up Trade',
-          href: '/why-uptrade'
-        },
-        {
-          text: 'Contact Us',
-          href: '/contact'
-        },
-        {
-          text: 'How Much Is My Phone Worth',
-          href: '/how-much-is-my-phone-worth'
-        },
-        {
-          text: 'Sell Broken iPhone',
-          href: '/sell-broken-iphone'
-        }
-      ],
-    ]
+    email: ''
   }
   public render() {
-    const linksGroup = this.state.links.map((group, key) => (
+    const linksGroup = FOOTERLINKS.map((group, key) => (
       <Col span={6} key={key} className="links-group">
         {
           group.map((link, index) => <p key={index} className="item" onClick={this.handleLink.bind(this, link)} data-href={link.href}>{link.text}</p>)
@@ -125,7 +80,7 @@ export default class Footer extends React.Component<{ router: any }, IFooterStat
 
     if (result) {
       notification.success({
-        message: 'Successfly subscribe',
+        message: 'Successfully subscribed.',
       });
       this.setState({
         email: ''
