@@ -86,10 +86,33 @@ class AboutYou extends React.Component<IAboutYouProps, IAboutYouState> {
   }
 
   private handleSubmit = () => {
-    if (!this.state.validateStatus) {
+    const state: IAboutYouState = {
+      isValidate: this.state.isValidate,
+      help: undefined,
+      validateStatus: undefined,
+    }
+
+    if (!/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,})$/.test(this.state.value)) {
+      state.help = <><Icon type="close-circle" />Please enter a valid email address</>;
+      state.validateStatus = 'error';
+    } else {
       this.props.user.getPreOrderKey(this.state.value);
       this.props.history.push('/sell/yourphone/brand');
     }
+
+    this.setState(state);
+
+    // if (!this.state.validateStatus && /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,})$/.test(this.state.value)) {
+    //   this.props.user.getPreOrderKey(this.state.value);
+    //   this.props.history.push('/sell/yourphone/brand');
+    // } else {
+    //   const state: IAboutYouState = {
+    //     isValidate: this.state.isValidate,
+    //     help: <><Icon type="close-circle" />Please enter a valid email address</>,
+    //     validateStatus: 'error',
+    //   }
+    //   this.setState(state);
+    // }
   }
 
   private handleValidate = (e: React.ChangeEvent<HTMLInputElement>) => {
