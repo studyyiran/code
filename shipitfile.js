@@ -10,7 +10,7 @@ module.exports = shipit => {
             dirToCopy: '/tmp/avril/build',
             ignores: ['.DS_Store', '.git', 'node_modules'],
             keepReleases: 2,
-            key: '~/.ssh/id_rsa_production',
+            // key: '~/.ssh/id_rsa_production',
             repositoryUrl: 'git@lab.aihuishou.com:uptradeit/avril.git',
             rsync: ['--del'],
             shallowClone: false,
