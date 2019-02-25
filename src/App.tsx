@@ -10,6 +10,11 @@ import { isMobile } from 'utils'
 if (isMobile()) {
   store['common'].isMobile = true;
   document.body.classList.add('ismobile');
+  const dpr = window.devicePixelRatio || 1;
+  const metaEl = document.querySelector('meta[name="viewport"]');
+  if (metaEl) {
+    metaEl.setAttribute('content', `width=device-width,initial-scale=${1 / dpr}, maximum-scale=${1 / dpr}, minimum-scale=${1 / dpr}, user-scalable=no`);
+  }
 }
 
 
