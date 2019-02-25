@@ -28,14 +28,14 @@ module.exports = shipit => {
     // npm install & build
     shipit.blTask('npm-install', () => {
         shipit.log('npm install.');
-        return shipit.local('npm install', {
+        return shipit.local('yarn', {
             cwd: '/tmp/avril'
         });
     });
 
     shipit.blTask('npm-build', () => {
         shipit.log('npm build start.');
-        return shipit.local('npm run pub', {
+        return shipit.local('yarn run pub', {
             cwd: '/tmp/avril'
         });
     });
