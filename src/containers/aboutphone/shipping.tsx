@@ -3,7 +3,7 @@ import { inject, observer } from 'mobx-react';
 import { Form, Col, Row, Input } from 'antd';
 import Layout from '@/containers/aboutphone/layout';
 import './shipping.less';
-import { IShippingProps } from './interface/index.interface';
+import { IShippingProps, IShippingState } from './interface/index.interface';
 import { IProductInfo } from '@/store/interface/user.interface';
 import { shippingPageValidate } from '@/containers/aboutphone/pageValidate';
 import yourphoneStore from './store/yourphone.store';
@@ -11,7 +11,7 @@ import yourphoneStore from './store/yourphone.store';
 const onValuesChange = (props: any, changedValues: any, allValues: any) => {
   let disabled = false;
   Object.keys(allValues).forEach((v: string) => {
-    if (!allValues[v] && v !== 'city' && v !== 'state') {
+    if (!allValues[v] && v !== 'state' && v !== 'addressLineOptional' && v !== 'mobile' && v !== 'country') {
 
       disabled = true;
     }
@@ -24,19 +24,24 @@ const onValuesChange = (props: any, changedValues: any, allValues: any) => {
 
 @inject('yourphone', 'user')
 @observer
-class ShippingAddress extends React.Component<IShippingProps> {
-
+class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
+  public state = {
+    help: 'We’ll only call you if there is an issue with your sale.',
+    validateStatus: undefined
+  }
   public componentDidMount() {
+    // 判断是否页面需要必备数据，分TBD的情况
+    if (!shippingPageValidate()) {
+      this.props.history.push('/sell/account');
+      return;
+    }
+
     // didmount 的时候校验是否填了字段
     const { getFieldsValue } = this.props.form;
     const allValus = getFieldsValue();
     onValuesChange(false, false, allValus);
     // 显示左侧价格模块
     this.props.user.isShowLeftPrice = true;
-    if (!shippingPageValidate()) {
-      this.props.history.push('/sell/account');
-      return;
-    }
     // this.props.yourphone.createInquiry();
     // this.props.form.validateFields(['zipCode'], (errors, values) => {
     //   if (!errors) { console.log('ininiin'); }
@@ -191,7 +196,7 @@ class ShippingAddress extends React.Component<IShippingProps> {
                   validateTrigger: 'onBlur',
                   initialValue: addressInfo.zipCode,
                 })(
-                  <Input onChange={this.handleZipCodeChange} />
+                  <Input onChange={this.handleZipCodeChange} maxLength={5} />
                 )
               }
             </Form.Item>
@@ -236,20 +241,24 @@ class ShippingAddress extends React.Component<IShippingProps> {
           <Col span={11}>
             <Form.Item
               label="Phone(optional)"
-              help="We’ll only call you if there is an issue with your sale."
+              help={this.state.help}
+              validateStatus={this.state.validateStatus}
             >
               {
                 getFieldDecorator('mobile', {
                   rules: [
                     {
-                      pattern: /\d{11,11}/,
-                      message: "Please enter a valid mobile."
+                      pattern: /\d{10}/,
+                      // message: "Please enter a valid mobile."
                     }
                   ],
                   initialValue: addressInfo.mobile,
                   validateTrigger: 'onBlur'
                 })(
-                  <Input />
+                  <Input
+                    onBlur={this.handleBlurPhone}
+                    maxLength={10}
+                  />
                 )
               }
             </Form.Item>
@@ -271,7 +280,7 @@ class ShippingAddress extends React.Component<IShippingProps> {
                   initialValue: addressInfo.country,
                   validateTrigger: 'onBlur'
                 })(
-                  <Input value="United States" disabled={true} />
+                  <Input disabled={true} />
                 )
               }
             </Form.Item>
@@ -291,20 +300,41 @@ class ShippingAddress extends React.Component<IShippingProps> {
     );
   }
 
+  private handleBlurPhone = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.trim();
+    const state: IShippingState = {
+      help: 'We’ll only call you if there is an issue with your sale.',
+      validateStatus: undefined
+    }
+    if (value && !/\d{10}/.test(value)) {
+      state.help = 'Please enter a valid mobile.';
+      state.validateStatus = 'error';
+    }
+
+    this.setState(state);
+  }
+
   private handleZipCode = async (rule: any, value: any, callback: any) => {
     const { setFieldsValue } = this.props.form;
-
     if (!/\d{5,5}/.test(value)) {
       callback('Please enter a valid zipCode.');
       return;
     }
 
     await this.props.yourphone.getAmericaState(value);
-    if (this.props.yourphone.americaStates) {
+    if (this.props.yourphone.americaStates && this.props.yourphone.americaStates.state && this.props.yourphone.americaStates.city) {
       setFieldsValue({ 'state': this.props.yourphone.americaStates.state });
       setFieldsValue({ 'city': this.props.yourphone.americaStates.city });
+      callback();
+    } else {
+      // setFields({
+      //   zipCode: {
+      //     value: value,
+      //     errors: [new Error('Please enter a valid zipCode')],
+      //   }
+      // });
+      callback('Please enter a valid zipCode.');
     }
-    callback();
   }
 
   private handleNext = async () => {

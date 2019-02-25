@@ -30,7 +30,7 @@ export default class Models extends React.Component<IModelsProps> {
           <>
             <Breadcrumb
               brandName={this.props.yourphone.activeBrandsName}
-              carrierName={this.props.yourphone.activeCarrierName}
+              carrierName={this.props.yourphone.activeCarrierDescription}
             />
             {
               <div>

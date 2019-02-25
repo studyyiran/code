@@ -44,7 +44,7 @@ class Store implements IOrderStore {
                 paymentMethod.push(this.orderDetail.paypalInfo.email);
             }
             if (this.orderDetail.payment === "CHECK") {
-                paymentMethod.push("Check");
+                paymentMethod.push("eCheck");
                 paymentMethod.push(this.orderDetail.checkInfo.email);
             }
         }

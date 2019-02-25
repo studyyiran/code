@@ -107,6 +107,7 @@ export interface IProductInfo {
   brandId: number; // 品牌ID
   brandName: string; // 品牌名称
   carrier: string; // 运营商
+  carrierDescription: string; // 运营商全称
   priceUnits: number[];
   productId: number; // 机型ID
   productName: string; // 机型名称

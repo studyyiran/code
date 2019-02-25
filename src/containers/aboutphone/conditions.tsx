@@ -24,6 +24,15 @@ export default class Conditions extends React.Component<IConditionsProps> {
     }
 
     this.props.yourphone.getProductPPVN();
+
+    // 初次进入页面判断是否要高亮
+    if (this.props.yourphone.isAllConditionSelected) {
+      this.setState({
+        progress: 4,
+        disabled: false
+      })
+    }
+
     // done页面，允许父组件调用里面的方法
     if (typeof this.props.onRef === 'function') {
       this.props.onRef!(this);
@@ -65,7 +74,7 @@ export default class Conditions extends React.Component<IConditionsProps> {
                 <>
                   <Breadcrumb
                     brandName={this.props.yourphone.activeBrandsName}
-                    carrierName={this.props.yourphone.activeCarrierName}
+                    carrierName={this.props.yourphone.activeCarrierDescription}
                     modelName={`${this.props.yourphone.activeProductName} ${this.props.yourphone.activeModelName}`}
                   />
                   {conditionList}

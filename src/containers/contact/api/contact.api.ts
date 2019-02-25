@@ -9,7 +9,6 @@ export function onSubmit<T>(item: IContact): Promise<T> {
     url: `/message_books`,
     params: item,
     loading: true,
-    isMock: true
   };
 
   return Request<T>(opts);

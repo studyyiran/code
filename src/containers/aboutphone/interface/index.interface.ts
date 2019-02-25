@@ -25,12 +25,13 @@ export interface IYourPhoneStore {
   activeBrandsId: number;
   activeBrandsName: string;
   activeCarrierName: string;
+  activeCarrierDescription: string,
   activeProductId: number;
   activeProductName: string;
   activeModelId: number;
   activeModelName: string;
   activeConditions: object;
-  americaStates: IAmericaState;
+  americaStates: IAmericaState | null;
   isTBD: boolean; // 选中的品牌是否为other
   isAllConditionSelected: boolean; // computed
   isAddressValuesAndDisabled: boolean;
@@ -242,4 +243,9 @@ export interface IBreadCrumb {
   brandName: string;
   carrierName: string;
   modelName: string;
+}
+
+export interface IShippingState {
+  help: string,
+  validateStatus: string | undefined
 }

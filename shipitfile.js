@@ -10,13 +10,14 @@ module.exports = shipit => {
             dirToCopy: '/tmp/avril/build',
             ignores: ['.DS_Store', '.git', 'node_modules'],
             keepReleases: 2,
+            key: '~/.ssh/id_rsa_production',
             repositoryUrl: 'git@lab.aihuishou.com:uptradeit/avril.git',
             rsync: ['--del'],
             shallowClone: false,
             workspace: '/tmp/avril'
         },
         prod: {
-            servers: 'root@47.56.40.75',
+            servers: 'root@47.56.40.75'
         },
     });
 
@@ -27,12 +28,16 @@ module.exports = shipit => {
     // npm install & build
     shipit.blTask('npm-install', () => {
         shipit.log('npm install.');
-        return shipit.local('npm install', { cwd: '/tmp/avril' });
+        return shipit.local('npm install', {
+            cwd: '/tmp/avril'
+        });
     });
 
     shipit.blTask('npm-build', () => {
         shipit.log('npm build start.');
-        return shipit.local('npm run pub', { cwd: '/tmp/avril' });
+        return shipit.local('npm run pub', {
+            cwd: '/tmp/avril'
+        });
     });
 
     shipit.on('fetched', () => {

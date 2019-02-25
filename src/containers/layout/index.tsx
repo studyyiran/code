@@ -1,10 +1,12 @@
 import * as React from 'react';
 import { TITLE_CONFIG } from 'config';
 import * as PropTypes from 'prop-types';
+import sotreCommon from '@/store/common'
 import './index.less';
 import Header from './header';
 import Footer from './footer';
-
+import MobileHeader from './mobile/header';
+import MobileFooter from './mobile/footer';
 
 export default class LayoutIndex extends React.Component {
   // 通过context 拿到 router 对象
@@ -49,11 +51,11 @@ export default class LayoutIndex extends React.Component {
   public render() {
     return (
       <div className="layout-container">
-        <Header />
+        {sotreCommon.isMobile ? <MobileHeader /> : <Header />}
         <div className="layout-content">
           {this.props.children}
         </div>
-        <Footer router={this.context.router} />
+        {sotreCommon.isMobile ? <MobileFooter /> : <Footer router={this.context.router} />}
       </div>
     );
   }
