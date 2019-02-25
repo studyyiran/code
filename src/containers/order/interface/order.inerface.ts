@@ -337,7 +337,9 @@ export interface IInspectionData {
  */
 interface IPaymentInfo {
     account: string;
-    amount: number;
+    amountDollar?: number;
+    hammerAmountDollar?: number;
+    // amount: number;
     status: "PENDING" | "PAYING" | "SUCCESS" | "FAILED",
     payFor: "RESERVE_PRICE" | "HAMMER_ADDITIONAL"
 }

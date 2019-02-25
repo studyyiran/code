@@ -107,6 +107,16 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
             }
             break;
         }
+        // 于此更新preOrder，使得该页面以弹窗形式出现依旧能更新preOrder
+        try {
+          this.props.user.preOrder = {
+            ...this.props.user.preOrder,
+            checkInfo: { ...this.props.yourphone.echeck },
+            payment: this.props.yourphone.payment,
+            paypalInfo: { ...this.props.yourphone.paypal },
+          }
+        } catch (error) { console.warn(error, 'in payment page preOrder') }
+
         resolve(true);
       });
     });
@@ -383,16 +393,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
 
   private handleNext = async () => {
     const isOk = await this.validateData();
-    // console.warn(isOk, '结果');
     if (isOk) {
-      try {
-        this.props.user.preOrder = {
-          ...this.props.user.preOrder,
-          checkInfo: { ...this.props.yourphone.echeck },
-          payment: this.props.yourphone.payment,
-          paypalInfo: { ...this.props.yourphone.paypal },
-        }
-      } catch (error) { console.warn(error, 'in payment page preOrder') }
       this.props.history.push('/sell/yourphone/done');
     }
   }
