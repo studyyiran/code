@@ -7,7 +7,10 @@
     .condition {
       margin-bottom: 11px;
       .set-font-color(20px, #000);
-      line-height: 20px;
+      line-height: 50px;
+      &.middle {
+        line-height: 20px;
+      }
     }
     .detail {
       .set-font-color(14px, #9B9B9B);
@@ -18,20 +21,36 @@
   .right-wrapper {
     margin-left: 20px;
     width: 335px;
+    display: flex;
     .option {
-      display: inline-block;
+      flex:1;
+      display: flex;
       margin-left: 15px;
       margin-bottom: 10px;
       width:160px;
       height:50px;
-      line-height: 50px;
-      text-align: center;
+      line-height: 16px;
+      align-items: center;
       background:rgba(255,255,255,1);
       cursor: pointer;
       .outline-shadow-highlight();
       .text-overflow();
       &:nth-of-type(2n + 1) {
         margin-left: 0;
+      }
+
+      .text {
+        flex:1;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+        justify-content: center;
+        text-align: center;
+        padding:0 10px;
+        box-sizing: border-box;
       }
     }
   }

@@ -11,12 +11,14 @@ interface IProps {
 }
 
 interface IStates {
-  navigatorObj: INavigatorObj | null
+  navigatorObj: INavigatorObj | null,
+  nextButtonLoading: boolean
 }
 
 export default class NavigatorWithBar extends React.Component<IProps, IStates> {
   public readonly state: Readonly<IStates> = {
-    navigatorObj: null
+    navigatorObj: null,
+    nextButtonLoading: false,
   }
 
   public componentDidMount() {
@@ -70,6 +72,7 @@ export default class NavigatorWithBar extends React.Component<IProps, IStates> {
               onClick={this.goNext}
               type="primary"
               disabled={this.props.disabled}
+              loading={this.state.nextButtonLoading}
             >
               NEXT <Icon type="arrow-right" />
             </Button>
@@ -83,10 +86,16 @@ export default class NavigatorWithBar extends React.Component<IProps, IStates> {
     window['__history__'].goBack();
   }
 
-  private goNext = () => {
+  private goNext = async () => {
 
     if (typeof this.props.nextCb === 'function') {
-      this.props.nextCb();
+      this.setState({
+        nextButtonLoading: true
+      })
+      await this.props.nextCb();
+      this.setState({
+        nextButtonLoading: false
+      })
       return;
     }
 
