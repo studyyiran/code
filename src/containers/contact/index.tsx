@@ -12,8 +12,10 @@ export default class Contact extends React.Component<IContactProps> {
   public render() {
     return (
       <div className="page-contact-container">
-        <h1>Get in Touch with Us</h1>
-        <ContactForm onOk={this.handleOk} />
+        <div className="page-m-wrap">
+          <h1>Get in Touch with Us</h1>
+          <ContactForm onOk={this.handleOk} />
+        </div>
       </div >
     )
   }
