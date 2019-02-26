@@ -10,7 +10,7 @@ module.exports = shipit => {
             dirToCopy: '/tmp/avril/build',
             ignores: ['.DS_Store', '.git', 'node_modules'],
             keepReleases: 2,
-            key: '~/.ssh/id_rsa_production',
+            // key: '~/.ssh/id_rsa_production',
             repositoryUrl: 'git@lab.aihuishou.com:uptradeit/avril.git',
             rsync: ['--del'],
             shallowClone: false,
@@ -28,14 +28,14 @@ module.exports = shipit => {
     // npm install & build
     shipit.blTask('npm-install', () => {
         shipit.log('npm install.');
-        return shipit.local('npm install', {
+        return shipit.local('yarn', {
             cwd: '/tmp/avril'
         });
     });
 
     shipit.blTask('npm-build', () => {
         shipit.log('npm build start.');
-        return shipit.local('npm run pub', {
+        return shipit.local('yarn run pub', {
             cwd: '/tmp/avril'
         });
     });
