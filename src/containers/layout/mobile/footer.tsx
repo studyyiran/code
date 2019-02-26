@@ -39,7 +39,7 @@ export default class Footer extends React.Component {
         </div>
         <div className="logo-box">
           <img src={require('@/images/logo.png')} alt="" />
-          <div className="copy">&copy; 2169 2019 UpTrade Technologies, Inc.</div>
+          <div className="copy">&copy; 2019 UpTrade Technologies, Inc.</div>
         </div>
         <div className="link-list">
           <Link to="/privacy-policy">Privacy Policy</Link>
