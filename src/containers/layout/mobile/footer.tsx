@@ -16,7 +16,7 @@ export default class Footer extends React.Component {
                 {
                   group.map((link, index) => {
                     if (!link.href) {
-                      return <dt>{link.text}</dt>
+                      return <dt key={index}>{link.text}</dt>
                     }
                     return <dd key={index}><Link to={link.href}>{link.text}</Link></dd>;
                   })
