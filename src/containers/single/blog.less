@@ -55,6 +55,9 @@
     width:100%;
     margin-top:34px;
   }
+  .banner-m {
+    display: none;
+  }
   p {
     margin:25px 0;
     font-size:16px;
@@ -215,6 +218,92 @@
           color:#808080;
         }
       }
+    }
+  }
+}
+
+
+// 响应式内容
+.ismobile {
+  // 布局模块公用
+  .layout-content {
+    // background: #fff;
+    margin: 0;
+    padding: 0;
+  }
+
+  // 页面模块公用
+  .page-howmuch-container, 
+  .page-broken-container, 
+  .page-single-android-container, 
+  .page-single-iphone-container,
+  .page-privacy-policy-container,
+  .page-terms-container {
+    width: 100%;
+    margin: 0;
+    padding: 0 5.5556% .3rem;
+
+    h1,h2,h3,h4,h5,h6,strong {
+      font-weight: normal;
+      line-height: .29rem;
+    }
+
+    h1 {
+      font-size: .3rem;
+      padding-top: .9rem;
+    }
+
+    h2 {
+      font-size: .2rem;
+      margin-top: .32rem;
+    }
+
+    ul,li, ol, p {
+      font-size: .14rem;
+      line-height: .18rem;
+    }
+
+    ol {
+      margin-top: 0;
+    }
+
+    li {
+      margin-bottom: .08rem;
+    }
+
+    p {
+      margin: .2rem 0;
+      line-height: .18rem;
+    }
+
+    .small span {
+      margin-right: .2rem;
+    }
+
+    .banner {
+      display: none;
+    }
+    .banner-m {
+      display: block;
+      width:100%;
+      padding-top: .2rem;
+      margin-top: .2rem;
+      border-top: 1px solid rgba(242,242,242,1);
+    }
+
+  }
+
+  // 部分页面公用
+  .page-privacy-policy-container,
+  .page-terms-container {
+    .layout-content {
+      padding: .2rem;
+    }
+    
+    box-sizing: border-box;
+    h1 {
+      color: #00cfff;
+      text-align: center;
     }
   }
 }
