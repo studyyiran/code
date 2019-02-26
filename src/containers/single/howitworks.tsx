@@ -12,8 +12,7 @@ class HowItWorks extends React.Component<RouteComponentProps>{
             <section className="page-help-howitworks">
                 <div className="article">
                     <div className="col-1">
-                        <p>Sell My Phone In</p>
-                        <p>Two Simple Steps </p>
+                        <p>Sell My Phone In <br/>Two Simple Steps </p>
                         <p>Get cash for what it’s actually worth. Ship it and get paid. It’s that easy.</p>
                     </div>
                     <div className="col-2">

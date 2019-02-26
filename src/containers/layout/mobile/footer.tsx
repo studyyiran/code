@@ -16,7 +16,7 @@ export default class Footer extends React.Component {
                 {
                   group.map((link, index) => {
                     if (!link.href) {
-                      return <dt>{link.text}</dt>
+                      return <dt key={index}>{link.text}</dt>
                     }
                     return <dd key={index}><Link to={link.href}>{link.text}</Link></dd>;
                   })
@@ -39,7 +39,7 @@ export default class Footer extends React.Component {
         </div>
         <div className="logo-box">
           <img src={require('@/images/logo.png')} alt="" />
-          <div className="copy">&copy; 2169 2019 UpTrade Technologies, Inc.</div>
+          <div className="copy">&copy; 2019 UpTrade Technologies, Inc.</div>
         </div>
         <div className="link-list">
           <Link to="/privacy-policy">Privacy Policy</Link>
