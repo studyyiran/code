@@ -30,7 +30,7 @@ class ContactForm extends React.Component<IContactFormProps> {
       <div className="comp-contact-form-container">
         <Form hideRequiredMark={true} layout="vertical">
           <Row gutter={32}>
-            <Col span={12}>
+            <Col lg={12} sm={32}>
               <Form.Item
                 {...col}
                 label="Your name"
@@ -45,7 +45,7 @@ class ContactForm extends React.Component<IContactFormProps> {
                 )}
               </Form.Item>
             </Col>
-            <Col span={12}>
+            <Col lg={12} sm={32}>
               <Form.Item
                 {...col}
                 label="Your e-mail"
