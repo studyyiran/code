@@ -7,7 +7,7 @@ export default [
   ...singlePage,
   {
     component: asyncComponent(() => import('@/containers/order/checkOrderNo')),
-    path: '/order/check',
+    path: '/check-order',
     exact: true,
   },
   {

@@ -60,7 +60,7 @@ export default class Faq extends React.Component {
             <input type="checkbox" id="6" />
             <label htmlFor="6"><h2 className="default-h2">What types of electronics does UpTrade accept?<Icon type="plus" /></h2></label>
             <h2 className="noevent-h2">What types of electronics does UpTrade accept?<label htmlFor="6"><Icon type="plus" /></label></h2>
-            <p>UpTrade accepts all types of smartphone devices. If you do not see your device listed, send us an email at support@UpTradeit.com for a quote. We do not currently make offers on any other type of electronics.</p>
+            <p>UpTrade accepts all types of smartphone devices. If you do not see your device listed, send us an email at support@uptradeit.com for a quote. We do not currently make offers on any other type of electronics.</p>
           </dd>
 
           <dd>
@@ -84,7 +84,7 @@ export default class Faq extends React.Component {
             <input type="checkbox" id="9" />
             <label htmlFor="9"><h2 className="default-h2">How do I prepare my device for shipment?<Icon type="plus" /></h2></label>
             <h2 className="noevent-h2">How do I prepare my device for shipment?<label htmlFor="9"><Icon type="plus" /></label></h2>
-            <p>Once we make you an offer on your mobile device, we will send you an email with full instructions on mailing your device in a safe and secure fashion. If you are still unsure of anything, feel free to contact us at support@UpTradeit.com with any other questions you may have. Our support team will get back to you the same day.</p>
+            <p>Once we make you an offer on your mobile device, we will send you an email with full instructions on mailing your device in a safe and secure fashion. If you are still unsure of anything, feel free to contact us at support@uptradeit.com with any other questions you may have. Our support team will get back to you the same day.</p>
           </dd>
         </dl>
 

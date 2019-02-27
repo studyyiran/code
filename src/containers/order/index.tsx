@@ -21,7 +21,7 @@ class Order extends React.Component<IOrderProps & RouteComponentProps> {
       const isLogined = await order.autoLogin();
       // 登录失败
       if (!isLogined) {
-        this.props.history.replace('/order/check');
+        this.props.history.replace('/check-order');
       }
     }
   }

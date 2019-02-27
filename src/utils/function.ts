@@ -129,7 +129,7 @@ export const formatNumberFixTwo = (n: number) => (n < 10 ? "0" + n : n.toString(
 
 
 export const isMobile = () => {
-  return false;
+  return true;
 }
 
 export const createDate = (t: string) => {

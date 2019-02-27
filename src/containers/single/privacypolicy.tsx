@@ -1,5 +1,6 @@
 import * as React from 'react';
 import "./blog.less"
+import "./terms.less"
 export default class Broken extends React.Component {
   public render() {
     return (

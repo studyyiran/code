@@ -77,7 +77,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
           this.props.form.setFields({
             email_confirm: {
               value: email_confirm,
-              errors: [new Error("The emails don't matach.")]
+              errors: [new Error("The emails don't match.")]
             }
           });
           resolve(false);
@@ -88,7 +88,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
           this.props.form.setFields({
             paypal_email_confirm: {
               value: paypal_email_confirm,
-              errors: [new Error("The emails don't matach.")]
+              errors: [new Error("The emails don't match.")]
             }
           });
           resolve(false);

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 import classnames from 'classnames';
-import { Modal } from 'antd';
+import { Modal, Button } from 'antd';
 import Layout from '@/containers/aboutphone/layout';
 import ShippingPage from '@/containers/aboutphone/shipping';
 import PaymentPage from '@/containers/aboutphone/payment';
@@ -20,6 +20,7 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
     isChecked: false, // 勾选协议
     showEditModal: false, // 展示弹窗
     pageType: '', // 弹窗内置的页面组件
+    loading: false
   }
 
   public constructor(props: IDoneProps) {
@@ -114,7 +115,7 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
             </p>
             <p className="info-item condition">
               <span className="label">Condition</span>
-              <span className="content">{yourphone.inquiryDetail && yourphone.inquiryDetail.ppvs.map(ppv => ppv.value).join(',')}<span className="edit-bg" onClick={this.handlePageChoose.bind(this, EChangeType.CONDITION)} /></span>
+              <span className="content">{yourphone.inquiryDetail && yourphone.inquiryDetail.ppvs.map(ppv => ppv.value).join(', ')}<span className="edit-bg" onClick={this.handlePageChoose.bind(this, EChangeType.CONDITION)} /></span>
             </p>
             <style>
               {`.info-wrapper .info-item.condition .content {
@@ -130,10 +131,10 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
     // 缺少物流目的地
     const shippingAddress = [];
     const addressInfo = yourphone.addressInfo;
+    shippingAddress.push(addressInfo.addressLine.trim());
     if (addressInfo.addressLineOptional && addressInfo.addressLineOptional !== "") {
       shippingAddress.push(addressInfo.addressLineOptional.trim());
     }
-    shippingAddress.push(addressInfo.addressLine.trim());
     shippingAddress.push(addressInfo.city + ", " + addressInfo.state);
     shippingAddress.push(addressInfo.zipCode);
 
@@ -189,7 +190,17 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
               <span onClick={this.handleServiceCheck} className={classnames('text-with-icon', { checked: this.state.isChecked })} >By checking this box, you agree to our </span>
               <Link to='/terms' className="highlight">Terms of Service </Link>
             </div>
-            <p className={classnames('ship-btn', { active: this.state.isChecked })} onClick={this.handleShip}>ALL GOOD. Let’s Ship It!</p>
+            <Button
+              disabled={!this.state.isChecked}
+              onClick={this.handleShip}
+              className="ship-btn"
+              type="primary"
+              size="large"
+              loading={this.state.loading}
+            >
+              ALL GOOD. Let’s Ship It!
+            </Button>
+            {/* <p className={classnames('ship-btn', { active: this.state.isChecked })} onClick={this.handleShip}>ALL GOOD. Let’s Ship It!</p> */}
           </div>
         </Layout>
         <Modal
@@ -226,8 +237,15 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
       return;
     }
 
+    this.setState({
+      loading: true
+    })
+
     // 开始创建订单
     const isOrderCreated = await this.props.yourphone.createOrder();
+    this.setState({
+      loading: false
+    })
     if (isOrderCreated) {
       try {
         this.props.user.preOrder = {

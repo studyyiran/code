@@ -21,6 +21,22 @@
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
 
   <title>loading...</title>
+  <script>
+    (function () {
+      //初始化REM
+      var w = 750;
+      var setFontSize = function () {
+        var width = document.documentElement.clientWidth;
+
+        //width = width > w ? w: width;
+        var fontSize = parseInt(width / w * 200);
+        document.getElementsByTagName("html")[0].style.fontSize = fontSize + "px";
+      };
+      setFontSize();
+      window.addEventListener('resize', setFontSize, false);
+    })();
+  </script>
+
 
   <!-- Google Tag Manager -->
   <script>(function (w, d, s, l, i) {
