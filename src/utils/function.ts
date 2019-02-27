@@ -131,3 +131,35 @@ export const formatNumberFixTwo = (n: number) => (n < 10 ? "0" + n : n.toString(
 export const isMobile = () => {
   return false;
 }
+
+export const createDate = (t: string) => {
+  const b = new Date();
+  const arrT = t.split(" ");
+  // 年月日
+  if (arrT[0]) {
+    const arrT1b = arrT[0].split("-");
+    if (arrT1b[0]) {
+      b.setFullYear(parseInt(arrT1b[0], 10))
+    }
+    if (arrT1b[1]) {
+      b.setMonth(parseInt(arrT1b[1], 10) - 1)
+    }
+    if (arrT1b[2]) {
+      b.setDate(parseInt(arrT1b[2], 10))
+    }
+  }
+  // 时分秒
+  if (arrT[1]) {
+    const arrT2b = arrT[1].split(":");
+    if (arrT2b[0]) {
+      b.setHours(parseInt(arrT2b[0], 10))
+    }
+    if (arrT2b[1]) {
+      b.setMinutes(parseInt(arrT2b[1], 10))
+    }
+    if (arrT2b[2]) {
+      b.setSeconds(parseInt(arrT2b[2], 10))
+    }
+  }
+  return b;
+}
