@@ -114,7 +114,7 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
             </p>
             <p className="info-item condition">
               <span className="label">Condition</span>
-              <span className="content">{yourphone.inquiryDetail && yourphone.inquiryDetail.ppvs.map(ppv => ppv.value).join(',')}<span className="edit-bg" onClick={this.handlePageChoose.bind(this, EChangeType.CONDITION)} /></span>
+              <span className="content">{yourphone.inquiryDetail && yourphone.inquiryDetail.ppvs.map(ppv => ppv.value).join(', ')}<span className="edit-bg" onClick={this.handlePageChoose.bind(this, EChangeType.CONDITION)} /></span>
             </p>
             <style>
               {`.info-wrapper .info-item.condition .content {
@@ -130,10 +130,10 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
     // 缺少物流目的地
     const shippingAddress = [];
     const addressInfo = yourphone.addressInfo;
+    shippingAddress.push(addressInfo.addressLine.trim());
     if (addressInfo.addressLineOptional && addressInfo.addressLineOptional !== "") {
       shippingAddress.push(addressInfo.addressLineOptional.trim());
     }
-    shippingAddress.push(addressInfo.addressLine.trim());
     shippingAddress.push(addressInfo.city + ", " + addressInfo.state);
     shippingAddress.push(addressInfo.zipCode);
 
