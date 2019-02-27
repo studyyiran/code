@@ -193,6 +193,7 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
             <Button
               disabled={!this.state.isChecked}
               onClick={this.handleShip}
+              className="ship-btn"
               type="primary"
               size="large"
               loading={this.state.loading}
