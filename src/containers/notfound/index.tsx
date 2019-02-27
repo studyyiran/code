@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from 'antd';
 
 // import Loading from '@/components/Loading';
@@ -19,9 +20,9 @@ class NotFound extends React.Component {
           <h1>Apologies… something isn’t right here</h1>
           <p>This can’t be what you were looking for. <br />There may be a technical issue that brought you here, or you may be trying to access a page that doesn’t exist.</p>
           <div className="button-box">
-            <Button type="primary" size="large">GO BACK TO HOME</Button>
+            <Button type="primary" size="large"><Link to="/">GO BACK TO HOME</Link></Button>
           </div>
-          <p>If your issue persists, please call customer service：+1 (408) 111-2222 and we will be happy to help.</p>
+          <p>If your issue persists, please email support@uptradeit.com</p>
         </div>
       </div>
     );

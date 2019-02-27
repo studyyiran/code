@@ -241,7 +241,7 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
         <Row gutter={32}>
           <Col span={11}>
             <Form.Item
-              label="Phone(optional)"
+              label="Phone"
               help={this.state.help}
               validateStatus={this.state.validateStatus}
             >
@@ -249,6 +249,7 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
                 getFieldDecorator('mobile', {
                   rules: [
                     {
+                      required: true,
                       pattern: /\d{10}/,
                       // message: "Please enter a valid mobile."
                     }
