@@ -221,7 +221,7 @@ class Store implements IOrderStore {
             name: "Package Sent",
             img: PackageSentIcon
         }, {
-            name: "Package Recived",
+            name: "Package Received",
             img: PackageReceivedIcon
         }, {
             name: "Inspection Completed",
@@ -244,7 +244,7 @@ class Store implements IOrderStore {
                 img: PackageSentIcon,
                 date: this.packageDate(this.findDate(IProgressType.TO_BE_SHIPPED))
             }, {
-                name: "Package Recived",
+                name: "Package Received",
                 img: PackageReceivedIcon,
                 date: this.packageDate(this.findDate(IProgressType.TO_BE_RECEIVED))
             }, {
