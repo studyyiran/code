@@ -1,5 +1,6 @@
 export interface ICommonStore {
   positionInfo: any;
+  isMobile: boolean;
   initPosition: () => Promise<boolean>;
   onSubscribe: (email: string) => Promise<boolean>
 }

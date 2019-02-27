@@ -11,7 +11,7 @@ const isMatch = (activeConditions: object | null, conditionId: number, ppvnValue
 export default (props: IProductPPVN & { onConditionItemClick: (conditionId: number, ppvnValueId: number) => void; activeConditions: object | null }) => (
   <div className="comp-condition-item-container">
     <div className="left-wrapper">
-      <p className="condition">{props.name}</p>
+      <p className={classnames('condition', { middle: props.illustrationContent && props.illustrationContent.propertyIllustrationContentText })}>{props.name}</p>
       {
         props.illustrationContent && props.illustrationContent.propertyIllustrationContentText &&
         <p className="detail">{props.illustrationContent.propertyIllustrationContentText}</p>
@@ -27,7 +27,9 @@ export default (props: IProductPPVN & { onConditionItemClick: (conditionId: numb
               key={index}
               className={classnames('option', { active: isActive })}
               onClick={props.onConditionItemClick.bind(null, props.id, property.id)}
-            >{property.value}</span>
+            >
+              <span className="text">{property.value}</span>
+            </span>
           )
         })
       }

@@ -44,7 +44,7 @@ class Store implements IOrderStore {
                 paymentMethod.push(this.orderDetail.paypalInfo.email);
             }
             if (this.orderDetail.payment === "CHECK") {
-                paymentMethod.push("Check");
+                paymentMethod.push("eCheck");
                 paymentMethod.push(this.orderDetail.checkInfo.email);
             }
         }
@@ -193,13 +193,13 @@ class Store implements IOrderStore {
         if (orderPaymentBills.length > 0) {
             orderPaymentBills.map(t => {
                 if (t.payFor === "RESERVE_PRICE") {
-                    payment.priceGuarantee = t.amount;
+                    payment.priceGuarantee = t.amountDollar || 0;
                     if (t.status === "SUCCESS") {
                         payment.priceGuaranteeStatus = true;
                     }
                 }
                 if (t.payFor === "HAMMER_ADDITIONAL") {
-                    payment.bonus = t.amount;
+                    payment.bonus = t.amountDollar || 0;
                     if (t.status === "SUCCESS") {
                         payment.priceGuaranteeStatus = true;
                         payment.bonusStatus = true
@@ -221,7 +221,7 @@ class Store implements IOrderStore {
             name: "Package Sent",
             img: PackageSentIcon
         }, {
-            name: "Package Recived",
+            name: "Package Received",
             img: PackageReceivedIcon
         }, {
             name: "Inspection Completed",
@@ -244,7 +244,7 @@ class Store implements IOrderStore {
                 img: PackageSentIcon,
                 date: this.packageDate(this.findDate(IProgressType.TO_BE_SHIPPED))
             }, {
-                name: "Package Recived",
+                name: "Package Received",
                 img: PackageReceivedIcon,
                 date: this.packageDate(this.findDate(IProgressType.TO_BE_RECEIVED))
             }, {

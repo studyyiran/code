@@ -31,7 +31,7 @@ export interface IYourPhoneStore {
   activeModelId: number;
   activeModelName: string;
   activeConditions: object;
-  americaStates: IAmericaState;
+  americaStates: IAmericaState | null;
   isTBD: boolean; // 选中的品牌是否为other
   isAllConditionSelected: boolean; // computed
   isAddressValuesAndDisabled: boolean;
@@ -95,6 +95,7 @@ export interface IDoneStates {
   isChecked: boolean;
   showEditModal: boolean;
   pageType: 'shipping' | 'payment' | 'condition' | '';
+  loading: boolean
 }
 
 export interface ICheckOutStates {
@@ -243,4 +244,9 @@ export interface IBreadCrumb {
   brandName: string;
   carrierName: string;
   modelName: string;
+}
+
+export interface IShippingState {
+  help: string,
+  validateStatus: string | undefined
 }

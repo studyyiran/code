@@ -15,7 +15,13 @@ export default class Broken extends React.Component {
             <em />
           </div>
         </div>
-        <img src={require('@/images/single/broken_banner.png')} alt="" className="banner" />
+        {
+          <>
+            <img src={require('@/images/single/broken_banner.png')} alt="" className="banner" />
+            <img src={require('@/images/single/broken_banner_m.png')} alt="" className="banner-m" />
+          </>
+        }
+
         <p> From cracked screens to busted cameras, damage to your iPhone is hugely frustrating. For one, iPhones aren’t exactly a cheap investment and buying a new one can really set you back—particularly if you’ve just spent a bundle on the latest model. </p>
         <p>Luckily, there is a market out there for broken iPhones, often times for the purpose of refurbishing and obtaining spare parts. </p>
         <p>Below, is a breakdown of numerous types of iPhone damage, whether or not the broken device can still be sold, how much it can be sold for, and the available selling channels.</p>

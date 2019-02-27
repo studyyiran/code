@@ -197,3 +197,155 @@
         padding: 0 173px;
     }
 }
+
+.ismobile {
+  .page-help-howitworks{
+    padding-top: 0.7rem;
+    width: 100%;
+    .article{
+      display: block;
+      height: 5.21rem;
+      background: url("~@/images/single/howitworks-top.png") no-repeat center center / 100% 100%;
+      box-shadow: none;
+      .col-1{
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0.45rem 0.3rem 0 0.3rem;
+        flex-grow: 0;
+        flex-shrink: 0;
+        line-height: 0.5rem;
+        p {
+          display: inline;
+          line-height: 0.5rem;
+          font-size: 0.4rem;
+          br{
+            display: none;
+          }
+          &:last-child {
+            display: block;
+            width: 100%;
+            margin-top: 0.2rem;
+            font-size: 0.16rem;
+            line-height: 0.24rem;
+          }
+        }
+      }
+      .col-2{
+        display: none;
+      }
+    }
+    .two-step-and-done{
+      padding: 0.3rem 0.3rem 0.4rem 0.3rem;
+      text-align: center;
+      .title{
+        line-height: 0.44rem;
+        font-size: 0.34rem;
+      }
+      .subtitle{
+        margin-top: 0.2rem;
+        font-size: 0.16rem;
+        line-height: 0.2rem;
+      }
+      .two-step{
+        .one, .two{
+          display: block;
+          margin: 0;
+          .icon{
+            display: block;
+            flex: none;
+            padding-top: 0.3rem;
+            p{
+              padding: 0.2rem 0;
+              font-size: 0.2rem;
+              line-height: 0.26rem;
+            }
+          }
+          .content{
+            width: 100%;
+            p{
+              &:nth-child(odd) {
+                margin-top: 0.3rem;
+                font-size: 0.16rem;
+                line-height: 0.28rem;
+              }
+              &:nth-child(even) {
+                margin-top: 0.15rem;
+                font-size: 0.14rem;
+                line-height: 0.2rem;
+              }
+              &:first-child {
+                margin-top: 0;
+              }
+            }
+          }
+        }
+        .one{
+          .icon{
+            img{
+              width: 0.7rem;
+            }
+          }
+        }
+        .two{
+          .icon{
+            img{
+              width: 0.71rem;
+            }
+          }
+        }
+      }
+    }
+    .bg-white{
+      padding: 0 0.25rem 0.4rem 0.25rem;
+      .uptrade-different{
+        padding-top: 0.3rem;
+        .title {
+          font-size: 0.34rem;
+          line-height: 0.44rem;
+          text-align: center;
+        }
+
+        table {
+          margin: 0.3rem 0 0 0 ;
+          th {
+            width: 0.75rem;
+            height: 0.66rem;
+            text-align: center;
+            font-size: 0.12rem;
+            line-height: 0.15rem;
+            background: #F8F8F8;
+          }
+
+          tr {
+            td {
+              border: solid 1px #F8F8F8;
+              background-color: #fff;
+              height: 0.6rem;
+              font-size: 0.12rem;
+              line-height: 0.14rem;
+              text-align: center;
+              &:first-child {
+                background-color: #F8F8F8;
+                padding: 0 0.08rem;
+              }
+              .right, .wrong{
+                margin-top: 0;
+                height: 0.15rem;;
+              }
+            }
+          }
+        }
+      }
+      .button-group {
+        margin: 0;
+        padding-top: 0.3rem;
+        height: 1.1rem;
+        box-sizing: border-box;
+        .ant-btn{
+          width: 2rem!important;
+          height: 0.4rem!important;
+        }
+      }
+    }
+  }
+}

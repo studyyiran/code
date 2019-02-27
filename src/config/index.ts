@@ -4,6 +4,7 @@ import NAVIGATOR from './navigator.config';
 import DEFAULT from './defalut.config';
 import devConfig from './dev.config';
 import prodConfig from './prod.config';
+import FOOTERLINKS from './footerLinks.config';
 
 let ENVCONFIG = devConfig;
 
@@ -16,5 +17,6 @@ export {
   EOrderStatus,
   NAVIGATOR,
   DEFAULT,
-  ENVCONFIG
+  ENVCONFIG,
+  FOOTERLINKS
 }

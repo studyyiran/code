@@ -17,6 +17,7 @@ export default class HowMuch extends React.Component {
           </div>
         </div>
         <img src={require('@/images/single/howmuch_banner.png')} alt="" className="banner" />
+        <img src={require('@/images/single/howmuch_banner_m.png')} alt="" className="banner-m" />
         <p> If you want or need to get a new phone, this guide should help you determine how much your iPhone, Samsung or other type of phone is worth. Taking care of the phone while you’re using it and taking time to prepare it for sale should also help you get maximum resale value. Also, remember, even if you aren’t able to sell your phone, there are many ways to recycle old phones.</p>
 
         <h2>How Much is My Phone Worth?</h2>
