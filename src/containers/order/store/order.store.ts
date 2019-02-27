@@ -199,7 +199,7 @@ class Store implements IOrderStore {
                     }
                 }
                 if (t.payFor === "HAMMER_ADDITIONAL") {
-                    payment.bonus = t.hammerAmountDollar || 0;
+                    payment.bonus = t.amountDollar || 0;
                     if (t.status === "SUCCESS") {
                         payment.priceGuaranteeStatus = true;
                         payment.bonusStatus = true
