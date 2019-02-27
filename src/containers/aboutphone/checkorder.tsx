@@ -95,6 +95,6 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
   }
 
   private hanleCheckOrder = () => {
-    this.props.history.push('/order/check');
+    this.props.history.push('/check-order');
   }
 }
