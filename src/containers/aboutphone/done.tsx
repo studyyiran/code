@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 import classnames from 'classnames';
-import { Modal } from 'antd';
+import { Modal, Button } from 'antd';
 import Layout from '@/containers/aboutphone/layout';
 import ShippingPage from '@/containers/aboutphone/shipping';
 import PaymentPage from '@/containers/aboutphone/payment';
@@ -20,6 +20,7 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
     isChecked: false, // 勾选协议
     showEditModal: false, // 展示弹窗
     pageType: '', // 弹窗内置的页面组件
+    loading: false
   }
 
   public constructor(props: IDoneProps) {
@@ -189,6 +190,15 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
               <span onClick={this.handleServiceCheck} className={classnames('text-with-icon', { checked: this.state.isChecked })} >By checking this box, you agree to our </span>
               <Link to='/terms' className="highlight">Terms of Service </Link>
             </div>
+            <Button
+              disabled={!this.state.isChecked}
+              onClick={this.handleShip}
+              type="primary"
+              size="large"
+              loading={this.state.loading}
+            >
+              ALL GOOD. Let’s Ship It!
+            </Button>
             <p className={classnames('ship-btn', { active: this.state.isChecked })} onClick={this.handleShip}>ALL GOOD. Let’s Ship It!</p>
           </div>
         </Layout>
@@ -226,8 +236,15 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
       return;
     }
 
+    this.setState({
+      loading: true
+    })
+
     // 开始创建订单
     const isOrderCreated = await this.props.yourphone.createOrder();
+    this.setState({
+      loading: false
+    })
     if (isOrderCreated) {
       try {
         this.props.user.preOrder = {
