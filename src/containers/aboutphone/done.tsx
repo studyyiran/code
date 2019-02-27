@@ -200,7 +200,7 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
             >
               ALL GOOD. Let’s Ship It!
             </Button>
-            <p className={classnames('ship-btn', { active: this.state.isChecked })} onClick={this.handleShip}>ALL GOOD. Let’s Ship It!</p>
+            {/* <p className={classnames('ship-btn', { active: this.state.isChecked })} onClick={this.handleShip}>ALL GOOD. Let’s Ship It!</p> */}
           </div>
         </Layout>
         <Modal
