@@ -8,6 +8,7 @@ import store from './store';
 
 const setIsMobile = function () {
   const clientWidth = document.documentElement.clientWidth;
+  // const dpr = window.devicePixelRatio || 1;
   if (clientWidth <= 750) {
     store['common'].isMobile = true;
     document.body.classList.add('ismobile');
