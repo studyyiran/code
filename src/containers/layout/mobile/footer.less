@@ -1,62 +1,68 @@
 .comp-mobile-footer-container {
-  height:5.82rem;
-  color:#fff;
+  height: 5.82rem;
+  color: #fff;
   background: #444962;
-  padding:.46rem 0 0;
+  padding: .46rem 0 0;
   box-sizing: border-box;
   overflow: hidden;
   display: none;
+  position: relative;
 
   .list-box {
     display: flex;
     padding: 0 .3rem;
+
     dl {
-      flex:1;
+      flex: 1;
 
       &:last-child {
-        padding-left:.3rem;
+        padding-left: .3rem;
       }
 
       dt {
-        font-size:.14rem;
+        font-size: .14rem;
         line-height: .26rem;
         font-weight: bold;
       }
 
       dd {
-        font-size:.14rem;
+        font-size: .14rem;
         // margin-left:.2rem;
         line-height: .24rem;
-        margin-top:.16rem;
+        margin-top: .16rem;
       }
 
       a {
-        color:#fff;
+        color: #fff;
       }
     }
   }
 
   .subscribe {
-    margin-top:.3rem;
+    margin-top: .3rem;
     padding: 0 .3rem;
+
     header {
-      color:#fff;
+      color: #fff;
       font-weight: bold;
-      font-size:.14rem;
+      font-size: .14rem;
     }
 
     .input-group {
-      margin-top:.18rem;
-      height:.4rem;
+      margin-top: .18rem;
+      height: .4rem;
+
       .subscribe-input {
-        width:3rem;
+        width: 3rem;
         overflow: hidden;
         border-radius: 4px;
       }
-      .ant-input-search.ant-input-search-enter-button > .ant-input-suffix {
-        right:-1px;
+
+      .ant-input-search.ant-input-search-enter-button>.ant-input-suffix {
+        right: -1px;
+
         .ant-btn {
-          height:.42rem;
+          height: .42rem;
         }
       }
     }
@@ -64,28 +70,31 @@
 
   .logo-box {
     padding: 0 .3rem .44rem;
-    margin-top:.4rem;
+    margin-top: .4rem;
     text-align: center;
-    border-bottom:1px solid #383D50;
+    border-bottom: 1px solid #383D50;
+
     img {
-      width:.85rem;
+      width: .85rem;
     }
+
     .copy {
-      margin-top:.17rem;
-      color:#000;
+      margin-top: .17rem;
+      color: #000;
     }
   }
 
   .link-list {
     line-height: .4rem;
-    padding:0 .96rem;
+    padding: 0 .96rem;
+
     a {
-      color:#000;
+      color: #000;
       display: inline-block;
-      font-size:.1rem;
+      font-size: .1rem;
 
       &:last-child {
-        margin-left:.3rem;
+        margin-left: .3rem;
       }
     }
   }
