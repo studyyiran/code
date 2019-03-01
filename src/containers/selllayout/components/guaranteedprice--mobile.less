@@ -1,0 +1,29 @@
+@import (reference) '~@/styles/index.less';
+.comp-selllayout-guaranteedprice-mobile-container {
+  margin: 0 auto;
+  width: 3.33rem;
+  height: 1.44rem;
+  background: url("~@/images/order/guaranteedprice_bg.png") no-repeat;
+  background-size: 100% 100%;
+  text-align: center;
+  .main-title {
+    padding: 0.21rem 0 0.18rem;
+    .set-font-color(0.17rem, #fff, bold);
+    line-height: 0.27rem;
+  }
+
+  .TBD,
+  .price {
+    .set-font-color(0.42rem, #00CFFF, bold);
+    line-height: 0.42rem;
+  }
+
+  .price {
+    &::before {
+      margin-right: 0.1rem;
+      content: "¥";
+      .set-font-color(0.21rem, #00CFFF, bold);
+    }
+  }
+
+}

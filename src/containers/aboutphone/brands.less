@@ -1,10 +1,12 @@
 @import (reference) '~@/styles/index.less';
-.page-brans-container {
+.page-brands-container {
   height: 100%;
-
+  .brand-list-wrapper {
+    margin-bottom: 32px;
+  }
   .comp-brand-item-container {
-    margin-top: 0.25rem;
-    margin-left: 0.15rem;
+    margin-top: 32px;
+    margin-left: 15px;
     &:nth-of-type(4n + 1) {
       margin-left: 0;
     }
@@ -12,9 +14,20 @@
 }
 
 .@{MOBILECLS} {
-  .comp-brand-item-container {
-    &:nth-of-type(2n + 1) {
-      margin-left: 0;
+  .page-brands-container {
+    .comp-yourphone-breadcrumb-container {
+      margin-top: 0;
+      margin-left: 0.21rem;
+    }
+    .brand-list-wrapper {
+      padding-left: 0.31rem;
+      .comp-brand-item-container {
+        margin-top: 0.25rem;
+        margin-left: 0.15rem;
+        &:nth-of-type(2n + 1) {
+          margin-left: 0;
+        }
+      }
     }
   }
 }

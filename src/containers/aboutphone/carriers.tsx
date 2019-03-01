@@ -6,8 +6,9 @@ import CarrierItem from '@/containers/aboutphone/components/carrieritem';
 import './carriers.less';
 import { userEmailValidate } from '@/containers/aboutphone/pageValidate';
 import Breadcrumb from './components/breadcrumb';
+import ProgressBar from '@/containers/aboutphone/components/progressbar--mobile';
 
-@inject('yourphone', 'user')
+@inject('yourphone', 'user', 'common')
 @observer
 export default class Brands extends React.Component<IBrandsProps> {
 
@@ -29,6 +30,9 @@ export default class Brands extends React.Component<IBrandsProps> {
       <div className="page-carriers-container">
         <LayOut>
           <>
+            {
+              this.props.common.isMobile && <ProgressBar />
+            }
             <Breadcrumb
               brandName={this.props.yourphone.activeBrandsName}
             />

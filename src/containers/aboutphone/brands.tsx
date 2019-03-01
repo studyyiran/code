@@ -7,8 +7,9 @@ import './brands.less';
 import { DEFAULT } from '@/config';
 import { userEmailValidate } from '@/containers/aboutphone/pageValidate';
 import Breadcrumb from '@/containers/aboutphone/components/breadcrumb';
+import ProgressBar from '@/containers/aboutphone/components/progressbar--mobile';
 
-@inject('yourphone', 'user')
+@inject('yourphone', 'user', 'common')
 @observer
 export default class Brands extends React.Component<IBrandsProps> {
   public componentDidMount() {
@@ -25,11 +26,14 @@ export default class Brands extends React.Component<IBrandsProps> {
   public render() {
     const { brands, activeBrandsId } = this.props.yourphone;
     return (
-      <div className="page-brans-container">
+      <div className="page-brands-container">
         <LayOut>
           <>
             <Breadcrumb />
-            <div style={{ paddingBottom: '32px' }}>
+            {
+              this.props.common.isMobile && <ProgressBar />
+            }
+            <div className="brand-list-wrapper">
               {
                 brands.map((brand, index) => <BrandItem key={index} brand={brand} activeBrandsId={activeBrandsId} onBrandClick={this.onBrandItemClick} />)
               }
