@@ -10,7 +10,7 @@ class MachineInfo extends React.Component<IMachineInfo>{
                 <div className="properties">
                     <div>
                         <div>Model</div>
-                        <div style={{ fontWeight: "bold" }}>{this.props.model}</div>
+                        <div >{this.props.model}</div>
                     </div>
                     {
                         this.props.carrier !== "" && (

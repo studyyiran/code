@@ -1,7 +1,7 @@
 @import (reference) '~@/styles/index.less';
 .page-payment-container {
   height: 100%;
-
+  
   .paypal-bg {
     width: 91px;
     height: 22px;
@@ -54,17 +54,32 @@
   // 覆盖antd的样式
   .ant-collapse-header {
     background-color: #fff;
+    padding-left: 20px !important;
   }
+
+  .ant-collapse {
+    border-width: 2px;
+    border-color:#f5f5f5;
+  }
+ .ant-collapse-item {
+  border-width: 2px;
+  border-color:#f5f5f5;
+ }
+ .ant-collapse-content > .ant-collapse-content-box {
+   padding-left:20px;
+   padding-right:20px;
+ }
 
   .ant-collapse {
     &.active {
       box-shadow:0px 2px 4px 0px rgba(0,207,255,0.19);
-      border:1px solid rgba(0,207,255,1);
+      border:2px solid rgba(0,207,255,1);
       .ant-collapse-item {
         border-bottom: none;
       }
       .ant-collapse-content {
         border-top: none;
+        
       }
     }
     .ant-collapse-content {

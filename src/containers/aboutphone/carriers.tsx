@@ -33,9 +33,11 @@ export default class Brands extends React.Component<IBrandsProps> {
               style={{ marginLeft: '15px' }}
               brandName={this.props.yourphone.activeBrandsName}
             />
-            {
-              carriers.map((carrier, index) => <CarrierItem key={index} carrier={carrier} activeCarrierName={activeCarrierName} onCarrierClick={this.onCarrierItemClick} />)
-            }
+            <div className="comp-carrier-wrapper-container">
+              {
+                carriers.map((carrier, index) => <CarrierItem key={index} carrier={carrier} activeCarrierName={activeCarrierName} onCarrierClick={this.onCarrierItemClick} />)
+              }
+            </div>
           </>
         </LayOut>
       </div>

@@ -68,6 +68,7 @@ class AboutYou extends React.Component<IAboutYouProps, IAboutYouState> {
                 onBlur={this.handleValidateBlur}
                 defaultValue={this.props.user.preOrder.userEmail}
                 value={this.state.value}
+                size="large"
               />
             </Form.Item>
             <Form.Item>
@@ -93,7 +94,7 @@ class AboutYou extends React.Component<IAboutYouProps, IAboutYouState> {
     }
 
     if (!/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,})$/.test(this.state.value)) {
-      state.help = <><Icon type="close-circle" />Please enter a valid email address</>;
+      state.help = <><Icon type="close-circle" />&nbsp;Please enter a valid email address</>;
       state.validateStatus = 'error';
     } else {
       this.props.user.getPreOrderKey(this.state.value);
@@ -136,7 +137,7 @@ class AboutYou extends React.Component<IAboutYouProps, IAboutYouState> {
       validateStatus: undefined,
     }
     if (!/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,})$/.test(e.target.value)) {
-      state.help = <><Icon type="close-circle" />Please enter a valid email address</>;
+      state.help = <><Icon type="close-circle" />&nbsp;Please enter a valid email address</>;
       state.validateStatus = 'error';
     }
     this.setState(state);
