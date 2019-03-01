@@ -3,13 +3,14 @@
 .comp-model-item-container {
   display: inline-block;
   overflow: hidden;
-  width:340px;
-  height:145px;
+  width: 340px;
+  height: 145px;
   box-sizing: border-box;
   padding: 0 20px;
-  background:rgba(255,255,255,1);
+  background: rgba(255, 255, 255, 1);
   cursor: pointer;
   .outline-shadow-highlight();
+
   .title {
     margin-top: 18px;
     margin-bottom: 14px;
@@ -21,18 +22,22 @@
   .property-wrapper {
     display: flex;
     align-items: center;
+
     .left-wrapper {
       flex: 1;
+      height: 72px;
+
       .memory-item {
         display: inline-block;
         margin-left: 6px;
         margin-bottom: 8px;
-        width:60px;
-        height:24px;
+        width: 60px;
+        height: 24px;
         text-align: center;
-        background:rgba(255,255,255,1);
+        background: rgba(255, 255, 255, 1);
         .outline-shadow-highlight();
         .text-overflow();
+
         &:nth-of-type(3n + 1) {
           margin-left: 0;
         }
