@@ -140,3 +140,70 @@
         }
     }
 }
+
+.ismobile {
+    .comp-order-progressBar {
+        height: 1.3rem;
+        padding: 0;
+        // display: block;
+        overflow: hidden;
+
+        .dot {
+            display: inline-block;
+            min-width: 0.9rem;
+
+            .dot-icon {
+                top: .32rem;
+            }
+
+            &::after {
+                width: .39rem;
+                top: .38rem;
+            }
+
+            &::before {
+                width: .39rem;
+                top: .38rem;
+            }
+
+            .child-mark {
+                top: .62rem;
+
+                &.child-mark-current {
+                    top: .18rem;
+
+                    .title {
+                        margin-top: .06rem;
+                        font-weight: 500;
+                    }
+
+                    .icon {
+                        width: .44rem;
+                        height: .44rem;
+                    }
+                }
+
+                .title {
+                    padding: 0 0.135rem;
+                    font-size: .12rem;
+                    line-height: .16rem;
+                }
+
+                .date {
+                    margin-top: .04rem;
+                    font-size: .1rem;
+                    line-height: .1rem;
+                    color: rgba(235, 237, 240, 1);
+                }
+            }
+
+            .currentMark {
+                &::after {
+                    border-width: 0 .05rem .06rem;
+                    top: -.06rem;
+                    left: -.05rem;
+                }
+            }
+        }
+    }
+}
