@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
-import { Divider, Input, Button, Form } from 'antd';
+import { Divider, Input, Button, Form, Icon } from 'antd';
 import { IOrderProps } from '@/containers/order/interface/order.inerface';
 import { RouteComponentProps } from 'react-router';
 import { getQueryString } from '@/utils/function';
@@ -111,7 +111,7 @@ class CheckOrderNo extends React.Component<IOrderProps & RouteComponentProps> {
         if (!email.test(this.state.email) && this.state.email !== "") {
             this.setState({
                 validateEmail: 'error',
-                emailInputHelp: 'Please enter a valid email address'
+                emailInputHelp: <><Icon type="close-circle" />&nbsp;Please enter a valid email address</>
             });
         }
     }
@@ -124,7 +124,7 @@ class CheckOrderNo extends React.Component<IOrderProps & RouteComponentProps> {
             canSubmit = false;
             this.setState({
                 validateEmail: 'error',
-                emailInputHelp: 'Please enter a valid email address'
+                emailInputHelp: <><Icon type="close-circle" />&nbsp;Please enter a valid email address</>
             });
         }
         if (!/^[0-9]*$/.test(this.state.orderNo)) {
