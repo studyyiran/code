@@ -83,11 +83,6 @@ export default class Conditions extends React.Component<IConditionsProps> {
             )
             : (conditionList)
         }
-        <style>
-          {`.comp-condition-item-container .right-wrapper .option .text {
-            -webkit-box-orient: vertical;
-          }`}
-        </style>
       </div>
     )
   }

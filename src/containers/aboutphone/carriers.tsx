@@ -30,12 +30,13 @@ export default class Brands extends React.Component<IBrandsProps> {
         <LayOut>
           <>
             <Breadcrumb
-              style={{ marginLeft: '15px' }}
               brandName={this.props.yourphone.activeBrandsName}
             />
-            {
-              carriers.map((carrier, index) => <CarrierItem key={index} carrier={carrier} activeCarrierName={activeCarrierName} onCarrierClick={this.onCarrierItemClick} />)
-            }
+            <div className="carrier-list-wrapper">
+              {
+                carriers.map((carrier, index) => <CarrierItem key={index} carrier={carrier} activeCarrierName={activeCarrierName} onCarrierClick={this.onCarrierItemClick} />)
+              }
+            </div>
           </>
         </LayOut>
       </div>

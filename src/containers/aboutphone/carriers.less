@@ -1,12 +1,32 @@
 @import (reference) '~@/styles/index.less';
 .page-carriers-container {
   height: 100%;
-
+  .comp-yourphone-breadcrumb-container {
+    margin-left: 15px;
+  }
   .comp-carrier-item-container {
     margin-top: 32px;
     margin-left: 15px;
     &:nth-of-type(3n + 1) {
       margin-left: 0;
+    }
+  }
+}
+
+.@{MOBILECLS} {
+  .page-carriers-container {
+    .comp-yourphone-breadcrumb-container {
+      margin-left: 0.3rem;
+    }
+    .carrier-list-wrapper {
+      padding-bottom: 0.25rem;
+    }
+    .comp-carrier-item-container {
+      margin-top: 0.25rem;
+      margin-left: 0.1rem;
+      &:nth-of-type(2n +1) {
+        margin-left: 0;
+      }
     }
   }
 }

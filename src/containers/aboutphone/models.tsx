@@ -33,7 +33,7 @@ export default class Models extends React.Component<IModelsProps> {
               carrierName={this.props.yourphone.activeCarrierDescription}
             />
             {
-              <div>
+              <div className="model-list-wrapper">
                 {
                   products.length > 0
                     ? products.map((phone, index) => (
