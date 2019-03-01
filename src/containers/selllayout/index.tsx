@@ -7,10 +7,11 @@ import LeftSide from './components/leftside';
 import GuaranteedPrice from './components/guaranteedprice';
 import { IYourPhoneStore } from '../aboutphone/interface/index.interface';
 import { IUserStoreNew } from '@/store/interface/user.interface';
+import { ICommonStore } from '@/store/interface/common.interface';
 
-@inject('yourphone', 'user')
+@inject('yourphone', 'user', 'common')
 @observer
-export default class SellLayout extends React.Component<{ route: { [key: string]: any }, yourphone: IYourPhoneStore, user: IUserStoreNew }, { stepIndex: number, isSetedPreOrder: boolean }> {
+export default class SellLayout extends React.Component<{ route: { [key: string]: any }, yourphone: IYourPhoneStore, user: IUserStoreNew, common: ICommonStore }, { stepIndex: number, isSetedPreOrder: boolean }> {
 
   public readonly state = {
     stepIndex: -1,
@@ -112,7 +113,10 @@ export default class SellLayout extends React.Component<{ route: { [key: string]
     return (
       <div className="page-sell-layout-container">
         <div className="sell-layout-left">
-          <LeftSide stepIndex={this.state.stepIndex} />
+          <LeftSide 
+            stepIndex={this.state.stepIndex} 
+            isMobile={this.props.common.isMobile}
+          />
           <GuaranteedPrice price={price} isTBD={this.props.yourphone.isTBD} user={this.props.user} />
         </div>
         <div className="sell-layout-right">

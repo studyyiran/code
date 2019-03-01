@@ -1,0 +1,41 @@
+@import (reference) '~@/styles/index.less';
+.@{MOBILECLS} {
+  .comp-sellayout-leftside-container {
+    padding: 0 !important;
+    display: flex;
+    align-items: center;
+    height: 0.5rem;
+    .step {
+      flex: 1;
+      height: 0.5rem;
+      .main-content {
+        text-align: center;
+        line-height: 0.5rem;
+        .set-font-color(0.12rem, #747784, bold);
+        &.active {
+          &::after {
+            top: auto;
+            height: 0;
+            right: 50%;
+            bottom: 0;
+            transform: translateX(50%);
+            border-top: 0.04rem solid #383D50;
+            border-left: 0.04rem solid #383D50;
+            border-right: 0.04rem solid #383D50;
+            border-bottom: 0.04rem solid #fff;
+          }
+        }
+
+        &.done {
+          color: #747784;
+        }
+      }
+      .sub-content {
+        display: none;
+      }
+    }
+    .step + .step {
+      margin-top: 0;
+    }
+  }
+}

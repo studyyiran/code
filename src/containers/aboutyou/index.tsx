@@ -6,6 +6,7 @@ import { IAboutYouProps, IAboutYouState } from './interface/index.interface';
 @inject('user')
 @observer
 class AboutYou extends React.Component<IAboutYouProps, IAboutYouState> {
+  public static readonly displayName: string = "about you";
   public readonly state = {
     isValidate: false,
     validateStatus: undefined,
@@ -41,25 +42,6 @@ class AboutYou extends React.Component<IAboutYouProps, IAboutYouState> {
               validateStatus={this.state.validateStatus}
               help={this.state.help}
             >
-              {/* {
-                getFieldDecorator("email", {
-                  rules: [
-                    {
-                      required: true,
-                      // type: 'email',
-                      message: <p><Icon type="close-circle" /> Please enter a valid email address</p>
-                    }
-                  ],
-                  initialValue: this.props.user.preOrder.userEmail
-                })(
-                  <Input
-                    autoFocus={true}
-                    autoComplete="off"
-                    onChange={this.handleValidate}
-                    onPressEnter={this.handleSubmit}
-                  />
-                )
-              } */}
               <Input
                 autoFocus={true}
                 autoComplete="off"
