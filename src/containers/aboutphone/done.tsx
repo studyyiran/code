@@ -180,7 +180,7 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
             <div className="bottom-part-wrapper">
               <p className="phone-name">Your Phone</p>
               <div className="phone-info-wrapper">
-                <img className="img" src={require('@/images/noprice.png')} />
+                <img className="img" src={yourphone.inquiryDetail ? yourphone.inquiryDetail.product.imageUrl : require('@/images/noprice.png')} />
                 <div className="info-wrapper">
                   {phoneNode}
                 </div>

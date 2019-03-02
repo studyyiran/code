@@ -149,6 +149,7 @@ export interface IProductDetail {
   id: number;
   name: string;
   skuPricePropertyValues: ISkuPricePropertyNames;
+  imageUrl: string;
 }
 
 export interface ISkuPricePropertyNames {
@@ -187,7 +188,7 @@ export interface IProductModel {
   skuPricePropertyNames: ISkuPricePropertyNames[];
   activeModelId: number;
   activeProductId: number;
-  onModelItemClick(productId: number, productName: string, skuId: number, skuName: string): void;
+  onModelItemClick(productId: number, productName: string, skuId: number, skuName: string, imageUrl: string): void;
 }
 
 export interface IProductPPVN {
