@@ -26,7 +26,7 @@ const onValuesChange = (props: any, changedValues: any, allValues: any) => {
 }
 
 
-@inject('yourphone', 'user')
+@inject('yourphone', 'user', 'common')
 @observer
 class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
   public state = {
@@ -76,17 +76,23 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
     });
   }
 
+  public colLayout(span: number = 11) {
+    const isMobile = this.props.common.isMobile;
+    return !isMobile ? { span } : {}
+  }
+
   public render() {
     const { getFieldDecorator } = this.props.form;
     const { addressInfo } = this.props.yourphone;
+    const isMobile = this.props.common.isMobile;
 
     const infomationHTML = (
-      <Form layout="vertical" style={{ paddingTop: '40px' }}>
+      <Form layout="vertical" style={isMobile ? {} : { paddingTop: '40px' }}>
         {/* 在弹窗时才有 */}
         {
           this.props.hideLayout &&
           <Row>
-            <Col span={11}>
+            <Col {...this.colLayout()}>
               <Form.Item label="Email address">
                 {
                   getFieldDecorator('userEmail', {
@@ -108,7 +114,7 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
           </Row>
         }
         <Row gutter={32}>
-          <Col span={11}>
+          <Col {...this.colLayout()}>
             <Form.Item label="First name" required={true}>
               {
                 getFieldDecorator('firstName', {
@@ -126,7 +132,7 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
               }
             </Form.Item>
           </Col>
-          <Col span={11}>
+          <Col {...this.colLayout()}>
             <Form.Item label="Last name">
               {
                 getFieldDecorator('lastName', {
@@ -146,7 +152,7 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
           </Col>
         </Row>
         <Row gutter={32}>
-          <Col span={11}>
+          <Col {...this.colLayout()}>
             <Form.Item label="Address Line 1">
               {
                 getFieldDecorator('addressLine', {
@@ -164,7 +170,7 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
               }
             </Form.Item>
           </Col>
-          <Col span={11}>
+          <Col {...this.colLayout()}>
             <Form.Item label="Address Line 2(Optional)">
               {
                 getFieldDecorator('addressLineOptional', {
@@ -183,7 +189,7 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
           </Col>
         </Row>
         <Row gutter={32}>
-          <Col span={7}>
+          <Col {...this.colLayout(7)}>
             <Form.Item label="Zip Code">
               {
                 getFieldDecorator('zipCode', {
@@ -202,7 +208,7 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
               }
             </Form.Item>
           </Col>
-          <Col span={7}>
+          <Col {...this.colLayout(7)}>
             <Form.Item label="State">
               {
                 getFieldDecorator('state', {
@@ -219,7 +225,7 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
               }
             </Form.Item>
           </Col>
-          <Col span={8}>
+          <Col {...this.colLayout(8)}>
             <Form.Item label="City">
               {
                 getFieldDecorator('city', {
@@ -239,7 +245,7 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
           </Col>
         </Row>
         <Row gutter={32}>
-          <Col span={11}>
+          <Col {...this.colLayout()}>
             <Form.Item
               label="Phone"
               help={this.state.help}
@@ -265,7 +271,7 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
               }
             </Form.Item>
           </Col>
-          <Col span={11}>
+          <Col {...this.colLayout()}>
             <Form.Item
               label="Country"
               // validateStatus="validating"
