@@ -11,8 +11,9 @@ import ChangeModal from '@/containers/aboutphone/components/changemodal';
 import { donePageValidate } from '@/containers/aboutphone/pageValidate';
 import './done.less';
 import { IDoneProps, IDoneStates, EChangeType, EPayType } from './interface/index.interface';
+import { ModalProps } from 'antd/lib/modal';
 
-@inject('yourphone', 'user')
+@inject('yourphone', 'user', 'common')
 @observer
 export default class YoureDone extends React.Component<IDoneProps, IDoneStates> {
   public pageRef: React.Component;
@@ -138,6 +139,17 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
     shippingAddress.push(addressInfo.city + ", " + addressInfo.state);
     shippingAddress.push(addressInfo.zipCode);
 
+
+    // 弹窗添加属性
+    const customizeModalProps: ModalProps = {
+      className: 'ant-modal-in-done-page',
+      visible: this.state.showEditModal,
+      footer: null,
+      onCancel: this.toggleChangeModal
+    };
+
+    customizeModalProps['width'] = this.props.common.isMobile ? '3.33rem' : 800;
+
     return (
       <div className="page-youredone-container">
         <Layout hideBottom={true}>
@@ -204,10 +216,7 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
           </div>
         </Layout>
         <Modal
-          width={800}
-          visible={this.state.showEditModal}
-          footer={null}
-          onCancel={this.toggleChangeModal}
+          {...customizeModalProps}
         >
           <ChangeModal type={this.state.pageType} onSave={this.onSave} >
             {Page}

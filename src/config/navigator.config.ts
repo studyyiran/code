@@ -44,6 +44,7 @@ export default {
     subText: 'We use this info on the shipping label so you can mail your phone for free.',
     hasSearch: false,
     progress: -1,
+    isBeforeShippingMobile: true
   },
   '/sell/yourphone/payment': {
     step: 3,

@@ -95,14 +95,14 @@ export default class SellLayout extends React.Component<ISellLayoutProps, ISellL
   }
 
   public onMappingIndex = (navigatorKey: string[], navigator: object) => {
-    console.log((window['__history__'].location.pathname), 'ininin');
+    const isMobile = this.props.common.isMobile;
     const arr = navigatorKey.filter(v => new RegExp(v).test(window['__history__'].location.pathname));
     if (!arr.length) {
       return;
     }
     this.setState({
       stepIndex: navigator[arr[arr.length - 1]]['step'],
-      isBeforeShipping: navigator[arr[arr.length - 1]]['isBeforeShipping']
+      isBeforeShipping: isMobile ? navigator[arr[arr.length - 1]]['isBeforeShippingMobile'] : navigator[arr[arr.length - 1]]['isBeforeShipping']
     });
   }
 
@@ -121,7 +121,7 @@ export default class SellLayout extends React.Component<ISellLayoutProps, ISellL
           />
           {
             this.props.common.isMobile
-              ? (<GuaranteedPriceMobile price={price} isTBD={this.props.yourphone.isTBD} user={this.props.user} />)
+              ? (<GuaranteedPriceMobile price={price} isTBD={this.props.yourphone.isTBD} user={this.props.user} isBeforeShipping={this.state.isBeforeShipping} />)
               : (<GuaranteedPrice price={price} isTBD={this.props.yourphone.isTBD} user={this.props.user} isBeforeShipping={this.state.isBeforeShipping} />)
           }
         </div>

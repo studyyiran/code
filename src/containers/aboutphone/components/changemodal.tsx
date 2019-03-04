@@ -27,7 +27,7 @@ const ChangeModal: React.SFC<IChangeModalProps> = (props) => (
       {props.children}
     </div>
     <div className="footer-wrapper">
-      <Button type="primary" onClick={props.onSave} size='large' style={{width: '400px'}}>SAVE</Button>
+      <Button className="save-btn" type="primary" onClick={props.onSave} size='large'>SAVE</Button>
     </div>
   </div>
 );

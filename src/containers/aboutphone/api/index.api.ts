@@ -92,7 +92,8 @@ export const createOrder = <T>(orderParams: Pick<IPreOrder, Exclude<keyof IPreOr
   const opts: IOpts = {
     url: `/orders`,
     method: 'post',
-    params: orderParams
+    params: orderParams,
+    isMock: true
   };
 
   return Request<T>(opts);

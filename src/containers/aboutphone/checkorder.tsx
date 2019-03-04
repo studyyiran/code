@@ -28,14 +28,13 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
     // 隐藏左侧价格模块
     this.props.user.isShowLeftPrice = false;
     if (!checkOrderPageValidate()) {
-      debugger;
       this.props.history.push('/sell/account');
       return;
     }
   }
 
   public render() {
-    const { activeBrandsId, inquiryDetail, orderDetail } = this.props.yourphone; // 选中的品牌， 苹果为52
+    const { activeBrandsId, inquiryDetail, orderDetail, isTBD } = this.props.yourphone; // 选中的品牌， 苹果为52
     return (
       <div className="page-checkorder-container">
         <Layout hideBottom={true}>
@@ -68,7 +67,7 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
                   <div className="info-wrapper">
                     <div className="info-item">
                       <span className="label">Model</span>
-                      <p className="content">{inquiryDetail && inquiryDetail.product.name}</p>
+                      <p className="content">{isTBD ? 'Other Phone' : (inquiryDetail && inquiryDetail.product.name)}</p>
                     </div>
                     <div className="info-item">
                       <span className="label">Order Number</span>
@@ -81,13 +80,13 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
                   </div>
                   <p className="guaranteed-price">
                     <span className="text">Guaranteed Price</span>
-                    <span className="price">${inquiryDetail && inquiryDetail.priceDollar}</span>
+                    <span className="price">{isTBD ? 'TBD' : `\$${inquiryDetail && inquiryDetail.priceDollar}`}</span>
                   </p>
                 </div>
               </div>
             </div>
 
-            <div style={{ textAlign: 'center' }}><Button onClick={this.hanleCheckOrder} type="primary" style={{ width: '400px', height: '48px', marginTop: '50px', fontWeight: 'bold' }}>CHECK ORDER</Button></div>
+            <div className="checkorder-btn-wrapper"><Button block={true} className="checkorder-btn" onClick={this.hanleCheckOrder} type="primary" >CHECK ORDER</Button></div>
           </div>
         </Layout>
       </div>
