@@ -26,15 +26,16 @@ class DeliverSatus extends React.Component<IOrderProps, IDeliverSatus> {
         // 条数大于1，只显示第一条
         const deliverInfos = [];
         const deliverInfosProps = this.props.order.deliverInfos;
-        if (deliverInfosProps.length > 0) {
+        if (deliverInfosProps.length > 2) {
             deliverInfos.push(deliverInfosProps[0]);
+            deliverInfos.push(deliverInfosProps[1]);
         } else {
             // 没有物流信息，不展示此模块
             return null;
         }
         // 有没有多条
         let hasMuch = false;
-        if (deliverInfosProps.length > 1) {
+        if (deliverInfosProps.length > 2) {
             hasMuch = true;
         }
         const shippoTransaction = this.props.order.deliverNoInfo;
