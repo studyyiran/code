@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IOrderProps, IDeliverSatus } from '@/containers/order/interface/order.inerface';
+import { IOrderProps, IDeliverSatus, IShippingAddress } from '@/containers/order/interface/order.inerface';
 import UPSICON from '@/images/order/upsIcon.png';
 import './deliverSatus.less';
 import { Modal } from 'antd';
@@ -24,14 +24,21 @@ class DeliverSatus extends React.Component<IOrderProps, IDeliverSatus> {
     }
     public render() {
         // 条数大于1，只显示第一条
-        const deliverInfos = [];
+        const deliverInfos: IShippingAddress[] = [];
         const deliverInfosProps = this.props.order.deliverInfos;
         if (deliverInfosProps.length > 2) {
             deliverInfos.push(deliverInfosProps[0]);
             deliverInfos.push(deliverInfosProps[1]);
         } else {
             // 没有物流信息，不展示此模块
-            return null;
+            if (deliverInfosProps.length === 0) {
+                return null;
+            } else {
+                deliverInfosProps.map(v => {
+                    deliverInfos.push(v);
+                    return true;
+                });
+            }
         }
         // 有没有多条
         let hasMuch = false;

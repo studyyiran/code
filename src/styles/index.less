@@ -116,11 +116,15 @@
 .ismobile {
     .ant-modal {
         top: .4rem;
-        overflow: auto;
         height: calc(100% - .8rem);
         margin-left: .2rem;
         margin-right: .2rem;
         padding-bottom: 0;
+
+        .ant-modal-content {
+            height: 100%;
+            overflow: auto;
+        }
 
         .ant-modal-body {
             padding: .15rem;
