@@ -2,6 +2,15 @@
 .page-conditions-container {
   height: 100%;
 
+  &.notlayout {
+    height:auto;
+    overflow: hidden;
+
+    .comp-condition-item-container:first-child {
+      margin-top:0;
+    }
+  }
+
   .comp-condition-item-container {
     margin-top: 40px;
   }

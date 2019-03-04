@@ -204,7 +204,7 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
           </div>
         </Layout>
         <Modal
-          width={800}
+          width={900}
           visible={this.state.showEditModal}
           footer={null}
           onCancel={this.toggleChangeModal}
