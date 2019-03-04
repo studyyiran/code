@@ -11,35 +11,39 @@ export default {
     mainText: 'What kind of phone do you have？',
     subText: '',
     hasSearch: false,
-    progress: 0
+    progress: 0,
+    isBeforeShipping: true
   },
   '/sell/yourphone/carrier': {
     step: 1,
     mainText: 'What phone carrier is your phone?',
     subText: '',
     hasSearch: false,
-    progress: 1
+    progress: 1,
+    isBeforeShipping: true
   },
   '/sell/yourphone/model': {
     step: 1,
     mainText: 'Choose your phone model',
     subText: '',
     hasSearch: true,
-    progress: 2
+    progress: 2,
+    isBeforeShipping: true
   },
   '/sell/yourphone/condition': {
     step: 1,
     mainText: 'What is the condition of your phone？',
     subText: '',
     hasSearch: false,
-    progress: 3
+    progress: 3,
+    isBeforeShipping: true
   },
   '/sell/yourphone/shipping': {
     step: 2,
     mainText: 'Shipping Address',
     subText: 'We use this info on the shipping label so you can mail your phone for free.',
     hasSearch: false,
-    progress: -1
+    progress: -1,
   },
   '/sell/yourphone/payment': {
     step: 3,

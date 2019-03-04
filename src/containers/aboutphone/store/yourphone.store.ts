@@ -61,7 +61,13 @@ class YourPhone implements IYourPhoneStore {
   }
 
   @computed get isAllConditionSelected() { // 是否全选了ppvn
-    return JSON.stringify(this.activeConditions) !== '{}' && Object.keys(this.activeConditions).length === this.productPPVNS.length;
+    try {
+      return JSON.stringify(this.activeConditions) !== '{}' && Object.keys(this.activeConditions).length === this.productPPVNS.length;
+    } catch (error) {
+      console.warn(error, 'in yourphone store');
+    }
+
+    return false;
   }
 
   @computed get isTBD() {
