@@ -1,4 +1,5 @@
 import { IUserStoreNew } from '@/store/interface/user.interface';
+import { IYourPhoneStore } from '@/containers/aboutphone/interface/index.interface';
 export interface ILeftSideState {
   steps: ISteps[]
 }
@@ -11,5 +12,20 @@ interface ISteps {
 export interface IGuaranteedPriceProps {
   price?: number | string;
   isTBD: boolean;
-  user: IUserStoreNew
+  user: IUserStoreNew;
+  isBeforeShipping?: boolean;
+}
+
+export interface ISellLayoutProps {
+  route: {
+    [key: string]: any
+  };
+  yourphone: IYourPhoneStore;
+  user: IUserStoreNew;
+}
+
+export interface ISellLayoutState {
+  stepIndex: number;
+  isSetedPreOrder: boolean;
+  isBeforeShipping?: boolean;
 }

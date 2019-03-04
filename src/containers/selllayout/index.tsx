@@ -5,16 +5,16 @@ import { NAVIGATOR } from 'config';
 import './index.less';
 import LeftSide from './components/leftside';
 import GuaranteedPrice from './components/guaranteedprice';
-import { IYourPhoneStore } from '../aboutphone/interface/index.interface';
-import { IUserStoreNew } from '@/store/interface/user.interface';
+import { ISellLayoutProps, ISellLayoutState } from './interface/index.interface';
 
 @inject('yourphone', 'user')
 @observer
-export default class SellLayout extends React.Component<{ route: { [key: string]: any }, yourphone: IYourPhoneStore, user: IUserStoreNew }, { stepIndex: number, isSetedPreOrder: boolean }> {
+export default class SellLayout extends React.Component<ISellLayoutProps, ISellLayoutState> {
 
-  public readonly state = {
+  public readonly state: Readonly<ISellLayoutState> = {
     stepIndex: -1,
-    isSetedPreOrder: false
+    isSetedPreOrder: false,
+    isBeforeShipping: false
   }
 
   public componentDidMount() {
@@ -94,12 +94,14 @@ export default class SellLayout extends React.Component<{ route: { [key: string]
   }
 
   public onMappingIndex = (navigatorKey: string[], navigator: object) => {
+    console.log((window['__history__'].location.pathname), 'ininin');
     const arr = navigatorKey.filter(v => new RegExp(v).test(window['__history__'].location.pathname));
     if (!arr.length) {
       return;
     }
     this.setState({
-      stepIndex: navigator[arr[arr.length - 1]]['step']
+      stepIndex: navigator[arr[arr.length - 1]]['step'],
+      isBeforeShipping: navigator[arr[arr.length - 1]]['isBeforeShipping']
     });
   }
 
@@ -113,7 +115,12 @@ export default class SellLayout extends React.Component<{ route: { [key: string]
       <div className="page-sell-layout-container">
         <div className="sell-layout-left">
           <LeftSide stepIndex={this.state.stepIndex} />
-          <GuaranteedPrice price={price} isTBD={this.props.yourphone.isTBD} user={this.props.user} />
+          <GuaranteedPrice
+            price={price}
+            isTBD={this.props.yourphone.isTBD}
+            user={this.props.user}
+            isBeforeShipping={this.state.isBeforeShipping}
+          />
         </div>
         <div className="sell-layout-right">
           {

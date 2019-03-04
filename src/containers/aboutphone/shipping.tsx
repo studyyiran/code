@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
-import { Form, Col, Row, Input } from 'antd';
+import { Form, Col, Row, Input, Icon } from 'antd';
 import Layout from '@/containers/aboutphone/layout';
 import './shipping.less';
 import { IShippingProps, IShippingState } from './interface/index.interface';
@@ -189,7 +189,7 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
                 getFieldDecorator('zipCode', {
                   rules: [
                     {
-                      message: 'Please enter a valid zipCode.',
+                      message: <><Icon type="close-circle" />&nbsp;Please enter a valid zipCode.</>,
                       required: true,
                       pattern: /\d{5,5}/
                     }
@@ -310,6 +310,11 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
       validateStatus: undefined
     }
 
+    if (!value) {
+      state.help = 'Please enter a valid mobile.';
+      state.validateStatus = 'error';
+    }
+
     if (value && !/\d{10}/.test(value)) {
       state.help = 'Please enter a valid mobile.';
       state.validateStatus = 'error';
@@ -335,7 +340,7 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
       setFields({
         'zipCode': {
           value: value,
-          errors: [new Error('Please enter a valid zipCode.')]
+          errors: [<><Icon type="def-close-circle" />Please enter a valid zipCode.</>]
         }
       })
     }

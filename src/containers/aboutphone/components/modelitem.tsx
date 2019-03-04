@@ -6,7 +6,12 @@ export default (props: IProductModel) => (
   <div className={classnames('comp-model-item-container', { active: props.activeProductId === props.id })}>
     <p className="title">{props.name}</p>
     <div className="property-wrapper">
-      <div className="left-wrapper">
+      <div className={classnames('left-wrapper', {
+        double: props.skuPricePropertyNames
+          && props.skuPricePropertyNames.length > 0
+          && props.skuPricePropertyNames[0]['pricePropertyValues'] !== null
+          && props.skuPricePropertyNames[0]['pricePropertyValues'].length < 5
+      })}>
         {
           props.skuPricePropertyNames && props.skuPricePropertyNames.length > 0 &&
           props.skuPricePropertyNames[0]['pricePropertyValues'] !== null && // 测试环境的肮脏数据

@@ -65,7 +65,7 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
       case EPayType.PAYPAL:
         payment = (
           <>
-            <img src={require('@/images/paypal.png')} />
+            <img className="paypal-logo" src={require('@/images/paypal.png')} />
             <p className="email-info">
               <span className="label">E-mail</span>
               <span className="address">{yourphone.paypal.email}</span>
