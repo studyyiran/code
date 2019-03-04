@@ -2,7 +2,7 @@ import * as React from 'react';
 import "./machineInfo.less";
 import { IMachineInfo } from '@/containers/order/interface/order.inerface';
 
-class MachineInfo extends React.Component<IMachineInfo>{
+class MachineInfo extends React.Component<IMachineInfo & { productName: string }>{
     public render() {
         return (
             <div className="comp-order-machineInfo">
@@ -10,7 +10,7 @@ class MachineInfo extends React.Component<IMachineInfo>{
                 <div className="properties">
                     <div>
                         <div>Model</div>
-                        <div style={{ fontWeight: "bold" }}>{this.props.model}</div>
+                        <div>{this.props.productName}</div>
                     </div>
                     {
                         this.props.carrier !== "" && (

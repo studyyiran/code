@@ -4,6 +4,7 @@ import * as PropTypes from 'prop-types';
 import './index.less';
 import HeaderHoc from './headerHoc'
 import FooterHoc from './footerHoc'
+import { getQueryString } from 'utils';
 export default class LayoutIndex extends React.Component {
   // 通过context 拿到 router 对象
   public static contextTypes = {
@@ -13,9 +14,12 @@ export default class LayoutIndex extends React.Component {
   }
 
   public componentDidMount() {
-    console.log(this.context.router.route.match.path);
+    if (getQueryString('origin') === 'mail') {
+      sessionStorage.setItem('invitationCode', '1');
+    }
     // 是否输入国 invatation code
-    if (!sessionStorage.getItem('invitationCode') && this.context.router.route.match.path !== '/invitationCode') {
+    if (!sessionStorage.getItem('invitationCode')
+      && this.context.router.route.match.path !== '/invitationCode') {
       this.context.router.history.push('/invitationCode')
     }
 
