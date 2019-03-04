@@ -1,6 +1,12 @@
 @import (reference) '~@/styles/index.less';
 .page-payment-container {
   height: 100%;
+
+  &.notlayout {
+    & > .ant-row {
+      padding-top:0 !important;
+    }
+  }
   
   .paypal-bg {
     width: 91px;
@@ -45,6 +51,7 @@
     }
 
     .form-wrapper {
+      margin-top:16px;
       .ant-form-item {
         margin-bottom: 6px;
       }
