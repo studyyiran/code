@@ -29,7 +29,7 @@ class OrderSummary extends React.Component<IOrderProps & { normal?: boolean }, I
             <div className={"comp-order-summary" + ((this.state.isOpen || this.state.normal) ? " isOpened" : "")}>
                 <p>Order Summary</p>
                 <div className="info-container">
-                    <MachineInfo {...this.props.order.machineInfo} />
+                    <MachineInfo productName={this.props.order.orderDetail.orderItem.productName} {...this.props.order.machineInfo} />
                     <UserInfo {...this.props.order.userInformation} />
                     {(!this.state.normal && this.state.isOpen) && <div className="close-btn">
                         <img src={ArrowToTop} alt="" onClick={this.closeOrder} />

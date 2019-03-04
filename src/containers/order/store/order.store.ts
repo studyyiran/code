@@ -9,6 +9,7 @@ import InspectionCompleteIcon from '@/images/order/inspectionComplete.png';
 import ListSaleIcon from '@/images/order/listForSale.png';
 import OrderCompleteIcon from '@/images/order/orderComplete.png';
 import ReturnRequestIcon from '@/images/order/returnRequest.png';
+import { createDate } from '@/utils/function';
 
 
 class Store implements IOrderStore {
@@ -53,7 +54,7 @@ class Store implements IOrderStore {
             telAndEmail,
             paymentMethod,
             orderNumber: this.orderDetail.orderNo || "",
-            orderDate: this.orderDetail.updatedDt || "",
+            orderDate: this.orderDetail.createdDt || "",
         }
     }
 
@@ -88,7 +89,7 @@ class Store implements IOrderStore {
         const infos: IShippingAddress[] = [];
         if (this.trackingInfo) {
             this.trackingInfo.trackingHistory.map(t => {
-                const time = new Date(t.objectUpdated || t.objectCreated);
+                const time = createDate(t.objectUpdated || t.objectCreated);
                 const now = new Date();
                 let dateStr = "";
                 if (time.getFullYear() !== now.getFullYear()) {
@@ -108,7 +109,12 @@ class Store implements IOrderStore {
         } else {
             // 判断是否为退货
             if (this.orderDetail.status === IProgressType.TRANSACTION_FAILED) {
-                const time = new Date();
+                let timeStr = this.orderDetail.updatedDt;
+                const timeforreturn = this.orderDetail.orderRecords.find(z => z.beforeStatus === IProgressType.DIFFERENCE_INSPECTED && z.afterStatus === IProgressType.TO_BE_RETURNED);
+                if (timeforreturn) {
+                    timeStr = timeforreturn.createdDt
+                }
+                const time = createDate(timeStr);
                 const now = new Date();
                 let dateStr = "";
                 if (time.getFullYear() !== now.getFullYear()) {
@@ -142,8 +148,7 @@ class Store implements IOrderStore {
             // 是否为物品退还
             if (this.orderDetail.status === IProgressType.TRANSACTION_FAILED) {
                 carrier = this.orderDetail.orderItem.ext.carrier;
-                trackingNumber = this.orderDetail.orderItem.ext.carrier;
-                console.error("退货快递单号缺少字段");
+                trackingNumber = this.orderDetail.returnTrackingNo;
             }
         }
         return {
@@ -199,15 +204,16 @@ class Store implements IOrderStore {
                     }
                 }
                 if (t.payFor === "HAMMER_ADDITIONAL") {
-                    payment.bonus = t.hammerAmountDollar || 0;
+                    payment.bonus = t.amountDollar || 0;
                     if (t.status === "SUCCESS") {
                         payment.priceGuaranteeStatus = true;
                         payment.bonusStatus = true
                     }
                 }
             })
-
         }
+        // 如果保底金为0，表示没有待支付订单，取质检价格作为保底金
+        payment.priceGuarantee = this.orderDetail.orderItem.actualAmountDollar;
         payment.finalSalePrice = payment.priceGuarantee + payment.bonus;
         return payment;
     }
@@ -408,7 +414,7 @@ class Store implements IOrderStore {
     }
     private packageDate(b: string | undefined) {
         if (b) {
-            const date = new Date(b);
+            const date = createDate(b);
             return getMonthEn(date) + " " + date.getDate()
         }
         return b

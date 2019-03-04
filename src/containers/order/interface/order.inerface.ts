@@ -68,6 +68,7 @@ export interface IOrderStore {
  * @property addressInfo 邮寄目的地
  * @property shippoTransaction 快递信息
  * @property orderPaymentBills 支付信息
+ * @property returnTrackingNo 退货物流单号
  */
 export interface IOrderDetail {
     status: IProgressType;
@@ -84,7 +85,8 @@ export interface IOrderDetail {
     addressInfo: IAddressInfo;
     shippoTransaction: IShippingTran;
     orderPaymentBills: IPaymentInfo[];
-    orderRecords: IOrderRecord[]
+    orderRecords: IOrderRecord[];
+    returnTrackingNo: string;
 }
 /**
  * 订单中物流id

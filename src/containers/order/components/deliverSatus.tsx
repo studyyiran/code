@@ -70,7 +70,9 @@ class DeliverSatus extends React.Component<IOrderProps, IDeliverSatus> {
                             <img src={UPSICON} alt="" />
                             {shippoTransaction && (<div>
                                 <p className="name">{shippoTransaction.carrier}</p>
-                                <p className="orderNo">{shippoTransaction.trackingNumber}</p>
+                                {shippoTransaction.trackingNumber && (
+                                    <p className="orderNo">{shippoTransaction.trackingNumber}</p>
+                                )}
                             </div>)}
                         </div>
                     </div>

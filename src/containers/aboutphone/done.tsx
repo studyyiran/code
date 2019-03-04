@@ -180,7 +180,7 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
             <div className="bottom-part-wrapper">
               <p className="phone-name">Your Phone</p>
               <div className="phone-info-wrapper">
-                <img className="img" src={require('@/images/noprice.png')} />
+                <img className="img" src={yourphone.inquiryDetail ? yourphone.inquiryDetail.product.imageUrl : require('@/images/noprice.png')} />
                 <div className="info-wrapper">
                   {phoneNode}
                 </div>
@@ -188,7 +188,7 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
             </div>
             <div className="terms-of-service">
               <span onClick={this.handleServiceCheck} className={classnames('text-with-icon', { checked: this.state.isChecked })} >By checking this box, you agree to our </span>
-              <Link to='/terms' className="highlight">Terms of Service </Link>
+              <Link to='/terms' className="highlight" target="_blank">Terms of Service </Link>
             </div>
             <Button
               disabled={!this.state.isChecked}

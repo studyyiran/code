@@ -45,7 +45,8 @@ export function approveRevisedPrice<T>(userEmail: string, orderNo: string): Prom
         method: "POST",
         url: `/orders/confirm`,
         params: {
-            orderNo
+            orderNo,
+            userEmail
         },
         loading: true,
     };
@@ -59,7 +60,8 @@ export function returnProduct<T>(userEmail: string, orderNo: string): Promise<T>
         method: "POST",
         url: `/orders/applyReturn`,
         params: {
-            orderNo
+            orderNo,
+            userEmail
         },
         loading: true
     };
