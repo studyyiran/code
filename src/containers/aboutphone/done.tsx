@@ -148,7 +148,7 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
       onCancel: this.toggleChangeModal
     };
 
-    customizeModalProps['width'] = this.props.common.isMobile ? '3.33rem' : 800;
+    customizeModalProps['width'] = this.props.common.isMobile ? '3.33rem' : 900;
 
     return (
       <div className="page-youredone-container">

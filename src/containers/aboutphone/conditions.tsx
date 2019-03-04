@@ -9,6 +9,7 @@ import { IProductInfo } from '@/store/interface/user.interface';
 import { conditionPageValidate } from '@/containers/aboutphone/pageValidate';
 import Breadcrumb from '@/containers/aboutphone/components/breadcrumb';
 import ProgressBar from '@/containers/aboutphone/components/progressbar--mobile';
+import classnames from 'classnames';
 @inject('yourphone', 'user', 'common')
 @observer
 export default class Conditions extends React.Component<IConditionsProps> {
@@ -67,7 +68,7 @@ export default class Conditions extends React.Component<IConditionsProps> {
     );
 
     return (
-      <div className="page-conditions-container">
+      <div className={classnames('page-conditions-container', { 'notlayout': this.props.hideLayout })}>
         {
           !this.props.hideLayout
             ? (
