@@ -1,0 +1,36 @@
+@import (reference) '~@/styles/index.less';
+
+.@{MOBILECLS} {
+  .comp-condition-item-container {
+    padding-left: 0.2rem;
+    flex-direction: column;
+    .left-wrapper {
+      text-align: left;
+      margin-bottom: 0.2rem;
+      .condition {
+        margin: 0;
+        .set-font-color(0.16rem, #333);
+        line-height: 0.2rem;
+      }
+      .detail {
+        margin-top: 0.04rem;
+        width: 27em;
+        font-size: 0.12rem;
+        line-height: 0.18rem;
+      }
+    }
+
+    .right-wrapper {
+      margin-left: 0;
+      .option {
+        margin-left: 0.14rem;
+        width: 1.53rem;
+        height: 0.5rem;
+        border-width: 1px;
+        &.active {
+          border-width: 1px;
+        }
+      }
+    }
+  }
+}

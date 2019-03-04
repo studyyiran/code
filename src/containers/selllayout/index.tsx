@@ -5,6 +5,7 @@ import { NAVIGATOR } from 'config';
 import './index.less';
 import LeftSide from './components/leftside';
 import GuaranteedPrice from './components/guaranteedprice';
+import GuaranteedPriceMobile from './components/guaranteedprice--mobile';
 import { IYourPhoneStore } from '../aboutphone/interface/index.interface';
 import { IUserStoreNew } from '@/store/interface/user.interface';
 import { ICommonStore } from '@/store/interface/common.interface';
@@ -113,11 +114,15 @@ export default class SellLayout extends React.Component<{ route: { [key: string]
     return (
       <div className="page-sell-layout-container">
         <div className="sell-layout-left">
-          <LeftSide 
-            stepIndex={this.state.stepIndex} 
+          <LeftSide
+            stepIndex={this.state.stepIndex}
             isMobile={this.props.common.isMobile}
           />
-          <GuaranteedPrice price={price} isTBD={this.props.yourphone.isTBD} user={this.props.user} />
+          {
+            this.props.common.isMobile
+              ? (<GuaranteedPriceMobile price={price} isTBD={this.props.yourphone.isTBD} user={this.props.user} />)
+              : (<GuaranteedPrice price={price} isTBD={this.props.yourphone.isTBD} user={this.props.user} />)
+          }
         </div>
         <div className="sell-layout-right">
           {
