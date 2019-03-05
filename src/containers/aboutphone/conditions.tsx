@@ -110,10 +110,7 @@ export default class Conditions extends React.Component<IConditionsProps> {
       try {
         const productInfo: Partial<IProductInfo> = {
           ...this.props.user.preOrder.productInfo,
-          priceUnits: [...Object.values(this.props.yourphone.activeConditions)],
-        }
-        if (this.props.yourphone.activeModelId && this.props.yourphone.activeModelId > 0 && productInfo.priceUnits) {
-          productInfo.priceUnits.push(this.props.yourphone.activeModelId);
+          priceUnits: [...Object.values(this.props.yourphone.activeConditions), this.props.yourphone.activeModelId],
         }
         this.props.user.preOrder = {
           ...this.props.user.preOrder,
