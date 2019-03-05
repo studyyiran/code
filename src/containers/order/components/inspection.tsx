@@ -24,7 +24,7 @@ class Inspection extends React.Component<IOrderProps> {
                     <span>Inspection Result</span>
                     <Tag className="inspect-title-tag" {...tag} />
                 </p>
-                {isMatch && (<div className="inspected-success-body" style={{ display: "none" }}>
+                {isMatch && (<div className="inspected-success-body">
                     <div className="col-1">
                         <div>Price Guarantee</div>
                         <div>${inspectionInfo.amount}</div>
