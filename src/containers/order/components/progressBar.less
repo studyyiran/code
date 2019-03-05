@@ -118,7 +118,6 @@
 
     // children css propertities
     .title {
-        height: 14px;
         font-size: 14px;
         font-family: HelveticaNeue;
         color:#bbb;
@@ -126,7 +125,6 @@
     }
 
     .date {
-        height: 10px;
         font-size: 10px;
         font-family: HelveticaNeue;
         color:#EBEDF0;
@@ -142,6 +140,73 @@
 
         &>img {
             height: 100%;
+        }
+    }
+}
+
+.ismobile {
+    .comp-order-progressBar {
+        height: 1.3rem;
+        padding: 0;
+        // display: block;
+        overflow: hidden;
+
+        .dot {
+            display: inline-block;
+            min-width: 0.9rem;
+
+            .dot-icon {
+                top: .32rem;
+            }
+
+            &::after {
+                width: .39rem;
+                top: .38rem;
+            }
+
+            &::before {
+                width: .39rem;
+                top: .38rem;
+            }
+
+            .child-mark {
+                top: .62rem;
+
+                &.child-mark-current {
+                    top: .2rem;
+
+                    .title {
+                        margin-top: .06rem;
+                        font-weight: 500;
+                    }
+
+                    .icon {
+                        width: .36rem;
+                        height: .36rem;
+                    }
+                }
+
+                .title {
+                    padding: 0 0.135rem;
+                    font-size: .12rem;
+                    line-height: .16rem;
+                }
+
+                .date {
+                    margin-top: .04rem;
+                    font-size: .1rem;
+                    line-height: .1rem;
+                    color: rgba(235, 237, 240, 1);
+                }
+            }
+
+            .currentMark {
+                &::after {
+                    border-width: 0 .05rem .06rem;
+                    top: -.06rem;
+                    left: -.05rem;
+                }
+            }
         }
     }
 }

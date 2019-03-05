@@ -19,7 +19,7 @@ export default (props: IProductModel) => (
             // 取第一个skuPricePropertyNames下的pricePropertyValues数组所有项
             return (
               <span
-                onClick={props.onModelItemClick.bind(null, props.id, props.name, sku.id, sku.value)}
+                onClick={props.onModelItemClick.bind(null, props.id, props.name, sku.id, sku.value, props.imageUrl)}
                 className={classnames('memory-item', { active: props.id === props.activeProductId && props.activeModelId === sku.id })}
                 key={index}
               >

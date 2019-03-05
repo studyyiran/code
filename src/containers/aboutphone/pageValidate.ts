@@ -78,6 +78,9 @@ export const paymentValidate = (): boolean => {
 }
 
 export const orderDetailValidate = (): boolean => {
+  if (isTBDValidate()) {
+    return true;
+  }
   return !!(yourPhoneStore.inquiryDetail !== null && JSON.stringify(yourPhoneStore.orderDetail) !== '{}');
 }
 

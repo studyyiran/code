@@ -34,6 +34,7 @@ export function getTranshipping<T>(carrier: string, trackingNumber: string): Pro
             trackingNumber
         },
         loading: true,
+        isMock: true
     };
 
     return Request<T>(opts);

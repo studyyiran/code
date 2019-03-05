@@ -1,7 +1,6 @@
 @import (reference) '~@/styles/index.less';
 .comp-aboutyourphone-changemodal-container {
   height: 800px;
-  height: 800px;
   display: flex;
   flex-direction: column;
   .header-wrapper {
@@ -22,10 +21,66 @@
     flex: 1;
     overflow: auto;
     padding: 0 40px;
+    margin-top:40px;
   }
 
   .footer-wrapper {
     text-align: center;
     padding: 50px 0;
+    .save-btn {
+      width: 400px;
+    }
+  }
+}
+
+.@{MOBILECLS} {
+  .comp-aboutyourphone-changemodal-container {
+    height: auto !important;
+    .header-wrapper {
+      padding-top: 0.15rem;
+      padding-bottom: 0.31rem;
+      .main-title {
+        font-size: 0.17rem;
+        line-height: 0.19rem;
+      }
+    }
+
+    .body-wrapper {
+      margin-top: 0;
+      padding: 0;
+      .echeck-col-wrapper {
+        padding-top: 0.21rem;
+      }
+    }
+
+    .footer-wrapper {
+      padding-top: 0.31rem;
+      padding-bottom: 0.15rem;
+      .save-btn {
+        width: 100%;
+      }
+    }
+  }
+
+  // 修改弹窗样式
+  .ant-modal-in-done-page {
+    .comp-aboutyourphone-changemodal-container {
+      .sub-title {
+        display: none;
+      }
+    }
+    .page-conditions-container {
+      .comp-condition-item-container {
+        padding-left: 0;
+        .left-wrapper {
+          .detail {
+            width: auto;
+          }
+        }
+        .right-wrapper {
+          width: auto;
+        }
+      }
+    }
   }
 }

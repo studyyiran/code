@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
+import classnames from 'classnames';
 import './headerwithsearch.less';
 import { NAVIGATOR } from 'config';
 import { Input } from 'antd';
@@ -14,7 +15,7 @@ interface IStates {
 // let timer: number = 0;
 @observer
 export default class BrandHeader extends React.Component<object, IStates> {
-
+  public static readonly displayName: string = '页面title显示组件';
   public readonly state: Readonly<IStates> = {
     navigatorObj: null,
   }
@@ -45,7 +46,7 @@ export default class BrandHeader extends React.Component<object, IStates> {
     const { navigatorObj } = this.state;
     const extraText = navigatorObj.isInCheckOrder ? userStore.preOrder.userEmail : ''; // checkorder页面需要添加用户邮箱展示
     return (
-      <div className="comp-brand-header-container" style={{ height: navigatorObj.subText ? '110px' : '90px' }}>
+      <div className={classnames('comp-brand-header-container', {multiple: navigatorObj.subText})}>
         <div className="left-wrapper">
           <p className="main-text">{navigatorObj.mainText}</p>
           {

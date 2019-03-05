@@ -2,8 +2,10 @@
 
 .page-carriers-container {
   height: 100%;
-
-  .comp-carrier-wrapper-container {
+  .comp-yourphone-breadcrumb-container {
+    margin-left: 15px;
+  }
+  .carrier-list-wrapper {
     .comp-carrier-item-container {
       margin-top: 32px;
       margin-left: 15px;
@@ -13,5 +15,31 @@
       }
     }
   }
+}
 
+.@{MOBILECLS} {
+  .page-carriers-container {
+    .comp-order-progressbar-container {
+      padding-top: 0;
+    }
+    .comp-yourphone-breadcrumb-container {
+      margin-top: 0;
+      margin-left: 0.3rem;
+    }
+    .carrier-list-wrapper {
+      padding-bottom: 0.25rem;
+      padding-left: 0.4rem;
+    }
+    .comp-carrier-item-container {
+      margin-top: 0.25rem;
+      margin-left: 0.1rem;
+      &:nth-of-type(2n +1) {
+        margin-left: 0;
+      }
+
+      &:nth-of-type(3n + 4) {
+        margin-left: 0.1rem;
+      }
+    }
+  }
 }

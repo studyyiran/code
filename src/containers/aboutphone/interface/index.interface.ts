@@ -2,6 +2,7 @@ import { FormComponentProps } from 'antd/lib/form';
 import * as React from 'react';
 import * as H from 'history';
 import { IUserStoreNew } from '@/store/interface/user.interface';
+import { ICommonStore } from '@/store/interface/common.interface';
 
 export interface IYourPhoneStore {
   carriers: ICarrier[];
@@ -67,6 +68,7 @@ export interface IBrandsProps {
   history: H.History;
   yourphone: IYourPhoneStore;
   user: IUserStoreNew;
+  common: ICommonStore;
   hideLayout?: boolean; // 用于隐藏布局标题头和导航脚，用于在done页面当modal的组件
   // ref?: React.RefObject<React.Component<IShippingProps | IPaymentProps | IConditionsProps>>;
   onRef?: (child: React.Component) => void;
@@ -102,6 +104,7 @@ export interface ICheckOutStates {
   brand: number;
   payment: string;
   brandText: string[];
+  detailText: string[];
   payText: object;
 }
 
@@ -149,6 +152,7 @@ export interface IProductDetail {
   id: number;
   name: string;
   skuPricePropertyValues: ISkuPricePropertyNames;
+  imageUrl: string;
 }
 
 export interface ISkuPricePropertyNames {
@@ -187,7 +191,7 @@ export interface IProductModel {
   skuPricePropertyNames: ISkuPricePropertyNames[];
   activeModelId: number;
   activeProductId: number;
-  onModelItemClick(productId: number, productName: string, skuId: number, skuName: string): void;
+  onModelItemClick(productId: number, productName: string, skuId: number, skuName: string, imageUrl: string): void;
 }
 
 export interface IProductPPVN {

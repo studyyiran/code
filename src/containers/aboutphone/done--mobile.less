@@ -1,0 +1,126 @@
+@import (reference) '~@/styles/index.less';
+
+.@{MOBILECLS} {
+  .page-youredone-container {
+    .top-wrapper {
+      .comp-brand-header-container {
+        margin-bottom: 0.26rem;
+      }
+    }
+    .middle-wrapper {
+      padding: 0 0.31rem;
+      .content-wrapper {
+        padding-top: 0;
+        .top-part-wrapper {
+          .show-module {
+            margin-left: 0;
+            width: 3.13rem;
+            min-height: 2.17rem;
+            border-radius: 0.04rem;
+
+            .show-header {
+              padding: 0 0.2rem;
+              line-height: 0.44rem;
+              .name {
+                font-size: 0.13rem;
+              }
+              .edit-bg {
+                margin-top: 0.12rem;
+                width: 0.2rem;
+                height: 0.2rem;
+              }
+            }
+  
+            .show-content {
+              padding: 0.2rem 0 0 0.2rem;
+              .email-info {
+                margin-top: 0.06rem;
+                .label {
+                  font-size: 0.12rem;
+                }
+                .address {
+                  text-indent: 0.24rem;
+                  font-size: 0.16rem;
+                  line-height: 0.18rem;
+                }
+              }
+
+              .info-item {
+                margin-bottom: 0.1rem;
+                .label {
+                  width: 0.62rem;
+                  font-size: 0.12rem;
+                }
+                .content {
+                  width: 2.2rem;
+                  font-size: 0.15rem;
+                }
+              }
+
+              .tips {
+                margin-left: 0.76rem;
+                width: 2rem;
+                font-size: 0.1rem;
+              }
+            }
+          }
+
+          .show-module + .show-module {
+            margin-top: 0.21rem;
+          }
+        }
+
+        .bottom-part-wrapper {
+          margin-top: 0.21rem;
+          .phone-info-wrapper {
+            padding-bottom: 0.26rem;
+            .info-wrapper {
+              .info-item {
+                &.condition {
+                  .content {
+                    flex: 1;
+                    text-decoration: underline;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    /* autoprefixer: off */
+                    -webkit-line-clamp: 3;
+                    -webkit-box-orient: vertical;
+                    height: 0.56rem;
+                    &::after {
+                      content: " >";
+                    }
+                    .edit-bg {
+                      display: none;
+                    }
+                  }
+                }
+                .content {
+                  display: inline;
+                }
+              }
+            }
+          }
+        }
+
+        .terms-of-service {
+          margin-top: 0.21rem;
+          font-size: 0.13rem;
+          .text-with-icon {
+            &::before {
+              width: 0.15rem;
+              height: 0.15rem;
+              margin-right: 0.1rem;
+            }
+          }
+        }
+
+        .ship-btn {
+          margin: 0.31rem auto;
+          width: 3.13rem;
+          line-height: 0.5rem;
+          font-size: 0.15rem;
+        }
+      }
+    }
+  }
+}

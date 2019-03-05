@@ -15,7 +15,7 @@ const leftHeader = <div className='paypal-bg' />;
  * 根据yourphone的payment来判断用户选择哪种收款方式： PAYPAL | ECHECK
  */
 
-@inject('yourphone', 'user')
+@inject('yourphone', 'user', 'common')
 @observer
 class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
 
@@ -133,9 +133,15 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
     });
   }
 
+  public colLayout(span: number = 11) {
+    const isMobile = this.props.common.isMobile;
+    return !isMobile ? { span } : {}
+  }
+
   public render() {
     let leftContent: React.ReactNode;
     let rightContent: React.ReactNode;
+    const isMobile = this.props.common.isMobile;
 
     const { getFieldDecorator } = this.props.form;
 
@@ -307,8 +313,8 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
     }
 
     const paymentHTML = (
-      <Row gutter={30} style={{ paddingTop: '42px' }}>
-        <Col span={12}>
+      <Row gutter={30} style={!isMobile ? { paddingTop: '42px' } : {}}>
+        <Col {...this.colLayout(12)} className="paypal-col-wrapper">
           <Collapse
             onChange={this.handlePaypalCollapseExtend}
             activeKey={this.props.yourphone.payment}
@@ -323,7 +329,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
             </Panel>
           </Collapse>
         </Col>
-        <Col span={12}>
+        <Col {...this.colLayout(12)} className="echeck-col-wrapper">
           <Collapse
             onChange={this.handleEcheckCollapseExtend}
             activeKey={this.props.yourphone.payment}
@@ -342,7 +348,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
     )
 
     return (
-      <div className="page-payment-container">
+      <div className={classnames('page-payment-container', { notlayout: this.props.hideLayout })}>
         {
           !this.props.hideLayout
             ? <Layout nextCb={this.handleNext} disabled={!this.props.yourphone.isDonePayment}>{paymentHTML}</Layout>
