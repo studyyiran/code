@@ -7,6 +7,7 @@ import { IShippingProps, IShippingState } from './interface/index.interface';
 import { IProductInfo } from '@/store/interface/user.interface';
 import { shippingPageValidate } from '@/containers/aboutphone/pageValidate';
 import yourphoneStore from './store/yourphone.store';
+import classnames from 'classnames';
 
 // create form value 变化时候判断 按钮是否能高亮
 const onValuesChange = (props: any, changedValues: any, allValues: any) => {
@@ -292,7 +293,7 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
     )
 
     return (
-      <div className="page-shipping-container">
+      <div className={classnames('page-shipping-container', { notlayout: this.props.hideLayout })}>
         {
           !this.props.hideLayout
             ? <Layout nextCb={this.handleNext} disabled={this.props.yourphone.isAddressValuesAndDisabled}>{infomationHTML}</Layout>

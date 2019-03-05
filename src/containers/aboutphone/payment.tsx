@@ -342,7 +342,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
     )
 
     return (
-      <div className="page-payment-container">
+      <div className={classnames('page-payment-container', { notlayout: this.props.hideLayout })}>
         {
           !this.props.hideLayout
             ? <Layout nextCb={this.handleNext} disabled={!this.props.yourphone.isDonePayment}>{paymentHTML}</Layout>

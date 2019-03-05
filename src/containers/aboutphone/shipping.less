@@ -2,4 +2,10 @@
 .page-shipping-container {
   height: 100%;
   overflow: hidden;
+
+  &.notlayout {
+    & > .ant-form {
+      padding-top:0 !important;
+    }
+  }
 }
