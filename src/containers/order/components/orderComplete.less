@@ -112,3 +112,112 @@
         }
     }
 }
+
+.ismobile {
+    .comp-order-orderComplete {
+        margin-top: 0;
+        padding: 0 .3rem;
+        flex-direction: column;
+
+        .table {
+            flex: 1;
+            border-radius: .02rem;
+            border: 1px solid rgba(245, 245, 245, 1);
+            margin-top: .3rem;
+            margin-left: 0;
+            padding-bottom: .3rem;
+
+            &.inspection-success-result {
+                padding-bottom: .3rem;
+            }
+
+            &>* {
+                padding: 0 .2rem;
+            }
+
+            &>p {
+                height: .44rem;
+                font-size: .12rem;
+                line-height: .44rem;
+                padding-right: 0;
+            }
+
+            &>div {
+                padding-top: .2rem;
+
+                div:nth-of-type(odd) {
+                    font-size: .14rem;
+                    color: #bbbbbb;
+                    line-height: .16rem;
+                    margin-top: .2rem;
+                }
+
+                div:nth-of-type(even) {
+                    font-size: .14rem;
+                    line-height: .16rem;
+                    margin-top: .1rem;
+                }
+
+                div:first-child {
+                    margin-top: 0;
+                }
+            }
+
+            .paid {
+                display: inline-block;
+                vertical-align: top;
+                margin-left: 0;
+                padding: 0 .09rem;
+                line-height: .16rem;
+                border-radius: .1rem;
+                font-size: .1rem;
+                color: #fff;
+                background-color: #00CFFF;
+
+                .paid-check {
+                    position: absolute;
+                    top: 50%;
+                    right: .09rem;
+                    transform: translate(0, -50%);
+
+                    &>svg {
+                        width: .09rem !important;
+                        height: .09rem !important;
+                    }
+                }
+            }
+
+            .not-paid {
+                display: inline-block;
+                vertical-align: top;
+                margin-left: 0;
+                padding: 0 .09rem;
+                background: rgba(245, 166, 35, 1);
+                border-radius: .1rem;
+                font-size: .1rem;
+                font-family: HelveticaNeue;
+                color: rgba(255, 255, 255, 1);
+                line-height: .16rem;
+            }
+
+        }
+
+        .inspect-title-tag {
+            margin-left: .15rem;
+        }
+
+        .flex {
+            .col {
+                padding-bottom: .25rem;
+                position: relative;
+
+                .not-paid,
+                .paid {
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                }
+            }
+        }
+    }
+}
