@@ -11,6 +11,7 @@ export function getOrderDetail<T>(userEmail: string, orderNo: string): Promise<T
             orderNo
         },
         loading: true,
+        isMock: true
     };
     return Request<T>(opts);
 }
