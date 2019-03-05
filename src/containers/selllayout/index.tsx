@@ -51,6 +51,10 @@ export default class SellLayout extends React.Component<ISellLayoutProps, ISellL
         this.props.yourphone.paypal = this.props.user.preOrder.paypalInfo;
       }
 
+      if (this.props.user.preOrder.orderDetail) {
+        this.props.yourphone.orderDetail = this.props.user.preOrder.orderDetail;
+      }
+
       // 有关机型的 
       if (this.props.user.preOrder.productInfo) {
         if (this.props.user.preOrder.productInfo.brandId) {

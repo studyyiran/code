@@ -2,6 +2,11 @@
 
 .@{MOBILECLS} {
   .page-youredone-container {
+    .top-wrapper {
+      .comp-brand-header-container {
+        margin-bottom: 0.26rem;
+      }
+    }
     .middle-wrapper {
       padding: 0 0.31rem;
       .content-wrapper {
@@ -68,8 +73,27 @@
         .bottom-part-wrapper {
           margin-top: 0.21rem;
           .phone-info-wrapper {
+            padding-bottom: 0.26rem;
             .info-wrapper {
               .info-item {
+                &.condition {
+                  .content {
+                    flex: 1;
+                    text-decoration: underline;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    /* autoprefixer: off */
+                    -webkit-line-clamp: 3;
+                    -webkit-box-orient: vertical;
+                    height: 0.56rem;
+                    &::after {
+                      content: " >";
+                    }
+                    .edit-bg {
+                      display: none;
+                    }
+                  }
+                }
                 .content {
                   display: inline;
                 }

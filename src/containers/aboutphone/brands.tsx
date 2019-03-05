@@ -29,10 +29,10 @@ export default class Brands extends React.Component<IBrandsProps> {
       <div className="page-brands-container">
         <LayOut>
           <>
-            <Breadcrumb />
             {
               this.props.common.isMobile && <ProgressBar />
             }
+            <Breadcrumb />
             <div className="brand-list-wrapper">
               {
                 brands.map((brand, index) => <BrandItem key={index} brand={brand} activeBrandsId={activeBrandsId} onBrandClick={this.onBrandItemClick} />)

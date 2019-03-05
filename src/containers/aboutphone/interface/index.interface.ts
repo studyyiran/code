@@ -104,6 +104,7 @@ export interface ICheckOutStates {
   brand: number;
   payment: string;
   brandText: string[];
+  detailText: string[];
   payText: object;
 }
 
