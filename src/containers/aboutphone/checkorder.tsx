@@ -8,9 +8,11 @@ import { Button } from 'antd';
 import { ICheckOutProps, ICheckOutStates, EBrandType, EPayType } from './interface/index.interface';
 import { checkOrderPageValidate } from '@/containers/aboutphone/pageValidate';
 
-@inject('yourphone', 'user')
+@inject('yourphone', 'user', 'common')
 @observer
 export default class FinalStep extends React.Component<ICheckOutProps, ICheckOutStates> {
+  public static readonly displayName: string = '订单完成页面';
+
   public readonly state: Readonly<ICheckOutStates> = {
     brand: EBrandType.IPHONE,
     payment: EPayType.PAYPAL,
@@ -18,9 +20,19 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
       'Turn off “Find My iPhone”. <br /> Deactivate your service. <br /> Remove your Data&SIM Card.',
       'Delete your Google account. <br /> Deactivate your service. <br /> Remove your Data & SIM Card.'
     ],
+    detailText: [
+      'Pack your device in a box. <br /> Drop it off at your <br /> nearest delivery place.',
+      'Pack your device in a box. <br /> Drop it off at your nearest delivery place.'
+    ],
     payText: {
-      [EPayType.PAYPAL]: 'After your device arrives, it <br /> typically takes a week for your <br /> PayPal funds to be deposited.',
-      [EPayType.ECHECK]: 'After your device arrives, your <br /> eCheck is typically sent within a <br /> week.'
+      PC: {
+        [EPayType.PAYPAL]: 'After your device arrives, it <br /> typically takes a week for your <br /> PayPal funds to be deposited.',
+        [EPayType.ECHECK]: 'After your device arrives, your <br /> eCheck is typically sent within a <br /> week.'
+      },
+      MOBILE: {
+        [EPayType.PAYPAL]: 'After your device arrives, it <br /> typically takes a week for your PayPal funds to be deposited.',
+        [EPayType.ECHECK]: 'After your device arrives, your eCheck is <br /> typically sent within a week.'
+      }
     }
   }
 
@@ -47,16 +59,12 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
               </div>
               <div className="step">
                 <p className="name">Pack and Send</p>
-                <p className="detail">
-                  Pack your device in a box. <br />
-                  Drop it off at your <br />
-                  nearest delivery place.
-                </p>
+                <p className="detail" dangerouslySetInnerHTML={{__html: this.state.detailText[this.props.common.isMobile ? 1 : 0]}} />
                 <a href={DEFAULT.FedExUrl} target="__blank" className="tips">How to find the local FedEx location</a>
               </div>
               <div className="step">
                 <p className="name">Get Paid</p>
-                <p className="detail" dangerouslySetInnerHTML={{ __html: this.state.payText[this.state.payment] }} />
+                <p className="detail" dangerouslySetInnerHTML={{ __html: this.state.payText[this.props.common.isMobile ? 'MOBILE' : 'PC'][this.state.payment] }} />
               </div>
             </div>
             <div className="order-summary-wrapper">

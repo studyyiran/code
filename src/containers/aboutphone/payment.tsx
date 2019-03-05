@@ -314,7 +314,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
 
     const paymentHTML = (
       <Row gutter={30} style={!isMobile ? { paddingTop: '42px' } : {}}>
-        <Col {...this.colLayout(12)}>
+        <Col {...this.colLayout(12)} className="paypal-col-wrapper">
           <Collapse
             onChange={this.handlePaypalCollapseExtend}
             activeKey={this.props.yourphone.payment}

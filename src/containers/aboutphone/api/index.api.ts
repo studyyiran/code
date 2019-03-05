@@ -58,7 +58,8 @@ export const createInquiry = <T>(inquiry: IQueryParams) => {
   const opts: IOpts = {
     url: '/inquiries',
     method: 'post',
-    params: inquiry
+    params: inquiry,
+    isMock: true
   };
 
   return Request<T>(opts)
@@ -70,7 +71,8 @@ export const getInquiryDetail = <T>(key: string, agentCode: string = ENVCONFIG['
     url: `/inquiries/${key}`,
     params: {
       agentCode
-    }
+    },
+    isMock: true
   };
 
   return Request<T>(opts);
