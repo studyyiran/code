@@ -125,7 +125,7 @@ export default class SellLayout extends React.Component<ISellLayoutProps, ISellL
           />
           {
             this.props.common.isMobile
-              ? (<GuaranteedPriceMobile price={price} isTBD={this.props.yourphone.isTBD} user={this.props.user} isBeforeShipping={this.state.isBeforeShipping} />)
+              ? (<GuaranteedPriceMobile price={price} isTBD={this.props.yourphone.isTBD} user={this.props.user} isBeforeShipping={this.props.user.isShowLeftPriceMobile} />)
               : (<GuaranteedPrice price={price} isTBD={this.props.yourphone.isTBD} user={this.props.user} isBeforeShipping={this.state.isBeforeShipping} />)
           }
         </div>
