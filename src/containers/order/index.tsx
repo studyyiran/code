@@ -14,7 +14,7 @@ import './index.less';
 @inject("order")
 @observer
 class Order extends React.Component<IOrderProps & RouteComponentProps> {
-  public componentDidMount = async () => {
+  public async componentDidMount() {
     const order = this.props.order;
     if (order.orderNo === "") {
       // 自动登陆
