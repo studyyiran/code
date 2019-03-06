@@ -50,10 +50,15 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
 
     // 显示左侧价格模块
     this.props.user.isShowLeftPrice = true;
+    this.props.user.isShowLeftPriceMobile = true;
 
     if (typeof this.props.onRef === 'function') {
       this.props.onRef!(this);
     }
+  }
+
+  public componentWillUnmount() {
+    this.props.user.isShowLeftPriceMobile = false;
   }
 
   public validateData = (): Promise<boolean> => {
