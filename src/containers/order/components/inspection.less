@@ -136,3 +136,118 @@
         }
     }
 }
+
+.ismobile {
+    .comp-order-inspection {
+        border-radius: .02rem;
+        margin: .3rem .3rem 0;
+
+        .inspection-title {
+            font-size: .12rem;
+            line-height: .44rem;
+            padding: 0 .15rem;
+        }
+
+        .inspected-success-body {
+            display: block;
+            height: auto;
+
+            .col-1 {
+                padding-top: .2rem;
+                width: auto;
+            }
+
+            .col-2 {
+                padding-top: .2rem;
+                padding-bottom: .3rem;
+
+                p {
+                    width: auto;
+                    height: auto;
+                    padding-top: .1rem;
+
+                    span {
+                        position: relative;
+                        top: -.1rem;
+                    }
+                }
+            }
+        }
+
+        .inspected-fail-body {
+            height: auto;
+            box-sizing: border-box;
+            padding: 0 .2rem;
+            padding-top: .2rem;
+            display: block;
+
+            &.withNoFooter {
+                padding-bottom: .25rem;
+            }
+
+            .col-1 {
+                width: auto;
+
+                &>p {
+                    font-size: .14rem;
+                    color: rgba(187, 187, 187, 1);
+                    line-height: .17rem;
+
+                    &:last-child {
+                        color: rgba(51, 51, 51, 1);
+                        line-height: .16rem;
+                        margin-top: .1rem;
+
+                    }
+                }
+            }
+
+            .col-2 {
+                margin-top: .16rem;
+                margin-left: 0;
+                flex: 1;
+                font-size: .14rem;
+
+                &>p {
+                    font-size: .14rem;
+                    color: rgba(187, 187, 187, 1);
+
+                    &:last-child {
+                        color: rgba(255, 88, 88, 1);
+                        line-height: .16rem;
+                        margin-top: .1rem;
+                    }
+                }
+            }
+
+            .col-3 {
+                width: 100%;
+                padding-top: .23rem;
+                padding-bottom: .3rem;
+                display: inline-flex;
+                flex-wrap: wrap;
+                justify-content: center;
+
+                .approve-btn {
+                    width: 100%;
+                    text-align: center;
+                    color: rgba(255, 255, 255, 1);
+                    line-height: .44rem;
+                    background-color: #00CFFF;
+                    cursor: pointer;
+                    font-size: .14rem;
+                }
+
+                .unapprove-btn {
+                    font-size: .12rem;
+                    color: rgba(0, 186, 229, 1);
+                    line-height: .18rem;
+                    margin-top: .12rem;
+                    text-align: center;
+                    margin: 0;
+                    margin-top: .2rem;
+                }
+            }
+        }
+    }
+}

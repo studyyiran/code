@@ -1,5 +1,6 @@
 import { IUserStoreNew } from '@/store/interface/user.interface';
 import { IYourPhoneStore } from '@/containers/aboutphone/interface/index.interface';
+import { ICommonStore } from '@/store/interface/common.interface';
 export interface ILeftSideState {
   steps: ISteps[]
 }
@@ -22,6 +23,7 @@ export interface ISellLayoutProps {
   };
   yourphone: IYourPhoneStore;
   user: IUserStoreNew;
+  common: ICommonStore
 }
 
 export interface ISellLayoutState {

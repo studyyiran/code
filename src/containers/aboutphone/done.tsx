@@ -11,8 +11,9 @@ import ChangeModal from '@/containers/aboutphone/components/changemodal';
 import { donePageValidate } from '@/containers/aboutphone/pageValidate';
 import './done.less';
 import { IDoneProps, IDoneStates, EChangeType, EPayType } from './interface/index.interface';
+import { ModalProps } from 'antd/lib/modal';
 
-@inject('yourphone', 'user')
+@inject('yourphone', 'user', 'common')
 @observer
 export default class YoureDone extends React.Component<IDoneProps, IDoneStates> {
   public pageRef: React.Component;
@@ -46,7 +47,8 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
     let payment: React.ReactNode | null = null;
     let phoneNode: React.ReactNode | null = null;
 
-    const { yourphone, user } = this.props;
+    const { yourphone, user, common } = this.props;
+    const chooseConditionInMobile = common.isMobile ? { onClick: this.handlePageChoose.bind(this, EChangeType.CONDITION) } : {}; // 移动端，condition弹窗触发点在ppv内容上
 
     switch (this.state.pageType) {
       case EChangeType.SHIPPING:
@@ -115,14 +117,8 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
             </p>
             <p className="info-item condition">
               <span className="label">Condition</span>
-              <span className="content">{yourphone.inquiryDetail && yourphone.inquiryDetail.ppvs.map(ppv => ppv.value).join(', ')}<span className="edit-bg" onClick={this.handlePageChoose.bind(this, EChangeType.CONDITION)} /></span>
+              <span className="content" {...chooseConditionInMobile} >{yourphone.inquiryDetail && yourphone.inquiryDetail.ppvs.map(ppv => ppv.value).join(', ')}<span className="edit-bg" onClick={this.handlePageChoose.bind(this, EChangeType.CONDITION)} /></span>
             </p>
-            <style>
-              {`.info-wrapper .info-item.condition .content {
-                -webkit-box-orient: vertical;
-              }`
-              }
-            </style>
           </>
         );
         break;
@@ -137,6 +133,17 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
     }
     shippingAddress.push(addressInfo.city + ", " + addressInfo.state);
     shippingAddress.push(addressInfo.zipCode);
+
+
+    // 弹窗添加属性
+    const customizeModalProps: ModalProps = {
+      className: 'ant-modal-in-done-page',
+      visible: this.state.showEditModal,
+      footer: null,
+      onCancel: this.toggleChangeModal
+    };
+
+    customizeModalProps['width'] = this.props.common.isMobile ? '3.33rem' : 900;
 
     return (
       <div className="page-youredone-container">
@@ -180,7 +187,10 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
             <div className="bottom-part-wrapper">
               <p className="phone-name">Your Phone</p>
               <div className="phone-info-wrapper">
-                <img className="img" src={yourphone.inquiryDetail ? yourphone.inquiryDetail.product.imageUrl : require('@/images/noprice.png')} />
+                {
+                  !this.props.common.isMobile &&
+                  <img className="img" src={yourphone.inquiryDetail ? yourphone.inquiryDetail.product.imageUrl : require('@/images/noprice.png')} />
+                }
                 <div className="info-wrapper">
                   {phoneNode}
                 </div>
@@ -188,7 +198,11 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
             </div>
             <div className="terms-of-service">
               <span onClick={this.handleServiceCheck} className={classnames('text-with-icon', { checked: this.state.isChecked })} >By checking this box, you agree to our </span>
-              <Link to='/terms' className="highlight" target="_blank">Terms of Service </Link>
+              {
+                this.props.common.isMobile 
+                ? <Link to='/terms' className="highlight" target="_blank">Terms of &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Service </Link>
+                : <Link to='/terms' className="highlight" target="_blank">Terms of Service </Link>
+              }
             </div>
             <Button
               disabled={!this.state.isChecked}
@@ -204,10 +218,7 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
           </div>
         </Layout>
         <Modal
-          width={900}
-          visible={this.state.showEditModal}
-          footer={null}
-          onCancel={this.toggleChangeModal}
+          {...customizeModalProps}
         >
           <ChangeModal type={this.state.pageType} onSave={this.onSave} >
             {Page}
@@ -254,6 +265,7 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
           checkInfo: { ...this.props.yourphone.echeck },
           payment: this.props.yourphone.payment,
           paypalInfo: { ...this.props.yourphone.paypal },
+          orderDetail: { ...this.props.yourphone.orderDetail }
         }
       } catch (error) { console.warn(error, 'in done page preOrder') }
       this.props.history.push('/sell/yourphone/checkorder');

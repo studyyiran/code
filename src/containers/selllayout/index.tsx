@@ -5,9 +5,10 @@ import { NAVIGATOR } from 'config';
 import './index.less';
 import LeftSide from './components/leftside';
 import GuaranteedPrice from './components/guaranteedprice';
+import GuaranteedPriceMobile from './components/guaranteedprice--mobile';
 import { ISellLayoutProps, ISellLayoutState } from './interface/index.interface';
 
-@inject('yourphone', 'user')
+@inject('yourphone', 'user', 'common')
 @observer
 export default class SellLayout extends React.Component<ISellLayoutProps, ISellLayoutState> {
 
@@ -48,6 +49,10 @@ export default class SellLayout extends React.Component<ISellLayoutProps, ISellL
 
       if (this.props.user.preOrder.paypalInfo) {
         this.props.yourphone.paypal = this.props.user.preOrder.paypalInfo;
+      }
+
+      if (this.props.user.preOrder.orderDetail) {
+        this.props.yourphone.orderDetail = this.props.user.preOrder.orderDetail;
       }
 
       // 有关机型的 
@@ -94,14 +99,14 @@ export default class SellLayout extends React.Component<ISellLayoutProps, ISellL
   }
 
   public onMappingIndex = (navigatorKey: string[], navigator: object) => {
-    console.log((window['__history__'].location.pathname), 'ininin');
+    const isMobile = this.props.common.isMobile;
     const arr = navigatorKey.filter(v => new RegExp(v).test(window['__history__'].location.pathname));
     if (!arr.length) {
       return;
     }
     this.setState({
       stepIndex: navigator[arr[arr.length - 1]]['step'],
-      isBeforeShipping: navigator[arr[arr.length - 1]]['isBeforeShipping']
+      isBeforeShipping: isMobile ? navigator[arr[arr.length - 1]]['isBeforeShippingMobile'] : navigator[arr[arr.length - 1]]['isBeforeShipping']
     });
   }
 
@@ -114,13 +119,15 @@ export default class SellLayout extends React.Component<ISellLayoutProps, ISellL
     return (
       <div className="page-sell-layout-container">
         <div className="sell-layout-left">
-          <LeftSide stepIndex={this.state.stepIndex} />
-          <GuaranteedPrice
-            price={price}
-            isTBD={this.props.yourphone.isTBD}
-            user={this.props.user}
-            isBeforeShipping={this.state.isBeforeShipping}
+          <LeftSide
+            stepIndex={this.state.stepIndex}
+            isMobile={this.props.common.isMobile}
           />
+          {
+            this.props.common.isMobile
+              ? (<GuaranteedPriceMobile price={price} isTBD={this.props.yourphone.isTBD} user={this.props.user} isBeforeShipping={this.state.isBeforeShipping} />)
+              : (<GuaranteedPrice price={price} isTBD={this.props.yourphone.isTBD} user={this.props.user} isBeforeShipping={this.state.isBeforeShipping} />)
+          }
         </div>
         <div className="sell-layout-right">
           {

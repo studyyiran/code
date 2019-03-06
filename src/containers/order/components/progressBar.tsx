@@ -31,8 +31,12 @@ class Dot extends React.Component<IDot>{
 class ProgressBar extends React.Component<{ data: IProgressData }>{
     public render() {
         const props = this.props.data;
+        const cls = ["comp-order-progressBar"];
+        if (props.currentIndex > 3) {
+            cls.push("mobileHideLeft");
+        }
         return (
-            <div className="comp-order-progressBar">
+            <div className={cls.join(" ")}>
                 {props.dataList.map((t, i) => (
                     <Dot isActive={i < props.currentIndex + 1} key={i} isCurrent={i === props.currentIndex}>
                         {(i === props.currentIndex) && t.img && (

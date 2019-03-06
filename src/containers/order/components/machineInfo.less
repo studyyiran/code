@@ -66,3 +66,65 @@
         }
     }
 }
+
+.ismobile {
+    .comp-order-machineInfo {
+        .title {
+            font-size: .12rem;
+            height: .44rem;
+            line-height: .44rem;
+            padding: 0 .15rem;
+        }
+
+        .properties {
+            display: block;
+            padding: .16rem .2rem;
+
+            &>div {
+                margin-top: .15rem;
+
+                &:first-child {
+                    margin-top: 0;
+                }
+
+                width: auto;
+
+                &>div {
+                    font-size: .14rem;
+                    line-height: .17rem;
+                    height: .17rem;
+                    font-weight: 500;
+
+                    &:last-child {
+                        margin-top: .1rem;
+                        font-weight: normal !important;
+                        line-height: .16rem;
+                        height: auto;
+                    }
+                }
+            }
+
+            .line {
+                height: 1px;
+                margin: .2rem;
+
+            }
+        }
+
+        .total {
+            font-size: .14rem;
+            line-height: .18rem;
+            padding: 0 .2rem;
+            padding-bottom: .3rem;
+
+            &>span {
+                font-size: .14rem;
+
+                &:last-child {
+                    font-size: .14rem;
+                    min-width: .52rem;
+                }
+            }
+        }
+    }
+}

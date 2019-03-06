@@ -1,3 +1,4 @@
+import { IOrderDetail } from './../../containers/order/interface/order.inerface';
 
 import { IYourPhoneStore } from "@/containers/aboutphone/interface/index.interface";
 
@@ -80,6 +81,7 @@ export interface IPreOrder {
   userEmail: string; // 用户邮箱
   agentCode?: string; // 应用渠道名字
   carrier?: string; // 选中的运营商的名称
+  orderDetail?: IOrderDetail;
   // yourphoneStore?: IYourPhoneStore; // 存储store的属性
 
 }

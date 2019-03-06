@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { IOrderProps } from '@/containers/order/interface/order.inerface';
-import './toBeReturn.less';
+// import './toBeReturn.less';
 import Tag from '@/components/tag';
 
 class ToBeReturn extends React.Component<IOrderProps> {
@@ -18,7 +18,7 @@ class ToBeReturn extends React.Component<IOrderProps> {
                     <span>Inspection Result</span>
                     <Tag className="inspect-title-tag" {...tag} />
                 </p>
-                {isMatch && (<div className="inspected-success-body" style={{ display: "none" }}>
+                {isMatch && (<div className="inspected-success-body">
                     <div className="col-1">
                         <div>Price Guarantee</div>
                         <div>${inspectionInfo.amount}</div>
@@ -31,7 +31,7 @@ class ToBeReturn extends React.Component<IOrderProps> {
                         </p>
                     </div>
                 </div>)}
-                {!isMatch && (<div className="inspected-fail-body">
+                {!isMatch && (<div className="inspected-fail-body withNoFooter">
                     <div className="col-1">
                         <p>Difference</p>
                         <p>

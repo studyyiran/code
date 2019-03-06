@@ -6,7 +6,8 @@ import './models.less';
 import { IModelsProps } from './interface/index.interface';
 import { modalPageValidate } from '@/containers/aboutphone/pageValidate';
 import Breadcrumb from '@/containers/aboutphone/components/breadcrumb';
-@inject('yourphone', 'user')
+import ProgressBar from '@/containers/aboutphone/components/progressbar--mobile';
+@inject('yourphone', 'user', 'common')
 @observer
 export default class Models extends React.Component<IModelsProps> {
 
@@ -26,14 +27,16 @@ export default class Models extends React.Component<IModelsProps> {
     return (
       <div className="page-models-container">
         <LayOut>
-
           <>
+            {
+              this.props.common.isMobile && <ProgressBar />
+            }
             <Breadcrumb
               brandName={this.props.yourphone.activeBrandsName}
               carrierName={this.props.yourphone.activeCarrierDescription}
             />
             {
-              <div>
+              <div className="model-list-wrapper">
                 {
                   products.length > 0
                     ? products.map((phone, index) => (

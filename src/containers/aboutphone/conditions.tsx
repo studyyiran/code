@@ -8,8 +8,9 @@ import { message } from 'antd';
 import { IProductInfo } from '@/store/interface/user.interface';
 import { conditionPageValidate } from '@/containers/aboutphone/pageValidate';
 import Breadcrumb from '@/containers/aboutphone/components/breadcrumb';
+import ProgressBar from '@/containers/aboutphone/components/progressbar--mobile';
 import classnames from 'classnames';
-@inject('yourphone', 'user')
+@inject('yourphone', 'user', 'common')
 @observer
 export default class Conditions extends React.Component<IConditionsProps> {
   public state = {
@@ -73,6 +74,9 @@ export default class Conditions extends React.Component<IConditionsProps> {
             ? (
               <Layout nextCb={this.handleNext} progress={this.state.progress} disabled={this.state.disabled}>
                 <>
+                  {
+                    this.props.common.isMobile && <ProgressBar />
+                  }
                   <Breadcrumb
                     brandName={this.props.yourphone.activeBrandsName}
                     carrierName={this.props.yourphone.activeCarrierDescription}
@@ -84,11 +88,6 @@ export default class Conditions extends React.Component<IConditionsProps> {
             )
             : (conditionList)
         }
-        <style>
-          {`.comp-condition-item-container .right-wrapper .option .text {
-            -webkit-box-orient: vertical;
-          }`}
-        </style>
       </div>
     )
   }

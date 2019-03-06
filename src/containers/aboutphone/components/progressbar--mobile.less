@@ -1,0 +1,34 @@
+@import (reference) '~@/styles/index.less';
+.comp-order-progressbar-container {
+  padding: 0.31rem 0 ;
+  text-align: center;
+  line-height: 0;
+  .bar-wrapper {
+    display: inline-block;
+    width: 3.33rem;
+    height: 0.05rem;
+    background:rgba(207,216,220,1);
+    box-shadow:0px 0.02rem 0.04rem 0px rgba(0,207,255,0.15);
+    border-radius:0.03rem;
+    .bar-item {
+      float: left;
+      width: 25%;
+      height: 100%;
+      &:nth-of-type(4) {
+        background-color: #21F7D8;
+        border-radius: 3px;
+      }
+
+      &:nth-of-type(3) {
+        background-color: #00E0C0;
+      }
+
+      &:nth-of-type(2) {
+        background-color: #00CEC8;
+      }
+      &:nth-of-type(1) {
+        background-color: #00BAE5;
+      }
+    }
+  }
+}
