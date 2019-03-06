@@ -163,3 +163,12 @@ export const createDate = (t: string) => {
   }
   return b;
 }
+
+export const getShippoString = (name: string, location: string): string | null => {
+  const reg = new RegExp('/(\[|\,\s)' + name + '=([^\,\s]*)(\,\s|\])/', 'i');
+  const r = location.match(reg);
+  if (r != null) {
+    return unescape(r[2]);
+  }
+  return null;
+}

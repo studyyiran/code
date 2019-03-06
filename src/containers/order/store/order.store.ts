@@ -18,7 +18,7 @@ import InspectionCompleteIcon from "@/images/order/inspectionComplete.png";
 import ListSaleIcon from "@/images/order/listForSale.png";
 import OrderCompleteIcon from "@/images/order/orderComplete.png";
 import ReturnRequestIcon from "@/images/order/returnRequest.png";
-import { createDate } from "@/utils/function";
+import { createDate, getShippoString } from "@/utils/function";
 
 class Store implements IOrderStore {
   // 订单编号
@@ -108,6 +108,12 @@ class Store implements IOrderStore {
         }
         dateStr = dateStr + getMonthEn(time) + " " + time.getDate();
         const timeBy12 = getHourBy12(time);
+        let locationCtiy = '';
+        let locationCountry = '';
+        if (t.location) {
+          locationCtiy = getShippoString('city', t.location) || '';
+          locationCountry = getShippoString('country', t.location) || '';
+        }
         infos.push({
           date: dateStr,
           listData: [
@@ -115,7 +121,7 @@ class Store implements IOrderStore {
               time: timeBy12.hour + " " + timeBy12.part,
               listData: [
                 t.statusDetails,
-                t.location ? t.location.city + "," + t.location.country : ""
+                locationCtiy && locationCountry ? locationCtiy + "," + locationCountry : ""
               ]
             }
           ]
