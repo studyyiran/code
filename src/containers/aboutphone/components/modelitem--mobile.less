@@ -22,6 +22,16 @@
           line-height: 0.22rem;
           border-width: 1px;
         }
+        &.double {
+          width:1.36rem;
+          flex: 1;
+          margin-right:80px;
+          .memory-item {
+            &:nth-of-type(3n + 1) {
+              margin-left: .1rem;
+            }
+          }
+        }
       }
       img {
         width: 0.76rem;
