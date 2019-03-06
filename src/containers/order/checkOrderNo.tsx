@@ -19,19 +19,7 @@ class CheckOrderNo extends React.Component<IOrderProps & RouteComponentProps> {
         formError: ''
     }
     public componentDidMount = async () => {
-        const token = getQueryString("token");
-        // 存在token
-        if (token) {
-            // 如果可以获取到订单信息则跳转，否则停留当前页面
-            const order = this.props.order
-            const getOrderDetail = await order.getOrderDetailByToken(token);
-            if (getOrderDetail) {
-                // saveloginmes
-                order.autoSaveLoginMes();
-                // 自动定向到订单详情去
-                this.props.history.push(`/order`);
-            }
-        }
+        this.initData();
     }
     public render() {
         return (
@@ -80,6 +68,21 @@ class CheckOrderNo extends React.Component<IOrderProps & RouteComponentProps> {
                 </div>
             </div>
         );
+    }
+    private initData = async () => {
+        const token = getQueryString("token");
+        // 存在token
+        if (token) {
+            // 如果可以获取到订单信息则跳转，否则停留当前页面
+            const order = this.props.order
+            const getOrderDetail = await order.getOrderDetailByToken(token);
+            if (getOrderDetail) {
+                // saveloginmes
+                order.autoSaveLoginMes();
+                // 自动定向到订单详情去
+                this.props.history.push(`/order`);
+            }
+        }
     }
     /**
      * email change event
