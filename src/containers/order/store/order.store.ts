@@ -111,8 +111,10 @@ class Store implements IOrderStore {
         let locationCtiy = '';
         let locationCountry = '';
         if (t.location) {
-          locationCtiy = getShippoString('city', t.location) || '';
-          locationCountry = getShippoString('country', t.location) || '';
+          const matchCity = t.location.match(/(\[|\,\s)city=([^\,\s]*)(\,\s|\])/);
+          const matchCountry = t.location.match(/(\[|\,\s)country=([^\,\s]*)(\,\s|\])/);
+          locationCtiy = matchCity ? matchCity[2] : '';
+          locationCountry = matchCountry ? matchCountry[2] : '';
         }
         infos.push({
           date: dateStr,
