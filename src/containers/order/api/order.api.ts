@@ -11,7 +11,7 @@ export function getOrderDetail<T>(userEmail: string, orderNo: string): Promise<T
             orderNo
         },
         loading: true,
-        isMock: true
+        // isMock: true
     };
     return Request<T>(opts);
 }
@@ -35,7 +35,7 @@ export function getTranshipping<T>(carrier: string, trackingNumber: string): Pro
             trackingNumber
         },
         loading: true,
-        isMock: true
+        // isMock: true
     };
 
     return Request<T>(opts);
