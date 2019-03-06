@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import { Divider, Input, Button, Form, Icon } from 'antd';
-import { IOrderProps, IProgressType } from '@/containers/order/interface/order.inerface';
+import { IOrderProps } from '@/containers/order/interface/order.inerface';
 import { RouteComponentProps } from 'react-router';
 import { getQueryString } from '@/utils/function';
 import './checkOrderNo.less';
@@ -137,8 +137,10 @@ class CheckOrderNo extends React.Component<IOrderProps & RouteComponentProps> {
         if (canSubmit) {
             const b = await this.props.order.getOrderDetail(this.state.email, this.state.orderNo);
             if (b.orderNo) {
-                // 交易失败,并且没有物流单号
-                if (b.status === IProgressType.TRANSACTION_FAILED && !b.shippoTransaction) {
+                // 根据操作记录判断CRM取消订单
+                if (b.orderRecords.find(v =>
+                    (v.beforeStatus === "TO_BE_SHIPPED" || v.beforeStatus === "TO_BE_RECEIVED")
+                    && v.afterStatus === "TRANSACTION_FAILED")) {
                     this.setState({
                         formError: "This order has been cancelled"
                     });
