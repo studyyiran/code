@@ -146,7 +146,7 @@ class Store implements IOrderStore {
                 trackingNumber = this.orderDetail.shippoTransaction.trackingNumber;
             }
             // 是否为物品退还
-            if (this.orderDetail.status === IProgressType.TO_BE_RETURNED) {
+            if (this.orderDetail.status === IProgressType.TO_BE_RETURNED || this.orderDetail.status === IProgressType.TRANSACTION_FAILED) {
                 carrier = this.orderDetail.ext.returnExpressInfo.carrier;
                 trackingNumber = this.orderDetail.ext.returnExpressInfo.trackingNumber;
             }
