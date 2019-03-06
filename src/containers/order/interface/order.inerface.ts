@@ -87,6 +87,12 @@ export interface IOrderDetail {
     orderPaymentBills: IPaymentInfo[];
     orderRecords: IOrderRecord[];
     returnTrackingNo: string;
+    ext: {
+        returnExpressInfo: {
+            carrier: string;
+            trackingNumber: string;
+        }
+    }
 }
 /**
  * 订单中物流id
@@ -150,12 +156,6 @@ export interface IOrderInspected {
         name: string;
         isTBD: boolean;
     };
-    ext: {
-        carrier: string;
-        autoCancelledDt: string;
-        returnDt: string;
-        receivedDt: string;
-    }
 }
 /**
  * 询价数据

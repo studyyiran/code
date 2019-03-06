@@ -101,7 +101,7 @@ class Store implements IOrderStore {
                     date: dateStr,
                     listData: [{
                         time: timeBy12.hour + " " + timeBy12.part,
-                        listData: [t.statusDetails, t.location.city + "," + t.location.country]
+                        listData: [t.statusDetails, t.location ? (t.location.city + "," + t.location.country) : ""]
                     }]
                 });
                 return true;
@@ -146,9 +146,9 @@ class Store implements IOrderStore {
                 trackingNumber = this.orderDetail.shippoTransaction.trackingNumber;
             }
             // 是否为物品退还
-            if (this.orderDetail.status === IProgressType.TRANSACTION_FAILED) {
-                carrier = this.orderDetail.orderItem.ext.carrier;
-                trackingNumber = this.orderDetail.returnTrackingNo;
+            if (this.orderDetail.status === IProgressType.TO_BE_RETURNED || this.orderDetail.status === IProgressType.TRANSACTION_FAILED) {
+                carrier = this.orderDetail.ext.returnExpressInfo.carrier;
+                trackingNumber = this.orderDetail.ext.returnExpressInfo.trackingNumber;
             }
         }
         return {
