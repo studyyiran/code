@@ -28,6 +28,7 @@ export default class BrandHeader extends React.Component<object, IStates> {
     const navigator = NAVIGATOR;
     const navigatorKey = Object.keys(navigator);
     this.onMappingText(navigatorKey, navigator);
+    yourphoneStore.getProductsList('1')
     // 注册全局点击事件，以便点击其他区域时，隐藏展开的内容
     EventHandler.add(this.globalClick);
 
