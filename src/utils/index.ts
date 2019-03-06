@@ -1,6 +1,6 @@
 import Request from './request';
 import storage from "./storage";
-import { isMobile, getQueryString, ModalScroll, checkedMobilePhone, isArrayAIsPartOfArrayBMult, elementIsPartOfArrayBMult, random, gcj02ToBd09, getWeek, getShippoString } from './function';
+import { isMobile, getQueryString, ModalScroll, checkedMobilePhone, isArrayAIsPartOfArrayBMult, elementIsPartOfArrayBMult, random, gcj02ToBd09, getWeek } from './function';
 import Oauth from './oauth';
 import formatTime from './formatTime';
 import Cookie from './cookie';
@@ -11,7 +11,6 @@ export {
   formatTime,
   ModalScroll,
   getQueryString,
-  getShippoString,
   checkedMobilePhone,
   Oauth,
   storage,

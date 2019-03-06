@@ -18,7 +18,7 @@ import InspectionCompleteIcon from "@/images/order/inspectionComplete.png";
 import ListSaleIcon from "@/images/order/listForSale.png";
 import OrderCompleteIcon from "@/images/order/orderComplete.png";
 import ReturnRequestIcon from "@/images/order/returnRequest.png";
-import { createDate, getShippoString } from "@/utils/function";
+import { createDate } from "@/utils/function";
 
 class Store implements IOrderStore {
   // 订单编号
