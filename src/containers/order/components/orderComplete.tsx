@@ -4,7 +4,7 @@ import { IOrderProps } from '@/containers/order/interface/order.inerface';
 import Tag from '@/components/tag';
 import './orderComplete.less';
 
-class ListedForSale extends React.Component<IOrderProps> {
+class OrderComplete extends React.Component<IOrderProps> {
     public render() {
         const inspectionInfo = this.props.order.inspectionInfo;
         const tag = {
@@ -96,4 +96,4 @@ class ListedForSale extends React.Component<IOrderProps> {
     }
 }
 
-export default ListedForSale;
+export default OrderComplete;
