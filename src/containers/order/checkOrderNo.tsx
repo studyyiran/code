@@ -18,7 +18,7 @@ class CheckOrderNo extends React.Component<IOrderProps & RouteComponentProps> {
         orderInputHelp: '',
         formError: ''
     }
-    public componentDidMount = async () => {
+    public async componentDidMount() {
         const token = getQueryString("token");
         // 存在token
         if (token) {

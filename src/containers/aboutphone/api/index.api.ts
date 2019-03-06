@@ -59,7 +59,6 @@ export const createInquiry = <T>(inquiry: IQueryParams) => {
     url: '/inquiries',
     method: 'post',
     params: inquiry,
-    isMock: true
   };
 
   return Request<T>(opts)
@@ -72,7 +71,6 @@ export const getInquiryDetail = <T>(key: string, agentCode: string = ENVCONFIG['
     params: {
       agentCode
     },
-    isMock: true
   };
 
   return Request<T>(opts);
@@ -95,7 +93,6 @@ export const createOrder = <T>(orderParams: Pick<IPreOrder, Exclude<keyof IPreOr
     url: `/orders`,
     method: 'post',
     params: orderParams,
-    isMock: true
   };
 
   return Request<T>(opts);
