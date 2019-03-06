@@ -176,7 +176,9 @@ class YourPhone implements IYourPhoneStore {
   // 创建询价
   @action public createInquiry = async () => {
     const priceUnits: number[] = Object.values(this.activeConditions);
-    priceUnits.push(this.activeModelId); // priceUnits包括在model选择的ppv，以及condition选的非sku属性
+    if (this.activeModelId && this.activeModelId > 0) {
+      priceUnits.push(this.activeModelId); // priceUnits包括在model选择的ppv，以及condition选的非sku属性
+    }
 
     const inquiry: IQueryParams = {
       agentCode: ENVCONFIG.agentCode,
