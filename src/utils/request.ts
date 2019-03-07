@@ -103,12 +103,12 @@ const Request = <T>(opts: IOpts, code?: number[]): Promise<T> => {
         }
 
         if (res.data.message || res.data.resultMessage) {
-          message.error(res.data.message || res.data.resultMessage);
+          message.warning('Something is technically wrong, please try again.');
           reject(res.data);
           return;
         }
 
-        message.error("server error");
+        message.warning("Something is technically wrong, please try again.");
         reject(res);
         return;
 
@@ -125,7 +125,7 @@ const Request = <T>(opts: IOpts, code?: number[]): Promise<T> => {
     }).catch((err) => {
       setTimeout(hide, 0);
       // 默认直接弹框报错
-      message.error('network error');
+      message.error('Network error!');
       reject(err);
     });
   });
