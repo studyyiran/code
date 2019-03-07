@@ -129,6 +129,10 @@ class YourPhone implements IYourPhoneStore {
   }
 
   @action public getProductsList = async (keyword: string = '') => {
+    // 直接return
+    if (this.activeBrandsId <= 0) {
+      return true;
+    }
     let res: IProductModel[] = [];
     try {
       res = await Api.getProductsList<IProductModel[]>(this.activeBrandsId);
