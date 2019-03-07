@@ -95,7 +95,7 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
               </div>
             </div>
 
-            <div className="checkorder-btn-wrapper"><Button block={true} className="checkorder-btn" onClick={this.hanleCheckOrder} type="primary" >CHECK ORDER</Button></div>
+            <div className="checkorder-btn-wrapper" style={{ textAlign: 'center' }}><Button className="checkorder-btn" onClick={this.hanleCheckOrder} type="primary" style={{ width: '400px', height: '48px', marginTop: '50px', fontWeight: 'bold' }}>CHECK ORDER</Button></div>
           </div>
         </Layout>
       </div>
