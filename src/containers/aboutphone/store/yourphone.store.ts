@@ -204,6 +204,7 @@ class YourPhone implements IYourPhoneStore {
         type: 'error',
         okText: 'OK',
         title: 'Oops... something goes wrong!',
+        maskClosable: true,
         hasCountDown: false,
         onOk: () => {
           const aDOM = document.createElement('a');
@@ -272,6 +273,7 @@ class YourPhone implements IYourPhoneStore {
         okText: 'OK',
         title: 'Oops... something goes wrong!',
         hasCountDown: false,
+        maskClosable: true,
         onOk: () => {
           const aDOM = document.createElement('a');
           aDOM.style.display = 'none';
