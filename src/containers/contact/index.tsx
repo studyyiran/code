@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { observer, inject } from 'mobx-react';
 import ContactForm from './component/form';
-import { notification } from 'antd';
 import { IContactProps, IContact } from './interface/contact.interface';
 import './index.less';
 
@@ -22,11 +21,6 @@ export default class Contact extends React.Component<IContactProps> {
 
   private handleOk = async (item: IContact) => {
     const result = await this.props.contact.onSubmit(item);
-    if (result) {
-      notification.success({
-        message: 'Successfully submitted.',
-      });
-      this.props.history.push('/');
-    }
+    return result;
   }
 }

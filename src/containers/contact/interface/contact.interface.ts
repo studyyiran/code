@@ -1,7 +1,7 @@
 import { FormComponentProps } from 'antd/lib/form';
 import { RouteComponentProps } from 'react-router';
 export interface IContactFormProps extends FormComponentProps {
-  onOk: (item: IContact) => void;
+  onOk: (item: IContact) => Promise<boolean>;
 }
 
 export interface IContactProps extends RouteComponentProps {

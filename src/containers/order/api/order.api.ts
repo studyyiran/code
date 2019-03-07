@@ -13,8 +13,8 @@ export function getOrderDetail<T>(
       userEmail,
       orderNo
     },
-    loading: true
-    // isMock: true
+    loading: false,
+    isMock: true
   };
   return Request<T>(opts);
 }
@@ -24,7 +24,7 @@ export function getOrderDetailByToken<T>(token: string): Promise<T> {
   const opts: IOpts = {
     method: "GET",
     url: `/orders/token/${token}`,
-    loading: true
+    loading: false
   };
   return Request<T>(opts, [201]); // 201表示token已经被使用过了
 }
@@ -40,8 +40,8 @@ export function getTranshipping<T>(
       carrier,
       trackingNumber
     },
-    loading: true
-    // isMock: true
+    loading: false,
+    isMock: true
   };
 
   return Request<T>(opts);
@@ -59,7 +59,7 @@ export function approveRevisedPrice<T>(
       orderNo,
       userEmail
     },
-    loading: true
+    loading: false
   };
 
   return Request<T>(opts);
@@ -77,7 +77,7 @@ export function returnProduct<T>(
       orderNo,
       userEmail
     },
-    loading: true
+    loading: false
   };
 
   return Request<T>(opts);
