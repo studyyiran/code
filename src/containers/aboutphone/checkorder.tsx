@@ -7,6 +7,7 @@ import './checkorder.less';
 import { Button } from 'antd';
 import { ICheckOutProps, ICheckOutStates, EBrandType, EPayType } from './interface/index.interface';
 import { checkOrderPageValidate } from '@/containers/aboutphone/pageValidate';
+import * as moment from 'moment-timezone';
 
 @inject('yourphone', 'user', 'common')
 @observer
@@ -59,7 +60,7 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
               </div>
               <div className="step">
                 <p className="name">Pack and Send</p>
-                <p className="detail" dangerouslySetInnerHTML={{__html: this.state.detailText[this.props.common.isMobile ? 1 : 0]}} />
+                <p className="detail" dangerouslySetInnerHTML={{ __html: this.state.detailText[this.props.common.isMobile ? 1 : 0] }} />
                 <a href={DEFAULT.FedExUrl} target="__blank" className="tips">How to find the local FedEx location</a>
               </div>
               <div className="step">
@@ -83,7 +84,7 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
                     </div>
                     <div className="info-item">
                       <span className="label">Order Date</span>
-                      <p className="content">{orderDetail && orderDetail.createdDt}</p>
+                      <p className="content">{orderDetail && moment.tz(orderDetail.createdDt, "America/Chicago").format('MMMM. DD, YYYY')}</p>
                     </div>
                   </div>
                   <p className="guaranteed-price">
