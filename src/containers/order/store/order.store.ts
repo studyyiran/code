@@ -526,7 +526,7 @@ class Store implements IOrderStore {
   };
   @action public tellUserToReportError = (error: any) => {
     noteUserModal({
-      content: 'please contact support@uptradeit.com for help.',
+      content: 'Please contact support@uptradeit.com for help.',
       type: 'error',
       okText: 'OK',
       title: 'Oops... something goes wrong!',
