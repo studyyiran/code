@@ -212,7 +212,7 @@ class Store implements IOrderStore {
           }
         });
         if (orderItem.inspectResult.result === "WRONG_PRODUCT") {
-          data.productName = orderItem.actualSkuName;
+          data.productName = orderItem.actualProductName;
         }
       }
     }

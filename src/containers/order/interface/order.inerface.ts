@@ -3,7 +3,7 @@
  * @property order 订单store
  */
 export interface IOrderProps {
-    order: IOrderStore;
+  order: IOrderStore;
 }
 /**
  * 订单summary组件的State
@@ -11,8 +11,8 @@ export interface IOrderProps {
  * @property isOpen 订单summary是否展开
  */
 export interface IOrderSummaryState {
-    isOpen: boolean;
-    normal: boolean
+  isOpen: boolean;
+  normal: boolean;
 }
 /**
  * 订单模块的Store
@@ -29,30 +29,30 @@ export interface IOrderSummaryState {
  * @action setOrderDetail 保存订单详情
  */
 export interface IOrderStore {
-    email: string;
-    orderNo: string;
-    orderDetail: IOrderDetail;
-    progressType: IProgressData;
-    machineInfo: IMachineInfo;
-    userInformation: IUserInformation;
-    deliverInfos: IShippingAddress[];
-    deliverNoInfo: {
-        carrier: null | string;
-        trackingNumber: null | string;
-    };
-    inspectionInfo: IInspectionData;
-    trackingInfo: ITrackingModel | null;
-    paymentInfo: IPayment;
-    getOrderDetail: (email: string, orderNo: string) => Promise<IOrderDetail>;
-    getOrderDetailByToken: (token: string) => Promise<boolean>;
-    approveRevisedPrice: () => Promise<boolean>;
-    returnProduct: () => Promise<boolean>;
-    autoSaveLoginMes: () => void;
-    autoLogin: () => Promise<boolean>;
-    setOrderDetail: (d: IOrderDetail) => void;
+  email: string;
+  orderNo: string;
+  orderDetail: IOrderDetail;
+  progressType: IProgressData;
+  machineInfo: IMachineInfo;
+  userInformation: IUserInformation;
+  deliverInfos: IShippingAddress[];
+  deliverNoInfo: {
+    carrier: null | string;
+    trackingNumber: null | string;
+  };
+  inspectionInfo: IInspectionData;
+  trackingInfo: ITrackingModel | null;
+  paymentInfo: IPayment;
+  getOrderDetail: (email: string, orderNo: string) => Promise<IOrderDetail>;
+  getOrderDetailByToken: (token: string) => Promise<boolean>;
+  approveRevisedPrice: () => Promise<boolean>;
+  returnProduct: () => Promise<boolean>;
+  autoSaveLoginMes: () => void;
+  autoLogin: () => Promise<boolean>;
+  setOrderDetail: (d: IOrderDetail) => void;
 }
 
-/** 
+/**
  * 订单详情数据（原始版）
  * @property status 订单状态，枚举值
  * @property payment 支付方式 "PAYPAL" | "CHECK"
@@ -71,55 +71,55 @@ export interface IOrderStore {
  * @property returnTrackingNo 退货物流单号
  */
 export interface IOrderDetail {
-    status: IProgressType;
-    payment: "PAYPAL" | "CHECK";
-    checkInfo: ICheckInfo;
-    paypalInfo: IPaypalInfo;
-    orderNo: string;
-    orderItem: IOrderInspected;
-    trackingNo: string;
-    createdDt: string;
-    updatedDt: string;
-    userName: string;
-    userEmail: string;
-    addressInfo: IAddressInfo;
-    shippoTransaction: IShippingTran;
-    orderPaymentBills: IPaymentInfo[];
-    orderRecords: IOrderRecord[];
-    returnTrackingNo: string;
-    ext: {
-        returnExpressInfo: {
-            carrier: string;
-            trackingNumber: string;
-        }
-    }
+  status: IProgressType;
+  payment: "PAYPAL" | "CHECK";
+  checkInfo: ICheckInfo;
+  paypalInfo: IPaypalInfo;
+  orderNo: string;
+  orderItem: IOrderInspected;
+  trackingNo: string;
+  createdDt: string;
+  updatedDt: string;
+  userName: string;
+  userEmail: string;
+  addressInfo: IAddressInfo;
+  shippoTransaction: IShippingTran;
+  orderPaymentBills: IPaymentInfo[];
+  orderRecords: IOrderRecord[];
+  returnTrackingNo: string;
+  ext: {
+    returnExpressInfo: {
+      carrier: string;
+      trackingNumber: string;
+    };
+  };
 }
 /**
  * 订单中物流id
  */
 export interface IShippingTran {
-    carrier: string;
-    trackingNumber: string;
+  carrier: string;
+  trackingNumber: string;
 }
 /**
  * 物流信息接口返回
  */
 export interface ITrackingModel {
-    trackingNumber: string;
-    trackingHistory: ITrackHistoryItem[];
-    trackingStatus: ITrackHistoryItem
+  trackingNumber: string;
+  trackingHistory: ITrackHistoryItem[];
+  trackingStatus: ITrackHistoryItem;
 }
 /**
  * 单个物流记录
  */
 export interface ITrackHistoryItem {
-    location: {
-        city: string;
-        country: string;
-    },
-    objectCreated: string;
-    objectUpdated: string;
-    statusDetails: string;
+  location: {
+    city: string;
+    country: string;
+  };
+  objectCreated: string;
+  objectUpdated: string;
+  statusDetails: string;
 }
 /**
  * 订单属性
@@ -137,42 +137,41 @@ export interface ITrackHistoryItem {
  * @property carrier 运营商
  */
 export interface IOrderInspected {
-    actualAmountDollar: number;
-    actualProductName: string;
-    actualSkuName: string;
-    amountDollar: number;
-    inspectItems: IInspectItems[];
-    inspectedDt: string;
-    orderItemNo: string;
-    productId: string;
-    productName: string;
-    skuName: string;
-    // submitItems: IInspectItems[];
-    carrier: string;
-    inspectResult: IInsepectResult;
-    pricePropertyValues: IInquiryPropertity[];
-    product: {
-        id: string;
-        name: string;
-        isTBD: boolean;
-    };
+  actualAmountDollar: number;
+  actualProductName: string;
+  amountDollar: number;
+  inspectItems: IInspectItems[];
+  inspectedDt: string;
+  orderItemNo: string;
+  productId: string;
+  productName: string;
+  skuName: string;
+  // submitItems: IInspectItems[];
+  carrier: string;
+  inspectResult: IInsepectResult;
+  pricePropertyValues: IInquiryPropertity[];
+  product: {
+    id: string;
+    name: string;
+    isTBD: boolean;
+  };
 }
 /**
  * 询价数据
  */
 export interface IInquiryPropertity {
-    id: string;
-    value: string;
+  id: string;
+  value: string;
 }
 /**
  * 质检结果
  */
 export interface IInsepectResult {
-    diffs: Array<{
-        actualValueName: string;
-        matched: boolean;
-    }>;
-    result: "MATCHED" | "WRONG_PRODUCT" | "WRONG_CONDITION"
+  diffs: Array<{
+    actualValueName: string;
+    matched: boolean;
+  }>;
+  result: "MATCHED" | "WRONG_PRODUCT" | "WRONG_CONDITION";
 }
 /**
  * 邮寄信息
@@ -187,15 +186,15 @@ export interface IInsepectResult {
  * @property zipCode 邮编
  */
 export interface IAddressInfo {
-    addressLine: string;
-    addressLineOptional?: string;
-    city: string;
-    country: string;
-    firstName: string;
-    lastName: string;
-    mobile: string;
-    state: string;
-    zipCode: string;
+  addressLine: string;
+  addressLineOptional?: string;
+  city: string;
+  country: string;
+  firstName: string;
+  lastName: string;
+  mobile: string;
+  state: string;
+  zipCode: string;
 }
 /**
  * 机器单个属性内容
@@ -204,23 +203,23 @@ export interface IAddressInfo {
  * @property name 属性名称
  */
 export interface IInspectItems {
-    id: number;
-    isSkuProperty: boolean;
-    name: string;
+  id: number;
+  isSkuProperty: boolean;
+  name: string;
 }
 /**
  * 支票信息，只有支票付款才有
  * @property card 卡号
  */
 export interface ICheckInfo {
-    email: string;
+  email: string;
 }
 /**
  * paypal信息，只有paypal付款才有
  * @property email paypal账号
  */
 export interface IPaypalInfo {
-    email: string;
+  email: string;
 }
 /**
  * 订单状态枚举
@@ -234,22 +233,22 @@ export interface IPaypalInfo {
  * @enum(LISTED_FOR_SALE) 等待拍卖
  */
 export enum IProgressType {
-    TO_BE_SHIPPED = "TO_BE_SHIPPED",
-    TRANSACTION_SUCCEED = "TRANSACTION_SUCCEED",
-    TRANSACTION_FAILED = "TRANSACTION_FAILED",
-    TO_BE_RECEIVED = "TO_BE_RECEIVED",
-    TO_BE_INSPECTED = "TO_BE_INSPECTED",
-    DIFFERENCE_INSPECTED = "DIFFERENCE_INSPECTED",
-    TO_BE_RETURNED = "TO_BE_RETURNED",
-    LISTED_FOR_SALE = "LISTED_FOR_SALE"
+  TO_BE_SHIPPED = "TO_BE_SHIPPED",
+  TRANSACTION_SUCCEED = "TRANSACTION_SUCCEED",
+  TRANSACTION_FAILED = "TRANSACTION_FAILED",
+  TO_BE_RECEIVED = "TO_BE_RECEIVED",
+  TO_BE_INSPECTED = "TO_BE_INSPECTED",
+  DIFFERENCE_INSPECTED = "DIFFERENCE_INSPECTED",
+  TO_BE_RETURNED = "TO_BE_RETURNED",
+  LISTED_FOR_SALE = "LISTED_FOR_SALE"
 }
 
 // 机器属性
 export interface IMachineInfo {
-    model: string;
-    carrier: string;
-    condition: string;
-    guaranteedPrice: number | string;
+  model: string;
+  carrier: string;
+  condition: string;
+  guaranteedPrice: number | string;
 }
 
 /**
@@ -263,13 +262,13 @@ export interface IMachineInfo {
  * @property orderDate 订单日期
  */
 export interface IUserInformation {
-    shippingAddress: string[];
-    telAndEmail: string[];
-    paymentType?: string;
-    paymentAccount?: string;
-    paymentMethod: string[];
-    orderNumber: string;
-    orderDate: string;
+  shippingAddress: string[];
+  telAndEmail: string[];
+  paymentType?: string;
+  paymentAccount?: string;
+  paymentMethod: string[];
+  orderNumber: string;
+  orderDate: string;
 }
 /**
  * 单条物流信息
@@ -278,27 +277,27 @@ export interface IUserInformation {
  * @property location 物流更新地区
  */
 export interface IDeliverInfoItem {
-    createdDt: string;
-    description: string;
-    location: string;
+  createdDt: string;
+  description: string;
+  location: string;
 }
 // 进度条数据
 export interface IProgressData {
-    currentIndex: number;
-    dataList: IProgressDot[];
+  currentIndex: number;
+  dataList: IProgressDot[];
 }
 
 // 进度条单个点属性
 export interface IProgressDot {
-    name: string;
-    date?: string;
-    img?: string | null | undefined;
+  name: string;
+  date?: string;
+  img?: string | null | undefined;
 }
 /**
  * 物流信息
  */
 export interface IDeliverData {
-    shippingAddress: IShippingAddress[];
+  shippingAddress: IShippingAddress[];
 }
 /**
  * 物流信息
@@ -306,15 +305,15 @@ export interface IDeliverData {
  * @property listData 物流更新记录
  */
 export interface IShippingAddress {
-    date: string;
-    listData: Array<{
-        time: string;
-        listData: string[]
-    }>;
+  date: string;
+  listData: Array<{
+    time: string;
+    listData: string[];
+  }>;
 }
 export interface IDeliverSatus {
-    loading: boolean;
-    visible: boolean;
+  loading: boolean;
+  visible: boolean;
 }
 /**
  * 质检信息,
@@ -326,42 +325,42 @@ export interface IDeliverSatus {
  * @property productName 产品名 当质检产品不一致的时候存在，否则为""
  */
 export interface IInspectionData {
-    diffStatus: "success" | "fail";
-    productName: string;
-    differenceText: string;
-    amount: number;
-    revisedPrice: number;
-    differentCondition: string[];
+  diffStatus: "success" | "fail";
+  productName: string;
+  differenceText: string;
+  amount: number;
+  revisedPrice: number;
+  differentCondition: string[];
 }
 
 /**
  * 支付信息
  */
 interface IPaymentInfo {
-    account: string;
-    amountDollar?: number;
-    hammerAmountDollar?: number;
-    // amount: number;
-    status: "PENDING" | "PAYING" | "SUCCESS" | "FAILED",
-    payFor: "RESERVE_PRICE" | "HAMMER_ADDITIONAL"
+  account: string;
+  amountDollar?: number;
+  hammerAmountDollar?: number;
+  // amount: number;
+  status: "PENDING" | "PAYING" | "SUCCESS" | "FAILED";
+  payFor: "RESERVE_PRICE" | "HAMMER_ADDITIONAL";
 }
 
 /**
  * 支付结果
  */
 interface IPayment {
-    finalSalePrice: number;
-    priceGuarantee: number;
-    priceGuaranteeStatus: boolean; // 支付状态
-    bonus: number;
-    bonusStatus: boolean;
+  finalSalePrice: number;
+  priceGuarantee: number;
+  priceGuaranteeStatus: boolean; // 支付状态
+  bonus: number;
+  bonusStatus: boolean;
 }
 
 /**
  * 操作记录
  */
 export interface IOrderRecord {
-    afterStatus: IProgressType;
-    beforeStatus: IProgressType;
-    createdDt: string;
+  afterStatus: IProgressType;
+  beforeStatus: IProgressType;
+  createdDt: string;
 }
