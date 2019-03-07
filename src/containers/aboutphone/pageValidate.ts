@@ -103,17 +103,20 @@ export const noteUserModal = (params: INoteUserModalProps) => {
   if (defaultParams.hasCountDown) {
     const timer = setInterval(() => {
       secondsToGo -= 1;
-      // modal.update({
-      //   content: `This modal will be destroyed after ${secondsToGo} second.`,
-      // });
+      if (defaultParams.update) {
+        defaultParams.update(secondsToGo)
+        modal.update({
+          content: defaultParams.update(secondsToGo),
+        });
+      }
     }, 1000);
 
     setTimeout(() => {
       clearInterval(timer);
       modal.destroy();
       // 自动关闭，来执行okClick
-      if (defaultParams.okClick) {
-        defaultParams.okClick();
+      if (defaultParams.onOk) {
+        defaultParams.onOk();
       }
     }, secondsToGo * 1000);
   }
