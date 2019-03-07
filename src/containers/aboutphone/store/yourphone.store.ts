@@ -200,7 +200,7 @@ class YourPhone implements IYourPhoneStore {
       console.warn(error, 'in yourphone store createInquiry');
       // 前端拦截所有报错并提示用户去写邮件寻求帮助
       noteUserModal({
-        content: error['resultMessage'],
+        content: 'please contact support@uptradeit.com for help.',
         type: 'error',
         okText: 'OK',
         title: 'Oops... something goes wrong!',
@@ -267,7 +267,7 @@ class YourPhone implements IYourPhoneStore {
     } catch (error) {
       console.warn(error, 'in yourphone store createOrder');
       noteUserModal({
-        content: error['resultMessage'],
+        content: 'please contact support@uptradeit.com for help.',
         type: 'error',
         okText: 'OK',
         title: 'Oops... something goes wrong!',
