@@ -1,3 +1,4 @@
+import { ModalFuncProps } from 'antd/lib/modal';
 import { FormComponentProps } from 'antd/lib/form';
 import * as React from 'react';
 import * as H from 'history';
@@ -253,4 +254,13 @@ export interface IBreadCrumb {
 export interface IShippingState {
   help: string,
   validateStatus: string | undefined
+}
+
+export interface INoteUserModalProps extends ModalFuncProps {
+  content: string;
+  type: 'success' | 'info' | 'error' | 'warn' | 'confirm' | 'warning'
+  okClick?: () => void
+  title?: string;
+  seconds?: number;
+  hasCountDown?: boolean;
 }

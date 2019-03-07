@@ -1,3 +1,4 @@
+
 import { ENVCONFIG, DEFAULT } from 'config';
 import { IQueryParams, IInquiryDetail, IAddressInfo } from './../interface/index.interface';
 import * as Api from '../api/index.api';
@@ -5,6 +6,7 @@ import { action, observable, autorun, computed } from 'mobx';
 import { IYourPhoneStore, ICarrier, IBrands, IAmericaState, IProductModel, IProductPPVN } from '../interface/index.interface';
 import { IPreOrder } from '@/store/interface/user.interface';
 import UserStore from '@/store/user';
+import { noteUserModal } from '@/containers/aboutphone/pageValidate';
 class YourPhone implements IYourPhoneStore {
   @observable public carriers: ICarrier[] = [];
   @observable public brands: IBrands[] = [];
@@ -196,6 +198,26 @@ class YourPhone implements IYourPhoneStore {
       res = await Api.createInquiry<string>(inquiry);
     } catch (error) {
       console.warn(error, 'in yourphone store createInquiry');
+      // 前端拦截所有报错并提示用户去写邮件寻求帮助
+      noteUserModal({
+        content: error['resultMessage'],
+        type: 'confirm',
+        okText: 'OK',
+        hasCountDown: false,
+        onOk: () => {
+          const aDOM = document.createElement('a');
+          aDOM.style.display = 'none';
+          aDOM.id = 'AFOREMAIL';
+          aDOM.setAttribute('href', `mailto:${DEFAULT.supportEmail}`);
+          document.body.appendChild(aDOM);
+
+          const adom = document.getElementById('AFOREMAIL');
+          if (adom) {
+            adom.click();
+            document.body.removeChild(adom);
+          }
+        }
+      });
       return false;
     }
 
@@ -243,6 +265,25 @@ class YourPhone implements IYourPhoneStore {
       this.orderDetail = await Api.createOrder<any>(orderParams);
     } catch (error) {
       console.warn(error, 'in yourphone store createOrder');
+      noteUserModal({
+        content: error['resultMessage'],
+        type: 'confirm',
+        okText: 'OK',
+        hasCountDown: false,
+        onOk: () => {
+          const aDOM = document.createElement('a');
+          aDOM.style.display = 'none';
+          aDOM.id = 'AFOREMAIL';
+          aDOM.setAttribute('href', `mailto:${DEFAULT.supportEmail}`);
+          document.body.appendChild(aDOM);
+
+          const adom = document.getElementById('AFOREMAIL');
+          if (adom) {
+            adom.click();
+            document.body.removeChild(adom);
+          }
+        }
+      });
       return false;
     }
 
