@@ -60,7 +60,7 @@ export function approveRevisedPrice<T>(
     loading: false
   };
 
-  return Request<T>(opts);
+  return Request<T>(opts, []);
 }
 
 // 退回商品
@@ -78,5 +78,5 @@ export function returnProduct<T>(
     loading: false
   };
 
-  return Request<T>(opts);
+  return Request<T>(opts, []);
 }
