@@ -523,7 +523,7 @@ class Store implements IOrderStore {
   private packageDate(b: string | undefined) {
     if (b) {
       const date = moment.tz(b, "America/Chicago");
-      return date.format("MMM. Do");
+      return date.format("MMM DD");
     }
     return b;
   }
