@@ -67,7 +67,7 @@ class Store implements IOrderStore {
       orderNumber: this.orderDetail.orderNo || "",
       orderDate: moment
         .tz(this.orderDetail.createdDt, "America/Chicago")
-        .format("MMM Do YYYY")
+        .format("MMMM Do, YYYY")
     };
   }
 
@@ -107,9 +107,9 @@ class Store implements IOrderStore {
           "America/Chicago"
         );
         const now = new Date();
-        let dateStr = time.format("MMM Do");
+        let dateStr = time.format("MMM DD");
         if (time.year() !== now.getFullYear()) {
-          dateStr = time.format("YYYY MMM Do");
+          dateStr = time.format("YYYY MMM DD");
         }
 
         let locationCtiy = "";
@@ -167,9 +167,9 @@ class Store implements IOrderStore {
         }
         const time = moment.tz(timeStr, "America/Chicago");
         const now = new Date();
-        let dateStr = time.format("MMM Do");
+        let dateStr = time.format("MMM DD");
         if (time.year() !== now.getFullYear()) {
-          dateStr = time.format("YYYY MMM Do");
+          dateStr = time.format("YYYY MMM DD");
         }
         infos.push({
           date: dateStr,
@@ -523,7 +523,7 @@ class Store implements IOrderStore {
   private packageDate(b: string | undefined) {
     if (b) {
       const date = moment.tz(b, "America/Chicago");
-      return date.format("MMM Do");
+      return date.format("MMM. Do");
     }
     return b;
   }
