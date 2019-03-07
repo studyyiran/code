@@ -4,6 +4,7 @@ import { inject, observer } from "mobx-react";
 import "./index.less";
 import { Button } from "antd";
 import { IHomeState } from "./interface/index.interface";
+
 @inject("common")
 @observer
 export default class Home extends React.Component<object, IHomeState> {
