@@ -121,11 +121,13 @@ export default class Conditions extends React.Component<IConditionsProps> {
 
       // 询价成功，提示用户，有保证金的存在，只存在于PC，因为移动端价格面板在最上面啦
       if (!this.props.common.isMobile) {
+        console.log(this.props.yourphone.inquiryDetail)
         noteUserModal({
           title: 'Your UpTrade Offer',
-          content: `Your ${this.props.yourphone.inquiryDetail!.product.name} Guarantee Price is $${this.props.yourphone.inquiryDetail!.priceDollar}`,
+          content: (<>Your {this.props.yourphone.inquiryDetail!.product.name} Guarantee Price is ${this.props.yourphone.inquiryDetail!.priceDollar} <br /> <br />This window will be closed after 5 seconds.</>),
           type: 'success',
           seconds: 5,
+          update: (seconds) => (<>Your {this.props.yourphone.inquiryDetail!.product.name} Guarantee Price is ${this.props.yourphone.inquiryDetail!.priceDollar} <br /> <br />This window will be closed after {seconds} seconds.</>),
           onOk: () => this.props.history.push('/sell/yourphone/shipping')
         });
       } else {

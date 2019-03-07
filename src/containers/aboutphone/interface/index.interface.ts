@@ -257,9 +257,10 @@ export interface IShippingState {
 }
 
 export interface INoteUserModalProps extends ModalFuncProps {
-  content: string;
+  content: JSX.Element | string;
+  update?: (seconds: number) => JSX.Element | string;
   type: 'success' | 'info' | 'error' | 'warn' | 'confirm' | 'warning'
-  okClick?: () => void
+  onOk?: () => void
   title?: string;
   seconds?: number;
   hasCountDown?: boolean;

@@ -201,8 +201,9 @@ class YourPhone implements IYourPhoneStore {
       // 前端拦截所有报错并提示用户去写邮件寻求帮助
       noteUserModal({
         content: error['resultMessage'],
-        type: 'confirm',
+        type: 'error',
         okText: 'OK',
+        title: 'Oops... something goes wrong!',
         hasCountDown: false,
         onOk: () => {
           const aDOM = document.createElement('a');
@@ -267,8 +268,9 @@ class YourPhone implements IYourPhoneStore {
       console.warn(error, 'in yourphone store createOrder');
       noteUserModal({
         content: error['resultMessage'],
-        type: 'confirm',
+        type: 'error',
         okText: 'OK',
+        title: 'Oops... something goes wrong!',
         hasCountDown: false,
         onOk: () => {
           const aDOM = document.createElement('a');
