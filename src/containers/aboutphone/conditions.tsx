@@ -120,7 +120,7 @@ export default class Conditions extends React.Component<IConditionsProps> {
 
 
       // 询价成功，提示用户，有保证金的存在，只存在于PC，因为移动端价格面板在最上面啦
-      if (this.props.common.isMobile) {
+      if (!this.props.common.isMobile) {
         noteUserModal({
           content: `Your SKU Guarantee Price is $${this.props.yourphone.inquiryDetail!.priceDollar}`,
           type: 'success',
