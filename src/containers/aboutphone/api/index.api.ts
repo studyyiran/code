@@ -54,6 +54,7 @@ export const getProductPPVN = <T>(productId: number) => {
 };
 
 // 创建询价，获得询价key
+// 创建询价接口， 只要发生错误，都提示用户可以写邮件寻求帮助
 export const createInquiry = <T>(inquiry: IQueryParams) => {
   const opts: IOpts = {
     url: "/inquiries",
@@ -61,8 +62,8 @@ export const createInquiry = <T>(inquiry: IQueryParams) => {
     params: inquiry
   };
 
-  return Request<T>(opts);
-};
+  return Request<T>(opts, [])
+}
 
 // 获取询价详情
 export const getInquiryDetail = <T>(
@@ -89,14 +90,13 @@ export const getStateByCode = <T>(zipCode: number) => {
   return Request<T>(opts);
 };
 
-export const createOrder = <T>(
-  orderParams: Pick<IPreOrder, Exclude<keyof IPreOrder, "key" | "productInfo">>
-) => {
+// 创建订单接口， 只要发生错误，都提示用户可以写邮件寻求帮助
+export const createOrder = <T>(orderParams: Pick<IPreOrder, Exclude<keyof IPreOrder, 'key' | 'productInfo'>>) => {
   const opts: IOpts = {
     url: `/orders`,
-    method: "post",
-    params: orderParams
+    method: 'post',
+    params: orderParams,
   };
 
-  return Request<T>(opts);
-};
+  return Request<T>(opts, []);
+}

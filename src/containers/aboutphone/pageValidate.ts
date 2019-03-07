@@ -5,7 +5,8 @@
 import { DEFAULT } from 'config';
 import userStore from '@/store/user';
 import yourPhoneStore from '@/containers/aboutphone/store/yourphone.store';
-import { EPayType } from './interface/index.interface';
+import { EPayType, INoteUserModalProps } from './interface/index.interface';
+import { Modal } from 'antd';
 
 // modal页面的校验
 export const modalPageValidate = (): boolean => {
@@ -84,4 +85,36 @@ export const orderDetailValidate = (): boolean => {
   return !!(yourPhoneStore.inquiryDetail !== null && JSON.stringify(yourPhoneStore.orderDetail) !== '{}');
 }
 
+export const noteUserModal = (params: INoteUserModalProps) => {
+  const defaultParams: INoteUserModalProps = {
+    className: 'modal-for-user-to-email',
+    content: '',
+    type: 'success',
+    seconds: 5,
+    hasCountDown: true,
+    ...params
+  };
 
+  let secondsToGo: number = defaultParams.seconds!;
+
+  const modal = Modal[defaultParams.type](defaultParams);
+
+  // 是否自动关闭
+  if (defaultParams.hasCountDown) {
+    const timer = setInterval(() => {
+      secondsToGo -= 1;
+      // modal.update({
+      //   content: `This modal will be destroyed after ${secondsToGo} second.`,
+      // });
+    }, 1000);
+
+    setTimeout(() => {
+      clearInterval(timer);
+      modal.destroy();
+      // 自动关闭，来执行okClick
+      if (defaultParams.okClick) {
+        defaultParams.okClick();
+      }
+    }, secondsToGo * 1000);
+  }
+}

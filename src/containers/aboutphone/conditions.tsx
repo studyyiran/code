@@ -6,7 +6,7 @@ import './conditions.less';
 import { IConditionsProps } from './interface/index.interface';
 import { message } from 'antd';
 import { IProductInfo } from '@/store/interface/user.interface';
-import { conditionPageValidate } from '@/containers/aboutphone/pageValidate';
+import { conditionPageValidate, noteUserModal } from '@/containers/aboutphone/pageValidate';
 import Breadcrumb from '@/containers/aboutphone/components/breadcrumb';
 import ProgressBar from '@/containers/aboutphone/components/progressbar--mobile';
 import classnames from 'classnames';
@@ -118,7 +118,19 @@ export default class Conditions extends React.Component<IConditionsProps> {
         };
       } catch (error) { console.warn(error, 'in conditions page preOrder') }
 
-      this.props.history.push('/sell/yourphone/shipping');
+
+      // 询价成功，提示用户，有保证金的存在，只存在于PC，因为移动端价格面板在最上面啦
+      if (!this.props.common.isMobile) {
+        noteUserModal({
+          content: `Your SKU Guarantee Price is $${this.props.yourphone.inquiryDetail!.priceDollar}`,
+          type: 'success',
+          seconds: 5,
+          okClick: () => this.props.history.push('/sell/yourphone/shipping')
+        });
+      } else {
+        this.props.history.push('/sell/yourphone/shipping');
+      }
+
     }
   }
 }

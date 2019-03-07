@@ -18,6 +18,8 @@ import ListSaleIcon from "@/images/order/listForSale.png";
 import OrderCompleteIcon from "@/images/order/orderComplete.png";
 import ReturnRequestIcon from "@/images/order/returnRequest.png";
 import * as moment from "moment-timezone";
+import { noteUserModal } from '@/containers/aboutphone/pageValidate';
+import { DEFAULT } from 'config';
 moment.locale("en");
 
 class Store implements IOrderStore {
@@ -503,6 +505,7 @@ class Store implements IOrderStore {
       return true;
     } catch (e) {
       console.error(e);
+      this.tellUserToReportError(e);
       return false;
     }
   };
@@ -517,9 +520,31 @@ class Store implements IOrderStore {
       return true;
     } catch (e) {
       console.error(e);
+      this.tellUserToReportError(e);
       return false;
     }
   };
+  @action public tellUserToReportError = (error: any) => {
+    noteUserModal({
+      content: error['resultMessage'],
+      type: 'confirm',
+      okText: 'OK',
+      hasCountDown: false,
+      onOk: () => {
+        const aDOM = document.createElement('a');
+        aDOM.style.display = 'none';
+        aDOM.id = 'AFOREMAIL';
+        aDOM.setAttribute('href', `mailto:${DEFAULT.supportEmail}`);
+        document.body.appendChild(aDOM);
+
+        const adom = document.getElementById('AFOREMAIL');
+        if (adom) {
+          adom.click();
+          document.body.removeChild(adom);
+        }
+      }
+    });
+  }
   private packageDate(b: string | undefined) {
     if (b) {
       const date = moment.tz(b, "America/Chicago");
