@@ -14,7 +14,7 @@ export function getOrderDetail<T>(
       orderNo
     },
     loading: true,
-    isMock: true
+    // isMock: true
   };
   return Request<T>(opts);
 }
@@ -41,7 +41,7 @@ export function getTranshipping<T>(
       trackingNumber
     },
     loading: true,
-    isMock: true
+    // isMock: true
   };
 
   return Request<T>(opts);
