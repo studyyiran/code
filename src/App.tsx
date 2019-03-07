@@ -18,8 +18,8 @@ export default class App extends React.Component {
 
   public setIsMobile = () => {
     const clientWidth = document.documentElement.clientWidth;
-    const dpr = window.devicePixelRatio || 1;
-    if ((clientWidth / dpr) <= 500) {
+    // const dpr = window.devicePixelRatio || 1;
+    if (clientWidth <= 700) {
       store['common'].isMobile = true;
       document.body.classList.add('ismobile');
     } else {

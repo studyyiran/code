@@ -113,10 +113,7 @@ export interface ITrackingModel {
  * 单个物流记录
  */
 export interface ITrackHistoryItem {
-    location: {
-        city: string;
-        country: string;
-    },
+    location: string,
     objectCreated: string;
     objectUpdated: string;
     statusDetails: string;

@@ -5,6 +5,7 @@ import './index.less';
 import HeaderHoc from './headerHoc'
 import FooterHoc from './footerHoc'
 import { getQueryString } from 'utils';
+import commonStore from '@/store/common';
 export default class LayoutIndex extends React.Component {
   // 通过context 拿到 router 对象
   public static contextTypes = {
@@ -34,6 +35,11 @@ export default class LayoutIndex extends React.Component {
     this.context.router.history.listen(() => {
       // message.loading(ECommonText.LOADING, 1);
       this.onMappingTitles(titlesKey, titles);
+      if (commonStore.isMobile) {
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+        }, 0);
+      }
 
       if (!sessionStorage.getItem('invitationCode') && location.pathname !== '/invitationCode') {
         this.context.router.history.push('/invitationCode')
