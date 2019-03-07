@@ -10,7 +10,6 @@ import {
 } from "@/containers/order/interface/order.inerface";
 import { computed, action, observable } from "mobx";
 import * as OrderApi from "../api/order.api";
-import { getMonthEn, getHourBy12 } from "@/utils/function";
 import OrderPlacedIcon from "@/images/order/orderPlaced.png";
 import PackageSentIcon from "@/images/order/packageSent.png";
 import PackageReceivedIcon from "@/images/order/packageReceived.png";
@@ -18,7 +17,15 @@ import InspectionCompleteIcon from "@/images/order/inspectionComplete.png";
 import ListSaleIcon from "@/images/order/listForSale.png";
 import OrderCompleteIcon from "@/images/order/orderComplete.png";
 import ReturnRequestIcon from "@/images/order/returnRequest.png";
-import { createDate } from "@/utils/function";
+import * as moment from "moment-timezone";
+moment.locale("en");
+
+const formatterTime = (a: string) => {
+  return a
+    .replace(".", " ")
+    .replace(",", " ")
+    .replace("  ", " ");
+};
 
 class Store implements IOrderStore {
   // 订单编号
@@ -39,14 +46,14 @@ class Store implements IOrderStore {
       // 缺少物流目的地
       const addressInfo = this.orderDetail.addressInfo;
       shippingAddress.push(addressInfo.firstName + " " + addressInfo.lastName);
+      shippingAddress.push(addressInfo.addressLine);
       if (
         addressInfo.addressLineOptional &&
         addressInfo.addressLineOptional !== ""
       ) {
         shippingAddress.push(addressInfo.addressLineOptional);
       }
-      shippingAddress.push(addressInfo.addressLine);
-      shippingAddress.push(addressInfo.city + "," + addressInfo.country);
+      shippingAddress.push(addressInfo.city + "," + addressInfo.state);
       shippingAddress.push(addressInfo.zipCode);
       // 电话和email
       telAndEmail.push(addressInfo.mobile);
@@ -100,30 +107,38 @@ class Store implements IOrderStore {
     const infos: IShippingAddress[] = [];
     if (this.trackingInfo) {
       this.trackingInfo.trackingHistory.map(t => {
-        const time = createDate(t.objectUpdated || t.objectCreated);
+        const time = moment.tz(
+          formatterTime(t.objectUpdated || t.objectCreated),
+          "America/Chicago"
+        );
         const now = new Date();
-        let dateStr = "";
-        if (time.getFullYear() !== now.getFullYear()) {
-          dateStr += time.getFullYear() + " ";
+        let dateStr = time.format("MMM DD");
+        if (time.year() !== now.getFullYear()) {
+          dateStr = time.format("YYYY MMM Do");
         }
-        dateStr = dateStr + getMonthEn(time) + " " + time.getDate();
-        const timeBy12 = getHourBy12(time);
-        let locationCtiy = '';
-        let locationCountry = '';
+
+        let locationCtiy = "";
+        let locationCountry = "";
         if (t.location) {
-          const matchCity = t.location.match(/(\[|\,\s)city=([^\,\s]*)(\,\s|\])/);
-          const matchCountry = t.location.match(/(\[|\,\s)country=([^\,\s]*)(\,\s|\])/);
-          locationCtiy = matchCity ? matchCity[2] : '';
-          locationCountry = matchCountry ? matchCountry[2] : '';
+          const matchCity = t.location.match(
+            /(\[|\,\s)city=([^\,\s]*)(\,\s|\])/
+          );
+          const matchCountry = t.location.match(
+            /(\[|\,\s)country=([^\,\s]*)(\,\s|\])/
+          );
+          locationCtiy = matchCity ? matchCity[2] : "";
+          locationCountry = matchCountry ? matchCountry[2] : "";
         }
         infos.push({
           date: dateStr,
           listData: [
             {
-              time: timeBy12.hour + " " + timeBy12.part,
+              time: time.format("h:mm A"),
               listData: [
                 t.statusDetails,
-                locationCtiy && locationCountry ? locationCtiy + "," + locationCountry : ""
+                locationCtiy && locationCountry
+                  ? locationCtiy + "," + locationCountry
+                  : ""
               ]
             }
           ]
@@ -142,23 +157,21 @@ class Store implements IOrderStore {
         if (timeforreturn) {
           timeStr = timeforreturn.createdDt;
         }
-        const time = createDate(timeStr);
+        const time = moment.tz(formatterTime(timeStr), "America/Chicago");
         const now = new Date();
-        let dateStr = "";
-        if (time.getFullYear() !== now.getFullYear()) {
-          dateStr += time.getFullYear() + " ";
+        let dateStr = time.format("MMM Do");
+        if (time.year() !== now.getFullYear()) {
+          dateStr = time.format("YYYY MMM Do");
         }
-        dateStr = dateStr + getMonthEn(time) + " " + time.getDate();
-        const timeBy12 = getHourBy12(time);
         infos.push({
           date: dateStr,
           listData: [
             {
-              time: timeBy12.hour + " " + timeBy12.part,
+              time: time.format("h:mm A") + "CST",
               listData: ["Shipment order placed"]
             },
             {
-              time: timeBy12.hour + " " + timeBy12.part,
+              time: time.format("h:mm A") + "CST",
               listData: ["Package is picked up"]
             }
           ]
@@ -501,8 +514,8 @@ class Store implements IOrderStore {
   };
   private packageDate(b: string | undefined) {
     if (b) {
-      const date = createDate(b);
-      return getMonthEn(date) + " " + date.getDate();
+      const date = moment.tz(formatterTime(b), "America/Chicago");
+      return date.format("MMM") + " " + date.date();
     }
     return b;
   }
