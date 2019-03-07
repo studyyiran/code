@@ -108,6 +108,14 @@ class Store implements IOrderStore {
         }
         dateStr = dateStr + getMonthEn(time) + " " + time.getDate();
         const timeBy12 = getHourBy12(time);
+        let locationCtiy = '';
+        let locationCountry = '';
+        if (t.location) {
+          const matchCity = t.location.match(/(\[|\,\s)city=([^\,\s]*)(\,\s|\])/);
+          const matchCountry = t.location.match(/(\[|\,\s)country=([^\,\s]*)(\,\s|\])/);
+          locationCtiy = matchCity ? matchCity[2] : '';
+          locationCountry = matchCountry ? matchCountry[2] : '';
+        }
         infos.push({
           date: dateStr,
           listData: [
@@ -115,7 +123,7 @@ class Store implements IOrderStore {
               time: timeBy12.hour + " " + timeBy12.part,
               listData: [
                 t.statusDetails,
-                t.location ? t.location.city + "," + t.location.country : ""
+                locationCtiy && locationCountry ? locationCtiy + "," + locationCountry : ""
               ]
             }
           ]
