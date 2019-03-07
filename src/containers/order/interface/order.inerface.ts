@@ -50,6 +50,7 @@ export interface IOrderStore {
   autoSaveLoginMes: () => void;
   autoLogin: () => Promise<boolean>;
   setOrderDetail: (d: IOrderDetail) => void;
+  tellUserToReportError: (error: any) => void;
 }
 
 /**
