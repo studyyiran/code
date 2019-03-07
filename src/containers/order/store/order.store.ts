@@ -69,7 +69,7 @@ class Store implements IOrderStore {
       orderNumber: this.orderDetail.orderNo || "",
       orderDate: moment
         .tz(this.orderDetail.createdDt, "America/Chicago")
-        .format("MMM. Do, YYYY")
+        .format("MMM. DD, YYYY")
     };
   }
 
@@ -84,7 +84,7 @@ class Store implements IOrderStore {
       if (orderItem.product && !orderItem.product.isTBD) {
         model = orderItem.product.name;
         carrier = this.referenceEnumToCarrier(orderItem.carrier);
-        condition = orderItem.pricePropertyValues.map(t => t.value).join(",");
+        condition = orderItem.pricePropertyValues.map(t => t.value).join(", ");
         guaranteedPrice = `$${orderItem.amountDollar}`;
       } else {
         // TBD
@@ -531,6 +531,7 @@ class Store implements IOrderStore {
       okText: 'OK',
       title: 'Oops... something goes wrong!',
       hasCountDown: false,
+      maskClosable: true,
       onOk: () => {
         const aDOM = document.createElement('a');
         aDOM.style.display = 'none';
