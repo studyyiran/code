@@ -13,7 +13,7 @@ export function getOrderDetail<T>(
       userEmail,
       orderNo
     },
-    loading: true,
+    loading: true
     // isMock: true
   };
   return Request<T>(opts);
@@ -40,7 +40,7 @@ export function getTranshipping<T>(
       carrier,
       trackingNumber
     },
-    loading: true,
+    loading: true
     // isMock: true
   };
 

@@ -20,13 +20,6 @@ import ReturnRequestIcon from "@/images/order/returnRequest.png";
 import * as moment from "moment-timezone";
 moment.locale("en");
 
-const formatterTime = (a: string) => {
-  return a
-    .replace(".", " ")
-    .replace(",", " ")
-    .replace("  ", " ");
-};
-
 class Store implements IOrderStore {
   // 订单编号
   @observable public orderNo = "";
@@ -72,7 +65,9 @@ class Store implements IOrderStore {
       telAndEmail,
       paymentMethod,
       orderNumber: this.orderDetail.orderNo || "",
-      orderDate: this.orderDetail.createdDt || ""
+      orderDate: moment
+        .tz(this.orderDetail.createdDt, "America/Chicago")
+        .format("MMM Do YYYY")
     };
   }
 
@@ -108,11 +103,11 @@ class Store implements IOrderStore {
     if (this.trackingInfo) {
       this.trackingInfo.trackingHistory.map(t => {
         const time = moment.tz(
-          formatterTime(t.objectUpdated || t.objectCreated),
+          t.objectUpdated || t.objectCreated,
           "America/Chicago"
         );
         const now = new Date();
-        let dateStr = time.format("MMM DD");
+        let dateStr = time.format("MMM Do");
         if (time.year() !== now.getFullYear()) {
           dateStr = time.format("YYYY MMM Do");
         }
@@ -129,20 +124,33 @@ class Store implements IOrderStore {
           locationCtiy = matchCity ? matchCity[2] : "";
           locationCountry = matchCountry ? matchCountry[2] : "";
         }
-        infos.push({
-          date: dateStr,
-          listData: [
-            {
-              time: time.format("h:mm A"),
-              listData: [
-                t.statusDetails,
-                locationCtiy && locationCountry
-                  ? locationCtiy + "," + locationCountry
-                  : ""
-              ]
-            }
-          ]
-        });
+        const obj = infos.findIndex(v => v.date === dateStr);
+        if (obj > -1) {
+          infos[obj].listData.push({
+            time: time.format("h:mm A"),
+            listData: [
+              t.statusDetails,
+              locationCtiy && locationCountry
+                ? locationCtiy + "," + locationCountry
+                : ""
+            ]
+          });
+        } else {
+          infos.push({
+            date: dateStr,
+            listData: [
+              {
+                time: time.format("h:mm A"),
+                listData: [
+                  t.statusDetails,
+                  locationCtiy && locationCountry
+                    ? locationCtiy + "," + locationCountry
+                    : ""
+                ]
+              }
+            ]
+          });
+        }
         return true;
       });
     } else {
@@ -157,7 +165,7 @@ class Store implements IOrderStore {
         if (timeforreturn) {
           timeStr = timeforreturn.createdDt;
         }
-        const time = moment.tz(formatterTime(timeStr), "America/Chicago");
+        const time = moment.tz(timeStr, "America/Chicago");
         const now = new Date();
         let dateStr = time.format("MMM Do");
         if (time.year() !== now.getFullYear()) {
@@ -167,11 +175,11 @@ class Store implements IOrderStore {
           date: dateStr,
           listData: [
             {
-              time: time.format("h:mm A") + "CST",
+              time: time.format("h:mm A"),
               listData: ["Shipment order placed"]
             },
             {
-              time: time.format("h:mm A") + "CST",
+              time: time.format("h:mm A"),
               listData: ["Package is picked up"]
             }
           ]
@@ -514,8 +522,8 @@ class Store implements IOrderStore {
   };
   private packageDate(b: string | undefined) {
     if (b) {
-      const date = moment.tz(formatterTime(b), "America/Chicago");
-      return date.format("MMM") + " " + date.date();
+      const date = moment.tz(b, "America/Chicago");
+      return date.format("MMM Do");
     }
     return b;
   }
