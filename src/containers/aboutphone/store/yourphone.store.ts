@@ -224,6 +224,7 @@ class YourPhone implements IYourPhoneStore {
     }
 
     this.inquiryKey = res;
+    await this.getInquiryDetail();
     return true;
   }
 
