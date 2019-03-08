@@ -7,7 +7,7 @@ release:
     script:
       - pwd
       - whoami
-      - npm install shipit-deploy@4.1.0 shipit-shared-copy@0.1.0
+      - yarn add shipit-deploy@4.1.0 shipit-shared-copy@0.1.0
       - shipit prod deploy
       - |-
          curl 'https://oapi.dingtalk.com/robot/send?access_token=9586e21e95d59e2fc3579d27997450694fcaaa0b10da01a4f0cd73ccfd68f456' -H 'Content-Type: application/json'  -d '{"msgtype": "text",  "text": {"content": "美国帮卖宝 前台页面 production 已部署"}}'
