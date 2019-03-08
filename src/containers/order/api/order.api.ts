@@ -15,7 +15,7 @@ export function getOrderDetail<T>(
     },
     loading: false
   };
-  return Request<T>(opts);
+  return Request<T>(opts, []);
 }
 
 // 采用一次性token获取订单详情
