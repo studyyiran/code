@@ -61,8 +61,8 @@ export default class Broken extends React.Component {
         <p>UP Trade welcomes your questions or comments regarding the Terms: </p>
         <p>
           UP Trade Technologies, Incorporated <br />
-          550 S. Watters Rd. Suite 180<br />
-          Allen, Texas 75013 <br />
+          550 S Waters Rd, Suite 276<br />
+          Allen, TX 75070<br />
         </p>
         <p>
           Email Address: <br />
