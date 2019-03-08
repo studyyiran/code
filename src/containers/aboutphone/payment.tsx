@@ -152,13 +152,13 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
       case false:
         leftContent = (
           <div className="left-wrapper">
-            <p className="description">Confirm your paypal address so we can send you the payment of ryour phone.</p>
+            <p className="description">Confirm your paypal address so we can send you the payment for your phone.</p>
             <p className="email">
-              <span className="title">Paypal email address</span>
+              <span className="title">PayPal email address</span>
               <br />
               <span className="address">{this.props.user.preOrder.userEmail}</span>
             </p>
-            <p className="difference" onClick={this.changeEditState.bind(this, 'paypal')} >My email for Paypal is not the same as contact email</p>
+            <p className="difference" onClick={this.changeEditState.bind(this, 'paypal')} >My email for PayPal is not the same as contact email</p>
           </div>
         );
         break;

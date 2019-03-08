@@ -90,7 +90,7 @@ export const noteUserModal = (params: INoteUserModalProps) => {
     className: 'modal-for-user-to-email',
     content: '',
     type: 'success',
-    seconds: 5,
+    seconds: 15,
     hasCountDown: true,
     ...params
   };
