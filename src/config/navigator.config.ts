@@ -48,7 +48,7 @@ export default {
   },
   '/sell/yourphone/payment': {
     step: 3,
-    mainText: 'How would you like to paid?',
+    mainText: 'How would you like to be paid?',
     subText: 'We’ll send payment to your account, the day your phone arrives at our offices.',
     hasSearch: false,
     progress: -1
