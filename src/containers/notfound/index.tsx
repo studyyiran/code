@@ -13,7 +13,7 @@ class NotFound extends React.Component {
     return (
       <div className="page-not-found-container">
         <div className="left">
-          <img src={require('@/images/notfound/404_banner.png')} className="pc-404-img" alt="" />
+          <img src={require('@/images/notfound/404_banner.jpg')} className="pc-404-img" alt="" />
           <img src={require('@/images/notfound/m_404_banner.png')} className="m-404-img" alt="" />
         </div>
         <div className="right">
