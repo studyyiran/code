@@ -169,7 +169,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
             <p className="description">Confirm your paypal address so we can send you the payment of ryour phone.</p>
             <div className="form-wrapper">
               <Form layout="vertical">
-                <Form.Item label="Paypal email address">
+                <Form.Item label="PayPal email address">
                   {
                     getFieldDecorator('paypal_email', {
                       rules: [
@@ -186,7 +186,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
                     )
                   }
                 </Form.Item>
-                <Form.Item label="Confirm Paypal email address">
+                <Form.Item label="Confirm PayPal email address">
                   {
                     getFieldDecorator('paypal_email_confirm', {
                       rules: [
@@ -205,7 +205,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
                 </Form.Item>
               </Form>
             </div>
-            <p className="difference" onClick={this.changeEditState.bind(this, 'paypal')} >My email for Paypal is the same as contact email</p>
+            <p className="difference" onClick={this.changeEditState.bind(this, 'paypal')} >My email for PayPal is the same as contact email</p>
           </div>
         );
         break;

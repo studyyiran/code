@@ -60,7 +60,7 @@ export default class Why extends React.Component<IContactProps> {
                 <h2>Easy. Two steps and done</h2>
                 <p>
                   Ship it and get paid. It’s that simple. Multiple payout
-                  methods means you can get paid how you want it. Choose paypal
+                  methods means you can get paid how you want it. Choose PayPal
                   for the fastest way to get paid. We payout our price guarantee
                   the next business day after receiving and evaluating your
                   phone.
