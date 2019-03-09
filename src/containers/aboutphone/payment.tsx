@@ -152,7 +152,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
       case false:
         leftContent = (
           <div className="left-wrapper">
-            <p className="description">Confirm your paypal address so we can send you the payment for your phone.</p>
+            <p className="description">Confirm your PayPal address so we can send you the payment for your phone.</p>
             <p className="email">
               <span className="title">PayPal email address</span>
               <br />
@@ -166,7 +166,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
       case true:
         leftContent = (
           <div className="left-wrapper">
-            <p className="description">Confirm your paypal address so we can send you the payment of ryour phone.</p>
+            <p className="description">Confirm your PayPal address so we can send you the payment of ryour phone.</p>
             <div className="form-wrapper">
               <Form layout="vertical">
                 <Form.Item label="PayPal email address">
