@@ -5260,7 +5260,7 @@ mobx@^4.6.0:
 
 moment-timezone@^0.5.23:
   version "0.5.23"
-  resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.23.tgz#7cbb00db2c14c71b19303cb47b0fb0a6d8651463"
+  resolved "http://registry.npm.taobao.org/moment-timezone/download/moment-timezone-0.5.23.tgz#7cbb00db2c14c71b19303cb47b0fb0a6d8651463"
   dependencies:
     moment ">= 2.9.0"
 

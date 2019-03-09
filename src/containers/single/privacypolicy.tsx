@@ -1,8 +1,13 @@
 import * as React from 'react';
 import "./blog.less"
 import "./terms.less"
-export default class Broken extends React.Component {
+import { inject, observer } from 'mobx-react';
+import { ICommonProps } from '@/store/interface/common.interface';
+@inject('common')
+@observer
+export default class Broken extends React.Component<ICommonProps> {
   public render() {
+    const staticOffice = this.props.common.staticOffice;
     return (
       <div className="page-privacy-policy-container">
         <h1>Privacy Policy</h1>
@@ -52,11 +57,13 @@ export default class Broken extends React.Component {
         <p>UP Trade reserves the right to change this Privacy Policy from time to time. We will notify you about significant changes in the way we treat personal information by sending a notice to the primary email address specified in your account, by placing a prominent notice on our site, and/or by updating any privacy information on this page. Your continued use of the Site and/or Services available through this Site after such modifications will constitute your: (a) acknowledgment of the modified Privacy Policy; and (b) agreement to abide and be bound by that Policy.</p>
         <h2>Contact Information</h2>
         <p>UP Trade welcomes your questions or comments regarding this Statement of Privacy. If you believe that UP Trade has not adhered to this Statement, please contact UP Trade at:</p>
-        <p>
-          UP Trade Technologies, Incorporated<br />
-          550 S Waters Rd, Suite 276<br />
-          Allen, TX 75070<br />
-        </p>
+        {
+          staticOffice && <p>
+            UP Trade Technologies, Incorporated<br />
+            {staticOffice.street}<br />
+            {staticOffice.city}, {staticOffice.state} {staticOffice.zipCode}<br />
+          </p>
+        }
         <p>
           Email Address:<br />
           support@uptradeit.com

@@ -1,9 +1,15 @@
 import * as React from 'react';
 import "./blog.less"
 import "./terms.less"
+import { inject, observer } from 'mobx-react';
+import { ICommonProps } from '@/store/interface/common.interface';
 
-export default class Broken extends React.Component {
+
+@inject('common')
+@observer
+export default class Broken extends React.Component<ICommonProps> {
   public render() {
+    const staticOffice = this.props.common.staticOffice;
     return (
       <div className="page-terms-container">
         <h1>Terms and Conditions </h1>
@@ -59,11 +65,13 @@ export default class Broken extends React.Component {
         <p>UP Trade reserves the right, in its sole discretion, to change the Terms under which uptradeit.com is offered. The most current version of the Terms will supersede all previous versions. UP Trade encourages you to periodically review the Terms to stay informed of our updates.</p>
         <h2>Contact Us </h2>
         <p>UP Trade welcomes your questions or comments regarding the Terms: </p>
-        <p>
-          UP Trade Technologies, Incorporated <br />
-          550 S Waters Rd, Suite 276<br />
-          Allen, TX 75070<br />
-        </p>
+        {
+          staticOffice && <p>
+            UP Trade Technologies, Incorporated<br />
+            {staticOffice.street}<br />
+            {staticOffice.city}, {staticOffice.state} {staticOffice.zipCode}<br />
+          </p>
+        }
         <p>
           Email Address: <br />
           support@uptradeit.com

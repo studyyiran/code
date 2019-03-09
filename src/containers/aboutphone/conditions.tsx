@@ -124,10 +124,10 @@ export default class Conditions extends React.Component<IConditionsProps> {
         console.log(this.props.yourphone.inquiryDetail)
         noteUserModal({
           title: 'Your UpTrade Offer',
-          content: (<>Your {this.props.yourphone.inquiryDetail!.product.name} Guarantee Price is ${this.props.yourphone.inquiryDetail!.priceDollar} <br /> <br />This window will be closed after 15 seconds.</>),
+          content: (<>Your {this.props.yourphone.inquiryDetail!.product.name} Guaranteed Price is ${this.props.yourphone.inquiryDetail!.priceDollar} <br /> <br />This window will be closed after 15 seconds.</>),
           type: 'success',
           seconds: 15,
-          update: (seconds) => (<>Your {this.props.yourphone.inquiryDetail!.product.name} Guarantee Price is ${this.props.yourphone.inquiryDetail!.priceDollar} <br /> <br />This window will be closed after {seconds} seconds.</>),
+          update: (seconds) => (<>Your {this.props.yourphone.inquiryDetail!.product.name} Guaranteed Price is ${this.props.yourphone.inquiryDetail!.priceDollar} <br /> <br />This window will be closed after {seconds} seconds.</>),
           onOk: () => this.props.history.push('/sell/yourphone/shipping')
         });
       } else {

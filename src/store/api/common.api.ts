@@ -19,7 +19,7 @@ export const getPostion = () => {
   });
 
   return new Promise((reslove, reject) => {
-    map.plugin("AMap.Geolocation", function() {
+    map.plugin("AMap.Geolocation", function () {
       geolocation = new AMap.Geolocation(options);
 
       geolocation.getCurrentPosition();
@@ -47,3 +47,12 @@ export const onSubscribe = <T>(userEmail: string): Promise<T> => {
 
   return Request<T>(opts);
 };
+
+
+export const getStaticOffice = <T>(): Promise<T> => {
+  const opts: IOpts = {
+    url: `/static/office`,
+  };
+
+  return Request<T>(opts);
+}
