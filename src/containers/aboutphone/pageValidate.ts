@@ -96,23 +96,26 @@ export const noteUserModal = (params: INoteUserModalProps) => {
   };
 
   let secondsToGo: number = defaultParams.seconds!;
+  let timer: NodeJS.Timer
+  if (defaultParams.customerOk) {
+    defaultParams.onOk = () => {
+      clearInterval(timer);
+      if (defaultParams.customerOk) {
+        defaultParams.customerOk();
+      }
+    }
+  }
 
   const modal = Modal[defaultParams.type](defaultParams);
 
   // 是否自动关闭
   if (defaultParams.hasCountDown) {
-    const timer = setInterval(() => {
+    timer = setInterval(() => {
       secondsToGo -= 1;
       if (defaultParams.update) {
         defaultParams.update(secondsToGo)
         modal.update({
           content: defaultParams.update(secondsToGo),
-          onOk: () => {
-            clearInterval(timer);
-            if (defaultParams.customerOk) {
-              defaultParams.customerOk();
-            }
-          }
         });
       }
     }, 1000);
