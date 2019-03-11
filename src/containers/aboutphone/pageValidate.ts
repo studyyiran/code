@@ -115,6 +115,14 @@ export const noteUserModal = (params: INoteUserModalProps) => {
       clearInterval(timer);
       modal.destroy();
       // 自动关闭，来执行okClick
+      if (defaultParams.customerOk) {
+        defaultParams.onOk = () => {
+          clearInterval(timer);
+          if (defaultParams.customerOk) {
+            defaultParams.customerOk();
+          }
+        }
+      }
       if (defaultParams.onOk) {
         defaultParams.onOk();
       }

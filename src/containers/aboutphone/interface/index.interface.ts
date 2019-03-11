@@ -261,6 +261,7 @@ export interface INoteUserModalProps extends ModalFuncProps {
   update?: (seconds: number) => JSX.Element | string;
   type: 'success' | 'info' | 'error' | 'warn' | 'confirm' | 'warning'
   onOk?: () => void
+  customerOk?: () => void
   title?: string;
   seconds?: number;
   hasCountDown?: boolean;
