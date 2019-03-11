@@ -105,7 +105,7 @@ class Store implements IOrderStore {
     if (this.trackingInfo) {
       this.trackingInfo.trackingHistory.map(t => {
         const time = moment.tz(
-          t.statusDate || t.objectUpdated || t.objectCreated,
+          t.statusDate,
           "America/Chicago"
         );
         const now = new Date();
