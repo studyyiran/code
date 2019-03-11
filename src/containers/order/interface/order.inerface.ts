@@ -118,6 +118,7 @@ export interface ITrackHistoryItem {
   objectCreated: string;
   objectUpdated: string;
   statusDetails: string;
+  statusDate: string;
 }
 /**
  * 订单属性
