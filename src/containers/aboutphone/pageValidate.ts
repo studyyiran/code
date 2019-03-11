@@ -97,11 +97,16 @@ export const noteUserModal = (params: INoteUserModalProps) => {
 
   let secondsToGo: number = defaultParams.seconds!;
   let timer: NodeJS.Timer
+  let timer2: NodeJS.Timer
   if (defaultParams.customerOk) {
     defaultParams.onOk = () => {
+      debugger;
       clearInterval(timer);
+      clearTimeout(timer2);
       if (defaultParams.customerOk) {
         defaultParams.customerOk();
+        defaultParams.hasCountDown = false;
+
       }
     }
   }
@@ -130,7 +135,7 @@ export const noteUserModal = (params: INoteUserModalProps) => {
     //   }
     // }
 
-    setTimeout(() => {
+    timer2 = setTimeout(() => {
       clearInterval(timer);
       modal.destroy();
       if (defaultParams.onOk) {
