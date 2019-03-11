@@ -111,18 +111,19 @@ export const noteUserModal = (params: INoteUserModalProps) => {
       }
     }, 1000);
 
+    // 倒计时时候的Click 按钮点击
+    if (defaultParams.customerOk) {
+      defaultParams.onOk = () => {
+        clearInterval(timer);
+        if (defaultParams.customerOk) {
+          defaultParams.customerOk();
+        }
+      }
+    }
+
     setTimeout(() => {
       clearInterval(timer);
       modal.destroy();
-      // 自动关闭，来执行okClick
-      if (defaultParams.customerOk) {
-        defaultParams.onOk = () => {
-          clearInterval(timer);
-          if (defaultParams.customerOk) {
-            defaultParams.customerOk();
-          }
-        }
-      }
       if (defaultParams.onOk) {
         defaultParams.onOk();
       }
