@@ -107,19 +107,25 @@ export const noteUserModal = (params: INoteUserModalProps) => {
         defaultParams.update(secondsToGo)
         modal.update({
           content: defaultParams.update(secondsToGo),
+          onOk: () => {
+            clearInterval(timer);
+            if (defaultParams.customerOk) {
+              defaultParams.customerOk();
+            }
+          }
         });
       }
     }, 1000);
 
-    // 倒计时时候的Click 按钮点击
-    if (defaultParams.customerOk) {
-      defaultParams.onOk = () => {
-        clearInterval(timer);
-        if (defaultParams.customerOk) {
-          defaultParams.customerOk();
-        }
-      }
-    }
+    // // 倒计时时候的Click 按钮点击
+    // if (defaultParams.customerOk) {
+    //   defaultParams.onOk = () => {
+    //     clearInterval(timer);
+    //     if (defaultParams.customerOk) {
+    //       defaultParams.customerOk();
+    //     }
+    //   }
+    // }
 
     setTimeout(() => {
       clearInterval(timer);
