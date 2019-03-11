@@ -84,7 +84,7 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
                     </div>
                     <div className="info-item">
                       <span className="label">Order Date</span>
-                      <p className="content">{orderDetail && moment.tz(orderDetail.createdDt, "America/Chicago").format('MMM. DD, YYYY')}</p>
+                      <p className="content">{orderDetail && moment.tz(orderDetail.createdDt, "America/Chicago").format('MMM DD, YYYY')}</p>
                     </div>
                   </div>
                   <p className="guaranteed-price">

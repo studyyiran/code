@@ -27,7 +27,7 @@ export default [
       href: '/who-we-are'
     },
     {
-      text: 'Why Up Trade',
+      text: 'Why UpTrade',
       href: '/why-uptrade'
     },
     {
