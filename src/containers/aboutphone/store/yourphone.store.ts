@@ -253,7 +253,7 @@ class YourPhone implements IYourPhoneStore {
 
   // 创建订单
   @action public createOrder = async () => {
-    const orderParams: Pick<IPreOrder, Exclude<keyof IPreOrder, 'key' | 'productInfo'>> = {
+    const orderParams: Pick<IPreOrder, Exclude<keyof IPreOrder, 'key' | 'productInfo'>> & { brandId?: number } = {
       addressInfo: this.addressInfo,
       agentCode: ENVCONFIG.agentCode,
       carrier: this.activeCarrierName,
@@ -261,7 +261,8 @@ class YourPhone implements IYourPhoneStore {
       inquiryKey: this.inquiryKey,
       payment: this.payment,
       paypalInfo: this.paypal,
-      userEmail: UserStore.preOrder.userEmail!
+      userEmail: UserStore.preOrder.userEmail!,
+      brandId: UserStore.preOrder.productInfo ? UserStore.preOrder.productInfo.brandId : undefined
     }
 
     try {
