@@ -52,13 +52,19 @@ export default class Brands extends React.Component<IBrandsProps> {
         productInfo: {
           brandId: brand.id,
           brandName: brand.name
-        }
+        },
+        inquiryKey: brand.id === DEFAULT.otherBrandsId ? '' : this.props.yourphone.inquiryKey
       };
     } catch (error) { console.warn(error, 'in brands page updatePreorder') }
 
     this.props.yourphone.activeBrandsId = brand.id;
     this.props.yourphone.activeBrandsName = brand.name;
     // 是否为TBD机型
-    brand.id === DEFAULT.otherBrandsId ? this.props.history.push('/sell/yourphone/shipping') : this.props.history.push('/sell/yourphone/carrier');
+    if (brand.id === DEFAULT.otherBrandsId) {
+      this.props.yourphone.inquiryKey = '';
+      this.props.history.push('/sell/yourphone/shipping')
+      return;
+    }
+    this.props.history.push('/sell/yourphone/carrier');
   }
 }
