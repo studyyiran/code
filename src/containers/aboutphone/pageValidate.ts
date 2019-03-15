@@ -5,7 +5,8 @@
 import { DEFAULT } from 'config';
 import userStore from '@/store/user';
 import yourPhoneStore from '@/containers/aboutphone/store/yourphone.store';
-import { EPayType } from './interface/index.interface';
+import { EPayType, INoteUserModalProps } from './interface/index.interface';
+import { Modal } from 'antd';
 
 // modal页面的校验
 export const modalPageValidate = (): boolean => {
@@ -84,4 +85,62 @@ export const orderDetailValidate = (): boolean => {
   return !!(yourPhoneStore.inquiryDetail !== null && JSON.stringify(yourPhoneStore.orderDetail) !== '{}');
 }
 
+export const noteUserModal = (params: INoteUserModalProps) => {
+  const defaultParams: INoteUserModalProps = {
+    className: 'modal-for-user-to-email',
+    content: '',
+    type: 'success',
+    seconds: 15,
+    hasCountDown: true,
+    ...params
+  };
 
+  let secondsToGo: number = defaultParams.seconds!;
+  let timer: NodeJS.Timer
+  let timer2: NodeJS.Timer
+  if (defaultParams.customerOk) {
+    defaultParams.onOk = () => {
+      debugger;
+      clearInterval(timer);
+      clearTimeout(timer2);
+      if (defaultParams.customerOk) {
+        defaultParams.customerOk();
+        defaultParams.hasCountDown = false;
+
+      }
+    }
+  }
+
+  const modal = Modal[defaultParams.type](defaultParams);
+
+  // 是否自动关闭
+  if (defaultParams.hasCountDown) {
+    timer = setInterval(() => {
+      secondsToGo -= 1;
+      if (defaultParams.update) {
+        defaultParams.update(secondsToGo)
+        modal.update({
+          content: defaultParams.update(secondsToGo),
+        });
+      }
+    }, 1000);
+
+    // // 倒计时时候的Click 按钮点击
+    // if (defaultParams.customerOk) {
+    //   defaultParams.onOk = () => {
+    //     clearInterval(timer);
+    //     if (defaultParams.customerOk) {
+    //       defaultParams.customerOk();
+    //     }
+    //   }
+    // }
+
+    timer2 = setTimeout(() => {
+      clearInterval(timer);
+      modal.destroy();
+      if (defaultParams.onOk) {
+        defaultParams.onOk();
+      }
+    }, secondsToGo * 1000);
+  }
+}

@@ -1,3 +1,4 @@
+
 import { ENVCONFIG, DEFAULT } from 'config';
 import { IQueryParams, IInquiryDetail, IAddressInfo } from './../interface/index.interface';
 import * as Api from '../api/index.api';
@@ -5,6 +6,7 @@ import { action, observable, autorun, computed } from 'mobx';
 import { IYourPhoneStore, ICarrier, IBrands, IAmericaState, IProductModel, IProductPPVN } from '../interface/index.interface';
 import { IPreOrder } from '@/store/interface/user.interface';
 import UserStore from '@/store/user';
+import { noteUserModal } from '@/containers/aboutphone/pageValidate';
 class YourPhone implements IYourPhoneStore {
   @observable public carriers: ICarrier[] = [];
   @observable public brands: IBrands[] = [];
@@ -129,6 +131,10 @@ class YourPhone implements IYourPhoneStore {
   }
 
   @action public getProductsList = async (keyword: string = '') => {
+    // 直接return
+    if (this.activeBrandsId <= 0) {
+      return true;
+    }
     let res: IProductModel[] = [];
     try {
       res = await Api.getProductsList<IProductModel[]>(this.activeBrandsId);
@@ -176,7 +182,9 @@ class YourPhone implements IYourPhoneStore {
   // 创建询价
   @action public createInquiry = async () => {
     const priceUnits: number[] = Object.values(this.activeConditions);
-    priceUnits.push(this.activeModelId); // priceUnits包括在model选择的ppv，以及condition选的非sku属性
+    if (this.activeModelId && this.activeModelId > 0) {
+      priceUnits.push(this.activeModelId); // priceUnits包括在model选择的ppv，以及condition选的非sku属性
+    }
 
     const inquiry: IQueryParams = {
       agentCode: ENVCONFIG.agentCode,
@@ -190,10 +198,33 @@ class YourPhone implements IYourPhoneStore {
       res = await Api.createInquiry<string>(inquiry);
     } catch (error) {
       console.warn(error, 'in yourphone store createInquiry');
+      // 前端拦截所有报错并提示用户去写邮件寻求帮助
+      noteUserModal({
+        content: 'Please contact support@uptradeit.com for help.',
+        type: 'error',
+        okText: 'OK',
+        title: 'Oops... something goes wrong!',
+        maskClosable: true,
+        hasCountDown: false,
+        onOk: () => {
+          const aDOM = document.createElement('a');
+          aDOM.style.display = 'none';
+          aDOM.id = 'AFOREMAIL';
+          aDOM.setAttribute('href', `mailto:${DEFAULT.supportEmail}`);
+          document.body.appendChild(aDOM);
+
+          const adom = document.getElementById('AFOREMAIL');
+          if (adom) {
+            adom.click();
+            document.body.removeChild(adom);
+          }
+        }
+      });
       return false;
     }
 
     this.inquiryKey = res;
+    await this.getInquiryDetail();
     return true;
   }
 
@@ -222,7 +253,7 @@ class YourPhone implements IYourPhoneStore {
 
   // 创建订单
   @action public createOrder = async () => {
-    const orderParams: Pick<IPreOrder, Exclude<keyof IPreOrder, 'key' | 'productInfo'>> = {
+    const orderParams: Pick<IPreOrder, Exclude<keyof IPreOrder, 'key' | 'productInfo'>> & { brandId?: number } = {
       addressInfo: this.addressInfo,
       agentCode: ENVCONFIG.agentCode,
       carrier: this.activeCarrierName,
@@ -230,13 +261,35 @@ class YourPhone implements IYourPhoneStore {
       inquiryKey: this.inquiryKey,
       payment: this.payment,
       paypalInfo: this.paypal,
-      userEmail: UserStore.preOrder.userEmail!
+      userEmail: UserStore.preOrder.userEmail!,
+      brandId: UserStore.preOrder.productInfo ? UserStore.preOrder.productInfo.brandId : undefined
     }
 
     try {
       this.orderDetail = await Api.createOrder<any>(orderParams);
     } catch (error) {
       console.warn(error, 'in yourphone store createOrder');
+      noteUserModal({
+        content: 'Please contact support@uptradeit.com for help.',
+        type: 'error',
+        okText: 'OK',
+        title: 'Oops... something goes wrong!',
+        hasCountDown: false,
+        maskClosable: true,
+        onOk: () => {
+          const aDOM = document.createElement('a');
+          aDOM.style.display = 'none';
+          aDOM.id = 'AFOREMAIL';
+          aDOM.setAttribute('href', `mailto:${DEFAULT.supportEmail}`);
+          document.body.appendChild(aDOM);
+
+          const adom = document.getElementById('AFOREMAIL');
+          if (adom) {
+            adom.click();
+            document.body.removeChild(adom);
+          }
+        }
+      });
       return false;
     }
 

@@ -11,6 +11,8 @@ import EventHandler from '@/utils/event';
 
 interface IStates {
   navigatorObj: INavigatorObj | null;
+  value: string,
+  searchList: IProductModel[]
 }
 // let timer: number = 0;
 @observer
@@ -18,12 +20,15 @@ export default class BrandHeader extends React.Component<object, IStates> {
   public static readonly displayName: string = '页面title显示组件';
   public readonly state: Readonly<IStates> = {
     navigatorObj: null,
+    value: '',
+    searchList: []
   }
 
   public componentDidMount() {
     const navigator = NAVIGATOR;
     const navigatorKey = Object.keys(navigator);
     this.onMappingText(navigatorKey, navigator);
+    yourphoneStore.getProductsList('1')
     // 注册全局点击事件，以便点击其他区域时，隐藏展开的内容
     EventHandler.add(this.globalClick);
 
@@ -46,7 +51,7 @@ export default class BrandHeader extends React.Component<object, IStates> {
     const { navigatorObj } = this.state;
     const extraText = navigatorObj.isInCheckOrder ? userStore.preOrder.userEmail : ''; // checkorder页面需要添加用户邮箱展示
     return (
-      <div className={classnames('comp-brand-header-container', {multiple: navigatorObj.subText})}>
+      <div className={classnames('comp-brand-header-container', { multiple: navigatorObj.subText })}>
         <div className="left-wrapper">
           <p className="main-text">{navigatorObj.mainText}</p>
           {
@@ -62,12 +67,13 @@ export default class BrandHeader extends React.Component<object, IStates> {
               onChange={this.handleKeyWordChange}
               onFocus={this.handleFocus}
               enterButton={true}
+              value={this.state.value}
             />
             {
-              yourphoneStore.products4Search.length > 0 &&
+              this.state.searchList.length > 0 &&
               <div className="results-wrapper">
                 {
-                  yourphoneStore.products4Search.map((product, index) => (
+                  this.state.searchList.map((product, index) => (
                     <p
                       key={index}
                       className='product'
@@ -95,18 +101,26 @@ export default class BrandHeader extends React.Component<object, IStates> {
     // TODO: 防抖目前搞不通，死活报warning
     // 获取input dom对象，然后获取里面的值
     const value = event.target.value;
+    this.setState({
+      value,
+    })
     if (value.trim() === '') {
-      yourphoneStore.products4Search = [];
+      this.setState({
+        searchList: []
+      })
     }
 
     if (value.trim()) {
-      const arr: IProductModel[] = yourphoneStore.products.filter((v: IProductModel) => {
+      const arr: IProductModel[] = yourphoneStore.products4Search.filter((v: IProductModel) => {
         if (v.name.toLocaleLowerCase().indexOf(value.toLocaleLowerCase()) !== -1) {
           return true;
         }
         return false;
       })
-      yourphoneStore.products4Search = arr;
+
+      this.setState({
+        searchList: arr
+      })
     }
 
     // if (timer) {
@@ -123,12 +137,19 @@ export default class BrandHeader extends React.Component<object, IStates> {
 
   private handleProductSelect = (product: IProductModel) => {
     yourphoneStore.products = [product];
-    yourphoneStore.products4Search = [];
+    this.setState({
+      searchList: []
+    })
+    this.setState({
+      value: product.name
+    })
   }
 
   // 全局点击
   private globalClick = () => {
-    yourphoneStore.products4Search = [];
+    this.setState({
+      searchList: []
+    })
   }
 
   private handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {

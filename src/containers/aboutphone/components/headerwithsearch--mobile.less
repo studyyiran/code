@@ -6,18 +6,52 @@
     padding: 0.31rem 0.2rem;
     height: auto;
     border-bottom: none;
+
+    .ant-input {
+      border: 1px solid rgba(213, 213, 213, 1);
+    }
+
     &.multiple {
       padding: 0.31rem 0.2rem 0.26rem;
       border-bottom: 1px solid #f5f5f5;
     }
+
     .left-wrapper {
       .main-text {
         text-align: center;
         font-size: 0.16rem;
         line-height: 0.16rem;
       }
+
       .sub-text {
         text-align: center;
+      }
+    }
+
+    .results-wrapper {
+      max-height: 2rem;
+      overflow-y: auto;
+      overflow-x: hidden;
+      margin-top: -0.02rem;
+      position: absolute;
+      width: 2.88rem;
+      z-index: 10;
+      background: rgba(255, 255, 255, 1);
+      box-shadow: none;
+      border-radius: 0 0px .04rem .04rem;
+      border: 1px solid rgba(213, 213, 213, 1);
+
+      .product {
+        text-indent: .12rem;
+        line-height: .25rem;
+        .text-overflow();
+        .set-font-color(.13rem, rgba(51, 51, 51, 1));
+        cursor: pointer;
+
+        &:hover {
+          color: #fff;
+          background-color: #00CFFF;
+        }
       }
     }
   }

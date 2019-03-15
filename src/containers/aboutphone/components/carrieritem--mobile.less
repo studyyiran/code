@@ -5,7 +5,19 @@
     .img-wrapper {
       width: 1.46rem;
       height: 0.83rem;
-      line-height: 0.83rem;  
+      line-height: 0.83rem;
+      border: .02rem solid rgba(245, 245, 245, 1);
+      border-radius: .04rem;
+
+      &:hover {
+        box-shadow: 0rem .02rem .08rem 0rem rgba(208, 208, 208, 0.8);
+        border: .02rem solid rgba(204, 204, 204, 1);
+      }
+
+      &.active {
+        box-shadow: 0rem .02rem .08rem 0rem rgba(0, 207, 255, 0.35);
+        border: .02rem solid rgba(0, 207, 255, 1);
+      }
 
       .carrier-icon {
         width: 0.6rem;
@@ -13,7 +25,7 @@
         vertical-align: -0.22rem;
       }
     }
-  
+
     .name {
       margin-top: 0.15rem;
       font-size: 0.14rem;

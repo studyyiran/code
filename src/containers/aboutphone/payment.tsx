@@ -152,13 +152,13 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
       case false:
         leftContent = (
           <div className="left-wrapper">
-            <p className="description">Confirm your paypal address so we can send you the payment of ryour phone.</p>
+            <p className="description">Confirm your PayPal address so we can send you the payment for your phone.</p>
             <p className="email">
-              <span className="title">Paypal email address</span>
+              <span className="title">PayPal email address</span>
               <br />
               <span className="address">{this.props.user.preOrder.userEmail}</span>
             </p>
-            <p className="difference" onClick={this.changeEditState.bind(this, 'paypal')} >My email for Paypal is not the same as contact email</p>
+            <p className="difference" onClick={this.changeEditState.bind(this, 'paypal')} >My email for PayPal is not the same as my contact email</p>
           </div>
         );
         break;
@@ -166,10 +166,10 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
       case true:
         leftContent = (
           <div className="left-wrapper">
-            <p className="description">Confirm your paypal address so we can send you the payment of ryour phone.</p>
+            <p className="description">Confirm your PayPal address so we can send you the payment of ryour phone.</p>
             <div className="form-wrapper">
               <Form layout="vertical">
-                <Form.Item label="Paypal email address">
+                <Form.Item label="PayPal email address">
                   {
                     getFieldDecorator('paypal_email', {
                       rules: [
@@ -186,7 +186,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
                     )
                   }
                 </Form.Item>
-                <Form.Item label="Confirm Paypal email address">
+                <Form.Item label="Confirm PayPal email address">
                   {
                     getFieldDecorator('paypal_email_confirm', {
                       rules: [
@@ -205,7 +205,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
                 </Form.Item>
               </Form>
             </div>
-            <p className="difference" onClick={this.changeEditState.bind(this, 'paypal')} >My email for Paypal is the same as contact email</p>
+            <p className="difference" onClick={this.changeEditState.bind(this, 'paypal')} >My email for PayPal is the same as my contact email</p>
           </div>
         );
         break;
@@ -227,7 +227,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
               <br />
               <span className="address">{this.props.user.preOrder.userEmail}</span>
             </p>
-            <p className="difference" onClick={this.changeEditState.bind(this, 'check')} >The name and email for eCheck is not the same as contact information</p>
+            <p className="difference" onClick={this.changeEditState.bind(this, 'check')} >The name and email for eCheck is not the same as my contact information</p>
           </div>
         );
         break;
@@ -306,7 +306,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
                 </Form.Item>
               </Form>
             </div>
-            <p className="difference" onClick={this.changeEditState.bind(this, 'check')}>The name and email for eCheck is the same as contact information</p>
+            <p className="difference" onClick={this.changeEditState.bind(this, 'check')}>The name and email for eCheck is the same as my contact information</p>
           </div>
         );
         break;

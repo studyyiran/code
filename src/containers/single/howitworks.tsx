@@ -12,7 +12,7 @@ class HowItWorks extends React.Component<RouteComponentProps>{
             <section className="page-help-howitworks">
                 <div className="article">
                     <div className="col-1">
-                        <p>Sell My Phone In <br/>Two Simple Steps </p>
+                        <p>Sell My Phone In <br />Two Simple Steps </p>
                         <p>Get cash for what it’s actually worth. Ship it and get paid. It’s that easy.</p>
                     </div>
                     <div className="col-2">
@@ -44,7 +44,7 @@ class HowItWorks extends React.Component<RouteComponentProps>{
                             </div>
                             <div className="content">
                                 <p>Multiple payment options</p>
-                                <p>Choose to get paid via Paypal or eCheck. For the fastest and easiest way to receive payment, choose Paypal.</p>
+                                <p>Choose to get paid via PayPal or eCheck. For the fastest and easiest way to receive payment, choose PayPal.</p>
                                 <p>Fast payment</p>
                                 <p>We issue payment the next business day after we have received and verified the condition of your phone.</p>
                                 <p>Premium payout</p>

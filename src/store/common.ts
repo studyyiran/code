@@ -1,10 +1,11 @@
 import { action } from 'mobx';
 import { requireJS, gcj02ToBd09 } from 'utils';
-import { ICommonStore } from './interface/common.interface';
+import { ICommonStore, IStaticOffice } from './interface/common.interface';
 import * as Api from './api/common.api';
 class Common implements ICommonStore {
   public positionInfo: any = null;
   public isMobile: boolean = false;
+  public staticOffice: IStaticOffice | null = null;
   @action public async initPosition() {
     // Toast('正在获取定位信息');
     // 加载高德地图
@@ -37,6 +38,15 @@ class Common implements ICommonStore {
       return false;
     }
 
+    return true;
+  }
+
+  @action public getStaticOffice = async () => {
+    try {
+      this.staticOffice = await Api.getStaticOffice<IStaticOffice>();
+    } catch (e) {
+      return false;
+    }
     return true;
   }
 }

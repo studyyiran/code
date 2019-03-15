@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "@types/antd": "^1.0.0",
+    "@types/moment": "^2.13.0",
+    "@types/moment-timezone": "^0.5.10",
     "@types/react-router": "^4.0.31",
     "@types/react-router-config": "^1.0.9",
     "@types/react-router-dom": "^4.3.1",
@@ -31,6 +33,7 @@
     "mobx": "^4.6.0",
     "mobx-react": "^5.2.8",
     "mobx-react-router": "^4.0.5",
+    "moment-timezone": "^0.5.23",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.2.0",
     "postcss-loader": "2.0.8",

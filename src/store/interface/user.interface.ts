@@ -46,7 +46,8 @@ export enum ECaptchaErrCode {
 }
 
 export interface IUserStoreNew {
-  isShowLeftPrice: boolean,
+  isShowLeftPrice: boolean;
+  isShowLeftPriceMobile: boolean;
   canUpdatePreOrder: boolean;
   preOrder: Partial<IPreOrder>;
   getPreOrderKey: (userEmail: string) => Promise<boolean>;

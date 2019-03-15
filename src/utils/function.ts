@@ -1,11 +1,11 @@
 export const getQueryString = (name: string): string | null => {
-  const reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+  const reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
   const r = window.location.search.substr(1).match(reg);
   if (r != null) {
     return unescape(r[2]);
   }
   return null;
-}
+};
 
 export const ModalScroll = (() => {
   let scrollTop: number;
@@ -16,14 +16,14 @@ export const ModalScroll = (() => {
         if (document.scrollingElement) {
           scrollTop = document.scrollingElement.scrollTop;
         }
-        document.body.style.cssText = 'position:fixed;top:-' + scrollTop + 'px';
+        document.body.style.cssText = "position:fixed;top:-" + scrollTop + "px";
       } catch (e) {
         console.warn(e);
       }
     },
-    beforeClose: function () {
+    beforeClose: function() {
       try {
-        document.body.style.cssText = 'position:initial';
+        document.body.style.cssText = "position:initial";
         if (document.scrollingElement) {
           document.scrollingElement.scrollTop = scrollTop;
         }
@@ -41,11 +41,11 @@ export const checkedMobilePhone = (num: string) => {
 export const isArrayAIsPartOfArrayB = <T>(a: T[], b: T[]) => {
   for (const item of a) {
     if (b.findIndex(v => item.toString() === v.toString()) < 0) {
-      return false
+      return false;
     }
   }
-  return true
-}
+  return true;
+};
 
 export const isArrayAIsPartOfArrayBMult = <T>(arr: T[], collections: T[][]) => {
   for (const itemN of collections) {
@@ -54,7 +54,7 @@ export const isArrayAIsPartOfArrayBMult = <T>(arr: T[], collections: T[][]) => {
     }
   }
   return false;
-}
+};
 
 export const elementIsPartOfArrayBMult = <T>(a: T, collections: T[][]) => {
   for (const b of collections) {
@@ -63,8 +63,7 @@ export const elementIsPartOfArrayBMult = <T>(a: T, collections: T[][]) => {
     }
   }
   return false;
-}
-
+};
 
 export const random = (num: number) => {
   let text = "";
@@ -83,7 +82,7 @@ export const random = (num: number) => {
  */
 
 export const gcj02ToBd09 = (lat: any, lng: any) => {
-  const xPi = 3.14159265358979324 * 3000.0 / 180.0;
+  const xPi = (3.14159265358979324 * 3000.0) / 180.0;
   const x = lng;
   const y = lat;
   const z = Math.sqrt(x * x + y * y) + 0.00002 * Math.sin(y * xPi);
@@ -95,71 +94,21 @@ export const gcj02ToBd09 = (lat: any, lng: any) => {
 };
 
 export const getWeek = (date: string) => {
-
   const weekMap = {
-    '0': '周日',
-    '1': '周一',
-    '2': '周二',
-    '3': '周三',
-    '4': '周四',
-    '5': '周五',
-    '6': '周六'
+    "0": "周日",
+    "1": "周一",
+    "2": "周二",
+    "3": "周三",
+    "4": "周四",
+    "5": "周五",
+    "6": "周六"
   };
   return weekMap[new Date(date).getDay()];
 };
-
-// 月份转换为英文月份
-export const getMonthEn = (d: Date) => {
-  const MonthArray = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
-
-  return MonthArray[d.getMonth()];
-}
-
-// 24小时转换为12小时记录
-export const getHourBy12 = (d: Date) => {
-  const dhour = d.getHours();
-  const hour12 = dhour > 12 ? (dhour - 12) : dhour;
-  return {
-    hour: formatNumberFixTwo(hour12) + ":" + formatNumberFixTwo(d.getMinutes()),
-    part: dhour > 12 ? "PM" : "AM"
-  };
-}
 // 1 => 01
-export const formatNumberFixTwo = (n: number) => (n < 10 ? "0" + n : n.toString());
-
+export const formatNumberFixTwo = (n: number) =>
+  n < 10 ? "0" + n : n.toString();
 
 export const isMobile = () => {
   return true;
-}
-
-export const createDate = (t: string) => {
-  const b = new Date();
-  const arrT = t.split(" ");
-  // 年月日
-  if (arrT[0]) {
-    const arrT1b = arrT[0].split("-");
-    if (arrT1b[0]) {
-      b.setFullYear(parseInt(arrT1b[0], 10))
-    }
-    if (arrT1b[1]) {
-      b.setMonth(parseInt(arrT1b[1], 10) - 1)
-    }
-    if (arrT1b[2]) {
-      b.setDate(parseInt(arrT1b[2], 10))
-    }
-  }
-  // 时分秒
-  if (arrT[1]) {
-    const arrT2b = arrT[1].split(":");
-    if (arrT2b[0]) {
-      b.setHours(parseInt(arrT2b[0], 10))
-    }
-    if (arrT2b[1]) {
-      b.setMinutes(parseInt(arrT2b[1], 10))
-    }
-    if (arrT2b[2]) {
-      b.setSeconds(parseInt(arrT2b[2], 10))
-    }
-  }
-  return b;
-}
+};

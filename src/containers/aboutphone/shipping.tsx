@@ -50,17 +50,31 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
 
     // 显示左侧价格模块
     this.props.user.isShowLeftPrice = true;
+    this.props.user.isShowLeftPriceMobile = true;
 
     if (typeof this.props.onRef === 'function') {
       this.props.onRef!(this);
     }
   }
 
+  public componentWillUnmount() {
+    this.props.user.isShowLeftPriceMobile = false;
+  }
+
   public validateData = (): Promise<boolean> => {
-    return new Promise((resolve) => {
-      this.props.form.validateFields((err, values) => {
+    return new Promise((resolve, reject) => {
+      this.props.form.validateFields(async (err, values) => {
         if (err) {
           resolve(false);
+        }
+
+        if (!values.state) {
+          const result = await this.handleZipCodeBlur({ target: { value: values.zipCode } } as React.ChangeEvent<HTMLInputElement>);
+          if (result) {
+            reject(1)
+          } else {
+            reject(2)
+          }
         }
 
         this.props.yourphone.addressInfo = { ...this.props.yourphone.addressInfo, ...values, };
@@ -343,18 +357,30 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
 
       setFieldsValue({ 'state': this.props.yourphone.americaStates.state });
       setFieldsValue({ 'city': this.props.yourphone.americaStates.city });
+      return true
     } else {
       setFields({
         'zipCode': {
           value: value,
-          errors: [<><Icon type="def-close-circle" />Please enter a valid zipCode.</>]
+          errors: [new Error('Please enter a valid zipCode')]
         }
       })
+      return false
     }
   }
 
   private handleNext = async () => {
-    const isOk = await this.validateData();
+
+    let isOk = false;
+
+    try {
+      isOk = await this.validateData();
+    } catch (e) {
+      isOk = false;
+      if (e === 1) {
+        this.handleNext();
+      }
+    }
 
     if (isOk) {
       try {
@@ -377,12 +403,12 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
 
   private handleZipCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { setFieldsValue } = this.props.form;
-    const value = e.target.value;
+    // const value = e.target.value;
 
-    if (!value) {
-      setFieldsValue({ 'state': '' });
-      setFieldsValue({ 'city': '' });
-    }
+    // if (!value) {
+    setFieldsValue({ 'state': '' });
+    setFieldsValue({ 'city': '' });
+    // }
   }
 }
 export default Form.create({ onValuesChange: onValuesChange })(ShippingAddress);
