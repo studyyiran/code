@@ -7,9 +7,9 @@ const urlList = require('../config/prerender.config.js');
   for (let i = 0; i < urlList.length; i++) {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    await page.goto('https://www.uptradeit.com' + urlList[i].url + '?origin=mail');
+    await page.goto('http://uptrade-www-staging.aihuishou.com' + urlList[i].url + '?origin=mail');
     const html = await page.content()
-    fs.writeFileSync(path.join(__dirname + '/../public/') + urlList[i].fileName, html)
+    fs.writeFileSync(path.join(__dirname + '/../public/prerender/') + urlList[i].fileName, html)
     await browser.close();
   }
 })();
