@@ -24,6 +24,12 @@ module.exports = shipit => {
     shipit.on('init', () => {
         return shipit.local('mkdir -p /tmp/avril');
     });
+    shipit.blTask('git-init', () => {
+        shipit.log('git-init.');
+        return shipit.local('git init', {
+            cwd: '/tmp/avril'
+        });
+    });
 
     // npm install & build
     shipit.blTask('npm-install', () => {
@@ -42,6 +48,7 @@ module.exports = shipit => {
 
     shipit.on('fetched', () => {
         shipit.log('run npm build');
-        shipit.start(['npm-install', 'npm-build']);
+        shipit.start(['git-init', 'npm-install', 'npm-build']);
     });
+
 };
