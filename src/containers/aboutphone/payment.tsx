@@ -158,7 +158,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
               <br />
               <span className="address">{this.props.user.preOrder.userEmail}</span>
             </p>
-            <p className="difference" onClick={this.changeEditState.bind(this, 'paypal')} >My email for PayPal is not the same as contact email</p>
+            <p className="difference" onClick={this.changeEditState.bind(this, 'paypal')} >My email for PayPal is not the same as my contact email</p>
           </div>
         );
         break;
@@ -205,7 +205,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
                 </Form.Item>
               </Form>
             </div>
-            <p className="difference" onClick={this.changeEditState.bind(this, 'paypal')} >My email for PayPal is the same as contact email</p>
+            <p className="difference" onClick={this.changeEditState.bind(this, 'paypal')} >My email for PayPal is the same as my contact email</p>
           </div>
         );
         break;
@@ -227,7 +227,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
               <br />
               <span className="address">{this.props.user.preOrder.userEmail}</span>
             </p>
-            <p className="difference" onClick={this.changeEditState.bind(this, 'check')} >The name and email for eCheck is not the same as contact information</p>
+            <p className="difference" onClick={this.changeEditState.bind(this, 'check')} >The name and email for eCheck is not the same as my contact information</p>
           </div>
         );
         break;
@@ -306,7 +306,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
                 </Form.Item>
               </Form>
             </div>
-            <p className="difference" onClick={this.changeEditState.bind(this, 'check')}>The name and email for eCheck is the same as contact information</p>
+            <p className="difference" onClick={this.changeEditState.bind(this, 'check')}>The name and email for eCheck is the same as my contact information</p>
           </div>
         );
         break;
