@@ -16,6 +16,7 @@ const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const tsImportPluginFactory = require('ts-import-plugin');
 const packagejson = require('../package.json');
+// const PrerenderSPAPlugin = require('prerender-spa-plugin')
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -437,6 +438,13 @@ module.exports = {
 
       minChunks: 2,
     }),
+    // new PrerenderSPAPlugin({
+    //   // Required - The path to the webpack-outputted app to prerender.
+    //   staticDir: path.join(__dirname, '../build'),
+    //   outputDir: path.join(__dirname, 'prerendered'),
+    //   // Required - Routes to render.
+    //   routes: ['/', '/faq', '/why-uptrade'],
+    // })
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
