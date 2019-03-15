@@ -44,5 +44,4 @@ module.exports = shipit => {
         shipit.log('run npm build');
         shipit.start(['npm-install', 'npm-build']);
     });
-
 };

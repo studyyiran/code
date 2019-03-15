@@ -38,6 +38,7 @@
     "postcss-flexbugs-fixes": "3.2.0",
     "postcss-loader": "2.0.8",
     "promise": "8.0.1",
+    "puppeteer": "^1.13.0",
     "raf": "3.4.0",
     "react": "^16.5.1",
     "react-dev-utils": "^5.0.1",
@@ -68,7 +69,8 @@
     "uat": "cross-env REACT_APP_SERVER_ENV=UAT node scripts/build.js",
     "pre": "cross-env REACT_APP_SERVER_ENV=PRE node scripts/build.js",
     "pub": "cross-env REACT_APP_SERVER_ENV=PUB node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom"
+    "test": "node scripts/test.js --env=jsdom",
+    "prerender": "node scripts/prerender.js"
   },
   "devDependencies": {
     "@babel/plugin-transform-exponentiation-operator": "^7.1.0",
