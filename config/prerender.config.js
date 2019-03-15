@@ -1,5 +1,9 @@
 module.exports = [
   {
+    url: '/',
+    fileName: 'index.html'
+  },
+  {
     url: '/faq',
     fileName: 'faq.html'
   },
@@ -36,7 +40,7 @@ module.exports = [
     fileName: 'sell-my-phone.html'
   },
   {
-    url: '/who-we-are',
+    url: '/\/',
     fileName: 'who-we-are.html'
   },
 ]
