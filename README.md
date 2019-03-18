@@ -37,5 +37,13 @@ todo
 遵循 typescript-react 规范 以及 arbnb 规范
 
 ## 其他说明
+
+prerender 执行步骤
+
+1. 关闭 生产服务器 rewrite
+2. 发布新的代码
+3. 本地执行 prerender
+4. 重新发布代码
+5. 打开 rewrite
  
 todo

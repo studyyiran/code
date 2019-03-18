@@ -4,7 +4,7 @@ import * as PropTypes from 'prop-types';
 import './index.less';
 import HeaderHoc from './headerHoc'
 import FooterHoc from './footerHoc'
-import { getQueryString } from 'utils';
+// import { getQueryString } from 'utils';
 import commonStore from '@/store/common';
 export default class LayoutIndex extends React.Component {
   // 通过context 拿到 router 对象
@@ -15,14 +15,14 @@ export default class LayoutIndex extends React.Component {
   }
 
   public componentDidMount() {
-    if (getQueryString('origin') === 'mail') {
-      sessionStorage.setItem('invitationCode', '1');
-    }
-    // 是否输入国 invatation code
-    if (!sessionStorage.getItem('invitationCode')
-      && this.context.router.route.match.path !== '/invitationCode') {
-      this.context.router.history.push('/invitationCode')
-    }
+    // if (getQueryString('origin') === 'mail') {
+    //   sessionStorage.setItem('invitationCode', '1');
+    // }
+    // // 是否输入国 invatation code
+    // if (!sessionStorage.getItem('invitationCode')
+    //   && this.context.router.route.match.path !== '/invitationCode') {
+    //   this.context.router.history.push('/invitationCode')
+    // }
 
     // message.loading(ECommonText.LOADING, 1);
     window['__history__'] = this.context.router.history;
@@ -41,9 +41,9 @@ export default class LayoutIndex extends React.Component {
         }, 0);
       }
 
-      if (!sessionStorage.getItem('invitationCode') && location.pathname !== '/invitationCode') {
-        this.context.router.history.push('/invitationCode')
-      }
+      // if (!sessionStorage.getItem('invitationCode') && location.pathname !== '/invitationCode') {
+      //   this.context.router.history.push('/invitationCode')
+      // }
     });
   }
 
@@ -51,7 +51,11 @@ export default class LayoutIndex extends React.Component {
     // 得到所有和当前路由匹配的数组
     const arr = titlesKey.filter(v => new RegExp(v).test(this.context.router.history.location.pathname));
     // 设置title
-    document.title = titles[arr[arr.length - 1]];
+    const currentConfig = titles[arr[arr.length - 1]];
+    document.title = currentConfig ? currentConfig.title : '';
+    document.querySelector('meta[name="keywords"]')!.setAttribute('content', currentConfig ? currentConfig.keywords : '');
+    document.querySelector('meta[name="description"]')!.setAttribute('content', currentConfig ? currentConfig.description : '');
+
   }
 
   public render() {
