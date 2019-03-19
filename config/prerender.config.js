@@ -40,6 +40,10 @@ module.exports = [
     fileName: 'sell-my-phone.html'
   },
   {
+    url: '/terms',
+    fileName: 'terms.html'
+  },
+  {
     url: '/\/',
     fileName: 'who-we-are.html'
   },
