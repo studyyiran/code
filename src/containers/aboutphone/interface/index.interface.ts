@@ -4,6 +4,7 @@ import * as React from 'react';
 import * as H from 'history';
 import { IUserStoreNew } from '@/store/interface/user.interface';
 import { ICommonStore } from '@/store/interface/common.interface';
+import { IOrderDetail } from '@/containers/order/interface/order.inerface'
 
 export interface IYourPhoneStore {
   carriers: ICarrier[];
@@ -12,7 +13,7 @@ export interface IYourPhoneStore {
   products4Search: IProductModel[],
   productPPVNS: IProductPPVN[];
   inquiryDetail: IInquiryDetail | null;
-  orderDetail: any;
+  orderDetail: IOrderDetail | null;
   addressInfo: IAddressInfo;
   inquiryKey: string;
   payment: string; // 选择的支付方式
@@ -57,7 +58,8 @@ export interface ILayOutProps {
   hideBottom?: boolean;
   nextCb?: () => void;
   progress?: number;
-  disabled?: boolean
+  disabled?: boolean;
+  userEmail?: string;
 }
 
 export interface IBrandLayoutProps {
@@ -192,7 +194,12 @@ export interface IProductModel {
   skuPricePropertyNames: ISkuPricePropertyNames[];
   activeModelId: number;
   activeProductId: number;
+  isTBD?: boolean
+}
+
+export interface IModleItemProps extends IProductModel {
   onModelItemClick(productId: number, productName: string, skuId: number, skuName: string, imageUrl: string): void;
+  onGoToTBD(): void
 }
 
 export interface IProductPPVN {

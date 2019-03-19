@@ -7,6 +7,7 @@ import { IYourPhoneStore, ICarrier, IBrands, IAmericaState, IProductModel, IProd
 import { IPreOrder } from '@/store/interface/user.interface';
 import UserStore from '@/store/user';
 import { noteUserModal } from '@/containers/aboutphone/pageValidate';
+import { IOrderDetail } from '@/containers/order/interface/order.inerface'
 class YourPhone implements IYourPhoneStore {
   @observable public carriers: ICarrier[] = [];
   @observable public brands: IBrands[] = [];
@@ -15,7 +16,7 @@ class YourPhone implements IYourPhoneStore {
   @observable public productPPVNS: IProductPPVN[] = [];
   @observable public inquiryKey = '';
   @observable public inquiryDetail = null;
-  @observable public orderDetail = null; // 订单详情
+  @observable public orderDetail: IOrderDetail | null = null; // 订单详情
   @observable public addressInfo: IAddressInfo = { // 用户填写的信息
     addressLine: '',
     addressLineOptional: '',

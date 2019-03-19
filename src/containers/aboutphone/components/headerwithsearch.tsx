@@ -16,7 +16,7 @@ interface IStates {
 }
 // let timer: number = 0;
 @observer
-export default class BrandHeader extends React.Component<object, IStates> {
+export default class BrandHeader extends React.Component<{ userEmail?: string }, IStates> {
   public static readonly displayName: string = '页面title显示组件';
   public readonly state: Readonly<IStates> = {
     navigatorObj: null,
@@ -49,7 +49,12 @@ export default class BrandHeader extends React.Component<object, IStates> {
     }
     const Search = Input.Search;
     const { navigatorObj } = this.state;
-    const extraText = navigatorObj.isInCheckOrder ? userStore.preOrder.userEmail : ''; // checkorder页面需要添加用户邮箱展示
+
+    let extraText = '';
+    // checkorder页面需要添加用户邮箱展示
+    if (navigatorObj.isInCheckOrder) {
+      extraText = userStore.preOrder.userEmail ? userStore.preOrder.userEmail : (this.props.userEmail || '');
+    }
     return (
       <div className={classnames('comp-brand-header-container', { multiple: navigatorObj.subText })}>
         <div className="left-wrapper">

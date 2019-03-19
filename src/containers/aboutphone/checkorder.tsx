@@ -44,13 +44,18 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
       this.props.history.push('/sell/account');
       return;
     }
+
+    // 清除相关信息
+    this.props.user.preOrder = {
+      userEmail: '',
+    }
   }
 
   public render() {
     const { activeBrandsId, inquiryDetail, orderDetail, isTBD } = this.props.yourphone; // 选中的品牌， 苹果为52
     return (
       <div className="page-checkorder-container">
-        <Layout hideBottom={true}>
+        <Layout hideBottom={true} userEmail={orderDetail ? orderDetail.userEmail : ''}>
           <div className="content-wrapper">
             <div className="final-step-wrapper">
               <div className="step">
@@ -66,6 +71,17 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
               <div className="step">
                 <p className="name">Get Paid</p>
                 <p className="detail" dangerouslySetInnerHTML={{ __html: this.state.payText[this.props.common.isMobile ? 'MOBILE' : 'PC'][this.state.payment] }} />
+              </div>
+            </div>
+            <div className="shipping-label-wrapper">
+              <div className="label">Your Shipping Label</div>
+              <div className="left">
+                <span>Tracking Number</span>
+                <span>063746374682374</span>
+              </div>
+              <div className="button-group">
+                <a target="__blank" href={this.props.yourphone.orderDetail ? this.props.yourphone.orderDetail.shippoTransaction.ext.labelUrl : 'javascript:;'}><Button type="primary" ghost={true} size="small">DOWNLOAD</Button></a>
+                <a target="__blank" href={this.props.yourphone.orderDetail ? this.props.yourphone.orderDetail.shippoTransaction.ext.labelUrl : 'javascript:;'}><Button type="primary" size="small">PRINT</Button></a>
               </div>
             </div>
             <div className="order-summary-wrapper">
@@ -95,10 +111,10 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
               </div>
             </div>
 
-            <div className="checkorder-btn-wrapper" style={{ textAlign: 'center' }}><Button className="checkorder-btn" onClick={this.hanleCheckOrder} type="primary" style={{ width: '400px', height: '48px', marginTop: '50px', fontWeight: 'bold' }}>CHECK ORDER</Button></div>
+            <div className="checkorder-btn-wrapper" style={{ textAlign: 'center' }}><Button className="checkorder-btn" onClick={this.hanleCheckOrder} type="primary" style={{ width: '400px', height: '48px', marginTop: '30px', fontWeight: 'bold' }}>CHECK ORDER</Button></div>
           </div>
         </Layout>
-      </div>
+      </div >
     )
   }
 

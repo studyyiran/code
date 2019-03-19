@@ -101,6 +101,9 @@ export interface IOrderDetail {
 export interface IShippingTran {
   carrier: string;
   trackingNumber: string;
+  ext: {
+    labelUrl: string;
+  }
 }
 /**
  * 物流信息接口返回

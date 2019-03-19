@@ -23,6 +23,10 @@ export default [
         path: '/sell/yourphone/model'
       },
       {
+        component: asyncComponent(() => import('@/containers/aboutphone/other')),
+        path: '/sell/yourphone/other'
+      },
+      {
         component: asyncComponent(() => import('@/containers/aboutphone/conditions')),
         path: '/sell/yourphone/condition'
       },

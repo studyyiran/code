@@ -9,7 +9,7 @@ export default class Layout extends React.Component<ILayOutProps> {
     return (
       <div className="page-layout-container">
         <div className="top-wrapper">
-          <HeaderWithSearch />
+          <HeaderWithSearch userEmail={this.props.userEmail} />
         </div>
         <div className="middle-wrapper">
           {

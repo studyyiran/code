@@ -7,6 +7,7 @@ import './carriers.less';
 import { userEmailValidate } from '@/containers/aboutphone/pageValidate';
 import Breadcrumb from './components/breadcrumb';
 import ProgressBar from '@/containers/aboutphone/components/progressbar--mobile';
+import { DEFAULT } from 'config';
 
 @inject('yourphone', 'user', 'common')
 @observer
@@ -65,6 +66,11 @@ export default class Brands extends React.Component<IBrandsProps> {
 
     this.props.yourphone.activeCarrierName = carrier.name;
     this.props.yourphone.activeCarrierDescription = carrier.description;
+
+    if (this.props.yourphone.activeBrandsId === DEFAULT.otherBrandsId) {
+      this.props.history.push('/sell/yourphone/other');
+      return;
+    }
     this.props.history.push('/sell/yourphone/model');
   }
 }

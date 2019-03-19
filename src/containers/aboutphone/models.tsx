@@ -8,6 +8,7 @@ import { IModelsProps } from './interface/index.interface';
 import { modalPageValidate } from '@/containers/aboutphone/pageValidate';
 import Breadcrumb from '@/containers/aboutphone/components/breadcrumb';
 import ProgressBar from '@/containers/aboutphone/components/progressbar--mobile';
+import { DEFAULT } from 'config'
 @inject('yourphone', 'user', 'common')
 @observer
 export default class Models extends React.Component<IModelsProps> {
@@ -23,6 +24,18 @@ export default class Models extends React.Component<IModelsProps> {
     }
 
     await this.props.yourphone.getProductsList();
+    // 掉完机型列表，强行塞一个other 进去
+    this.props.yourphone.products.push({
+      brandId: DEFAULT.otherBrandsId,
+      categoryId: 0,
+      id: 0,
+      imageUrl: require('@/images/noprice.png'),
+      name: 'Other',
+      skuPricePropertyNames: [],
+      activeModelId: 0,
+      activeProductId: 0,
+      isTBD: true
+    })
     this.setState({
       didMount: true
     })
@@ -44,29 +57,38 @@ export default class Models extends React.Component<IModelsProps> {
             {
               <div className="model-list-wrapper">
                 {
-                  false && products.length > 0
+                  products.length > 0
                     ? products.map((phone, index) => (
                       <ModelItem
                         key={index}
                         {...phone}
                         onModelItemClick={this.onModelItemClick}
+                        onGoToTBD={this.onModelItemClickToTBD}
                         activeProductId={this.props.yourphone.activeProductId}
                         activeModelId={this.props.yourphone.activeModelId}
                       />
                     ))
-                    : null // this.state.didMount && <div>12312312313</div>
+                    : this.state.didMount && <div className="no-product">
+                      <img src={require('@/images/yourphone/no-product.png')} alt="" />
+                      <h3>Sorry, the model of your phone has not been found.</h3>
+                      <Link to="/sell/yourphone/other"><img src={require('@/images/yourphone/circle-arrow.png')} alt="" />Please input your phone model</Link>
+                    </div>
                 }
-                <div className="no-product">
-                  <img src={require('@/images/yourphone/no-product.png')} alt="" />
-                  <h3>Sorry, the model of your phone has not been found.</h3>
-                  <Link to="/"><img src={require('@/images/yourphone/circle-arrow.png')} alt="" />Please input your phone model</Link>
-                </div>
               </div>
             }
           </>
         </LayOut>
       </div>
     );
+  }
+
+  private onModelItemClickToTBD = () => {
+    this.props.user.preOrder.productInfo = {
+      ...this.props.user.preOrder.productInfo,
+      brandId: DEFAULT.otherBrandsId,
+      brandName: 'Other'
+    }
+    this.props.history.push('/sell/yourphone/other')
   }
 
   private onModelItemClick = (productId: number, productName: string, skuId: number, skuName: string, imgUrl: string) => {
