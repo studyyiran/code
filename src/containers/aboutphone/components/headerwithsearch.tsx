@@ -93,8 +93,15 @@ export default class BrandHeader extends React.Component<object, IStates> {
 
   private handleSearch = (value: string) => {
     if (value.trim()) {
-      yourphoneStore.getProductsList(value.trim());
+      // 没有搜索接口，先注释掉
+      // yourphoneStore.getProductsList(value.trim());
+      yourphoneStore.products = this.state.searchList;
+
+      return;
     }
+
+    // 如果value 为空
+    yourphoneStore.getProductsList(value.trim());
   }
 
   private handleKeyWordChange = (event: React.ChangeEvent<HTMLInputElement>) => {

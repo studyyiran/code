@@ -56,3 +56,15 @@ export const getStaticOffice = <T>(): Promise<T> => {
 
   return Request<T>(opts);
 }
+
+export const getTest = <T>(): Promise<T> => {
+  const opts: IOpts = {
+    url: `https://api.reviews.io/merchant/reviews`,
+    params: {
+      store: 'amazon'
+    },
+    isFullUrl: true
+  };
+
+  return Request<T>(opts);
+}

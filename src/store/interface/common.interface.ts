@@ -5,6 +5,7 @@ export interface ICommonStore {
   initPosition: () => Promise<boolean>;
   onSubscribe: (email: string) => Promise<boolean>
   getStaticOffice: () => Promise<boolean>
+  getTest: () => Promise<boolean>
 }
 
 export interface ICommonProps {

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom'
 import { inject, observer } from 'mobx-react';
 import LayOut from '@/containers/aboutphone/layout';
 import ModelItem from '@/containers/aboutphone/components/modelitem';
@@ -10,8 +11,10 @@ import ProgressBar from '@/containers/aboutphone/components/progressbar--mobile'
 @inject('yourphone', 'user', 'common')
 @observer
 export default class Models extends React.Component<IModelsProps> {
-
-  public componentDidMount() {
+  public readonly state = {
+    didMount: false
+  }
+  public async componentDidMount() {
     // 显示左侧价格模块
     this.props.user.isShowLeftPrice = true;
     if (!modalPageValidate()) {
@@ -19,7 +22,10 @@ export default class Models extends React.Component<IModelsProps> {
       return;
     }
 
-    this.props.yourphone.getProductsList();
+    await this.props.yourphone.getProductsList();
+    this.setState({
+      didMount: true
+    })
   }
 
   public render() {
@@ -38,7 +44,7 @@ export default class Models extends React.Component<IModelsProps> {
             {
               <div className="model-list-wrapper">
                 {
-                  products.length > 0
+                  false && products.length > 0
                     ? products.map((phone, index) => (
                       <ModelItem
                         key={index}
@@ -48,8 +54,13 @@ export default class Models extends React.Component<IModelsProps> {
                         activeModelId={this.props.yourphone.activeModelId}
                       />
                     ))
-                    : null
+                    : null // this.state.didMount && <div>12312312313</div>
                 }
+                <div className="no-product">
+                  <img src={require('@/images/yourphone/no-product.png')} alt="" />
+                  <h3>Sorry, the model of your phone has not been found.</h3>
+                  <Link to="/"><img src={require('@/images/yourphone/circle-arrow.png')} alt="" />Please input your phone model</Link>
+                </div>
               </div>
             }
           </>

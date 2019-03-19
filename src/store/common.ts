@@ -49,6 +49,19 @@ class Common implements ICommonStore {
     }
     return true;
   }
+
+  @action public getTest = async () => {
+    let result: any;
+    try {
+      result = await Api.getTest();
+    } catch (e) {
+      console.log(e)
+      return false;
+    }
+
+    console.log(result);
+    return true;
+  }
 }
 
 // 外部使用require

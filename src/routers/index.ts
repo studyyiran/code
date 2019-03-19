@@ -25,6 +25,11 @@ export default [
     // ]
   },
   {
+    component: asyncComponent(() => import('@/containers/home/reviews')),
+    exact: true,
+    path: '/reviews',
+  },
+  {
     // 首页
     component: asyncComponent(() => import('@/containers/notfound')),
     exact: true,
