@@ -25,6 +25,15 @@
 
   <title>Sell My Phone for More Cash | UpTradeit.com</title>
   <script>
+    const clientWidth = document.documentElement.clientWidth;
+    // 这里放一份， 更快的加载
+    if (clientWidth <= 700) {
+      document.body.classList.add('ismobile');
+    } else {
+      document.body.classList.remove('ismobile');
+    }
+  </script>
+  <script>
     (function () {
       //初始化REM
       var w = 750;
