@@ -15,7 +15,7 @@ export default class Broken extends React.Component<ICommonProps> {
         <h1>Terms and Conditions </h1>
         <h2>Agreement between User and uptradeit.com </h2>
         <p>Welcome to uptradeit.com. The uptradeit.com website (the "Site") is comprised of various web pages operated by UP Trade Technologies, Incorporated ("UP Trade"). uptradeit.com is offered to you conditioned on your acceptance without modification of the terms, conditions, and notices contained herein (the "Terms"). Your use of uptradeit.com constitutes your agreement to all such Terms. Please read these terms carefully, and keep a copy of them for your reference. </p>
-        <p>uptradeit.com is a UP Trade gives users the ability to sell, buy or donate certain electronic devices such as mobile phones. Site. </p>
+        <p>uptradeit.com gives users the ability to sell, buy or donate certain electronic devices such as mobile phones.</p>
         <p>UP Trade sells, buys or donate certain electronic devices such as mobile phones. </p>
         <h2>Electronic Communications </h2>
         <p>Visiting uptradeit.com or sending emails to UP Trade constitutes electronic communications. You consent to receive electronic communications and you agree that all agreements, notices, disclosures and other communications that we provide to you electronically, via email and on the Site, satisfy any legal requirement that such communications be in writing. </p>
@@ -24,10 +24,10 @@ export default class Broken extends React.Component<ICommonProps> {
         <h2>Children Under Thirteen </h2>
         <p>UP Trade does not knowingly collect, either online or offline, personal information from persons under the age of thirteen. If you are under 18, you may use uptradeit.com only with permission of a parent or guardian. </p>
         <h2>Cancellation/Refund Policy </h2>
-        <p>Once you accept the offer from UP Trade, it will be considered a final transaction unless we determine that the physical condition of the device is different than the original description that was submitted. If this happens, we will provide you an updated offer based on the value of the device. If you decline the new offer, we will return your device to you at no cost and the transaction will be cancelled. </p>
+        <p>Once you accept the offer from UP Trade, it will be considered a final transaction unless we determine that the physical condition of the device is different from the original description that was submitted. If this happens, we will provide you an updated offer based on the value of the device. If you decline the new offer, we will return your device to you at no cost and the transaction will be canceled. If no action is taken after four days, we will proceed with the updated offer.</p>
         <h2>Links to Third Party Sites/Third Party Services </h2>
         <p>uptradeit.com may contain links to other websites ("Linked Sites"). The Linked Sites are not under the control of UP Trade and UP Trade is not responsible for the contents of any Linked Site, including without limitation any link contained in a Linked Site, or any changes or updates to a Linked Site. UP Trade is providing these links to you only as a convenience, and the inclusion of any link does not imply endorsement by UP Trade of the site or any association with its operators. </p>
-        <p>Certain services made available via uptradeit.com are delivered by third party sites and organizations. By using any product, service or functionality originating from the uptradeit.com domain, you hereby acknowledge and consent that UP Trade may share such information and data with any third party with whom UP Trade has a contractual relationship to provide the requested product, service or functionality on behalf of uptradeit.com users and customers. </p>
+        <p>Third party sites and organizations deliver certain services made available via uptradeit.com. By using any product, service or functionality originating from the uptradeit.com domain, you hereby acknowledge and consent that UP Trade may share such information and data with any third party with whom UP Trade has a contractual relationship to provide the requested product, service or functionality on behalf of uptradeit.com users and customers. </p>
         <h2>No Unlawful or Prohibited Use/Intellectual Property </h2>
         <p>You are granted a non-exclusive, non-transferable, revocable license to access and use uptradeit.com strictly in accordance with these terms of use. As a condition of your use of the Site, you warrant to UP Trade that you will not use the Site for any purpose that is unlawful or prohibited by these Terms. You may not use the Site in any manner which could damage, disable, overburden, or impair the Site or interfere with any other party's use and enjoyment of the Site. You may not obtain or attempt to obtain any materials or information through any means not intentionally made available or provided for through the Site. </p>
         <p>All content included as part of the Service, such as text, graphics, logos, images, as well as the compilation thereof, and any software used on the Site, is the property of UP Trade or its suppliers and protected by copyright and other laws that protect intellectual property and proprietary rights. You agree to observe and abide by all copyright and other proprietary notices, legends or other restrictions contained in any such content and will not make any changes thereto. </p>
@@ -77,7 +77,7 @@ export default class Broken extends React.Component<ICommonProps> {
           support@uptradeit.com
         </p>
         <hr style={{ width: 200, marginLeft: 0 }} />
-        <p>Effective as of February 20, 2019 </p>
+        <p>Effective as of March 18, 2019</p>
       </div>
     )
   }
