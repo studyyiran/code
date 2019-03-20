@@ -31,7 +31,7 @@ export default class Conditions extends React.Component<IConditionsProps> {
     if (this.props.yourphone.isAllConditionSelected) {
       this.setState({
         progress: 4,
-        disabled: false
+        // disabled: false
       })
     }
 
@@ -72,7 +72,7 @@ export default class Conditions extends React.Component<IConditionsProps> {
         {
           !this.props.hideLayout
             ? (
-              <Layout nextCb={this.handleNext} progress={this.state.progress} disabled={this.state.disabled}>
+              <Layout nextCb={this.handleNext} progress={this.state.progress} disabled={this.props.yourphone.isAllConditionSelected}>
                 <>
                   {
                     this.props.common.isMobile && <ProgressBar />
@@ -97,7 +97,7 @@ export default class Conditions extends React.Component<IConditionsProps> {
     if (this.props.yourphone.isAllConditionSelected) {
       this.setState({
         progress: 4,
-        disabled: false
+        // disabled: false
       })
     }
   }
