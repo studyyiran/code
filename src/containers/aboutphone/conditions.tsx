@@ -17,7 +17,7 @@ export default class Conditions extends React.Component<IConditionsProps> {
     progress: 3,
     disabled: true
   }
-  public componentDidMount() {
+  public async componentDidMount() {
     // 显示左侧价格模块
     this.props.user.isShowLeftPrice = true;
     if (!conditionPageValidate()) {
@@ -25,7 +25,7 @@ export default class Conditions extends React.Component<IConditionsProps> {
       return;
     }
 
-    this.props.yourphone.getProductPPVN();
+    await this.props.yourphone.getProductPPVN();
 
     // 初次进入页面判断是否要高亮
     if (this.props.yourphone.isAllConditionSelected) {
@@ -72,7 +72,7 @@ export default class Conditions extends React.Component<IConditionsProps> {
         {
           !this.props.hideLayout
             ? (
-              <Layout nextCb={this.handleNext} progress={this.state.progress} disabled={this.props.yourphone.isAllConditionSelected}>
+              <Layout nextCb={this.handleNext} progress={this.state.progress} disabled={!this.props.yourphone.isAllConditionSelected}>
                 <>
                   {
                     this.props.common.isMobile && <ProgressBar />
