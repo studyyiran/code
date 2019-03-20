@@ -54,6 +54,15 @@
 </head>
 
 <body>
+  <script>
+    var clientWidth = document.documentElement.clientWidth;
+    // 这里放一份， 更快的加载
+    if (clientWidth <= 700) {
+      document.body.classList.add('ismobile');
+    } else {
+      document.body.classList.remove('ismobile');
+    }
+  </script>
   <noscript>
     You need to enable JavaScript to run this app.
   </noscript>

@@ -190,14 +190,12 @@ class YourPhone implements IYourPhoneStore {
 
     // 根据isSkuProperty进行筛选，只要值为false的
     this.productPPVNS = res.filter(ppvitem => !ppvitem.isSkuProperty);
-
     const activePpnIdStrings = Object.keys(this.activeConditions);
     const activePpnIdNumbers = activePpnIdStrings.map((v: string) => Number(v));
     const ppnIds = this.productPPVNS.map((v: IProductPPVN) => v.id);
     if (new Set([...activePpnIdNumbers, ...ppnIds]).size !== ppnIds.length) {
       this.activeConditions = {};
     }
-
     return true;
   }
 
