@@ -3,7 +3,7 @@ import { ENVCONFIG, DEFAULT } from 'config';
 import { IQueryParams, IInquiryDetail, IAddressInfo } from './../interface/index.interface';
 import * as Api from '../api/index.api';
 import { action, observable, autorun, computed } from 'mobx';
-import { IYourPhoneStore, ICarrier, IBrands, IAmericaState, IProductModel, IProductPPVN } from '../interface/index.interface';
+import { IYourPhoneStore, ICarrier, IBrands, IAmericaState, IProductModel, IProductPPVN, ISubSkuPricePropertyValues } from '../interface/index.interface';
 import { IPreOrder } from '@/store/interface/user.interface';
 import UserStore from '@/store/user';
 import { noteUserModal } from '@/containers/aboutphone/pageValidate';
@@ -63,13 +63,21 @@ class YourPhone implements IYourPhoneStore {
   }
 
   @computed get isAllConditionSelected() { // 是否全选了ppvn
-    try {
-      return JSON.stringify(this.activeConditions) !== '{}' && Object.keys(this.activeConditions).length === this.productPPVNS.length;
-    } catch (error) {
-      console.warn(error, 'in yourphone store');
+    let result = true;
+    // 似乎没什么用
+    if (JSON.stringify(this.activeConditions) === '{}') {
+      return false;
     }
 
-    return false;
+    for (const item of this.productPPVNS) {
+      const value = this.activeConditions[item.id];
+      const active = item.pricePropertyValues.find((v: ISubSkuPricePropertyValues) => v.id === value);
+      if (!active) {
+        result = false;
+        break;
+      }
+    }
+    return result;
   }
 
   @computed get isTBD() {
@@ -176,6 +184,12 @@ class YourPhone implements IYourPhoneStore {
 
     // 根据isSkuProperty进行筛选，只要值为false的
     this.productPPVNS = res.filter(ppvitem => !ppvitem.isSkuProperty);
+    const activePpnIdStrings = Object.keys(this.activeConditions);
+    const activePpnIdNumbers = activePpnIdStrings.map((v: string) => Number(v));
+    const ppnIds = this.productPPVNS.map((v: IProductPPVN) => v.id);
+    if (new Set([...activePpnIdNumbers, ...ppnIds]).size !== ppnIds.length) {
+      this.activeConditions = {};
+    }
     return true;
   }
 
