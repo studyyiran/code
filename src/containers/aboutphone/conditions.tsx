@@ -31,18 +31,13 @@ export default class Conditions extends React.Component<IConditionsProps> {
       this.props.history.push('/sell/account');
       return;
     }
-<<<<<<< HEAD
     // tbd 赛默认选项
     if (this.props.yourphone.isTBD) {
       this.props.yourphone.productPPVNS = TBDPPNS;
     } else {
       // 非 tbd 调用正常的询价项
-      this.props.yourphone.getProductPPVN();
+      await this.props.yourphone.getProductPPVN();
     }
-=======
-
-    await this.props.yourphone.getProductPPVN();
->>>>>>> master
 
     // 初次进入页面判断是否要高亮
     if (this.props.yourphone.isAllConditionSelected) {
