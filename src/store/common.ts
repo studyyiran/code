@@ -1,11 +1,13 @@
-import { action } from 'mobx';
+import { action, observable } from 'mobx';
 import { requireJS, gcj02ToBd09 } from 'utils';
-import { ICommonStore, IStaticOffice } from './interface/common.interface';
+import { ICommonStore, IStaticOffice, IReviews } from './interface/common.interface';
 import * as Api from './api/common.api';
 class Common implements ICommonStore {
-  public positionInfo: any = null;
-  public isMobile: boolean = false;
-  public staticOffice: IStaticOffice | null = null;
+  @observable public positionInfo: any = null;
+  @observable public isMobile: boolean = false;
+  @observable public staticOffice: IStaticOffice | null = null;
+  @observable public reviews: IReviews | null = null;
+  @observable public moduleOn: boolean = false;
   @action public async initPosition() {
     // Toast('正在获取定位信息');
     // 加载高德地图
@@ -50,16 +52,21 @@ class Common implements ICommonStore {
     return true;
   }
 
-  @action public getTest = async () => {
-    let result: any;
+  @action public getReviews = async (query: { [key: string]: string | number }) => {
     try {
-      result = await Api.getTest();
+      this.reviews = await Api.getReviews<IReviews>(query);
     } catch (e) {
-      console.log(e)
       return false;
     }
+    return true;
+  }
 
-    console.log(result);
+  @action public getModuleOn = async () => {
+    try {
+      this.moduleOn = await Api.getModuleOn<boolean>();
+    } catch (e) {
+      return false;
+    }
     return true;
   }
 }

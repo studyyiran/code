@@ -42,6 +42,7 @@ export interface IYourPhoneStore {
   isLeftOnEdit: boolean;
   isRightOnEdit: boolean;
   isPaymentFormFilled: boolean;
+  tbdInfo: ITbdInfo;
   getBrandsByCid: (categoryId?: number) => Promise<boolean>;
   getCarrier: () => Promise<boolean>;
   getProductsList: (keyword?: string) => Promise<boolean>;
@@ -177,6 +178,7 @@ export interface INavigatorObj {
   hasSearch: boolean;
   progress: number; // 底部导航, 值为-1表示不需要展示
   isInCheckOrder?: boolean;
+  showNext?: boolean; // 是否强制显示next 按钮（跳过step 和 progress 判断）
 }
 
 export interface IQueryParams {
@@ -207,7 +209,7 @@ export interface IProductPPVN {
   name: string;
   illustrationContent: {
     propertyIllustrationContentText: string;
-  }
+  } | null
   pricePropertyValues: ISubSkuPricePropertyValues[];
   isSkuProperty: boolean;
 }
@@ -272,4 +274,16 @@ export interface INoteUserModalProps extends ModalFuncProps {
   title?: string;
   seconds?: number;
   hasCountDown?: boolean;
+}
+
+export interface IOtherProps extends FormComponentProps {
+  history: H.History;
+  yourphone: IYourPhoneStore
+  user: IUserStoreNew
+}
+
+export interface ITbdInfo {
+  modelName: string,
+  properties: string[],
+  storage: string
 }

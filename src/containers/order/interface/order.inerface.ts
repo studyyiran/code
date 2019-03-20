@@ -88,6 +88,7 @@ export interface IOrderDetail {
   orderPaymentBills: IPaymentInfo[];
   orderRecords: IOrderRecord[];
   returnTrackingNo: string;
+  downloadCode: string,
   ext: {
     returnExpressInfo: {
       carrier: string;

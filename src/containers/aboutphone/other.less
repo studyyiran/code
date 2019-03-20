@@ -1,6 +1,41 @@
+@import (reference) '~@/styles/index.less';
 .page-yourphone-other-container {
   height: 100%;
   .content-wrapper {
+    .content {
+      margin-top:60px;
+
+      .formitem {
+        label {
+          padding-left:6px;
+        }
+        label:before {
+          display: none;
+        }
+        .model-input {
+          width:330px;
+        }
+      }
+
+      .storage-list {
+        .memory-item {
+          display: inline-block;
+          margin-left: 15px;
+          margin-bottom: 16px;
+          width: 120px;
+          height: 40px;
+          text-align: center;
+          background: rgba(255, 255, 255, 1);
+          line-height: 36px;
+          cursor: pointer;
+          .outline-shadow-highlight();
+          .text-overflow();
   
+          &:nth-of-type(1), &:nth-of-type(5) {
+            margin-left: 0;
+          }
+        }
+      }
+    }
   }
 }

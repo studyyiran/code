@@ -57,13 +57,26 @@ export const getStaticOffice = <T>(): Promise<T> => {
   return Request<T>(opts);
 }
 
-export const getTest = <T>(): Promise<T> => {
+export const getReviews = <T>(query: { [key: string]: string | number }): Promise<T> => {
   const opts: IOpts = {
     url: `https://api.reviews.io/merchant/reviews`,
     params: {
-      store: 'amazon'
+      page: query.page || 0,
+      per_page: query.pageSize || 10,
+      order: query.order || 'desc',
+      min_rating: query.min_rating,
+      max_rating: query.max_rating,
+      store: 'amazon' // uptradeit-com
     },
     isFullUrl: true
+  };
+
+  return Request<T>(opts);
+}
+
+export const getModuleOn = <T>(): Promise<T> => {
+  const opts: IOpts = {
+    url: `/reviews-io/module-on`,
   };
 
   return Request<T>(opts);

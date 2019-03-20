@@ -77,11 +77,11 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
               <div className="label">Your Shipping Label</div>
               <div className="left">
                 <span>Tracking Number</span>
-                <span>063746374682374</span>
+                <span>{orderDetail && orderDetail.shippoTransaction.trackingNumber}</span>
               </div>
               <div className="button-group">
-                <a target="__blank" href={this.props.yourphone.orderDetail ? this.props.yourphone.orderDetail.shippoTransaction.ext.labelUrl : 'javascript:;'}><Button type="primary" ghost={true} size="small">DOWNLOAD</Button></a>
-                <a target="__blank" href={this.props.yourphone.orderDetail ? this.props.yourphone.orderDetail.shippoTransaction.ext.labelUrl : 'javascript:;'}><Button type="primary" size="small">PRINT</Button></a>
+                <a target="__blank" href={orderDetail ? '/up-api/up-trade-it/api/orders/download-label?code=' + orderDetail.downloadCode : 'javascript:;'}><Button type="primary" ghost={true} size="small">DOWNLOAD</Button></a>
+                <a target="__blank" href={orderDetail ? orderDetail.shippoTransaction.ext.labelUrl : 'javascript:;'}><Button type="primary" size="small">PRINT</Button></a>
               </div>
             </div>
             <div className="order-summary-wrapper">
@@ -92,7 +92,7 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
                   <div className="info-wrapper">
                     <div className="info-item">
                       <span className="label">Model</span>
-                      <p className="content">{isTBD ? 'Other Phone' : (inquiryDetail && inquiryDetail.product.name)}</p>
+                      <p className="content">{isTBD ? 'Other' : (inquiryDetail && inquiryDetail.product.name)}</p>
                     </div>
                     <div className="info-item">
                       <span className="label">Order Number</span>

@@ -88,6 +88,8 @@ export default class Models extends React.Component<IModelsProps> {
       brandId: DEFAULT.otherBrandsId,
       brandName: 'Other'
     }
+
+    this.props.yourphone.activeBrandsId = DEFAULT.otherBrandsId;
     this.props.history.push('/sell/yourphone/other')
   }
 

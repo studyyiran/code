@@ -1,23 +1,57 @@
 import * as React from 'react';
-import { Form, Select, Pagination } from 'antd'
+import { observer, inject } from 'mobx-react';
+import { Form, Select, Pagination, Skeleton } from 'antd'
 import Star from '@/components/star';
+import { ICommonProps, IReview } from '@/store/interface/common.interface';
 import './reviews.less';
+interface IState {
+  page: number,
+  list: IReview[],
+  rating: string
+}
 
+@inject('common')
+@observer
+export default class Reviews extends React.Component<ICommonProps, IState> {
+  public readonly state: IState = {
+    page: 0,
+    list: [],
+    rating: ''
+  }
+  public async componentDidMount() {
+    await this.props.common.getReviews({
+      page: 0,
+      pageSize: 100,
+      order: 'desc'
+    });
+    this.filterList();
+  }
 
-
-export default class Reviews extends React.Component {
+  public componentWillUnmount() {
+    this.setState({
+      page: 0,
+      list: [],
+      rating: ''
+    })
+    this.props.common.reviews = null;
+  }
   public render() {
+    const reviews = this.props.common.reviews;
+    const total = reviews ? reviews.reviews.length : 0;
     return (
       <div className="page-home-reviews-container">
         <div className="global-wrapper">
           <div className="top">
             <h1>UPTRADE REVIEWS</h1>
             <div className="rating-list">
-              <Star rate={0.3} />
+              {reviews && <Star rate={Number(reviews.stats.average_rating)} />}
             </div>
           </div>
           <div className="bottom">
-            <div className="text"><span>4.56 Rating</span>  <span>15,103 Reviews</span></div>
+            <div className="text">
+              <span>{reviews ? reviews.stats.average_rating : ''} Rating</span>&nbsp;&nbsp;&nbsp;&nbsp;
+              <span>{reviews ? reviews.stats.total_reviews.replace(/(\d)(?=(?:\d{3})+$)/g, '$1,') : ''} Reviews</span>
+            </div>
             <div className="right">
               <span>Data From</span>
               <img src={require('@/images/home/reviews_logo.png')} alt="" />
@@ -28,74 +62,116 @@ export default class Reviews extends React.Component {
         <div className="list-wrapper">
           <div className="filter-box">
             <Form className="form">
-              <Form.Item label="Sort by" className="form-item item1">
-                <Select>
-                  <Select.Option value="111">1111</Select.Option>
-                  <Select.Option value="222">222</Select.Option>
-                </Select>
-              </Form.Item>
+              {
+                !this.state.rating && (
+                  <Form.Item label="Sort by" className="form-item item1">
+                    <Select defaultValue="desc" onChange={this.handleChangeOrder}>
+                      <Select.Option value="desc">Most Recent</Select.Option>
+                      <Select.Option value="rating">Highest Rated</Select.Option>
+                    </Select>
+                  </Form.Item>
+                )
+              }
               <Form.Item label="Filter" className="form-item item2">
-                <Select>
-                  <Select.Option value="111">1111</Select.Option>
-                  <Select.Option value="222">222</Select.Option>
+                <Select defaultValue={this.state.rating} onChange={this.handleChangeStar}>
+                  <Select.Option value="">None</Select.Option>
+                  <Select.Option value="5">5 Stars</Select.Option>
+                  <Select.Option value="4">4 Stars</Select.Option>
+                  <Select.Option value="3">3 Stars</Select.Option>
+                  <Select.Option value="2">2 Stars</Select.Option>
+                  <Select.Option value="1">1 Stars</Select.Option>
                 </Select>
               </Form.Item>
             </Form>
           </div>
           <div className="content-wrapper">
-            <div className="list">
-              <div className="header">
-                <h2>Name</h2>
-                <div className="rating">
-                  <Star rate={3} size="small" />
-                </div>
+            {
+              this.state.list.length > 0 ?
+                this.state.list.map((item: IReview, index: number) => {
+                  return (
+                    <div className="list" key={index}>
+                      <div className="header">
+                        <h2>{item.reviewer.first_name} {item.reviewer.last_name}</h2>
+                        <div className="rating">
+                          <Star rate={Number(item.rating)} size="small" />
+                        </div>
 
-              </div>
-              <p className="content">Very easy to use, quick response, and very thorough details for my car insurance search - much better than some others I looked at before. Came up with some very good rates, and I saved almost £150 against my expiring insurance for my two cars. Very happy!</p>
-              <div className="time">Posted 11 minutes ago</div>
-            </div>
+                      </div>
+                      <p className="content">{item.comments}</p>
+                      <div className="time">{item.timeago}</div>
+                    </div>
+                  )
+                }) :
+                <>
+                  <Skeleton active={true} />
+                  <Skeleton active={true} />
+                  <Skeleton active={true} />
+                  <Skeleton active={true} />
+                  <Skeleton active={true} />
+                </>
+            }
 
-            <div className="list">
-              <div className="header">
-                <h2>Name</h2>
-                <div className="rating">
-                  <Star rate={3} size="small" />
-                </div>
-
-              </div>
-              <p className="content">Very easy to use, quick response, and very thorough details for my car insurance search - much better than some others I looked at before. Came up with some very good rates, and I saved almost £150 against my expiring insurance for my two cars. Very happy!</p>
-              <div className="time">Posted 11 minutes ago</div>
-            </div>
-
-            <div className="list">
-              <div className="header">
-                <h2>Name</h2>
-                <div className="rating">
-                  <Star rate={3} size="small" />
-                </div>
-
-              </div>
-              <p className="content">Very easy to use, quick response, and very thorough details for my car insurance search - much better than some others I looked at before. Came up with some very good rates, and I saved almost £150 against my expiring insurance for my two cars. Very happy!</p>
-              <div className="time">Posted 11 minutes ago</div>
-            </div>
-
-            <div className="list">
-              <div className="header">
-                <h2>Name</h2>
-                <div className="rating">
-                  <Star rate={3} size="small" />
-                </div>
-
-              </div>
-              <p className="content">Very easy to use, quick response, and very thorough details for my car insurance search - much better than some others I looked at before. Came up with some very good rates, and I saved almost £150 against my expiring insurance for my two cars. Very happy!</p>
-              <div className="time">Posted 11 minutes ago</div>
-            </div>
             <div className="page-box">
-              <Pagination defaultCurrent={6} total={500} />
+              <Pagination current={this.state.page + 1} total={total} onChange={this.handlePageChange} />
             </div>
           </div>
         </div>
       </div>
     )
+  }
+
+  private handleChangeOrder = (value: string) => {
+    this.setState({
+      page: 0,
+      list: [],
+      rating: ''
+    }, async () => {
+      // this.props.common.reviews = null;
+      await this.props.common.getReviews({
+        page: 0,
+        pageSize: 100,
+        order: value
+      });
+      this.filterList();
+    });
+  }
+
+  private handleChangeStar = (value: string) => {
+    this.setState({
+      page: 0,
+      list: [],
+      rating: value
+    }, async () => {
+      // this.props.common.reviews = null;
+      await this.props.common.getReviews({
+        page: 0,
+        pageSize: 100,
+        order: 'desc',
+        min_rating: value,
+        max_rating: value
+      });
+      this.filterList();
+    });
+  }
+
+  private filterList = () => {
+    if (this.props.common.reviews) {
+      this.setState({
+        list: this.props.common.reviews.reviews.slice(this.state.page * 10, this.state.page * 10 + 10)
+      })
+    }
+  }
+
+  private handlePageChange = (page: number) => {
+    this.setState({
+      page: page - 1
+    }, () => {
+      this.filterList();
+      try {
+        window.scrollTo(0, 0)
+      } catch (e) {
+        console.warn(e)
+      }
+    })
   }
 }

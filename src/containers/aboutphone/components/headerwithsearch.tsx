@@ -8,6 +8,7 @@ import { INavigatorObj, IProductModel } from '@/containers/aboutphone/interface/
 import yourphoneStore from '@/containers/aboutphone/store/yourphone.store';
 import userStore from '@/store/user';
 import EventHandler from '@/utils/event';
+import { DEFAULT } from 'config';
 
 interface IStates {
   navigatorObj: INavigatorObj | null;
@@ -96,7 +97,7 @@ export default class BrandHeader extends React.Component<{ userEmail?: string },
     )
   }
 
-  private handleSearch = (value: string) => {
+  private handleSearch = async (value: string) => {
     if (value.trim()) {
       // 没有搜索接口，先注释掉
       // yourphoneStore.getProductsList(value.trim());
@@ -106,7 +107,18 @@ export default class BrandHeader extends React.Component<{ userEmail?: string },
     }
 
     // 如果value 为空
-    yourphoneStore.getProductsList(value.trim());
+    await yourphoneStore.getProductsList(value.trim());
+    yourphoneStore.products.push({
+      brandId: DEFAULT.otherBrandsId,
+      categoryId: 0,
+      id: 0,
+      imageUrl: require('@/images/noprice.png'),
+      name: 'Other',
+      skuPricePropertyNames: [],
+      activeModelId: 0,
+      activeProductId: 0,
+      isTBD: true
+    })
   }
 
   private handleKeyWordChange = (event: React.ChangeEvent<HTMLInputElement>) => {

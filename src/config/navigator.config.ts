@@ -74,6 +74,7 @@ export default {
     subText: '',
     isInCheckOrder: false,
     hasSearch: false,
-    progress: -1
+    progress: 2,
+    showNext: true
   }
 }

@@ -15,7 +15,6 @@ export default class App extends React.Component {
     this.setIsMobile();
     window.addEventListener('resize', this.setIsMobile, false);
     store['common'].getStaticOffice();
-    store['common'].getTest();
   }
 
   public setIsMobile = () => {
