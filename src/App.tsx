@@ -6,35 +6,50 @@ import Layout from './containers/layout/index';
 import routes from './routers';
 import store from './store';
 
+const setIsMobile = (fn?: () => void) => {
+  const clientWidth = document.documentElement.clientWidth;
+  // const dpr = window.devicePixelRatio || 1;
+  if (clientWidth <= 700) {
+    store['common'].isMobile = true;
+    document.body.classList.add('ismobile');
+  } else {
+    store['common'].isMobile = false;
+    document.body.classList.remove('ismobile');
+  }
+  if (fn) {
+    fn();
+  }
+}
+
+setIsMobile();
 export default class App extends React.Component {
   public state = {
     store: store
   }
 
   public componentDidMount() {
-    this.setIsMobile();
-    window.addEventListener('resize', this.setIsMobile, false);
+    window.addEventListener('resize', () => {
+      setIsMobile(() => {
+        this.setState({
+          store: { ...store }
+        })
+      })
+    }, false);
     store['common'].getStaticOffice();
-  }
-
-  public setIsMobile = () => {
-    const clientWidth = document.documentElement.clientWidth;
-    // const dpr = window.devicePixelRatio || 1;
-    if (clientWidth <= 700) {
-      store['common'].isMobile = true;
-      document.body.classList.add('ismobile');
-    } else {
-      store['common'].isMobile = false;
-      document.body.classList.remove('ismobile');
-    }
-
     this.setState({
       store: { ...store }
     })
   }
 
+
   public componentWillUnmount() {
-    window.removeEventListener('resize', this.setIsMobile);
+    window.removeEventListener('resize', () => {
+      setIsMobile(() => {
+        this.setState({
+          store: { ...store }
+        })
+      })
+    });
   }
 
   public render() {

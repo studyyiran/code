@@ -68,7 +68,8 @@
     "uat": "cross-env REACT_APP_SERVER_ENV=UAT node scripts/build.js",
     "pre": "cross-env REACT_APP_SERVER_ENV=PRE node scripts/build.js",
     "pub": "cross-env REACT_APP_SERVER_ENV=PUB node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom"
+    "test": "node scripts/test.js --env=jsdom",
+    "prerender": "node scripts/prerender.js"
   },
   "devDependencies": {
     "@babel/plugin-transform-exponentiation-operator": "^7.1.0",
