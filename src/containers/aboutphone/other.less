@@ -39,3 +39,54 @@
     }
   }
 }
+
+.ismobile {
+  .page-yourphone-other-container {
+    .content-wrapper {
+      padding-left:.2rem;
+      padding-right:.2rem;
+      .content {
+        margin-top:.2rem;
+        overflow: hidden;
+        padding-left:.1rem;
+        padding-right:.1rem;
+        .formitem {
+          label {
+            padding-left:.06rem;
+          }
+          label:before {
+            display: none;
+          }
+          .model-input {
+            width:100%;
+          }
+        }
+  
+        .storage-list {
+          br {
+            display: none;
+          }
+          .memory-item {
+            display: inline-block;
+            margin-left: .15rem;
+            margin-bottom: .16rem;
+            width: .9rem;
+            height: .44rem;
+            text-align: center;
+            background: rgba(255, 255, 255, 1);
+            line-height: .4rem;
+            cursor: pointer;
+            .outline-shadow-highlight();
+            .text-overflow();
+            &:nth-of-type(1), &:nth-of-type(5) {
+              margin-left:.15rem;
+            }
+            &:nth-of-type(3n + 1) {
+              margin-left:0;
+            }
+          }
+        }
+      }
+    }
+  }
+}

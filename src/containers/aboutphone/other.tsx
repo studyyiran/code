@@ -62,12 +62,17 @@ export default class Other extends React.Component<IOtherProps> {
   }
 
   private gotoNext = () => {
-    this.props.yourphone.activeProductName = 'xxx'
-    this.props.yourphone.activeModelName = '64g'
+    this.props.yourphone.activeProductName = this.props.yourphone.tbdInfo.modelName
+    this.props.yourphone.activeModelName = this.props.yourphone.tbdInfo.storage
 
     try {
       this.props.user.preOrder = {
         ...this.props.user.preOrder,
+        productInfo: {
+          ...this.props.user.preOrder.productInfo,
+          productName: this.props.yourphone.activeProductName,
+          modelName: this.props.yourphone.activeModelName
+        },
         tbdInfo: this.props.yourphone.tbdInfo
       };
     } catch (error) { console.warn(error, 'in conditions page preOrder') }

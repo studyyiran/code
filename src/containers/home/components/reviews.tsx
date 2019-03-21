@@ -22,22 +22,26 @@ export default observer((props: ICommonProps) => {
       </div>
 
       <div className="reviews-list">
-        {
-          reviews.reviews.slice(0, 3).map((item: IReview, index: number) => {
-            return (
-              <div className="list" key={index}>
-                <div className="top">
-                  <div className="reviews-rating-list">
-                    <Star size="small" gray={true} rate={Number(item.rating)} />
+        <div className="reviews-list-scroll-box">
+          <div className="block" />
+          {
+            reviews.reviews.slice(0, 3).map((item: IReview, index: number) => {
+              return (
+                <div className="list" key={index}>
+                  <div className="top">
+                    <div className="reviews-rating-list">
+                      <Star size="small" gray={true} rate={Number(item.rating)} />
+                    </div>
+                    <div className="time">{item.timeago}</div>
                   </div>
-                  <div className="time">{item.timeago}</div>
+                  <p className="content">{item.comments}</p>
+                  <div className="reviewer">{item.reviewer.first_name} {item.reviewer.last_name}</div>
                 </div>
-                <p className="content">{item.comments}</p>
-                <div className="reviewer">{item.reviewer.first_name} {item.reviewer.last_name}</div>
-              </div>
-            )
-          })
-        }
+              )
+            })
+          }
+          <div className="block" />
+        </div>
       </div>
 
       <Link to="/reviews"><Button type="primary" ghost={true} size="large" className="view-more">VIEW MORE</Button></Link>
