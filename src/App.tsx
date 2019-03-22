@@ -26,6 +26,7 @@ window.addEventListener('resize', () => {
 }, false);
 
 setIsMobile();
+store['common'].getStaticOffice();
 
 export default () => {
   return (
