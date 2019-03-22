@@ -2,7 +2,7 @@ import * as React from 'react';
 import { observer } from 'mobx-react';
 import classnames from 'classnames';
 import './headerwithsearch.less';
-import { NAVIGATOR } from 'config';
+import config from 'config';
 import { Input } from 'antd';
 import { INavigatorObj, IProductModel } from '@/containers/aboutphone/interface/index.interface';
 import yourphoneStore from '@/containers/aboutphone/store/yourphone.store';
@@ -25,7 +25,7 @@ export default class BrandHeader extends React.Component<object, IStates> {
   }
 
   public componentDidMount() {
-    const navigator = NAVIGATOR;
+    const navigator = config.NAVIGATOR;
     const navigatorKey = Object.keys(navigator);
     this.onMappingText(navigatorKey, navigator);
     yourphoneStore.getProductsList('1')

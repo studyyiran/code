@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Input, Button, Form, Icon } from 'antd';
-import { DEFAULT } from 'config';
+import config from 'config';
 import './invitation_code.less';
 export default class InvationCode extends React.Component<RouteComponentProps> {
   public state = {
@@ -69,7 +69,7 @@ export default class InvationCode extends React.Component<RouteComponentProps> {
       help: <><Icon className="def-close-circle" type="close-circle" /><span>Please enter a valid invite code.</span></>,
     }
 
-    if (this.state.code !== DEFAULT.invatationCode) {
+    if (this.state.code !== config.DEFAULT.invatationCode) {
       this.setState(state)
       return;
     }

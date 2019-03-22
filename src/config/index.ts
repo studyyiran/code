@@ -12,7 +12,7 @@ if (process.env.REACT_APP_SERVER_ENV === 'PUB') {
   ENVCONFIG = prodConfig;
 }
 
-export {
+export default {
   TITLE_CONFIG,
   EOrderStatus,
   NAVIGATOR,

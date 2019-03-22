@@ -19,7 +19,7 @@ import OrderCompleteIcon from "@/images/order/orderComplete.png";
 import ReturnRequestIcon from "@/images/order/returnRequest.png";
 import * as moment from "moment-timezone";
 import { noteUserModal } from '@/containers/aboutphone/pageValidate';
-import { DEFAULT } from 'config';
+import config from '@/config';
 moment.locale("en");
 
 class Store implements IOrderStore {
@@ -536,7 +536,7 @@ class Store implements IOrderStore {
         const aDOM = document.createElement('a');
         aDOM.style.display = 'none';
         aDOM.id = 'AFOREMAIL';
-        aDOM.setAttribute('href', `mailto:${DEFAULT.supportEmail}`);
+        aDOM.setAttribute('href', `mailto:${config.DEFAULT.supportEmail}`);
         document.body.appendChild(aDOM);
 
         const adom = document.getElementById('AFOREMAIL');

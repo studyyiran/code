@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import { renderRoutes } from 'react-router-config';
-import { NAVIGATOR } from 'config';
+import config from 'config';
 import './index.less';
 import LeftSide from './components/leftside';
 import GuaranteedPrice from './components/guaranteedprice';
@@ -19,7 +19,7 @@ export default class SellLayout extends React.Component<ISellLayoutProps, ISellL
   }
 
   public componentDidMount() {
-    const navigator = NAVIGATOR;
+    const navigator = config.NAVIGATOR;
     const navigatorKey = Object.keys(navigator);
     this.onMappingIndex(navigatorKey, navigator);
     window['__history__'].listen(() => {

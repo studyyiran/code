@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Input, notification } from 'antd';
 import { Link } from 'react-router-dom';
-import { FOOTERLINKS } from 'config';
+import config from '../../../config';
 import commonStore from '@/store/common';
 import './footer.less';
 
@@ -11,7 +11,7 @@ export default class Footer extends React.Component {
       <div className="comp-mobile-footer-container">
         <div className="list-box">
           {
-            [...FOOTERLINKS].reverse().map((group, key) => (
+            [...config.FOOTERLINKS].reverse().map((group, key) => (
               <dl key={key}>
                 {
                   group.map((link, index) => {

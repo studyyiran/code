@@ -1,5 +1,5 @@
 
-import { ENVCONFIG, DEFAULT } from 'config';
+import config from '../../../config/index';
 import { IQueryParams, IInquiryDetail, IAddressInfo } from './../interface/index.interface';
 import * as Api from '../api/index.api';
 import { action, observable, autorun, computed } from 'mobx';
@@ -81,7 +81,7 @@ class YourPhone implements IYourPhoneStore {
   }
 
   @computed get isTBD() {
-    if (this.activeBrandsId !== DEFAULT.otherBrandsId) {
+    if (this.activeBrandsId !== config.DEFAULT.otherBrandsId) {
       return false;
     }
 
@@ -201,7 +201,7 @@ class YourPhone implements IYourPhoneStore {
     }
 
     const inquiry: IQueryParams = {
-      agentCode: ENVCONFIG.agentCode,
+      agentCode: config.ENVCONFIG.agentCode,
       priceUnits: priceUnits,
       productId: this.activeProductId
     }
@@ -224,7 +224,7 @@ class YourPhone implements IYourPhoneStore {
           const aDOM = document.createElement('a');
           aDOM.style.display = 'none';
           aDOM.id = 'AFOREMAIL';
-          aDOM.setAttribute('href', `mailto:${DEFAULT.supportEmail}`);
+          aDOM.setAttribute('href', `mailto:${config.DEFAULT.supportEmail}`);
           document.body.appendChild(aDOM);
 
           const adom = document.getElementById('AFOREMAIL');
@@ -269,7 +269,7 @@ class YourPhone implements IYourPhoneStore {
   @action public createOrder = async () => {
     const orderParams: Pick<IPreOrder, Exclude<keyof IPreOrder, 'key' | 'productInfo'>> & { brandId?: number } = {
       addressInfo: this.addressInfo,
-      agentCode: ENVCONFIG.agentCode,
+      agentCode: config.ENVCONFIG.agentCode,
       carrier: this.activeCarrierName,
       checkInfo: this.echeck,
       inquiryKey: this.inquiryKey,
@@ -294,7 +294,7 @@ class YourPhone implements IYourPhoneStore {
           const aDOM = document.createElement('a');
           aDOM.style.display = 'none';
           aDOM.id = 'AFOREMAIL';
-          aDOM.setAttribute('href', `mailto:${DEFAULT.supportEmail}`);
+          aDOM.setAttribute('href', `mailto:${config.DEFAULT.supportEmail}`);
           document.body.appendChild(aDOM);
 
           const adom = document.getElementById('AFOREMAIL');
