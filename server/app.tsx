@@ -54,6 +54,10 @@ Router.get('*', async (ctx: any, next: any) => {
     await Promise.all(promises);
   }
 
+  if(!CONFIFG.routerIgnore.includes(ctx.path)) {
+    ctx.body = template;
+    return;
+  }
   const html = ReactDOMServer.renderToString(
     <Provider {...store}>
       <StaticRouter location={ctx.path} context={{}}>
