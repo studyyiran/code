@@ -17,7 +17,7 @@ staging:
     stage: staging
     script:
       - yarn
-      - yarn run uat
+      - yarn run pm2:uat
       - mv ./build ./avril
       - cp -R ./avril /var/www/
       - |-
