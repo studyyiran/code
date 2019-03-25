@@ -54,7 +54,7 @@ Router.get('*', async (ctx: any, next: any) => {
     await Promise.all(promises);
   }
 
-  if(!CONFIG.routerIgnore.includes(ctx.path)) {
+  if(CONFIG.routerIgnore.includes(ctx.path)) {
     ctx.body = template;
     next();
     return;
