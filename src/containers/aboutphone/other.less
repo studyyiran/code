@@ -1,10 +1,15 @@
 @import (reference) '~@/styles/index.less';
 .page-yourphone-other-container {
   height: 100%;
+  position: relative;
   .content-wrapper {
     .content {
       margin-top:60px;
-
+      .form-col {
+        .ant-form-item {
+          margin-bottom:0;
+        }
+      }
       .formitem {
         label {
           padding-left:6px;
@@ -36,7 +41,37 @@
           }
         }
       }
+
+      .text-with-icon {
+        width: 100%;
+        &::before {
+          content: "";
+          display: inline-block;
+          vertical-align: top;
+          width: 20px;
+          height: 20px;
+          margin-right: 10px;
+          background: url("~@/images/yourphone/check_icon--normal.png") no-repeat;
+          background-size: 100%;
+          cursor: pointer;
+        }
+        &.checked {
+          &::before {
+            background: url("~@/images/yourphone/check_icon--active.png") no-repeat;
+            background-size: 100%;
+          }
+        }
+        p {
+          display: inline-block;
+        }
+      }
     }
+  }
+  .tips {
+    text-align: center;
+    color:#B3B3B3;
+    font-size:16px;
+    margin-top:169px;
   }
 }
 
@@ -86,7 +121,21 @@
             }
           }
         }
+        .text-with-icon {
+          p {
+            width:280px;
+            font-size:12px;
+          }
+        }
       }
+    }
+    .tips {
+      text-align: center;
+      color:#B3B3B3;
+      font-size:12px;
+      margin-top:30px;
+      line-height:15px;
+      margin-bottom:30px;
     }
   }
 }

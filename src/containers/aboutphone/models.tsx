@@ -23,6 +23,11 @@ export default class Models extends React.Component<IModelsProps> {
       return;
     }
 
+    if (this.props.yourphone.activeBrandsId === DEFAULT.otherBrandsId && this.props.yourphone.oldActiveBrandsId) {
+      this.props.yourphone.activeBrandsId = this.props.yourphone.oldActiveBrandsId;
+      this.props.yourphone.oldActiveBrandsId = 0;
+    }
+
     await this.props.yourphone.getProductsList();
     // 掉完机型列表，强行塞一个other 进去
     this.props.yourphone.products.push({
@@ -36,6 +41,7 @@ export default class Models extends React.Component<IModelsProps> {
       activeProductId: 0,
       isTBD: true
     })
+
     this.setState({
       didMount: true
     })
@@ -88,8 +94,9 @@ export default class Models extends React.Component<IModelsProps> {
       brandId: DEFAULT.otherBrandsId,
       brandName: 'Other'
     }
-
+    this.props.yourphone.oldActiveBrandsId = this.props.yourphone.activeBrandsId;
     this.props.yourphone.activeBrandsId = DEFAULT.otherBrandsId;
+    this.props.yourphone.activeBrandsName = DEFAULT.otherBrandsName;
     this.props.history.push('/sell/yourphone/other')
   }
 
@@ -109,7 +116,7 @@ export default class Models extends React.Component<IModelsProps> {
         productInfo
       };
     } catch (error) { console.warn(error, 'in models page preOrder') }
-
+    // this.props.yourphone.activeBrandsId = props.brandId,
     this.props.yourphone.activeProductId = productId;
     this.props.yourphone.activeProductName = productName;
     this.props.yourphone.activeModelId = skuId;

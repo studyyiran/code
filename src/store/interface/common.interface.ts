@@ -4,6 +4,7 @@ export interface ICommonStore {
   staticOffice: IStaticOffice | null;
   reviews: IReviews | null;
   moduleOn: boolean;
+  reviewsLoading: boolean;
   initPosition: () => Promise<boolean>;
   onSubscribe: (email: string) => Promise<boolean>
   getStaticOffice: () => Promise<boolean>

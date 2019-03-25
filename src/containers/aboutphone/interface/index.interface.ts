@@ -26,6 +26,7 @@ export interface IYourPhoneStore {
     email: string;
   }
   activeBrandsId: number;
+  oldActiveBrandsId: number;
   activeBrandsName: string;
   activeCarrierName: string;
   activeCarrierDescription: string,
@@ -200,7 +201,7 @@ export interface IProductModel {
 }
 
 export interface IModleItemProps extends IProductModel {
-  onModelItemClick(productId: number, productName: string, skuId: number, skuName: string, imageUrl: string): void;
+  onModelItemClick(productId: number, productName: string, skuId: number, skuName: string, imageUrl: string, props?: IProductModel): void;
   onGoToTBD(): void
 }
 
@@ -285,5 +286,6 @@ export interface IOtherProps extends FormComponentProps {
 export interface ITbdInfo {
   modelName: string,
   properties: string[],
-  storage: string
+  storage: string,
+  donate: boolean
 }

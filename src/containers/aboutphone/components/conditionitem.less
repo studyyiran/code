@@ -3,19 +3,27 @@
 .comp-condition-item-container {
   overflow: hidden;
   display: flex;
+  align-items: center;
+
+  &.middle {
+    align-items: flex-start;
+    .left-wrapper {
+      .condition {
+        line-height: 20px;
+      }
+    }
+  }
   .left-wrapper {
     flex: 1;
     .condition {
       margin-bottom: 11px;
       .set-font-color(20px, #000);
-      line-height: 50px;
-      &.middle {
-        line-height: 20px;
-      }
+      line-height: 30px;
     }
     .detail {
       .set-font-color(14px, #9B9B9B);
       line-height: 14px;
+      margin-top: 11px;
     }
   }
 

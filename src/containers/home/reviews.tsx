@@ -86,22 +86,7 @@ export default class Reviews extends React.Component<ICommonProps, IState> {
           </div>
           <div className="content-wrapper">
             {
-              this.state.list.length > 0 ?
-                this.state.list.map((item: IReview, index: number) => {
-                  return (
-                    <div className="list" key={index}>
-                      <div className="header">
-                        <h2>{item.reviewer.first_name} {item.reviewer.last_name}</h2>
-                        <div className="rating">
-                          <Star rate={Number(item.rating)} size="small" />
-                        </div>
-
-                      </div>
-                      <p className="content">{item.comments}</p>
-                      <div className="time">{item.timeago}</div>
-                    </div>
-                  )
-                }) :
+              this.props.common.reviewsLoading && (
                 <>
                   <Skeleton active={true} />
                   <Skeleton active={true} />
@@ -109,14 +94,38 @@ export default class Reviews extends React.Component<ICommonProps, IState> {
                   <Skeleton active={true} />
                   <Skeleton active={true} />
                 </>
+              )
             }
+            {!this.props.common.reviewsLoading && (
+              this.state.list.length > 0 ?
+                <>
+                  {this.state.list.map((item: IReview, index: number) => {
+                    return (
+                      <div className="list" key={index}>
+                        <div className="header">
+                          <h2>{item.reviewer.first_name} {item.reviewer.last_name}</h2>
+                          <div className="rating">
+                            <Star rate={Number(item.rating)} size="small" />
+                          </div>
 
-            <div className="page-box">
-              <Pagination current={this.state.page + 1} total={total} onChange={this.handlePageChange} />
-            </div>
+                        </div>
+                        <p className="content">{item.comments}</p>
+                        <div className="time">{item.timeago}</div>
+                      </div>)
+                  })}
+                  < div className="page-box">
+                    <Pagination current={this.state.page + 1} total={total} onChange={this.handlePageChange} />
+                  </div>
+                </>
+                : <div className="no-reviews">
+                  <img src={require('@/images/yourphone/no-product.png')} alt="" />
+                  <h3>No results match this filter query</h3>
+                </div>
+            )
+            }
           </div>
         </div>
-      </div>
+      </div >
     )
   }
 

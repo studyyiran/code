@@ -43,6 +43,7 @@ class YourPhone implements IYourPhoneStore {
   @observable public isRightOnEdit: boolean = false;
 
   @observable public activeBrandsId = -1; // 选择的品牌Id
+  @observable public oldActiveBrandsId = 0; // 上一个选择的品牌id
   @observable public activeBrandsName = ''; // 选择的品牌的名称
   @observable public activeCarrierName = ''; // 选择的运营商
   @observable public activeCarrierDescription = ''; // 运营商的description
@@ -57,7 +58,8 @@ class YourPhone implements IYourPhoneStore {
   @observable public tbdInfo: ITbdInfo = {
     storage: '',
     properties: [],
-    modelName: ''
+    modelName: '',
+    donate: false
   }
 
   constructor() {

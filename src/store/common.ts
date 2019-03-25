@@ -8,6 +8,7 @@ class Common implements ICommonStore {
   @observable public staticOffice: IStaticOffice | null = null;
   @observable public reviews: IReviews | null = null;
   @observable public moduleOn: boolean = false;
+  @observable public reviewsLoading: boolean = false;
   @action public async initPosition() {
     // Toast('正在获取定位信息');
     // 加载高德地图
@@ -53,10 +54,13 @@ class Common implements ICommonStore {
   }
 
   @action public getReviews = async (query: { [key: string]: string | number }) => {
+    this.reviewsLoading = true;
     try {
       this.reviews = await Api.getReviews<IReviews>(query);
     } catch (e) {
       return false;
+    } finally {
+      this.reviewsLoading = false;
     }
     return true;
   }

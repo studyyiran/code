@@ -28,7 +28,7 @@ export default class Other extends React.Component<IOtherProps> {
                     <Input className="model-input" onChange={this.handleChangeModelName} value={this.props.yourphone.tbdInfo.modelName} />
                   </Form.Item>
                 </Col>
-                <Col span={24}>
+                <Col span={24} className="form-col">
                   <Form.Item label="Storage" colon={false} className="formitem">
                     <div className="storage-list">
                       {
@@ -45,8 +45,12 @@ export default class Other extends React.Component<IOtherProps> {
                     </div>
                   </Form.Item>
                 </Col>
+                <Col>
+                  <span onClick={this.handleRecycleCheck} className={classnames('text-with-icon', { checked: this.props.yourphone.tbdInfo.donate })} ><p>Allow UpTrade to recycle my phone if the model is too old to be sold by UpTrade</p></span>
+                </Col>
               </Form>
             </div>
+            <div className="tips">Thank you for your interest! We will review your request and get back to you shortly.</div>
           </div>
         </LayOut>
       </div>
@@ -59,6 +63,10 @@ export default class Other extends React.Component<IOtherProps> {
 
   private handleChangeModelName = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.props.yourphone.tbdInfo.modelName = e.target.value
+  }
+
+  private handleRecycleCheck = () => {
+    this.props.yourphone.tbdInfo.donate = !this.props.yourphone.tbdInfo.donate;
   }
 
   private gotoNext = () => {
@@ -78,6 +86,5 @@ export default class Other extends React.Component<IOtherProps> {
     } catch (error) { console.warn(error, 'in conditions page preOrder') }
 
     this.props.history.push('/sell/yourphone/condition');
-    console.log(123123)
   }
 }
