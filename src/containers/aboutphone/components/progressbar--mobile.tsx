@@ -1,5 +1,5 @@
 import * as React from 'react';
-import config from 'config';
+import config from '@/config';
 import './progressbar--mobile.less';
 import { INavigatorObj } from '@/containers/aboutphone/interface/index.interface';
 interface IProps {

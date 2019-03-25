@@ -72,7 +72,7 @@ module.exports = {
   },
   output: {
     filename: 'compiled.js', // output file
-    path: `${root}/build_server`,
+    path: `${root}/build`,
     libraryTarget: "commonjs"
   },
   resolve: {

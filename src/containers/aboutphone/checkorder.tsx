@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
-import config from 'config';
+import config from '@/config';
 import Layout from '@/containers/aboutphone/layout';
 import './checkorder.less';
 import { Button } from 'antd';

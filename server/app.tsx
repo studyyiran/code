@@ -1,6 +1,7 @@
 import router from 'koa-router';
-// import path from 'path';
-// import fs from 'fs';
+import koaProxy from 'koa-proxies'
+import Axios from 'axios';
+
 import * as React from 'react'
 import send from 'koa-send';
 
@@ -9,31 +10,45 @@ import { matchRoutes, renderRoutes } from 'react-router-config'
 import { StaticRouter, Switch } from 'react-router-dom'
 import { Provider } from 'mobx-react';
 
-const modules: any = {};
 import clientRouter from './router';
-import store from './store';
+import store from '../src/store';
 import Layout from '../src/containers/layout/index';
 import fs from 'fs';
+import CONFIG from './config';
 
-// modules.module1_routeArray = routeArray;
-// import configureStore from '../../src/module1/store/store';
-// modules.module1_store = configureStore;
-// modules.serverPre = [{"filename": "server", "path": "../../src/module1" }];
+// 对请求过来的数据做一个转发，转发到localhost
+Axios.interceptors.request.use((config) => {
+  if (!config['isFullUrl']) {
+    config.baseURL = 'http://localhost:' + CONFIG.port
+  }
+  return config;
+})
 
-// modules.serverPre.map((server) => {
-//   inject(server.filename, server.path);
-// })
 
 const Router = new router();
+// 模板文件
 const template = fs.readFileSync(__dirname + '/../build/index.html', { encoding: 'utf-8' });
 
+// 转发静态资源的请求
 Router.get('/static/*', async (ctx: any, next: any) => {
   await send(ctx, ctx.path, { root: `${__dirname}/../build` });
 })
 
+// 反向代理请求
+Router.all('/up-api/*', koaProxy('/up-api', {
+  target: CONFIG.proxyUrl,
+  changeOrigin: true,
+  logs: true
+}))
+
 Router.get('*', async (ctx: any, next: any) => {
   const matches = matchRoutes(clientRouter, ctx.path)
+  console.log(matches);
 
+  if (matches[0].route['actions']) {
+    const promises = matches[0].route['actions'].map(v => v())
+    await Promise.all(promises);
+  }
 
   const html = ReactDOMServer.renderToString(
     <Provider {...store}>
@@ -46,60 +61,9 @@ Router.get('*', async (ctx: any, next: any) => {
       </StaticRouter>
     </Provider>
   );
-  const body = template.replace(/(<div id=\"root\">)/, '$1' + html);
+  let body = template.replace(/(<\/head>)/, '<script>var __SERVER_RENDER__INITIALSTATE__=' + JSON.stringify(store) + ';</script>$1');
+  body = body.replace(/(<div id=\"root\">)/, '$1' + html);
   ctx.body = body;
-
-  // matchRoutes({routes, location: req.url }, (error, redirectLocation, renderProps) => {
-  //   if (error) {
-  //     res.send(500, error.message)
-  //   } else if (redirectLocation) {
-  //     res.redirect(302, redirectLocation.pathname + redirectLocation.search)
-  //   } else if (renderProps) {
-  //     res.send(200, renderToString(<RoutingContext { ...renderProps } />))
-  //   } else {
-  //     res.send(404, 'Not found')
-  //   }
-  // })
-
 })
-
-// function inject(file, p) {
-//   let dir = path.basename(p);
-//   console.log(('dir----' + dir));  //module1或者module2
-//   router.get('/' + dir, async (ctx, next) => {
-//     let moduleName = path.basename(ctx.req.url);
-//     let router = modules[moduleName + '_routeArray'];
-//     let store = (modules[moduleName + '_store'])();
-//     let htmlSource = fs.readFileSync('./build/' + moduleName + '.html', { encoding: 'utf-8' });
-//     console.log(moduleName);
-//     console.log(htmlSource);
-//     const branch = matchRoutes(router, '/');
-//     const promises = branch.map(({ route }) => {
-//       const fetch = route.component.fetch;
-//       return fetch instanceof Function ? fetch(store) : Promise.resolve(null)
-//     });
-//     await Promise.all(promises).catch((err) => {
-//       console.log(err);
-//     });
-
-//     const html = ReactDOMServer.renderToString(
-//       <Provider store={ store } >
-//       <StaticRouter location={ ctx.url } context = {{}}>
-//       <div>
-//       { renderRoutes(router) }
-//       < /div>
-//       < /StaticRouter>
-//     < /Provider>
-//   );
-
-//   console.log(html)
-//   let initState = JSON.stringify(store.getState());
-//   console.log(initState);
-//   let output = htmlSource.replace(/(<\/head>)/, '<script>var __INITIALSTATE__=' + initState + ';</script>$1');
-
-//   const body = output.replace(/(<div id=\"root\">)/, '$1' + html);
-//   ctx.body = body;
-// });
-// }
 
 export default Router;

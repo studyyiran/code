@@ -24,7 +24,7 @@ app.on('error', (err, ctx) => {
 });
 
 
-const port: any = process.env.PORT || '3008';
+const port: any = process.env.PORT || '3006';
 app.listen(port, () => {
   console.log('listen on:' + port);
 });

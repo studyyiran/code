@@ -4,35 +4,29 @@ import { Form, Select, Pagination, Skeleton } from 'antd'
 import Star from '@/components/star';
 import { ICommonProps, IReview } from '@/store/interface/common.interface';
 import './reviews.less';
-interface IState {
-  page: number,
-  list: IReview[],
-  rating: string
-}
 
 @inject('common')
 @observer
-export default class Reviews extends React.Component<ICommonProps, IState> {
-  public readonly state: IState = {
-    page: 0,
-    list: [],
-    rating: ''
-  }
+export default class Reviews extends React.Component<ICommonProps> {
   public async componentDidMount() {
-    await this.props.common.getReviews({
-      page: 0,
-      pageSize: 100,
-      order: 'desc'
-    });
-    this.filterList();
+    if (window['__SERVER_RENDER__INITIALSTATE__']) {
+      const initialState = window['__SERVER_RENDER__INITIALSTATE__'];
+      this.props.common.reviewsPagation = initialState['common'].reviewsPagation;
+      this.props.common.reviews = initialState['common'].reviews;
+    } else {
+      this.props.common.getReviews({
+        pageSize: 100,
+        order: 'desc'
+      });
+    }
   }
 
   public componentWillUnmount() {
-    this.setState({
+    this.props.common.reviewsPagation = {
       page: 0,
       list: [],
       rating: ''
-    })
+    }
     this.props.common.reviews = null;
   }
   public render() {
@@ -63,7 +57,7 @@ export default class Reviews extends React.Component<ICommonProps, IState> {
           <div className="filter-box">
             <Form className="form">
               {
-                !this.state.rating && (
+                !this.props.common.reviewsPagation.rating && (
                   <Form.Item label="Sort by" className="form-item item1">
                     <Select defaultValue="desc" onChange={this.handleChangeOrder}>
                       <Select.Option value="desc">Most Recent</Select.Option>
@@ -73,7 +67,7 @@ export default class Reviews extends React.Component<ICommonProps, IState> {
                 )
               }
               <Form.Item label="Filter" className="form-item item2">
-                <Select defaultValue={this.state.rating} onChange={this.handleChangeStar}>
+                <Select defaultValue={this.props.common.reviewsPagation.rating} onChange={this.handleChangeStar}>
                   <Select.Option value="">None</Select.Option>
                   <Select.Option value="5">5 Stars</Select.Option>
                   <Select.Option value="4">4 Stars</Select.Option>
@@ -97,9 +91,9 @@ export default class Reviews extends React.Component<ICommonProps, IState> {
               )
             }
             {!this.props.common.reviewsLoading && (
-              this.state.list.length > 0 ?
+              this.props.common.reviewsPagation.list.length > 0 ?
                 <>
-                  {this.state.list.map((item: IReview, index: number) => {
+                  {this.props.common.reviewsPagation.list.map((item: IReview, index: number) => {
                     return (
                       <div className="list" key={index}>
                         <div className="header">
@@ -114,7 +108,7 @@ export default class Reviews extends React.Component<ICommonProps, IState> {
                       </div>)
                   })}
                   < div className="page-box">
-                    <Pagination current={this.state.page + 1} total={total} onChange={this.handlePageChange} />
+                    <Pagination current={this.props.common.reviewsPagation.page + 1} total={total} onChange={this.handlePageChange} />
                   </div>
                 </>
                 : <div className="no-reviews">
@@ -130,57 +124,35 @@ export default class Reviews extends React.Component<ICommonProps, IState> {
   }
 
   private handleChangeOrder = (value: string) => {
-    this.setState({
+    this.props.common.getReviews({
       page: 0,
-      list: [],
-      rating: ''
-    }, async () => {
-      // this.props.common.reviews = null;
-      await this.props.common.getReviews({
-        page: 0,
-        pageSize: 100,
-        order: value
-      });
-      this.filterList();
+      pageSize: 100,
+      order: value
     });
   }
 
   private handleChangeStar = (value: string) => {
-    this.setState({
+    this.props.common.reviewsPagation.rating = value;
+    this.props.common.getReviews({
       page: 0,
-      list: [],
-      rating: value
-    }, async () => {
-      // this.props.common.reviews = null;
-      await this.props.common.getReviews({
-        page: 0,
-        pageSize: 100,
-        order: 'desc',
-        min_rating: value,
-        max_rating: value
-      });
-      this.filterList();
+      pageSize: 100,
+      order: 'desc',
+      min_rating: value,
+      max_rating: value
     });
   }
 
-  private filterList = () => {
-    if (this.props.common.reviews) {
-      this.setState({
-        list: this.props.common.reviews.reviews.slice(this.state.page * 10, this.state.page * 10 + 10)
-      })
-    }
-  }
+  // private filterList = () => {
+  //   if (this.props.common.reviews) {
+  //     this.setState({
+  //       list: this.props.common.reviews.reviews.slice(this.state.page * 10, this.state.page * 10 + 10)
+  //     })
+  //   }
+  // }
 
   private handlePageChange = (page: number) => {
-    this.setState({
-      page: page - 1
-    }, () => {
-      this.filterList();
-      try {
-        window.scrollTo(0, 0)
-      } catch (e) {
-        console.warn(e)
-      }
-    })
+    this.props.common.reviewsPagation.page = page - 1;
+    this.props.common.filterReviews();
+    window.scrollTo(0, 0)
   }
 }

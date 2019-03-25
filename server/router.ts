@@ -1,3 +1,4 @@
+import store from '../src/store';
 import NotFound from '../src/containers/notfound';
 import Home from '../src/containers/home';
 import Faq from '../src/containers/single/faq'
@@ -11,6 +12,7 @@ import Privacypolicy from '../src/containers/single/privacypolicy'
 import Terms from '../src/containers/single/terms'
 import Howitworks from '../src/containers/single/howitworks'
 import AboutUs from '../src/containers/single/aboutUs'
+import Reviews from '../src/containers/home/reviews'
 
 export default [
   {
@@ -62,6 +64,18 @@ export default [
     path: '/who-we-are',
   },
   {
+    component: Reviews,
+    exact: true,
+    path: '/reviews',
+    actions: [
+      () => store['common'].getReviews({
+        page: 0,
+        pageSize: 100,
+        order: 'desc'
+      }),
+    ]
+  },
+  {
     // 404
     component: NotFound,
     exact: true,
@@ -72,6 +86,13 @@ export default [
     component: Home,
     exact: true,
     path: '/',
+    actions: [
+      () => store['common'].getReviews({
+        page: 0,
+        pageSize: 3,
+        order: 'desc'
+      }),
+      store['common'].getModuleOn
+    ]
   },
 ];
-
