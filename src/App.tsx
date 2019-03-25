@@ -28,6 +28,8 @@ window.addEventListener('resize', () => {
 setIsMobile();
 store['common'].getStaticOffice();
 
+document.body.classList.add('isrender');
+
 export default () => {
   return (
     <Provider {...store}>

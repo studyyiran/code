@@ -8,7 +8,7 @@ import './styles/index.less';
 // import './iconfont/iconfont';
 
 if (process.env.NODE_ENV === "development") {
-  ReactDOM.render(
+  ReactDOM.hydrate(
     <AppContainer>
       <App />
     </AppContainer>,
@@ -21,7 +21,7 @@ if (process.env.NODE_ENV === "development") {
 
 
 if (process.env.NODE_ENV === "production") {
-  ReactDOM.render(
+  ReactDOM.hydrate(
     <App />,
     document.getElementById('root') as HTMLElement
   );

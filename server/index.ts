@@ -9,11 +9,11 @@ import mount from 'koa-mount'
 import App from './app';
 import { JSDOM } from 'jsdom'
 
-const app = new Koa();
 
+const app = new Koa();
 app.use(App.routes())
 app.use(App.allowedMethods())
-app.use(staticCache(path.resolve(__dirname, '/static/'), {
+app.use(staticCache(path.resolve(__dirname, '/../build'), {
   maxAge: 365 * 24 * 60 * 60,
   gzip: true
 }));
