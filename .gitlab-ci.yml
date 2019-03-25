@@ -20,6 +20,10 @@ staging:
       - yarn run pm2:uat
       - mv ./build ./avril
       - cp -R ./avril /var/www/
+      - cp -R ./ecosystem.config.js /var/www/avril
+      - cd /var/www/avril
+      - pm2 stop all
+      - pm2 start ecosystem.config.js --env=staging
       - |-
          curl 'https://oapi.dingtalk.com/robot/send?access_token=9586e21e95d59e2fc3579d27997450694fcaaa0b10da01a4f0cd73ccfd68f456' -H 'Content-Type: application/json'  -d '{"msgtype": "text",  "text": {"content": "美国帮卖宝 前台页面 avril 已部署"}}'
     only:

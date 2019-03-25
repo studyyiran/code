@@ -16,7 +16,7 @@ module.exports = {
     instances: 'max',
     max_memory_restart: '1G',
     name: 'uptradeit',
-    script: './build/compiled.js',
+    script: './compiled.js',
     watch: false,
   }],
 

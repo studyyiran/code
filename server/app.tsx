@@ -27,11 +27,11 @@ Axios.interceptors.request.use((config) => {
 
 const Router = new router();
 // 模板文件
-const template = fs.readFileSync(__dirname + '/../build/index.html', { encoding: 'utf-8' });
+const template = fs.readFileSync('./index.html', { encoding: 'utf-8' });
 
 // 转发静态资源的请求
 Router.get('/static/*', async (ctx: any, next: any) => {
-  await send(ctx, ctx.path, { root: `${__dirname}/../build` });
+  await send(ctx, ctx.path, { root: `./` });
 })
 
 // 反向代理请求
