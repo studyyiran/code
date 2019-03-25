@@ -66,7 +66,7 @@ export default class NavigatorWithBar extends React.Component<IProps, IStates> {
         </div>
         <div className="right-wrapper">
           {
-            (navigatorObj.progress === 3 || navigatorObj.step > 1) &&
+            (navigatorObj.progress === 3 || navigatorObj.step > 1 || navigatorObj.showNext) &&
             <Button
               style={{ width: '130px', height: '50px' }}
               onClick={this.goNext}

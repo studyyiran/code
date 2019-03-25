@@ -3,10 +3,11 @@ import config from '../../../config/index';
 import { IQueryParams, IInquiryDetail, IAddressInfo } from './../interface/index.interface';
 import * as Api from '../api/index.api';
 import { action, observable, autorun, computed } from 'mobx';
-import { IYourPhoneStore, ICarrier, IBrands, IAmericaState, IProductModel, IProductPPVN, ISubSkuPricePropertyValues } from '../interface/index.interface';
+import { IYourPhoneStore, ICarrier, IBrands, IAmericaState, IProductModel, IProductPPVN, ITbdInfo, ISubSkuPricePropertyValues } from '../interface/index.interface';
 import { IPreOrder } from '@/store/interface/user.interface';
 import UserStore from '@/store/user';
 import { noteUserModal } from '@/containers/aboutphone/pageValidate';
+import { IOrderDetail } from '@/containers/order/interface/order.inerface'
 class YourPhone implements IYourPhoneStore {
   @observable public carriers: ICarrier[] = [];
   @observable public brands: IBrands[] = [];
@@ -15,7 +16,7 @@ class YourPhone implements IYourPhoneStore {
   @observable public productPPVNS: IProductPPVN[] = [];
   @observable public inquiryKey = '';
   @observable public inquiryDetail = null;
-  @observable public orderDetail = null; // 订单详情
+  @observable public orderDetail: IOrderDetail | null = null; // 订单详情
   @observable public addressInfo: IAddressInfo = { // 用户填写的信息
     addressLine: '',
     addressLineOptional: '',
@@ -42,6 +43,7 @@ class YourPhone implements IYourPhoneStore {
   @observable public isRightOnEdit: boolean = false;
 
   @observable public activeBrandsId = -1; // 选择的品牌Id
+  @observable public oldActiveBrandsId = 0; // 上一个选择的品牌id
   @observable public activeBrandsName = ''; // 选择的品牌的名称
   @observable public activeCarrierName = ''; // 选择的运营商
   @observable public activeCarrierDescription = ''; // 运营商的description
@@ -53,6 +55,12 @@ class YourPhone implements IYourPhoneStore {
   @observable public isAddressValuesAndDisabled: boolean = true;
   @observable public isPaymentFormFilled: boolean = false;
   @observable public americaStates: IAmericaState | null;
+  @observable public tbdInfo: ITbdInfo = {
+    storage: '',
+    properties: [],
+    modelName: '',
+    donate: false
+  }
 
   constructor() {
     autorun(() => {
@@ -85,11 +93,11 @@ class YourPhone implements IYourPhoneStore {
       return false;
     }
 
-    this.activeCarrierName = ''; // TBD的情况下，运营商不选，赋默认值为'' | 'other'
-    this.activeProductId = -1;
-    this.activeModelId = -1;
-    this.activeConditions = {};
-    this.activeCarrierName = 'OTHERS'
+    // this.activeCarrierName = ''; // TBD的情况下，运营商不选，赋默认值为'' | 'other'
+    // this.activeProductId = -1;
+    // this.activeModelId = -1;
+    // this.activeConditions = {};
+    // this.activeCarrierName = 'OTHERS'
     return true;
   }
 
@@ -277,6 +285,10 @@ class YourPhone implements IYourPhoneStore {
       paypalInfo: this.paypal,
       userEmail: UserStore.preOrder.userEmail!,
       brandId: UserStore.preOrder.productInfo ? UserStore.preOrder.productInfo.brandId : undefined
+    }
+
+    if (this.isTBD) {
+      orderParams.tbdInfo = this.tbdInfo;
     }
 
     try {

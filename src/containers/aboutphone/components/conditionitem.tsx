@@ -9,9 +9,9 @@ const isMatch = (activeConditions: object | null, conditionId: number, ppvnValue
   return activeConditions[conditionId] === ppvnValueId;
 };
 export default (props: IProductPPVN & { onConditionItemClick: (conditionId: number, ppvnValueId: number) => void; activeConditions: object | null }) => (
-  <div className="comp-condition-item-container">
+  <div className={classnames('comp-condition-item-container', { middle: props.illustrationContent && props.illustrationContent.propertyIllustrationContentText })}>
     <div className="left-wrapper">
-      <p className={classnames('condition', { middle: props.illustrationContent && props.illustrationContent.propertyIllustrationContentText })}>{props.name}</p>
+      <p className="condition">{props.name}</p>
       {
         props.illustrationContent && props.illustrationContent.propertyIllustrationContentText &&
         <p className="detail">{props.illustrationContent.propertyIllustrationContentText}</p>

@@ -1,0 +1,141 @@
+@import (reference) '~@/styles/index.less';
+.page-yourphone-other-container {
+  height: 100%;
+  position: relative;
+  .content-wrapper {
+    .content {
+      margin-top:60px;
+      .form-col {
+        .ant-form-item {
+          margin-bottom:0;
+        }
+      }
+      .formitem {
+        label {
+          padding-left:6px;
+        }
+        label:before {
+          display: none;
+        }
+        .model-input {
+          width:330px;
+        }
+      }
+
+      .storage-list {
+        .memory-item {
+          display: inline-block;
+          margin-left: 15px;
+          margin-bottom: 16px;
+          width: 120px;
+          height: 40px;
+          text-align: center;
+          background: rgba(255, 255, 255, 1);
+          line-height: 36px;
+          cursor: pointer;
+          .outline-shadow-highlight();
+          .text-overflow();
+  
+          &:nth-of-type(1), &:nth-of-type(5) {
+            margin-left: 0;
+          }
+        }
+      }
+
+      .text-with-icon {
+        width: 100%;
+        &::before {
+          content: "";
+          display: inline-block;
+          vertical-align: top;
+          width: 20px;
+          height: 20px;
+          margin-right: 10px;
+          background: url("~@/images/yourphone/check_icon--normal.png") no-repeat;
+          background-size: 100%;
+          cursor: pointer;
+        }
+        &.checked {
+          &::before {
+            background: url("~@/images/yourphone/check_icon--active.png") no-repeat;
+            background-size: 100%;
+          }
+        }
+        p {
+          display: inline-block;
+        }
+      }
+    }
+  }
+  .tips {
+    text-align: center;
+    color:#B3B3B3;
+    font-size:16px;
+    margin-top:169px;
+  }
+}
+
+.ismobile {
+  .page-yourphone-other-container {
+    .content-wrapper {
+      padding-left:.2rem;
+      padding-right:.2rem;
+      .content {
+        margin-top:.2rem;
+        overflow: hidden;
+        padding-left:.1rem;
+        padding-right:.1rem;
+        .formitem {
+          label {
+            padding-left:.06rem;
+          }
+          label:before {
+            display: none;
+          }
+          .model-input {
+            width:100%;
+          }
+        }
+  
+        .storage-list {
+          br {
+            display: none;
+          }
+          .memory-item {
+            display: inline-block;
+            margin-left: .15rem;
+            margin-bottom: .16rem;
+            width: .9rem;
+            height: .44rem;
+            text-align: center;
+            background: rgba(255, 255, 255, 1);
+            line-height: .4rem;
+            cursor: pointer;
+            .outline-shadow-highlight();
+            .text-overflow();
+            &:nth-of-type(1), &:nth-of-type(5) {
+              margin-left:.15rem;
+            }
+            &:nth-of-type(3n + 1) {
+              margin-left:0;
+            }
+          }
+        }
+        .text-with-icon {
+          p {
+            width:280px;
+            font-size:12px;
+          }
+        }
+      }
+    }
+    .tips {
+      text-align: center;
+      color:#B3B3B3;
+      font-size:12px;
+      margin-top:30px;
+      line-height:15px;
+      margin-bottom:30px;
+    }
+  }
+}

@@ -62,8 +62,6 @@ export default class Brands extends React.Component<IBrandsProps> {
     // 是否为TBD机型
     if (brand.id === config.DEFAULT.otherBrandsId) {
       this.props.yourphone.inquiryKey = '';
-      this.props.history.push('/sell/yourphone/shipping')
-      return;
     }
     this.props.history.push('/sell/yourphone/carrier');
   }

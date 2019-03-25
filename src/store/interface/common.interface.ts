@@ -2,9 +2,14 @@ export interface ICommonStore {
   positionInfo: any;
   isMobile: boolean;
   staticOffice: IStaticOffice | null;
+  reviews: IReviews | null;
+  moduleOn: boolean;
+  reviewsLoading: boolean;
   initPosition: () => Promise<boolean>;
   onSubscribe: (email: string) => Promise<boolean>
   getStaticOffice: () => Promise<boolean>
+  getReviews: (query: { [key: string]: string | number }) => Promise<boolean>,
+  getModuleOn: () => Promise<boolean>,
 }
 
 export interface ICommonProps {
@@ -21,4 +26,26 @@ export interface IStaticOffice {
   state: string  // 州,
   street: string  // 详细地址,
   zipCode: string  // 邮编
+}
+
+export interface IReviews {
+  page: number, // 当前页
+  per_page: number, // x条一分页
+  stats: {
+    average_rating: string, // 评分
+    total_reviews: string, // 总评论数
+  },
+  reviews: IReview[],
+  store: string, // 公司
+  total_pages: number // 总页数
+}
+
+export interface IReview {
+  timeago: string, // 5 years ago
+  comments: string, // 评论
+  rating: string, // 评分
+  reviewer: {
+    first_name: string,
+    last_name: string
+  }
 }
