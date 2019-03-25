@@ -68,7 +68,7 @@ module.exports = {
   target: 'node',
   node: {
     __filename: false,
-    __dirname: true
+    __dirname: false
   },
   output: {
     filename: 'compiled.js', // output file

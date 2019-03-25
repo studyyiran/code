@@ -8,12 +8,13 @@ import koaStatic from 'koa-static';
 import mount from 'koa-mount'
 import App from './app';
 import { JSDOM } from 'jsdom'
+import rootPath = require('app-root-path').path;
 
 
 const app = new Koa();
 app.use(App.routes())
 app.use(App.allowedMethods())
-app.use(staticCache('./', {
+app.use(staticCache(__dirname, {
   maxAge: 365 * 24 * 60 * 60,
   gzip: true
 }));
