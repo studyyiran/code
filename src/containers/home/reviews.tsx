@@ -13,6 +13,7 @@ export default class Reviews extends React.Component<ICommonProps> {
       const initialState = window['__SERVER_RENDER__INITIALSTATE__'];
       this.props.common.reviewsPagation = initialState['common'].reviewsPagation;
       this.props.common.reviews = initialState['common'].reviews;
+      window['__SERVER_RENDER__INITIALSTATE__'] = null;
     } else {
       this.props.common.getReviews({
         pageSize: 100,

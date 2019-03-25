@@ -60,6 +60,7 @@ export default class Home extends React.Component<ICommonProps, IHomeState> {
       this.props.common.reviewsPagation = initialState['common'].reviewsPagation;
       this.props.common.reviews = initialState['common'].reviews;
       this.props.common.moduleOn = initialState['common'].moduleOn;
+      window['__SERVER_RENDER__INITIALSTATE__'] = null;
     } else {
       this.props.common.getReviews({
         page: 0,
