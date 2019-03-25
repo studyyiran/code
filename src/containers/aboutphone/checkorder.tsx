@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
-import { DEFAULT } from 'config';
+import config from '@/config';
 import Layout from '@/containers/aboutphone/layout';
 import './checkorder.less';
 import { Button } from 'antd';
@@ -66,7 +66,7 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
               <div className="step">
                 <p className="name">Pack and Send</p>
                 <p className="detail" dangerouslySetInnerHTML={{ __html: this.state.detailText[this.props.common.isMobile ? 1 : 0] }} />
-                <a href={DEFAULT.FedExUrl} target="__blank" className="tips">How to find the local FedEx location</a>
+                <a href={config.DEFAULT.FedExUrl} target="__blank" className="tips">How to find the local FedEx location</a>
               </div>
               <div className="step">
                 <p className="name">Get Paid</p>

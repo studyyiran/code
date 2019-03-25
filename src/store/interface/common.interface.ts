@@ -5,11 +5,19 @@ export interface ICommonStore {
   reviews: IReviews | null;
   moduleOn: boolean;
   reviewsLoading: boolean;
+  reviewsPagation: IReviewsPagation;
+  filterReviews: () => void;
   initPosition: () => Promise<boolean>;
   onSubscribe: (email: string) => Promise<boolean>
   getStaticOffice: () => Promise<boolean>
   getReviews: (query: { [key: string]: string | number }) => Promise<boolean>,
   getModuleOn: () => Promise<boolean>,
+}
+
+export interface IReviewsPagation {
+  page: number,
+  list: IReview[],
+  rating: string
 }
 
 export interface ICommonProps {

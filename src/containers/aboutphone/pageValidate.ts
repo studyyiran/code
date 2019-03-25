@@ -2,7 +2,7 @@
  * 用于校验在yourphone流程中，各个页面所必须的关键数据
  * 如果不满足，则跳会about you 页面
  */
-import { DEFAULT } from 'config';
+import config from '@/config';
 import userStore from '@/store/user';
 import yourPhoneStore from '@/containers/aboutphone/store/yourphone.store';
 import { EPayType, INoteUserModalProps } from './interface/index.interface';
@@ -54,7 +54,7 @@ export const brandIdValidate = (): boolean => {
 }
 
 export const isTBDValidate = (): boolean => {
-  return !!(yourPhoneStore.activeBrandsId === DEFAULT.otherBrandsId);
+  return !!(yourPhoneStore.activeBrandsId === config.DEFAULT.otherBrandsId);
 }
 
 export const carrierValidate = (): boolean => {

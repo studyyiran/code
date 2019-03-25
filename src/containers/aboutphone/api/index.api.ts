@@ -1,7 +1,7 @@
 import { Request } from "utils";
 import { IOpts } from "@/utils/request.interface";
 import { IQueryParams } from "../interface/index.interface";
-import { ENVCONFIG } from "config";
+import config from "../../../config/index";
 import { IPreOrder } from "@/store/interface/user.interface";
 
 // 根据类目获取品牌列表
@@ -68,7 +68,7 @@ export const createInquiry = <T>(inquiry: IQueryParams) => {
 // 获取询价详情
 export const getInquiryDetail = <T>(
   key: string,
-  agentCode: string = ENVCONFIG["agentCode"]
+  agentCode: string = config.ENVCONFIG["agentCode"]
 ) => {
   const opts: IOpts = {
     url: `/inquiries/${key}`,

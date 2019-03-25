@@ -78,7 +78,9 @@ const Request = <T>(opts: IOpts, code?: number[]): Promise<T> => {
   // 返回一个promise 用来 await调用
   return new Promise((resolve, reject) => {
     Axios(opts).then((res: AxiosResponse<IRequestRes<T>>) => {
-      setTimeout(hide, 0);
+      if (hide) {
+        setTimeout(hide, 0);
+      }
       if (res && opts.isFullUrl) {
         const data: T = JSON.parse(JSON.stringify(res.data)) as T
         resolve(data);
@@ -129,7 +131,9 @@ const Request = <T>(opts: IOpts, code?: number[]): Promise<T> => {
       resolve(res.data.data);
 
     }).catch((err) => {
-      setTimeout(hide, 0);
+      if (hide) {
+        setTimeout(hide, 0);
+      }
       // 默认直接弹框报错
       message.error('Network error!', 5);
       reject(err);

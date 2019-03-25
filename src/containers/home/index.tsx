@@ -55,12 +55,19 @@ export default class Home extends React.Component<ICommonProps, IHomeState> {
     ]
   };
   public componentDidMount() {
-    this.props.common.getReviews({
-      page: 0,
-      pageSize: 3,
-      order: 'desc'
-    });
-    this.props.common.getModuleOn();
+    if (window['__SERVER_RENDER__INITIALSTATE__']) {
+      const initialState = window['__SERVER_RENDER__INITIALSTATE__'];
+      this.props.common.reviewsPagation = initialState['common'].reviewsPagation;
+      this.props.common.reviews = initialState['common'].reviews;
+      this.props.common.moduleOn = initialState['common'].moduleOn;
+    } else {
+      this.props.common.getReviews({
+        page: 0,
+        pageSize: 3,
+        order: 'desc'
+      });
+      this.props.common.getModuleOn();
+    }
   }
   public render() {
     return (

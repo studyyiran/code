@@ -8,7 +8,7 @@ import { IModelsProps } from './interface/index.interface';
 import { modalPageValidate } from '@/containers/aboutphone/pageValidate';
 import Breadcrumb from '@/containers/aboutphone/components/breadcrumb';
 import ProgressBar from '@/containers/aboutphone/components/progressbar--mobile';
-import { DEFAULT } from 'config'
+import config from '@/config'
 @inject('yourphone', 'user', 'common')
 @observer
 export default class Models extends React.Component<IModelsProps> {
@@ -23,7 +23,7 @@ export default class Models extends React.Component<IModelsProps> {
       return;
     }
 
-    if (this.props.yourphone.activeBrandsId === DEFAULT.otherBrandsId && this.props.yourphone.oldActiveBrandsId) {
+    if (this.props.yourphone.activeBrandsId === config.DEFAULT.otherBrandsId && this.props.yourphone.oldActiveBrandsId) {
       this.props.yourphone.activeBrandsId = this.props.yourphone.oldActiveBrandsId;
       this.props.yourphone.oldActiveBrandsId = 0;
     }
@@ -31,7 +31,7 @@ export default class Models extends React.Component<IModelsProps> {
     await this.props.yourphone.getProductsList();
     // 掉完机型列表，强行塞一个other 进去
     this.props.yourphone.products.push({
-      brandId: DEFAULT.otherBrandsId,
+      brandId: config.DEFAULT.otherBrandsId,
       categoryId: 0,
       id: 0,
       imageUrl: require('@/images/noprice.png'),
@@ -91,12 +91,12 @@ export default class Models extends React.Component<IModelsProps> {
   private onModelItemClickToTBD = () => {
     this.props.user.preOrder.productInfo = {
       ...this.props.user.preOrder.productInfo,
-      brandId: DEFAULT.otherBrandsId,
+      brandId: config.DEFAULT.otherBrandsId,
       brandName: 'Other'
     }
     this.props.yourphone.oldActiveBrandsId = this.props.yourphone.activeBrandsId;
-    this.props.yourphone.activeBrandsId = DEFAULT.otherBrandsId;
-    this.props.yourphone.activeBrandsName = DEFAULT.otherBrandsName;
+    this.props.yourphone.activeBrandsId = config.DEFAULT.otherBrandsId;
+    this.props.yourphone.activeBrandsName = config.DEFAULT.otherBrandsName;
     this.props.history.push('/sell/yourphone/other')
   }
 

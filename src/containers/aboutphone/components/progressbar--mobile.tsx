@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { NAVIGATOR } from 'config';
+import config from '@/config';
 import './progressbar--mobile.less';
 import { INavigatorObj } from '@/containers/aboutphone/interface/index.interface';
 interface IProps {
@@ -17,7 +17,7 @@ export default class NavigatorWithBar extends React.Component<IProps, IStates> {
   }
 
   public componentDidMount() {
-    const navigator = NAVIGATOR;
+    const navigator = config.NAVIGATOR;
     const navigatorKey = Object.keys(navigator);
     this.onMappingStep(navigatorKey, navigator);
   }

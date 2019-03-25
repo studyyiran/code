@@ -4,7 +4,7 @@ import { IBrandsProps, IBrands } from './interface/index.interface';
 import LayOut from '@/containers/aboutphone/layout';
 import BrandItem from '@/containers/aboutphone/components/branditem';
 import './brands.less';
-import { DEFAULT } from '@/config';
+import config from '@/config';
 import { userEmailValidate } from '@/containers/aboutphone/pageValidate';
 import Breadcrumb from '@/containers/aboutphone/components/breadcrumb';
 import ProgressBar from '@/containers/aboutphone/components/progressbar--mobile';
@@ -53,14 +53,14 @@ export default class Brands extends React.Component<IBrandsProps> {
           brandId: brand.id,
           brandName: brand.name
         },
-        inquiryKey: brand.id === DEFAULT.otherBrandsId ? '' : this.props.yourphone.inquiryKey
+        inquiryKey: brand.id === config.DEFAULT.otherBrandsId ? '' : this.props.yourphone.inquiryKey
       };
     } catch (error) { console.warn(error, 'in brands page updatePreorder') }
 
     this.props.yourphone.activeBrandsId = brand.id;
     this.props.yourphone.activeBrandsName = brand.name;
     // 是否为TBD机型
-    if (brand.id === DEFAULT.otherBrandsId) {
+    if (brand.id === config.DEFAULT.otherBrandsId) {
       this.props.yourphone.inquiryKey = '';
     }
     this.props.history.push('/sell/yourphone/carrier');

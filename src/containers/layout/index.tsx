@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { TITLE_CONFIG } from 'config';
+import config from '../../config';
 import * as PropTypes from 'prop-types';
 import './index.less';
 import HeaderHoc from './headerHoc'
@@ -27,7 +27,7 @@ export default class LayoutIndex extends React.Component {
     // message.loading(ECommonText.LOADING, 1);
     window['__history__'] = this.context.router.history;
     // 获取title 配置 以及拿到所有的title key
-    const titles = TITLE_CONFIG;
+    const titles = config.TITLE_CONFIG;
     const titlesKey = Object.keys(titles);
     // 初始化先匹配一次
     this.onMappingTitles(titlesKey, titles);

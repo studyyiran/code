@@ -2,13 +2,12 @@ import * as React from 'react';
 import { observer } from 'mobx-react';
 import classnames from 'classnames';
 import './headerwithsearch.less';
-import { NAVIGATOR } from 'config';
+import config from '@/config';
 import { Input } from 'antd';
 import { INavigatorObj, IProductModel } from '@/containers/aboutphone/interface/index.interface';
 import yourphoneStore from '@/containers/aboutphone/store/yourphone.store';
 import userStore from '@/store/user';
 import EventHandler from '@/utils/event';
-import { DEFAULT } from 'config';
 
 interface IStates {
   navigatorObj: INavigatorObj | null;
@@ -26,7 +25,7 @@ export default class BrandHeader extends React.Component<{ userEmail?: string },
   }
 
   public componentDidMount() {
-    const navigator = NAVIGATOR;
+    const navigator = config.NAVIGATOR;
     const navigatorKey = Object.keys(navigator);
     this.onMappingText(navigatorKey, navigator);
     yourphoneStore.getProductsList('1')
@@ -109,7 +108,7 @@ export default class BrandHeader extends React.Component<{ userEmail?: string },
     // 如果value 为空
     await yourphoneStore.getProductsList(value.trim());
     yourphoneStore.products.push({
-      brandId: DEFAULT.otherBrandsId,
+      brandId: config.DEFAULT.otherBrandsId,
       categoryId: 0,
       id: 0,
       imageUrl: require('@/images/noprice.png'),
