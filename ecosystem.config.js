@@ -1,23 +1,23 @@
 module.exports = {
   apps: [{
-    name: 'uptradeit',
-    script: './build/compiled.js',
-    instances: 'max',
     autorestart: true,
-    watch: false,
-    max_memory_restart: '1G',
     env: {
       NODE_ENV: 'development',
-      REACT_APP_SERVER_ENV: 'UAT'
-    },
-    env_staging: {
-      NODE_ENV: 'production',
       REACT_APP_SERVER_ENV: 'UAT'
     },
     env_production: {
       NODE_ENV: 'production',
       REACT_APP_SERVER_ENV: 'PUB'
-    }
+    },
+    env_staging: {
+      NODE_ENV: 'production',
+      REACT_APP_SERVER_ENV: 'UAT'
+    },
+    instances: 'max',
+    max_memory_restart: '1G',
+    name: 'uptradeit',
+    script: './build/compiled.js',
+    watch: false,
   }],
 
   // deploy: {
