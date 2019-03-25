@@ -88,6 +88,7 @@ export interface IOrderDetail {
   orderPaymentBills: IPaymentInfo[];
   orderRecords: IOrderRecord[];
   returnTrackingNo: string;
+  downloadCode: string,
   ext: {
     returnExpressInfo: {
       carrier: string;
@@ -101,6 +102,9 @@ export interface IOrderDetail {
 export interface IShippingTran {
   carrier: string;
   trackingNumber: string;
+  ext: {
+    labelUrl: string;
+  }
 }
 /**
  * 物流信息接口返回

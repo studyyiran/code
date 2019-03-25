@@ -1,6 +1,6 @@
 import { IOrderDetail } from './../../containers/order/interface/order.inerface';
 
-import { IYourPhoneStore } from "@/containers/aboutphone/interface/index.interface";
+import { IYourPhoneStore, ITbdInfo } from "@/containers/aboutphone/interface/index.interface";
 
 export interface IUserInfo {
   identityChecked: boolean, // 是否实名
@@ -83,9 +83,12 @@ export interface IPreOrder {
   agentCode?: string; // 应用渠道名字
   carrier?: string; // 选中的运营商的名称
   orderDetail?: IOrderDetail;
+  tbdInfo?: ITbdInfo
   // yourphoneStore?: IYourPhoneStore; // 存储store的属性
 
 }
+
+
 
 // interface IAddressInfo {
 //   addressLine: string; // 必须地址

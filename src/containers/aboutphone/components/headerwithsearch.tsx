@@ -8,6 +8,7 @@ import { INavigatorObj, IProductModel } from '@/containers/aboutphone/interface/
 import yourphoneStore from '@/containers/aboutphone/store/yourphone.store';
 import userStore from '@/store/user';
 import EventHandler from '@/utils/event';
+import { DEFAULT } from 'config';
 
 interface IStates {
   navigatorObj: INavigatorObj | null;
@@ -16,7 +17,7 @@ interface IStates {
 }
 // let timer: number = 0;
 @observer
-export default class BrandHeader extends React.Component<object, IStates> {
+export default class BrandHeader extends React.Component<{ userEmail?: string }, IStates> {
   public static readonly displayName: string = '页面title显示组件';
   public readonly state: Readonly<IStates> = {
     navigatorObj: null,
@@ -49,7 +50,12 @@ export default class BrandHeader extends React.Component<object, IStates> {
     }
     const Search = Input.Search;
     const { navigatorObj } = this.state;
-    const extraText = navigatorObj.isInCheckOrder ? userStore.preOrder.userEmail : ''; // checkorder页面需要添加用户邮箱展示
+
+    let extraText = '';
+    // checkorder页面需要添加用户邮箱展示
+    if (navigatorObj.isInCheckOrder) {
+      extraText = userStore.preOrder.userEmail ? userStore.preOrder.userEmail : (this.props.userEmail || '');
+    }
     return (
       <div className={classnames('comp-brand-header-container', { multiple: navigatorObj.subText })}>
         <div className="left-wrapper">
@@ -91,10 +97,28 @@ export default class BrandHeader extends React.Component<object, IStates> {
     )
   }
 
-  private handleSearch = (value: string) => {
+  private handleSearch = async (value: string) => {
     if (value.trim()) {
-      yourphoneStore.getProductsList(value.trim());
+      // 没有搜索接口，先注释掉
+      // yourphoneStore.getProductsList(value.trim());
+      yourphoneStore.products = this.state.searchList;
+
+      return;
     }
+
+    // 如果value 为空
+    await yourphoneStore.getProductsList(value.trim());
+    yourphoneStore.products.push({
+      brandId: DEFAULT.otherBrandsId,
+      categoryId: 0,
+      id: 0,
+      imageUrl: require('@/images/noprice.png'),
+      name: 'Other',
+      skuPricePropertyNames: [],
+      activeModelId: 0,
+      activeProductId: 0,
+      isTBD: true
+    })
   }
 
   private handleKeyWordChange = (event: React.ChangeEvent<HTMLInputElement>) => {

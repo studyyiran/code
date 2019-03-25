@@ -265,7 +265,7 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
           checkInfo: { ...this.props.yourphone.echeck },
           payment: this.props.yourphone.payment,
           paypalInfo: { ...this.props.yourphone.paypal },
-          orderDetail: { ...this.props.yourphone.orderDetail }
+          orderDetail: this.props.yourphone.orderDetail ? { ...this.props.yourphone.orderDetail } : undefined
         }
       } catch (error) { console.warn(error, 'in done page preOrder') }
       this.props.history.push('/sell/yourphone/checkorder');

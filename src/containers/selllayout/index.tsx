@@ -92,6 +92,10 @@ export default class SellLayout extends React.Component<ISellLayoutProps, ISellL
         if (this.props.user.preOrder.productInfo.inquiryDetail) {
           this.props.yourphone.inquiryDetail = this.props.user.preOrder.productInfo.inquiryDetail;
         }
+
+        if (this.props.user.preOrder.tbdInfo) {
+          this.props.yourphone.tbdInfo = this.props.user.preOrder.tbdInfo;
+        }
       }
     }
 

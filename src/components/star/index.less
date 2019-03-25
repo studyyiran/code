@@ -1,0 +1,71 @@
+.comp-rating-list-container {
+  width:100%;
+  height:100%;
+  display: flex;
+  &.small {
+    .comp-rating-list {
+      width:15px;
+      height:15px;
+      margin-right:5px;
+    }
+  }
+  &.gray {
+    .comp-rating-list {
+      .background {
+        background: url(../../images/home/star-gray.png) no-repeat center /100%;
+      }
+    }
+  }
+  .comp-rating-list {
+    width:32px;
+    height:32px;
+    margin-right: 10px;
+    overflow: hidden;
+    position: relative;
+    background: #ECECEC;
+
+    &:last-child {
+      margin-right:0;
+    }
+    .progress {
+      background: #F5A623;
+      width:0;
+      height:100%;
+    }
+    .background {
+      position: absolute;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      background: url(../../images/home/star-white.png) no-repeat center /100%;
+    }
+  }
+}
+
+.ismobile {
+  .comp-rating-list-container {
+    &.small {
+      .comp-rating-list {
+        width:15px;
+        height:15px;
+        margin-right:5px;
+      }
+    }
+    &.gray {
+      .comp-rating-list {
+        .background {
+          background: url(../../images/home/star-gray.png) no-repeat center /100%;
+        }
+      }
+    }
+    .comp-rating-list {
+      width:24px;
+      height:24px;
+      margin-right: 8px;
+      &:last-child {
+        margin-right:0;
+      }
+    }
+  }
+}

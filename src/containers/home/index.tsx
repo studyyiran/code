@@ -4,10 +4,12 @@ import { inject, observer } from "mobx-react";
 import "./index.less";
 import { Button } from "antd";
 import { IHomeState } from "./interface/index.interface";
+import { ICommonProps } from '@/store/interface/common.interface';
+import Reviews from './components/reviews'
 
 @inject("common")
 @observer
-export default class Home extends React.Component<object, IHomeState> {
+export default class Home extends React.Component<ICommonProps, IHomeState> {
   public readonly state: Readonly<IHomeState> = {
     howitworksGroup: [
       [
@@ -52,7 +54,14 @@ export default class Home extends React.Component<object, IHomeState> {
       ]
     ]
   };
-
+  public componentDidMount() {
+    this.props.common.getReviews({
+      page: 0,
+      pageSize: 3,
+      order: 'desc'
+    });
+    this.props.common.getModuleOn();
+  }
   public render() {
     return (
       <div className="page-home-container">
@@ -231,6 +240,8 @@ export default class Home extends React.Component<object, IHomeState> {
             </dd>
           </dl>
         </div>
+
+        {this.props.common.moduleOn && <Reviews {...this.props} />}
 
         <div className="section-just">
           <h2>Just Two Steps. Ship and Paid.</h2>

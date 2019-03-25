@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Button } from 'antd';
 import { inject, observer } from 'mobx-react';
 import { RouteComponentProps } from 'react-router';
 import { IOrderProps, IProgressType } from '@/containers/order/interface/order.inerface';
@@ -73,6 +74,13 @@ class Order extends React.Component<IOrderProps & RouteComponentProps> {
       <div className="page-order-container">
         <section>
           <ProgressBar data={this.props.order.progressType} />
+          {
+            this.props.order.orderDetail.status === IProgressType.TRANSACTION_SUCCEED &&
+            <div className="reviews-wrapper">
+              <h3>Thank you for using UpTrade, your review is important to us.</h3>
+              <a href="https://www.reviews.io/company-reviews/store/uptradeit-com"><Button type="primary" size="small" style={{ width: 170 }}>Write Your Review</Button></a>
+            </div>
+          }
           <div className="page-order-body">
             {ReactNodeConfig.deliver && <DeliverSatus {...this.props} />}
             {ReactNodeConfig.inspected && <Inspection {...this.props} />}
@@ -90,5 +98,4 @@ class Order extends React.Component<IOrderProps & RouteComponentProps> {
     )
   }
 }
-
 export default Order;
