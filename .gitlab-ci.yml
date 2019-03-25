@@ -20,7 +20,6 @@ staging:
       - yarn run pm2:uat
       - mv ./build ./avril
       - cp -R ./avril /var/www/
-      - cp -R ./ecosystem.config.js /var/www/avril
       - cd /var/www/avril
       - pm2 stop all
       - pm2 start ecosystem.config.js --env=staging
