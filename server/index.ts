@@ -13,7 +13,7 @@ import { JSDOM } from 'jsdom'
 const app = new Koa();
 app.use(App.routes())
 app.use(App.allowedMethods())
-app.use(staticCache(path.resolve(__dirname, '/../build'), {
+app.use(staticCache('./', {
   maxAge: 365 * 24 * 60 * 60,
   gzip: true
 }));
