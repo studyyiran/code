@@ -56,6 +56,7 @@ Router.get('*', async (ctx: any, next: any) => {
 
   if(!CONFIG.routerIgnore.includes(ctx.path)) {
     ctx.body = template;
+    next();
     return;
   }
   const html = ReactDOMServer.renderToString(
