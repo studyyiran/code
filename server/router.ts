@@ -73,7 +73,12 @@ export default [
         pageSize: 100,
         order: 'desc'
       }),
-    ]
+    ],
+    // templateValue:{
+    //   title:'测试title',
+    //   keywords:'测试keywords',
+    //   description:'测试description'
+    // }
   },
   {
     // 404
