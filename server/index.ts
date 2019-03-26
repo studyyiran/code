@@ -4,8 +4,6 @@ global['window'] = dom.window
 import Koa from 'koa'
 import path from 'path';
 import staticCache from 'koa-static-cache';
-import koaStatic from 'koa-static';
-import mount from 'koa-mount'
 import App from './app';
 import { JSDOM } from 'jsdom'
 import rootPath = require('app-root-path').path;
