@@ -105,5 +105,10 @@ export default {
     title: 'Order Complete - Ship Your Phone | Uptradeit.com',
     keywords: 'Sell my phone',
     description: ''
+  },
+  '/reviews': {
+     title: 'Customer Reviews | Uptradeit.com',
+    keywords: 'Sell my phone',
+    description: 'A better way to sell. Read real customer ratings and reviews. Write your own review and share your experience with UpTrade.'
   }
 }
