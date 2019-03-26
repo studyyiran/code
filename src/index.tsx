@@ -3,12 +3,13 @@ declare var module: __WebpackModuleApi.Module
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
+import * as Loadable from 'react-loadable';
 import App from './App';
 import './styles/index.less';
 // import './iconfont/iconfont';
 
 if (process.env.NODE_ENV === "development") {
-  ReactDOM.hydrate(
+  ReactDOM.render(
     <AppContainer>
       <App />
     </AppContainer>,
@@ -21,9 +22,11 @@ if (process.env.NODE_ENV === "development") {
 
 
 if (process.env.NODE_ENV === "production") {
-  ReactDOM.hydrate(
-    <App />,
-    document.getElementById('root') as HTMLElement
-  );
+  Loadable.preloadReady().then(() => {
+    ReactDOM.hydrate(
+      <App />,
+      document.getElementById('root') as HTMLElement
+    );
+  })
 }
 

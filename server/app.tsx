@@ -8,12 +8,15 @@ import ReactDOMServer from 'react-dom/server'
 import { matchRoutes, renderRoutes } from 'react-router-config'
 import { StaticRouter, Switch } from 'react-router-dom'
 import { Provider } from 'mobx-react';
+import Loadable from 'react-loadable';
 
-import clientRouter from './router';
+import clientRouter from '../src/routers';
 import store from '../src/store';
 import Layout from '../src/containers/layout/index';
 import CONFIG from './config';
 import TITLE from '../src/config/title.config'
+import { getBundles } from 'react-loadable/webpack';
+import stats from '../build/react-loadable.json';
 
 // 对请求过来的数据做一个转发，转发到localhost
 Axios.interceptors.request.use((config) => {
@@ -24,11 +27,11 @@ Axios.interceptors.request.use((config) => {
 })
 
 
-const mappingTitle = (template, path, matches)=> {
-  if(matches && matches[0] && matches[0].route) {
+const mappingTitle = (template, path, matches) => {
+  if (matches && matches[0] && matches[0].route) {
     const templateValue = matches[0].route['templateValue'];
     console.log(templateValue);
-    if(templateValue) {
+    if (templateValue) {
       template = template.replace(/\<title\>(.*)\<\/title\>/, '<title>' + (templateValue.title || '') + '</title>');
       template = template.replace(/\<meta name=\"keywords\" content=\"\"\>/, '<meta name="keywords" content="' + (templateValue.keywords || '') + '">');
       template = template.replace(/\<meta name=\"description\" content=\"\"\>/, '<meta name="description" content="' + (templateValue.description || '') + '">')
@@ -42,15 +45,22 @@ const mappingTitle = (template, path, matches)=> {
   // 设置title
   const currentConfig = TITLE[arr[arr.length - 1]];
   console.log(currentConfig);
-  if(currentConfig) {
+  if (currentConfig) {
     template = template.replace(/\<title\>(.*)\<\/title\>/, '<title>' + (currentConfig.title || '') + '</title>');
     template = template.replace(/\<meta name=\"keywords\" content=\"\"\>/, '<meta name="keywords" content="' + (currentConfig.keywords || '') + '">');
     template = template.replace(/\<meta name=\"description\" content=\"\"\>/, '<meta name="description" content="' + (currentConfig.description || '') + '">')
     return template;
   }
-  
+
   return template;
 }
+
+const generateBundleScripts = (intries) => {
+  return intries.filter(bundle => bundle.file.endsWith('.js')).map(bundle => {
+    return `<script type="text/javascript" src="${bundle.publicPath}"></script>\n`;
+  });
+}
+
 
 
 const Router = new router();
@@ -67,16 +77,16 @@ Router.get('/favicon.ico', async (ctx: any, next: any) => {
 Router.all('/up-api/*', koaProxy('/up-api', {
   target: CONFIG.proxyUrl,
   changeOrigin: true,
-  logs: true
+  logs: true,
   rewrite: path => path.replace(/\/up-api/, ''),
 }))
 
 Router.get('*', async (ctx: any, next: any) => {
   // 模板文件
-  const template = fs.readFileSync(__dirname + '/index.html', { encoding: 'utf-8' });
+  let template = fs.readFileSync(__dirname + '/index.html', { encoding: 'utf-8' });
 
-  //如果在排除列表中，直接返回 html
-  if(CONFIG.routerIgnore.includes(ctx.path)) {
+  // 如果在排除列表中，直接返回 html
+  if (CONFIG.routerIgnore.includes(ctx.path)) {
     ctx.body = template;
     next();
     return;
@@ -91,19 +101,29 @@ Router.get('*', async (ctx: any, next: any) => {
   }
 
   template = mappingTitle(template, ctx.path, matches);
-
+  const modules = [];
   const html = ReactDOMServer.renderToString(
-    <Provider {...store}>
-      <StaticRouter location={ctx.path} context={{}}>
-        <Layout>
-          <Switch>
-            {renderRoutes(clientRouter)}
-          </Switch>
-        </Layout>
-      </StaticRouter>
-    </Provider>
+    <Loadable.Capture report={(moduleName) => modules.push(moduleName)}>
+      <Provider {...store}>
+        <StaticRouter location={ctx.path} context={{}}>
+          <Layout>
+            <Switch>
+              {renderRoutes(clientRouter)}
+            </Switch>
+          </Layout>
+        </StaticRouter>
+      </Provider>
+    </Loadable.Capture>
   );
+  const bundles = getBundles(stats, modules);
+  console.log(1111);
+  console.log(bundles)
+  console.log(222);
+  console.log(modules)
+  console.log(333);
+  const scripts = generateBundleScripts(bundles);
   let body = template.replace(/(<\/head>)/, '<script>var __SERVER_RENDER__INITIALSTATE__=' + JSON.stringify(store) + ';</script>$1');
+  body = body.replace(/(<\/body>)/, scripts.join() + '$1');
   body = body.replace(/(<div id=\"root\">)/, '$1' + html);
   ctx.body = body;
 })

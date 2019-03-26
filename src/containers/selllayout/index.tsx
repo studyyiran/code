@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import { renderRoutes } from 'react-router-config';
-import config from 'config';
+import config from '@/config';
 import './index.less';
 import LeftSide from './components/leftside';
 import GuaranteedPrice from './components/guaranteedprice';

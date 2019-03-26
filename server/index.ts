@@ -9,6 +9,7 @@ import mount from 'koa-mount'
 import App from './app';
 import { JSDOM } from 'jsdom'
 import rootPath = require('app-root-path').path;
+import Loadable from 'react-loadable';
 
 
 const app = new Koa();
@@ -26,6 +27,8 @@ app.on('error', (err, ctx) => {
 
 
 const port: any = process.env.PORT || '3006';
-app.listen(port, () => {
-  console.log('listen on:' + port);
-});
+Loadable.preloadAll().then(() => {
+  app.listen(port, () => {
+    console.log('listen on:' + port);
+  });
+})

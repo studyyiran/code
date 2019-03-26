@@ -16,6 +16,7 @@ const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const tsImportPluginFactory = require('ts-import-plugin');
 const packagejson = require('../package.json');
+const ReactLoadablePlugin = require('react-loadable/webpack').ReactLoadablePlugin;
 // const PrerenderSPAPlugin = require('prerender-spa-plugin')
 
 // Webpack uses `publicPath` to determine where the app is being served from.
@@ -417,6 +418,7 @@ module.exports = {
       // Don't precache sourcemaps (they're large) and build asset manifest:
       staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
     }),
+    new ReactLoadablePlugin({ filename: paths.appBuild + '/react-loadable.json', }),
     // Moment.js is an extremely popular library that bundles large locale files
     // by default due to how Webpack interprets its code. This is a practical
     // solution that requires the user to opt into importing specific locales.
@@ -429,23 +431,17 @@ module.exports = {
       tsconfig: paths.appTsProdConfig,
       tslint: paths.appTsLint,
     }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'main',
-      children: true,
-      // (选择所有被选 chunks 的子 chunks)
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   name: 'main',
+    //   children: true,
+    //   // (选择所有被选 chunks 的子 chunks)
 
-      async: true,
-      // (创建一个异步 公共chunk)
+    //   async: true,
+    //   // (创建一个异步 公共chunk)
 
-      minChunks: 2,
-    }),
-    // new PrerenderSPAPlugin({
-    //   // Required - The path to the webpack-outputted app to prerender.
-    //   staticDir: path.join(__dirname, '../build'),
-    //   outputDir: path.join(__dirname, 'prerendered'),
-    //   // Required - Routes to render.
-    //   routes: ['/', '/faq', '/why-uptrade'],
-    // })
+    //   minChunks: 4,
+    // }),
+
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
