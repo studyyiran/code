@@ -116,11 +116,6 @@ Router.get('*', async (ctx: any, next: any) => {
     </Loadable.Capture>
   );
   const bundles = getBundles(stats, modules);
-  console.log(1111);
-  console.log(bundles)
-  console.log(222);
-  console.log(modules)
-  console.log(333);
   const scripts = generateBundleScripts(bundles);
   let body = template.replace(/(<\/head>)/, '<script>var __SERVER_RENDER__INITIALSTATE__=' + JSON.stringify(store) + ';</script>$1');
   body = body.replace(/(<\/body>)/, scripts.join() + '$1');
