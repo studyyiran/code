@@ -7,7 +7,7 @@ export default class HowToTransferAndroid extends React.Component {
       <div className="page-static-blog-how-to-transfer-container page-statig-blog-container">
         <h1>How to Fix Water Damaged iPhone</h1>
         <div className="small">
-          <span>April 2,2019 7AM Central US Time</span>
+          <span>April 2,2019 7AM</span>
           <span>By UpTrade</span>
           <div className="right">
             <em />

@@ -7,7 +7,7 @@ export default class HowToTellUnlocked extends React.Component {
       <div className="page-static-blog-how-long-do-container page-statig-blog-container">
         <h1>How long do smartphones last?</h1>
         <div className="small">
-          <span>March 29,2019 7AM Central US Time</span>
+          <span>March 29,2019 7AM</span>
           <span>By UpTrade</span>
           <div className="right">
             <em />

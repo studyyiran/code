@@ -17,7 +17,7 @@ export default class BlogList extends React.Component {
                 </div>
                 <div className="right">
                   <h3>What is a blacklisted phone?</h3>
-                  <small>April 3,2019 7AM Central US Time By UpTrade</small>
+                  <small>April 3,2019 By UpTrade</small>
                   <p>Before purchasing a used phone, you should check to see if a phone has been blacklisted or has a bad ESN number. Here is how to check and make sure you are protected before spending any money.</p>
                 </div>
               </Link>
@@ -30,7 +30,7 @@ export default class BlogList extends React.Component {
                 </div>
                 <div className="right">
                   <h3>How to Fix Water Damaged iPhone</h3>
-                  <small>April 2,2019 7AM Central US Time By UpTrade</small>
+                  <small>April 2,2019 By UpTrade</small>
                   <p>Find out your options when your iPhone gets dropped in water. What is the best way to bring your phone back to life? Learn preventative ways when accidents like this happens. Surprisingly, your iPhone still might have value if it doesn’t turn on. </p>
                 </div>
               </Link>
@@ -44,7 +44,7 @@ export default class BlogList extends React.Component {
                 </div>
                 <div className="right">
                   <h3>How to Transfer Contacts From Android to Android</h3>
-                  <small>April 1,2019 7AM Central US Time By UpTrade</small>
+                  <small>April 1,2019 By UpTrade</small>
                   <p>Find out what the most efficient way is to transfer your contacts from your old android phone to a new android phone. Tips and tricks to ensure nothing is lost when you setup a new phone.</p>
                 </div>
               </Link>
@@ -58,7 +58,7 @@ export default class BlogList extends React.Component {
                 </div>
                 <div className="right">
                   <h3>How long do smartphones last? </h3>
-                  <small>March 29,2019 7AM Central US Time By UpTrade</small>
+                  <small>March 29,2019 By UpTrade</small>
                   <p>Find out what the typical lifespan of a smartphone. How long can they last? Compare it to how long you use your own phone. Is it more or less? What are some things you can do to extend the life of your smartphone?</p>
                 </div>
               </Link>
@@ -72,7 +72,7 @@ export default class BlogList extends React.Component {
                 </div>
                 <div className="right">
                   <h3>How To Tell If A Phone Is Unlocked</h3>
-                  <small>March 28,2019 7AM Central US Time By UpTrade</small>
+                  <small>March 28,2019 By UpTrade</small>
                   <p>Unlocked phones gives you an advantage over locked carrier specific phones. Here are some tips to determine if your phone is unlocked. If you’re looking to sell, unlocked phones can also have a a higher resale value.</p>
                 </div>
               </Link>
