@@ -34,6 +34,16 @@ export default [
       text: 'Contact Us',
       href: '/contact'
     },
+  ],
+  [
+    {
+      text: 'PRESS',
+      href: ''
+    },
+    {
+      text: 'Blogs',
+      href: '/blog'
+    },
     {
       text: 'How Much Is My Phone Worth',
       href: '/how-much-is-my-phone-worth'
@@ -42,5 +52,5 @@ export default [
       text: 'Sell Broken iPhone',
       href: '/sell-broken-iphone'
     }
-  ],
+  ]
 ]

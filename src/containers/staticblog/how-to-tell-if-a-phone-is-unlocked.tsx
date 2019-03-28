@@ -7,7 +7,7 @@ export default class HowToTellUnlocked extends React.Component {
       <div className="page-static-blog-how-to-tell-container page-statig-blog-container">
         <h1>How to tell if a phone is unlocked</h1>
         <div className="small">
-          <span>March 28,2019 7AM Central US Time</span>
+          <span>March 28,2019 7AM</span>
           <span>By UpTrade</span>
           <div className="right">
             <em />

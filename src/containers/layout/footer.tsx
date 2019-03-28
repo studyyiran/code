@@ -12,7 +12,7 @@ export default class Footer extends React.Component<{ router: any }, IFooterStat
   }
   public render() {
     const linksGroup = FOOTERLINKS.map((group, key) => (
-      <Col span={6} key={key} className="links-group">
+      <Col span={5} key={key} className="links-group">
         {
           group.map((link, index) => <p key={index} className="item" onClick={this.handleLink.bind(this, link)} data-href={link.href}>{link.text}</p>)
         }

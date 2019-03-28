@@ -7,7 +7,7 @@ export default class HowToTransferAndroid extends React.Component {
       <div className="page-static-blog-how-to-transfer-container page-statig-blog-container">
         <h1>How to Transfer Contacts From Android to Android</h1>
         <div className="small">
-          <span>April 1,2019 7AM Central US Time</span>
+          <span>April 1,2019 7AM</span>
           <span>By UpTrade</span>
           <div className="right">
             <em />
