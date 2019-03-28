@@ -65,7 +65,7 @@ module.exports = [
   },
   {
     url: '/blog/how-long-do-smartphones-last',
-    fileName: 'how-long-do-smartphones-last'
+    fileName: 'how-long-do-smartphones-last.html'
   },
   {
     url: '/blog/how-to-tell-if-a-phone-is-unlocked',
