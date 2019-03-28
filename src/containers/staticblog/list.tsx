@@ -9,7 +9,7 @@ export default class BlogList extends React.Component {
         <div className="bloglist-list-wrapper">
           <header>Lastest</header>
           <div className="list-box">
-            <div className="list">
+            {/* <div className="list">
               <Link to={'/blog/what-is-a-blacklisted-phone'}>
                 <div className="img-box">
                   <div className="img" style={{ backgroundImage: `url(${require('@/images/staticblog/img-5.png')})` }} />
@@ -62,7 +62,7 @@ export default class BlogList extends React.Component {
                   <p>Find out what the typical lifespan of a smartphone. How long can they last? Compare it to how long you use your own phone. Is it more or less? What are some things you can do to extend the life of your smartphone?</p>
                 </div>
               </Link>
-            </div>
+            </div> */}
 
             <div className="list">
               <Link to={'/blog/how-to-tell-if-a-phone-is-unlocked'}>
