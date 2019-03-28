@@ -52,23 +52,23 @@ module.exports = [
     fileName: 'blog.html'
   },
   {
-    url: '/blog/what-is-a-blacklisted-phone',
+    url: '/what-is-a-blacklisted-phone',
     fileName: 'what-is-a-blacklisted-phon.html'
   },
   {
-    url: '/blog/how-to-fix-water-damaged-iphone',
+    url: '/how-to-fix-water-damaged-iphone',
     fileName: 'how-to-fix-water-damaged-iphone.html'
   },
   {
-    url: '/blog/how-to-transfer-contacts-from-android-to-android',
+    url: '/how-to-transfer-contacts-from-android-to-android',
     fileName: 'how-to-transfer-contacts-from-android-to-android.html'
   },
   {
-    url: '/blog/how-long-do-smartphones-last',
+    url: '/how-long-do-smartphones-last',
     fileName: 'how-long-do-smartphones-last.html'
   },
   {
-    url: '/blog/how-to-tell-if-a-phone-is-unlocked',
+    url: '/how-to-tell-if-a-phone-is-unlocked',
     fileName: 'how-to-tell-if-a-phone-is-unlocked.html'
   }
 ]
