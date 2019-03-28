@@ -10,7 +10,7 @@ export default class BlogList extends React.Component {
           <header>Lastest</header>
           <div className="list-box">
             {/* <div className="list">
-              <Link to={'/blog/what-is-a-blacklisted-phone'}>
+              <Link to={'/what-is-a-blacklisted-phone'}>
                 <div className="img-box">
                   <div className="img" style={{ backgroundImage: `url(${require('@/images/staticblog/img-5.png')})` }} />
                   <img src={require('@/images/staticblog/img-5.png')} alt="How To Tell If A Phone Is Blacklisted | UpTradeit.com" />
@@ -23,7 +23,7 @@ export default class BlogList extends React.Component {
               </Link>
             </div>
             <div className="list">
-              <Link to={'/blog/how-to-fix-water-damaged-iphone'}>
+              <Link to={'/how-to-fix-water-damaged-iphone'}>
                 <div className="img-box">
                   <div className="img" style={{ backgroundImage: `url(${require('@/images/staticblog/img-4.png')})` }} />
                   <img src={require('@/images/staticblog/img-4.png')} alt="Water Damaged iPhone | UpTradeit.com" />
@@ -37,7 +37,7 @@ export default class BlogList extends React.Component {
             </div>
 
             <div className="list">
-              <Link to={'/blog/how-to-transfer-contacts-from-android-to-android'}>
+              <Link to={'/how-to-transfer-contacts-from-android-to-android'}>
                 <div className="img-box">
                   <div className="img" style={{ backgroundImage: `url(${require('@/images/staticblog/img-3.png')})` }} />
                   <img src={require('@/images/staticblog/img-3.png')} alt="Android to Android Contact Transfer | UpTradeit.com" />
@@ -51,7 +51,7 @@ export default class BlogList extends React.Component {
             </div>
 
             <div className="list">
-              <Link to={'/blog/how-long-do-smartphones-last'}>
+              <Link to={'/how-long-do-smartphones-last'}>
                 <div className="img-box">
                   <div className="img" style={{ backgroundImage: `url(${require('@/images/staticblog/img-2.png')})` }} />
                   <img src={require('@/images/staticblog/img-2.png')} alt="Smartphone lifespan | UpTradeit.com" />
@@ -65,7 +65,7 @@ export default class BlogList extends React.Component {
             </div> */}
 
             <div className="list">
-              <Link to={'/blog/how-to-tell-if-a-phone-is-unlocked'}>
+              <Link to={'/how-to-tell-if-a-phone-is-unlocked'}>
                 <div className="img-box">
                   <div className="img" style={{ backgroundImage: `url(${require('@/images/staticblog/img-1.png')})` }} />
                   <img src={require('@/images/staticblog/img-1.png')} alt="How To Tell If A Phone Is Unlocked | UpTradeit.com" />
