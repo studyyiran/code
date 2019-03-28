@@ -1,3 +1,3 @@
 export default {
-  agentCode: 'ahs_android',
+  agentCode: 'UpTradeIt_PC',
 }
