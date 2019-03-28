@@ -41,16 +41,16 @@ export default [
       href: ''
     },
     {
-      text: 'Blogs',
-      href: '/blog'
-    },
-    {
       text: 'How Much Is My Phone Worth',
       href: '/how-much-is-my-phone-worth'
     },
     {
       text: 'Sell Broken iPhone',
       href: '/sell-broken-iphone'
+    },
+    {
+      text: 'Blogs',
+      href: '/blog'
     }
   ]
 ]
