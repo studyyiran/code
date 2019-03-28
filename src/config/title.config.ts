@@ -105,5 +105,15 @@ export default {
     title: 'Order Complete - Ship Your Phone | Uptradeit.com',
     keywords: 'Sell my phone',
     description: ''
-  }
+  },
+  '/blog/how-to-tell-if-a-phone-is-unlocked': {
+    title: 'How To Tell If A Phone Is Unlocked | UpTradeit.com',
+    keywords: 'Sell my phone',
+    description: 'Unlocked phones gives you an advantage over locked carrier specific phones. Here are some tips to determine if your phone is unlocked. If you’re looking to sell, unlocked phones can also have a a higher resale value. '
+  },
+  '/blog/how-long-do-smartphones-last': {
+    title: 'How long do smartphones last? | UpTradeit.com',
+    keywords: 'Sell my phone',
+    description: 'Find out what the typical lifespan of a smartphone. How long can they last? Compare it to how long you use your own phone. Is it more or less? What are some things you can do to extend the life of your smartphone?'
+  },
 }

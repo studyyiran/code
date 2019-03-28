@@ -1,10 +1,12 @@
 import asyncComponent from '@/components/asyncComponent';
 import sell from './sell';
 import singlePage from './singlePage';
+import staticBlog from './staticBlog';
 
 export default [
   ...sell,
   ...singlePage,
+  ...staticBlog,
   {
     component: asyncComponent(() => import('@/containers/order/checkOrderNo')),
     path: '/check-order',
