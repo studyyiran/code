@@ -13,6 +13,10 @@
       }
     }
   }
+
+  &.moreppv {
+    align-items: flex-start;
+  }
   .left-wrapper {
     flex: 1;
     .condition {
@@ -31,9 +35,12 @@
     margin-left: 20px;
     width: 335px;
     display: flex;
+    flex-wrap: wrap;
     .option {
       flex:1;
       display: flex;
+      flex-basis: 160px;
+      flex-grow: 0;
       margin-left: 15px;
       margin-bottom: 10px;
       width:160px;
