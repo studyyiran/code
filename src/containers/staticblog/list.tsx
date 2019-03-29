@@ -48,7 +48,7 @@ export default class BlogList extends React.Component {
                   <p>Find out what the most efficient way is to transfer your contacts from your old android phone to a new android phone. Tips and tricks to ensure nothing is lost when you setup a new phone.</p>
                 </div>
               </Link>
-            </div>
+            </div> */}
 
             <div className="list">
               <Link to={'/how-long-do-smartphones-last'}>
@@ -62,7 +62,7 @@ export default class BlogList extends React.Component {
                   <p>Find out what the typical lifespan of a smartphone. How long can they last? Compare it to how long you use your own phone. Is it more or less? What are some things you can do to extend the life of your smartphone?</p>
                 </div>
               </Link>
-            </div> */}
+            </div>
 
             <div className="list">
               <Link to={'/how-to-tell-if-a-phone-is-unlocked'}>
