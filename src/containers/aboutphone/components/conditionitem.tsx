@@ -8,31 +8,35 @@ const isMatch = (activeConditions: object | null, conditionId: number, ppvnValue
   }
   return activeConditions[conditionId] === ppvnValueId;
 };
-export default (props: IProductPPVN & { onConditionItemClick: (conditionId: number, ppvnValueId: number) => void; activeConditions: object | null }) => (
-  <div className={classnames('comp-condition-item-container', { middle: props.illustrationContent && props.illustrationContent.propertyIllustrationContentText })}>
-    <div className="left-wrapper">
-      <p className="condition">{props.name}</p>
-      {
-        props.illustrationContent && props.illustrationContent.propertyIllustrationContentText &&
-        <p className="detail">{props.illustrationContent.propertyIllustrationContentText}</p>
-      }
+export default (props: IProductPPVN & { onConditionItemClick: (conditionId: number, ppvnValueId: number) => void; activeConditions: object | null }) => {
+  const middle = props.illustrationContent && props.illustrationContent.propertyIllustrationContentText;
+  const morePPV = props.pricePropertyValues && props.pricePropertyValues.length > 2;
+  return (
+    <div className={classnames('comp-condition-item-container', { middle: middle, moreppv: morePPV })}>
+      <div className="left-wrapper">
+        <p className="condition">{props.name}</p>
+        {
+          props.illustrationContent && props.illustrationContent.propertyIllustrationContentText &&
+          <p className="detail">{props.illustrationContent.propertyIllustrationContentText}</p>
+        }
 
+      </div>
+      <div className="right-wrapper">
+        {
+          props.pricePropertyValues.map((property, index) => {
+            const isActive = isMatch(props.activeConditions, props.id, property.id);
+            return (
+              <span
+                key={index}
+                className={classnames('option', { active: isActive })}
+                onClick={props.onConditionItemClick.bind(null, props.id, property.id)}
+              >
+                <span className="text">{property.value}</span>
+              </span>
+            )
+          })
+        }
+      </div>
     </div>
-    <div className="right-wrapper">
-      {
-        props.pricePropertyValues.map((property, index) => {
-          const isActive = isMatch(props.activeConditions, props.id, property.id);
-          return (
-            <span
-              key={index}
-              className={classnames('option', { active: isActive })}
-              onClick={props.onConditionItemClick.bind(null, props.id, property.id)}
-            >
-              <span className="text">{property.value}</span>
-            </span>
-          )
-        })
-      }
-    </div>
-  </div>
-)
+  )
+}
