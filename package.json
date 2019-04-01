@@ -11,7 +11,7 @@
     "@types/koa-static-cache": "^5.1.0",
     "@types/moment": "^2.13.0",
     "@types/moment-timezone": "^0.5.10",
-    "@types/react-loadable": "^5.5.0",
+    "@types/react-loadable": "^5.5.1",
     "@types/react-router": "^4.0.31",
     "@types/react-router-config": "^1.0.9",
     "@types/react-router-dom": "^4.3.1",

@@ -321,6 +321,51 @@ class YourPhone implements IYourPhoneStore {
 
     return true;
   }
+  @action public desoryUnmount = () => {
+    this.payment = '';
+    this.activeBrandsId = -1;
+  }
+  @action public destory = () => {
+    this.addressInfo = {
+      addressLine: '',
+      addressLineOptional: '',
+      city: '',
+      country: 'United States',
+      firstName: '',
+      lastName: '',
+      mobile: '',
+      state: '',
+      zipCode: ''
+    };
+    this.paypal = {
+      email: ''
+    };
+    this.echeck = {
+      firstName: '',
+      lastName: '',
+      email: ''
+    }
+    this.tbdInfo = {
+      storage: '',
+      properties: [],
+      modelName: '',
+      donate: false
+    }
+    this.isLeftOnEdit = false;
+    this.isRightOnEdit = false;
+    this.oldActiveBrandsId = 0;
+    this.activeBrandsName = '';
+    this.activeCarrierName = '';
+    this.activeCarrierDescription = '';
+    this.activeProductId = -1;
+    this.activeProductName = '';
+    this.activeModelId = -1;
+    this.activeModelName = '';
+    this.activeConditions = {};
+    this.isAddressValuesAndDisabled = false;
+    this.isPaymentFormFilled = false;
+    this.americaStates = null;
+  }
 }
 
 export default new YourPhone();

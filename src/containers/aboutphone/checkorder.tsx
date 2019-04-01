@@ -16,7 +16,6 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
 
   public readonly state: Readonly<ICheckOutStates> = {
     brand: EBrandType.IPHONE,
-    payment: EPayType.PAYPAL,
     brandText: [
       'Turn off “Find My iPhone”. <br /> Deactivate your service. <br /> Remove your Data&SIM Card.',
       'Delete your Google account. <br /> Deactivate your service. <br /> Remove your Data & SIM Card.'
@@ -49,6 +48,11 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
     this.props.user.preOrder = {
       userEmail: '',
     }
+    this.props.yourphone.destory();
+  }
+
+  public componentWillUnmount() {
+    this.props.yourphone.desoryUnmount();
   }
 
   public render() {
@@ -70,7 +74,7 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
               </div>
               <div className="step">
                 <p className="name">Get Paid</p>
-                <p className="detail" dangerouslySetInnerHTML={{ __html: this.state.payText[this.props.common.isMobile ? 'MOBILE' : 'PC'][this.state.payment] }} />
+                <p className="detail" dangerouslySetInnerHTML={{ __html: this.state.payText[this.props.common.isMobile ? 'MOBILE' : 'PC'][this.props.yourphone.payment] }} />
               </div>
             </div>
             <div className="shipping-label-wrapper">
