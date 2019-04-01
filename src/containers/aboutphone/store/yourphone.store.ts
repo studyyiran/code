@@ -321,7 +321,10 @@ class YourPhone implements IYourPhoneStore {
 
     return true;
   }
-
+  @action public desoryUnmount = () => {
+    this.payment = '';
+    this.activeBrandsId = -1;
+  }
   @action public destory = () => {
     this.addressInfo = {
       addressLine: '',
@@ -334,7 +337,6 @@ class YourPhone implements IYourPhoneStore {
       state: '',
       zipCode: ''
     };
-    this.payment = '';
     this.paypal = {
       email: ''
     };
@@ -351,7 +353,6 @@ class YourPhone implements IYourPhoneStore {
     }
     this.isLeftOnEdit = false;
     this.isRightOnEdit = false;
-    this.activeBrandsId = -1;
     this.oldActiveBrandsId = 0;
     this.activeBrandsName = '';
     this.activeCarrierName = '';
