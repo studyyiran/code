@@ -34,7 +34,7 @@ export default class BlogList extends React.Component {
                   <p>Find out your options when your iPhone gets dropped in water. What is the best way to bring your phone back to life? Learn preventative ways when accidents like this happens. Surprisingly, your iPhone still might have value if it doesn’t turn on. </p>
                 </div>
               </Link>
-            </div>
+            </div> */}
 
             <div className="list">
               <Link to={'/how-to-transfer-contacts-from-android-to-android'}>
@@ -48,7 +48,7 @@ export default class BlogList extends React.Component {
                   <p>Find out what the most efficient way is to transfer your contacts from your old android phone to a new android phone. Tips and tricks to ensure nothing is lost when you setup a new phone.</p>
                 </div>
               </Link>
-            </div> */}
+            </div>
 
             <div className="list">
               <Link to={'/how-long-do-smartphones-last'}>
