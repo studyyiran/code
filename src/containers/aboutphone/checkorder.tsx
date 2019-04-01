@@ -49,6 +49,7 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
     this.props.user.preOrder = {
       userEmail: '',
     }
+    this.props.yourphone.destory();
   }
 
   public render() {
