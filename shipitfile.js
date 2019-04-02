@@ -48,7 +48,7 @@ module.exports = shipit => {
 
     shipit.blTask('pm2', async () => {
         shipit.log('pm2');
-        await shipit.remote('cd /var/www/avril');
+        await shipit.remote('cd /var/www/avril/current');
         await shipit.remote('pm2 stop uptradeit');
         return shipit.remote('pm2 start ecosystem.config.js --env=production');
     });
