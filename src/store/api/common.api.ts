@@ -66,7 +66,7 @@ export const getReviews = <T>(query: { [key: string]: string | number }): Promis
       order: query.order || 'desc',
       min_rating: query.min_rating,
       max_rating: query.max_rating,
-      store: 'amazon' // uptradeit-com
+      store: 'uptradeit-com' // amazon
     },
     isFullUrl: true
   };
