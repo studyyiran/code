@@ -41,7 +41,7 @@ module.exports = shipit => {
 
     shipit.blTask('npm-build', () => {
         shipit.log('npm build start.');
-        return shipit.local('yarn run pm2:uat', {
+        return shipit.local('yarn run pm2:pub', {
             cwd: '/tmp/avril'
         });
     });
