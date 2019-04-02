@@ -48,7 +48,7 @@ module.exports = shipit => {
 
     shipit.blTask('pm2', async () => {
         shipit.log('pm2');
-        return shipit.remote('pm2 startOrRestart /var/www/avril/current/ecosystem.config.js --env=production');
+        return shipit.remote('pm2 startOrRestart /var/www/avril/current/ecosystem.config.js --env=production --update-env');
     });
 
     shipit.on('fetched', () => {
