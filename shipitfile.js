@@ -46,9 +46,28 @@ module.exports = shipit => {
         });
     });
 
+    shipit.blTask('pm2', async () => {
+        shipit.log('pm2');
+        await shipit.local('cd /var/www/avril', {
+            cwd: '/tmp/avril'
+        });
+        await shipit.local('pm2 stop uptradeit', {
+            cwd: '/var/www/avril'
+        });
+
+        shipit.local('pm2 start ecosystem.config.js --env=production', {
+            cwd: '/var/www/avril'
+        });
+    });
+
     shipit.on('fetched', () => {
         shipit.log('run npm build');
         shipit.start(['git-init', 'npm-install', 'npm-build']);
+    });
+
+    shipit.on('published', () => {
+        shipit.log('run pm2');
+        shipit.start(['pm2']);
     });
 
 };
