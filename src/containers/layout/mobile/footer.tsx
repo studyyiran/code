@@ -11,7 +11,7 @@ export default class Footer extends React.Component {
       <div className="comp-mobile-footer-container">
         <div className="list-box">
           {
-            [...config.FOOTERLINKS].reverse().map((group, key) => (
+            [...config.FOOTERLINKS].map((group, key) => (
               <dl key={key}>
                 {
                   group.map((link, index) => {

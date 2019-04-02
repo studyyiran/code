@@ -2,10 +2,12 @@ import sell from './sell';
 import singlePage from './singlePage';
 import Loadable from 'react-loadable';
 import store from '../store';
+import staticBlog from './staticBlog';
 
 export default [
   ...sell,
   ...singlePage,
+  ...staticBlog,
   {
     component: Loadable({
       loader: () => import('../containers/order/checkOrderNo'),
