@@ -4,14 +4,14 @@ import './footer.less';
 import { Row, Col, Input, Button, notification } from 'antd';
 import { IFooterState } from './interface/index.interface';
 import commonStore from '@/store/common'
-import { FOOTERLINKS } from 'config';
+import config from '../../config';
 
 export default class Footer extends React.Component<{ router: any }, IFooterState> {
   public readonly state = {
     email: ''
   }
   public render() {
-    const linksGroup = FOOTERLINKS.map((group, key) => (
+    const linksGroup = config.FOOTERLINKS.map((group, key) => (
       <Col span={5} key={key} className="links-group">
         {
           group.map((link, index) => <p key={index} className="item" onClick={this.handleLink.bind(this, link)} data-href={link.href}>{link.text}</p>)

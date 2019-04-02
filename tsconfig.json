@@ -25,6 +25,7 @@
     "experimentalDecorators": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "paths": {
       // 设着alias别名，相似webpack，相对上面设置的基础路径      
       "@/*": [
@@ -48,6 +49,8 @@
     "acceptance-tests",
     "webpack",
     "jest",
-    "src/setupTests.ts"
+    "src/setupTests.ts",
+    "build_server",
+    "server"
   ]
 }

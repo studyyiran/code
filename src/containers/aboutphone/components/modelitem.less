@@ -3,22 +3,39 @@
 .comp-model-item-container {
   display: block;
   float: left;
-  overflow: hidden;
+  // overflow: hidden;
   max-width: 340px;
   width:47%;
   height: 145px;
-  box-sizing: border-box;
-  padding: 0 20px;
   background: rgba(255, 255, 255, 1);
   cursor: pointer;
   .outline-shadow-highlight();
+  position: relative;
 
+  .content-wrapper {
+    overflow: hidden;
+    border:none;
+    width:100%;
+    height: 145px;
+    padding: 0 20px;
+    box-sizing: border-box;
+  }
   .title {
     margin-top: 18px;
     margin-bottom: 10px;
     .text-overflow();
     .set-font-color(18px, #000, bold);
     line-height: normal;
+  }
+
+  .tbd-img {
+    width:40px;
+    height:20px;
+    display: block;
+    position: absolute;
+    right:-1px;
+    top:-1px;
+    background: url(../../../images/yourphone/tbd-img.png) no-repeat center /100%;
   }
 
   .property-wrapper {

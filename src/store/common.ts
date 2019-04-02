@@ -1,11 +1,34 @@
-import { action } from 'mobx';
+import { action, observable, autorun } from 'mobx';
 import { requireJS, gcj02ToBd09 } from 'utils';
-import { ICommonStore, IStaticOffice } from './interface/common.interface';
+import { ICommonStore, IStaticOffice, IReviews, IReviewsPagation } from './interface/common.interface';
 import * as Api from './api/common.api';
 class Common implements ICommonStore {
-  public positionInfo: any = null;
-  public isMobile: boolean = false;
-  public staticOffice: IStaticOffice | null = null;
+  @observable public positionInfo: any = null;
+  @observable public isMobile: boolean = false;
+  @observable public staticOffice: IStaticOffice | null = null;
+  @observable public reviews: IReviews | null = null;
+  @observable public reviewsPagation: IReviewsPagation = {
+    page: 0,
+    list: [],
+    rating: ''
+  }
+  @observable public moduleOn: boolean = false;
+  @observable public reviewsLoading: boolean = false;
+
+  constructor() {
+    autorun(() => {
+      if (this.reviews) {
+        this.filterReviews();
+      }
+    })
+  }
+
+  @action public filterReviews = () => {
+    if (this.reviews) {
+      this.reviewsPagation.list = this.reviews.reviews.slice(this.reviewsPagation.page * 10, this.reviewsPagation.page * 10 + 10)
+    }
+  }
+
   @action public async initPosition() {
     // Toast('正在获取定位信息');
     // 加载高德地图
@@ -44,6 +67,46 @@ class Common implements ICommonStore {
   @action public getStaticOffice = async () => {
     try {
       this.staticOffice = await Api.getStaticOffice<IStaticOffice>();
+    } catch (e) {
+      return false;
+    }
+    return true;
+  }
+
+  @action public getReviews = async (query: { [key: string]: string | number }) => {
+    this.reviewsLoading = true;
+    try {
+      this.reviews = await Api.getReviews<IReviews>(query);
+    } catch (e) {
+      return false;
+    } finally {
+      this.reviewsLoading = false;
+    }
+    return true;
+  }
+  @action public getReviewsSort = async (query: { [key: string]: string | number }) => {
+    this.reviewsLoading = true;
+    let result: IReviews | null = null;
+    try {
+      result = await Api.getReviews<IReviews>(query);
+    } catch (e) {
+      return false;
+    } finally {
+      this.reviewsLoading = false;
+    }
+
+    const list = [...result.reviews];
+
+    result.reviews = list.sort((n1, n2) => n1.rating > n2.rating ? -1 : 1);
+
+    this.reviews = result;
+
+    return true;
+  }
+
+  @action public getModuleOn = async () => {
+    try {
+      this.moduleOn = await Api.getModuleOn<boolean>();
     } catch (e) {
       return false;
     }

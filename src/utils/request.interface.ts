@@ -11,6 +11,7 @@ export interface IOpts {
   getAll?: boolean,
   proxyName?: string,
   isMock?: boolean,
+  isFullUrl?: boolean,
 }
 
 export interface IRequestRes<T> {

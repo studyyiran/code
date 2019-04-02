@@ -4,6 +4,7 @@ import * as React from 'react';
 import * as H from 'history';
 import { IUserStoreNew } from '@/store/interface/user.interface';
 import { ICommonStore } from '@/store/interface/common.interface';
+import { IOrderDetail } from '@/containers/order/interface/order.inerface'
 
 export interface IYourPhoneStore {
   carriers: ICarrier[];
@@ -12,7 +13,7 @@ export interface IYourPhoneStore {
   products4Search: IProductModel[],
   productPPVNS: IProductPPVN[];
   inquiryDetail: IInquiryDetail | null;
-  orderDetail: any;
+  orderDetail: IOrderDetail | null;
   addressInfo: IAddressInfo;
   inquiryKey: string;
   payment: string; // 选择的支付方式
@@ -25,6 +26,7 @@ export interface IYourPhoneStore {
     email: string;
   }
   activeBrandsId: number;
+  oldActiveBrandsId: number;
   activeBrandsName: string;
   activeCarrierName: string;
   activeCarrierDescription: string,
@@ -41,6 +43,7 @@ export interface IYourPhoneStore {
   isLeftOnEdit: boolean;
   isRightOnEdit: boolean;
   isPaymentFormFilled: boolean;
+  tbdInfo: ITbdInfo;
   getBrandsByCid: (categoryId?: number) => Promise<boolean>;
   getCarrier: () => Promise<boolean>;
   getProductsList: (keyword?: string) => Promise<boolean>;
@@ -50,6 +53,8 @@ export interface IYourPhoneStore {
   getInquiryDetail: () => Promise<boolean>;
   getAmericaState: (zipCode: number) => Promise<boolean>;
   createOrder: () => Promise<boolean>;
+  destory: () => void;
+  desoryUnmount: () => void;
 }
 
 export interface ILayOutProps {
@@ -57,7 +62,8 @@ export interface ILayOutProps {
   hideBottom?: boolean;
   nextCb?: () => void;
   progress?: number;
-  disabled?: boolean
+  disabled?: boolean;
+  userEmail?: string;
 }
 
 export interface IBrandLayoutProps {
@@ -103,7 +109,6 @@ export interface IDoneStates {
 
 export interface ICheckOutStates {
   brand: number;
-  payment: string;
   brandText: string[];
   detailText: string[];
   payText: object;
@@ -175,6 +180,7 @@ export interface INavigatorObj {
   hasSearch: boolean;
   progress: number; // 底部导航, 值为-1表示不需要展示
   isInCheckOrder?: boolean;
+  showNext?: boolean; // 是否强制显示next 按钮（跳过step 和 progress 判断）
 }
 
 export interface IQueryParams {
@@ -192,7 +198,12 @@ export interface IProductModel {
   skuPricePropertyNames: ISkuPricePropertyNames[];
   activeModelId: number;
   activeProductId: number;
-  onModelItemClick(productId: number, productName: string, skuId: number, skuName: string, imageUrl: string): void;
+  isTBD?: boolean
+}
+
+export interface IModleItemProps extends IProductModel {
+  onModelItemClick(productId: number, productName: string, skuId: number, skuName: string, imageUrl: string, props?: IProductModel): void;
+  onGoToTBD(): void
 }
 
 export interface IProductPPVN {
@@ -200,7 +211,7 @@ export interface IProductPPVN {
   name: string;
   illustrationContent: {
     propertyIllustrationContentText: string;
-  }
+  } | null
   pricePropertyValues: ISubSkuPricePropertyValues[];
   isSkuProperty: boolean;
 }
@@ -265,4 +276,17 @@ export interface INoteUserModalProps extends ModalFuncProps {
   title?: string;
   seconds?: number;
   hasCountDown?: boolean;
+}
+
+export interface IOtherProps extends FormComponentProps {
+  history: H.History;
+  yourphone: IYourPhoneStore
+  user: IUserStoreNew
+}
+
+export interface ITbdInfo {
+  modelName: string,
+  properties: string[],
+  storage: string,
+  donate: boolean
 }

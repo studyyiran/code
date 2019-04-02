@@ -19,7 +19,7 @@ import OrderCompleteIcon from "@/images/order/orderComplete.png";
 import ReturnRequestIcon from "@/images/order/returnRequest.png";
 import * as moment from "moment-timezone";
 import { noteUserModal } from '@/containers/aboutphone/pageValidate';
-import { DEFAULT } from 'config';
+import config from '@/config';
 moment.locale("en");
 
 class Store implements IOrderStore {
@@ -338,7 +338,8 @@ class Store implements IOrderStore {
           date: this.packageDate(
             this.findDate(
               IProgressType.LISTED_FOR_SALE,
-              IProgressType.LISTED_FOR_SALE
+              IProgressType.LISTED_FOR_SALE,
+              true
             )
           )
         },
@@ -421,7 +422,7 @@ class Store implements IOrderStore {
             shippoTransaction.carrier,
             shippoTransaction.trackingNumber
           );
-          if (trans.trackingNumber) {
+          if (trans && trans.trackingNumber) {
             this.trackingInfo = trans;
           }
         }
@@ -536,7 +537,7 @@ class Store implements IOrderStore {
         const aDOM = document.createElement('a');
         aDOM.style.display = 'none';
         aDOM.id = 'AFOREMAIL';
-        aDOM.setAttribute('href', `mailto:${DEFAULT.supportEmail}`);
+        aDOM.setAttribute('href', `mailto:${config.DEFAULT.supportEmail}`);
         document.body.appendChild(aDOM);
 
         const adom = document.getElementById('AFOREMAIL');
@@ -554,10 +555,16 @@ class Store implements IOrderStore {
     }
     return b;
   }
-  private findDate(status: IProgressType, afterStatus?: IProgressType) {
+  private findDate(status: IProgressType, afterStatus?: IProgressType, isSale?: boolean) {
     const orderRecords = this.orderDetail.orderRecords;
     let target: IOrderRecord | null;
-    if (afterStatus) {
+    // 为sale 这个状态单独处理
+    if (isSale) {
+      target = this.findFirstEleFromTarget(
+        orderRecords,
+        t => t.afterStatus === status
+      );
+    } else if (afterStatus) {
       target = this.findFirstEleFromTarget(
         orderRecords,
         t => t.beforeStatus === status && t.afterStatus === afterStatus

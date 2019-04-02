@@ -106,6 +106,16 @@ export default {
     keywords: 'Sell my phone',
     description: ''
   },
+  '/reviews': {
+    title: 'Customer Reviews | Uptradeit.com',
+    keywords: 'Sell my phone',
+    description: 'A better way to sell. Read real customer ratings and reviews. Write your own review and share your experience with UpTrade.'
+  },
+  '/blog': {
+    title: 'UpTrade Blog | UpTradeit.com',
+    keywords: 'Sell my phone',
+    description: "UpTrade's Blog"
+  },
   // blog
   '/blog/how-to-tell-if-a-phone-is-unlocked': {
     title: 'How To Tell If A Phone Is Unlocked | UpTradeit.com',

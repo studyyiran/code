@@ -58,7 +58,9 @@ const Request = <T>(opts: IOpts, code?: number[]): Promise<T> => {
 
 
   // url 增加代理名
-  opts.url = defaultProxyName + basePath + opts.url;
+  if (!opts.isFullUrl) {
+    opts.url = defaultProxyName + basePath + opts.url;
+  }
   // 合并默认参数和业务参数
   opts.whitecode = code || null;
   opts = { ...defaultopts, ...opts };
@@ -76,8 +78,14 @@ const Request = <T>(opts: IOpts, code?: number[]): Promise<T> => {
   // 返回一个promise 用来 await调用
   return new Promise((resolve, reject) => {
     Axios(opts).then((res: AxiosResponse<IRequestRes<T>>) => {
-      setTimeout(hide, 0);
-
+      if (hide) {
+        setTimeout(hide, 0);
+      }
+      if (res && opts.isFullUrl) {
+        const data: T = JSON.parse(JSON.stringify(res.data)) as T
+        resolve(data);
+        return;
+      }
       // 如果业务层有错误码过来
       if (code && code.indexOf(res.data.code) !== -1) {
         reject(res.data);
@@ -123,7 +131,9 @@ const Request = <T>(opts: IOpts, code?: number[]): Promise<T> => {
       resolve(res.data.data);
 
     }).catch((err) => {
-      setTimeout(hide, 0);
+      if (hide) {
+        setTimeout(hide, 0);
+      }
       // 默认直接弹框报错
       message.error('Network error!', 5);
       reject(err);

@@ -6,9 +6,11 @@
   .content-wrapper {
     padding-top: 50px;
     .top-part-wrapper {
+      overflow: hidden;
       .show-module {
+        float: left;
         overflow: hidden;
-        display: inline-block;
+        // display: inline-block;
         width: 344px;
         height:220px;
         box-sizing: border-box;
@@ -80,7 +82,8 @@
       }
 
       .show-module + .show-module {
-        margin-left: 30px;
+        margin-left: 10px;
+        float:right;
       }
     }
 

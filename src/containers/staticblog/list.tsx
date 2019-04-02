@@ -21,7 +21,7 @@ export default class BlogList extends React.Component {
                   <p>Before purchasing a used phone, you should check to see if a phone has been blacklisted or has a bad ESN number. Here is how to check and make sure you are protected before spending any money.</p>
                 </div>
               </Link>
-            </div>
+            </div>*/}
             <div className="list">
               <Link to={'/how-to-fix-water-damaged-iphone'}>
                 <div className="img-box">
@@ -34,7 +34,7 @@ export default class BlogList extends React.Component {
                   <p>Find out your options when your iPhone gets dropped in water. What is the best way to bring your phone back to life? Learn preventative ways when accidents like this happens. Surprisingly, your iPhone still might have value if it doesn’t turn on. </p>
                 </div>
               </Link>
-            </div> */}
+            </div>
 
             <div className="list">
               <Link to={'/how-to-transfer-contacts-from-android-to-android'}>

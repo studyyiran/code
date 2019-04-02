@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { NAVIGATOR } from 'config';
+import config from '@/config';
 import './index.less';
 import { Button, Icon } from 'antd';
 import { INavigatorObj } from '@/containers/aboutphone/interface/index.interface';
@@ -22,7 +22,7 @@ export default class NavigatorWithBar extends React.Component<IProps, IStates> {
   }
 
   public componentDidMount() {
-    const navigator = NAVIGATOR;
+    const navigator = config.NAVIGATOR;
     const navigatorKey = Object.keys(navigator);
     this.onMappingStep(navigatorKey, navigator);
   }
@@ -66,7 +66,7 @@ export default class NavigatorWithBar extends React.Component<IProps, IStates> {
         </div>
         <div className="right-wrapper">
           {
-            (navigatorObj.progress === 3 || navigatorObj.step > 1) &&
+            (navigatorObj.progress === 3 || navigatorObj.step > 1 || navigatorObj.showNext) &&
             <Button
               style={{ width: '130px', height: '50px' }}
               onClick={this.goNext}

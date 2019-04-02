@@ -67,5 +67,15 @@ export default {
     isInCheckOrder: true,
     hasSearch: false,
     progress: -1
+  },
+  '/sell/yourphone/other': {
+    step: 1,
+    mainText: 'What phone carrier is your phone?',
+    subText: '',
+    isInCheckOrder: false,
+    hasSearch: false,
+    progress: 2,
+    showNext: true,
+    isBeforeShipping: true
   }
 }

@@ -3,13 +3,20 @@ import { inject, observer } from 'mobx-react';
 import Layout from '@/containers/aboutphone/layout';
 import ConditionItem from '@/containers/aboutphone/components/conditionitem';
 import './conditions.less';
-import { IConditionsProps } from './interface/index.interface';
+import { IConditionsProps, ISubSkuPricePropertyValues } from './interface/index.interface';
 import { message } from 'antd';
 import { IProductInfo } from '@/store/interface/user.interface';
 import { conditionPageValidate, noteUserModal } from '@/containers/aboutphone/pageValidate';
 import Breadcrumb from '@/containers/aboutphone/components/breadcrumb';
 import ProgressBar from '@/containers/aboutphone/components/progressbar--mobile';
 import classnames from 'classnames';
+
+const TBDPPNS = [
+  { "id": 316, "name": "Can your phone power on to the Home screen?", "isSkuProperty": false, "pricePropertyValues": [{ "id": 2026, "propertyName": 316, "value": "Turns on", "isPreferred": true, "isSkuProperty": false }, { "id": 2027, "propertyName": 316, "value": "Doesn't turn on", "isPreferred": false, "isSkuProperty": false }], "illustrationContent": null },
+  { "id": 345, "name": "Is your phone 100% functional?", "isSkuProperty": false, "pricePropertyValues": [{ "id": 2104, "propertyName": 345, "value": "Fully functional", "isPreferred": true, "isSkuProperty": false }, { "id": 2105, "propertyName": 345, "value": "Have functional problems", "isPreferred": false, "isSkuProperty": false }], "illustrationContent": null },
+  { "id": 351, "name": "Is your display cracked?", "isSkuProperty": false, "pricePropertyValues": [{ "id": 2118, "propertyName": 351, "value": "No Cracks", "isPreferred": true, "isSkuProperty": false }, { "id": 2122, "propertyName": 351, "value": "Cracked", "isPreferred": false, "isSkuProperty": false }], "illustrationContent": null }
+]
+
 @inject('yourphone', 'user', 'common')
 @observer
 export default class Conditions extends React.Component<IConditionsProps> {
@@ -24,8 +31,13 @@ export default class Conditions extends React.Component<IConditionsProps> {
       this.props.history.push('/sell/account');
       return;
     }
-
-    await this.props.yourphone.getProductPPVN();
+    // tbd 赛默认选项
+    if (this.props.yourphone.isTBD) {
+      this.props.yourphone.productPPVNS = TBDPPNS;
+    } else {
+      // 非 tbd 调用正常的询价项
+      await this.props.yourphone.getProductPPVN();
+    }
 
     // 初次进入页面判断是否要高亮
     if (this.props.yourphone.isAllConditionSelected) {
@@ -103,6 +115,23 @@ export default class Conditions extends React.Component<IConditionsProps> {
   }
 
   private handleNext = async () => {
+    if (this.props.yourphone.isTBD) {
+      this.props.yourphone.tbdInfo.properties = [];
+      Object.keys(this.props.yourphone.activeConditions).forEach((key: string) => {
+        const ppn = TBDPPNS.find(v => v.id.toString() === key);
+        let ppv: ISubSkuPricePropertyValues | null = null;
+        console.log(ppn)
+        if (ppn) {
+          ppv = ppn.pricePropertyValues.find(v => v.id === this.props.yourphone.activeConditions[key]) || null;
+        }
+        console.log(ppv)
+        if (ppv) {
+          this.props.yourphone.tbdInfo.properties.push(ppv.value);
+        }
+      })
+      this.props.history.push('/sell/yourphone/shipping');
+      return;
+    }
     const isInquiryKeyCreated = await this.validateData();
 
     if (isInquiryKeyCreated) {
