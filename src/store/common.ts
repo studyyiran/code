@@ -84,6 +84,25 @@ class Common implements ICommonStore {
     }
     return true;
   }
+  @action public getReviewsSort = async (query: { [key: string]: string | number }) => {
+    this.reviewsLoading = true;
+    let result: IReviews | null = null;
+    try {
+      result = await Api.getReviews<IReviews>(query);
+    } catch (e) {
+      return false;
+    } finally {
+      this.reviewsLoading = false;
+    }
+
+    const list = [...result.reviews];
+
+    result.reviews = list.sort((n1, n2) => n1.rating > n2.rating ? -1 : 1);
+
+    this.reviews = result;
+
+    return true;
+  }
 
   @action public getModuleOn = async () => {
     try {

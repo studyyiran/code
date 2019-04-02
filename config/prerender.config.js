@@ -44,7 +44,31 @@ module.exports = [
     fileName: 'terms.html'
   },
   {
-    url: '/\/',
+    url: '/who-we-are',
     fileName: 'who-we-are.html'
   },
+  {
+    url: '/blog',
+    fileName: 'blog.html'
+  },
+  {
+    url: '/what-is-a-blacklisted-phone',
+    fileName: 'what-is-a-blacklisted-phon.html'
+  },
+  {
+    url: '/how-to-fix-water-damaged-iphone',
+    fileName: 'how-to-fix-water-damaged-iphone.html'
+  },
+  {
+    url: '/how-to-transfer-contacts-from-android-to-android',
+    fileName: 'how-to-transfer-contacts-from-android-to-android.html'
+  },
+  {
+    url: '/how-long-do-smartphones-last',
+    fileName: 'how-long-do-smartphones-last.html'
+  },
+  {
+    url: '/how-to-tell-if-a-phone-is-unlocked',
+    fileName: 'how-to-tell-if-a-phone-is-unlocked.html'
+  }
 ]

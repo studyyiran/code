@@ -11,6 +11,7 @@ export interface ICommonStore {
   onSubscribe: (email: string) => Promise<boolean>
   getStaticOffice: () => Promise<boolean>
   getReviews: (query: { [key: string]: string | number }) => Promise<boolean>,
+  getReviewsSort: (query: { [key: string]: string | number }) => Promise<boolean>,
   getModuleOn: () => Promise<boolean>,
 }
 
