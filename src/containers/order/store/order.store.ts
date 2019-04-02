@@ -422,7 +422,7 @@ class Store implements IOrderStore {
             shippoTransaction.carrier,
             shippoTransaction.trackingNumber
           );
-          if (trans.trackingNumber) {
+          if (trans && trans.trackingNumber) {
             this.trackingInfo = trans;
           }
         }
