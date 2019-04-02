@@ -48,7 +48,7 @@ module.exports = shipit => {
 
     shipit.blTask('pm2', async () => {
         shipit.log('pm2');
-        shipit.local('ssh root@47.56.40.75', {
+        await shipit.local('ssh root@47.56.40.75', {
             cwd: '/tmp/avril'
         });
         await shipit.local('cd /var/www/avril');
