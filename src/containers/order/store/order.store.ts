@@ -338,7 +338,8 @@ class Store implements IOrderStore {
           date: this.packageDate(
             this.findDate(
               IProgressType.LISTED_FOR_SALE,
-              IProgressType.LISTED_FOR_SALE
+              IProgressType.LISTED_FOR_SALE,
+              true
             )
           )
         },
@@ -554,10 +555,16 @@ class Store implements IOrderStore {
     }
     return b;
   }
-  private findDate(status: IProgressType, afterStatus?: IProgressType) {
+  private findDate(status: IProgressType, afterStatus?: IProgressType, isSale?: boolean) {
     const orderRecords = this.orderDetail.orderRecords;
     let target: IOrderRecord | null;
-    if (afterStatus) {
+    // 为sale 这个状态单独处理
+    if (isSale) {
+      target = this.findFirstEleFromTarget(
+        orderRecords,
+        t => t.afterStatus === status
+      );
+    } else if (afterStatus) {
       target = this.findFirstEleFromTarget(
         orderRecords,
         t => t.beforeStatus === status && t.afterStatus === afterStatus
