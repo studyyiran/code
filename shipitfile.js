@@ -50,7 +50,7 @@ module.exports = shipit => {
         shipit.log('pm2');
         await shipit.remote('cd /var/www/avril/current');
         await shipit.remote('pm2 stop uptradeit');
-        return shipit.remote('pm2 start ecosystem.config.js --env=production');
+        return shipit.remote('pm2 start /var/www/avril/current/ecosystem.config.js --env=production');
     });
 
     shipit.on('fetched', () => {
