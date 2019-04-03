@@ -9,7 +9,7 @@ export default class BlogList extends React.Component {
         <div className="bloglist-list-wrapper">
           <header>Lastest</header>
           <div className="list-box">
-            {/* <div className="list">
+            <div className="list">
               <Link to={'/what-is-a-blacklisted-phone'}>
                 <div className="img-box">
                   <div className="img" style={{ backgroundImage: `url(${require('@/images/staticblog/img-5.png')})` }} />
@@ -21,7 +21,7 @@ export default class BlogList extends React.Component {
                   <p>Before purchasing a used phone, you should check to see if a phone has been blacklisted or has a bad ESN number. Here is how to check and make sure you are protected before spending any money.</p>
                 </div>
               </Link>
-            </div>*/}
+            </div>
             <div className="list">
               <Link to={'/how-to-fix-water-damaged-iphone'}>
                 <div className="img-box">
