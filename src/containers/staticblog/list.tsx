@@ -9,6 +9,37 @@ export default class BlogList extends React.Component {
         <div className="bloglist-list-wrapper">
           <header>Lastest</header>
           <div className="list-box">
+            {/* <div className="list">
+              <Link to={'/how-to-sell-your-old-phone-for-cash'}>
+                <div className="img-box">
+                  <div className="img" style={{ backgroundImage: `url(${require('@/images/staticblog/img-7.jpg')})` }} />
+                  <img src={require('@/images/staticblog/img-7.jpg')} alt="How To Sell Your Old Phone For Cash? | UpTradeit.com" />
+                </div>
+                <div className="right">
+                  <h3>How To Sell Your Old Phone For Cash</h3>
+                  <small>April 9,2019</small>
+                  <p>There are a lot of different factors that have an effect on the resale value of your phone. A mint condition phone will fetch more value than a broken one for instance. Here are some of the factors that can influence how much you can sell your device for. </p>
+                </div>
+              </Link>
+            </div>
+
+            <div className="list">
+              <Link to={'/att-phone-trade-in-is-it-worth-it'}>
+                <div className="img-box">
+                  <div className="img" style={{ backgroundImage: `url(${require('@/images/staticblog/img-6.jpg')})` }} />
+                  <img src={require('@/images/staticblog/img-6.jpg')} alt="ATT Phone Trade In: Is It Worth It? | UpTradeit.com" />
+                </div>
+                <div className="right">
+                  <h3>ATT Phone Trade In: Is It Worth It?</h3>
+                  <small>April 8,2019</small>
+                  <p>You may want to read this before trading in your phone into ATT. We take a closer look and take a deep dive to compare your options of trading your phone versus selling your phone with UpTrade</p>
+                </div>
+              </Link>
+            </div> */}
+
+
+
+
             <div className="list">
               <Link to={'/what-is-a-blacklisted-phone'}>
                 <div className="img-box">
