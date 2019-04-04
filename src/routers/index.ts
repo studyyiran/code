@@ -2,12 +2,22 @@ import sell from './sell';
 import singlePage from './singlePage';
 import Loadable from 'react-loadable';
 import store from '../store';
-import staticBlog from './staticBlog';
+// import staticBlog from './staticBlog';
 
 export default [
   ...sell,
   ...singlePage,
-  ...staticBlog,
+  // ...staticBlog,
+  {
+    component: Loadable({
+      loader: () => import('../containers/blog/list'),
+      loading: () => null,
+      modules: ['../containers/blog/list'],
+      webpack: () => [require.resolveWeak('../containers/blog/list') as number],
+    }),
+    path: '/blog',
+    exact: true,
+  },
   {
     component: Loadable({
       loader: () => import('../containers/order/checkOrderNo'),
