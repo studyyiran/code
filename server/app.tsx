@@ -100,8 +100,6 @@ Router.get('*', async (ctx: any, next: any) => {
   }
 
   const matches = matchRoutes(clientRouter, ctx.path)
-  console.log(matches);
-  console.log(matches[0].match.params)
 
   if (matches && matches[0] && matches[0].route['actions']) {
     const promises = matches[0].route['actions'].map(v => v())
