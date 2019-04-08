@@ -89,6 +89,12 @@ export default [
     path: '/:slug',
     bootstrap: async (param: { [key: string]: string }) => {
       await store['blog'].getPageDetail(param.slug);
+    },
+    templateValue: {
+      title: store['blog'].detail.title,
+      keywords: store['blog'].detail.seoKeywords,
+      description: store['blog'].detail.seoDesc,
+      robots: store['blog'].detail.seoRobots,
     }
   },
   {

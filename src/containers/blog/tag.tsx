@@ -10,12 +10,19 @@ import * as moment from 'moment-timezone';
 @observer
 export default class BlogList extends React.Component<IBlogListProps> {
   public componentDidMount() {
-    this.props.blog.tagPageListPagination = {
-      tagSlug: this.props.match.params.tag,
-      pageIndex: 0,
-      pageSize: 10
+    if (window['__SERVER_RENDER__INITIALSTATE__']) {
+      const initialState = window['__SERVER_RENDER__INITIALSTATE__'];
+      this.props.blog.tagPageListPagination = initialState.blog.tagPageListPagination;
+      this.props.blog.tagPageList = initialState.blog.tagPageList;
+      window['__SERVER_RENDER__INITIALSTATE__'] = null;
+    } else {
+      this.props.blog.tagPageListPagination = {
+        tagSlug: this.props.match.params.tag,
+        pageIndex: 0,
+        pageSize: 10
+      }
+      this.props.blog.getTagPageList();
     }
-    this.props.blog.getTagPageList();
   }
   public componentWillUnmount() {
     this.props.blog.destory();

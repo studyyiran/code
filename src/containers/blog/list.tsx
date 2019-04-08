@@ -14,9 +14,18 @@ export default class BlogList extends React.Component<IBlogListProps, IBlogListS
     translate: false,
   }
   public async componentDidMount() {
-    this.props.blog.getFeatureList();
-    this.props.blog.getLastestList();
-    this.props.blog.getTagList();
+    if (window['__SERVER_RENDER__INITIALSTATE__']) {
+      const initialState = window['__SERVER_RENDER__INITIALSTATE__'];
+      this.props.blog.features = initialState.blog.features;
+      this.props.blog.lastest = initialState.blog.lastest;
+      this.props.blog.tags = initialState.blog.tags;
+      this.props.blog.tagPageList = initialState.blog.tagPageList;
+      window['__SERVER_RENDER__INITIALSTATE__'] = null;
+    } else {
+      this.props.blog.getFeatureList();
+      this.props.blog.getLastestList();
+      this.props.blog.getTagList();
+    }
     this.toggleArrow();
   }
 
