@@ -69,6 +69,9 @@ const Router = new router();
 Router.get('/static/*', async (ctx: any, next: any) => {
   await send(ctx, ctx.path, { root: `${__dirname}` });
 })
+Router.get('/email/*', async (ctx: any, next: any) => {
+  await send(ctx, ctx.path, { root: `${__dirname}` });
+})
 Router.get('/favicon.ico', async (ctx: any, next: any) => {
   await send(ctx, ctx.path, { root: `${__dirname}` });
 })

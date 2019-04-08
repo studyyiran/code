@@ -35,7 +35,7 @@ export default [
       href: '/contact'
     },
     {
-      text: 'Blogs',
+      text: 'Blog',
       href: '/blog'
     }
   ],
