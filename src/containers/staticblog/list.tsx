@@ -21,7 +21,7 @@ export default class BlogList extends React.Component {
                   <p>There are a lot of different factors that have an effect on the resale value of your phone. A mint condition phone will fetch more value than a broken one for instance. Here are some of the factors that can influence how much you can sell your device for. </p>
                 </div>
               </Link>
-            </div>
+            </div> */}
 
             <div className="list">
               <Link to={'/att-phone-trade-in-is-it-worth-it'}>
@@ -35,7 +35,7 @@ export default class BlogList extends React.Component {
                   <p>You may want to read this before trading in your phone into ATT. We take a closer look and take a deep dive to compare your options of trading your phone versus selling your phone with UpTrade</p>
                 </div>
               </Link>
-            </div> */}
+            </div>
 
 
 
