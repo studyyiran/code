@@ -13,9 +13,12 @@
   <meta name="theme-color" content="#000000">
   <meta name="keywords" content="">
   <meta name="description" content="">
+  <% if(process.env.REACT_APP_SERVER_ENV === 'PUB'){ %>
   <meta name="robots" content="index,follow">
+  <% } %>
+
   <% if(process.env.REACT_APP_SERVER_ENV === 'UAT'){ %>
-  <META NAME="robots" content="noindex,nofollow">
+  <meta NAME="robots" content="noindex,nofollow">
   <% } %>
   <!--
       manifest.json provides metadata used when your web app is added to the

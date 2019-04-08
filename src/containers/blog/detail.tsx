@@ -7,13 +7,16 @@ import * as moment from 'moment-timezone';
 @inject('blog')
 @observer
 export default class BlogDetail extends React.Component<IBlogDetailProps> {
-  public componentDidMount() {
+  public async componentDidMount() {
     if (window['__SERVER_RENDER__INITIALSTATE__']) {
       const initialState = window['__SERVER_RENDER__INITIALSTATE__'];
       this.props.blog.detail = initialState.blog.detail;
       window['__SERVER_RENDER__INITIALSTATE__'] = null;
     } else {
-      this.props.blog.getPageDetail(this.props.match.params.slug);
+      await this.props.blog.getPageDetail(this.props.match.params.slug);
+      if (this.props.blog.detail) {
+        document.title = this.props.blog.detail.title;
+      }
     }
   }
   public render() {
