@@ -3,6 +3,26 @@ import Loadable from 'react-loadable';
 export default [
   {
     component: Loadable({
+      loader: () => import('../containers/staticblog/how-to-sell-your-old-phone-for-cash'),
+      loading: () => null,
+      modules: ['../containers/staticblog/how-to-sell-your-old-phone-for-cash'],
+      webpack: () => [require.resolveWeak('../containers/staticblog/how-to-sell-your-old-phone-for-cash') as number],
+    }),
+    exact: true,
+    path: '/how-to-sell-your-old-phone-for-cash'
+  },
+  {
+    component: Loadable({
+      loader: () => import('../containers/staticblog/att-phone-trade-in-is-it-worth-it'),
+      loading: () => null,
+      modules: ['../containers/staticblog/att-phone-trade-in-is-it-worth-it'],
+      webpack: () => [require.resolveWeak('../containers/staticblog/att-phone-trade-in-is-it-worth-it') as number],
+    }),
+    exact: true,
+    path: '/att-phone-trade-in-is-it-worth-it'
+  },
+  {
+    component: Loadable({
       loader: () => import('../containers/staticblog/what-is-a-blacklisted-phone'),
       loading: () => null,
       modules: ['../containers/staticblog/what-is-a-blacklisted-phone'],

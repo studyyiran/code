@@ -69,6 +69,9 @@ const Router = new router();
 Router.get('/static/*', async (ctx: any, next: any) => {
   await send(ctx, ctx.path, { root: `${__dirname}` });
 })
+Router.get('/email/*', async (ctx: any, next: any) => {
+  await send(ctx, ctx.path, { root: `${__dirname}` });
+})
 Router.get('/favicon.ico', async (ctx: any, next: any) => {
   await send(ctx, ctx.path, { root: `${__dirname}` });
 })
@@ -100,8 +103,6 @@ Router.get('*', async (ctx: any, next: any) => {
   }
 
   const matches = matchRoutes(clientRouter, ctx.path)
-  console.log(matches);
-  console.log(matches[0].match.params)
 
   if (matches && matches[0] && matches[0].route['actions']) {
     const promises = matches[0].route['actions'].map(v => v())
