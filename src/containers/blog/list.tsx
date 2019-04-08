@@ -1,9 +1,13 @@
 import * as React from 'react';
+import classnames from 'classnames';
 import { Link } from 'react-router-dom';
 import { Button } from 'antd'
 import './list.less';
 
 export default class BlogList extends React.Component {
+  public readonly state = {
+    translate: false
+  }
   public render() {
     return (
       <div className="page-blog-list-container">
@@ -41,7 +45,18 @@ export default class BlogList extends React.Component {
         </div>
 
         <div className="tag-list-wrapper">
-          <div className="tag-list">12312321</div>
+          <div className="tag-list-box">
+            <div className={classnames('tag-list', { active: !!this.state.translate })}>
+              <Link to={'/'}><div className="tag active">How to</div></Link>
+              <Link to={'/'}><div className="tag">Announcements</div></Link>
+              <Link to={'/'}><div className="tag">How to</div></Link>
+              <Link to={'/'}><div className="tag">Announcements</div></Link>
+              <Link to={'/'}><div className="tag">Announcements</div></Link>
+              <Link to={'/'}><div className="tag">Announcements</div></Link>
+              <Link to={'/'}><div className="tag">How to</div></Link>
+            </div>
+            <div className={classnames('arrow', { active: !!this.state.translate })} onClick={this.handleChangeArrow} />
+          </div>
           <div className="list-box">
             <div className="list">
               <Link to={'/what-is-a-blacklisted-phone'}>
@@ -153,5 +168,11 @@ export default class BlogList extends React.Component {
         </div>
       </div>
     )
+  }
+
+  private handleChangeArrow = () => {
+    this.setState({
+      translate: true
+    })
   }
 }

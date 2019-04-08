@@ -10,6 +10,16 @@ export default [
   // ...staticBlog,
   {
     component: Loadable({
+      loader: () => import('../containers/blog/tag'),
+      loading: () => null,
+      modules: ['../containers/blog/tag'],
+      webpack: () => [require.resolveWeak('../containers/blog/tag') as number],
+    }),
+    path: '/tag/:any',
+    exact: true,
+  },
+  {
+    component: Loadable({
       loader: () => import('../containers/blog/list'),
       loading: () => null,
       modules: ['../containers/blog/list'],
