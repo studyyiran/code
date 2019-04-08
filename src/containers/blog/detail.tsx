@@ -8,7 +8,13 @@ import * as moment from 'moment-timezone';
 @observer
 export default class BlogDetail extends React.Component<IBlogDetailProps> {
   public componentDidMount() {
-    this.props.blog.getPageDetail(this.props.match.params.slug);
+    if (window['__SERVER_RENDER__INITIALSTATE__']) {
+      const initialState = window['__SERVER_RENDER__INITIALSTATE__'];
+      this.props.blog.detail = initialState.blog.detail;
+      window['__SERVER_RENDER__INITIALSTATE__'] = null;
+    } else {
+      this.props.blog.getPageDetail(this.props.match.params.slug);
+    }
   }
   public render() {
     const detail = this.props.blog.detail;

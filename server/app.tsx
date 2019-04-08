@@ -35,6 +35,7 @@ const mappingTitle = (template, path, matches) => {
       template = template.replace(/\<title\>(.*)\<\/title\>/, '<title>' + (templateValue.title || '') + '</title>');
       template = template.replace(/\<meta name=\"keywords\" content=\"\"\>/, '<meta name="keywords" content="' + (templateValue.keywords || '') + '">');
       template = template.replace(/\<meta name=\"description\" content=\"\"\>/, '<meta name="description" content="' + (templateValue.description || '') + '">')
+      template = template.replace(/\<meta name=\"robots\" content=\"\"\>/, '<meta name="robots" content="' + (templateValue.robots || '') + '">')
       return template;
     }
   }
