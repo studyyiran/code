@@ -75,6 +75,7 @@ export default {
     isInCheckOrder: false,
     hasSearch: false,
     progress: 2,
-    showNext: true
+    showNext: true,
+    isBeforeShipping: true
   }
 }

@@ -24,12 +24,12 @@ export default class Footer extends React.Component<{ router: any }, IFooterStat
         <div className="section-box">
           <div className="content-wrapper">
             <div className="links-group-wrapper">
-              <Row gutter={56}>
-                <Col span={3}><img src={require('@/images/logo.png')} className="logo" /></Col>
+              <Row gutter={80}>
+                <Col span={5}><img src={require('@/images/logo.png')} className="logo" /></Col>
                 {
                   linksGroup
                 }
-                <Col span={6} offset={3} className="email-group">
+                <Col span={6} offset={1} className="email-group">
                   <p className="title">CONNECT WITH US!</p>
                   <Input
                     placeholder="Enter your email"

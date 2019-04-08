@@ -41,14 +41,25 @@ module.exports = shipit => {
 
     shipit.blTask('npm-build', () => {
         shipit.log('npm build start.');
-        return shipit.local('yarn run pub', {
+        return shipit.local('yarn run pm2:pub', {
             cwd: '/tmp/avril'
         });
+    });
+
+    shipit.blTask('pm2', async () => {
+        shipit.log('pm2');
+        await shipit.remote('pm2 delete uptradeit');
+        return shipit.remote('pm2 startOrRestart /var/www/avril/current/ecosystem.config.js --env production');
     });
 
     shipit.on('fetched', () => {
         shipit.log('run npm build');
         shipit.start(['git-init', 'npm-install', 'npm-build']);
+    });
+
+    shipit.on('published', () => {
+        shipit.log('run pm2');
+        shipit.start(['pm2']);
     });
 
 };

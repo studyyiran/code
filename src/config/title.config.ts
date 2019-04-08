@@ -112,27 +112,33 @@ export default {
     description: 'A better way to sell. Read real customer ratings and reviews. Write your own review and share your experience with UpTrade.'
   },
   // blog
-  '/blog/how-to-tell-if-a-phone-is-unlocked': {
+  '/blog': {
+    title: 'UpTrade Blog | UpTradeit.com',
+    keywords: 'Sell my phone',
+    description: "UpTrade's Blog"
+  },
+
+  '/how-to-tell-if-a-phone-is-unlocked': {
     title: 'How To Tell If A Phone Is Unlocked | UpTradeit.com',
     keywords: 'Sell my phone',
     description: 'Unlocked phones gives you an advantage over locked carrier specific phones. Here are some tips to determine if your phone is unlocked. If you’re looking to sell, unlocked phones can also have a a higher resale value. '
   },
-  '/blog/how-long-do-smartphones-last': {
+  '/how-long-do-smartphones-last': {
     title: 'How long do smartphones last? | UpTradeit.com',
     keywords: 'Sell my phone',
     description: 'Find out what the typical lifespan of a smartphone. How long can they last? Compare it to how long you use your own phone. Is it more or less? What are some things you can do to extend the life of your smartphone?'
   },
-  '/blog/how-to-transfer-contacts-from-android-to-android': {
+  '/how-to-transfer-contacts-from-android-to-android': {
     title: 'How to Transfer Contacts From Android to Android | UpTradeit.com',
     keywords: 'Sell my phone',
     description: 'Find out what the most efficient way is to transfer your contacts from your old android phone to a new android phone. Tips and tricks to ensure nothing is lost when you setup a new phone.'
   },
-  '/blog/how-to-fix-water-damaged-iphone': {
+  '/how-to-fix-water-damaged-iphone': {
     title: 'How to Fix Water Damaged iPhone | UpTradeit.com',
     keywords: 'Sell my phone',
     description: 'Find out your options when your iPhone gets dropped in water. What is the best way to bring your phone back to life? Learn preventative ways when accidents like this happens. Surprisingly, your iPhone still might have value if it doesn’t turn on. '
   },
-  '/blog/what-is-a-blacklisted-phone': {
+  '/what-is-a-blacklisted-phone': {
     title: 'What is a blacklisted phone? | UpTradeit.com',
     keywords: 'Sell my phone',
     description: ' Before purchasing a used phone, you should check to see if a phone has been blacklisted or has a bad ESN number. Here is how to check and make sure you are protected before spending any money.'

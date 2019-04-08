@@ -136,6 +136,7 @@ class CheckOrderNo extends React.Component<IOrderProps & RouteComponentProps> {
         }
         if (canSubmit) {
             const b = await this.props.order.getOrderDetail(this.state.email, this.state.orderNo);
+            console.log(b);
             if (b.orderNo) {
                 // 根据操作记录判断CRM取消订单
                 if (b.orderRecords.find(v =>

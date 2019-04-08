@@ -73,6 +73,13 @@ Router.get('/favicon.ico', async (ctx: any, next: any) => {
   await send(ctx, ctx.path, { root: `${__dirname}` });
 })
 
+Router.get('/manifest.json', async (ctx: any, next: any) => {
+  await send(ctx, ctx.path, { root: `${__dirname}` });
+})
+Router.get('/notfound.html', async (ctx: any, next: any) => {
+  await send(ctx, ctx.path, { root: `${__dirname}` });
+})
+
 // 反向代理请求
 Router.all('/up-api/*', koaProxy('/up-api', {
   target: CONFIG.proxyUrl,
@@ -94,10 +101,15 @@ Router.get('*', async (ctx: any, next: any) => {
 
   const matches = matchRoutes(clientRouter, ctx.path)
   console.log(matches);
+  console.log(matches[0].match.params)
 
   if (matches && matches[0] && matches[0].route['actions']) {
     const promises = matches[0].route['actions'].map(v => v())
     await Promise.all(promises);
+  }
+
+  if (matches && matches[0] && matches[0].match.params && matches[0].route['bootstrap']) {
+    await matches[0].route['bootstrap'](matches[0].match.params);
   }
 
   template = mappingTitle(template, ctx.path, matches);
