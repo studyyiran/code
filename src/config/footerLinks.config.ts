@@ -49,7 +49,7 @@ export default [
       href: '/sell-broken-iphone'
     },
     {
-      text: 'Blogs',
+      text: 'Blog',
       href: '/blog'
     }
   ]

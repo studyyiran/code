@@ -12,7 +12,7 @@ export default class Footer extends React.Component<{ router: any }, IFooterStat
   }
   public render() {
     const linksGroup = config.FOOTERLINKS.map((group, key) => (
-      <Col span={5} key={key} className="links-group">
+      <Col span={4} key={key} className="links-group">
         {
           group.map((link, index) => <p key={index} className="item" onClick={this.handleLink.bind(this, link)} data-href={link.href}>{link.text}</p>)
         }
@@ -29,7 +29,7 @@ export default class Footer extends React.Component<{ router: any }, IFooterStat
                 {
                   linksGroup
                 }
-                <Col span={6} offset={3} className="email-group">
+                <Col span={6} offset={1} className="email-group">
                   <p className="title">CONNECT WITH US!</p>
                   <Input
                     placeholder="Enter your email"
