@@ -132,8 +132,10 @@ Router.get('*', async (ctx: any, next: any) => {
   );
   const bundles = getBundles(stats, modules);
   const scripts = generateBundleScripts(bundles);
-  if (matches && matches[0] && matches[0].route['actions']) {
-    template = template.replace(/(<\/head>)/, '<script>var __SERVER_RENDER__INITIALSTATE__=' + JSON.stringify(store) + ';</script>$1');
+  if (matches && matches[0]) {
+    if (matches[0].route['actions'] || matches[0].route['bootstrap']) {
+      template = template.replace(/(<\/head>)/, '<script>var __SERVER_RENDER__INITIALSTATE__=' + JSON.stringify(store) + ';</script>$1');
+    }
   }
   template = template.replace(/(<\/body>)/, scripts.join() + '$1');
   template = template.replace(/(<div id=\"root\">)/, '$1' + html);
