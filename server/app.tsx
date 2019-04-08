@@ -29,7 +29,7 @@ Axios.interceptors.request.use((config) => {
 
 const mappingTitle = (template, path, matches) => {
   if (matches && matches[0] && matches[0].route) {
-    const templateValue = matches[0].route['templateValue'];
+    const templateValue = matches[0].route['templateValue']();
     console.log(templateValue);
     if (templateValue) {
       template = template.replace(/\<title\>(.*)\<\/title\>/, '<title>' + (templateValue.title || '') + '</title>');
