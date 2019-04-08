@@ -1,170 +1,145 @@
 import * as React from 'react';
+import { observer, inject } from 'mobx-react'
 import classnames from 'classnames';
 import { Link } from 'react-router-dom';
 import { Button } from 'antd'
+import { IBlogListState, IBlogListProps, ITag, IBlog } from './interface/blog.interface';
 import './list.less';
+import * as moment from 'moment-timezone';
 
-export default class BlogList extends React.Component {
+@inject('blog')
+@observer
+export default class BlogList extends React.Component<IBlogListProps, IBlogListState> {
   public readonly state = {
-    translate: false
+    translate: false,
   }
+  public async componentDidMount() {
+    this.props.blog.getFeatureList();
+    this.props.blog.getLastestList();
+    this.props.blog.getTagList();
+    this.toggleArrow();
+  }
+
+  public componentDidUpdate() {
+    this.toggleArrow();
+  }
+
   public render() {
+    const { features, tags, tagPageList, lastest, activeTag } = this.props.blog;
     return (
       <div className="page-blog-list-container">
-        <div className="featured-list-wrapper">
-          <header>Featured</header>
-          <div className="list-box">
-            <div className="left list">
-              <div className="img" style={{ backgroundImage: `url(${require('@/images/staticblog/img-5.png')})` }} />
-              <img src={require('@/images/staticblog/img-5.png')} alt={require('@/images/staticblog/img-5.png')} />
-              <div className="tips-box">
-                <h2>How Much Is My Phone Worth，How Much Is My Phone Worth?</h2>
-                <p>If you want or need to get a new phone, this guide should help you determine how much your iPhone, Samsung or other type of phone …</p>
-              </div>
-            </div>
-            <div className="right">
-              <div className="list">
-                <div className="img" style={{ backgroundImage: `url(${require('@/images/staticblog/img-5.png')})` }} />
-                <img src={require('@/images/staticblog/img-5.png')} alt={require('@/images/staticblog/img-5.png')} />
-                <div className="tips-box">
-                  <h2>How Much Is My Phone Worth?</h2>
-                  <p>If you want or need to get a new phone, this guide should help you determine how…</p>
+        {
+          features.length >= 3 && (
+            <div className="featured-list-wrapper">
+              <header>Featured</header>
+              <div className="list-box">
+                <div className="left list">
+                  <Link to={'/' + features[0].slug}>
+                    <div className="img" style={{ backgroundImage: `url(${features[0].thumbnailFullUrl})` }} />
+                    <img src={features[0].thumbnailFullUrl} alt={features[0].thumbnailFullUrl + " | UpTradeit.com"} />
+                    <div className="tips-box">
+                      <h2>{features[0].title}</h2>
+                      <p>{features[0].summary}</p>
+                    </div>
+                  </Link>
                 </div>
-              </div>
+                <div className="right">
+                  <div className="list">
+                    <Link to={'/' + features[1].slug}>
+                      <div className="img" style={{ backgroundImage: `url(${features[1].thumbnailFullUrl})` }} />
+                      <img src={features[1].thumbnailFullUrl} alt={features[1].thumbnailFullUrl + " | UpTradeit.com"} />
+                      <div className="tips-box">
+                        <h2>{features[1].title}</h2>
+                        <p>{features[2].summary}</p>
+                      </div>
+                    </Link>
+                  </div>
 
-              <div className="list">
-                <div className="img" style={{ backgroundImage: `url(${require('@/images/staticblog/img-5.png')})` }} />
-                <img src={require('@/images/staticblog/img-5.png')} alt={require('@/images/staticblog/img-5.png')} />
-                <div className="tips-box">
-                  <h2>If you want or need to get a new phone, this guide should help you determine how…</h2>
-                  <p>If you want or need to get a new phone, this guide should help you determine how…</p>
+                  <div className="list">
+                    <Link to={'/' + features[2].slug}>
+                      <div className="img" style={{ backgroundImage: `url(${features[2].thumbnailFullUrl})` }} />
+                      <img src={features[2].thumbnailFullUrl} alt={features[2].thumbnailFullUrl + " | UpTradeit.com"} />
+                      <div className="tips-box">
+                        <h2>{features[2].title}</h2>
+                        <p>{features[2].summary}</p>
+                      </div>
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+          )
+        }
 
         <div className="tag-list-wrapper">
           <div className="tag-list-box">
             <div className={classnames('tag-list', { active: !!this.state.translate })}>
-              <Link to={'/'}><div className="tag active">How to</div></Link>
-              <Link to={'/'}><div className="tag">Announcements</div></Link>
-              <Link to={'/'}><div className="tag">How to</div></Link>
-              <Link to={'/'}><div className="tag">Announcements</div></Link>
-              <Link to={'/'}><div className="tag">Announcements</div></Link>
-              <Link to={'/'}><div className="tag">Announcements</div></Link>
-              <Link to={'/'}><div className="tag">How to</div></Link>
+              <div className="tag-wrapper" id="tag-wrapper">
+                {
+                  tags.map((item: ITag, index: number) => {
+                    return <div className={classnames('tag', { active: activeTag && activeTag.id === item.id })} key={index} onClick={this.handleChangeActiveTag.bind(this, item)}>{item.name}</div>
+                  })
+                }
+              </div>
             </div>
-            <div className={classnames('arrow', { active: !!this.state.translate })} onClick={this.handleChangeArrow} />
+            <div className={classnames('arrow', { active: !!this.state.translate })} onClick={this.handleChangeArrow} style={{ display: 'none' }} id="arrow-right" />
           </div>
           <div className="list-box">
-            <div className="list">
-              <Link to={'/what-is-a-blacklisted-phone'}>
-                <div className="img-box">
-                  <div className="img" style={{ backgroundImage: `url(${require('@/images/staticblog/img-5.png')})` }} />
-                  <img src={require('@/images/staticblog/img-5.png')} alt="How To Tell If A Phone Is Blacklisted | UpTradeit.com" />
-                </div>
-                <div className="right">
-                  <h3>What is a blacklisted phone?</h3>
-                  <small>April 3,2019 By UpTrade</small>
-                  <p>Before purchasing a used phone, you should check to see if a phone has been blacklisted or has a bad ESN number. Here is how to check and make sure you are protected before spending any money.</p>
-                </div>
-              </Link>
-            </div>
-            <div className="list">
-              <Link to={'/how-to-fix-water-damaged-iphone'}>
-                <div className="img-box">
-                  <div className="img" style={{ backgroundImage: `url(${require('@/images/staticblog/img-4.png')})` }} />
-                  <img src={require('@/images/staticblog/img-4.png')} alt="Water Damaged iPhone | UpTradeit.com" />
-                </div>
-                <div className="right">
-                  <h3>How to Fix Water Damaged iPhone</h3>
-                  <small>April 2,2019 By UpTrade</small>
-                  <p>Find out your options when your iPhone gets dropped in water. What is the best way to bring your phone back to life? Learn preventative ways when accidents like this happens. Surprisingly, your iPhone still might have value if it doesn’t turn on. </p>
-                </div>
-              </Link>
-            </div>
+            {
+              tagPageList.map((item: IBlog, index: number) => {
+                return (
+                  <div className="list" key={index}>
+                    <Link to={'/' + item.slug}>
+                      <div className="img-box">
+                        <div className="img" style={{ backgroundImage: `url(${item.thumbnailFullUrl})` }} />
+                        <img src={item.thumbnailFullUrl} alt={item.thumbnailFullUrl + " | UpTradeit.com"} />
+                      </div>
+                      <div className="right">
+                        <h3>{item.title}</h3>
+                        <small>{moment.tz(item.releaseDt, "America/Chicago").format('MMM DD, YYYY HHA')}</small>
+                        <p>{item.summary}</p>
+                      </div>
+                    </Link>
+                  </div>
+                )
+              })
+            }
           </div>
           <div className="button-group">
-            <Link to={'/'} className="tag-link"><img src={require('@/images/yourphone/circle-arrow.png')} />How to find the local FedEx location</Link>
+            <Link to={`/tag/${this.props.blog.activeTag ? this.props.blog.activeTag.slug : ''}`} className="tag-link"><img src={require('@/images/yourphone/circle-arrow.png')} />How to find the local FedEx location</Link>
           </div>
         </div>
 
         <div className="bloglist-list-wrapper">
           <header>Lastest</header>
           <div className="list-box">
-            <div className="list">
-              <Link to={'/what-is-a-blacklisted-phone'}>
-                <div className="img-box">
-                  <div className="img" style={{ backgroundImage: `url(${require('@/images/staticblog/img-5.png')})` }} />
-                  <img src={require('@/images/staticblog/img-5.png')} alt="How To Tell If A Phone Is Blacklisted | UpTradeit.com" />
-                </div>
-                <div className="right">
-                  <h3>What is a blacklisted phone?</h3>
-                  <small>April 3,2019 By UpTrade</small>
-                  <p>Before purchasing a used phone, you should check to see if a phone has been blacklisted or has a bad ESN number. Here is how to check and make sure you are protected before spending any money.</p>
-                </div>
-              </Link>
-            </div>
-            <div className="list">
-              <Link to={'/how-to-fix-water-damaged-iphone'}>
-                <div className="img-box">
-                  <div className="img" style={{ backgroundImage: `url(${require('@/images/staticblog/img-4.png')})` }} />
-                  <img src={require('@/images/staticblog/img-4.png')} alt="Water Damaged iPhone | UpTradeit.com" />
-                </div>
-                <div className="right">
-                  <h3>How to Fix Water Damaged iPhone</h3>
-                  <small>April 2,2019 By UpTrade</small>
-                  <p>Find out your options when your iPhone gets dropped in water. What is the best way to bring your phone back to life? Learn preventative ways when accidents like this happens. Surprisingly, your iPhone still might have value if it doesn’t turn on. </p>
-                </div>
-              </Link>
-            </div>
-
-            <div className="list">
-              <Link to={'/how-to-transfer-contacts-from-android-to-android'}>
-                <div className="img-box">
-                  <div className="img" style={{ backgroundImage: `url(${require('@/images/staticblog/img-3.png')})` }} />
-                  <img src={require('@/images/staticblog/img-3.png')} alt="Android to Android Contact Transfer | UpTradeit.com" />
-                </div>
-                <div className="right">
-                  <h3>How to Transfer Contacts From Android to Android</h3>
-                  <small>April 1,2019 By UpTrade</small>
-                  <p>Find out what the most efficient way is to transfer your contacts from your old android phone to a new android phone. Tips and tricks to ensure nothing is lost when you setup a new phone.</p>
-                </div>
-              </Link>
-            </div>
-
-            <div className="list">
-              <Link to={'/how-long-do-smartphones-last'}>
-                <div className="img-box">
-                  <div className="img" style={{ backgroundImage: `url(${require('@/images/staticblog/img-2.png')})` }} />
-                  <img src={require('@/images/staticblog/img-2.png')} alt="Smartphone lifespan | UpTradeit.com" />
-                </div>
-                <div className="right">
-                  <h3>How long do smartphones last? </h3>
-                  <small>March 29,2019 By UpTrade</small>
-                  <p>Find out what the typical lifespan of a smartphone. How long can they last? Compare it to how long you use your own phone. Is it more or less? What are some things you can do to extend the life of your smartphone?</p>
-                </div>
-              </Link>
-            </div>
-
-            <div className="list">
-              <Link to={'/how-to-tell-if-a-phone-is-unlocked'}>
-                <div className="img-box">
-                  <div className="img" style={{ backgroundImage: `url(${require('@/images/staticblog/img-1.png')})` }} />
-                  <img src={require('@/images/staticblog/img-1.png')} alt="How To Tell If A Phone Is Unlocked | UpTradeit.com" />
-                </div>
-                <div className="right">
-                  <h3>How To Tell If A Phone Is Unlocked</h3>
-                  <small>March 28,2019 By UpTrade</small>
-                  <p>Unlocked phones gives you an advantage over locked carrier specific phones. Here are some tips to determine if your phone is unlocked. If you’re looking to sell, unlocked phones can also have a a higher resale value.</p>
-                </div>
-              </Link>
-            </div>
+            {
+              lastest.map((item: IBlog, index: number) => {
+                return (
+                  <div className="list" key={index}>
+                    <Link to={'/' + item.slug}>
+                      <div className="img-box">
+                        <div className="img" style={{ backgroundImage: `url(${item.thumbnailFullUrl})` }} />
+                        <img src={item.thumbnailFullUrl} alt={item.thumbnailFullUrl + " | UpTradeit.com"} />
+                      </div>
+                      <div className="right">
+                        <h3>{item.title}</h3>
+                        <small>{moment.tz(item.releaseDt, "America/Chicago").format('MMM DD, YYYY HHA')}</small>
+                        <p>{item.summary}</p>
+                      </div>
+                    </Link>
+                  </div>
+                )
+              })
+            }
           </div>
-          <div className="button-group">
-            <Button type="primary" ghost={true} size="large" className="view-more">VIEW MORE</Button>
-          </div>
+          {
+            this.props.blog.viewLastestMore && (
+              <div className="button-group">
+                <Button type="primary" ghost={true} size="large" className="view-more">VIEW MORE</Button>
+              </div>
+            )
+          }
         </div>
       </div>
     )
@@ -174,5 +149,19 @@ export default class BlogList extends React.Component {
     this.setState({
       translate: true
     })
+  }
+
+  private handleChangeActiveTag = (tag: ITag) => {
+    this.props.blog.activeTag = tag;
+  }
+
+  private toggleArrow = () => {
+    const tagWrapper = document.querySelector('#tag-wrapper');
+    const arrowRight = document.querySelector('#arrow-right');
+    if (tagWrapper && tagWrapper['offsetHeight'] > 40) {
+      if (arrowRight) {
+        arrowRight['style'].display = 'block';
+      }
+    }
   }
 }

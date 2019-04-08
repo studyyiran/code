@@ -89,6 +89,7 @@
     "server:pub": "cross-env REACT_APP_SERVER_ENV=PUB node scripts/server.js",
     "pm2:uat": "yarn run uat && yarn run server:uat && cp -R ecosystem.config.js build/",
     "pm2:pub": "yarn run pub && yarn run server:pub && cp -R ecosystem.config.js build/",
+    "running": "node build/compiled.js",
     "test": "node scripts/test.js --env=jsdom",
     "prerender": "node scripts/prerender.js"
   },

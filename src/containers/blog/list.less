@@ -24,6 +24,7 @@
       .list {
         overflow: hidden;
         position: relative;
+        cursor: pointer;
         img {
           display: none;
         }
@@ -35,7 +36,6 @@
           background-position: center;
           transform: scale(1);
           transition: transform .5s;
-          cursor: pointer;
   
           &:hover {
             transform: scale(1.2);
@@ -113,17 +113,14 @@
         &.active {
           height:auto;
         }
-        a {
-          overflow: hidden;
+        .tag {
           display: inline-block;
           margin-bottom:20px;
-        }
-        .tag {
-          display: block;
           font-size:20px;
           line-height: 20px;
           padding:0 30px;
           color:#9B9B9B;
+          cursor: pointer;
 
           &.active {
             color:#000000;
@@ -135,7 +132,7 @@
         height:9px;
         float:right;
         position: relative;
-        top:6px;
+        top:8px;
         transform: rotate(-90deg);
         transition: transform .5s;
         cursor: pointer;

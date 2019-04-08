@@ -15,8 +15,16 @@ export default [
       modules: ['../containers/blog/tag'],
       webpack: () => [require.resolveWeak('../containers/blog/tag') as number],
     }),
-    path: '/tag/:any',
+    path: '/tag/:tag',
     exact: true,
+    bootstrap: async (param: { [key: string]: string }) => {
+      store['blog'].tagPageListPagination = {
+        tagSlug: param.tag,
+        pageIndex: 0,
+        pageSize: 10
+      }
+      await store['blog'].getTagPageList();
+    }
   },
   {
     component: Loadable({
@@ -27,6 +35,11 @@ export default [
     }),
     path: '/blog',
     exact: true,
+    actions: [
+      store['blog'].getFeatureList,
+      store['blog'].getLastestList,
+      store['blog'].getTagList,
+    ]
   },
   {
     component: Loadable({
@@ -65,15 +78,18 @@ export default [
     ]
   },
   {
-    // 首页
+    // 单页
     component: Loadable({
-      loader: () => import('../containers/notfound'),
+      loader: () => import('../containers/blog/detail'),
       loading: () => null,
-      modules: ['../containers/notfound'],
-      webpack: () => [require.resolveWeak('../containers/notfound') as number],
+      modules: ['../containers/blog/detail'],
+      webpack: () => [require.resolveWeak('../containers/blog/detail') as number],
     }),
     exact: true,
-    path: '/:any',
+    path: '/:slug',
+    bootstrap: async (param: { [key: string]: string }) => {
+      await store['blog'].getPageDetail(param.slug);
+    }
   },
   {
     // 首页

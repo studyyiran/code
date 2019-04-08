@@ -23,7 +23,7 @@ export interface IRequestRes<T> {
 
 export interface IRequestResWithPage<T> extends IRequestRes<T> {
   totalCount: number,
-  pageIndex: number,
+  page: number,
   pageSize: number,
 }
 export interface IRequestResWithPageV2<T> extends IRequestRes<T> {
