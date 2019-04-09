@@ -30,13 +30,12 @@ Axios.interceptors.request.use((config) => {
 const mappingTitle = (template, path, matches) => {
   if (matches && matches[0] && matches[0].route) {
     let templateValue = matches[0].route['templateValue'];
-    console.log(templateValue);
     if (templateValue) {
       templateValue = templateValue();
       template = template.replace(/\<title\>(.*)\<\/title\>/, '<title>' + (templateValue.title || '') + '</title>');
       template = template.replace(/\<meta name=\"keywords\" content=\"\"\>/, '<meta name="keywords" content="' + (templateValue.keywords || '') + '">');
       template = template.replace(/\<meta name=\"description\" content=\"\"\>/, '<meta name="description" content="' + (templateValue.description || '') + '">')
-      template = template.replace(/\<meta name=\"robots\" content=\"\"\>/, '<meta name="robots" content="' + (templateValue.robots || '') + '">')
+      template = template.replace(/\<meta name=\"robots\" content=\"(index\,follow|noindex\,nofollow)\"\>/, '<meta name="robots" content="' + (templateValue.robots || '') + '">')
       return template;
     }
   }
