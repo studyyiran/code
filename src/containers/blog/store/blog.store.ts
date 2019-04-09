@@ -3,6 +3,13 @@ import * as Api from '../api/blog.api';
 import { IBlog, IBlogStore, ITag, IPagination } from '../interface/blog.interface'
 import { IRequestResWithPage } from '@/utils/request.interface';
 
+enum ERobots {
+  INDEX_FOLLOW = "index,follow",
+  INDEX_NOFOLLOW = "index,nofollow",
+  NOINDEX_FOLLOW = "noindex,follow",
+  NOINDEX_NOFOLLOW = "noindex,nofollow"
+}
+
 class Blog implements IBlogStore {
   @observable public features: IBlog[] = [];
   @observable public tags: ITag[] = [];
@@ -129,6 +136,7 @@ class Blog implements IBlogStore {
       console.warn(e);
       return false;
     }
+    this.detail.seoRobots = ERobots[this.detail.seoRobots];
     return true;
   }
 
