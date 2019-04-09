@@ -7,7 +7,7 @@ process.env.NODE_ENV = 'production';
 //   process.env.PUBLIC_URL = 'https://static-www-staging-uptradeit.aihuishou.com';
 // }
 if (process.env.REACT_APP_SERVER_ENV === 'PUB') {
-  process.env.PUBLIC_URL = 'https://static-www-uptradeit.aihuishou.com';
+  process.env.PUBLIC_URL = 'https://d35zt03d1ieih2.cloudfront.net';
 }
 process.env.GENERATE_SOURCEMAP = 'false';
 
