@@ -17,6 +17,11 @@ export default class BlogDetail extends React.Component<IBlogDetailProps> {
       if (this.props.blog.detail) {
         document.title = this.props.blog.detail.title;
       }
+      try {
+        window.scrollTo(0, 0)
+      } catch (e) {
+        console.warn(e);
+      }
     }
   }
   public render() {
