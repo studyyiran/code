@@ -95,7 +95,7 @@ export default [
         title: store['blog'].detail.title,
         keywords: store['blog'].detail.seoKeywords,
         description: store['blog'].detail.seoDesc,
-        robots: store['blog'].detail.seoRobots,
+        robots: store['blog'].detail.seoRobotsCode,
       }
     }
   },
