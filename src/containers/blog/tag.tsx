@@ -14,6 +14,7 @@ export default class BlogList extends React.Component<IBlogListProps> {
       const initialState = window['__SERVER_RENDER__INITIALSTATE__'];
       this.props.blog.tagPageListPagination = initialState.blog.tagPageListPagination;
       this.props.blog.tagPageList = initialState.blog.tagPageList;
+      this.props.blog.viewTagMore = initialState.blog.viewTagMore;
       window['__SERVER_RENDER__INITIALSTATE__'] = null;
     } else {
       this.props.blog.tagPageListPagination = {

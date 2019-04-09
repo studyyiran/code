@@ -20,6 +20,8 @@ export default class BlogList extends React.Component<IBlogListProps, IBlogListS
       this.props.blog.lastest = initialState.blog.lastest;
       this.props.blog.tags = initialState.blog.tags;
       this.props.blog.tagPageList = initialState.blog.tagPageList;
+      this.props.blog.activeTag = initialState.blog.activeTag;
+      this.props.blog.viewLastestMore = initialState.blog.viewLastestMore;
       window['__SERVER_RENDER__INITIALSTATE__'] = null;
     } else {
       this.props.blog.getFeatureList();
@@ -79,46 +81,48 @@ export default class BlogList extends React.Component<IBlogListProps, IBlogListS
             </div>
           )
         }
-
-        <div className="tag-list-wrapper">
-          <div className="tag-list-box">
-            <div className={classnames('tag-list', { active: !!this.state.translate })}>
-              <div className="tag-wrapper" id="tag-wrapper">
+        {
+          tags.length > 0 && (
+            <div className="tag-list-wrapper">
+              <div className="tag-list-box">
+                <div className={classnames('tag-list', { active: !!this.state.translate })}>
+                  <div className="tag-wrapper" id="tag-wrapper">
+                    {
+                      tags.map((item: ITag, index: number) => {
+                        return <div className={classnames('tag', { active: activeTag && activeTag.id === item.id })} key={index} onClick={this.handleChangeActiveTag.bind(this, item)}>{item.name}</div>
+                      })
+                    }
+                  </div>
+                </div>
+                <div className={classnames('arrow', { active: !!this.state.translate })} onClick={this.handleChangeArrow} style={{ display: 'none' }} id="arrow-right" />
+              </div>
+              <div className="list-box">
                 {
-                  tags.map((item: ITag, index: number) => {
-                    return <div className={classnames('tag', { active: activeTag && activeTag.id === item.id })} key={index} onClick={this.handleChangeActiveTag.bind(this, item)}>{item.name}</div>
+                  tagPageList.map((item: IBlog, index: number) => {
+                    return (
+                      <div className="list" key={index}>
+                        <Link to={'/' + item.slug}>
+                          <div className="img-box">
+                            <div className="img" style={{ backgroundImage: `url(${item.thumbnailFullUrl})` }} />
+                            <img src={item.thumbnailFullUrl} alt={item.thumbnailFullUrl + " | UpTradeit.com"} />
+                          </div>
+                          <div className="right">
+                            <h3>{item.title}</h3>
+                            <small>{moment.tz(item.releaseDt, "America/Chicago").format('MMM DD, YYYY HHA')}</small>
+                            <p>{item.summary}</p>
+                          </div>
+                        </Link>
+                      </div>
+                    )
                   })
                 }
               </div>
+              <div className="button-group">
+                <Link to={`/tag/${this.props.blog.activeTag ? this.props.blog.activeTag.slug : ''}`} className="tag-link"><img src={require('@/images/yourphone/circle-arrow.png')} />How to find the local FedEx location</Link>
+              </div>
             </div>
-            <div className={classnames('arrow', { active: !!this.state.translate })} onClick={this.handleChangeArrow} style={{ display: 'none' }} id="arrow-right" />
-          </div>
-          <div className="list-box">
-            {
-              tagPageList.map((item: IBlog, index: number) => {
-                return (
-                  <div className="list" key={index}>
-                    <Link to={'/' + item.slug}>
-                      <div className="img-box">
-                        <div className="img" style={{ backgroundImage: `url(${item.thumbnailFullUrl})` }} />
-                        <img src={item.thumbnailFullUrl} alt={item.thumbnailFullUrl + " | UpTradeit.com"} />
-                      </div>
-                      <div className="right">
-                        <h3>{item.title}</h3>
-                        <small>{moment.tz(item.releaseDt, "America/Chicago").format('MMM DD, YYYY HHA')}</small>
-                        <p>{item.summary}</p>
-                      </div>
-                    </Link>
-                  </div>
-                )
-              })
-            }
-          </div>
-          <div className="button-group">
-            <Link to={`/tag/${this.props.blog.activeTag ? this.props.blog.activeTag.slug : ''}`} className="tag-link"><img src={require('@/images/yourphone/circle-arrow.png')} />How to find the local FedEx location</Link>
-          </div>
-        </div>
-
+          )
+        }
         <div className="bloglist-list-wrapper">
           <header>Lastest</header>
           <div className="list-box">
@@ -145,7 +149,7 @@ export default class BlogList extends React.Component<IBlogListProps, IBlogListS
           {
             this.props.blog.viewLastestMore && (
               <div className="button-group">
-                <Button type="primary" ghost={true} size="large" className="view-more">VIEW MORE</Button>
+                <Button type="primary" ghost={true} size="large" className="view-more" onClick={this.handleMore}>VIEW MORE</Button>
               </div>
             )
           }
@@ -172,5 +176,10 @@ export default class BlogList extends React.Component<IBlogListProps, IBlogListS
         arrowRight['style'].display = 'block';
       }
     }
+  }
+
+  private handleMore = () => {
+    this.props.blog.lastestPagination.pageIndex = this.props.blog.lastestPagination.pageIndex + 1;
+    this.props.blog.getLastestList();
   }
 }
