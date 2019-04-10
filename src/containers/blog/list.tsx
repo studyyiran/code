@@ -27,6 +27,11 @@ export default class BlogList extends React.Component<IBlogListProps, IBlogListS
       this.props.blog.getFeatureList();
       this.props.blog.getLastestList();
       this.props.blog.getTagList();
+      try {
+        window.scrollTo(0, 0)
+      } catch (e) {
+        console.warn(e);
+      }
     }
     this.toggleArrow();
   }
@@ -108,7 +113,7 @@ export default class BlogList extends React.Component<IBlogListProps, IBlogListS
                           </div>
                           <div className="right">
                             <h3>{item.title}</h3>
-                            <small>{moment.tz(item.releaseDt, "America/Chicago").format('MMM DD, YYYY HHA')}</small>
+                            <small>{moment.tz(item.releaseDt, "America/Chicago").format('MMM DD, YYYY')}</small>
                             <p>{item.summary}</p>
                           </div>
                         </Link>
@@ -137,7 +142,7 @@ export default class BlogList extends React.Component<IBlogListProps, IBlogListS
                       </div>
                       <div className="right">
                         <h3>{item.title}</h3>
-                        <small>{moment.tz(item.releaseDt, "America/Chicago").format('MMM DD, YYYY HHA')}</small>
+                        <small>{moment.tz(item.releaseDt, "America/Chicago").format('MMM DD, YYYY')}</small>
                         <p>{item.summary}</p>
                       </div>
                     </Link>
