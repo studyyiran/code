@@ -24,6 +24,9 @@ export default class BlogDetail extends React.Component<IBlogDetailProps> {
       }
     }
   }
+  public componentWillUnmount() {
+    this.props.blog.detail = null;
+  }
   public render() {
     const detail = this.props.blog.detail;
     if (!detail) {
