@@ -118,7 +118,7 @@ export default class BlogList extends React.Component<IBlogListProps, IBlogListS
                 }
               </div>
               <div className="button-group">
-                <Link to={`/tag/${this.props.blog.activeTag ? this.props.blog.activeTag.slug : ''}`} className="tag-link"><img src={require('@/images/yourphone/circle-arrow.png')} />How to find the local FedEx location</Link>
+                <Link to={`/tag/${this.props.blog.activeTag ? this.props.blog.activeTag.slug : ''}`} className="tag-link"><img src={require('@/images/yourphone/circle-arrow.png')} />More about {this.props.blog.activeTag && this.props.blog.activeTag.name}</Link>
               </div>
             </div>
           )
