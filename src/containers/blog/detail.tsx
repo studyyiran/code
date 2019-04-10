@@ -33,7 +33,7 @@ export default class BlogDetail extends React.Component<IBlogDetailProps> {
       <div className="page-statig-blog-container">
         <h1>{detail.title}</h1>
         <div className="small">
-          <span>{moment.tz(detail.releaseDt, "America/Chicago").format('MMM DD, YYYY HHA')}</span>
+          <span>{moment.tz(detail.releaseDt, "America/Chicago").format('MMM DD, YYYY')}</span>
           <div className="right">
             <em />
             <em />
