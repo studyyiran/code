@@ -23,6 +23,11 @@ export default class BlogList extends React.Component<IBlogListProps> {
         pageSize: 10
       }
       this.props.blog.getTagPageList();
+      try {
+        window.scrollTo(0, 0)
+      } catch (e) {
+        console.warn(e);
+      }
     }
   }
   public componentWillUnmount() {
