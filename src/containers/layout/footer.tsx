@@ -24,8 +24,8 @@ export default class Footer extends React.Component<{ router: any }, IFooterStat
         <div className="section-box">
           <div className="content-wrapper">
             <div className="links-group-wrapper">
-              <Row gutter={56}>
-                <Col span={3}><img src={require('@/images/logo.png')} className="logo" /></Col>
+              <Row gutter={80}>
+                <Col span={5}><img src={require('@/images/logo.png')} className="logo" /></Col>
                 {
                   linksGroup
                 }

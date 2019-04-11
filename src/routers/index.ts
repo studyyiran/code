@@ -2,12 +2,45 @@ import sell from './sell';
 import singlePage from './singlePage';
 import Loadable from 'react-loadable';
 import store from '../store';
-import staticBlog from './staticBlog';
+// import staticBlog from './staticBlog';
 
 export default [
   ...sell,
   ...singlePage,
-  ...staticBlog,
+  // ...staticBlog,
+  {
+    component: Loadable({
+      loader: () => import('../containers/blog/tag'),
+      loading: () => null,
+      modules: ['../containers/blog/tag'],
+      webpack: () => [require.resolveWeak('../containers/blog/tag') as number],
+    }),
+    path: '/tag/:tag',
+    exact: true,
+    bootstrap: async (param: { [key: string]: string }) => {
+      store['blog'].tagPageListPagination = {
+        tagSlug: param.tag,
+        pageIndex: 0,
+        pageSize: 10
+      }
+      await store['blog'].getTagPageList();
+    }
+  },
+  {
+    component: Loadable({
+      loader: () => import('../containers/blog/list'),
+      loading: () => null,
+      modules: ['../containers/blog/list'],
+      webpack: () => [require.resolveWeak('../containers/blog/list') as number],
+    }),
+    path: '/blog',
+    exact: true,
+    actions: [
+      store['blog'].getFeatureList,
+      store['blog'].getLastestList,
+      store['blog'].getTagList,
+    ]
+  },
   {
     component: Loadable({
       loader: () => import('../containers/order/checkOrderNo'),
@@ -45,15 +78,26 @@ export default [
     ]
   },
   {
-    // 首页
+    // 单页
     component: Loadable({
-      loader: () => import('../containers/notfound'),
+      loader: () => import('../containers/blog/detail'),
       loading: () => null,
-      modules: ['../containers/notfound'],
-      webpack: () => [require.resolveWeak('../containers/notfound') as number],
+      modules: ['../containers/blog/detail'],
+      webpack: () => [require.resolveWeak('../containers/blog/detail') as number],
     }),
     exact: true,
-    path: '/:any',
+    path: '/:slug',
+    bootstrap: async (param: { [key: string]: string }) => {
+      await store['blog'].getPageDetail(param.slug);
+    },
+    templateValue() {
+      return {
+        title: store['blog'].detail.title,
+        keywords: store['blog'].detail.seoKeywords,
+        description: store['blog'].detail.seoDesc,
+        robots: store['blog'].detail.seoRobotsCode,
+      }
+    }
   },
   {
     // 首页

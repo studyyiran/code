@@ -9,7 +9,7 @@ export default class BlogList extends React.Component {
         <div className="bloglist-list-wrapper">
           <header>Lastest</header>
           <div className="list-box">
-            {/* <div className="list">
+            <div className="list">
               <Link to={'/how-to-sell-your-old-phone-for-cash'}>
                 <div className="img-box">
                   <div className="img" style={{ backgroundImage: `url(${require('@/images/staticblog/img-7.jpg')})` }} />
@@ -21,7 +21,7 @@ export default class BlogList extends React.Component {
                   <p>There are a lot of different factors that have an effect on the resale value of your phone. A mint condition phone will fetch more value than a broken one for instance. Here are some of the factors that can influence how much you can sell your device for. </p>
                 </div>
               </Link>
-            </div> */}
+            </div>
 
             <div className="list">
               <Link to={'/att-phone-trade-in-is-it-worth-it'}>

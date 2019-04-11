@@ -70,7 +70,7 @@ export default {
   },
   '/sell/yourphone/other': {
     step: 1,
-    mainText: 'What phone carrier is your phone?',
+    mainText: "What's your phone model?",
     subText: '',
     isInCheckOrder: false,
     hasSearch: false,
