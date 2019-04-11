@@ -19,7 +19,7 @@ export default class Models extends React.Component<IModelsProps> {
     // 显示左侧价格模块
     this.props.user.isShowLeftPrice = true;
     if (!modalPageValidate()) {
-      this.props.history.push('/sell/account');
+      this.props.history.push('/sell/yourphone/brand');
       return;
     }
 

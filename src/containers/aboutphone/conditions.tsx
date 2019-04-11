@@ -28,7 +28,7 @@ export default class Conditions extends React.Component<IConditionsProps> {
     // 显示左侧价格模块
     this.props.user.isShowLeftPrice = true;
     if (!conditionPageValidate()) {
-      this.props.history.push('/sell/account');
+      this.props.history.push('/sell/yourphone/brand');
       return;
     }
     // tbd 赛默认选项

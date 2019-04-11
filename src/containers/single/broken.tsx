@@ -44,7 +44,7 @@ export default class Broken extends React.Component {
         <p>Luckily, even with the influx of selfie-enthusiasts out there, an iPhone 6 with a broken camera can still be sold for around $120 at the time of this writing.</p>
         <h2>Find Out How Much Your Broken iPhone is Worth</h2>
         <p>The selling price of a broken iPhone will vary depending on the model and its condition. Needless to say, a broken iPhone 5 won’t sell for as much as an iPhone 7 in a similar state of disrepair.</p>
-        <Link to={'/sell/account'}>Get a quote to see how much money your broken iPhones are worth.</Link>
+        <Link to={'/sell/yourphone/brand'}>Get a quote to see how much money your broken iPhones are worth.</Link>
         <p>It’s a simple process; choose Apple as the manufacture and select the correct the phone model. Then, select the right phone conditions. From there, a display of the minimum price guarantee UpTrade will pay you will appear.</p>
         <h2>How to Prepare Broken iPhone for Sale</h2>
         <p>The first thing you should do before selling a damaged iPhone (if you can turn it on), is remove all data by following these instructions: </p>

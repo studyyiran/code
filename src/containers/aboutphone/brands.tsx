@@ -5,7 +5,6 @@ import LayOut from '@/containers/aboutphone/layout';
 import BrandItem from '@/containers/aboutphone/components/branditem';
 import './brands.less';
 import config from '@/config';
-import { userEmailValidate } from '@/containers/aboutphone/pageValidate';
 import Breadcrumb from '@/containers/aboutphone/components/breadcrumb';
 import ProgressBar from '@/containers/aboutphone/components/progressbar--mobile';
 
@@ -15,11 +14,6 @@ export default class Brands extends React.Component<IBrandsProps> {
   public componentDidMount() {
     // 显示左侧价格模块
     this.props.user.isShowLeftPrice = true;
-    // 检验是否获取到页面需要到必须数据
-    if (!userEmailValidate()) {
-      this.props.history.push('/sell/account');
-      return;
-    }
     this.props.yourphone.getBrandsByCid();
   }
 

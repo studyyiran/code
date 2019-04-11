@@ -32,7 +32,7 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
     // 显示左侧价格模块
     this.props.user.isShowLeftPrice = true;
     if (!donePageValidate()) {
-      this.props.history.push('/sell/account');
+      this.props.history.push('/sell/yourphone/brand');
       return;
     }
   }

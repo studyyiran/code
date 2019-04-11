@@ -1,14 +1,14 @@
 export const PC = [
-  {
-    main: 'About You',
-    sub: 'How to get in touch'
-  },
+  // {
+  //   main: 'About You',
+  //   sub: 'How to get in touch'
+  // },
   {
     main: 'About Your Phone',
     sub: 'Model and Condition'
   },
   {
-    main: 'Shipping Address',
+    main: 'Your Information',
     sub: 'We send you a shipping label'
   },
   {
@@ -22,16 +22,16 @@ export const PC = [
 ];
 
 export const MOBILE = [
-  {
-    main: 'Welcome',
-    sub: ''
-  },
+  // {
+  //   main: 'Welcome',
+  //   sub: ''
+  // },
   {
     main: 'Phone',
     sub: ''
   },
   {
-    main: 'Address',
+    main: 'Information',
     sub: ''
   },
   {

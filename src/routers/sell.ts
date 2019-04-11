@@ -12,12 +12,7 @@ export default [
     path: '/sell',
     children: [
       {
-        component: Loadable({
-          loader: () => import('../containers/aboutyou'),
-          loading: () => null,
-          modules: ['../containers/aboutyou'],
-          webpack: () => [require.resolveWeak('../containers/aboutyou') as number],
-        }),
+        component: redirectComponent('/sell/yourphone/brand'),
         path: '/sell/account',
       },
       {
