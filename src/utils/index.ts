@@ -20,5 +20,5 @@ export {
   requireJS,
   gcj02ToBd09,
   getWeek,
-  isMobile
+  isMobile,
 }

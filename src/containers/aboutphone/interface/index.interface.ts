@@ -109,9 +109,8 @@ export interface IDoneStates {
 
 export interface ICheckOutStates {
   brand: number;
-  brandText: string[];
-  detailText: string[];
-  payText: object;
+  brandText: React.ReactNode;
+  detailText: (label: React.ReactNode) => React.ReactNode;
 }
 
 export interface ICarrier {

@@ -5,9 +5,8 @@ import config from '@/config';
 import Layout from '@/containers/aboutphone/layout';
 import './checkorder.less';
 import { Button } from 'antd';
-import { ICheckOutProps, ICheckOutStates, EBrandType, EPayType } from './interface/index.interface';
+import { ICheckOutProps, ICheckOutStates, EBrandType } from './interface/index.interface';
 import { checkOrderPageValidate } from '@/containers/aboutphone/pageValidate';
-import * as moment from 'moment-timezone';
 
 @inject('yourphone', 'user', 'common')
 @observer
@@ -16,24 +15,21 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
 
   public readonly state: Readonly<ICheckOutStates> = {
     brand: EBrandType.IPHONE,
-    brandText: [
-      'Turn off “Find My iPhone”. <br /> Deactivate your service. <br /> Remove your Data&SIM Card.',
-      'Delete your Google account. <br /> Deactivate your service. <br /> Remove your Data & SIM Card.'
-    ],
-    detailText: [
-      'Pack your device in a box. <br /> Drop it off at your <br /> nearest delivery place.',
-      'Pack your device in a box. <br /> Drop it off at your nearest delivery place.'
-    ],
-    payText: {
-      PC: {
-        [EPayType.PAYPAL]: 'After your device arrives, it <br /> typically takes a week for your <br /> PayPal funds to be deposited.',
-        [EPayType.ECHECK]: 'After your device arrives, your <br /> eCheck is typically sent within a <br /> week.'
-      },
-      MOBILE: {
-        [EPayType.PAYPAL]: 'After your device arrives, it <br /> typically takes a week for your PayPal funds to be deposited.',
-        [EPayType.ECHECK]: 'After your device arrives, your eCheck is <br /> typically sent within a week.'
-      }
-    }
+    brandText: (
+      <>
+        <p>Remove your SIM Card</p>
+        <p>Make sure to wipe your device of all personal information</p>
+        <p>Pack your device in a box with protective packaging material for shipment</p>
+      </>),
+
+    detailText: (label: React.ReactNode) => (
+      <>
+        <p>Print out your free shipping label</p>
+        <small>* If you don't have a printer, you can go to Fedex location to print it according to the following tracking number</small>
+        {label}
+        <p>Take your package to your local FedEx location</p>
+      </>
+    )
   }
 
   public componentDidMount() {
@@ -45,10 +41,10 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
     }
 
     // 清除相关信息
-    this.props.user.preOrder = {
-      userEmail: '',
-    }
-    this.props.yourphone.destory();
+    // this.props.user.preOrder = {
+    //   userEmail: '',
+    // }
+    // this.props.yourphone.destory();
   }
 
   public componentWillUnmount() {
@@ -61,37 +57,11 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
       <div className="page-checkorder-container">
         <Layout hideBottom={true} userEmail={orderDetail ? orderDetail.userEmail : ''}>
           <div className="content-wrapper">
-            <div className="final-step-wrapper">
-              <div className="step">
-                <p className="name">Prepare Your Phone</p>
-                <p className="detail" dangerouslySetInnerHTML={{ __html: this.state.brandText[activeBrandsId === 52 ? EBrandType.IPHONE : EBrandType.ANDROID] }} />
-                <Link to={activeBrandsId === 52 ? '/how-to-factory-reset-iphone' : '/how-to-factory-reset-android-phone'} className="tips" target="_blank">How to Prepare Your Phone</Link>
-              </div>
-              <div className="step">
-                <p className="name">Pack and Send</p>
-                <p className="detail" dangerouslySetInnerHTML={{ __html: this.state.detailText[this.props.common.isMobile ? 1 : 0] }} />
-                <a href={config.DEFAULT.FedExUrl} target="__blank" className="tips">How to find the local FedEx location</a>
-              </div>
-              <div className="step">
-                <p className="name">Get Paid</p>
-                <p className="detail" dangerouslySetInnerHTML={{ __html: this.state.payText[this.props.common.isMobile ? 'MOBILE' : 'PC'][this.props.yourphone.payment] }} />
-              </div>
-            </div>
-            <div className="shipping-label-wrapper">
-              <div className="label">Your Shipping Label</div>
-              <div className="left">
-                <span>Tracking Number</span>
-                <span>{orderDetail && orderDetail.shippoTransaction.trackingNumber}</span>
-              </div>
-              <div className="button-group">
-                <a target="__blank" href={orderDetail ? '/up-api/up-trade-it/api/orders/download-label?code=' + orderDetail.downloadCode : 'javascript:;'}><Button type="primary" ghost={true} size="small">DOWNLOAD</Button></a>
-                <a target="__blank" href={orderDetail ? orderDetail.shippoTransaction.ext.labelUrl : 'javascript:;'}><Button type="primary" size="small">PRINT</Button></a>
-              </div>
-            </div>
+
             <div className="order-summary-wrapper">
               <p className="main-title">Order Summary</p>
               <div className="summary-wrapper">
-                <p className="sub-title">Your Phone</p>
+                <p className="sub-title"><span>Order Number</span><em>{orderDetail && orderDetail.orderNo}</em></p>
                 <div className="content-wrapper">
                   <div className="info-wrapper">
                     <div className="info-item">
@@ -99,30 +69,84 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
                       <p className="content">{isTBD ? 'Other' : (inquiryDetail && inquiryDetail.product.name)}</p>
                     </div>
                     <div className="info-item">
-                      <span className="label">Order Number</span>
-                      <p className="content">{orderDetail && orderDetail.orderNo}</p>
-                    </div>
-                    <div className="info-item">
-                      <span className="label">Order Date</span>
-                      <p className="content">{orderDetail && moment.tz(orderDetail.createdDt, "America/Chicago").format('MMM DD, YYYY')}</p>
+                      <span className="label">Guaranteed Price</span>
+                      <p className="content">{isTBD ? 'TBD' : `\$${inquiryDetail && inquiryDetail.priceDollar}`}</p>
                     </div>
                   </div>
-                  <p className="guaranteed-price">
-                    <span className="text">Guaranteed Price</span>
-                    <span className="price">{isTBD ? 'TBD' : `\$${inquiryDetail && inquiryDetail.priceDollar}`}</span>
-                  </p>
+
+                </div>
+              </div>
+              <div className="summary-wrapper">
+                <p className="sub-title"><span>Order Number</span><em>{orderDetail && orderDetail.orderNo}</em></p>
+                <div className="content-wrapper">
+                  <div className="info-wrapper">
+                    <div className="info-item">
+                      <span className="label">Model</span>
+                      <p className="content">{isTBD ? 'Other' : (inquiryDetail && inquiryDetail.product.name)}</p>
+                    </div>
+                    <div className="info-item">
+                      <span className="label">Guaranteed Price</span>
+                      <p className="content">{isTBD ? 'TBD' : `\$${inquiryDetail && inquiryDetail.priceDollar}`}</p>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <div className="summary-wrapper">
+                <p className="sub-title"><span>Order Number</span><em>{orderDetail && orderDetail.orderNo}</em></p>
+                <div className="content-wrapper">
+                  <div className="info-wrapper">
+                    <div className="info-item">
+                      <span className="label">Model</span>
+                      <p className="content">{isTBD ? 'Other' : (inquiryDetail && inquiryDetail.product.name)}</p>
+                    </div>
+                    <div className="info-item">
+                      <span className="label">Guaranteed Price</span>
+                      <p className="content">{isTBD ? 'TBD' : `\$${inquiryDetail && inquiryDetail.priceDollar}`}</p>
+                    </div>
+                  </div>
+
                 </div>
               </div>
             </div>
 
-            <div className="checkorder-btn-wrapper" style={{ textAlign: 'center' }}><Button className="checkorder-btn" onClick={this.hanleCheckOrder} type="primary" style={{ width: '400px', height: '48px', marginTop: '30px', fontWeight: 'bold' }}>CHECK ORDER</Button></div>
+            <div className="final-step-wrapper">
+              <h2>Your Next Steps</h2>
+              <div className="step">
+                <p className="name">Reset Your Phone</p>
+                <div className="detail" >
+                  {this.state.brandText}
+                </div>
+                <Link to={activeBrandsId === 52 ? '/how-to-factory-reset-iphone' : '/how-to-factory-reset-android-phone'} className="tips" target="_blank">Read our helpful instructions for more details</Link>
+              </div>
+              <div className="step">
+                <p className="name">Print Shipping Label</p>
+                <div className="detail">
+                  {this.state.detailText(this.labelRender())}
+                </div>
+                <a href={config.DEFAULT.FedExUrl} target="__blank" className="tips">How to find the local FedEx location</a>
+              </div>
+            </div>
+
           </div>
         </Layout>
       </div >
     )
   }
 
-  private hanleCheckOrder = () => {
-    this.props.history.push('/check-order');
+  private labelRender = () => {
+    const { orderDetail } = this.props.yourphone; // 选中的品牌， 苹果为52
+    return (
+      <div className="shipping-label-wrapper">
+        <div className="left">
+          <span>Tracking Number</span>
+          <span>{orderDetail && orderDetail.shippoTransaction.trackingNumber}</span>
+        </div>
+        <div className="button-group">
+          <a target="__blank" href={orderDetail ? '/up-api/up-trade-it/api/orders/download-label?code=' + orderDetail.downloadCode : 'javascript:;'}><Button type="primary" ghost={true} size="small">DOWNLOAD</Button></a>
+          <a target="__blank" href={orderDetail ? orderDetail.shippoTransaction.ext.labelUrl : 'javascript:;'}><Button type="primary" size="small">PRINT</Button></a>
+        </div>
+      </div>
+    )
   }
 }

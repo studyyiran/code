@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 import classnames from 'classnames';
-import { Modal, Button } from 'antd';
+import { Modal, Button, Tooltip } from 'antd';
 import Layout from '@/containers/aboutphone/layout';
 import ShippingPage from '@/containers/aboutphone/shipping';
 import PaymentPage from '@/containers/aboutphone/payment';
@@ -204,16 +204,31 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
                   : <Link to='/terms' className="highlight" target="_blank">Terms of Service </Link>
               }
             </div>
-            <Button
-              disabled={!this.state.isChecked}
-              onClick={this.handleShip}
-              className="ship-btn"
-              type="primary"
-              size="large"
-              loading={this.state.loading}
-            >
-              ALL GOOD. Let’s Ship It!
-            </Button>
+            <div className="button-group">
+              <Tooltip title="If you want to place another order with the same information, payment and the same shipping label.">
+                <Button
+                  disabled={!this.state.isChecked}
+                  onClick={this.handleShip}
+                  className="ship-btn ghost"
+                  type="primary"
+                  size="large"
+                  loading={this.state.loading}
+                >
+                  PLACE ANOTHER ORDER
+                </Button>
+              </Tooltip>
+              <Button
+                disabled={!this.state.isChecked}
+                onClick={this.handleShip}
+                className="ship-btn"
+                type="primary"
+                size="large"
+                loading={this.state.loading}
+              >
+                COMPLETE
+              </Button>
+            </div>
+
             {/* <p className={classnames('ship-btn', { active: this.state.isChecked })} onClick={this.handleShip}>ALL GOOD. Let’s Ship It!</p> */}
           </div>
         </Layout>

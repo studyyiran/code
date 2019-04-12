@@ -7,6 +7,7 @@ import './brands.less';
 import config from '@/config';
 import Breadcrumb from '@/containers/aboutphone/components/breadcrumb';
 import ProgressBar from '@/containers/aboutphone/components/progressbar--mobile';
+// import Clipboard from 'clipboard';
 
 @inject('yourphone', 'user', 'common')
 @observer
@@ -15,6 +16,8 @@ export default class Brands extends React.Component<IBrandsProps> {
     // 显示左侧价格模块
     this.props.user.isShowLeftPrice = true;
     this.props.yourphone.getBrandsByCid();
+    // const a = new Clipboard('.testtttt-btn');
+    // console.log(a);
   }
 
   public render() {
@@ -26,6 +29,10 @@ export default class Brands extends React.Component<IBrandsProps> {
             {
               this.props.common.isMobile && <ProgressBar />
             }
+            {/* <input id="foo" value={brands[3].name} />
+            <button className="testtttt-btn" data-clipboard-target="#foo">
+              12312312313
+                </button> */}
             <Breadcrumb />
             <div className="brand-list-wrapper">
               {
