@@ -81,7 +81,7 @@ export const getInquiryDetail = <T>(
 };
 
 // 根据zipCode获取美国对应的州
-export const getStateByCode = <T>(zipCode: number) => {
+export const getStateByCode = <T>(zipCode: string) => {
   const opts: IOpts = {
     url: `/USPS/state/${zipCode}`,
     loading: false

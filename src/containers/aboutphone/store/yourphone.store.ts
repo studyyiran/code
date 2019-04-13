@@ -261,7 +261,7 @@ class YourPhone implements IYourPhoneStore {
     return true;
   }
 
-  @action public getAmericaState = async (zipCode: number) => {
+  @action public getAmericaState = async (zipCode: string) => {
     this.americaStates = null;
     try {
       this.americaStates = await Api.getStateByCode<IAmericaState>(zipCode);
