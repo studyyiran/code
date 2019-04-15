@@ -12,7 +12,8 @@ export default {
     subText: '',
     hasSearch: false,
     progress: 0,
-    isBeforeShipping: true
+    isBeforeShipping: true,
+    showAppendOrder: true
   },
   '/sell/yourphone/carrier': {
     step: 0,

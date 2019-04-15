@@ -6,8 +6,9 @@ import { action, observable, autorun, computed } from 'mobx';
 import { IYourPhoneStore, ICarrier, IBrands, IAmericaState, IProductModel, IProductPPVN, ITbdInfo, ISubSkuPricePropertyValues } from '../interface/index.interface';
 import { IPreOrder } from '@/store/interface/user.interface';
 import UserStore from '@/store/user';
-import { noteUserModal } from '@/containers/aboutphone/pageValidate';
+// import { noteUserModal } from '@/containers/aboutphone/pageValidate';
 import { IOrderDetail } from '@/containers/order/interface/order.inerface'
+import EmailModal from '@/components/emailModal/index';
 class YourPhone implements IYourPhoneStore {
   @observable public carriers: ICarrier[] = [];
   @observable public brands: IBrands[] = [];
@@ -221,27 +222,7 @@ class YourPhone implements IYourPhoneStore {
     } catch (error) {
       console.warn(error, 'in yourphone store createInquiry');
       // 前端拦截所有报错并提示用户去写邮件寻求帮助
-      noteUserModal({
-        content: 'Please contact support@uptradeit.com for help.',
-        type: 'error',
-        okText: 'OK',
-        title: 'Oops... something goes wrong!',
-        maskClosable: true,
-        hasCountDown: false,
-        onOk: () => {
-          const aDOM = document.createElement('a');
-          aDOM.style.display = 'none';
-          aDOM.id = 'AFOREMAIL';
-          aDOM.setAttribute('href', `mailto:${config.DEFAULT.supportEmail}`);
-          document.body.appendChild(aDOM);
-
-          const adom = document.getElementById('AFOREMAIL');
-          if (adom) {
-            adom.click();
-            document.body.removeChild(adom);
-          }
-        }
-      });
+      EmailModal();
       return false;
     }
 
@@ -295,27 +276,28 @@ class YourPhone implements IYourPhoneStore {
       this.orderDetail = await Api.createOrder<any>(orderParams);
     } catch (error) {
       console.warn(error, 'in yourphone store createOrder');
-      noteUserModal({
-        content: 'Please contact support@uptradeit.com for help.',
-        type: 'error',
-        okText: 'OK',
-        title: 'Oops... something goes wrong!',
-        hasCountDown: false,
-        maskClosable: true,
-        onOk: () => {
-          const aDOM = document.createElement('a');
-          aDOM.style.display = 'none';
-          aDOM.id = 'AFOREMAIL';
-          aDOM.setAttribute('href', `mailto:${config.DEFAULT.supportEmail}`);
-          document.body.appendChild(aDOM);
+      EmailModal();
+      // noteUserModal({
+      //   content: 'Please contact support@uptradeit.com for help.',
+      //   type: 'error',
+      //   okText: 'OK',
+      //   title: 'Oops... something goes wrong!',
+      //   hasCountDown: false,
+      //   maskClosable: true,
+      //   onOk: () => {
+      //     const aDOM = document.createElement('a');
+      //     aDOM.style.display = 'none';
+      //     aDOM.id = 'AFOREMAIL';
+      //     aDOM.setAttribute('href', `mailto:${config.DEFAULT.supportEmail}`);
+      //     document.body.appendChild(aDOM);
 
-          const adom = document.getElementById('AFOREMAIL');
-          if (adom) {
-            adom.click();
-            document.body.removeChild(adom);
-          }
-        }
-      });
+      //     const adom = document.getElementById('AFOREMAIL');
+      //     if (adom) {
+      //       adom.click();
+      //       document.body.removeChild(adom);
+      //     }
+      //   }
+      // });
       return false;
     }
 

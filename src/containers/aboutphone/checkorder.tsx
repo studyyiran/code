@@ -1,4 +1,5 @@
 import * as React from 'react';
+import classnames from 'classnames';
 import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
 import config from '@/config';
@@ -29,7 +30,8 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
         {label}
         <p>Take your package to your local FedEx location</p>
       </>
-    )
+    ),
+    translateMore: false
   }
 
   public componentDidMount() {
@@ -58,7 +60,7 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
         <Layout hideBottom={true} userEmail={orderDetail ? orderDetail.userEmail : ''}>
           <div className="content-wrapper">
 
-            <div className="order-summary-wrapper">
+            <div className={classnames("order-summary-wrapper", { multiple: true, active: this.state.translateMore })}>
               <p className="main-title">Order Summary</p>
               <div className="summary-wrapper">
                 <p className="sub-title"><span>Order Number</span><em>{orderDetail && orderDetail.orderNo}</em></p>
@@ -108,6 +110,7 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
 
                 </div>
               </div>
+              <div className="btn-group" onClick={this.handleTranslateMore}><span>{!!!this.state.translateMore && `2 Orders in total`}<em /></span></div>
             </div>
 
             <div className="final-step-wrapper">
@@ -132,6 +135,12 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
         </Layout>
       </div >
     )
+  }
+
+  private handleTranslateMore = () => {
+    this.setState({
+      translateMore: !this.state.translateMore
+    })
   }
 
   private labelRender = () => {

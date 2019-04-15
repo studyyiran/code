@@ -18,8 +18,9 @@ import ListSaleIcon from "@/images/order/listForSale.png";
 import OrderCompleteIcon from "@/images/order/orderComplete.png";
 import ReturnRequestIcon from "@/images/order/returnRequest.png";
 import * as moment from "moment-timezone";
-import { noteUserModal } from '@/containers/aboutphone/pageValidate';
-import config from '@/config';
+// import { noteUserModal } from '@/containers/aboutphone/pageValidate';
+import EmailModal from '@/components/emailModal/index';
+// import config from '@/config';
 moment.locale("en");
 
 class Store implements IOrderStore {
@@ -526,27 +527,28 @@ class Store implements IOrderStore {
     }
   };
   @action public tellUserToReportError = (error: any) => {
-    noteUserModal({
-      content: 'Please contact support@uptradeit.com for help.',
-      type: 'error',
-      okText: 'OK',
-      title: 'Oops... something goes wrong!',
-      hasCountDown: false,
-      maskClosable: true,
-      onOk: () => {
-        const aDOM = document.createElement('a');
-        aDOM.style.display = 'none';
-        aDOM.id = 'AFOREMAIL';
-        aDOM.setAttribute('href', `mailto:${config.DEFAULT.supportEmail}`);
-        document.body.appendChild(aDOM);
+    // noteUserModal({
+    //   content: 'Please contact support@uptradeit.com for help.',
+    //   type: 'error',
+    //   okText: 'OK',
+    //   title: 'Oops... something goes wrong!',
+    //   hasCountDown: false,
+    //   maskClosable: true,
+    //   onOk: () => {
+    //     const aDOM = document.createElement('a');
+    //     aDOM.style.display = 'none';
+    //     aDOM.id = 'AFOREMAIL';
+    //     aDOM.setAttribute('href', `mailto:${config.DEFAULT.supportEmail}`);
+    //     document.body.appendChild(aDOM);
 
-        const adom = document.getElementById('AFOREMAIL');
-        if (adom) {
-          adom.click();
-          document.body.removeChild(adom);
-        }
-      }
-    });
+    //     const adom = document.getElementById('AFOREMAIL');
+    //     if (adom) {
+    //       adom.click();
+    //       document.body.removeChild(adom);
+    //     }
+    //   }
+    // });
+    EmailModal();
   }
   private packageDate(b: string | undefined) {
     if (b) {

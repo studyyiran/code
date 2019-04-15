@@ -81,3 +81,15 @@ export const getModuleOn = <T>(): Promise<T> => {
 
   return Request<T>(opts);
 }
+
+export const collectException = <T>(userEmail: string): Promise<T> => {
+  const opts: IOpts = {
+    url: `/static/collect-exception`,
+    method: 'POST',
+    params: {
+      userEmail
+    }
+  };
+
+  return Request<T>(opts);
+}

@@ -111,6 +111,7 @@ export interface ICheckOutStates {
   brand: number;
   brandText: React.ReactNode;
   detailText: (label: React.ReactNode) => React.ReactNode;
+  translateMore: boolean;
 }
 
 export interface ICarrier {
@@ -180,6 +181,7 @@ export interface INavigatorObj {
   progress: number; // 底部导航, 值为-1表示不需要展示
   isInCheckOrder?: boolean;
   showNext?: boolean; // 是否强制显示next 按钮（跳过step 和 progress 判断）
+  showAppendOrder: boolean
 }
 
 export interface IQueryParams {

@@ -100,7 +100,6 @@ export const noteUserModal = (params: INoteUserModalProps) => {
   let timer2: NodeJS.Timer
   if (defaultParams.customerOk) {
     defaultParams.onOk = () => {
-      debugger;
       clearInterval(timer);
       clearTimeout(timer2);
       if (defaultParams.customerOk) {

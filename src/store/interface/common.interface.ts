@@ -6,6 +6,7 @@ export interface ICommonStore {
   moduleOn: boolean;
   reviewsLoading: boolean;
   reviewsPagation: IReviewsPagation;
+  showEmailModal: boolean;
   filterReviews: () => void;
   initPosition: () => Promise<boolean>;
   onSubscribe: (email: string) => Promise<boolean>
@@ -13,6 +14,7 @@ export interface ICommonStore {
   getReviews: (query: { [key: string]: string | number }) => Promise<boolean>,
   getReviewsSort: (query: { [key: string]: string | number }) => Promise<boolean>,
   getModuleOn: () => Promise<boolean>,
+  collectException: (email: string) => Promise<boolean>,
 }
 
 export interface IReviewsPagation {

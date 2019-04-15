@@ -14,6 +14,7 @@ class Common implements ICommonStore {
   }
   @observable public moduleOn: boolean = false;
   @observable public reviewsLoading: boolean = false;
+  @observable public showEmailModal: boolean = true;
 
   constructor() {
     autorun(() => {
@@ -111,6 +112,14 @@ class Common implements ICommonStore {
       return false;
     }
     return true;
+  }
+
+  @action public collectException = async (email: string) => {
+    try {
+      return await Api.collectException<boolean>(email);
+    } catch (e) {
+      return false;
+    }
   }
 }
 
