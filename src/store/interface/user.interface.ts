@@ -84,6 +84,7 @@ export interface IPreOrder {
   carrier?: string; // 选中的运营商的名称
   orderDetail?: IOrderDetail;
   tbdInfo?: ITbdInfo
+  appendOrderDetail?: IOrderDetail | null;
   // yourphoneStore?: IYourPhoneStore; // 存储store的属性
 
 }

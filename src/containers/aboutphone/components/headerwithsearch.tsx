@@ -96,16 +96,16 @@ export default class BrandHeader extends React.Component<{ userEmail?: string },
       extraText = userStore.preOrder.userEmail ? userStore.preOrder.userEmail : (this.props.userEmail || '');
     }
     // todo 判断逻辑
-    const showAppendOrder = navigatorObj.showAppendOrder && true;
+    const showAppendOrder = navigatorObj.showAppendOrder && userStore.preOrder.appendOrderDetail;
     return (
       <div className={classnames('comp-brand-header-container', { multiple: navigatorObj.subText || showAppendOrder })}>
         {
           showAppendOrder && (
             <div className="append-order">
               <img src={require('@/images/yourphone/success.png')} style={{ width: 14 }} />
-              Order placed successfully! Order number #***************
+              Order placed successfully! Order number {userStore.preOrder.appendOrderDetail && userStore.preOrder.appendOrderDetail.orderNo}
               <Tooltip placement="right" title={this.state.copyMessage} visible={this.state.copyVisible}>
-                <span id="copy-btn" data-clipboard-text="caozheng nb">Copy</span>
+                <span id="copy-btn" data-clipboard-text={userStore.preOrder.appendOrderDetail && userStore.preOrder.appendOrderDetail.orderNo}>Copy</span>
               </Tooltip>
             </div>
           )

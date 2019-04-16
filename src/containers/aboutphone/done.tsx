@@ -21,7 +21,8 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
     isChecked: false, // 勾选协议
     showEditModal: false, // 展示弹窗
     pageType: '', // 弹窗内置的页面组件
-    loading: false
+    loadingComplete: false,
+    loadingAppend: false
   }
 
   public constructor(props: IDoneProps) {
@@ -208,11 +209,11 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
               <Tooltip title="If you want to place another order with the same information, payment and the same shipping label.">
                 <Button
                   disabled={!this.state.isChecked}
-                  onClick={this.handleShip}
+                  onClick={this.handleAppend}
                   className="ship-btn ghost"
                   type="primary"
                   size="large"
-                  loading={this.state.loading}
+                  loading={this.state.loadingAppend}
                 >
                   PLACE ANOTHER ORDER
                 </Button>
@@ -223,7 +224,7 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
                 className="ship-btn"
                 type="primary"
                 size="large"
-                loading={this.state.loading}
+                loading={this.state.loadingComplete}
               >
                 COMPLETE
               </Button>
@@ -258,19 +259,49 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
     this.setState({ showEditModal: false });
   }
 
+  private handleAppend = async () => {
+    if (!this.state.isChecked) {
+      return;
+    }
+
+    this.setState({
+      loadingAppend: true
+    })
+
+    // 开始创建订单
+    const isOrderCreated = await this.props.yourphone.createOrder();
+    this.setState({
+      loadingAppend: false
+    })
+    if (isOrderCreated) {
+      try {
+        this.props.user.preOrder = {
+          ...this.props.user.preOrder,
+          addressInfo: { ...this.props.yourphone.addressInfo },
+          checkInfo: { ...this.props.yourphone.echeck },
+          payment: this.props.yourphone.payment,
+          paypalInfo: { ...this.props.yourphone.paypal },
+          orderDetail: this.props.yourphone.orderDetail ? { ...this.props.yourphone.orderDetail } : undefined,
+          appendOrderDetail: this.props.yourphone.orderDetail ? { ...this.props.yourphone.orderDetail } : null
+        }
+      } catch (error) { console.warn(error, 'in done page preOrder') }
+      this.props.history.push('/sell/yourphone/brand');
+    }
+  }
+
   private handleShip = async () => {
     if (!this.state.isChecked) {
       return;
     }
 
     this.setState({
-      loading: true
+      loadingComplete: true
     })
 
     // 开始创建订单
     const isOrderCreated = await this.props.yourphone.createOrder();
     this.setState({
-      loading: false
+      loadingComplete: false
     })
     if (isOrderCreated) {
       try {

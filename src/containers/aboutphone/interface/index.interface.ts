@@ -104,7 +104,8 @@ export interface IDoneStates {
   isChecked: boolean;
   showEditModal: boolean;
   pageType: 'shipping' | 'payment' | 'condition' | '';
-  loading: boolean
+  loadingComplete: boolean,
+  loadingAppend: boolean
 }
 
 export interface ICheckOutStates {
