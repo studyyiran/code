@@ -32,7 +32,7 @@ class Blog implements IBlogStore {
   constructor() {
     autorun(() => {
       if (this.activeTag) {
-        this.tagPageListPagination.tagSlug = this.activeTag.name;
+        this.tagPageListPagination.tagSlug = this.activeTag.slug;
         this.getTagPageList();
       }
     })
