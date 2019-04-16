@@ -94,7 +94,7 @@ export default [
           modules: ['../containers/aboutphone/checkorder'],
           webpack: () => [require.resolveWeak('../containers/aboutphone/checkorder') as number],
         }),
-        path: '/sell/yourphone/checkorder'
+        path: '/sell/yourphone/checkorder/:orderNo'
       },
       {
         component: redirectComponent('/notfound'),

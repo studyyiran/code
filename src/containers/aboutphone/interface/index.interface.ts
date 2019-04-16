@@ -2,6 +2,7 @@ import { ModalFuncProps } from 'antd/lib/modal';
 import { FormComponentProps } from 'antd/lib/form';
 import * as React from 'react';
 import * as H from 'history';
+import { RouteComponentProps } from 'react-router'
 import { IUserStoreNew, IPreOrder } from '@/store/interface/user.interface';
 import { ICommonStore } from '@/store/interface/common.interface';
 import { IOrderDetail } from '@/containers/order/interface/order.inerface'
@@ -14,6 +15,7 @@ export interface IYourPhoneStore {
   productPPVNS: IProductPPVN[];
   inquiryDetail: IInquiryDetail | null;
   orderDetail: IOrderDetail | null;
+  allOrdersDetail: IOrderDetail[];
   addressInfo: IAddressInfo;
   inquiryKey: string;
   payment: string; // 选择的支付方式
@@ -54,8 +56,11 @@ export interface IYourPhoneStore {
   getAmericaState: (zipCode: number) => Promise<boolean>;
   createOrder: () => Promise<boolean>;
   destory: () => void;
+  destoryByAppendOrder: () => void;
   desoryUnmount: () => void;
   appendOrder: (preOrder: Partial<IPreOrder>) => Promise<boolean>;
+  getAllOrders: (orderNo: string, userEmail: string) => Promise<boolean>;
+  getOrderDetail: (orderNo: string, userEmail: string) => Promise<boolean>;
 }
 
 export interface ILayOutProps {
@@ -94,7 +99,7 @@ export type IPaymentProps = IBrandsProps & FormComponentProps;
 
 export type IDoneProps = IBrandsProps;
 
-export type ICheckOutProps = IBrandsProps & { user: IUserStoreNew };
+export type ICheckOutProps = IBrandsProps & { user: IUserStoreNew } & RouteComponentProps<{ orderNo: string }>;
 
 export interface IPaymentStates {
   // isLeftOnEdit: boolean;
@@ -110,7 +115,6 @@ export interface IDoneStates {
 }
 
 export interface ICheckOutStates {
-  brand: number;
   brandText: React.ReactNode;
   detailText: (label: React.ReactNode) => React.ReactNode;
   translateMore: boolean;

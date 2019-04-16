@@ -18,6 +18,7 @@ class YourPhone implements IYourPhoneStore {
   @observable public inquiryKey = '';
   @observable public inquiryDetail = null;
   @observable public orderDetail: IOrderDetail | null = null; // 订单详情
+  @observable public allOrdersDetail: IOrderDetail[] = []; // 追加订单的所有订单详情
   @observable public addressInfo: IAddressInfo = { // 用户填写的信息
     addressLine: '',
     addressLineOptional: '',
@@ -307,7 +308,7 @@ class YourPhone implements IYourPhoneStore {
   @action public appendOrder = async (preOrder: Partial<IPreOrder>) => {
     const orderParams: IAppendOrderParams = {
       brandId: preOrder.productInfo && preOrder.productInfo.brandId || 0,
-      carrier: preOrder.carrier || '',
+      carrier: preOrder.productInfo && preOrder.productInfo.carrier || '',
       inquiryKey: preOrder.inquiryKey || '',
     }
 
@@ -322,6 +323,40 @@ class YourPhone implements IYourPhoneStore {
       EmailModal();
       return false;
     }
+
+    return true;
+  }
+
+  @action public getOrderDetail = async (orderNo: string, userEmail: string) => {
+    if (!orderNo || !userEmail) {
+      return false;
+    }
+    try {
+      this.orderDetail = await Api.getOrderDetail<any>(orderNo, userEmail);
+    } catch (error) {
+      console.warn(error, 'in yourphone store createOrder');
+      return false;
+    }
+    if (this.orderDetail) {
+      this.allOrdersDetail = [this.orderDetail]
+    }
+    return true;
+  }
+
+  @action public getAllOrders = async (orderNo: string, userEmail: string) => {
+    if (!orderNo || !userEmail) {
+      return false;
+    }
+    let detail: IOrderDetail[] = [];
+    try {
+      detail = await Api.getAllOrders<any>(orderNo, userEmail);
+    } catch (error) {
+      console.warn(error, 'in yourphone store createOrder');
+      return false;
+    }
+
+    this.orderDetail = detail[0];
+    this.allOrdersDetail = detail;
 
     return true;
   }
@@ -356,6 +391,7 @@ class YourPhone implements IYourPhoneStore {
       modelName: '',
       donate: false
     }
+    this.activeBrandsId = -1;
     this.isLeftOnEdit = false;
     this.isRightOnEdit = false;
     this.oldActiveBrandsId = 0;
@@ -370,6 +406,25 @@ class YourPhone implements IYourPhoneStore {
     this.isAddressValuesAndDisabled = false;
     this.isPaymentFormFilled = false;
     this.americaStates = null;
+  }
+
+  @action public destoryByAppendOrder() {
+    this.tbdInfo = {
+      storage: '',
+      properties: [],
+      modelName: '',
+      donate: false
+    }
+    this.activeBrandsId = -1;
+    this.oldActiveBrandsId = 0;
+    this.activeBrandsName = '';
+    this.activeCarrierName = '';
+    this.activeCarrierDescription = '';
+    this.activeProductId = -1;
+    this.activeProductName = '';
+    this.activeModelId = -1;
+    this.activeModelName = '';
+    this.activeConditions = {};
   }
 }
 

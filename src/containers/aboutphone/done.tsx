@@ -295,6 +295,9 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
           appendOrderDetail: this.props.yourphone.orderDetail ? { ...this.props.yourphone.orderDetail } : null
         }
       } catch (error) { console.warn(error, 'in done page preOrder') }
+
+      this.props.yourphone.destoryByAppendOrder();
+
       this.props.history.push('/sell/yourphone/brand');
     }
   }
@@ -329,7 +332,15 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
           orderDetail: this.props.yourphone.orderDetail ? { ...this.props.yourphone.orderDetail } : undefined
         }
       } catch (error) { console.warn(error, 'in done page preOrder') }
-      this.props.history.push('/sell/yourphone/checkorder');
+
+      if (this.props.yourphone.orderDetail) {
+        let orderNo = this.props.yourphone.orderDetail.orderNo;
+        if (this.props.user.preOrder.appendOrderDetail) {
+          orderNo = this.props.user.preOrder.appendOrderDetail.orderNo
+        }
+        this.props.yourphone.orderDetail = null;
+        this.props.history.push('/sell/yourphone/checkorder/' + orderNo);
+      }
     }
   }
 

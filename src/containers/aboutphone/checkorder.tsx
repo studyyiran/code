@@ -6,8 +6,9 @@ import config from '@/config';
 import Layout from '@/containers/aboutphone/layout';
 import './checkorder.less';
 import { Button } from 'antd';
-import { ICheckOutProps, ICheckOutStates, EBrandType } from './interface/index.interface';
+import { ICheckOutProps, ICheckOutStates } from './interface/index.interface';
 import { checkOrderPageValidate } from '@/containers/aboutphone/pageValidate';
+import { IOrderDetail } from '../order/interface/order.inerface';
 
 @inject('yourphone', 'user', 'common')
 @observer
@@ -15,7 +16,6 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
   public static readonly displayName: string = '订单完成页面';
 
   public readonly state: Readonly<ICheckOutStates> = {
-    brand: EBrandType.IPHONE,
     brandText: (
       <>
         <p>Remove your SIM Card</p>
@@ -42,11 +42,17 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
       return;
     }
 
+    if (this.props.user.preOrder.appendOrderDetail) {
+      this.props.yourphone.getAllOrders(this.props.match.params.orderNo, this.props.user.preOrder.userEmail || '');
+    } else {
+      this.props.yourphone.getOrderDetail(this.props.match.params.orderNo, this.props.user.preOrder.userEmail || '');
+    }
+
     // 清除相关信息
-    // this.props.user.preOrder = {
-    //   userEmail: '',
-    // }
-    // this.props.yourphone.destory();
+    this.props.user.preOrder = {
+      userEmail: '',
+    }
+    this.props.yourphone.destory();
   }
 
   public componentWillUnmount() {
@@ -54,63 +60,38 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
   }
 
   public render() {
-    const { activeBrandsId, inquiryDetail, orderDetail, isTBD } = this.props.yourphone; // 选中的品牌， 苹果为52
+    const { activeBrandsId, orderDetail, allOrdersDetail } = this.props.yourphone; // 选中的品牌， 苹果为52
+
     return (
       <div className="page-checkorder-container">
         <Layout hideBottom={true} userEmail={orderDetail ? orderDetail.userEmail : ''}>
           <div className="content-wrapper">
-
-            <div className={classnames("order-summary-wrapper", { multiple: true, active: this.state.translateMore })}>
+            <div className={classnames("order-summary-wrapper", { multiple: allOrdersDetail.length > 1, active: this.state.translateMore })}>
               <p className="main-title">Order Summary</p>
-              <div className="summary-wrapper">
-                <p className="sub-title"><span>Order Number</span><em>{orderDetail && orderDetail.orderNo}</em></p>
-                <div className="content-wrapper">
-                  <div className="info-wrapper">
-                    <div className="info-item">
-                      <span className="label">Model</span>
-                      <p className="content">{isTBD ? 'Other' : (inquiryDetail && inquiryDetail.product.name)}</p>
-                    </div>
-                    <div className="info-item">
-                      <span className="label">Guaranteed Price</span>
-                      <p className="content">{isTBD ? 'TBD' : `\$${inquiryDetail && inquiryDetail.priceDollar}`}</p>
-                    </div>
-                  </div>
+              {
+                allOrdersDetail.map((detail: IOrderDetail) => {
+                  return (
+                    <div className="summary-wrapper" key={detail.orderNo}>
+                      <p className="sub-title"><span>Order Number</span><em>{detail.orderNo}</em></p>
+                      <div className="content-wrapper">
+                        <div className="info-wrapper">
+                          <div className="info-item">
+                            <span className="label">Model</span>
+                            <p className="content">{detail.orderItem.product.isTBD ? 'Other' : (detail.orderItem.productName)}</p>
+                          </div>
+                          <div className="info-item">
+                            <span className="label">Guaranteed Price</span>
+                            <p className="content">{detail.orderItem.product.isTBD ? 'TBD' : `\$${detail.orderItem.amountDollar}`}</p>
+                          </div>
+                        </div>
 
-                </div>
-              </div>
-              <div className="summary-wrapper">
-                <p className="sub-title"><span>Order Number</span><em>{orderDetail && orderDetail.orderNo}</em></p>
-                <div className="content-wrapper">
-                  <div className="info-wrapper">
-                    <div className="info-item">
-                      <span className="label">Model</span>
-                      <p className="content">{isTBD ? 'Other' : (inquiryDetail && inquiryDetail.product.name)}</p>
+                      </div>
                     </div>
-                    <div className="info-item">
-                      <span className="label">Guaranteed Price</span>
-                      <p className="content">{isTBD ? 'TBD' : `\$${inquiryDetail && inquiryDetail.priceDollar}`}</p>
-                    </div>
-                  </div>
+                  )
+                })
+              }
 
-                </div>
-              </div>
-              <div className="summary-wrapper">
-                <p className="sub-title"><span>Order Number</span><em>{orderDetail && orderDetail.orderNo}</em></p>
-                <div className="content-wrapper">
-                  <div className="info-wrapper">
-                    <div className="info-item">
-                      <span className="label">Model</span>
-                      <p className="content">{isTBD ? 'Other' : (inquiryDetail && inquiryDetail.product.name)}</p>
-                    </div>
-                    <div className="info-item">
-                      <span className="label">Guaranteed Price</span>
-                      <p className="content">{isTBD ? 'TBD' : `\$${inquiryDetail && inquiryDetail.priceDollar}`}</p>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-              <div className="btn-group" onClick={this.handleTranslateMore}><span>{!!!this.state.translateMore && `2 Orders in total`}<em /></span></div>
+              {allOrdersDetail.length > 1 && <div className="btn-group" onClick={this.handleTranslateMore}><span>{!!!this.state.translateMore && `${allOrdersDetail.length} Orders in total`}<em /></span></div>}
             </div>
 
             <div className="final-step-wrapper">

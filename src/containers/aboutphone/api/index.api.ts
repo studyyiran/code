@@ -109,3 +109,29 @@ export const appendOrder = <T>(orderParams: IAppendOrderParams, orderNo: string)
   };
   return Request<T>(opts, []);
 }
+
+// 查询多个追加订单
+export const getAllOrders = <T>(orderNo: string, userEmail: string) => {
+  const opts: IOpts = {
+    url: `/orders/${orderNo}/siblings`,
+    method: 'post',
+    params: {
+      orderNo,
+      userEmail
+    }
+  };
+  return Request<T>(opts, []);
+}
+
+export function getOrderDetail<T>(orderNo: string, userEmail: string): Promise<T> {
+  const opts: IOpts = {
+    method: "POST",
+    url: `/orders/check`,
+    params: {
+      userEmail,
+      orderNo
+    },
+    loading: false
+  };
+  return Request<T>(opts, []);
+}
