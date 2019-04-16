@@ -2,7 +2,7 @@ import { ModalFuncProps } from 'antd/lib/modal';
 import { FormComponentProps } from 'antd/lib/form';
 import * as React from 'react';
 import * as H from 'history';
-import { IUserStoreNew } from '@/store/interface/user.interface';
+import { IUserStoreNew, IPreOrder } from '@/store/interface/user.interface';
 import { ICommonStore } from '@/store/interface/common.interface';
 import { IOrderDetail } from '@/containers/order/interface/order.inerface'
 
@@ -55,6 +55,7 @@ export interface IYourPhoneStore {
   createOrder: () => Promise<boolean>;
   destory: () => void;
   desoryUnmount: () => void;
+  appendOrder: (preOrder: Partial<IPreOrder>) => Promise<boolean>;
 }
 
 export interface ILayOutProps {
@@ -291,4 +292,11 @@ export interface ITbdInfo {
   properties: string[],
   storage: string,
   donate: boolean
+}
+
+export interface IAppendOrderParams {
+  brandId: number,
+  carrier: string,
+  inquiryKey: string,
+  tbdInfo?: ITbdInfo,
 }

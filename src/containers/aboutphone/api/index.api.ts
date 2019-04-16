@@ -1,6 +1,6 @@
 import { Request } from "utils";
 import { IOpts } from "@/utils/request.interface";
-import { IQueryParams } from "../interface/index.interface";
+import { IQueryParams, IAppendOrderParams } from "../interface/index.interface";
 import config from "../../../config/index";
 import { IPreOrder } from "@/store/interface/user.interface";
 
@@ -94,6 +94,16 @@ export const getStateByCode = <T>(zipCode: number) => {
 export const createOrder = <T>(orderParams: Pick<IPreOrder, Exclude<keyof IPreOrder, 'key' | 'productInfo'>>) => {
   const opts: IOpts = {
     url: `/orders`,
+    method: 'post',
+    params: orderParams,
+  };
+  return Request<T>(opts, []);
+}
+
+// 追加订单
+export const appendOrder = <T>(orderParams: IAppendOrderParams, orderNo: string) => {
+  const opts: IOpts = {
+    url: `/orders/${orderNo}/append`,
     method: 'post',
     params: orderParams,
   };

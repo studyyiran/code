@@ -36,6 +36,12 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
       this.props.history.push('/sell/yourphone/brand');
       return;
     }
+
+    if (this.props.user.preOrder.appendOrderDetail) {
+      this.setState({
+        isChecked: true
+      })
+    }
   }
 
   public handleOnRef = (child: React.Component) => {
@@ -145,7 +151,6 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
     };
 
     customizeModalProps['width'] = this.props.common.isMobile ? '3.33rem' : 900;
-
     return (
       <div className="page-youredone-container">
         <Layout hideBottom={true}>
@@ -154,7 +159,7 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
               <div className="show-module">
                 <div className="show-header">
                   <span className="name">Your Payment</span>
-                  <span className="edit-bg" onClick={this.handlePageChoose.bind(this, EChangeType.PAYMENT)} />
+                  {!user.preOrder.appendOrderDetail && <span className="edit-bg" onClick={this.handlePageChoose.bind(this, EChangeType.PAYMENT)} />}
                 </div>
                 <div className="show-content">
                   {payment}
@@ -163,7 +168,7 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
               <div className="show-module">
                 <div className="show-header">
                   <span className="name">Your Information</span>
-                  <span className="edit-bg" onClick={this.handlePageChoose.bind(this, EChangeType.SHIPPING)} />
+                  {!user.preOrder.appendOrderDetail && <span className="edit-bg" onClick={this.handlePageChoose.bind(this, EChangeType.SHIPPING)} />}
                 </div>
                 <div className="show-content">
                   <p className="info-item">
@@ -269,7 +274,12 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
     })
 
     // 开始创建订单
-    const isOrderCreated = await this.props.yourphone.createOrder();
+    let isOrderCreated = false;
+    if (this.props.user.preOrder.appendOrderDetail) {
+      isOrderCreated = await this.props.yourphone.appendOrder(this.props.user.preOrder);
+    } else {
+      isOrderCreated = await this.props.yourphone.createOrder();
+    }
     this.setState({
       loadingAppend: false
     })
@@ -299,7 +309,12 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
     })
 
     // 开始创建订单
-    const isOrderCreated = await this.props.yourphone.createOrder();
+    let isOrderCreated = false;
+    if (this.props.user.preOrder.appendOrderDetail) {
+      isOrderCreated = await this.props.yourphone.appendOrder(this.props.user.preOrder);
+    } else {
+      isOrderCreated = await this.props.yourphone.createOrder();
+    }
     this.setState({
       loadingComplete: false
     })

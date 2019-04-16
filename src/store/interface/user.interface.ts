@@ -50,26 +50,10 @@ export interface IUserStoreNew {
   isShowLeftPriceMobile: boolean;
   canUpdatePreOrder: boolean;
   preOrder: Partial<IPreOrder>;
-  getPreOrderKey: (userEmail: string) => Promise<boolean>;
+  getPreOrderKey: (preOrder: { [key: string]: any }) => Promise<boolean>;
   updatePreOrder: (preOrder: IPreOrder) => Promise<boolean>;
 }
 
-// export interface IPreOrder {
-//   addressInfo?: IAddressInfo;
-//   checkInfo?: ICheckInfo;
-//   inquiryKey?: string; // 询价key
-//   key?: string; // 唯一key
-//   payment?: string;
-//   paypalInfo?: IPaypalInfo;
-//   productInfo?: Partial<IProductInfo>;
-//   userEmail?: string;
-
-//   carrier?: string;
-//   agentCode?: string;
-//   brands?: IBrands[]; // 品牌
-//   products?: IProductModel[];
-//   productPPVNS?: IProductPPVN[];
-// }
 
 export interface IPreOrder {
   addressInfo: IYourPhoneStore['addressInfo'];

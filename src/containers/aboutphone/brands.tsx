@@ -46,6 +46,17 @@ export default class Brands extends React.Component<IBrandsProps> {
   }
 
   private onBrandItemClick = (brand: IBrands) => {
+    const preOrder = {
+      ...this.props.user.preOrder,
+      productInfo: {
+        brandId: brand.id,
+        brandName: brand.name
+      },
+      inquiryKey: brand.id === config.DEFAULT.otherBrandsId ? '' : this.props.yourphone.inquiryKey
+    }
+
+    this.props.user.getPreOrderKey(preOrder);
+
     try {
       // const productInfo = { ...this.props.user.preOrder.productInfo, brand: brand.id };
       this.props.user.preOrder = {

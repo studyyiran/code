@@ -1,6 +1,6 @@
 
 import config from '../../../config/index';
-import { IQueryParams, IInquiryDetail, IAddressInfo } from './../interface/index.interface';
+import { IQueryParams, IInquiryDetail, IAddressInfo, IAppendOrderParams } from './../interface/index.interface';
 import * as Api from '../api/index.api';
 import { action, observable, autorun, computed } from 'mobx';
 import { IYourPhoneStore, ICarrier, IBrands, IAmericaState, IProductModel, IProductPPVN, ITbdInfo, ISubSkuPricePropertyValues } from '../interface/index.interface';
@@ -303,6 +303,29 @@ class YourPhone implements IYourPhoneStore {
 
     return true;
   }
+
+  @action public appendOrder = async (preOrder: Partial<IPreOrder>) => {
+    const orderParams: IAppendOrderParams = {
+      brandId: preOrder.productInfo && preOrder.productInfo.brandId || 0,
+      carrier: preOrder.carrier || '',
+      inquiryKey: preOrder.inquiryKey || '',
+    }
+
+    if (this.isTBD) {
+      orderParams['tbdInfo'] = this.tbdInfo;
+    }
+
+    try {
+      this.orderDetail = await Api.appendOrder<any>(orderParams, preOrder.appendOrderDetail ? preOrder.appendOrderDetail.orderNo : '');
+    } catch (error) {
+      console.warn(error, 'in yourphone store createOrder');
+      EmailModal();
+      return false;
+    }
+
+    return true;
+  }
+
   @action public desoryUnmount = () => {
     this.payment = '';
     this.activeBrandsId = -1;
