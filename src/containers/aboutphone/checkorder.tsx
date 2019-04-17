@@ -104,7 +104,7 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
                 <Link to={activeBrandsId === 52 ? '/how-to-factory-reset-iphone' : '/how-to-factory-reset-android-phone'} className="tips" target="_blank">Read our helpful instructions for more details</Link>
               </div>
               <div className="step">
-                <p className="name">Print Shipping Label</p>
+                <p className="name">Print Shipping Label and Ship within 7 days</p>
                 <div className="detail">
                   {this.state.detailText(this.labelRender())}
                 </div>
