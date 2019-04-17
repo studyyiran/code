@@ -15,7 +15,7 @@ export default class Footer extends React.Component<{ router: any }, IFooterStat
     const linksGroup = config.FOOTERLINKS.map((group, key) => (
       <Col span={5} key={key} className="links-group">
         {
-          group.map((link, index) => <p key={index} className={classnames('item', { nocursor: link.href })} onClick={this.handleLink.bind(this, link)} data-href={link.href}>{link.text}</p>)
+          group.map((link, index) => <p key={index} className={classnames('item', { nocursor: !link.href })} onClick={this.handleLink.bind(this, link)} data-href={link.href}>{link.text}</p>)
         }
       </Col>
     ))

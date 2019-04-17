@@ -49,14 +49,14 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
     }
 
     // 清除相关信息
-    this.props.user.preOrder = {
-      userEmail: '',
-    }
-    this.props.yourphone.destory();
+    // this.props.user.preOrder = {
+    //   userEmail: '',
+    // }
+    // this.props.yourphone.destory();
   }
 
   public componentWillUnmount() {
-    this.props.yourphone.desoryUnmount();
+    // this.props.yourphone.desoryUnmount();
   }
 
   public render() {
@@ -91,7 +91,7 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
                 })
               }
 
-              {allOrdersDetail.length > 1 && <div className="btn-group" onClick={this.handleTranslateMore}><span>{!!!this.state.translateMore && `${allOrdersDetail.length} Orders in total`}<em /></span></div>}
+              {allOrdersDetail.length > 1 && <div className="btn-group" onClick={this.handleTranslateMore}><span>{!!!this.state.translateMore && `${allOrdersDetail.length} Orders in total`}</span><em /></div>}
             </div>
 
             <div className="final-step-wrapper">
