@@ -10,12 +10,12 @@ import { Modal } from 'antd';
 
 // modal页面的校验
 export const modalPageValidate = (): boolean => {
-  return (userEmailValidate() && brandIdValidate() && carrierValidate());
+  return (brandIdValidate() && carrierValidate());
 }
 
 // condition 页面的校验
 export const conditionPageValidate = (): boolean => {
-  return (userEmailValidate() && brandIdValidate() && carrierValidate());
+  return (brandIdValidate() && carrierValidate());
 }
 
 // shipping 页面的校验
@@ -100,7 +100,6 @@ export const noteUserModal = (params: INoteUserModalProps) => {
   let timer2: NodeJS.Timer
   if (defaultParams.customerOk) {
     defaultParams.onOk = () => {
-      debugger;
       clearInterval(timer);
       clearTimeout(timer2);
       if (defaultParams.customerOk) {

@@ -1,6 +1,6 @@
 import { Request } from "utils";
 import { IOpts } from "@/utils/request.interface";
-import { IQueryParams } from "../interface/index.interface";
+import { IQueryParams, IAppendOrderParams } from "../interface/index.interface";
 import config from "../../../config/index";
 import { IPreOrder } from "@/store/interface/user.interface";
 
@@ -81,7 +81,7 @@ export const getInquiryDetail = <T>(
 };
 
 // 根据zipCode获取美国对应的州
-export const getStateByCode = <T>(zipCode: number) => {
+export const getStateByCode = <T>(zipCode: string) => {
   const opts: IOpts = {
     url: `/USPS/state/${zipCode}`,
     loading: false
@@ -96,6 +96,42 @@ export const createOrder = <T>(orderParams: Pick<IPreOrder, Exclude<keyof IPreOr
     url: `/orders`,
     method: 'post',
     params: orderParams,
+  };
+  return Request<T>(opts, []);
+}
+
+// 追加订单
+export const appendOrder = <T>(orderParams: IAppendOrderParams, orderNo: string) => {
+  const opts: IOpts = {
+    url: `/orders/${orderNo}/append`,
+    method: 'post',
+    params: orderParams,
+  };
+  return Request<T>(opts, []);
+}
+
+// 查询多个追加订单
+export const getAllOrders = <T>(orderNo: string, userEmail: string) => {
+  const opts: IOpts = {
+    url: `/orders/${orderNo}/siblings`,
+    method: 'post',
+    params: {
+      orderNo,
+      userEmail
+    }
+  };
+  return Request<T>(opts, []);
+}
+
+export function getOrderDetail<T>(orderNo: string, userEmail: string): Promise<T> {
+  const opts: IOpts = {
+    method: "POST",
+    url: `/orders/check`,
+    params: {
+      userEmail,
+      orderNo
+    },
+    loading: false
   };
   return Request<T>(opts, []);
 }

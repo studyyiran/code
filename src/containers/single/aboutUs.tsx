@@ -67,12 +67,12 @@ const ArticleComp = (props: {
   title: string;
   text: string;
 }) => (
-  <div className={"article-comp " + props.className}>
-    <img src={props.img} alt="" />
-    <p className="article-title">{props.title}</p>
-    <p className="article-text">{props.text}</p>
-  </div>
-);
+    <div className={"article-comp " + props.className}>
+      <img src={props.img} alt="" />
+      <p className="article-title">{props.title}</p>
+      <p className="article-text">{props.text}</p>
+    </div>
+  );
 
 class AboutUs extends React.Component<RouteComponentProps> {
   public render() {
@@ -117,7 +117,7 @@ class AboutUs extends React.Component<RouteComponentProps> {
     );
   }
   private onGoToSell = () => {
-    this.props.history.push("/sell/account");
+    this.props.history.push("/sell/yourphone/brand");
   };
 }
 export default AboutUs;

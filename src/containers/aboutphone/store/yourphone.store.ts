@@ -1,13 +1,14 @@
 
 import config from '../../../config/index';
-import { IQueryParams, IInquiryDetail, IAddressInfo } from './../interface/index.interface';
+import { IQueryParams, IInquiryDetail, IAddressInfo, IAppendOrderParams } from './../interface/index.interface';
 import * as Api from '../api/index.api';
 import { action, observable, autorun, computed } from 'mobx';
 import { IYourPhoneStore, ICarrier, IBrands, IAmericaState, IProductModel, IProductPPVN, ITbdInfo, ISubSkuPricePropertyValues } from '../interface/index.interface';
 import { IPreOrder } from '@/store/interface/user.interface';
 import UserStore from '@/store/user';
-import { noteUserModal } from '@/containers/aboutphone/pageValidate';
+// import { noteUserModal } from '@/containers/aboutphone/pageValidate';
 import { IOrderDetail } from '@/containers/order/interface/order.inerface'
+import EmailModal from '@/components/emailModal/index';
 class YourPhone implements IYourPhoneStore {
   @observable public carriers: ICarrier[] = [];
   @observable public brands: IBrands[] = [];
@@ -17,6 +18,7 @@ class YourPhone implements IYourPhoneStore {
   @observable public inquiryKey = '';
   @observable public inquiryDetail = null;
   @observable public orderDetail: IOrderDetail | null = null; // 订单详情
+  @observable public allOrdersDetail: IOrderDetail[] = []; // 追加订单的所有订单详情
   @observable public addressInfo: IAddressInfo = { // 用户填写的信息
     addressLine: '',
     addressLineOptional: '',
@@ -221,27 +223,7 @@ class YourPhone implements IYourPhoneStore {
     } catch (error) {
       console.warn(error, 'in yourphone store createInquiry');
       // 前端拦截所有报错并提示用户去写邮件寻求帮助
-      noteUserModal({
-        content: 'Please contact support@uptradeit.com for help.',
-        type: 'error',
-        okText: 'OK',
-        title: 'Oops... something goes wrong!',
-        maskClosable: true,
-        hasCountDown: false,
-        onOk: () => {
-          const aDOM = document.createElement('a');
-          aDOM.style.display = 'none';
-          aDOM.id = 'AFOREMAIL';
-          aDOM.setAttribute('href', `mailto:${config.DEFAULT.supportEmail}`);
-          document.body.appendChild(aDOM);
-
-          const adom = document.getElementById('AFOREMAIL');
-          if (adom) {
-            adom.click();
-            document.body.removeChild(adom);
-          }
-        }
-      });
+      EmailModal();
       return false;
     }
 
@@ -261,7 +243,7 @@ class YourPhone implements IYourPhoneStore {
     return true;
   }
 
-  @action public getAmericaState = async (zipCode: number) => {
+  @action public getAmericaState = async (zipCode: string) => {
     this.americaStates = null;
     try {
       this.americaStates = await Api.getStateByCode<IAmericaState>(zipCode);
@@ -295,32 +277,90 @@ class YourPhone implements IYourPhoneStore {
       this.orderDetail = await Api.createOrder<any>(orderParams);
     } catch (error) {
       console.warn(error, 'in yourphone store createOrder');
-      noteUserModal({
-        content: 'Please contact support@uptradeit.com for help.',
-        type: 'error',
-        okText: 'OK',
-        title: 'Oops... something goes wrong!',
-        hasCountDown: false,
-        maskClosable: true,
-        onOk: () => {
-          const aDOM = document.createElement('a');
-          aDOM.style.display = 'none';
-          aDOM.id = 'AFOREMAIL';
-          aDOM.setAttribute('href', `mailto:${config.DEFAULT.supportEmail}`);
-          document.body.appendChild(aDOM);
+      EmailModal();
+      // noteUserModal({
+      //   content: 'Please contact support@uptradeit.com for help.',
+      //   type: 'error',
+      //   okText: 'OK',
+      //   title: 'Oops... something goes wrong!',
+      //   hasCountDown: false,
+      //   maskClosable: true,
+      //   onOk: () => {
+      //     const aDOM = document.createElement('a');
+      //     aDOM.style.display = 'none';
+      //     aDOM.id = 'AFOREMAIL';
+      //     aDOM.setAttribute('href', `mailto:${config.DEFAULT.supportEmail}`);
+      //     document.body.appendChild(aDOM);
 
-          const adom = document.getElementById('AFOREMAIL');
-          if (adom) {
-            adom.click();
-            document.body.removeChild(adom);
-          }
-        }
-      });
+      //     const adom = document.getElementById('AFOREMAIL');
+      //     if (adom) {
+      //       adom.click();
+      //       document.body.removeChild(adom);
+      //     }
+      //   }
+      // });
       return false;
     }
 
     return true;
   }
+
+  @action public appendOrder = async (preOrder: Partial<IPreOrder>) => {
+    const orderParams: IAppendOrderParams = {
+      brandId: preOrder.productInfo && preOrder.productInfo.brandId || 0,
+      carrier: preOrder.productInfo && preOrder.productInfo.carrier || '',
+      inquiryKey: preOrder.inquiryKey || '',
+    }
+
+    if (this.isTBD) {
+      orderParams['tbdInfo'] = this.tbdInfo;
+    }
+
+    try {
+      this.orderDetail = await Api.appendOrder<any>(orderParams, preOrder.appendOrderDetail ? preOrder.appendOrderDetail.orderNo : '');
+    } catch (error) {
+      console.warn(error, 'in yourphone store createOrder');
+      EmailModal();
+      return false;
+    }
+
+    return true;
+  }
+
+  @action public getOrderDetail = async (orderNo: string, userEmail: string) => {
+    if (!orderNo || !userEmail) {
+      return false;
+    }
+    try {
+      this.orderDetail = await Api.getOrderDetail<any>(orderNo, userEmail);
+    } catch (error) {
+      console.warn(error, 'in yourphone store createOrder');
+      return false;
+    }
+    if (this.orderDetail) {
+      this.allOrdersDetail = [this.orderDetail]
+    }
+    return true;
+  }
+
+  @action public getAllOrders = async (orderNo: string, userEmail: string) => {
+    if (!orderNo || !userEmail) {
+      return false;
+    }
+    let detail: IOrderDetail[] = [];
+    try {
+      detail = await Api.getAllOrders<any>(orderNo, userEmail);
+    } catch (error) {
+      console.warn(error, 'in yourphone store createOrder');
+      return false;
+    }
+
+    this.orderDetail = detail[0];
+    this.allOrdersDetail = detail;
+
+    return true;
+  }
+
   @action public desoryUnmount = () => {
     this.payment = '';
     this.activeBrandsId = -1;
@@ -351,6 +391,7 @@ class YourPhone implements IYourPhoneStore {
       modelName: '',
       donate: false
     }
+    this.activeBrandsId = -1;
     this.isLeftOnEdit = false;
     this.isRightOnEdit = false;
     this.oldActiveBrandsId = 0;
@@ -365,6 +406,25 @@ class YourPhone implements IYourPhoneStore {
     this.isAddressValuesAndDisabled = false;
     this.isPaymentFormFilled = false;
     this.americaStates = null;
+  }
+
+  @action public destoryByAppendOrder() {
+    this.tbdInfo = {
+      storage: '',
+      properties: [],
+      modelName: '',
+      donate: false
+    }
+    this.activeBrandsId = -1;
+    this.oldActiveBrandsId = 0;
+    this.activeBrandsName = '';
+    this.activeCarrierName = '';
+    this.activeCarrierDescription = '';
+    this.activeProductId = -1;
+    this.activeProductName = '';
+    this.activeModelId = -1;
+    this.activeModelName = '';
+    this.activeConditions = {};
   }
 }
 

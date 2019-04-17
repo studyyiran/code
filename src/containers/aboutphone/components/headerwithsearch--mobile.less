@@ -14,6 +14,57 @@
     &.multiple {
       padding: 0.31rem 0.2rem 0.26rem;
       border-bottom: 1px solid #f5f5f5;
+
+      .append-order {
+        position: absolute;
+        top:0;
+        left:0;
+        width: 3.75rem;
+        margin-left:-.2rem;
+        margin-right:-.2rem;
+        height:.6rem;
+        line-height: .18rem;
+        background: #f8f9fb;
+        text-align: center;
+        font-size:.12rem;
+        color:#666666;
+        display: flex;
+        padding:0 .2rem;
+        align-items: center;
+    
+        img {
+          vertical-align: middle;
+          margin-right:10px;
+          position: relative;
+          top:-1px;
+          width:.16rem !important;
+          height:.16rem;
+        }
+
+        span {
+          text-align: left;
+        }
+    
+        span#copy-btn {
+          font-size:.13rem;
+          line-height: .6rem;
+          padding-left: .28rem;
+          position: relative;
+          color:#00CFFF;
+          cursor: pointer;
+    
+          &:before {
+            width:1px;
+            height: .2rem;
+            content:"";
+            display: block;
+            position: absolute;
+            left:.14rem;
+            top:.2rem;
+            background: rgba(0,0,0,.04);
+          }
+        }
+      }
     }
 
     .left-wrapper {

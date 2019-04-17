@@ -149,7 +149,7 @@ class HowItWorks extends React.Component<RouteComponentProps>{
         );
     }
     private onGoToSell = () => {
-        this.props.history.push('/sell/account')
+        this.props.history.push('/sell/yourphone/brand')
     }
 }
 export default HowItWorks;

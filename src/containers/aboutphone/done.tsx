@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 import classnames from 'classnames';
-import { Modal, Button } from 'antd';
+import { Modal, Button, Tooltip } from 'antd';
 import Layout from '@/containers/aboutphone/layout';
 import ShippingPage from '@/containers/aboutphone/shipping';
 import PaymentPage from '@/containers/aboutphone/payment';
@@ -21,7 +21,8 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
     isChecked: false, // 勾选协议
     showEditModal: false, // 展示弹窗
     pageType: '', // 弹窗内置的页面组件
-    loading: false
+    loadingComplete: false,
+    loadingAppend: false
   }
 
   public constructor(props: IDoneProps) {
@@ -32,8 +33,14 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
     // 显示左侧价格模块
     this.props.user.isShowLeftPrice = true;
     if (!donePageValidate()) {
-      this.props.history.push('/sell/account');
+      this.props.history.push('/sell/yourphone/brand');
       return;
+    }
+
+    if (this.props.user.preOrder.appendOrderDetail) {
+      this.setState({
+        isChecked: true
+      })
     }
   }
 
@@ -144,7 +151,6 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
     };
 
     customizeModalProps['width'] = this.props.common.isMobile ? '3.33rem' : 900;
-
     return (
       <div className="page-youredone-container">
         <Layout hideBottom={true}>
@@ -153,7 +159,7 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
               <div className="show-module">
                 <div className="show-header">
                   <span className="name">Your Payment</span>
-                  <span className="edit-bg" onClick={this.handlePageChoose.bind(this, EChangeType.PAYMENT)} />
+                  {!user.preOrder.appendOrderDetail && <span className="edit-bg" onClick={this.handlePageChoose.bind(this, EChangeType.PAYMENT)} />}
                 </div>
                 <div className="show-content">
                   {payment}
@@ -162,7 +168,7 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
               <div className="show-module">
                 <div className="show-header">
                   <span className="name">Your Information</span>
-                  <span className="edit-bg" onClick={this.handlePageChoose.bind(this, EChangeType.SHIPPING)} />
+                  {!user.preOrder.appendOrderDetail && <span className="edit-bg" onClick={this.handlePageChoose.bind(this, EChangeType.SHIPPING)} />}
                 </div>
                 <div className="show-content">
                   <p className="info-item">
@@ -204,16 +210,31 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
                   : <Link to='/terms' className="highlight" target="_blank">Terms of Service </Link>
               }
             </div>
-            <Button
-              disabled={!this.state.isChecked}
-              onClick={this.handleShip}
-              className="ship-btn"
-              type="primary"
-              size="large"
-              loading={this.state.loading}
-            >
-              ALL GOOD. Let’s Ship It!
-            </Button>
+            <div className="button-group">
+              <Tooltip title="If you want to place another order with the same information, payment and the same shipping label.">
+                <Button
+                  disabled={!this.state.isChecked}
+                  onClick={this.handleAppend}
+                  className="ship-btn ghost"
+                  type="primary"
+                  size="large"
+                  loading={this.state.loadingAppend}
+                >
+                  PLACE ANOTHER ORDER
+                </Button>
+              </Tooltip>
+              <Button
+                disabled={!this.state.isChecked}
+                onClick={this.handleShip}
+                className="ship-btn"
+                type="primary"
+                size="large"
+                loading={this.state.loadingComplete}
+              >
+                COMPLETE
+              </Button>
+            </div>
+
             {/* <p className={classnames('ship-btn', { active: this.state.isChecked })} onClick={this.handleShip}>ALL GOOD. Let’s Ship It!</p> */}
           </div>
         </Layout>
@@ -243,19 +264,62 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
     this.setState({ showEditModal: false });
   }
 
+  private handleAppend = async () => {
+    if (!this.state.isChecked) {
+      return;
+    }
+
+    this.setState({
+      loadingAppend: true
+    })
+
+    // 开始创建订单
+    let isOrderCreated = false;
+    if (this.props.user.preOrder.appendOrderDetail) {
+      isOrderCreated = await this.props.yourphone.appendOrder(this.props.user.preOrder);
+    } else {
+      isOrderCreated = await this.props.yourphone.createOrder();
+    }
+    this.setState({
+      loadingAppend: false
+    })
+    if (isOrderCreated) {
+      try {
+        this.props.user.preOrder = {
+          ...this.props.user.preOrder,
+          addressInfo: { ...this.props.yourphone.addressInfo },
+          checkInfo: { ...this.props.yourphone.echeck },
+          payment: this.props.yourphone.payment,
+          paypalInfo: { ...this.props.yourphone.paypal },
+          orderDetail: this.props.yourphone.orderDetail ? { ...this.props.yourphone.orderDetail } : undefined,
+          appendOrderDetail: this.props.yourphone.orderDetail ? { ...this.props.yourphone.orderDetail } : null
+        }
+      } catch (error) { console.warn(error, 'in done page preOrder') }
+
+      this.props.yourphone.destoryByAppendOrder();
+
+      this.props.history.push('/sell/yourphone/brand');
+    }
+  }
+
   private handleShip = async () => {
     if (!this.state.isChecked) {
       return;
     }
 
     this.setState({
-      loading: true
+      loadingComplete: true
     })
 
     // 开始创建订单
-    const isOrderCreated = await this.props.yourphone.createOrder();
+    let isOrderCreated = false;
+    if (this.props.user.preOrder.appendOrderDetail) {
+      isOrderCreated = await this.props.yourphone.appendOrder(this.props.user.preOrder);
+    } else {
+      isOrderCreated = await this.props.yourphone.createOrder();
+    }
     this.setState({
-      loading: false
+      loadingComplete: false
     })
     if (isOrderCreated) {
       try {
@@ -268,7 +332,15 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
           orderDetail: this.props.yourphone.orderDetail ? { ...this.props.yourphone.orderDetail } : undefined
         }
       } catch (error) { console.warn(error, 'in done page preOrder') }
-      this.props.history.push('/sell/yourphone/checkorder');
+
+      if (this.props.yourphone.orderDetail) {
+        let orderNo = this.props.yourphone.orderDetail.orderNo;
+        if (this.props.user.preOrder.appendOrderDetail) {
+          orderNo = this.props.user.preOrder.appendOrderDetail.orderNo
+        }
+        this.props.yourphone.orderDetail = null;
+        this.props.history.push('/sell/yourphone/checkorder/' + orderNo);
+      }
     }
   }
 

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import classnames from 'classnames';
 import { Link } from 'react-router-dom';
 import './footer.less';
 import { Row, Col, Input, Button, notification } from 'antd';
@@ -12,9 +13,9 @@ export default class Footer extends React.Component<{ router: any }, IFooterStat
   }
   public render() {
     const linksGroup = config.FOOTERLINKS.map((group, key) => (
-      <Col span={4} key={key} className="links-group">
+      <Col span={5} key={key} className="links-group">
         {
-          group.map((link, index) => <p key={index} className="item" onClick={this.handleLink.bind(this, link)} data-href={link.href}>{link.text}</p>)
+          group.map((link, index) => <p key={index} className={classnames('item', { nocursor: !link.href })} onClick={this.handleLink.bind(this, link)} data-href={link.href}>{link.text}</p>)
         }
       </Col>
     ))

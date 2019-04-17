@@ -21,7 +21,7 @@ export const ModalScroll = (() => {
         console.warn(e);
       }
     },
-    beforeClose: function() {
+    beforeClose: function () {
       try {
         document.body.style.cssText = "position:initial";
         if (document.scrollingElement) {

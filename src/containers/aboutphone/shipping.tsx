@@ -38,7 +38,7 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
   public componentDidMount() {
     // 判断是否页面需要必备数据，分TBD的情况
     if (!shippingPageValidate()) {
-      this.props.history.push('/sell/account');
+      this.props.history.push('/sell/yourphone/brand');
       return;
     }
 
@@ -80,12 +80,12 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
         this.props.yourphone.addressInfo = { ...this.props.yourphone.addressInfo, ...values, };
 
         // 弹窗检验额外添加
-        if (this.props.hideLayout) {
-          this.props.user.preOrder = {
-            ...this.props.user.preOrder,
-            userEmail: values.userEmail
-          }
+        // if (this.props.hideLayout) {
+        this.props.user.preOrder = {
+          ...this.props.user.preOrder,
+          userEmail: values.userEmail
         }
+        // }
         resolve(true);
       });
     });
@@ -105,7 +105,7 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
       <Form layout="vertical" style={isMobile ? {} : { paddingTop: '40px' }}>
         {/* 在弹窗时才有 */}
         {
-          this.props.hideLayout &&
+          // this.props.hideLayout &&
           <Row>
             <Col {...this.colLayout()}>
               <Form.Item label="Email address">
@@ -212,7 +212,7 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
                     {
                       message: <><Icon type="close-circle" />&nbsp;Please enter a valid zipCode.</>,
                       required: true,
-                      pattern: /\d{5,5}/
+                      pattern: /(\d{5,5})|(0\d{4,4})/
                     }
                   ],
                   validateTrigger: 'onBlur',
@@ -348,11 +348,11 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
     const { setFieldsValue, setFields } = this.props.form;
     const value = e.target.value;
 
-    if (!/\d{5,5}/.test(value)) {
+    if (!/(\d{5,5})|(0\d{4,4})/.test(value)) {
       return;
     }
 
-    await this.props.yourphone.getAmericaState(parseInt(value, 10));
+    await this.props.yourphone.getAmericaState(value);
     if (this.props.yourphone.americaStates && this.props.yourphone.americaStates.state && this.props.yourphone.americaStates.city) {
 
       setFieldsValue({ 'state': this.props.yourphone.americaStates.state });

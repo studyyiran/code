@@ -28,7 +28,7 @@ export default class Conditions extends React.Component<IConditionsProps> {
     // 显示左侧价格模块
     this.props.user.isShowLeftPrice = true;
     if (!conditionPageValidate()) {
-      this.props.history.push('/sell/account');
+      this.props.history.push('/sell/yourphone/brand');
       return;
     }
     // tbd 赛默认选项
@@ -147,7 +147,10 @@ export default class Conditions extends React.Component<IConditionsProps> {
         };
       } catch (error) { console.warn(error, 'in conditions page preOrder') }
 
-
+      let path = '/sell/yourphone/shipping'
+      if (this.props.user.preOrder.appendOrderDetail) {
+        path = '/sell/yourphone/done'
+      }
       // 询价成功，提示用户，有保证金的存在，只存在于PC，因为移动端价格面板在最上面啦
       if (!this.props.common.isMobile) {
         console.log(this.props.yourphone.inquiryDetail)
@@ -157,10 +160,10 @@ export default class Conditions extends React.Component<IConditionsProps> {
           type: 'success',
           seconds: 15,
           update: (seconds) => (<>Your {this.props.yourphone.inquiryDetail!.product.name} Guaranteed Price is ${this.props.yourphone.inquiryDetail!.priceDollar} <br /> <br />This window will be closed after {seconds} seconds.</>),
-          customerOk: () => this.props.history.push('/sell/yourphone/shipping')
+          customerOk: () => this.props.history.push(path)
         });
       } else {
-        this.props.history.push('/sell/yourphone/shipping');
+        this.props.history.push(path);
       }
 
     }

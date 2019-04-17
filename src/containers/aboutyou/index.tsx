@@ -79,7 +79,7 @@ class AboutYou extends React.Component<IAboutYouProps, IAboutYouState> {
       state.help = <><Icon type="close-circle" />&nbsp;Please enter a valid email address</>;
       state.validateStatus = 'error';
     } else {
-      this.props.user.getPreOrderKey(this.state.value);
+      // this.props.user.getPreOrderKey(this.state.value);
       this.props.history.push('/sell/yourphone/brand');
     }
 
