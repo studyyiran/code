@@ -53,7 +53,7 @@ export interface IYourPhoneStore {
   getProductPPVN: () => Promise<boolean>;
   createInquiry: () => Promise<boolean>;
   getInquiryDetail: () => Promise<boolean>;
-  getAmericaState: (zipCode: number) => Promise<boolean>;
+  getAmericaState: (zipCode: string) => Promise<boolean>;
   createOrder: () => Promise<boolean>;
   destory: () => void;
   destoryByAppendOrder: () => void;

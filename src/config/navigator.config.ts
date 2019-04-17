@@ -63,7 +63,7 @@ export default {
   },
   '/sell/yourphone/checkorder': {
     step: 3,
-    mainText: 'All done! Now ship the phone.',
+    mainText: 'All done! Ship within 7 days to secure your offer.',
     subText: 'We will send a confirmation email to ',
     isInCheckOrder: true,
     hasSearch: false,

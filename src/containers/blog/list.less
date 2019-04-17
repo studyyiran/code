@@ -94,6 +94,12 @@
               margin-top:11px;
               font-size:14px;
               line-height:18px;
+              overflow: hidden;
+              /* autoprefixer: off */
+              text-overflow: ellipsis;
+              display: -webkit-box;
+              -webkit-line-clamp: 3;
+              -webkit-box-orient: vertical;
             }
           }
         }
@@ -302,7 +308,7 @@
             p {
               margin-top:.1rem;
               font-size:.1rem;
-              line-height:.11rem;
+              line-height: .12rem;
             }
           }
         }
@@ -317,6 +323,52 @@
             width:3.2rem;
             height:2.1rem;
             margin-top:.1rem;
+          }
+        }
+      }
+    }
+
+    .tag-list-wrapper {
+      padding-top:0 !important;
+      .tag-list-box {
+        border-bottom:1px solid #eaeaea;
+        padding-bottom:0;
+        display: flex;
+        .tag-list {
+          margin-left:-.3rem;
+          flex:1;
+          height:.44rem;
+          overflow: hidden;
+          line-height: .44rem;
+          &.active {
+            height:auto;
+          }
+          .tag {
+            display: inline-block;
+            margin-bottom:0;
+            font-size:.14rem;
+            line-height: .22rem;
+            padding:0 .3rem;
+            color:#9B9B9B;
+            cursor: pointer;
+  
+            &.active {
+              color:#000000;
+            }
+          }
+        }
+        .arrow {
+          width:.16rem;
+          height:.09rem;
+          float:right;
+          position: relative;
+          top:.16rem;
+          transform: rotate(-90deg);
+          transition: transform .5s;
+          cursor: pointer;
+          background: url(../../images/bottom-arrow.png) no-repeat center /100%;
+          &.active {
+            transform: rotate(0);
           }
         }
       }

@@ -212,7 +212,7 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
                     {
                       message: <><Icon type="close-circle" />&nbsp;Please enter a valid zipCode.</>,
                       required: true,
-                      pattern: /\d{5,5}/
+                      pattern: /(\d{5,5})|(0\d{4,4})/
                     }
                   ],
                   validateTrigger: 'onBlur',
@@ -348,11 +348,11 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
     const { setFieldsValue, setFields } = this.props.form;
     const value = e.target.value;
 
-    if (!/\d{5,5}/.test(value)) {
+    if (!/(\d{5,5})|(0\d{4,4})/.test(value)) {
       return;
     }
 
-    await this.props.yourphone.getAmericaState(parseInt(value, 10));
+    await this.props.yourphone.getAmericaState(value);
     if (this.props.yourphone.americaStates && this.props.yourphone.americaStates.state && this.props.yourphone.americaStates.city) {
 
       setFieldsValue({ 'state': this.props.yourphone.americaStates.state });
