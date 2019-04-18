@@ -129,6 +129,7 @@ export default class SellLayout extends React.Component<ISellLayoutProps, ISellL
       }
       this.props.yourphone.destory();
       this.props.yourphone.desoryUnmount();
+      sessionStorage.removeItem('preOrder');
     }
 
   }
