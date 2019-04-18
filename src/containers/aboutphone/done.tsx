@@ -292,7 +292,9 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
           payment: this.props.yourphone.payment,
           paypalInfo: { ...this.props.yourphone.paypal },
           orderDetail: this.props.yourphone.orderDetail ? { ...this.props.yourphone.orderDetail } : undefined,
-          appendOrderDetail: this.props.yourphone.orderDetail ? { ...this.props.yourphone.orderDetail } : null
+        }
+        if (!this.props.user.preOrder.appendOrderDetail) {
+          this.props.user.preOrder.appendOrderDetail = this.props.yourphone.orderDetail ? { ...this.props.yourphone.orderDetail } : null
         }
       } catch (error) { console.warn(error, 'in done page preOrder') }
 
