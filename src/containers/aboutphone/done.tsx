@@ -211,18 +211,33 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
               }
             </div>
             <div className="button-group">
-              <Tooltip title="If you want to place another order with the same information, payment and the same shipping label.">
-                <Button
-                  disabled={!this.state.isChecked}
-                  onClick={this.handleAppend}
-                  className="ship-btn ghost"
-                  type="primary"
-                  size="large"
-                  loading={this.state.loadingAppend}
-                >
-                  PLACE ANOTHER ORDER
+              {
+                this.props.common.isMobile ? (
+                  <Button
+                    disabled={!this.state.isChecked}
+                    onClick={this.handleAppend}
+                    className="ship-btn ghost"
+                    type="primary"
+                    size="large"
+                    loading={this.state.loadingAppend}
+                  >
+                    PLACE ANOTHER ORDER
                 </Button>
-              </Tooltip>
+                ) : (
+                    <Tooltip title="If you want to place another order with the same information, payment and the same shipping label.">
+                      <Button
+                        disabled={!this.state.isChecked}
+                        onClick={this.handleAppend}
+                        className="ship-btn ghost"
+                        type="primary"
+                        size="large"
+                        loading={this.state.loadingAppend}
+                      >
+                        PLACE ANOTHER ORDER
+                      </Button>
+                    </Tooltip>
+                  )
+              }
               <Button
                 disabled={!this.state.isChecked}
                 onClick={this.handleShip}

@@ -49,15 +49,15 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
     }
 
     // 清除相关信息
-    this.props.user.preOrder = {
-      userEmail: '',
-    }
-    this.props.yourphone.destory();
-    sessionStorage.removeItem('preOrder');
+    // this.props.user.preOrder = {
+    //   userEmail: '',
+    // }
+    // this.props.yourphone.destory();
+    // sessionStorage.removeItem('preOrder');
   }
 
   public componentWillUnmount() {
-    this.props.yourphone.desoryUnmount();
+    // this.props.yourphone.desoryUnmount();
   }
 
   public render() {
@@ -69,30 +69,31 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
           <div className="content-wrapper">
             <div className={classnames("order-summary-wrapper", { multiple: allOrdersDetail.length > 1, active: this.state.translateMore })}>
               <p className="main-title">Order Summary</p>
-              {
-                allOrdersDetail.map((detail: IOrderDetail) => {
-                  return (
-                    <div className="summary-wrapper" key={detail.orderNo}>
-                      <p className="sub-title"><span>Order Number</span><em>{detail.orderNo}</em></p>
-                      <div className="content-wrapper">
-                        <div className="info-wrapper">
-                          <div className="info-item">
-                            <span className="label">Model</span>
-                            <p className="content">{detail.orderItem.product.isTBD ? 'Other' : (detail.orderItem.productName)}</p>
+              <div className="summary-wrapper-container">
+                {
+                  allOrdersDetail.map((detail: IOrderDetail) => {
+                    return (
+                      <div className="summary-wrapper" key={detail.orderNo}>
+                        <p className="sub-title"><span>Order Number</span><em>{detail.orderNo}</em></p>
+                        <div className="content-wrapper">
+                          <div className="info-wrapper">
+                            <div className="info-item">
+                              <span className="label">Model</span>
+                              <p className="content">{detail.orderItem.product.isTBD ? 'Other' : (detail.orderItem.productName)}</p>
+                            </div>
+                            <div className="info-item">
+                              <span className="label">Guaranteed Price</span>
+                              <p className="content">{detail.orderItem.product.isTBD ? 'TBD' : `\$${detail.orderItem.amountDollar}`}</p>
+                            </div>
                           </div>
-                          <div className="info-item">
-                            <span className="label">Guaranteed Price</span>
-                            <p className="content">{detail.orderItem.product.isTBD ? 'TBD' : `\$${detail.orderItem.amountDollar}`}</p>
-                          </div>
+
                         </div>
-
                       </div>
-                    </div>
-                  )
-                })
-              }
-
-              {allOrdersDetail.length > 1 && <div className="btn-group" onClick={this.handleTranslateMore}><span>{!!!this.state.translateMore && `${allOrdersDetail.length} Orders in total`}</span><em /></div>}
+                    )
+                  })
+                }
+                {allOrdersDetail.length > 1 && <div className="btn-group" onClick={this.handleTranslateMore}><span>{!!!this.state.translateMore && `${allOrdersDetail.length} Orders in total`}</span><em /></div>}
+              </div>
             </div>
 
             <div className="final-step-wrapper">
