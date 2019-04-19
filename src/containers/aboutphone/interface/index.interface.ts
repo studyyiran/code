@@ -58,7 +58,7 @@ export interface IYourPhoneStore {
   destory: () => void;
   destoryByAppendOrder: () => void;
   desoryUnmount: () => void;
-  appendOrder: (preOrder: Partial<IPreOrder>) => Promise<boolean>;
+  appendOrder: (preOrder: Partial<IPreOrder>, errCallback: () => void) => Promise<boolean>;
   getAllOrders: (orderNo: string, userEmail: string) => Promise<boolean>;
   getOrderDetail: (orderNo: string, userEmail: string) => Promise<boolean>;
 }

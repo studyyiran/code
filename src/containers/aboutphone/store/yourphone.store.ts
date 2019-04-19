@@ -6,7 +6,6 @@ import { action, observable, autorun, computed } from 'mobx';
 import { IYourPhoneStore, ICarrier, IBrands, IAmericaState, IProductModel, IProductPPVN, ITbdInfo, ISubSkuPricePropertyValues } from '../interface/index.interface';
 import { IPreOrder } from '@/store/interface/user.interface';
 import UserStore from '@/store/user';
-// import { noteUserModal } from '@/containers/aboutphone/pageValidate';
 import { IOrderDetail } from '@/containers/order/interface/order.inerface'
 import EmailModal from '@/components/emailModal/index';
 class YourPhone implements IYourPhoneStore {
@@ -305,7 +304,7 @@ class YourPhone implements IYourPhoneStore {
     return true;
   }
 
-  @action public appendOrder = async (preOrder: Partial<IPreOrder>) => {
+  @action public appendOrder = async (preOrder: Partial<IPreOrder>, errCallback: () => void) => {
     const orderParams: IAppendOrderParams = {
       brandId: preOrder.productInfo && preOrder.productInfo.brandId || 0,
       carrier: preOrder.productInfo && preOrder.productInfo.carrier || '',
@@ -320,6 +319,13 @@ class YourPhone implements IYourPhoneStore {
       this.orderDetail = await Api.appendOrder<any>(orderParams, preOrder.appendOrderDetail ? preOrder.appendOrderDetail.orderNo : '');
     } catch (error) {
       console.warn(error, 'in yourphone store createOrder');
+      if (error.code === 110001008) {
+        if (errCallback) {
+          errCallback();
+        }
+        return false;
+      }
+
       EmailModal();
       return false;
     }
