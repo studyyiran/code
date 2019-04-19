@@ -12,6 +12,7 @@ import { donePageValidate } from '@/containers/aboutphone/pageValidate';
 import './done.less';
 import { IDoneProps, IDoneStates, EChangeType, EPayType } from './interface/index.interface';
 import { ModalProps } from 'antd/lib/modal';
+import { noteUserModal } from '@/containers/aboutphone/pageValidate';
 
 @inject('yourphone', 'user', 'common')
 @observer
@@ -291,7 +292,25 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
     // 开始创建订单
     let isOrderCreated = false;
     if (this.props.user.preOrder.appendOrderDetail) {
-      isOrderCreated = await this.props.yourphone.appendOrder(this.props.user.preOrder);
+      isOrderCreated = await this.props.yourphone.appendOrder(this.props.user.preOrder, () => {
+        noteUserModal({
+          title: 'Failed to submit the order!',
+          content: (<>There is something wrong with your order, please try again.<br /> <br />This window will be closed after 10 seconds.</>),
+          type: 'info',
+          seconds: 10,
+          update: (seconds) => (<>There is something wrong with your order, please try again.<br /> <br />This window will be closed after {seconds} seconds.</>),
+          customerOk: () => {
+            // 清除相关信息
+            this.props.user.preOrder = {
+              userEmail: '',
+            }
+            this.props.yourphone.destory();
+            sessionStorage.removeItem('preOrder');
+            this.props.yourphone.desoryUnmount();
+            this.props.history.push('/sell/yourphone/brand')
+          }
+        });
+      });
     } else {
       isOrderCreated = await this.props.yourphone.createOrder();
     }
@@ -331,7 +350,25 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
     // 开始创建订单
     let isOrderCreated = false;
     if (this.props.user.preOrder.appendOrderDetail) {
-      isOrderCreated = await this.props.yourphone.appendOrder(this.props.user.preOrder);
+      isOrderCreated = await this.props.yourphone.appendOrder(this.props.user.preOrder, () => {
+        noteUserModal({
+          title: 'Failed to submit the order!',
+          content: (<>There is something wrong with your order, please try again.<br /> <br />This window will be closed after 10 seconds.</>),
+          type: 'info',
+          seconds: 10,
+          update: (seconds) => (<>There is something wrong with your order, please try again.<br /> <br />This window will be closed after {seconds} seconds.</>),
+          customerOk: () => {
+            // 清除相关信息
+            this.props.user.preOrder = {
+              userEmail: '',
+            }
+            this.props.yourphone.destory();
+            sessionStorage.removeItem('preOrder');
+            this.props.yourphone.desoryUnmount();
+            this.props.history.push('/sell/yourphone/brand')
+          }
+        });
+      });
     } else {
       isOrderCreated = await this.props.yourphone.createOrder();
     }

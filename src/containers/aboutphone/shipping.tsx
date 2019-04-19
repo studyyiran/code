@@ -81,9 +81,11 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
 
         // 弹窗检验额外添加
         // if (this.props.hideLayout) {
-        this.props.user.preOrder = {
-          ...this.props.user.preOrder,
-          userEmail: values.userEmail
+        if (/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,})$/.test(values.userEmail)) {
+          this.props.user.preOrder = {
+            ...this.props.user.preOrder,
+            userEmail: values.userEmail
+          }
         }
         // }
         resolve(true);
