@@ -2,7 +2,7 @@ import router from 'koa-router';
 import koaProxy from 'koa-proxies'
 import send from 'koa-send';
 import fs from 'fs';
-import Axios from 'axios';
+import Axios, { AxiosResponse } from 'axios';
 import * as React from 'react'
 import ReactDOMServer from 'react-dom/server'
 import { matchRoutes, renderRoutes } from 'react-router-config'
@@ -18,6 +18,8 @@ import TITLE from '../src/config/title.config'
 import { getBundles } from 'react-loadable/webpack';
 import stats from '../build/react-loadable.json';
 
+const Router = new router();
+
 // 对请求过来的数据做一个转发，转发到localhost
 Axios.interceptors.request.use((config) => {
   if (!config['isFullUrl']) {
@@ -25,6 +27,15 @@ Axios.interceptors.request.use((config) => {
   }
   return config;
 })
+// Axios.interceptors.response.use((response: AxiosResponse) => {
+//   console.log(response.data);
+//   if (response.data.code === 110000005) {
+//     console.log(1231231231313);
+//     Router.redirect('/notfound', '404', 302);
+//     return Promise.reject(false);
+//   }
+//   return response
+// })
 
 
 const mappingTitle = (template, path, matches) => {
@@ -32,6 +43,9 @@ const mappingTitle = (template, path, matches) => {
     let templateValue = matches[0].route['templateValue'];
     if (templateValue) {
       templateValue = templateValue();
+      if (!templateValue) {
+        return template;
+      }
       template = template.replace(/\<title\>(.*)\<\/title\>/, '<title>' + (templateValue.title || '') + '</title>');
       template = template.replace(/\<meta name=\"keywords\" content=\"\"\>/, '<meta name="keywords" content="' + (templateValue.keywords || '') + '">');
       template = template.replace(/\<meta name=\"description\" content=\"\"\>/, '<meta name="description" content="' + (templateValue.description || '') + '">')
@@ -62,9 +76,6 @@ const generateBundleScripts = (intries) => {
   });
 }
 
-
-
-const Router = new router();
 
 // 转发静态资源的请求
 Router.get('/static/*', async (ctx: any, next: any) => {

@@ -3,6 +3,7 @@ import * as Api from '../api/blog.api';
 import { IBlog, IBlogStore, ITag, IPagination } from '../interface/blog.interface'
 import { IRequestResWithPage } from '@/utils/request.interface';
 
+
 // enum ERobots {
 //   INDEX_FOLLOW = "index,follow",
 //   INDEX_NOFOLLOW = "index,nofollow",
@@ -134,6 +135,10 @@ class Blog implements IBlogStore {
       this.detail = await Api.getPageDetail<IBlog>(slug);
     } catch (e) {
       console.warn(e);
+      // if (e.code === 110000005) {
+      //  // window['__history__'].replace('/notfound');
+      //   // RedirectComponent('/notfound');
+      // }
       return false;
     }
     // this.detail.seoRobots = ERobots[this.detail.seoRobots];

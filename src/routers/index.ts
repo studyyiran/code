@@ -78,6 +78,16 @@ export default [
     ]
   },
   {
+    // 首页
+    component: Loadable({
+      loader: () => import('../containers/notfound'),
+      loading: () => null,
+      modules: ['../containers/notfound'],
+      webpack: () => [require.resolveWeak('../containers/notfound') as number],
+    }),
+    path: '/notfound',
+  },
+  {
     // 单页
     component: Loadable({
       loader: () => import('../containers/blog/detail'),
@@ -91,6 +101,9 @@ export default [
       await store['blog'].getPageDetail(param.slug);
     },
     templateValue() {
+      if (!store['blog'].detail) {
+        return null
+      }
       return {
         title: store['blog'].detail.title,
         keywords: store['blog'].detail.seoKeywords,
