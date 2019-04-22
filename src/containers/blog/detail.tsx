@@ -8,7 +8,9 @@ import * as moment from 'moment-timezone';
 @observer
 export default class BlogDetail extends React.Component<IBlogDetailProps> {
   public async componentDidMount() {
-    if (window['__SERVER_RENDER__INITIALSTATE__'] && window['__SERVER_RENDER__INITIALSTATE__'].blog.detail) {
+    if (window['__SERVER_RENDER__INITIALSTATE__'] && !window['__SERVER_RENDER__INITIALSTATE__'].blog.detail) {
+      window['__SERVER_RENDER__INITIALSTATE__'] = null;
+    } else if (window['__SERVER_RENDER__INITIALSTATE__'] && window['__SERVER_RENDER__INITIALSTATE__'].blog.detail) {
       const initialState = window['__SERVER_RENDER__INITIALSTATE__'];
       this.props.blog.detail = initialState.blog.detail;
       window['__SERVER_RENDER__INITIALSTATE__'] = null;
