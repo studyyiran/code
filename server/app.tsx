@@ -2,7 +2,7 @@ import router from 'koa-router';
 import koaProxy from 'koa-proxies'
 import send from 'koa-send';
 import fs from 'fs';
-import Axios, { AxiosResponse } from 'axios';
+import Axios from 'axios';
 import * as React from 'react'
 import ReactDOMServer from 'react-dom/server'
 import { matchRoutes, renderRoutes } from 'react-router-config'
