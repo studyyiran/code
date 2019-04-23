@@ -82,7 +82,7 @@ export default class Home extends React.Component<ICommonProps, IHomeState> {
             UpTrade helps you sell your phone, so you can get paid <br /> for
             what your device is actually worth.
           </p>
-          <Link to="/sell/account" className="button-link">
+          <Link to="/sell/yourphone/brand" className="button-link">
             <Button type="primary" size="large" className="sell-it-now">
               SELL NOW
             </Button>
@@ -254,7 +254,7 @@ export default class Home extends React.Component<ICommonProps, IHomeState> {
         <div className="section-just">
           <h2>Just Two Steps. Ship and Paid.</h2>
           <p>Quick, easy, and safe. Don’t settle for less.</p>
-          <Link className="button-group" to={"/sell/account"}>
+          <Link className="button-group" to={"/sell/yourphone/brand"}>
             <Button type="primary" size="large" className="sell-it-now">
               SELL NOW
             </Button>

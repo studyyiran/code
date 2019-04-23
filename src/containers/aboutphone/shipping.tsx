@@ -38,7 +38,7 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
   public componentDidMount() {
     // 判断是否页面需要必备数据，分TBD的情况
     if (!shippingPageValidate()) {
-      this.props.history.push('/sell/account');
+      this.props.history.push('/sell/yourphone/brand');
       return;
     }
 
@@ -80,12 +80,14 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
         this.props.yourphone.addressInfo = { ...this.props.yourphone.addressInfo, ...values, };
 
         // 弹窗检验额外添加
-        if (this.props.hideLayout) {
+        // if (this.props.hideLayout) {
+        if (/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,})$/.test(values.userEmail)) {
           this.props.user.preOrder = {
             ...this.props.user.preOrder,
             userEmail: values.userEmail
           }
         }
+        // }
         resolve(true);
       });
     });
@@ -105,7 +107,7 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
       <Form layout="vertical" style={isMobile ? {} : { paddingTop: '40px' }}>
         {/* 在弹窗时才有 */}
         {
-          this.props.hideLayout &&
+          // this.props.hideLayout &&
           <Row>
             <Col {...this.colLayout()}>
               <Form.Item label="Email address">

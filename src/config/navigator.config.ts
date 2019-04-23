@@ -1,21 +1,22 @@
 export default {
-  '/sell/account': {
-    step: 0,
-    mainText: 'About You',
-    subText: 'We just need an email address to send you a shipping label.',
-    hasSearch: false,
-    progress: -1
-  },
+  // '/sell/account': {
+  //   step: 0,
+  //   mainText: 'About You',
+  //   subText: 'We just need an email address to send you a shipping label.',
+  //   hasSearch: false,
+  //   progress: -1
+  // },
   '/sell/yourphone/brand': {
-    step: 1,
+    step: 0,
     mainText: 'What kind of phone do you have？',
     subText: '',
     hasSearch: false,
     progress: 0,
-    isBeforeShipping: true
+    isBeforeShipping: true,
+    showAppendOrder: true
   },
   '/sell/yourphone/carrier': {
-    step: 1,
+    step: 0,
     mainText: 'What phone carrier is your phone?',
     subText: '',
     hasSearch: false,
@@ -23,7 +24,7 @@ export default {
     isBeforeShipping: true
   },
   '/sell/yourphone/model': {
-    step: 1,
+    step: 0,
     mainText: 'Choose your phone model',
     subText: '',
     hasSearch: true,
@@ -31,7 +32,7 @@ export default {
     isBeforeShipping: true
   },
   '/sell/yourphone/condition': {
-    step: 1,
+    step: 0,
     mainText: 'What is the condition of your phone？',
     subText: '',
     hasSearch: false,
@@ -39,7 +40,7 @@ export default {
     isBeforeShipping: true
   },
   '/sell/yourphone/shipping': {
-    step: 2,
+    step: 1,
     mainText: 'Shipping Address',
     subText: 'We use this info on the shipping label so you can mail your phone for free.',
     hasSearch: false,
@@ -47,21 +48,21 @@ export default {
     isBeforeShippingMobile: true
   },
   '/sell/yourphone/payment': {
-    step: 3,
+    step: 2,
     mainText: 'How would you like to be paid',
     subText: 'We’ll send payment to your account, the day your phone arrives at our offices.',
     hasSearch: false,
     progress: -1
   },
   '/sell/yourphone/done': {
-    step: 4,
+    step: 3,
     mainText: 'Please confirm all the details. ',
     subText: 'If everything looks correct, we’ll create a shipping label. You’ll get you paid in no time!',
     hasSearch: false,
     progress: -1
   },
   '/sell/yourphone/checkorder': {
-    step: 4,
+    step: 3,
     mainText: 'All done! Ship within 7 days to secure your offer.',
     subText: 'We will send a confirmation email to ',
     isInCheckOrder: true,
@@ -69,7 +70,7 @@ export default {
     progress: -1
   },
   '/sell/yourphone/other': {
-    step: 1,
+    step: 0,
     mainText: "What's your phone model?",
     subText: '',
     isInCheckOrder: false,

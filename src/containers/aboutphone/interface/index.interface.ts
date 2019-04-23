@@ -2,7 +2,8 @@ import { ModalFuncProps } from 'antd/lib/modal';
 import { FormComponentProps } from 'antd/lib/form';
 import * as React from 'react';
 import * as H from 'history';
-import { IUserStoreNew } from '@/store/interface/user.interface';
+import { RouteComponentProps } from 'react-router'
+import { IUserStoreNew, IPreOrder } from '@/store/interface/user.interface';
 import { ICommonStore } from '@/store/interface/common.interface';
 import { IOrderDetail } from '@/containers/order/interface/order.inerface'
 
@@ -14,6 +15,7 @@ export interface IYourPhoneStore {
   productPPVNS: IProductPPVN[];
   inquiryDetail: IInquiryDetail | null;
   orderDetail: IOrderDetail | null;
+  allOrdersDetail: IOrderDetail[];
   addressInfo: IAddressInfo;
   inquiryKey: string;
   payment: string; // 选择的支付方式
@@ -54,7 +56,11 @@ export interface IYourPhoneStore {
   getAmericaState: (zipCode: string) => Promise<boolean>;
   createOrder: () => Promise<boolean>;
   destory: () => void;
+  destoryByAppendOrder: () => void;
   desoryUnmount: () => void;
+  appendOrder: (preOrder: Partial<IPreOrder>, errCallback: () => void) => Promise<boolean>;
+  getAllOrders: (orderNo: string, userEmail: string) => Promise<boolean>;
+  getOrderDetail: (orderNo: string, userEmail: string) => Promise<boolean>;
 }
 
 export interface ILayOutProps {
@@ -93,7 +99,7 @@ export type IPaymentProps = IBrandsProps & FormComponentProps;
 
 export type IDoneProps = IBrandsProps;
 
-export type ICheckOutProps = IBrandsProps & { user: IUserStoreNew };
+export type ICheckOutProps = IBrandsProps & { user: IUserStoreNew } & RouteComponentProps<{ orderNo: string }>;
 
 export interface IPaymentStates {
   // isLeftOnEdit: boolean;
@@ -104,14 +110,14 @@ export interface IDoneStates {
   isChecked: boolean;
   showEditModal: boolean;
   pageType: 'shipping' | 'payment' | 'condition' | '';
-  loading: boolean
+  loadingComplete: boolean,
+  loadingAppend: boolean
 }
 
 export interface ICheckOutStates {
-  brand: number;
-  brandText: string[];
-  detailText: string[];
-  payText: object;
+  brandText: React.ReactNode;
+  detailText: (label: React.ReactNode) => React.ReactNode;
+  translateMore: boolean;
 }
 
 export interface ICarrier {
@@ -181,6 +187,7 @@ export interface INavigatorObj {
   progress: number; // 底部导航, 值为-1表示不需要展示
   isInCheckOrder?: boolean;
   showNext?: boolean; // 是否强制显示next 按钮（跳过step 和 progress 判断）
+  showAppendOrder: boolean
 }
 
 export interface IQueryParams {
@@ -289,4 +296,11 @@ export interface ITbdInfo {
   properties: string[],
   storage: string,
   donate: boolean
+}
+
+export interface IAppendOrderParams {
+  brandId: number,
+  carrier: string,
+  inquiryKey: string,
+  tbdInfo?: ITbdInfo,
 }

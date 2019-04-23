@@ -3,16 +3,18 @@ import { observer } from 'mobx-react';
 import classnames from 'classnames';
 import './headerwithsearch.less';
 import config from '@/config';
-import { Input } from 'antd';
+import { Input, Tooltip } from 'antd';
 import { INavigatorObj, IProductModel } from '@/containers/aboutphone/interface/index.interface';
 import yourphoneStore from '@/containers/aboutphone/store/yourphone.store';
 import userStore from '@/store/user';
 import EventHandler from '@/utils/event';
-
+import Clipboard from 'clipboard';
 interface IStates {
   navigatorObj: INavigatorObj | null;
   value: string,
-  searchList: IProductModel[]
+  searchList: IProductModel[],
+  copyMessage: string,
+  copyVisible: boolean,
 }
 // let timer: number = 0;
 @observer
@@ -21,8 +23,12 @@ export default class BrandHeader extends React.Component<{ userEmail?: string },
   public readonly state: Readonly<IStates> = {
     navigatorObj: null,
     value: '',
-    searchList: []
+    searchList: [],
+    copyMessage: 'Successfully cpoyed',
+    copyVisible: false
   }
+
+  private copyObj: null | Clipboard = null
 
   public componentDidMount() {
     const navigator = config.NAVIGATOR;
@@ -32,6 +38,40 @@ export default class BrandHeader extends React.Component<{ userEmail?: string },
     // 注册全局点击事件，以便点击其他区域时，隐藏展开的内容
     EventHandler.add(this.globalClick);
 
+    this.copyObj = new Clipboard('#copy-btn');
+
+    this.copyObj.on('success', () => {
+      this.setState({
+        copyMessage: 'Successfully copyed',
+        copyVisible: true
+      })
+
+      setTimeout(() => {
+        this.setState({
+          copyVisible: false
+        })
+      }, 3000)
+    })
+
+    this.copyObj.on('error', () => {
+      this.setState({
+        copyMessage: 'Failed copy',
+        copyVisible: true
+      })
+
+      setTimeout(() => {
+        this.setState({
+          copyVisible: false
+        })
+      }, 3000)
+    })
+  }
+
+  public componentWillUnmount() {
+    if (this.copyObj) {
+      this.copyObj.destroy();
+      this.copyObj = null;
+    }
   }
 
   public onMappingText = (navigatorKey: string[], navigator: object) => {
@@ -55,9 +95,22 @@ export default class BrandHeader extends React.Component<{ userEmail?: string },
     if (navigatorObj.isInCheckOrder) {
       extraText = userStore.preOrder.userEmail ? userStore.preOrder.userEmail : (this.props.userEmail || '');
     }
+    // todo 判断逻辑
+    const showAppendOrder = navigatorObj.showAppendOrder && userStore.preOrder.appendOrderDetail;
     return (
-      <div className={classnames('comp-brand-header-container', { multiple: navigatorObj.subText })}>
-        <div className="left-wrapper">
+      <div className={classnames('comp-brand-header-container', { multiple: navigatorObj.subText || showAppendOrder })}>
+        {
+          showAppendOrder && (
+            <div className="append-order">
+              <img src={require('@/images/yourphone/success.png')} style={{ width: 14 }} />
+              <span>Order placed successfully! Order number {yourphoneStore.orderDetail && yourphoneStore.orderDetail.orderNo}</span>
+              <Tooltip placement="right" title={this.state.copyMessage} visible={this.state.copyVisible}>
+                <span id="copy-btn" data-clipboard-text={yourphoneStore.orderDetail && yourphoneStore.orderDetail.orderNo}>Copy</span>
+              </Tooltip>
+            </div>
+          )
+        }
+        <div className={classnames('left-wrapper', { showAppendOrder: showAppendOrder })}>
           <p className="main-text">{navigatorObj.mainText}</p>
           {
             navigatorObj.subText && <p className="sub-text">{`${navigatorObj.subText} ${extraText}`}</p>
