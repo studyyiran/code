@@ -158,6 +158,7 @@ export interface IOrderInspected {
     name: string;
     isTBD: boolean;
   };
+  notice: string;
 }
 /**
  * 询价数据

@@ -13,6 +13,9 @@ export default class LayoutIndex extends React.Component {
       history: PropTypes.object.isRequired
     }).isRequired
   }
+  public readonly state = {
+    showMobileFooter: true
+  }
 
   public componentDidMount() {
     // if (getQueryString('origin') === 'mail') {
@@ -48,6 +51,13 @@ export default class LayoutIndex extends React.Component {
   }
 
   public onMappingTitles = (titlesKey: string[], titles: object) => {
+    // 处理 m 版是否要显示 footer，/sell 路由下不用显示
+    if (/\/sell\//.test(window.location.href)) {
+      this.setState({
+        showMobileFooter: false
+      })
+    }
+
     // 得到所有和当前路由匹配的数组
     const arr = titlesKey.filter(v => new RegExp(v).test(this.context.router.history.location.pathname));
     // 设置title
@@ -65,7 +75,7 @@ export default class LayoutIndex extends React.Component {
         <div className="layout-content">
           {this.props.children}
         </div>
-        <FooterHoc router={this.context.router} />
+        <FooterHoc router={this.context.router} showMobileFooter={this.state.showMobileFooter} />
       </div>
     );
   }

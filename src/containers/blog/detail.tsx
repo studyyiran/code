@@ -3,7 +3,7 @@ import { inject, observer } from 'mobx-react'
 import { IBlogDetailProps } from './interface/blog.interface';
 import './bolg.less';
 import * as moment from 'moment-timezone';
-
+import { shareComponent } from '@/utils/function'
 @inject('blog')
 @observer
 export default class BlogDetail extends React.Component<IBlogDetailProps> {
@@ -29,9 +29,12 @@ export default class BlogDetail extends React.Component<IBlogDetailProps> {
         console.warn(e);
       }
     }
+
+    shareComponent.show();
   }
   public componentWillUnmount() {
     this.props.blog.detail = null;
+    shareComponent.hide();
   }
   public render() {
     const detail = this.props.blog.detail;

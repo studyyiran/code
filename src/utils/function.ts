@@ -112,3 +112,24 @@ export const formatNumberFixTwo = (n: number) =>
 export const isMobile = () => {
   return true;
 };
+
+export const shareComponent = {
+  show: () => {
+    const el: HTMLDivElement | null = document.querySelector('.addthis-smartlayers-desktop');
+    if (!el) {
+      setTimeout(() => {
+        shareComponent.show();
+      }, 1000)
+      return;
+    }
+    if (el) {
+      el.style.display = 'block';
+    }
+  },
+  hide: () => {
+    const el: HTMLDivElement | null = document.querySelector('.addthis-smartlayers-desktop');
+    if (el) {
+      el.style.display = 'none';
+    }
+  }
+}

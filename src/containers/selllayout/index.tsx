@@ -143,10 +143,12 @@ export default class SellLayout extends React.Component<ISellLayoutProps, ISellL
     return (
       <div className="page-sell-layout-container">
         <div className="sell-layout-left">
-          <LeftSide
-            stepIndex={this.state.stepIndex}
-            isMobile={this.props.common.isMobile}
-          />
+          {
+            !this.props.common.isMobile && <LeftSide
+              stepIndex={this.state.stepIndex}
+              isMobile={this.props.common.isMobile}
+            />
+          }
           {
             this.props.common.isMobile
               ? (<GuaranteedPriceMobile price={price} isTBD={this.props.yourphone.isTBD} user={this.props.user} isBeforeShipping={this.props.user.isShowLeftPriceMobile} />)
