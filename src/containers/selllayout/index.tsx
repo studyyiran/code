@@ -43,6 +43,9 @@ export default class SellLayout extends React.Component<ISellLayoutProps, ISellL
       if (this.props.user.preOrder.payment) {
         this.props.yourphone.payment = this.props.user.preOrder.payment;
       }
+      if (this.props.user.preOrder.expressCarrier) {
+        this.props.yourphone.expressCarrier = this.props.user.preOrder.expressCarrier;
+      }
 
       if (this.props.user.preOrder.checkInfo) {
         this.props.yourphone.echeck = this.props.user.preOrder.checkInfo;
@@ -50,10 +53,6 @@ export default class SellLayout extends React.Component<ISellLayoutProps, ISellL
 
       if (this.props.user.preOrder.paypalInfo) {
         this.props.yourphone.paypal = this.props.user.preOrder.paypalInfo;
-      }
-
-      if (this.props.user.preOrder.orderDetail) {
-        this.props.yourphone.orderDetail = this.props.user.preOrder.orderDetail;
       }
 
       // 有关机型的 

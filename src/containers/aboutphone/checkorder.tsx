@@ -6,9 +6,10 @@ import config from '@/config';
 import Layout from '@/containers/aboutphone/layout';
 import './checkorder.less';
 import { Button } from 'antd';
-import { ICheckOutProps, ICheckOutStates } from './interface/index.interface';
+import { ICheckOutProps, ICheckOutStates, EBrandType, EShipmentType } from './interface/index.interface';
 import { checkOrderPageValidate } from '@/containers/aboutphone/pageValidate';
 import { IOrderDetail } from '../order/interface/order.inerface';
+import { noteUserModal } from '@/containers/aboutphone/pageValidate';
 
 @inject('yourphone', 'user', 'common')
 @observer
@@ -16,22 +17,40 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
   public static readonly displayName: string = '订单完成页面';
 
   public readonly state: Readonly<ICheckOutStates> = {
-    brandText: (
-      <>
-        <p>Remove your SIM Card</p>
-        <p>Make sure to wipe your device of all personal information</p>
-        <p>Pack your device in a box with protective packaging material for shipment</p>
-      </>),
-
-    detailText: (label: React.ReactNode) => (
-      <>
-        <p>Print out your free shipping label</p>
-        <small>* If you don't have a printer, you can go to Fedex location to print it according to the following tracking number</small>
-        {label}
-        <p>Take your package to your local FedEx location</p>
-      </>
-    ),
-    translateMore: false
+    brandText: (type: number) => {
+      switch (type) {
+        case EBrandType.IPHONE:
+          return (
+            <>
+              <p><strong>Disable find my iPhone and remove your SIM Card</strong></p>
+              <span className="text">Make sure to wipe your device of all personal information</span>
+              <Link to="/how-to-factory-reset-iphone" target="__blank" className="tips">Read our helpful intructions for more detail</Link>
+            </>
+          )
+          break;
+        case EBrandType.ANDROID:
+          return (
+            <>
+              <p><strong>Sign out of your Google account and remove your SIM Card</strong></p>
+              <span className="text">Make sure to wipe your device of all personal information</span>
+              <Link to="/how-to-factory-reset-android-phone" target="__blank" className="tips">Read our helpful intructions for more detail</Link>
+            </>
+          )
+          break;
+        case EBrandType.ALL:
+          return (
+            <>
+              <p><strong>iOS: Disable find my iPhone and remove your SIM Card</strong>&nbsp;&nbsp;&nbsp;&nbsp;<Link style={{ display: 'inline' }} to="/how-to-factory-reset-iphone" target="__blank" className="tips">More detail</Link></p>
+              <p><strong>Android: Sign out of your Google account and remove your SIM Card</strong>&nbsp;&nbsp;&nbsp;&nbsp;<Link style={{ display: 'inline' }} to="/how-to-factory-reset-iphone" target="__blank" className="tips">More detail</Link></p>
+              <span className="text">Pack your device in a box with protective packaging material for shipment</span>
+            </>
+          )
+        default:
+          return null;
+      }
+    },
+    translateMore: false,
+    checkboxType: true
   }
 
   public componentDidMount() {
@@ -61,7 +80,7 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
   }
 
   public render() {
-    const { activeBrandsId, orderDetail, allOrdersDetail } = this.props.yourphone; // 选中的品牌， 苹果为52
+    const { orderDetail, allOrdersDetail } = this.props.yourphone; // 选中的品牌， 苹果为52
 
     return (
       <div className="page-checkorder-container">
@@ -101,16 +120,39 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
               <div className="step">
                 <p className="name">Reset Your Phone</p>
                 <div className="detail" >
-                  {this.state.brandText}
+                  {this.state.brandText(this.props.yourphone.checkOrderStepType)}
                 </div>
-                <Link to={activeBrandsId === 52 ? '/how-to-factory-reset-iphone' : '/how-to-factory-reset-android-phone'} className="tips" target="_blank">Read our helpful instructions for more details</Link>
               </div>
               <div className="step">
-                <p className="name">Print Shipping Label and Ship within 7 days</p>
+                <p className="name">Print Shipping Label</p>
                 <div className="detail">
-                  {this.state.detailText(this.labelRender())}
+                  <div className={classnames('checkbox-wrapper', { active: this.state.checkboxType })}>
+                    <div className="checkbox" onClick={this.handleTranslateCheckbox.bind(this, true)} />
+                    <div className="content">
+                      <p><strong>Use my own box and print shipping label</strong></p>
+                      <span className="text">You can leave your package in your mailbox or find the closest location</span>
+                      {
+                        orderDetail && orderDetail.shippoTransaction.carrier === EShipmentType.FEDEX && <Link to={config.DEFAULT.FedExUrl} target="__blank" className="tips">Find the closest FedEx location</Link>
+                      }
+
+                      {
+                        orderDetail && orderDetail.shippoTransaction.carrier === EShipmentType.USPS && <Link to={config.DEFAULT.USPSUrl} target="__blank" className="tips">Find the closest USPS location</Link>
+                      }
+
+                    </div>
+                    <a target="__blank" href={orderDetail && this.state.checkboxType ? orderDetail.shippoTransaction.ext.labelUrl : 'javascript:;'}>
+                      <Button type="primary" className="checkbox-button" disabled={!this.state.checkboxType}>PRINT</Button>
+                    </a>
+                  </div>
+                  <div className={classnames('checkbox-wrapper', { active: !this.state.checkboxType })}>
+                    <div className="checkbox" onClick={this.handleTranslateCheckbox.bind(this, false)} />
+                    <div className="content">
+                      <p>Send me a box and shipping Label</p>
+                      <span className="text">Help us reduce waste and only select if you don't have a spare time</span>
+                    </div>
+                    <Button type="primary" className="checkbox-button" disabled={this.state.checkboxType} onClick={this.handleSendBox}>SEND BOX</Button>
+                  </div>
                 </div>
-                <a href={config.DEFAULT.FedExUrl} target="__blank" className="tips">How to find the local FedEx location</a>
               </div>
             </div>
 
@@ -120,25 +162,34 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
     )
   }
 
+  private handleSendBox = async () => {
+    const detail = this.props.yourphone.orderDetail;
+    if (!detail) {
+      return null;
+    }
+    const result = await this.props.yourphone.sendBox(detail.orderNo, detail.userEmail);
+
+    if (result) {
+      noteUserModal({
+        title: 'Thanks! A box will be sent to you.',
+        content: (<><br /> <br />This window will be closed after 10 seconds.</>),
+        type: 'success',
+        seconds: 10,
+        update: (seconds) => (<><br /> <br />This window will be closed after {seconds} seconds.</>)
+      });
+    }
+    return true;
+  }
+
+  private handleTranslateCheckbox = (type: boolean) => {
+    this.setState({
+      checkboxType: type
+    })
+  }
+
   private handleTranslateMore = () => {
     this.setState({
       translateMore: !this.state.translateMore
     })
-  }
-
-  private labelRender = () => {
-    const { orderDetail } = this.props.yourphone; // 选中的品牌， 苹果为52
-    return (
-      <div className="shipping-label-wrapper">
-        <div className="left">
-          <span>Tracking Number</span>
-          <span>{orderDetail && orderDetail.shippoTransaction.trackingNumber}</span>
-        </div>
-        <div className="button-group">
-          <a target="__blank" href={orderDetail ? '/up-api/up-trade-it/api/orders/download-label?code=' + orderDetail.downloadCode : 'javascript:;'}><Button type="primary" ghost={true} size="small">DOWNLOAD</Button></a>
-          <a target="__blank" href={orderDetail ? orderDetail.shippoTransaction.ext.labelUrl : 'javascript:;'}><Button type="primary" size="small">PRINT</Button></a>
-        </div>
-      </div>
-    )
   }
 }

@@ -27,6 +27,7 @@ export interface IYourPhoneStore {
     lastName: string;
     email: string;
   }
+  expressCarrier: string;
   activeBrandsId: number;
   oldActiveBrandsId: number;
   activeBrandsName: string;
@@ -46,6 +47,7 @@ export interface IYourPhoneStore {
   isRightOnEdit: boolean;
   isPaymentFormFilled: boolean;
   tbdInfo: ITbdInfo;
+  checkOrderStepType: number;
   getBrandsByCid: (categoryId?: number) => Promise<boolean>;
   getCarrier: () => Promise<boolean>;
   getProductsList: (keyword?: string) => Promise<boolean>;
@@ -61,6 +63,7 @@ export interface IYourPhoneStore {
   appendOrder: (preOrder: Partial<IPreOrder>, errCallback: () => void) => Promise<boolean>;
   getAllOrders: (orderNo: string, userEmail: string) => Promise<boolean>;
   getOrderDetail: (orderNo: string, userEmail: string) => Promise<boolean>;
+  sendBox: (orderNo: string, userEmail: string) => Promise<boolean>;
 }
 
 export interface ILayOutProps {
@@ -115,9 +118,9 @@ export interface IDoneStates {
 }
 
 export interface ICheckOutStates {
-  brandText: React.ReactNode;
-  detailText: (label: React.ReactNode) => React.ReactNode;
+  brandText: (type: number) => React.ReactNode;
   translateMore: boolean;
+  checkboxType: boolean;
 }
 
 export interface ICarrier {
@@ -254,12 +257,18 @@ export enum EChangeType {
 
 export enum EBrandType {
   IPHONE = 0,
-  ANDROID = 1
+  ANDROID = 1,
+  ALL = 2,
 }
 
 export enum EPayType {
   PAYPAL = 'PAYPAL',
   ECHECK = 'CHECK'
+}
+
+export enum EShipmentType {
+  FEDEX = 'FEDEX',
+  USPS = 'USPS'
 }
 
 export interface IBreadCrumb {
@@ -271,7 +280,8 @@ export interface IBreadCrumb {
 
 export interface IShippingState {
   help: string,
-  validateStatus: string | undefined
+  validateStatus: string | undefined,
+  isLoadingZipCode: boolean
 }
 
 export interface INoteUserModalProps extends ModalFuncProps {

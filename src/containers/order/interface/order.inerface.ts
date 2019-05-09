@@ -157,6 +157,7 @@ export interface IOrderInspected {
     id: string;
     name: string;
     isTBD: boolean;
+    isIOS: boolean;
   };
   notice: string;
 }

@@ -97,6 +97,15 @@ export default [
         path: '/sell/yourphone/checkorder/:orderNo'
       },
       {
+        component: Loadable({
+          loader: () => import('../containers/aboutphone/shipment'),
+          loading: () => null,
+          modules: ['../containers/aboutphone/shipment'],
+          webpack: () => [require.resolveWeak('../containers/aboutphone/shipment') as number],
+        }),
+        path: '/sell/yourphone/shipment'
+      },
+      {
         component: redirectComponent('/notfound'),
         path: '/sell/:any',
       }

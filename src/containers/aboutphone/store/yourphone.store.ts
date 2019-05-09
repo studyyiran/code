@@ -30,6 +30,8 @@ class YourPhone implements IYourPhoneStore {
     zipCode: ''
   };
 
+  @observable public expressCarrier: string = '';
+
   // paypal和echeck的信息有可能和contact information不同
   @observable public payment: string = ''; // 选择的支付方式, 必须为PAYPAL 或 CHECK，否则无法下一步
   @observable public paypal: IYourPhoneStore['paypal'] = {
@@ -118,6 +120,26 @@ class YourPhone implements IYourPhoneStore {
       return true;
     }
     return false;
+  }
+
+  @computed get checkOrderStepType() {
+    if (this.allOrdersDetail.length > 1) {
+      let arr: number[] = [];
+      for (const item of this.allOrdersDetail) {
+        arr.push(this.getOrderBrandType(item));
+        arr = [...new Set(arr)];
+        if (arr.length === 2) {
+          return 2;
+        }
+        return arr[0];
+      }
+    }
+    if (!this.orderDetail) {
+      return 0;
+    }
+
+    return this.getOrderBrandType(this.orderDetail);
+
   }
 
 
@@ -265,7 +287,8 @@ class YourPhone implements IYourPhoneStore {
       payment: this.payment,
       paypalInfo: this.paypal,
       userEmail: UserStore.preOrder.userEmail!,
-      brandId: UserStore.preOrder.productInfo ? UserStore.preOrder.productInfo.brandId : undefined
+      brandId: UserStore.preOrder.productInfo ? UserStore.preOrder.productInfo.brandId : undefined,
+      expressCarrier: this.expressCarrier
     }
 
     if (this.isTBD) {
@@ -367,6 +390,14 @@ class YourPhone implements IYourPhoneStore {
     return true;
   }
 
+  @action public sendBox = async (orderNo: string, email: string) => {
+    try {
+      return await Api.sendBox<boolean>(orderNo, email);
+    } catch (e) {
+      return false;
+    }
+  }
+
   @action public desoryUnmount = () => {
     this.payment = '';
     this.activeBrandsId = -1;
@@ -431,6 +462,13 @@ class YourPhone implements IYourPhoneStore {
     this.activeModelId = -1;
     this.activeModelName = '';
     this.activeConditions = {};
+  }
+
+  private getOrderBrandType(item: IOrderDetail) {
+    if (item.orderItem.product.isIOS) {
+      return 0;
+    }
+    return 1;
   }
 }
 

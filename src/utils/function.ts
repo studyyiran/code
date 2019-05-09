@@ -133,3 +133,8 @@ export const shareComponent = {
     }
   }
 }
+
+export const addDate = (date: Date, days: number = 1) => {
+  date.setDate(date.getDate() + days);
+  return date;
+}

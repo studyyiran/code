@@ -123,7 +123,7 @@ export const getAllOrders = <T>(orderNo: string, userEmail: string) => {
   return Request<T>(opts, []);
 }
 
-export function getOrderDetail<T>(orderNo: string, userEmail: string): Promise<T> {
+export const getOrderDetail = <T>(orderNo: string, userEmail: string): Promise<T> => {
   const opts: IOpts = {
     method: "POST",
     url: `/orders/check`,
@@ -132,6 +132,18 @@ export function getOrderDetail<T>(orderNo: string, userEmail: string): Promise<T
       orderNo
     },
     loading: false
+  };
+  return Request<T>(opts, []);
+}
+
+export const sendBox = <T>(orderNo: string, userEmail: string) => {
+  const opts: IOpts = {
+    url: `/orders/${orderNo}/send-me-a-box`,
+    method: 'POST',
+    params: {
+      orderNo,
+      userEmail
+    }
   };
   return Request<T>(opts, []);
 }

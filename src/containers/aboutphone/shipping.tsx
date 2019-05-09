@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
-import { Form, Col, Row, Input, Icon } from 'antd';
+import { Form, Col, Row, Input } from 'antd';
 import Layout from '@/containers/aboutphone/layout';
 import './shipping.less';
 import { IShippingProps, IShippingState } from './interface/index.interface';
@@ -32,7 +32,8 @@ const onValuesChange = (props: any, changedValues: any, allValues: any) => {
 class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
   public state = {
     help: 'We’ll only call you if there is an issue with your sale.',
-    validateStatus: undefined
+    validateStatus: undefined,
+    isLoadingZipCode: true
   }
 
   public componentDidMount() {
@@ -69,7 +70,7 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
         }
 
         if (!values.state) {
-          const result = await this.handleZipCodeBlur({ target: { value: values.zipCode } } as React.ChangeEvent<HTMLInputElement>);
+          const result = await this.handleZipCodeChange({ target: { value: values.zipCode } } as React.ChangeEvent<HTMLInputElement>);
           if (result) {
             reject(1)
           } else {
@@ -212,7 +213,7 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
                 getFieldDecorator('zipCode', {
                   rules: [
                     {
-                      message: <><Icon type="close-circle" />&nbsp;Please enter a valid zipCode.</>,
+                      message: <>&nbsp;Please enter a valid zipCode.</>,
                       required: true,
                       pattern: /(\d{5,5})|(0\d{4,4})/
                     }
@@ -220,24 +221,11 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
                   validateTrigger: 'onBlur',
                   initialValue: addressInfo.zipCode,
                 })(
-                  <Input onChange={this.handleZipCodeChange} maxLength={5} onBlur={this.handleZipCodeBlur} />
-                )
-              }
-            </Form.Item>
-          </Col>
-          <Col {...this.colLayout(7)}>
-            <Form.Item label="State">
-              {
-                getFieldDecorator('state', {
-                  rules: [
-                    {
-                      message: "Please enter a valid state.",
-                      whitespace: true
-                    }
-                  ],
-                  initialValue: addressInfo.state,
-                })(
-                  <Input disabled={true} />
+                  <Input
+                    onChange={this.handleZipCodeChange}
+                    maxLength={5}
+                    onBlur={this.handleZipCodeBlur}
+                  />
                 )
               }
             </Form.Item>
@@ -255,7 +243,24 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
                   ],
                   initialValue: addressInfo.city
                 })(
-                  <Input />
+                  <Input disabled={this.state.isLoadingZipCode} />
+                )
+              }
+            </Form.Item>
+          </Col>
+          <Col {...this.colLayout(7)}>
+            <Form.Item label="State">
+              {
+                getFieldDecorator('state', {
+                  rules: [
+                    {
+                      message: "Please enter a valid state.",
+                      whitespace: true
+                    }
+                  ],
+                  initialValue: addressInfo.state,
+                })(
+                  <Input disabled={true} />
                 )
               }
             </Form.Item>
@@ -330,7 +335,8 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
 
     const state: IShippingState = {
       help: 'We’ll only call you if there is an issue with your sale.',
-      validateStatus: undefined
+      validateStatus: undefined,
+      isLoadingZipCode: this.state.isLoadingZipCode
     }
 
     if (!value) {
@@ -346,28 +352,20 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
     this.setState(state);
   }
   // 失去焦点的时候判断下否能拉取接口，全手动处理
-  private handleZipCodeBlur = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { setFieldsValue, setFields } = this.props.form;
-    const value = e.target.value;
-
-    if (!/(\d{5,5})|(0\d{4,4})/.test(value)) {
-      return;
-    }
-
-    await this.props.yourphone.getAmericaState(value);
-    if (this.props.yourphone.americaStates && this.props.yourphone.americaStates.state && this.props.yourphone.americaStates.city) {
-
-      setFieldsValue({ 'state': this.props.yourphone.americaStates.state });
-      setFieldsValue({ 'city': this.props.yourphone.americaStates.city });
-      return true
-    } else {
-      setFields({
-        'zipCode': {
-          value: value,
-          errors: [new Error('Please enter a valid zipCode')]
-        }
+  private handleZipCodeBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { getFieldError, setFields } = this.props.form;
+    const err = getFieldError('zipCode') ? getFieldError('zipCode')[0] as string : false;
+    console.log(err)
+    if (err) {
+      const value = e.target.value;
+      setTimeout(() => {
+        setFields({
+          'zipCode': {
+            value: value,
+            errors: [new Error(err)]
+          }
+        })
       })
-      return false
     }
   }
 
@@ -403,13 +401,50 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
     }
   }
 
-  private handleZipCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { setFieldsValue } = this.props.form;
+  private handleZipCodeChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { setFieldsValue, setFields } = this.props.form;
+    const value = e.target.value;
+
+    if (!/(\d{5,5})|(0\d{4,4})/.test(value)) {
+      return;
+    }
+    this.setState({
+      isLoadingZipCode: true
+    })
+    await this.props.yourphone.getAmericaState(value);
+
+    this.setState({
+      isLoadingZipCode: false
+    })
+
+    if (this.props.yourphone.americaStates && this.props.yourphone.americaStates.state && this.props.yourphone.americaStates.city) {
+
+      setFieldsValue({ 'state': this.props.yourphone.americaStates.state });
+      setFieldsValue({ 'city': this.props.yourphone.americaStates.city });
+      setFields({
+        'zipCode': {
+          value: value,
+          errors: []
+        }
+      })
+      return true
+    } else {
+      setFieldsValue({ 'state': '' });
+      setFieldsValue({ 'city': '' });
+      setFields({
+        'zipCode': {
+          value: value,
+          errors: [new Error('Please enter a valid zipCode')]
+        }
+      })
+      return false
+    }
+
     // const value = e.target.value;
 
     // if (!value) {
-    setFieldsValue({ 'state': '' });
-    setFieldsValue({ 'city': '' });
+    // setFieldsValue({ 'state': '' });
+    // setFieldsValue({ 'city': '' });
     // }
   }
 }
