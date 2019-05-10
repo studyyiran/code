@@ -8,7 +8,6 @@ import App from './app';
 import { JSDOM } from 'jsdom'
 import rootPath = require('app-root-path').path;
 import Loadable from 'react-loadable';
-import sendDingTalkMessage from './lib/sendDingtalk';
 
 
 const app = new Koa();
@@ -29,6 +28,5 @@ const port: any = process.env.PORT || '3006';
 Loadable.preloadAll().then(() => {
   app.listen(port, () => {
     console.log('listen on:' + port);
-    sendDingTalkMessage(true);
   });
 })

@@ -2,7 +2,7 @@ import Request from 'request';
 import CONFIG from '../config';
 import * as moment from 'moment'
 
-const options = (isSuccess: boolean) => {
+const options = (isSuccess: boolean, isStart: boolean, err?: any) => {
   return {
     url: CONFIG.dingTalkHook,
     headers: {
@@ -16,9 +16,9 @@ const options = (isSuccess: boolean) => {
         "title": 'NodeJS定时任务',
         "text": "#### 美国BMB Sitemap 生成" + (isSuccess ? "成功" : "失败") + "\n\n" +
           "> 时间：" + moment(new Date()).format('YYYY-MM-DD HH:mm:ss') + "\n\n" +
-          "> 部署启动时由PM2进程(" + (process.env.NODE_APP_INSTANCE || "本机") + ")生成\n\n" +
+          "> " + (isStart ? "部署启动时" : "定时任务") + "由PM2进程(" + (process.env.NODE_APP_INSTANCE || "本机") + ")生成\n\n" +
           "> 下次生成时间：" + moment(addHours(new Date(), 6)).format('YYYY-MM-DD HH:mm:ss') + "\n\n" +
-          "> ###### [查看sitemap](http://uptradeit.com/sitemap.xml) \n\n"
+          (err ? ("> " + JSON.stringify(err)) : "> ###### [查看sitemap](http://uptradeit.com/sitemap.xml)")
       }
     }
   }
@@ -30,14 +30,10 @@ const addHours = (date: Date, hours: number = 1) => {
 }
 
 
-export default (isSuccess: boolean) => {
-  Request(options(isSuccess), (err, request, body) => {
+export default (isSuccess: boolean, isStart: boolean, err?: any) => {
+  Request(options(isSuccess, isStart, err), (err, request, body) => {
     if (err) {
-      console.log(err);
       return;
     }
-
-    console.log(request)
-    console.log(body);
   });
 }

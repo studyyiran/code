@@ -7,7 +7,7 @@ const app = new Koa();
 
 var curl = () => {
   const options = {
-    url: 'https://oapi.dingtalk.com/robot/send?access_token=9586e21e95d59e2fc3579d27997450694fcaaa0b10da01a4f0cd73ccfd68f456',
+    url: 'https://oapi.dingtalk.com/robot/send?access_token=0ec3135911e7572e520a1a13aede568fdfb75927e247f3a124bca2af7c79b3f6',
     headers: {
       "Content-Type": "application/json"
     },
