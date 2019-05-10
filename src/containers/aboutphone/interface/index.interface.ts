@@ -48,6 +48,8 @@ export interface IYourPhoneStore {
   isPaymentFormFilled: boolean;
   tbdInfo: ITbdInfo;
   checkOrderStepType: number;
+  USPSNearStores: INearStore | null;
+  FedExNearStores: INearStore | null;
   getBrandsByCid: (categoryId?: number) => Promise<boolean>;
   getCarrier: () => Promise<boolean>;
   getProductsList: (keyword?: string) => Promise<boolean>;
@@ -64,6 +66,12 @@ export interface IYourPhoneStore {
   getAllOrders: (orderNo: string, userEmail: string) => Promise<boolean>;
   getOrderDetail: (orderNo: string, userEmail: string) => Promise<boolean>;
   sendBox: (orderNo: string, userEmail: string) => Promise<boolean>;
+  getNearExpressStores: () => Promise<boolean>;
+}
+
+export interface INearStore {
+  name: string;
+  vicinity: string;
 }
 
 export interface ILayOutProps {

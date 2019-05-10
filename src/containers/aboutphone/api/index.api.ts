@@ -147,3 +147,15 @@ export const sendBox = <T>(orderNo: string, userEmail: string) => {
   };
   return Request<T>(opts, []);
 }
+
+export const getNearExpressStores = <T>(address: string, carrier: string, mock: boolean) => {
+  const opts: IOpts = {
+    url: `/google-maps/nearby-express-stores`,
+    params: {
+      address,
+      carrier,
+      mock
+    }
+  };
+  return Request<T>(opts, []);
+}

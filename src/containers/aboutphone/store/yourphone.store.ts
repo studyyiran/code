@@ -1,6 +1,6 @@
 
 import config from '../../../config/index';
-import { IQueryParams, IInquiryDetail, IAddressInfo, IAppendOrderParams } from './../interface/index.interface';
+import { IQueryParams, IInquiryDetail, IAddressInfo, IAppendOrderParams, INearStore } from './../interface/index.interface';
 import * as Api from '../api/index.api';
 import { action, observable, autorun, computed } from 'mobx';
 import { IYourPhoneStore, ICarrier, IBrands, IAmericaState, IProductModel, IProductPPVN, ITbdInfo, ISubSkuPricePropertyValues } from '../interface/index.interface';
@@ -64,6 +64,8 @@ class YourPhone implements IYourPhoneStore {
     modelName: '',
     donate: false
   }
+  @observable public USPSNearStores: INearStore | null = null;
+  @observable public FedExNearStores: INearStore | null = null;
 
   constructor() {
     autorun(() => {
@@ -396,6 +398,31 @@ class YourPhone implements IYourPhoneStore {
     } catch (e) {
       return false;
     }
+  }
+
+  @action public getNearExpressStores = async () => {
+    const shippingAddress = [];
+    const addressInfo = this.addressInfo;
+    shippingAddress.push(addressInfo.addressLine.trim());
+    if (addressInfo.addressLineOptional && addressInfo.addressLineOptional !== "") {
+      shippingAddress.push(addressInfo.addressLineOptional.trim());
+    }
+    shippingAddress.push(addressInfo.city + ", " + addressInfo.state);
+    shippingAddress.push(addressInfo.zipCode);
+
+    const isMock = process.env.REACT_APP_SERVER_ENV === 'PUB' ? false : true;
+    let USPSStores: INearStore[] = [];
+    let FedExStores: INearStore[] = [];
+    try {
+      USPSStores = await Api.getNearExpressStores<INearStore[]>(shippingAddress.join(', '), 'USPS', isMock);
+      FedExStores = await Api.getNearExpressStores<INearStore[]>(shippingAddress.join(', '), 'FEDEX', isMock);
+    } catch (e) {
+      return false;
+    }
+
+    this.USPSNearStores = USPSStores[0];
+    this.FedExNearStores = FedExStores[0];
+    return true;
   }
 
   @action public desoryUnmount = () => {

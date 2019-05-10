@@ -31,6 +31,7 @@ class Shipment extends React.Component<IPaymentProps, IPaymentStates> {
     if (typeof this.props.onRef === 'function') {
       this.props.onRef!(this); // 让done page里获取到这个组件实例，调用其validateData方法
     }
+    this.props.yourphone.getNearExpressStores();
   }
 
   public colLayout(span: number = 11) {
@@ -41,21 +42,33 @@ class Shipment extends React.Component<IPaymentProps, IPaymentStates> {
   public render() {
     const leftContent = (
       <div className="left-wrapper">
-        {/* <p className="description">The closest FedEx location is:</p>
-        <p className="email">
-          <span className="title">FedEx Office Print&Ship Center 257 Park Ave S</span>
-        </p> */}
+        {
+          this.props.yourphone.FedExNearStores && (
+            <>
+              <p className="description">The closest FedEx location is:</p>
+              <p className="address">
+                <p className="title">{this.props.yourphone.FedExNearStores.name}</p>
+                <p className="title">{this.props.yourphone.FedExNearStores.vicinity}</p>
+              </p>
+            </>
+          )
+        }
         <a className="difference" href={config.DEFAULT.FedExUrl}>Find the closest FedEx location</a>
       </div>
     )
     const rightContent = (
       <div className="right-wrapper">
         <p className="description">You can leave your package in your mailbox or find the closest location</p>
-        {/* <p className="name">
-          <span className="title">Name</span>
-          <br />
-          <span className="address">FedEx Office Print&Ship Center 257 Park Ave S</span>
-        </p> */}
+        {
+          this.props.yourphone.USPSNearStores && (
+            <>
+              <p className="address">
+                <p className="title">{this.props.yourphone.USPSNearStores.name}</p>
+                <p className="title">{this.props.yourphone.USPSNearStores.vicinity}</p>
+              </p>
+            </>
+          )
+        }
         <a className="difference" href={config.DEFAULT.USPSUrl}>Find all USPS location</a>
       </div>
     );
