@@ -420,8 +420,8 @@ class YourPhone implements IYourPhoneStore {
       return false;
     }
 
-    this.USPSNearStores = USPSStores[0];
-    this.FedExNearStores = FedExStores[0];
+    this.USPSNearStores = USPSStores[0] || null;
+    this.FedExNearStores = FedExStores[0] || null;
     return true;
   }
 
