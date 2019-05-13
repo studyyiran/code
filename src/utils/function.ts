@@ -124,18 +124,18 @@ export const shareComponent = {
     }
     if (el) {
       const els: NodeListOf<HTMLDivElement> | null = document.querySelectorAll('.addthis-smartlayers') || [];
-      for (let i = 0; i < els.length; i++) {
-        el[i].style.display = 'block';
-      }
+      els.forEach((item: HTMLDivElement) => {
+        item.style.display = 'block';
+      })
     }
   },
   hide: () => {
     const el: HTMLDivElement | null = document.querySelector('.addthis-smartlayers');
     if (el) {
       const els: NodeListOf<HTMLDivElement> | null = document.querySelectorAll('.addthis-smartlayers') || [];
-      for (let i = 0; i < els.length; i++) {
-        el[i].style.display = 'none';
-      }
+      els.forEach((item: HTMLDivElement) => {
+        item.style.display = 'none';
+      })
     }
   }
 }
