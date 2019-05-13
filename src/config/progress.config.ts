@@ -9,7 +9,7 @@ export const PC = [
   },
   {
     main: 'Information',
-    sub: 'Tellus about yourself'
+    sub: 'Tell us about yourself'
   },
   {
     main: 'Payment',
@@ -17,7 +17,7 @@ export const PC = [
   },
   {
     main: 'Shipment',
-    sub: 'Choosehow you ship your phone'
+    sub: 'Choose how you ship your phone'
   },
   {
     main: 'Complete',

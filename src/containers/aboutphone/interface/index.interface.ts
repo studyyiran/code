@@ -43,6 +43,7 @@ export interface IYourPhoneStore {
   isAllConditionSelected: boolean; // computed
   isAddressValuesAndDisabled: boolean;
   isDonePayment: boolean;
+  isDoneShipment: boolean;
   isLeftOnEdit: boolean;
   isRightOnEdit: boolean;
   isPaymentFormFilled: boolean;

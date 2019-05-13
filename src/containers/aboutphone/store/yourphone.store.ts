@@ -124,6 +124,13 @@ class YourPhone implements IYourPhoneStore {
     return false;
   }
 
+  @computed get isDoneShipment() {
+    if (!this.expressCarrier) {
+      return false;
+    }
+    return true;
+  }
+
   @computed get checkOrderStepType() {
     if (this.allOrdersDetail.length > 1) {
       let arr: number[] = [];
