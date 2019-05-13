@@ -411,7 +411,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
   private handleNext = async () => {
     const isOk = await this.validateData();
     if (isOk) {
-      this.props.history.push('/sell/yourphone/done');
+      this.props.history.push('/sell/yourphone/shipment');
     }
   }
 }

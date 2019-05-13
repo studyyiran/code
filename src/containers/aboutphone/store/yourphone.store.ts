@@ -1,6 +1,6 @@
 
 import config from '../../../config/index';
-import { IQueryParams, IInquiryDetail, IAddressInfo, IAppendOrderParams } from './../interface/index.interface';
+import { IQueryParams, IInquiryDetail, IAddressInfo, IAppendOrderParams, INearStore } from './../interface/index.interface';
 import * as Api from '../api/index.api';
 import { action, observable, autorun, computed } from 'mobx';
 import { IYourPhoneStore, ICarrier, IBrands, IAmericaState, IProductModel, IProductPPVN, ITbdInfo, ISubSkuPricePropertyValues } from '../interface/index.interface';
@@ -29,6 +29,8 @@ class YourPhone implements IYourPhoneStore {
     state: '',
     zipCode: ''
   };
+
+  @observable public expressCarrier: string = '';
 
   // paypal和echeck的信息有可能和contact information不同
   @observable public payment: string = ''; // 选择的支付方式, 必须为PAYPAL 或 CHECK，否则无法下一步
@@ -62,6 +64,8 @@ class YourPhone implements IYourPhoneStore {
     modelName: '',
     donate: false
   }
+  @observable public USPSNearStores: INearStore | null = null;
+  @observable public FedExNearStores: INearStore | null = null;
 
   constructor() {
     autorun(() => {
@@ -118,6 +122,33 @@ class YourPhone implements IYourPhoneStore {
       return true;
     }
     return false;
+  }
+
+  @computed get isDoneShipment() {
+    if (!this.expressCarrier) {
+      return false;
+    }
+    return true;
+  }
+
+  @computed get checkOrderStepType() {
+    if (this.allOrdersDetail.length > 1) {
+      let arr: number[] = [];
+      for (const item of this.allOrdersDetail) {
+        arr.push(this.getOrderBrandType(item));
+        arr = [...new Set(arr)];
+        if (arr.length === 2) {
+          return 2;
+        }
+        return arr[0];
+      }
+    }
+    if (!this.orderDetail) {
+      return 0;
+    }
+
+    return this.getOrderBrandType(this.orderDetail);
+
   }
 
 
@@ -265,7 +296,8 @@ class YourPhone implements IYourPhoneStore {
       payment: this.payment,
       paypalInfo: this.paypal,
       userEmail: UserStore.preOrder.userEmail!,
-      brandId: UserStore.preOrder.productInfo ? UserStore.preOrder.productInfo.brandId : undefined
+      brandId: UserStore.preOrder.productInfo ? UserStore.preOrder.productInfo.brandId : undefined,
+      expressCarrier: this.expressCarrier
     }
 
     if (this.isTBD) {
@@ -367,6 +399,39 @@ class YourPhone implements IYourPhoneStore {
     return true;
   }
 
+  @action public sendBox = async (orderNo: string, email: string) => {
+    try {
+      return await Api.sendBox<boolean>(orderNo, email);
+    } catch (e) {
+      return false;
+    }
+  }
+
+  @action public getNearExpressStores = async () => {
+    const shippingAddress = [];
+    const addressInfo = this.addressInfo;
+    shippingAddress.push(addressInfo.addressLine.trim());
+    if (addressInfo.addressLineOptional && addressInfo.addressLineOptional !== "") {
+      shippingAddress.push(addressInfo.addressLineOptional.trim());
+    }
+    shippingAddress.push(addressInfo.city + ", " + addressInfo.state);
+    shippingAddress.push(addressInfo.zipCode);
+
+    const isMock = process.env.REACT_APP_SERVER_ENV === 'PUB' ? false : true;
+    let USPSStores: INearStore[] = [];
+    let FedExStores: INearStore[] = [];
+    try {
+      USPSStores = await Api.getNearExpressStores<INearStore[]>(shippingAddress.join(', '), 'USPS', isMock);
+      FedExStores = await Api.getNearExpressStores<INearStore[]>(shippingAddress.join(', '), 'FEDEX', isMock);
+    } catch (e) {
+      return false;
+    }
+
+    this.USPSNearStores = USPSStores[0] || null;
+    this.FedExNearStores = FedExStores[0] || null;
+    return true;
+  }
+
   @action public desoryUnmount = () => {
     this.payment = '';
     this.activeBrandsId = -1;
@@ -431,6 +496,13 @@ class YourPhone implements IYourPhoneStore {
     this.activeModelId = -1;
     this.activeModelName = '';
     this.activeConditions = {};
+  }
+
+  private getOrderBrandType(item: IOrderDetail) {
+    if (item.orderItem.product.isIOS) {
+      return 0;
+    }
+    return 1;
   }
 }
 

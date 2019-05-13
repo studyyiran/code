@@ -1,11 +1,6 @@
+import * as moment from 'moment-timezone';
+import { addDate } from '@/utils'
 export default {
-  // '/sell/account': {
-  //   step: 0,
-  //   mainText: 'About You',
-  //   subText: 'We just need an email address to send you a shipping label.',
-  //   hasSearch: false,
-  //   progress: -1
-  // },
   '/sell/yourphone/brand': {
     step: 0,
     mainText: 'What kind of phone do you have？',
@@ -17,7 +12,7 @@ export default {
   },
   '/sell/yourphone/carrier': {
     step: 0,
-    mainText: 'What phone carrier is your phone?',
+    mainText: 'What is your phone carrier?',
     subText: '',
     hasSearch: false,
     progress: 1,
@@ -25,7 +20,7 @@ export default {
   },
   '/sell/yourphone/model': {
     step: 0,
-    mainText: 'Choose your phone model',
+    mainText: 'What is your phone model?',
     subText: '',
     hasSearch: true,
     progress: 2,
@@ -33,7 +28,7 @@ export default {
   },
   '/sell/yourphone/condition': {
     step: 0,
-    mainText: 'What is the condition of your phone？',
+    mainText: 'What is the condition of your phone?',
     subText: '',
     hasSearch: false,
     progress: 3,
@@ -41,7 +36,7 @@ export default {
   },
   '/sell/yourphone/shipping': {
     step: 1,
-    mainText: 'Shipping Address',
+    mainText: 'What is your shipping address?',
     subText: 'We use this info on the shipping label so you can mail your phone for free.',
     hasSearch: false,
     progress: -1,
@@ -49,21 +44,28 @@ export default {
   },
   '/sell/yourphone/payment': {
     step: 2,
-    mainText: 'How would you like to be paid',
+    mainText: 'How would you like to be paid?',
     subText: 'We’ll send payment to your account, the day your phone arrives at our offices.',
     hasSearch: false,
     progress: -1
   },
-  '/sell/yourphone/done': {
+  '/sell/yourphone/shipment': {
     step: 3,
-    mainText: 'Please confirm all the details. ',
+    mainText: 'How would you like to ship your phone?',
+    subText: '',
+    hasSearch: false,
+    progress: -1
+  },
+  '/sell/yourphone/done': {
+    step: 4,
+    mainText: 'Please confirm all the details.',
     subText: 'If everything looks correct, we’ll create a shipping label. You’ll get you paid in no time!',
     hasSearch: false,
     progress: -1
   },
   '/sell/yourphone/checkorder': {
-    step: 3,
-    mainText: 'All done! Ship within 7 days to secure your offer.',
+    step: 4,
+    mainText: `All done! Ship by [${moment.tz(addDate(new Date(), 7), "America/Chicago").format('MMM DD')}] to secure your guaranteed price.`,
     subText: 'We will send a confirmation email to ',
     isInCheckOrder: true,
     hasSearch: false,
@@ -71,7 +73,7 @@ export default {
   },
   '/sell/yourphone/other': {
     step: 0,
-    mainText: "What's your phone model?",
+    mainText: 'What is your phone model?',
     subText: '',
     isInCheckOrder: false,
     hasSearch: false,

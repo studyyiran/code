@@ -8,15 +8,19 @@ export const PC = [
     sub: 'Model and Condition'
   },
   {
-    main: 'Your Information',
-    sub: 'We send you a shipping label'
+    main: 'Information',
+    sub: 'Tell us about yourself'
   },
   {
-    main: 'Your Payment',
+    main: 'Payment',
     sub: 'Where we send your money'
   },
   {
-    main: 'You’re Done',
+    main: 'Shipment',
+    sub: 'Choose how you ship your phone'
+  },
+  {
+    main: 'Complete',
     sub: 'Now to ship it'
   }
 ];

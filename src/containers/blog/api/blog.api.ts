@@ -26,5 +26,5 @@ export const getPageDetail = <T>(slug: string) => {
     url: `/cms-pages/${slug}`,
   };
 
-  return Request<T>(opts);
+  return Request<T>(opts, [110000005]);
 };

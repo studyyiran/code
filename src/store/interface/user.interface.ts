@@ -69,6 +69,7 @@ export interface IPreOrder {
   orderDetail?: IOrderDetail;
   tbdInfo?: ITbdInfo
   appendOrderDetail?: IOrderDetail | null;
+  expressCarrier?: string
   // yourphoneStore?: IYourPhoneStore; // 存储store的属性
 
 }

@@ -34,9 +34,14 @@ export const paymentPageValidate = (): boolean => {
   return !!(shippingPageValidate() && addressInfoValidate());
 }
 
+// sgipment 页面校验
+export const shipmentPageValidate = (): boolean => {
+  return !!(paymentPageValidate());
+}
+
 // done 页面的校验
 export const donePageValidate = (): boolean => {
-  return !!(paymentPageValidate() && paymentPageValidate());
+  return !!(shipmentPageValidate());
 }
 
 // checkorder 页面的校验

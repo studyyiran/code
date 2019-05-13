@@ -3,17 +3,23 @@ import { inject, observer } from 'mobx-react'
 import { IBlogDetailProps } from './interface/blog.interface';
 import './bolg.less';
 import * as moment from 'moment-timezone';
-
+import { shareComponent } from '@/utils/function'
 @inject('blog')
 @observer
 export default class BlogDetail extends React.Component<IBlogDetailProps> {
   public async componentDidMount() {
-    if (window['__SERVER_RENDER__INITIALSTATE__']) {
+    if (window['__SERVER_RENDER__INITIALSTATE__'] && window['__SERVER_RENDER__INITIALSTATE__'].blog.detail) {
       const initialState = window['__SERVER_RENDER__INITIALSTATE__'];
       this.props.blog.detail = initialState.blog.detail;
       window['__SERVER_RENDER__INITIALSTATE__'] = null;
     } else {
-      await this.props.blog.getPageDetail(this.props.match.params.slug);
+      if (window['__SERVER_RENDER__INITIALSTATE__'] && !window['__SERVER_RENDER__INITIALSTATE__'].blog.detail) {
+        window['__SERVER_RENDER__INITIALSTATE__'] = null;
+      }
+      const res = await this.props.blog.getPageDetail(this.props.match.params.slug);
+      if (!res) {
+        this.props.history.replace('/notfound')
+      }
       if (this.props.blog.detail) {
         document.title = this.props.blog.detail.title;
       }
@@ -23,9 +29,12 @@ export default class BlogDetail extends React.Component<IBlogDetailProps> {
         console.warn(e);
       }
     }
+
+    shareComponent.show();
   }
   public componentWillUnmount() {
     this.props.blog.detail = null;
+    shareComponent.hide();
   }
   public render() {
     const detail = this.props.blog.detail;

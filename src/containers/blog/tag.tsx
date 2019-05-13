@@ -5,7 +5,7 @@ import { Button } from 'antd'
 import { IBlogListProps, IBlog } from './interface/blog.interface';
 import './list.less';
 import * as moment from 'moment-timezone';
-
+import { shareComponent } from '@/utils/function'
 @inject('blog')
 @observer
 export default class BlogList extends React.Component<IBlogListProps> {
@@ -29,9 +29,12 @@ export default class BlogList extends React.Component<IBlogListProps> {
         console.warn(e);
       }
     }
+
+    shareComponent.show();
   }
   public componentWillUnmount() {
     this.props.blog.destory();
+    shareComponent.hide();
   }
   public render() {
     const blog = this.props.blog;
