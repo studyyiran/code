@@ -115,7 +115,7 @@ export const isMobile = () => {
 
 export const shareComponent = {
   show: () => {
-    const el: HTMLDivElement | null = document.querySelector('.addthis-smartlayers-desktop');
+    const el: HTMLDivElement | null = document.querySelector('.addthis-smartlayers');
     if (!el) {
       setTimeout(() => {
         shareComponent.show();
@@ -127,7 +127,7 @@ export const shareComponent = {
     }
   },
   hide: () => {
-    const el: HTMLDivElement | null = document.querySelector('.addthis-smartlayers-desktop');
+    const el: HTMLDivElement | null = document.querySelector('.addthis-smartlayers');
     if (el) {
       el.style.display = 'none';
     }
