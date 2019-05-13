@@ -123,13 +123,19 @@ export const shareComponent = {
       return;
     }
     if (el) {
-      el.style.display = 'block';
+      const els: NodeListOf<HTMLDivElement> | null = document.querySelectorAll('.addthis-smartlayers') || [];
+      for (let i = 0; i < els.length; i++) {
+        el[i].style.display = 'block';
+      }
     }
   },
   hide: () => {
     const el: HTMLDivElement | null = document.querySelector('.addthis-smartlayers');
     if (el) {
-      el.style.display = 'none';
+      const els: NodeListOf<HTMLDivElement> | null = document.querySelectorAll('.addthis-smartlayers') || [];
+      for (let i = 0; i < els.length; i++) {
+        el[i].style.display = 'none';
+      }
     }
   }
 }
