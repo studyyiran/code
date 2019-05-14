@@ -50,7 +50,8 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
       }
     },
     translateMore: false,
-    checkboxType: true
+    checkboxType: true,
+    isSended: false
   }
 
   public componentDidMount() {
@@ -81,7 +82,6 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
 
   public render() {
     const { orderDetail, allOrdersDetail } = this.props.yourphone; // 选中的品牌， 苹果为52
-    console.log(this.props.yourphone.checkOrderStepType)
     return (
       <div className="page-checkorder-container">
         <Layout hideBottom={true} userEmail={orderDetail ? orderDetail.userEmail : ''}>
@@ -150,7 +150,11 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
                       <p>Send me a box and shipping Label</p>
                       <span className="text">Help us reduce waste and only select if you don't have a spare time</span>
                     </div>
-                    <Button type="primary" className="checkbox-button" disabled={this.state.checkboxType} onClick={this.handleSendBox}>SEND BOX</Button>
+                    {
+                      this.state.isSended ?
+                        <span className={classnames('checkbox-button text', { active: !this.state.checkboxType })}>BOX REQUESTED</span> :
+                        <Button type="primary" className="checkbox-button" disabled={this.state.checkboxType} onClick={this.handleSendBox}>SEND BOX</Button>
+                    }
                   </div>
                 </div>
               </div>
@@ -177,6 +181,9 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
         seconds: 10,
         update: (seconds) => (<><br /> <br />This window will be closed after {seconds} seconds.</>)
       });
+      this.setState({
+        isSended: true
+      })
     }
     return true;
   }

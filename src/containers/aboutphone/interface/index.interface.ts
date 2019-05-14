@@ -130,6 +130,7 @@ export interface ICheckOutStates {
   brandText: (type: number) => React.ReactNode;
   translateMore: boolean;
   checkboxType: boolean;
+  isSended: boolean;
 }
 
 export interface ICarrier {
