@@ -477,6 +477,7 @@ class YourPhone implements IYourPhoneStore {
     this.isAddressValuesAndDisabled = false;
     this.isPaymentFormFilled = false;
     this.americaStates = null;
+    this.expressCarrier = '';
   }
 
   @action public destoryByAppendOrder() {
