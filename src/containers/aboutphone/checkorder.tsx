@@ -81,7 +81,7 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
 
   public render() {
     const { orderDetail, allOrdersDetail } = this.props.yourphone; // 选中的品牌， 苹果为52
-
+    console.log(this.props.yourphone.checkOrderStepType)
     return (
       <div className="page-checkorder-container">
         <Layout hideBottom={true} userEmail={orderDetail ? orderDetail.userEmail : ''}>
@@ -132,11 +132,11 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
                       <p><strong>Use my own box and print shipping label</strong></p>
                       <span className="text">You can leave your package in your mailbox or find the closest location</span>
                       {
-                        orderDetail && orderDetail.shippoTransaction.carrier === EShipmentType.FEDEX && <Link to={config.DEFAULT.FedExUrl} target="__blank" className="tips">Find the closest FedEx location</Link>
+                        orderDetail && orderDetail.shippoTransaction.carrier === EShipmentType.FEDEX && <a href={config.DEFAULT.FedExUrl} target="__blank" className="tips">Find the closest FedEx location</a>
                       }
 
                       {
-                        orderDetail && orderDetail.shippoTransaction.carrier === EShipmentType.USPS && <Link to={config.DEFAULT.USPSUrl} target="__blank" className="tips">Find the closest USPS location</Link>
+                        orderDetail && orderDetail.shippoTransaction.carrier === EShipmentType.USPS && <a href={config.DEFAULT.USPSUrl} target="__blank" className="tips">Find the closest USPS location</a>
                       }
 
                     </div>

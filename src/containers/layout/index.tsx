@@ -1,5 +1,6 @@
 import * as React from 'react';
 import config from '../../config';
+import classnames from 'classnames';
 import * as PropTypes from 'prop-types';
 import './index.less';
 import HeaderHoc from './headerHoc'
@@ -72,7 +73,7 @@ export default class LayoutIndex extends React.Component {
     return (
       <div className="layout-container">
         <HeaderHoc router={this.context.router} />
-        <div className="layout-content">
+        <div className={classnames('layout-content', { hideMobileFooter: !this.state.showMobileFooter })}>
           {this.props.children}
         </div>
         <FooterHoc router={this.context.router} showMobileFooter={this.state.showMobileFooter} />
