@@ -136,12 +136,12 @@ class YourPhone implements IYourPhoneStore {
       let arr: number[] = [];
       for (const item of this.allOrdersDetail) {
         arr.push(this.getOrderBrandType(item));
-        arr = [...new Set(arr)];
-        if (arr.length === 2) {
-          return 2;
-        }
-        return arr[0];
       }
+      arr = [...new Set(arr)];
+      if (arr.length === 2) {
+        return 2;
+      }
+      return arr[0];
     }
     if (!this.orderDetail) {
       return 0;
