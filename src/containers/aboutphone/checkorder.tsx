@@ -69,11 +69,11 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
     }
 
     // 清除相关信息
-    // this.props.user.preOrder = {
-    //   userEmail: '',
-    // }
-    // this.props.yourphone.destory();
-    // sessionStorage.removeItem('preOrder');
+    this.props.user.preOrder = {
+      userEmail: '',
+    }
+    this.props.yourphone.destory();
+    sessionStorage.removeItem('preOrder');
   }
 
   public componentWillUnmount() {
