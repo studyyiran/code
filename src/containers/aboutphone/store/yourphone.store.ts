@@ -132,6 +132,7 @@ class YourPhone implements IYourPhoneStore {
   }
 
   @computed get checkOrderStepType() {
+    return 2;
     if (this.allOrdersDetail.length > 1) {
       let arr: number[] = [];
       for (const item of this.allOrdersDetail) {
@@ -147,8 +148,7 @@ class YourPhone implements IYourPhoneStore {
       return 0;
     }
 
-    return this.getOrderBrandType(this.orderDetail);
-
+    // return this.getOrderBrandType(this.orderDetail);
   }
 
 
