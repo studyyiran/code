@@ -1,5 +1,6 @@
 import * as React from 'react';
 import config from '../../config';
+import classnames from 'classnames';
 import * as PropTypes from 'prop-types';
 import './index.less';
 import HeaderHoc from './headerHoc'
@@ -12,6 +13,9 @@ export default class LayoutIndex extends React.Component {
     router: PropTypes.shape({
       history: PropTypes.object.isRequired
     }).isRequired
+  }
+  public readonly state = {
+    showMobileFooter: true
   }
 
   public componentDidMount() {
@@ -48,6 +52,15 @@ export default class LayoutIndex extends React.Component {
   }
 
   public onMappingTitles = (titlesKey: string[], titles: object) => {
+    let showMobileFooter = true;
+    // 处理 m 版是否要显示 footer，/sell 路由下不用显示
+    if (/\/sell\//.test(window.location.href)) {
+      showMobileFooter = false
+    }
+    this.setState({
+      showMobileFooter
+    })
+
     // 得到所有和当前路由匹配的数组
     const arr = titlesKey.filter(v => new RegExp(v).test(this.context.router.history.location.pathname));
     // 设置title
@@ -62,10 +75,10 @@ export default class LayoutIndex extends React.Component {
     return (
       <div className="layout-container">
         <HeaderHoc router={this.context.router} />
-        <div className="layout-content">
+        <div className={classnames('layout-content', { hideMobileFooter: !this.state.showMobileFooter })}>
           {this.props.children}
         </div>
-        <FooterHoc router={this.context.router} />
+        <FooterHoc router={this.context.router} showMobileFooter={this.state.showMobileFooter} />
       </div>
     );
   }

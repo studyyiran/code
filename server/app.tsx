@@ -17,6 +17,7 @@ import CONFIG from './config';
 import TITLE from '../src/config/title.config'
 import { getBundles } from 'react-loadable/webpack';
 import stats from '../build/react-loadable.json';
+import SiteMap from './lib/sitemap'
 
 const Router = new router();
 
@@ -76,6 +77,12 @@ const generateBundleScripts = (intries) => {
   });
 }
 
+// Router.get('/sitemap.xml', async (ctx: any, next: any) => {
+//   SiteMap((xml) => {
+//     ctx.body = xml;
+//     next();
+//   });
+// })
 
 // 转发静态资源的请求
 Router.get('/static/*', async (ctx: any, next: any) => {
@@ -104,6 +111,12 @@ Router.all('/up-api/*', koaProxy('/up-api', {
 }))
 
 Router.get('*', async (ctx: any, next: any) => {
+  if (ctx.originalUrl === '/sitemap.xml') {
+    const xml = await SiteMap();
+    ctx.append('Content-Type', 'application/xml');
+    ctx.body = xml;
+    return;
+  }
   // 模板文件
   let template = fs.readFileSync(__dirname + '/index.html', { encoding: 'utf-8' });
 

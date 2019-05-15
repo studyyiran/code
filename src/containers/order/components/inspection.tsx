@@ -47,7 +47,7 @@ class Inspection extends React.Component<IOrderProps> {
                   <br />
                 </>
               )}
-              {inspectionInfo.differentCondition.join(",")}
+              {inspectionInfo.differentCondition.join(",")}{this.props.order.orderDetail.orderItem.notice && ', ' + this.props.order.orderDetail.orderItem.notice}
             </p>
           </div>
           <div className="col-2">

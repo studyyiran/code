@@ -18,6 +18,7 @@ class FormItem extends React.Component<{ common: ICommonStore, onCancel: () => v
         visible={this.props.common.showEmailModal}
         onOk={this.handleOk}
         onCancel={this.handleCancel}
+        style={{ height: 'auto' }}
         footer={
           <>
             <Button key="close" onClick={this.handleCancel} style={{ border: '2px solid #00CFFF', color: '#00CFFF' }}>Close</Button>

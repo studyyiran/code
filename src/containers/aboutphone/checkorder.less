@@ -159,18 +159,93 @@
         &:nth-of-type(2) {
           background:url(../../images/yourphone/step-2.png) rgba(0,215,184,.15) no-repeat left top /65px 65px;
           margin-top:2px;
+          padding-bottom:20px;
         }
         .name {
           margin-bottom: 10px;
-          .set-font-color(16px, #006859, bold);
+          .set-font-color(16px, #00CFFF, bold);
           line-height: 16px;
+          &.step-2 {
+            color:#00D7B8;
+          }
         }
         .detail {
           .set-font-color(12px, #111111);
           line-height: 18px;
+
+          .checkbox-wrapper {
+            height:90px;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            padding:16px 40px 18px 30px;
+            border-radius:4px;
+            box-sizing: border-box;
+            border:2px solid transparent;
+
+            .checkbox {
+              width:20px;
+              height:20px;
+              border:1px solid #00D7B8;
+              box-sizing: border-box;
+              border-radius: 50%;
+              cursor: pointer;
+            }
+            .content {
+              margin-left:30px;
+              margin-right:15px;
+              width: 381px;
+              p  {
+                padding-left:0;
+                &:before {
+                  display: none;
+                }
+              }
+              span {
+                padding-left:0;
+              }
+              .tips {
+                color:#E0E0E0;
+                &:before {
+                  background: url(../../images/yourphone/circle-arrow-disabled.png) no-repeat center/100%;
+                }
+              }
+            }
+            &:last-child {
+              margin-top:10px;
+              height:70px;
+            }
+            .checkbox-button {
+              width:112px;
+              &.text {
+                font-size:12px;
+                color:#E0E0E0;
+                &.active {
+                  color:#00cfff;
+                }
+              }
+            }
+
+            &.active {
+              border:2px solid rgba(0,215,184,1);
+              .checkbox {
+                background: url(../../images/yourphone/success.png) no-repeat center/100%;
+                border:none;
+              }
+              .tips {
+                color:#00BAE5;
+                &:before {
+                  background: url(../../images/yourphone/circle-arrow.png) no-repeat center/100%;
+                }
+              }
+            }
+          }
+
           p {
             padding-left:10px;
             position: relative;
+            padding-top:2px;
+            padding-bottom:2px;
             &:before {
               content:'';
               width:4px;
@@ -191,10 +266,16 @@
             line-height: 12px;
             padding-left:10px;
           }
+          span.text {
+            font-size:12px;
+            color:#666;
+            line-height: 12px;
+            padding-left:10px;
+          }
         }
         .tips {
           display: block;
-          margin-top: 10px;
+          // margin-top: 10px;
           .set-font-color(12px, #00BAE5);
           cursor: pointer;
           &::before {

@@ -256,6 +256,10 @@ h1,h2,h3,h4,h5,h6,strong {font-weight: bold}
 	// color:#fff !important;
 }
 
+.addthis-smartlayers {
+	display: none;
+}
+
 
 .ismobile {
 	.layout-content {
@@ -266,7 +270,14 @@ h1,h2,h3,h4,h5,h6,strong {font-weight: bold}
 	}
 	.modal-for-user-to-email {
     max-height: 2.3rem;
-  }
+	}
+	.ant-btn {
+		&:disabled {
+			background-color: #F3F3F3 !important;
+			color:#000 !important;
+			border:none !important;
+		}
+	}
 }
 
 @media screen and (max-width:950px) {

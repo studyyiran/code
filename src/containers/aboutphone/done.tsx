@@ -325,7 +325,6 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
           checkInfo: { ...this.props.yourphone.echeck },
           payment: this.props.yourphone.payment,
           paypalInfo: { ...this.props.yourphone.paypal },
-          orderDetail: this.props.yourphone.orderDetail ? { ...this.props.yourphone.orderDetail } : undefined,
         }
         if (!this.props.user.preOrder.appendOrderDetail) {
           this.props.user.preOrder.appendOrderDetail = this.props.yourphone.orderDetail ? { ...this.props.yourphone.orderDetail } : null
@@ -382,8 +381,7 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
           addressInfo: { ...this.props.yourphone.addressInfo },
           checkInfo: { ...this.props.yourphone.echeck },
           payment: this.props.yourphone.payment,
-          paypalInfo: { ...this.props.yourphone.paypal },
-          orderDetail: this.props.yourphone.orderDetail ? { ...this.props.yourphone.orderDetail } : undefined
+          paypalInfo: { ...this.props.yourphone.paypal }
         }
       } catch (error) { console.warn(error, 'in done page preOrder') }
 

@@ -6,6 +6,7 @@ import { Button } from 'antd'
 import { IBlogListState, IBlogListProps, ITag, IBlog } from './interface/blog.interface';
 import './list.less';
 import * as moment from 'moment-timezone';
+import { shareComponent } from '@/utils/function'
 
 @inject('blog')
 @observer
@@ -34,10 +35,15 @@ export default class BlogList extends React.Component<IBlogListProps, IBlogListS
       }
     }
     this.toggleArrow();
+    shareComponent.show();
   }
 
   public componentDidUpdate() {
     this.toggleArrow();
+  }
+
+  public componentWillUnmount() {
+    shareComponent.hide();
   }
 
   public render() {

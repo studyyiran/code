@@ -112,3 +112,35 @@ export const formatNumberFixTwo = (n: number) =>
 export const isMobile = () => {
   return true;
 };
+
+export const shareComponent = {
+  show: () => {
+    const el: HTMLDivElement | null = document.querySelector('.addthis-smartlayers');
+    if (!el) {
+      setTimeout(() => {
+        shareComponent.show();
+      }, 1000)
+      return;
+    }
+    if (el) {
+      const els: NodeListOf<HTMLDivElement> | null = document.querySelectorAll('.addthis-smartlayers') || [];
+      els.forEach((item: HTMLDivElement) => {
+        item.style.display = 'block';
+      })
+    }
+  },
+  hide: () => {
+    const el: HTMLDivElement | null = document.querySelector('.addthis-smartlayers');
+    if (el) {
+      const els: NodeListOf<HTMLDivElement> | null = document.querySelectorAll('.addthis-smartlayers') || [];
+      els.forEach((item: HTMLDivElement) => {
+        item.style.display = 'none';
+      })
+    }
+  }
+}
+
+export const addDate = (date: Date, days: number = 1) => {
+  date.setDate(date.getDate() + days);
+  return date;
+}
