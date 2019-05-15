@@ -24,7 +24,7 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
             <>
               <p><strong>Disable find my iPhone and remove your SIM Card</strong></p>
               <span className="text">Make sure to wipe your device of all personal information</span>
-              <Link to="/how-to-factory-reset-iphone" target="__blank" className="tips">Read our helpful intructions for more detail</Link>
+              <Link to="/how-to-factory-reset-iphone" target="_blank" className="tips">Read our helpful intructions for more detail</Link>
             </>
           )
           break;
@@ -33,15 +33,15 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
             <>
               <p><strong>Sign out of your Google account and remove your SIM Card</strong></p>
               <span className="text">Make sure to wipe your device of all personal information</span>
-              <Link to="/how-to-factory-reset-android-phone" target="__blank" className="tips">Read our helpful intructions for more detail</Link>
+              <Link to="/how-to-factory-reset-android-phone" target="_blank" className="tips">Read our helpful intructions for more detail</Link>
             </>
           )
           break;
         case EBrandType.ALL:
           return (
             <>
-              <p><strong>iOS: Disable find my iPhone and remove your SIM Card</strong>&nbsp;&nbsp;&nbsp;&nbsp;<Link style={{ display: 'inline' }} to="/how-to-factory-reset-iphone" target="__blank" className="tips">More detail</Link></p>
-              <p><strong>Android: Sign out of your Google account and remove your SIM Card</strong>&nbsp;&nbsp;&nbsp;&nbsp;<Link style={{ display: 'inline' }} to="/how-to-factory-reset-iphone" target="__blank" className="tips">More detail</Link></p>
+              <p><strong>iOS: Disable find my iPhone and remove your SIM Card</strong>&nbsp;&nbsp;&nbsp;&nbsp;<Link style={{ display: 'inline' }} to="/how-to-factory-reset-iphone" target="_blank" className="tips">More detail</Link></p>
+              <p><strong>Android: Sign out of your Google account and remove your SIM Card</strong>&nbsp;&nbsp;&nbsp;&nbsp;<Link style={{ display: 'inline' }} to="/how-to-factory-reset-iphone" target="_blank" className="tips">More detail</Link></p>
               <span className="text">Pack your device in a box with protective packaging material for shipment</span>
             </>
           )
@@ -132,15 +132,15 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
                       <p><strong>Use my own box and print shipping label</strong></p>
                       <span className="text">You can leave your package in your mailbox or find the closest location</span>
                       {
-                        orderDetail && orderDetail.shippoTransaction.carrier === EShipmentType.FEDEX && <a href={config.DEFAULT.FedExUrl} target="__blank" className="tips">Find the closest FedEx location</a>
+                        orderDetail && orderDetail.shippoTransaction.carrier === EShipmentType.FEDEX && <a href={config.DEFAULT.FedExUrl} target="_blank" className="tips">Find the closest FedEx location</a>
                       }
 
                       {
-                        orderDetail && orderDetail.shippoTransaction.carrier === EShipmentType.USPS && <a href={config.DEFAULT.USPSUrl} target="__blank" className="tips">Find the closest USPS location</a>
+                        orderDetail && orderDetail.shippoTransaction.carrier === EShipmentType.USPS && <a href={config.DEFAULT.USPSUrl} target="_blank" className="tips">Find the closest USPS location</a>
                       }
 
                     </div>
-                    <a target="__blank" href={orderDetail && this.state.checkboxType ? orderDetail.shippoTransaction.ext.labelUrl : 'javascript:;'}>
+                    <a target="_blank" href={orderDetail && this.state.checkboxType ? orderDetail.shippoTransaction.ext.labelUrl : 'javascript:;'}>
                       <Button type="primary" className="checkbox-button" disabled={!this.state.checkboxType}>PRINT</Button>
                     </a>
                   </div>
