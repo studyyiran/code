@@ -52,12 +52,14 @@ export default class LayoutIndex extends React.Component {
   }
 
   public onMappingTitles = (titlesKey: string[], titles: object) => {
+    let showMobileFooter = true;
     // 处理 m 版是否要显示 footer，/sell 路由下不用显示
     if (/\/sell\//.test(window.location.href)) {
-      this.setState({
-        showMobileFooter: false
-      })
+      showMobileFooter = false
     }
+    this.setState({
+      showMobileFooter
+    })
 
     // 得到所有和当前路由匹配的数组
     const arr = titlesKey.filter(v => new RegExp(v).test(this.context.router.history.location.pathname));
