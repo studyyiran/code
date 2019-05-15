@@ -77,7 +77,7 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
   }
 
   public componentWillUnmount() {
-    // this.props.yourphone.desoryUnmount();
+    this.props.yourphone.desoryUnmount();
   }
 
   public render() {
