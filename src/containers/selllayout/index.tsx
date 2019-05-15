@@ -123,12 +123,12 @@ export default class SellLayout extends React.Component<ISellLayoutProps, ISellL
         seconds: 10,
         update: (seconds) => (<>Your order process is interrupted, please try again. Sorry for the inconvenience.  <br /> <br />This window will be closed after {seconds} seconds.</>),
       });
-      this.props.user.preOrder = {
-        userEmail: '',
-      }
-      this.props.yourphone.destory();
-      this.props.yourphone.desoryUnmount();
-      sessionStorage.removeItem('preOrder');
+      // this.props.user.preOrder = {
+      //   userEmail: '',
+      // }
+      // this.props.yourphone.destory();
+      // this.props.yourphone.desoryUnmount();
+      // sessionStorage.removeItem('preOrder');
     }
 
   }

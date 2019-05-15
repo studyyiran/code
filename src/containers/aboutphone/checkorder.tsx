@@ -69,11 +69,11 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
     }
 
     // 清除相关信息
-    this.props.user.preOrder = {
-      userEmail: '',
-    }
-    this.props.yourphone.destory();
-    sessionStorage.removeItem('preOrder');
+    // this.props.user.preOrder = {
+    //   userEmail: '',
+    // }
+    // this.props.yourphone.destory();
+    // sessionStorage.removeItem('preOrder');
   }
 
   public componentWillUnmount() {
@@ -124,7 +124,7 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
                 </div>
               </div>
               <div className="step">
-                <p className="name">Print Shipping Label</p>
+                <p className="name step-2">Print Shipping Label</p>
                 <div className="detail">
                   <div className={classnames('checkbox-wrapper', { active: this.state.checkboxType })}>
                     <div className="checkbox" onClick={this.handleTranslateCheckbox.bind(this, true)} />
