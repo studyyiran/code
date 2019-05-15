@@ -159,11 +159,15 @@
         &:nth-of-type(2) {
           background:url(../../images/yourphone/step-2.png) rgba(0,215,184,.15) no-repeat left top /65px 65px;
           margin-top:2px;
+          padding-bottom:20px;
         }
         .name {
           margin-bottom: 10px;
-          .set-font-color(16px, #006859, bold);
+          .set-font-color(16px, #00CFFF, bold);
           line-height: 16px;
+          &.step-2 {
+            color:#00D7B8;
+          }
         }
         .detail {
           .set-font-color(12px, #111111);
@@ -177,6 +181,7 @@
             padding:16px 40px 18px 30px;
             border-radius:4px;
             box-sizing: border-box;
+            border:2px solid transparent;
 
             .checkbox {
               width:20px;
@@ -270,7 +275,7 @@
         }
         .tips {
           display: block;
-          margin-top: 10px;
+          // margin-top: 10px;
           .set-font-color(12px, #00BAE5);
           cursor: pointer;
           &::before {
