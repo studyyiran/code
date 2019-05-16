@@ -53,7 +53,7 @@ class Shipment extends React.Component<IPaymentProps, IPaymentStates> {
             </>
           )
         }
-        <a className="difference" href={config.DEFAULT.FedExUrl}>Find {this.props.yourphone.FedExNearStores ? 'all' : 'the closest'} FedEx location</a>
+        <a target="_blank" className="difference" href={config.DEFAULT.FedExUrl}>Find {this.props.yourphone.FedExNearStores ? 'all' : 'the closest'} FedEx location</a>
       </div>
     )
     const rightContent = (
@@ -69,7 +69,7 @@ class Shipment extends React.Component<IPaymentProps, IPaymentStates> {
             </>
           )
         }
-        <a className="difference" href={config.DEFAULT.USPSUrl}>Find {this.props.yourphone.USPSNearStores ? 'all' : 'the closest'} USPS location</a>
+        <a target="_blank" className="difference" href={config.DEFAULT.USPSUrl}>Find {this.props.yourphone.USPSNearStores ? 'all' : 'the closest'} USPS location</a>
       </div>
     );
     const isMobile = this.props.common.isMobile;
