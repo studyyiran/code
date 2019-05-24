@@ -69,13 +69,13 @@ export default [
     }),
     exact: true,
     path: '/reviews',
-    actions: [
-      () => store['common'].getReviews({
-        page: 0,
-        pageSize: 100,
-        order: 'desc'
-      }),
-    ]
+    // actions: [
+    //   () => store['common'].getReviews({
+    //     page: 0,
+    //     pageSize: 100,
+    //     order: 'desc'
+    //   }),
+    // ]
   },
   {
     // 首页
