@@ -19,7 +19,7 @@ export default observer((props: ICommonProps) => {
       </div>
       <div className="reviews">
         <span>{reviews.stats.average_rating} Rating</span> 
-         {/* <span>{reviews.stats.total_reviews.replace(/(\d)(?=(?:\d{3})+$)/g, '$1,')} Reviews</span> */}
+         <span>{reviews.stats.total_reviews} Reviews</span>
       </div>
 
       <div className="reviews-list">

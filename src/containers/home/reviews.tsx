@@ -45,7 +45,7 @@ export default class Reviews extends React.Component<ICommonProps> {
           <div className="bottom">
             <div className="text">
               <span>{reviews ? reviews.stats.average_rating : ''} Rating</span>&nbsp;&nbsp;&nbsp;&nbsp;
-              {/* <span>{reviews ? reviews.stats.total_reviews.replace(/(\d)(?=(?:\d{3})+$)/g, '$1,') : ''} Reviews</span> */}
+              <span>{reviews ? reviews.stats.total_reviews : ''} Reviews</span>
             </div>
             <div className="right">
               <span>Data From</span>
