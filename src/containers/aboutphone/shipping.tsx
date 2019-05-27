@@ -424,7 +424,7 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
       setFields({
         'zipCode': {
           value: value,
-          errors: []
+          // errors: []
         }
       })
       return true

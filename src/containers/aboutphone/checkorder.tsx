@@ -148,7 +148,7 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
                     <div className="checkbox" onClick={this.handleTranslateCheckbox.bind(this, false)} />
                     <div className="content">
                       <p>Send me a box and shipping Label</p>
-                      <span className="text">Help us reduce waste and only select if you don't have a spare time</span>
+                      <span className="text">Help us reduce waste and only select if you don't have a spare box</span>
                     </div>
                     {
                       this.state.isSended ?

@@ -7,7 +7,10 @@ import * as Loadable from 'react-loadable';
 import App from './App';
 import './styles/index.less';
 // import './iconfont/iconfont';
-
+import Raven from 'raven-js';
+if (process.env.REACT_APP_SERVER_ENV === 'PUB') {
+  Raven.config('https://af75361018b342bba487e7a637e713cf@sentry.aijihui.net/41').install();
+}
 if (process.env.NODE_ENV === "development") {
   ReactDOM.render(
     <AppContainer>

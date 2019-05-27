@@ -1,8 +1,8 @@
 export default {
   '/': {
-    title: 'Sell My Phone for More Cash | UpTradeit.com',
+    title: 'Sell My Phone, iPad, and Macbook for More | Uptradeit.com',
     keywords: 'Sell my phone',
-    description: 'Get paid for the true value of your phone. Save time. Quick and easy. Completely safe and risk free. We help sell your phone so you don’t have to.'
+    description: 'Get paid for the true value of your device. Save time. Quick and easy. Completely safe and risk free. We help sell your used electronics so you don’t have to.'
   },
   '/notfound': {
     title: '404 not found',
