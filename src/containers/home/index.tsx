@@ -263,24 +263,27 @@ export default class Home extends React.Component<ICommonProps, IHomeState> {
 
         {this.props.common.moduleOn && <Reviews {...this.props} />}
 
-        <div className="ewaste-wrapper">
-          <h2>Total eWaste Save by Our Customers</h2>
-          <div className="number-box">
-            <div className="img" />
-            <div className="number-list">
-              {
-                this.state.times.map((v: string, index: number) => {
-                  let classNames = 'list';
-                  if (v === ',' || v === '.') {
-                    classNames = 'symbol'
-                  }
-                  return <div className={classNames} key={index}>{v}</div>
-                })
-              }
+        {
+          this.state.times.length > 0 &&
+          <div className="ewaste-wrapper">
+            <h2>Total eWaste Save by Our Customers</h2>
+            <div className="number-box">
+              <div className="img" />
+              <div className="number-list">
+                {
+                  this.state.times.map((v: string, index: number) => {
+                    let classNames = 'list';
+                    if (v === ',' || v === '.') {
+                      classNames = 'symbol'
+                    }
+                    return <div className={classNames} key={index}>{v}</div>
+                  })
+                }
+              </div>
+              <span>OZ</span>
             </div>
-            <span>OZ</span>
           </div>
-        </div>
+        }
 
         <div className="section-just">
           <h2>Just Two Steps. Ship and Paid.</h2>
@@ -296,12 +299,18 @@ export default class Home extends React.Component<ICommonProps, IHomeState> {
   }
 
   private getTimes = () => {
-    const currentTimer = new Date().getTime() / 1000;
-    let theString = Number(parseInt(currentTimer.toString(), 10) + 7345).toString().substr(-7);
-    const lastString = theString.substr(-3);
-    theString = theString.substring(0, theString.length - 3).replace(/(\d)(?=(?:\d{3})+$)/g, '$1,') + '.' + lastString;
-    this.setState({
-      times: theString.split('')
-    })
+    try {
+      const currentTimer = new Date().getTime() / 1000;
+      let theString = Number(parseInt(currentTimer.toString(), 10) + 7345).toString().substr(-7);
+      const lastString = theString.substr(-3);
+      theString = theString.substring(0, theString.length - 3).replace(/(\d)(?=(?:\d{3})+$)/g, '$1,') + '.' + lastString;
+      this.setState({
+        times: theString.split('')
+      })
+    } catch (e) {
+      this.setState({
+        times: []
+      })
+    }
   }
 }
