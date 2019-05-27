@@ -18,14 +18,14 @@ export default class Home extends React.Component<ICommonProps, IHomeState> {
           img: require("@/images/home/icon_1.png"),
           title: "Price Guarantee",
           content:
-            "Go through our price calculator and we’ll provide you a minimum guaranteed price based on the condition and market value of your phone. If we sell the phone for more, you’ll get paid more."
+            "Go through our price calculator and we’ll provide you a minimum guaranteed price based on the condition and market value of your electronics. If we sell the device for more, you’ll get paid more."
         },
         {
           index: 2,
           img: require("@/images/home/icon_2.png"),
           title: "Clean & Package",
           content:
-            "Worry free instructions will be provided to help you wipe and prepare your phone for shipment. We don’t accept phones that have been reported lost or stolen."
+            "Worry free instructions will be provided to help you wipe and prepare your electronics for shipment. We don’t accept electronics that have been reported lost or stolen."
         }
       ],
       [
@@ -34,7 +34,7 @@ export default class Home extends React.Component<ICommonProps, IHomeState> {
           img: require("@/images/home/icon_3.png"),
           title: "Ship for Free",
           content:
-            "Shipping is on us. A prepaid shipping label will be sent to you for mailing your phone to us."
+            "Shipping is on us. A prepaid shipping label will be sent to you for mailing your electronics to us."
         }
       ],
       [
@@ -52,8 +52,10 @@ export default class Home extends React.Component<ICommonProps, IHomeState> {
             "Unlike other trade in services, we cut out the middleman and pass on those savings directly to you. That means more cash in your pocket."
         }
       ]
-    ]
+    ],
+    times: []
   };
+  private timer = 0;
   public componentDidMount() {
     if (window['__SERVER_RENDER__INITIALSTATE__']) {
       const initialState = window['__SERVER_RENDER__INITIALSTATE__'];
@@ -69,18 +71,28 @@ export default class Home extends React.Component<ICommonProps, IHomeState> {
       });
       this.props.common.getModuleOn();
     }
+    this.getTimes();
+    this.timer = window.setInterval(() => {
+      this.getTimes();
+    }, 1000)
+  }
+  public componentWillUnmount() {
+    clearInterval(this.timer);
+    this.timer = 0;
+    this.setState({
+      times: []
+    })
   }
   public render() {
     return (
       <div className="page-home-container">
         <div className="sell-your-phone-wrapper">
           <p className="main-title">
-            We Sell Your <br />
-            Phone for More.
+            How It Works
           </p>
           <p className="content-text">
-            UpTrade helps you sell your phone, so you can get paid <br /> for
-            what your device is actually worth.
+            UpTrade helps you sell your used electronics, so you can get paid <br />
+            for what your device is actually worth
           </p>
           <Link to="/sell/yourphone/brand" className="button-link">
             <Button type="primary" size="large" className="sell-it-now">
@@ -94,11 +106,11 @@ export default class Home extends React.Component<ICommonProps, IHomeState> {
         </div>
 
         <div className="how-it-works-wrapper">
-          <h2 className="main-title">How it Works</h2>
+          <h2 className="main-title">This Is How We Do It</h2>
           <p className="sub-title">Two Steps and Done</p>
           <p className="sub-content">
-            Ship your phone to us for free. You'll get <br />
-            paid once it's sold. It's that easy!
+            Ship your electronics to us for free. You’ll get <br />
+            paid once it’s sold. It’s that easy!
           </p>
           <div className="works-steps-wrapper">
             {this.state.howitworksGroup.map((steps, key1) => (
@@ -126,7 +138,7 @@ export default class Home extends React.Component<ICommonProps, IHomeState> {
                 High Payback
               </h2>
               <p>
-                Your phone will be listed on multiple markets
+                Your electronics will be listed on multiple markets
                 <br /> at the same time, so you get the best possible
                 <br /> payout.
               </p>
@@ -149,7 +161,7 @@ export default class Home extends React.Component<ICommonProps, IHomeState> {
                 <h3>Trade In Programs</h3>
                 <p>
                   UpTrade pays 36% more on average. <br />
-                  Most services that buy used phones <br /> offer a small credit
+                  Most services that buy used electronics <br /> offer a small credit
                   towards your next purchase.
                 </p>
               </li>
@@ -177,8 +189,8 @@ export default class Home extends React.Component<ICommonProps, IHomeState> {
               <p>
                 Our price guarantee means you get paid <br />
                 for the quoted price based on the
-                <br /> condition of your phone or we send your <br />
-                phone back for FREE!
+                <br /> condition of your electronics or we send your <br />
+                electronics back for FREE!
               </p>
             </dd>
 
@@ -191,7 +203,7 @@ export default class Home extends React.Component<ICommonProps, IHomeState> {
               <p>
                 Your personal information is our priority.
                 <br /> We send you worry free instructions on <br />
-                how to properly reset your phone for sale.
+                how to properly reset your electronics for sale.
               </p>
             </dd>
 
@@ -217,7 +229,7 @@ export default class Home extends React.Component<ICommonProps, IHomeState> {
               <p>
                 No more waiting for your cash. We issue <br />
                 our price guarantee payment the next <br />
-                business day after your phone is received.
+                business day after your electronics is received.
               </p>
             </dd>
 
@@ -241,7 +253,7 @@ export default class Home extends React.Component<ICommonProps, IHomeState> {
               </div>
               <h4>Eco-Friendly</h4>
               <p>
-                We accept any phone. If we can’t sell it for <br />
+                We accept any electronics. If we can’t sell it for <br />
                 you, we will recycle it to prevent it from <br />
                 ending up in a landfill.
               </p>
@@ -250,6 +262,25 @@ export default class Home extends React.Component<ICommonProps, IHomeState> {
         </div>
 
         {this.props.common.moduleOn && <Reviews {...this.props} />}
+
+        <div className="ewaste-wrapper">
+          <h2>Total eWaste Save by Our Customers</h2>
+          <div className="number-box">
+            <div className="img" />
+            <div className="number-list">
+              {
+                this.state.times.map((v: string, index: number) => {
+                  let classNames = 'list';
+                  if (v === ',' || v === '.') {
+                    classNames = 'symbol'
+                  }
+                  return <div className={classNames} key={index}>{v}</div>
+                })
+              }
+            </div>
+            <span>OZ</span>
+          </div>
+        </div>
 
         <div className="section-just">
           <h2>Just Two Steps. Ship and Paid.</h2>
@@ -262,5 +293,15 @@ export default class Home extends React.Component<ICommonProps, IHomeState> {
         </div>
       </div>
     );
+  }
+
+  private getTimes = () => {
+    const currentTimer = new Date().getTime() / 1000;
+    let theString = Number(parseInt(currentTimer.toString(), 10) + 7345).toString().substr(-7);
+    const lastString = theString.substr(-3);
+    theString = theString.substring(0, theString.length - 3).replace(/(\d)(?=(?:\d{3})+$)/g, '$1,') + '.' + lastString;
+    this.setState({
+      times: theString.split('')
+    })
   }
 }

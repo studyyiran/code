@@ -1,6 +1,6 @@
 import { action, observable, autorun } from 'mobx';
 import { requireJS, gcj02ToBd09 } from 'utils';
-import { ICommonStore, IStaticOffice, IReviews, IReviewsPagation } from './interface/common.interface';
+import { ICommonStore, IStaticOffice, IReviews, IReviewsPagation, IReview } from './interface/common.interface';
 import * as Api from './api/common.api';
 class Common implements ICommonStore {
   @observable public positionInfo: any = null;
@@ -76,13 +76,17 @@ class Common implements ICommonStore {
 
   @action public getReviews = async (query: { [key: string]: string | number }) => {
     this.reviewsLoading = true;
+    let result: IReviews | null = null;
     try {
-      this.reviews = await Api.getReviews<IReviews>(query);
+      result = await Api.getReviews<IReviews>(query);
     } catch (e) {
       return false;
     } finally {
       this.reviewsLoading = false;
     }
+
+    this.reviews = this.mappingReviews(result);
+
     return true;
   }
   @action public getReviewsSort = async (query: { [key: string]: string | number }) => {
@@ -100,7 +104,7 @@ class Common implements ICommonStore {
 
     result.reviews = list.sort((n1, n2) => n1.rating > n2.rating ? -1 : 1);
 
-    this.reviews = result;
+    this.reviews = this.mappingReviews(result);
 
     return true;
   }
@@ -120,6 +124,38 @@ class Common implements ICommonStore {
     } catch (e) {
       return false;
     }
+  }
+
+  private mappingReviews = (item: IReviews) => {
+    let json = null;
+    try {
+      json = Object.create({});
+      json['page'] = Number(item.page) || 0;
+      json['per_page'] = Number(item.per_page) || 0;
+      json['store'] = item.store.toString();
+      json['total_pages'] = Number(item.total_pages) || 0;
+      json['stats'] = {
+        average_rating: item.stats.average_rating.toString(),
+        total_reviews: item.stats.total_reviews.toString()
+      }
+      json['reviews'] = item.reviews.map((v: IReview) => {
+        return {
+          timeago: v.timeago.toString(),
+          comments: v.comments.toString(),
+          rating: v.rating.toString(),
+          reviewer: {
+            first_name: v.reviewer.first_name.toString(),
+            last_name: v.reviewer.last_name.toString()
+          }
+        }
+      })
+    } catch {
+      return null;
+    }
+    if (Object.keys(json).length > 0) {
+      return json;
+    }
+    return null;
   }
 }
 

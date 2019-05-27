@@ -1,5 +1,6 @@
 export interface IHomeState {
   howitworksGroup: IStepItem[][]
+  times: string[]
 }
 
 interface IStepItem {

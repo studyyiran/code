@@ -6,6 +6,7 @@ import HeaderHoc from './headerHoc'
 import FooterHoc from './footerHoc'
 // import { getQueryString } from 'utils';
 import commonStore from '@/store/common';
+import Raven from 'raven-js';
 export default class LayoutIndex extends React.Component {
   // 通过context 拿到 router 对象
   public static contextTypes = {
@@ -48,6 +49,12 @@ export default class LayoutIndex extends React.Component {
       //   this.context.router.history.push('/invitationCode')
       // }
     });
+  }
+
+  public componentDidCatch(error: any, errorInfo: any) {
+    if (process.env.REACT_APP_SERVER_ENV === 'PUB') {
+      Raven.captureException(error, { extra: errorInfo });
+    }
   }
 
   public onMappingTitles = (titlesKey: string[], titles: object) => {
