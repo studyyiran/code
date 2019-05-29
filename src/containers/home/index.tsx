@@ -92,7 +92,7 @@ export default class Home extends React.Component<ICommonProps, IHomeState> {
           </p>
           <p className="content-text">
             UpTrade helps you sell your used electronics, so you can get paid <br />
-            for what your device is actually worth
+            for what your device is actually worth.
           </p>
           <Link to="/sell/yourphone/brand" className="button-link">
             <Button type="primary" size="large" className="sell-it-now">
@@ -189,7 +189,7 @@ export default class Home extends React.Component<ICommonProps, IHomeState> {
               <p>
                 Our price guarantee means you get paid <br />
                 for the quoted price based on the
-                <br /> condition of your electronics or we send your <br />
+                <br /> condition of your electronics or we send your
                 electronics back for FREE!
               </p>
             </dd>
@@ -253,8 +253,8 @@ export default class Home extends React.Component<ICommonProps, IHomeState> {
               </div>
               <h4>Eco-Friendly</h4>
               <p>
-                We accept any electronics. If we can’t sell it for <br />
-                you, we will recycle it to prevent it from <br />
+                We accept any electronics. If we can’t sell it for
+                you, we will recycle it to prevent it from
                 ending up in a landfill.
               </p>
             </dd>
