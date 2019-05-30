@@ -18,8 +18,7 @@ export default observer((props: ICommonProps) => {
         <Star rate={Number(reviews.stats.average_rating)} />
       </div>
       <div className="reviews">
-        <span>{reviews.stats.average_rating} Rating</span> 
-         <span>{reviews.stats.total_reviews} Reviews</span>
+        <span>{reviews.stats.average_rating} Rating</span>
       </div>
 
       <div className="reviews-list">
