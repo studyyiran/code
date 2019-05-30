@@ -300,7 +300,7 @@ export default class Home extends React.Component<ICommonProps, IHomeState> {
 
   private getTimes = () => {
     try {
-      const baseTimer = new Date('2019-5-30').getTime() / 1000;
+      const baseTimer = new Date('2019/5/30').getTime() / 1000;
       const currentTimer = new Date().getTime() / 1000;
       const differenceTimer = currentTimer - baseTimer;
       const ounce = parseInt((differenceTimer / 7200).toString(), 10) * 5;
