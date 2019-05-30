@@ -300,10 +300,12 @@ export default class Home extends React.Component<ICommonProps, IHomeState> {
 
   private getTimes = () => {
     try {
+      const baseTimer = new Date('2019-5-30').getTime() / 1000;
       const currentTimer = new Date().getTime() / 1000;
-      let theString = Number(parseInt(currentTimer.toString(), 10) + 7345).toString().substr(-7);
-      const lastString = theString.substr(-3);
-      theString = theString.substring(0, theString.length - 3).replace(/(\d)(?=(?:\d{3})+$)/g, '$1,') + '.' + lastString;
+      const differenceTimer = currentTimer - baseTimer;
+      const ounce = parseInt((differenceTimer / 7200).toString(), 10) * 5;
+      let theString = (5000 + ounce).toString();
+      theString = theString.replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
       this.setState({
         times: theString.split('')
       })
