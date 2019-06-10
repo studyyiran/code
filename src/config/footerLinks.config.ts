@@ -1,7 +1,7 @@
 export default [
   [
     {
-      text: 'SELL YOUR PHONE',
+      text: 'SELL YOUR DEVICE',
       href: ''
     },
     {
