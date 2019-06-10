@@ -340,13 +340,13 @@ class YourPhone implements IYourPhoneStore {
     if (!preOrder.productInfo) {
       return false;
     }
-    if (!preOrder.productInfo.brandId || !preOrder.productInfo.carrier || !preOrder.inquiryKey) {
+    if (!preOrder.productInfo.brandId || !preOrder.productInfo.carrier) {
       return false;
     }
     const orderParams: IAppendOrderParams = {
       brandId: preOrder.productInfo.brandId,
       carrier: preOrder.productInfo.carrier,
-      inquiryKey: preOrder.inquiryKey,
+      inquiryKey: preOrder.inquiryKey || '',
     }
 
     if (this.isTBD) {
