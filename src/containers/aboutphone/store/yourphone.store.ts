@@ -337,9 +337,15 @@ class YourPhone implements IYourPhoneStore {
   }
 
   @action public appendOrder = async (preOrder: Partial<IPreOrder>, errCallback: () => void) => {
+    if (!preOrder.productInfo) {
+      return false;
+    }
+    if (!preOrder.productInfo.brandId || !preOrder.productInfo.carrier) {
+      return false;
+    }
     const orderParams: IAppendOrderParams = {
-      brandId: preOrder.productInfo && preOrder.productInfo.brandId || 0,
-      carrier: preOrder.productInfo && preOrder.productInfo.carrier || '',
+      brandId: preOrder.productInfo.brandId,
+      carrier: preOrder.productInfo.carrier,
       inquiryKey: preOrder.inquiryKey || '',
     }
 
