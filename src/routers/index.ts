@@ -122,14 +122,14 @@ export default [
     }),
     exact: true,
     path: '/',
-    actions: [
-      () => store['common'].getReviews({
-        page: 0,
-        pageSize: 3,
-        order: 'desc'
-      }),
-      store['common'].getModuleOn
-    ]
+    // actions: [
+    //   () => store['common'].getReviews({
+    //     page: 0,
+    //     pageSize: 3,
+    //     order: 'desc'
+    //   }),
+    //   store['common'].getModuleOn
+    // ]
   },
 ];
 
