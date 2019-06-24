@@ -56,7 +56,7 @@ export default class Home extends React.Component<ICommonProps, IHomeState> {
     times: []
   };
   private timer = 0;
-  public componentDidMount() {
+  public async componentDidMount() {
     if (window['__SERVER_RENDER__INITIALSTATE__']) {
       const initialState = window['__SERVER_RENDER__INITIALSTATE__'];
       this.props.common.reviewsPagation = initialState['common'].reviewsPagation;
@@ -64,12 +64,16 @@ export default class Home extends React.Component<ICommonProps, IHomeState> {
       this.props.common.moduleOn = initialState['common'].moduleOn;
       window['__SERVER_RENDER__INITIALSTATE__'] = null;
     } else {
-      this.props.common.getReviewsSort({
-        page: 0,
-        pageSize: 100,
-        order: 'desc'
-      });
-      this.props.common.getModuleOn();
+
+      await this.props.common.getModuleOn();
+
+      if (this.props.common.moduleOn) {
+        this.props.common.getReviewsSort({
+          page: 0,
+          pageSize: 100,
+          order: 'desc'
+        });
+      }
     }
     this.getTimes();
     this.timer = window.setInterval(() => {
