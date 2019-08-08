@@ -1,1 +1,16 @@
+@screen-pc: 1280px;
+@screen-mb: 720px;
 @font-big: 30px;
+@layout-padding: 18px;
+
+.mb(@rules) {
+  @media (max-width: @screen-mb) {
+    @rules()
+  }
+}
+
+.pc(@rules) {
+  @media (min-width: @screen-mb) {
+    @rules()
+  }
+}
