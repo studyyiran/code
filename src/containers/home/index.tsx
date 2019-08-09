@@ -6,7 +6,8 @@ import "./index.less";
 import "./test2.less";
 import { Button } from "antd";
 import { IHomeProps, IHomeState } from "./interface/index.interface";
-import Reviews from './components/reviews'
+import ReviewItem from './components/review'
+import {IReview} from './components/review/index.interface'
 import {BrandLogo} from './components/brandLogo'
 import {SectionIcons} from './components/sectionIcons'
 
@@ -64,6 +65,17 @@ function LinkButton(props: ILinkButton) {
       {children}
     </Button>
   </Link>
+}
+
+function RenderReviewList(props: any) {
+  const {reviews} = props
+  if (reviews && reviews.reviews) {
+    return (reviews.reviews || []).slice(0, 3).map((item: IReview, index: number) => {
+      return <ReviewItem key={index} {...item} />
+    })
+  } else {
+    return null
+  }
 }
 
 @inject('yourphone', 'common')
@@ -135,67 +147,41 @@ export default class Home extends React.Component<IHomeProps, IHomeState> {
       }
     }
   }
-  /*
-  <header className="comp-header-container">
-        <span className="logo">UpTrade</span>
-        <div className="user-info" />
-      </header>
-   */
-  
+
   public render() {
-    const { brands, activeBrandsId } = this.props.yourphone;
+    const { brands } = this.props.yourphone;
     return <main className="page-home">
-        <section className="intro">
-          <h1 className="intro_title">
-            Sell your devices for the best price.
-            <br />No up-front fees.
-          </h1>
-          <img
-            className="pc"
-            src={require("@/images/home/main_bg1.png")}
-          />
-          <img
-            className="mb"
-            src={require("./mb.jpg")}
-          />
-          <LinkButton url={"/sell/yourphone/brand"}>Sell Now!</LinkButton>
-          {brands && brands.length ? <div className="icon-list">
-            <div>
-              <BrandLogo brand={brands[0]} />
-              <BrandLogo brand={brands[1]} />
-              <BrandLogo brand={brands[2]} />
+        <div className="home__intro">
+          <section>
+            <h1>
+              Sell your devices for the best price. No up-front fees.
+            </h1>
+            <div className="comp-search">
+              <div>1</div>
+              <Button>2</Button>
             </div>
-            <div>
-              <BrandLogo brand={brands[3]} />
-              <BrandLogo brand={brands[4]} />
-              <BrandLogo brand={brands[5]} />
+            <div className="intro__icon-list">
+              {brands.map((brand, index) => <BrandLogo key={index} brand={brand} />)}
             </div>
-          </div> : null}
-        </section>
+          </section>
+          <img  src={require("@/images/home/main_bg1.png")} />
+        </div>
         <SectionIcons {...descPart1}>
           <LinkButton url={"/sell/yourphone/brand"}>Sell my device</LinkButton>
         </SectionIcons>
-        <SectionIcons {...descPart2}>
+        <SectionIcons {...descPart2} className="bg-white">
           <video className="comp-video" />
           <LinkButton url={"/sell/yourphone/brand"}>Learn More</LinkButton>
         </SectionIcons>
-        <section className="main-review">
-          <h2>See why customer</h2>
-          <div className="main-review__new-review">
-            <span>circle</span>
-            <span>Write a review</span>
-          </div>
-          <div className="main-review__reviews-container">
-            <article className="comp-review-card">
-              <div className="review-card__rate">1 2 3</div>
-              <p>"is good"</p>
-              <div className="review-card__footer">
-                <span>sun yiran</span>
-                <span>icon</span>
-              </div>
-            </article>
-          </div>
-        </section>
+      <SectionIcons title="See why customer" className={"home__review"}>
+        <div className="review__new-review">
+          <span>circle</span>
+          <span>Write a review</span>
+        </div>
+        <div className="review__reviews-container">
+          <RenderReviewList reviews={this.props.common.reviews}/>
+        </div>
+      </SectionIcons>
     </main>
     return (
       <div className="page-home-container">
@@ -373,9 +359,7 @@ export default class Home extends React.Component<IHomeProps, IHomeState> {
             </dd>
           </dl>
         </div>
-
-        {this.props.common.moduleOn && <Reviews {...this.props} />}
-
+        
         {
           this.state.times.length > 0 &&
           <div className="ewaste-wrapper">

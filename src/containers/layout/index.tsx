@@ -2,7 +2,7 @@ import * as React from 'react';
 import config from '../../config';
 import * as PropTypes from 'prop-types';
 import './index.less';
-// import HeaderHoc from './headerHoc'
+import HeaderHoc from './headerHoc'
 // import FooterHoc from './footerHoc'
 // import { getQueryString } from 'utils';
 import commonStore from '@/store/common';
@@ -72,10 +72,8 @@ export default class LayoutIndex extends React.Component {
   public render() {
     return (
       <div className="layout-container">
-        {/*<HeaderHoc router={this.context.router} />*/}
-        <div className="layout-content">
-          {this.props.children}
-        </div>
+        <HeaderHoc router={this.context.router} />
+        {this.props.children}
         {/*<FooterHoc router={this.context.router} />*/}
       </div>
     );

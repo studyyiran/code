@@ -6,6 +6,7 @@ interface IDesc {
 
 export interface ISectionIcons {
   title: string,
-  descArr: IDesc[],
-  children: any
+  descArr?: IDesc[],
+  children: any,
+  className?: string,
 }

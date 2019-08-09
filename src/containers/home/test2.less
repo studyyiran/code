@@ -1,0 +1,62 @@
+@import (reference) '~@/styles/index.less';
+@bg-white: #f5f7f9;
+
+.page-home {
+  background: @bg-white;
+  .bg-white {
+    background: @white;
+  }
+  .home__intro {
+    background: @bg-gray;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 60px 30px 40px;
+    > section {
+      > h1 {
+        color: @white;
+        font-size: @font-big;
+      }
+      .comp-search {
+        margin: 40px auto 30px
+      }
+      .intro__icon-list {
+        display: flex;
+      }
+    }
+    > img {
+      margin-left: 50px;
+      flex: 1 1 0px;
+      max-width: 20%;
+    }
+  }
+  .home__review {
+    > h2 {
+      
+    }
+    .review__new-review {
+      
+    }
+    .review__reviews-container {
+      width: 895px;
+      margin: auto;
+      .clearfix();
+      .comp-review-card {
+        .review-card__rate {
+          
+        }
+        > p {
+          
+        }
+        .review-card__footer {
+          
+        }
+      }
+    }
+  }
+}
+
+
+.is-mobile {
+  
+}
