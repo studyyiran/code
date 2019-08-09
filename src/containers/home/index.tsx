@@ -2,14 +2,73 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import { inject, observer } from "mobx-react";
 import "./index.less";
+// import "./test.less";
+import "./test2.less";
 import { Button } from "antd";
-import { IHomeState } from "./interface/index.interface";
-import { ICommonProps } from '@/store/interface/common.interface';
+import { IHomeProps, IHomeState } from "./interface/index.interface";
 import Reviews from './components/reviews'
+import {BrandLogo} from './components/brandLogo'
+import {SectionIcons} from './components/sectionIcons'
 
-@inject("common")
+const descPart1 = {
+  title: 'Hello World! Sell You Phone!',
+  descArr: [
+    {
+      descTitle: 'You Get Paid Fast',
+      icon: require("@/images/home/icon_4.png"),
+      content: 'Multiple payment options to get cash how you want.',
+    },
+    {
+      descTitle: 'You Get Paid Fast',
+      icon: require("@/images/home/icon_4.png"),
+      content: 'Multiple payment options to get cash how you want.',
+    },
+    {
+      descTitle: 'You Get Paid Fast',
+      icon: require("@/images/home/icon_4.png"),
+      content: 'Multiple payment options to get cash how you want.',
+    }
+  ]
+}
+
+const descPart2 = {
+  title: 'How it works',
+  descArr: [
+    {
+      descTitle: 'Step 1',
+      icon: require("@/images/home/icon_4.png"),
+      content: 'Multiple payment options to get cash how you want.',
+    },
+    {
+      descTitle: 'Step 2',
+      icon: require("@/images/home/icon_4.png"),
+      content: 'Multiple payment options to get cash how you want.',
+    },
+    {
+      descTitle: 'Step 3',
+      icon: require("@/images/home/icon_4.png"),
+      content: 'Multiple payment options to get cash how you want.',
+    }
+  ]
+}
+
+interface ILinkButton {
+  children: string,
+  url: string
+}
+
+function LinkButton(props: ILinkButton) {
+  const {children, url} = props
+  return <Link to={url} className="comp-link-button">
+    <Button type="primary" size="large" className="link-button__button">
+      {children}
+    </Button>
+  </Link>
+}
+
+@inject('yourphone', 'common')
 @observer
-export default class Home extends React.Component<ICommonProps, IHomeState> {
+export default class Home extends React.Component<IHomeProps, IHomeState> {
   public readonly state: Readonly<IHomeState> = {
     howitworksGroup: [
       [
@@ -55,8 +114,8 @@ export default class Home extends React.Component<ICommonProps, IHomeState> {
     ],
     times: []
   };
-  private timer = 0;
   public async componentDidMount() {
+    this.props.yourphone.getBrandsByCid();
     if (window['__SERVER_RENDER__INITIALSTATE__']) {
       const initialState = window['__SERVER_RENDER__INITIALSTATE__'];
       this.props.common.reviewsPagation = initialState['common'].reviewsPagation;
@@ -75,19 +134,69 @@ export default class Home extends React.Component<ICommonProps, IHomeState> {
         });
       }
     }
-    this.getTimes();
-    this.timer = window.setInterval(() => {
-      this.getTimes();
-    }, 1000)
   }
-  public componentWillUnmount() {
-    clearInterval(this.timer);
-    this.timer = 0;
-    this.setState({
-      times: []
-    })
-  }
+  /*
+  <header className="comp-header-container">
+        <span className="logo">UpTrade</span>
+        <div className="user-info" />
+      </header>
+   */
+  
   public render() {
+    const { brands, activeBrandsId } = this.props.yourphone;
+    return <main className="page-home">
+        <section className="intro">
+          <h1 className="intro_title">
+            Sell your devices for the best price.
+            <br />No up-front fees.
+          </h1>
+          <img
+            className="pc"
+            src={require("@/images/home/main_bg1.png")}
+          />
+          <img
+            className="mb"
+            src={require("./mb.jpg")}
+          />
+          <LinkButton url={"/sell/yourphone/brand"}>Sell Now!</LinkButton>
+          {brands && brands.length ? <div className="icon-list">
+            <div>
+              <BrandLogo brand={brands[0]} />
+              <BrandLogo brand={brands[1]} />
+              <BrandLogo brand={brands[2]} />
+            </div>
+            <div>
+              <BrandLogo brand={brands[3]} />
+              <BrandLogo brand={brands[4]} />
+              <BrandLogo brand={brands[5]} />
+            </div>
+          </div> : null}
+        </section>
+        <SectionIcons {...descPart1}>
+          <LinkButton url={"/sell/yourphone/brand"}>Sell my device</LinkButton>
+        </SectionIcons>
+        <SectionIcons {...descPart2}>
+          <video className="comp-video" />
+          <LinkButton url={"/sell/yourphone/brand"}>Learn More</LinkButton>
+        </SectionIcons>
+        <section className="main-review">
+          <h2>See why customer</h2>
+          <div className="main-review__new-review">
+            <span>circle</span>
+            <span>Write a review</span>
+          </div>
+          <div className="main-review__reviews-container">
+            <article className="comp-review-card">
+              <div className="review-card__rate">1 2 3</div>
+              <p>"is good"</p>
+              <div className="review-card__footer">
+                <span>sun yiran</span>
+                <span>icon</span>
+              </div>
+            </article>
+          </div>
+        </section>
+    </main>
     return (
       <div className="page-home-container">
         <div className="sell-your-phone-wrapper">
@@ -300,23 +409,5 @@ export default class Home extends React.Component<ICommonProps, IHomeState> {
         </div>
       </div>
     );
-  }
-
-  private getTimes = () => {
-    try {
-      const baseTimer = new Date('2019/5/30').getTime() / 1000;
-      const currentTimer = new Date().getTime() / 1000;
-      const differenceTimer = currentTimer - baseTimer;
-      const ounce = parseInt((differenceTimer / 7200).toString(), 10) * 5;
-      let theString = (5000 + ounce).toString();
-      theString = theString.replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
-      this.setState({
-        times: theString.split('')
-      })
-    } catch (e) {
-      this.setState({
-        times: []
-      })
-    }
   }
 }
