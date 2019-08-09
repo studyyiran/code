@@ -2,6 +2,7 @@ import * as React from 'react';
 import { observer } from 'mobx-react'
 import Star from '@/components/star';
 import { IReview } from './index.interface';
+import { Icon } from 'antd';
 import './index.less';
 {/*<article className="comp-review-card">*/}
 {/*  <div className="review-card__rate">1 2 3</div>*/}
@@ -21,7 +22,7 @@ export default observer((props: IReview) => {
     <p className="content">{props.comments}</p>
     <div className="review-card__footer">
       <span>{props.reviewer.first_name} {props.reviewer.last_name}</span>
-      <span>icon</span>
+      <Icon type="check-circle" />
     </div>
   </div>
 })

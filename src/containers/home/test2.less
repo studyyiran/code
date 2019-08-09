@@ -1,33 +1,92 @@
 @import (reference) '~@/styles/index.less';
 @bg-white: #f5f7f9;
+.comp-video {
+  display: block;
+  margin: auto;
+  width: 500px;
+}
+
+.comp-search {
+  display: flex;
+  background: #575d65;
+  width: 350px;
+  padding: 10px;
+  border-radius: 5px;
+  overflow: hidden;
+  color: @white;
+  > label {
+    align-self: center;
+    margin-right: 10px;
+  }
+  > input {
+    background: transparent;
+    flex: 0 0 300px;
+    color: @white;
+  }
+  input::-webkit-input-placeholder {
+    color: @white;
+  }
+}
 
 .page-home {
   background: @bg-white;
+  .comp-link-button {
+    display: block;
+    border-radius: 5px;
+    overflow: hidden;
+    width: 400px;
+    margin: auto;
+    > * {
+      width: 100%;
+    }
+  }
   .bg-white {
     background: @white;
+  }
+  .home__how-it-work {
+    .how-it-work__container {
+      padding: 60px 0 40px;
+      background: @white;
+      > *:first-child {
+        margin-bottom: 30px;
+      }
+    }
   }
   .home__intro {
     background: @bg-gray;
     display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 60px 30px 40px;
+    justify-content: space-between;
+    padding: 60px 30px 40px; > .flex-block {
+      flex: 1 1 0;
+    }
     > section {
+      flex: 0 0 0;
       > h1 {
+        width: 500px;
         color: @white;
         font-size: @font-big;
       }
-      .comp-search {
-        margin: 40px auto 30px
+      .search__container {
+        margin: 40px auto 30px;
+        display: flex;
+        align-items: stretch;
+        > *:last-child {
+          margin-left: 8px;
+          border-radius: 5px;
+          width: 160px;
+        }
       }
+      
       .intro__icon-list {
         display: flex;
+        justify-content: space-between;
+        width: 640px;
       }
     }
     > img {
-      margin-left: 50px;
-      flex: 1 1 0px;
-      max-width: 20%;
+      margin-right: 50px;
+      flex: 0 0 0px;
+      width: 600px;
     }
   }
   .home__review {
@@ -35,6 +94,15 @@
       
     }
     .review__new-review {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: -40px auto 40px;
+      color: black;
+      > *:first-child {
+        font-size: 22px;
+        margin-right: 10px;
+      }
       
     }
     .review__reviews-container {
