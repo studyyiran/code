@@ -2,7 +2,19 @@
 @screen-mb: 720px;
 @font-big: 30px;
 @layout-padding: 18px;
+#root {
+  .mb-ele {
+    display: none;
+  }
+}
 
+.ismobile {
+  #root {
+    .mb-ele {
+      display: block;
+    }
+  }
+}
 .mb(@rules) {
   @media (max-width: @screen-mb) {
     @rules()

@@ -4,7 +4,7 @@ import { inject, observer } from "mobx-react";
 import "./index.less";
 // import "./test.less";
 import "./test2.less";
-import { Button } from "antd";
+import { Button, Icon } from "antd";
 import { IHomeProps, IHomeState } from "./interface/index.interface";
 import ReviewItem from './components/review'
 import {IReview} from './components/review/index.interface'
@@ -55,12 +55,13 @@ const descPart2 = {
 
 interface ILinkButton {
   children: string,
+  className?: string,
   url: string
 }
 
 function LinkButton(props: ILinkButton) {
-  const {children, url} = props
-  return <Link to={url} className="comp-link-button">
+  const {children, url, className} = props
+  return <Link to={url} className={`comp-link-button ${className}`}>
     <Button type="primary" size="large" className="link-button__button">
       {children}
     </Button>
@@ -150,34 +151,45 @@ export default class Home extends React.Component<IHomeProps, IHomeState> {
 
   public render() {
     const { brands } = this.props.yourphone;
+    const {isMobile} = this.props.common;
+    console.log(isMobile)
     return <main className="page-home">
-        <div className="home__intro">
-          <section>
-            <h1>
-              Sell your devices for the best price. No up-front fees.
-            </h1>
+      <div className="home__intro">
+        <div className="flex-block"/>
+        <section>
+          <h1>
+            Sell your devices for the best price. No up-front fees.
+          </h1>
+          <img className="mb-ele" src={require('./bg.jpg')} />
+          <LinkButton className={"mb-ele"} url={"/sell/yourphone/brand"}>Sell Now</LinkButton>
+          <div className="search__container">
             <div className="comp-search">
-              <div>1</div>
-              <Button>2</Button>
+              <label htmlFor="comp-search"><Icon type="search" /></label>
+              <input id="comp-search" placeholder="123123"/>
             </div>
-            <div className="intro__icon-list">
-              {brands.map((brand, index) => <BrandLogo key={index} brand={brand} />)}
-            </div>
-          </section>
-          <img  src={require("@/images/home/main_bg1.png")} />
-        </div>
-        <SectionIcons {...descPart1}>
-          <LinkButton url={"/sell/yourphone/brand"}>Sell my device</LinkButton>
-        </SectionIcons>
-        <SectionIcons {...descPart2} className="bg-white">
-          <video className="comp-video" />
+            <Button type="primary" size="large">Search</Button>
+          </div>
+          <div className="intro__icon-list">
+            {brands.filter((brand, index) => index < 6).map((brand, index) => <BrandLogo key={index} brand={brand} />)}
+          </div>
+        </section>
+        <div className="flex-block"/>
+        <img  src={require("@/images/home/main_bg1.png")} />
+      </div>
+      <SectionIcons {...descPart1}>
+        <LinkButton url={"/sell/yourphone/brand"}>Sell my device</LinkButton>
+      </SectionIcons>
+      <SectionIcons {...descPart2} className="home__how-it-work">
+        <div className="how-it-work__container">
+          <video className="comp-video" src="https://www.w3school.com.cn/i/movie.ogg" controls={true} />
           <LinkButton url={"/sell/yourphone/brand"}>Learn More</LinkButton>
-        </SectionIcons>
-      <SectionIcons title="See why customer" className={"home__review"}>
-        <div className="review__new-review">
-          <span>circle</span>
-          <span>Write a review</span>
         </div>
+      </SectionIcons>
+      <SectionIcons title="See why customer" className={"home__review"}>
+        <Link to="/reviews" className="review__new-review">
+          <Icon type="plus-circle" />
+          <span>Write a review</span>
+        </Link>
         <div className="review__reviews-container">
           <RenderReviewList reviews={this.props.common.reviews}/>
         </div>

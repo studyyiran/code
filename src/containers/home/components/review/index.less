@@ -4,10 +4,10 @@
   width:285px;
   height:230px;
   background: @white;
-  float:left;
   margin-left:12px;
   padding:30px 20px;
   box-sizing: border-box;
+  flex: 1 0 0;
 
   &:first-child {
     margin-left:0;
@@ -54,5 +54,11 @@
     > *:last-child {
       margin-left: 3px;
     }
+  }
+}
+
+.ismobile #root {
+  .comp-review-card {
+    width: 100%;
   }
 }

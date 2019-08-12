@@ -103,12 +103,11 @@
         font-size: 22px;
         margin-right: 10px;
       }
-      
     }
     .review__reviews-container {
       width: 895px;
       margin: auto;
-      .clearfix();
+      display: flex;
       .comp-review-card {
         .review-card__rate {
           
@@ -125,6 +124,58 @@
 }
 
 
-.is-mobile {
-  
+.ismobile #root {
+  .page-home {
+    > .home__intro {
+      > section {
+         img.mb-ele {
+            width: 100%;
+            margin: 30px auto;
+            border-radius: 10px;
+         }
+        > a.mb-ele {
+          width: 100%;
+          margin-bottom: 30px;
+        }
+      }
+      .search__container {
+        display: none;
+      }
+      .intro__icon-list {
+        width: 100%;
+        flex-wrap: wrap;
+      }
+      > img {
+        display: none;
+      }
+      @space: 60px;
+      .intro__icon-list {
+        .comp-brand-logo:nth-child(3n) {
+          margin-left: @space;
+        }
+        .comp-brand-logo:nth-child(3n+1) {
+          margin-right: @space;
+        }
+        .comp-brand-logo {
+          margin-bottom: 30px;
+        }
+        > .comp-brand-logo {
+          > span:last-child {
+            display: none;
+          }
+        }
+      }
+    }
+    > .home__review {
+      > .review__new-review {
+        display: none;
+      }
+      .review__reviews-container {
+        padding: 50px;
+        width: 100%;
+        overflow-x: scroll;
+      }
+    }
+    
+  }
 }
