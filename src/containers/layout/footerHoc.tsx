@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import Footer from './footer';
+import Footer from './components/footer/footer';
 import MobileFooter from './mobile/footer';
 import * as PropTypes from 'prop-types';
 @observer
