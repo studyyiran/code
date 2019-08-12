@@ -53,10 +53,10 @@ export default [
       },
       {
         component: Loadable({
-          loader: () => import('../containers/aboutphone/conditions'),
+          loader: () => import('../containers/aboutphone/page/condition'),
           loading: () => null,
           modules: ['../containers/aboutphone/conditions'],
-          webpack: () => [require.resolveWeak('../containers/aboutphone/conditions') as number],
+          webpack: () => [require.resolveWeak('../containers/aboutphone/page/condition') as number],
         }),
         path: '/sell/yourphone/condition'
       },

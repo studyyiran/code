@@ -6,7 +6,7 @@ import { Modal, Button, Tooltip } from 'antd';
 import Layout from '@/containers/aboutphone/layout';
 import ShippingPage from '@/containers/aboutphone/shipping';
 import PaymentPage from '@/containers/aboutphone/payment';
-import ConditionPage from '@/containers/aboutphone/conditions';
+import ConditionPage from '@/containers/aboutphone/page/condition';
 import ChangeModal from '@/containers/aboutphone/components/changemodal';
 import { donePageValidate } from '@/containers/aboutphone/pageValidate';
 import './done.less';
@@ -66,7 +66,7 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
         Page = <PaymentPage {...this.props} hideLayout={true} onRef={this.handleOnRef} />;
         break;
       case EChangeType.CONDITION:
-        Page = <ConditionPage {...this.props} hideLayout={true} onRef={this.handleOnRef} />;
+        Page = <ConditionPage />;
         break;
     }
 
