@@ -49,6 +49,21 @@ interface IFooterState {
   email: string
 }
 
+interface IRenderByCondition {
+  isMobile: boolean,
+  ComponentMb: any,
+  ComponentPc: any,
+}
+
+function RenderByCondition(props: IRenderByCondition) {
+  const {isMobile, ComponentMb, ComponentPc} = props
+  if (isMobile) {
+    return ComponentMb
+  } else {
+    return ComponentPc
+  }
+}
+
 export default class Footer extends React.Component<{ router: any }, IFooterState> {
   public readonly state = {
     email: ''
@@ -62,24 +77,39 @@ export default class Footer extends React.Component<{ router: any }, IFooterStat
       </Col>
     ))
     return <footer className="comp-footer">
-      <h1 className="footer__logo">Logo</h1>
+      <h1 className="footer__logo">UpTrade</h1>
       <form className="footer__email-form">
         <h2>Keep in touch</h2>
         <p>123</p>
-        <input />
+        <input placeholder="Email"/>
       </form>
-      <div className="footer__group">
-        {footerInfo.map(({className, title, arr}) => {
-          return <ul className={className} key={title}>
-            <h2>{title}</h2>
-            {arr.map(({subTitle, href}) => {
-              return <li key={subTitle}>
-                <Link to={href}>{subTitle}</Link>
-              </li>
-            })}
-          </ul>
-        })}
-      </div>
+      <RenderByCondition ComponentMb={
+        <div className="footer__group">
+          {footerInfo.map(({className, title, arr}) => {
+            return <ul className={className} key={title}>
+              <h2>{title}</h2>
+              {arr.map(({subTitle, href}) => {
+                return <li key={subTitle}>
+                  <Link to={href}>{subTitle}</Link>
+                </li>
+              })}
+            </ul>
+          })}
+        </div>
+      } ComponentPc={
+        <div className="footer__group">
+          {footerInfo.map(({className, title, arr}) => {
+            return <ul className={className} key={title}>
+              <h2>{title}</h2>
+              {arr.map(({subTitle, href}) => {
+                return <li key={subTitle}>
+                  <Link to={href}>{subTitle}</Link>
+                </li>
+              })}
+            </ul>
+          })}
+        </div>
+      } />
     </footer>
     return (
       <div className="comp-footer-container">

@@ -3,21 +3,29 @@
 .comp-footer {
   background: @bg-gray;
   color: @white;
+  padding: 30px 20px 20px;
+  .clearfix();
   .title-font() {
     font-size: @font-size-title;
+    margin-bottom: 20px;
   }
   .content-font() {
-    font-size: @font-small;
+    font-size: @font-size-normal;
+    margin-bottom: 10px;
   }
   .footer__logo {
     font-size: 30px;
-    
+    margin-bottom: 30px;
   }
   .footer__group {
     display: flex;
     > ul {
       > h2 {
         .title-font();
+      }
+      > li {
+        .content-font();
+        margin-right: 50px;
       }
     }
     .footer-group-buy {
@@ -30,10 +38,15 @@
   .footer__email-form {
     float: right;
     > h2 {
-      
+      .title-font();
     }
     p {
-      
+      .content-font();
+    }
+    > input {
+      height: 50px;
+      padding: 10px;
+      border-radius: 5px;
     }
   }
 }
