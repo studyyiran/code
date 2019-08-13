@@ -1,3 +1,3 @@
-export interface IConditionsProps {
+export interface IConditionProps {
   test?: any
 }
