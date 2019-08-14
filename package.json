@@ -124,7 +124,7 @@
     "shipit-shared": "^4.4.2",
     "shipit-shared-copy": "^0.1.0",
     "ts-import-plugin": "^1.5.5",
-    "typescript": "3.5.3"
+    "typescript": "3.0.3"
   },
   "jest": {
     "collectCoverageFrom": [
