@@ -1,4 +1,3 @@
-// tslint:disable
 import React, { useReducer } from "react";
 import { Collapse } from 'antd';
 // import { IConditionProps } from './index.interface';
@@ -32,8 +31,9 @@ default 和 active似乎 遵从active
  */
 
 function reducer(state: any, action: IAction) {
+  console.log(arguments)
   const { type, value } = action;
-  function changeTargetById (arr: Array<any>, changedId: string, answer: any) {
+  function changeTargetById (arr: any[], changedId: string, answer: any) {
     // copy
     const changedArr = arr.slice(0);
     const findItemIndex = arr.findIndex((item: any) => {
@@ -56,7 +56,7 @@ function reducer(state: any, action: IAction) {
       // 新建一个新的
       const newQuestionAnswer: IUserQuestionAnswer = {id: questionId, answerArr: []}
       // 获取整合后的
-      const questionArr: Array<IUserQuestionAnswer> = changeTargetById(state.answerArr, questionId, newQuestionAnswer)
+      const questionArr: IUserQuestionAnswer[] = changeTargetById(state.answerArr, questionId, newQuestionAnswer)
       // 再取出来
       const targetArr = questionArr.find(item => item.id === questionId)
       // 新建一个正确的、新answer
@@ -65,9 +65,7 @@ function reducer(state: any, action: IAction) {
       // @ts-ignore
       targetArr.answerArr = changeTargetById((targetArr as IUserQuestionAnswer).answerArr, answerId, newAnswer)
       // 将target替换到原来的
-      console.log(newAnswer)
       const finalArr = changeTargetById(questionArr, questionId, targetArr)
-      console.log(finalArr)
       return { ...state, answerArr: finalArr};
     }
     case "setCurrentActive":
@@ -103,7 +101,7 @@ export function Conditions() {
       title: "scratch",
       subQuestionArr: [
         {
-          id: "00",
+          id: "10",
           content: "Are there any scratches ib the phone",
           type: 'default',
         }
@@ -136,13 +134,10 @@ export function ConditionForm(props: IConditionForm) {
       return answer.id !== id;
     });
   });
-  console.log(activeQuestion);
+  console.log(state)
   return (
     <Collapse
       activeKey={activeQuestion && activeQuestion.id}
-      onChange={e => {
-        console.log(e);
-      }}
     >
       {questionArr.map((question: IQuestion, index) => {
         const { id } = question;

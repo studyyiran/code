@@ -2,7 +2,7 @@
 declare var module: __WebpackModuleApi.Module
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { AppContainer } from 'react-hot-loader';
+// import { AppContainer } from 'react-hot-loader';
 import * as Loadable from 'react-loadable';
 import App from './App';
 import './styles/index.less';
@@ -13,14 +13,21 @@ if (process.env.REACT_APP_SERVER_ENV === 'PUB') {
 }
 if (process.env.NODE_ENV === "development") {
   ReactDOM.render(
-    <AppContainer>
-      <App />
-    </AppContainer>,
+    <App />,
     document.getElementById('root') as HTMLElement
   );
   if (module.hot) {
     module.hot.accept();
   }
+  // ReactDOM.render(
+  //   <AppContainer>
+  //     <Test />
+  //   </AppContainer>,
+  //   document.getElementById('root') as HTMLElement
+  // );
+  // if (module.hot) {
+  //   module.hot.accept();
+  // }
 }
 
 
