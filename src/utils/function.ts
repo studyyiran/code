@@ -40,6 +40,7 @@ export const checkedMobilePhone = (num: string) => {
 
 export const isArrayAIsPartOfArrayB = <T>(a: T[], b: T[]) => {
   for (const item of a) {
+    // @ts-ignore
     if (b.findIndex(v => item.toString() === v.toString()) < 0) {
       return false;
     }
@@ -58,6 +59,7 @@ export const isArrayAIsPartOfArrayBMult = <T>(arr: T[], collections: T[][]) => {
 
 export const elementIsPartOfArrayBMult = <T>(a: T, collections: T[][]) => {
   for (const b of collections) {
+    // @ts-ignore
     if (b.findIndex(v => a.toString() === v.toString()) > -1) {
       return true;
     }

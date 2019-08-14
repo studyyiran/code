@@ -1,3 +1,4 @@
+// tslint:disable
 import React, { useReducer } from "react";
 // import { IConditionProps } from './index.interface';
 import './index.less';

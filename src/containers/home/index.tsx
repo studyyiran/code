@@ -165,7 +165,7 @@ export default class Home extends React.Component<IHomeProps, IHomeState> {
           <div className="search__container">
             <div className="comp-search">
               <label htmlFor="comp-search"><Icon type="search" /></label>
-              <input id="comp-search" placeholder="123123"/>
+              <input id="comp-search" placeholder="search"/>
             </div>
             <Button type="primary" size="large">Search</Button>
           </div>

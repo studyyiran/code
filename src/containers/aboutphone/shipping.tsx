@@ -354,6 +354,7 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
   // 失去焦点的时候判断下否能拉取接口，全手动处理
   private handleZipCodeBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { getFieldError, setFields } = this.props.form;
+    // @ts-ignore
     const err = getFieldError('zipCode') ? getFieldError('zipCode')[0] as string : false;
     console.log(err)
     if (err) {
@@ -448,4 +449,4 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
     // }
   }
 }
-export default Form.create({ onValuesChange: onValuesChange })(ShippingAddress);
+export default Form.create<IShippingProps>({ onValuesChange: onValuesChange })(ShippingAddress);

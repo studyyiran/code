@@ -50,7 +50,7 @@ interface IFooterState {
 }
 
 interface IRenderByCondition {
-  isMobile: boolean,
+  isMobile?: boolean,
   ComponentMb: any,
   ComponentPc: any,
 }

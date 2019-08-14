@@ -52,6 +52,7 @@ export default [
         path: '/sell/yourphone/other'
       },
       {
+        // @ts-ignore
         component: Loadable({
           loader: () => import('../containers/aboutphone/page/condition'),
           loading: () => null,
@@ -61,6 +62,7 @@ export default [
         path: '/sell/yourphone/condition'
       },
       {
+        // @ts-ignore
         component: Loadable({
           loader: () => import('../containers/aboutphone/shipping'),
           loading: () => null,
@@ -70,6 +72,7 @@ export default [
         path: '/sell/yourphone/shipping'
       },
       {
+        // @ts-ignore
         component: Loadable({
           loader: () => import('../containers/aboutphone/payment'),
           loading: () => null,
@@ -97,6 +100,7 @@ export default [
         path: '/sell/yourphone/checkorder/:orderNo'
       },
       {
+        // @ts-ignore
         component: Loadable({
           loader: () => import('../containers/aboutphone/shipment'),
           loading: () => null,

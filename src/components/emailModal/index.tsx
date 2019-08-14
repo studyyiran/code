@@ -69,7 +69,7 @@ class FormItem extends React.Component<{ common: ICommonStore, onCancel: () => v
 }
 
 
-const EmailModal = Form.create()(FormItem)
+const EmailModal = Form.create<{ common: ICommonStore, onCancel: () => void } & FormComponentProps>()(FormItem)
 
 
 

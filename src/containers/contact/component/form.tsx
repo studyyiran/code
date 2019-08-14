@@ -93,4 +93,5 @@ class ContactForm extends React.Component<IContactFormProps> {
   }
 }
 
-export default Form.create()(ContactForm);
+// antd无法自动推导。需要再声明一下。
+export default Form.create<IContactFormProps>()(ContactForm);
