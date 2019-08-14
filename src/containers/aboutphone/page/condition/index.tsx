@@ -1,10 +1,13 @@
 // tslint:disable
 import React, { useReducer } from "react";
+import { Collapse } from 'antd';
 // import { IConditionProps } from './index.interface';
 import './index.less';
+import {IAction} from '@/interface/index.interface'
+import {IQuestion, IAnswer, IUserAnswer, IUserQuestionAnswer} from './index.interface'
+import {WrapperPanel} from './components/WrapperPanel'
 // import { inject, observer } from 'mobx-react';
-import { Collapse, Button } from 'antd';
-const {Panel} = Collapse
+
 
 // import Layout from '@/containers/aboutphone/layout';
 // import ConditionItem from '@/containers/aboutphone/components/conditionitem';
@@ -23,81 +26,49 @@ const {Panel} = Collapse
 //   { "id": 351, "name": "Is your display cracked?", "isSkuProperty": false, "pricePropertyValues": [{ "id": 2118, "propertyName": 351, "value": "No Cracks", "isPreferred": true, "isSkuProperty": false }, { "id": 2122, "propertyName": 351, "value": "Cracked", "isPreferred": false, "isSkuProperty": false }], "illustrationContent": null }
 // ]
 
-function SaveButton(props: any) {
-  return <Button onClick={props.onClick}>Save</Button>;
-}
-
-interface IMyPanel {
-  dispatch: any,
-  questionInfo: {
-    id: string,
-    question: string,
-  },
-  answerInfo: {
-    answer: string
-  },
-}
-
-function MyPanel(props: IMyPanel) {
-  const { dispatch, questionInfo, answerInfo } = props;
-  const { id, question } = questionInfo;
-  const { answer } = answerInfo;
-  return (
-    <Panel
-      {...props}
-      showArrow={false}
-      header={
-        <div>
-          {/*<img src={require("")} />*/}
-          <span>123</span>
-        </div>
-      }
-      key={id}
-      extra={<span>Step 4 of 7</span>}
-    >
-      <p>{question}</p>
-      <p>{answer}</p>
-      <SaveButton
-        onClick={() => {
-          dispatch("setAnswerArr", {
-            questionId: id,
-            answer: "123123"
-          });
-        }}
-      />
-    </Panel>
-  );
-}
 
 /*
 default 和 active似乎 遵从active
  */
 
-interface IAction {
-  type: string,
-  value: any
-}
-
-function reducer(action: IAction, state: any) {
+function reducer(state: any, action: IAction) {
   const { type, value } = action;
+  function changeTargetById (arr: Array<any>, changedId: string, answer: any) {
+    // copy
+    const changedArr = arr.slice(0);
+    const findItemIndex = arr.findIndex((item: any) => {
+      const { id } = item;
+      return id === changedId;
+    });
+    if (findItemIndex === -1) {
+      changedArr.push(answer);
+    } else {
+      changedArr[findItemIndex] = answer;
+    }
+    return changedArr
+  }
   switch (type) {
     case "setAnswerArr": {
-      const { questionId, answer } = value;
-      const answerArr = state.answerArr.slice(0);
-      const answerIndex = answerArr.findIndex((answerItem: any) => {
-        const { id } = answerItem;
-        return id === questionId;
-      });
-      const newAnswer = {
-        id: questionId,
-        answer
-      };
-      if (answerIndex === -1) {
-        answerArr.push(newAnswer);
-      } else {
-        answerArr[answerIndex] = newAnswer;
-      }
-      return { ...state, answerArr };
+      const { questionId, answerId, answer} = value;
+      // 1 获取当前的 或者 做一个新的
+      // 2 将answer 补充上。
+      // 3 返回掉
+      // 新建一个新的
+      const newQuestionAnswer: IUserQuestionAnswer = {id: questionId, answerArr: []}
+      // 获取整合后的
+      const questionArr: Array<IUserQuestionAnswer> = changeTargetById(state.answerArr, questionId, newQuestionAnswer)
+      // 再取出来
+      const targetArr = questionArr.find(item => item.id === questionId)
+      // 新建一个正确的、新answer
+      const newAnswer : IUserAnswer = {id: answerId, answer: answer}
+      // 补充替换到target中
+      // @ts-ignore
+      targetArr.answerArr = changeTargetById((targetArr as IUserQuestionAnswer).answerArr, answerId, newAnswer)
+      // 将target替换到原来的
+      console.log(newAnswer)
+      const finalArr = changeTargetById(questionArr, questionId, targetArr)
+      console.log(finalArr)
+      return { ...state, answerArr: finalArr};
     }
     case "setCurrentActive":
       return { ...state };
@@ -106,36 +77,47 @@ function reducer(action: IAction, state: any) {
   }
 }
 
+// for fix sell
+export default function () {
+  return <Conditions />
+}
+
 export function Conditions() {
   const initState = {
     answerArr: [] // 用户输入的。
   };
   const questionArr = [
     {
-      id: "1",
-      question: "111"
+      id: "0",
+      title: "power",
+      subQuestionArr: [
+        {
+          id: "00",
+          content: "Does your phone power on to the home screen?",
+          type: 'default',
+        }
+      ]
     },
     {
-      id: "2",
-      question: "222"
-    }
+      id: "1",
+      title: "scratch",
+      subQuestionArr: [
+        {
+          id: "00",
+          content: "Are there any scratches ib the phone",
+          type: 'default',
+        }
+      ]
+    },
   ]
   const [state, dispatch] = useReducer(reducer, initState);
   return <ConditionForm state={state} dispatch={dispatch} questionArr={questionArr} phoneConditionArr={[]}/>;
 }
 
-interface IQuestion {
-  id: string,
-  question: string
-}
 
-interface IAnswer {
-  id: string,
-  answer: string
-}
 
 interface IConditionForm {
-  dispatch: any,
+  dispatch: (action: IAction) => void,
   state: any,
   questionArr: IQuestion[],
   phoneConditionArr: IAnswer[]
@@ -162,10 +144,10 @@ export function ConditionForm(props: IConditionForm) {
         console.log(e);
       }}
     >
-      {questionArr.map((question, index) => {
+      {questionArr.map((question: IQuestion, index) => {
         const { id } = question;
         return (
-          <MyPanel
+          <WrapperPanel
             key={id}
             dispatch={dispatch}
             questionInfo={question}
