@@ -1,30 +1,9 @@
 import React, { useReducer } from "react";
-import { Collapse } from 'antd';
-// import { IConditionProps } from './index.interface';
 import './index.less';
+import { Collapse } from 'antd';
 import {IAction} from '@/interface/index.interface'
-import {IQuestion, IAnswer, IUserAnswer, IUserQuestionAnswer} from './index.interface'
-import {WrapperPanel} from './components/WrapperPanel'
-// import { inject, observer } from 'mobx-react';
-
-
-// import Layout from '@/containers/aboutphone/layout';
-// import ConditionItem from '@/containers/aboutphone/components/conditionitem';
-
-// import { IConditionsProps, ISubSkuPricePropertyValues } from './interface/index.interface';
-// import { message } from 'antd';
-// import { IProductInfo } from '@/store/interface/user.interface';
-// import { conditionPageValidate, noteUserModal } from '@/containers/aboutphone/pageValidate';
-// import Breadcrumb from '@/containers/aboutphone/components/breadcrumb';
-// import ProgressBar from '@/containers/aboutphone/components/progressbar--mobile';
-// import classnames from 'classnames';
-
-// const TBDPPNS = [
-//   { "id": 316, "name": "Can your phone power on to the Home screen?", "isSkuProperty": false, "pricePropertyValues": [{ "id": 2026, "propertyName": 316, "value": "Turns on", "isPreferred": true, "isSkuProperty": false }, { "id": 2027, "propertyName": 316, "value": "Doesn't turn on", "isPreferred": false, "isSkuProperty": false }], "illustrationContent": null },
-//   { "id": 345, "name": "Is your phone 100% functional?", "isSkuProperty": false, "pricePropertyValues": [{ "id": 2104, "propertyName": 345, "value": "Fully functional", "isPreferred": true, "isSkuProperty": false }, { "id": 2105, "propertyName": 345, "value": "Have functional problems", "isPreferred": false, "isSkuProperty": false }], "illustrationContent": null },
-//   { "id": 351, "name": "Is your display cracked?", "isSkuProperty": false, "pricePropertyValues": [{ "id": 2118, "propertyName": 351, "value": "No Cracks", "isPreferred": true, "isSkuProperty": false }, { "id": 2122, "propertyName": 351, "value": "Cracked", "isPreferred": false, "isSkuProperty": false }], "illustrationContent": null }
-// ]
-
+import {IQuestion, IUserAnswer, IUserQuestionAnswer} from './index.interface'
+import {WrapperPanel} from './components/wrapperPanel'
 
 /*
 default 和 active似乎 遵从active
@@ -54,19 +33,19 @@ function reducer(state: any, action: IAction) {
       // 2 将answer 补充上。
       // 3 返回掉
       // 新建一个新的
-      const newQuestionAnswer: IUserQuestionAnswer = {id: questionId, answerArr: []}
+      const newQuestionAnswer: IUserQuestionAnswer = {id: questionId, subAnswerArr: []}
       // 获取整合后的
-      const questionArr: IUserQuestionAnswer[] = changeTargetById(state.answerArr, questionId, newQuestionAnswer)
+      const questionArr: IUserQuestionAnswer[] = changeTargetById(state.userAnswerInput, questionId, newQuestionAnswer)
       // 再取出来
       const targetArr = questionArr.find(item => item.id === questionId)
       // 新建一个正确的、新answer
       const newAnswer : IUserAnswer = {id: answerId, answer: answer}
       // 补充替换到target中
       // @ts-ignore
-      targetArr.answerArr = changeTargetById((targetArr as IUserQuestionAnswer).answerArr, answerId, newAnswer)
+      targetArr.subAnswerArr = changeTargetById((targetArr as IUserQuestionAnswer).subAnswerArr, answerId, newAnswer)
       // 将target替换到原来的
       const finalArr = changeTargetById(questionArr, questionId, targetArr)
-      return { ...state, answerArr: finalArr};
+      return { ...state, userAnswerInput: finalArr};
     }
     case "setCurrentActive":
       return { ...state };
@@ -80,9 +59,16 @@ export default function () {
   return <Conditions />
 }
 
-export function Conditions() {
+// 后端接口
+interface IConditions {
+  phoneInfo?: any,
+  phoneConditionArr?: any,
+}
+
+export function Conditions(props: IConditions) {
+  const {phoneInfo = [], phoneConditionArr = []} = props
   const initState = {
-    answerArr: [] // 用户输入的。
+    userAnswerInput: phoneConditionArr // 用户输入的。
   };
   const questionArr = [
     {
@@ -109,44 +95,85 @@ export function Conditions() {
     },
   ]
   const [state, dispatch] = useReducer(reducer, initState);
-  return <ConditionForm state={state} dispatch={dispatch} questionArr={questionArr} phoneConditionArr={[]}/>;
+  return <ConditionForm state={state} dispatch={dispatch} questionArr={questionArr} phoneInfo={phoneInfo} />;
 }
-
 
 
 interface IConditionForm {
   dispatch: (action: IAction) => void,
   state: any,
   questionArr: IQuestion[],
-  phoneConditionArr: IAnswer[]
+  phoneInfo: any[],
+}
+
+// 关于手机情况的 写死的 问题
+const phoneInfoQuestion : IQuestion = {
+  id: 'phoneInfoQuestion',
+  title: 'About your phone',
+  subQuestionArr: [
+    {
+      id: 'phoneInfoSubQuestion1',
+      content: 'Phone Manufacture',
+      type: 'list',
+    },
+    {
+      id: 'phoneInfoSubQuestion2',
+      content: 'Model',
+      type: 'list',
+    },
+    {
+      id: 'phoneInfoSubQuestion3',
+      content: 'Storage',
+      type: 'list',
+    },
+    {
+      id: 'phoneInfoSubQuestion4',
+      content: 'Carrier',
+      type: 'list',
+    }
+  ]
 }
 
 export function ConditionForm(props: IConditionForm) {
   const { state, dispatch } = props;
-  const { answerArr = [] } = state;
+  const userAnswerInput : IUserQuestionAnswer[] = state.userAnswerInput
   const {
     questionArr = [],
-    phoneConditionArr = []
+    phoneInfo = {}
   } = props;
-  const activeQuestion = questionArr.find((question: IQuestion) => {
-    const { id } = question;
-    return answerArr.every((answer: IAnswer) => {
-      return answer.id !== id;
+  const currentQuestion = questionArr.find((question: IQuestion) => {
+    const { id: questionId } = question;
+    return !userAnswerInput.some((answer) => {
+      const {id: answerQuestionId, subAnswerArr} = answer
+      const result =  answerQuestionId === (questionId && subAnswerArr.length);
+      return result
     });
   });
+  const actionKey = []
+  if (currentQuestion && currentQuestion.id) {
+    actionKey.push(currentQuestion.id)
+  }
   console.log(state)
   return (
     <Collapse
-      activeKey={activeQuestion && activeQuestion.id}
+      activeKey={actionKey}
     >
+      <WrapperPanel
+        key={'first'}
+        dispatch={dispatch}
+        questionInfo={phoneInfoQuestion}
+        answerInfo={(phoneInfo as IUserQuestionAnswer)}
+      />
       {questionArr.map((question: IQuestion, index) => {
         const { id } = question;
+        // 外面设置 还是里面设置 谁更合理？谁该负责？
+        const answerInfo = userAnswerInput.find(userAnswer => userAnswer.id === id) || {}
         return (
           <WrapperPanel
             key={id}
             dispatch={dispatch}
             questionInfo={question}
-            answerInfo={phoneConditionArr[question.id] || {}}
+            answerInfo={answerInfo as IUserQuestionAnswer}
           />
         );
       })}
@@ -154,6 +181,26 @@ export function ConditionForm(props: IConditionForm) {
   );
 }
 
+// import { IConditionProps } from './index.interface';
+// import { inject, observer } from 'mobx-react';
+
+
+// import Layout from '@/containers/aboutphone/layout';
+// import ConditionItem from '@/containers/aboutphone/components/conditionitem';
+
+// import { IConditionsProps, ISubSkuPricePropertyValues } from './interface/index.interface';
+// import { message } from 'antd';
+// import { IProductInfo } from '@/store/interface/user.interface';
+// import { conditionPageValidate, noteUserModal } from '@/containers/aboutphone/pageValidate';
+// import Breadcrumb from '@/containers/aboutphone/components/breadcrumb';
+// import ProgressBar from '@/containers/aboutphone/components/progressbar--mobile';
+// import classnames from 'classnames';
+
+// const TBDPPNS = [
+//   { "id": 316, "name": "Can your phone power on to the Home screen?", "isSkuProperty": false, "pricePropertyValues": [{ "id": 2026, "propertyName": 316, "value": "Turns on", "isPreferred": true, "isSkuProperty": false }, { "id": 2027, "propertyName": 316, "value": "Doesn't turn on", "isPreferred": false, "isSkuProperty": false }], "illustrationContent": null },
+//   { "id": 345, "name": "Is your phone 100% functional?", "isSkuProperty": false, "pricePropertyValues": [{ "id": 2104, "propertyName": 345, "value": "Fully functional", "isPreferred": true, "isSkuProperty": false }, { "id": 2105, "propertyName": 345, "value": "Have functional problems", "isPreferred": false, "isSkuProperty": false }], "illustrationContent": null },
+//   { "id": 351, "name": "Is your display cracked?", "isSkuProperty": false, "pricePropertyValues": [{ "id": 2118, "propertyName": 351, "value": "No Cracks", "isPreferred": true, "isSkuProperty": false }, { "id": 2122, "propertyName": 351, "value": "Cracked", "isPreferred": false, "isSkuProperty": false }], "illustrationContent": null }
+// ]
 
 // @inject('yourphone')
 // @observer
