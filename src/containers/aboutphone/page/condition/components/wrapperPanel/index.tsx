@@ -1,8 +1,9 @@
+import React from "react";
 import { Collapse, Button } from 'antd';
 const {Panel} = Collapse
 import {IAction} from '@/interface/index.interface'
-import React from "react";
-import {IQuestion} from "@/containers/aboutphone/page/condition/index.interface";
+import {IQuestion, IUserQuestionAnswer} from "@/containers/aboutphone/page/condition/index.interface";
+import {Select} from "../subQuestion";
 
 function SaveButton(props: any) {
   return <Button onClick={props.onClick}>Save</Button>;
@@ -14,16 +15,13 @@ function SaveButton(props: any) {
 interface IWrapperPanel {
   dispatch:  (action: IAction) => void,
   questionInfo: IQuestion,
-  answerInfo: {
-    id: string,
-    answer: string
-  },
+  answerInfo: IUserQuestionAnswer,
 }
 
 export function WrapperPanel(props: IWrapperPanel) {
   const { dispatch, questionInfo, answerInfo } = props;
   const { id: questionId, title, subQuestionArr } = questionInfo;
-  const { id: answerId, answer } = answerInfo;
+  const { id: answerId, subAnswerArr } = answerInfo;
   const sureHandler = (subQuestionId: string) => {
     dispatch({type: 'setAnswerArr', value: {
         questionId,
@@ -50,7 +48,7 @@ export function WrapperPanel(props: IWrapperPanel) {
         return <div key={subQuestionId}>
           <p>content: {content}</p>
           <p>type: {type}</p>
-          <p>answer: {answer}</p>
+          <Select defaultValue={subAnswerArr.find(answer => answer.id === subQuestionId)} />
           <p>answerId: {answerId}</p>
           <SaveButton onClick={sureHandler.bind({}, subQuestionId)} />
         </div>
