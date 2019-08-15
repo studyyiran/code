@@ -13,6 +13,8 @@
     ]
   },
   "rules": {
+    // everyone like lambda
+    "jsx-no-lambda": false,
     "no-bitwise": false,
     "ordered-imports": false,
     "class-name": false,

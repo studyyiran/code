@@ -47,6 +47,10 @@ function reducer(state: any, action: IAction) {
       const finalArr = changeTargetById(questionArr, questionId, targetArr)
       return { ...state, userAnswerInput: finalArr};
     }
+    case "setEditKey":
+      console.log('enter')
+      // state 需要使用type吗？
+      return { ...state, editKey: value };
     case "setCurrentActive":
       return { ...state };
     case "set":
@@ -68,7 +72,8 @@ interface IConditions {
 export function Conditions(props: IConditions) {
   const {phoneInfo = [], phoneConditionArr = []} = props
   const initState = {
-    userAnswerInput: phoneConditionArr // 用户输入的。
+    userAnswerInput: phoneConditionArr, // 用户输入的。
+    editKey: [] // 用户输入的。
   };
   const questionArr = [
     {
@@ -136,30 +141,84 @@ const phoneInfoQuestion : IQuestion = {
 
 export function ConditionForm(props: IConditionForm) {
   const { state, dispatch } = props;
-  console.log(state)
+  // 这块怎么用语法写
   const userAnswerInput : IUserQuestionAnswer[] = state.userAnswerInput
+  const editKey : string[] = state.editKey
   const {
     questionArr = [],
     // phoneInfo
   } = props;
-  const currentQuestion = questionArr.find((question: IQuestion) => {
-    const { id: questionId } = question;
-    return !userAnswerInput.some((answer) => {
-      const {id: answerQuestionId, subAnswerArr} = answer
-      const result =  answerQuestionId === (questionId && subAnswerArr.length);
-      return result
-    });
-  });
-  const actionKey = []
-  if (currentQuestion && currentQuestion.id) {
-    actionKey.push(currentQuestion.id)
+
+  let actionKey : string[] = []
+  actionKey = actionKey.concat(editKey)
+  const isDoingKey : string = isDoing()
+  if (isDoingKey) {
+    actionKey.push(isDoingKey)
   }
-  console.log(state)
+  function getStatus(questionId: string) {
+    if (editKey.includes(questionId)) {
+      console.log(actionKey)
+      console.log(questionId)
+      return 'edit'
+    }
+    if (isDone(questionId)) {
+      return 'done'
+    }
+    if (isDoing() === questionId) {
+      return 'doing'
+    }
+    return 'close'
+  }
+  // 判断是否可以。0) isFinish,is can edit  
+  function isDone(key: string) {
+    const result = questionArr.find((question) => {
+      const { subQuestionArr } = question;
+      const findIt = userAnswerInput.find((answer) => {
+        const {id: answerQuestionId} = answer
+        return answerQuestionId === key
+      });
+      return Boolean(findIt && (findIt.subAnswerArr.length === subQuestionArr.length))
+    });
+    return !!result
+  }
+
+  function isDoing() {
+    const currentQuestion = questionArr.find((question: IQuestion) => {
+      const { id: questionId, subQuestionArr } = question;
+      return !userAnswerInput.some((answer) => {
+        const {id: answerQuestionId, subAnswerArr} = answer
+        const result = ((answerQuestionId === questionId) && (subAnswerArr.length === subQuestionArr.length));
+        return result
+      });
+    });
+    if (currentQuestion && currentQuestion.id) {
+      return currentQuestion.id
+    } else {
+      return ''
+    }
+  }
+  
+  function panelOnChangeHandler(activeKey: string) {
+    // 1) no edit.just have doing.
+    if (isDone(activeKey) && !(editKey && editKey.length)) {
+      dispatch({type: "setEditKey", value: activeKey})
+    }
+    // 如果可以打开。就插入进去
+  }
+  function onSaveHandler() {
+    dispatch({type: "setEditKey", value: []})
+  }
+  const extraQuestion : number = 1
   return (
     <Collapse
       activeKey={actionKey}
     >
       <WrapperPanel
+        onSave={onSaveHandler}
+        status={getStatus('first')}
+        onChange={panelOnChangeHandler}
+        index={extraQuestion}
+        total={questionArr.length + extraQuestion}
         key={'first'}
         dispatch={dispatch}
         questionInfo={phoneInfoQuestion}
@@ -167,10 +226,15 @@ export function ConditionForm(props: IConditionForm) {
       />
       {questionArr.map((question: IQuestion, index) => {
         const { id } = question;
-        // 外面设置 还是里面设置 谁更合理？谁该负责？
+        // 外面设置 还是里面设置 谁更合理？谁该负责？里面进行参数缺省更加合理。
         const answerInfo = userAnswerInput.find(userAnswer => userAnswer.id === id)
         return (
           <WrapperPanel
+            onSave={onSaveHandler}
+            status={getStatus(id)}
+            onChange={panelOnChangeHandler}
+            index={index + extraQuestion + 1}
+            total={questionArr.length + extraQuestion}
             key={id}
             dispatch={dispatch}
             questionInfo={question}
