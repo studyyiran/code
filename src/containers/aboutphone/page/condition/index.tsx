@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from "react";
+import React, { useReducer, useState, useEffect } from "react";
 import './index.less';
 import { Collapse } from 'antd';
 import {IAction} from '@/interface/index.interface'
@@ -160,41 +160,27 @@ const phoneInfoQuestion : IQuestion = {
 }
 
 export function ConditionForm(props: IConditionForm) {
-  const [continueKey, setContinueKey] = useState(firstQuestionKey)
+  const [maxActiveKey, setMaxActiveKey] = useState("")
   const { state, dispatch } = props;
   
   // 这块怎么用语法写
   const userAnswerInput : IUserQuestionAnswer[] = state.userAnswerInput
   const userPhoneInfoInput : IUserQuestionAnswer = state.userPhoneInfoInput
-
-  // check continue
-  if (userAnswerInput && userAnswerInput[0] && userAnswerInput[0].subAnswerArr && userAnswerInput[0].subAnswerArr.length) {
-    setContinueKey('')
-  }
-  
-  userAnswerInput.forEach((item, index) => {
-    const checkIndex = 4
-    if (index === checkIndex && !item.subAnswerArr) {
-      setContinueKey(userAnswerInput[checkIndex - 1].id)
-    }
-  })
   
   const editKey : string[] = state.editKey
   const {
     questionArr = [],
-    // phoneInfo
   } = props;
 
-  const actionKey : string[] = []
-  
-  if (isDoing()) {
-    actionKey.push(isDoing())
-  } else {
-    actionKey.push(firstQuestionKey)
-  }
+  // 初始化设置
+  useEffect(() => {
+    if (geMaxActiveKey()) {
+      setMaxActiveKey(geMaxActiveKey())
+    }
+  }, [])
   
   function getStatus(questionId: string) {
-    if (actionKey.includes(questionId)) {
+    if (maxActiveKey === questionId) {
       return 'doing'
     }
     if (editKey.includes(questionId)) {
@@ -207,6 +193,10 @@ export function ConditionForm(props: IConditionForm) {
   }
   // 判断是否可以。0) isFinish,is can edit  
   function isDone(key: string) {
+    // 特殊情况 可以优化掉
+    if (key === firstQuestionKey) {
+      return true
+    }
     const result = questionArr.find((question) => {
       const { subQuestionArr } = question;
       const findIt = userAnswerInput.find((answer) => {
@@ -218,55 +208,71 @@ export function ConditionForm(props: IConditionForm) {
     return !!result
   }
 
-  function isDoing() {
-    // 拦截第一个continue
-    if (continueKey === firstQuestionKey) {
-      return ''
-    }
-    const currentQuestion = questionArr.find((question: IQuestion) => {
+  // 
+  function geMaxActiveKey() {
+    let current = firstQuestionKey
+    questionArr.forEach((question: IQuestion) => {
       const { id: questionId, subQuestionArr } = question;
-      // 拦截题目中的continue
-      if (continueKey === questionId) {
-        return false
+      if (current === '') {
+        current = questionId
       }
-      return !userAnswerInput.some((answer) => {
-        const {id: answerQuestionId, subAnswerArr} = answer
-        const result = ((answerQuestionId === questionId) && (subAnswerArr.length === subQuestionArr.length));
-        return result
-      });
-    });
-    if (currentQuestion && currentQuestion.id) {
-      return currentQuestion.id
-    } else {
-      return ''
-    }
+      const findAnswer = userAnswerInput.find((answer) => {
+        return answer.id === questionId
+      })
+      if (findAnswer && findAnswer.subAnswerArr && subQuestionArr && subQuestionArr.length) {
+        if (findAnswer.subAnswerArr.length === subQuestionArr.length) {
+          current = ''
+        }
+      }
+    })
+    return current
   }
   
-  function panelOnChangeHandler(activeKey: string) {
-    // 1) no edit.just have doing.
-    if (isDone(activeKey) && !(editKey && editKey.length)) {
-      dispatch({type: "setEditKey", value: activeKey})
+  function onClickPanelHandler(questionId: string) {
+    // 如果已经完成 并且当前没有打开的
+    if (isDone(questionId) && !(editKey && editKey.length)) {
+      dispatch({type: "setEditKey", value: questionId})
     }
-    // 如果可以打开。就插入进去
   }
+  // 这个可以和上面的方法合并
   function onSaveHandler() {
     dispatch({type: "setEditKey", value: []})
   }
+  function onUserFinishInputHandler(questionId: string) {
+    if (questionId === firstQuestionKey) {
+      setMaxActiveKey(questionArr[0].id)
+    } else {
+      console.log('checkcehckl')
+      // check 无误的话 就+1(暂时无法解决异步问题)
+      if (true || isDone(questionId)) {
+        const findCurrent = questionArr.findIndex(({id}) => {
+          return id === maxActiveKey
+        })
+        if (findCurrent !== -1) {
+          if (questionArr[findCurrent + 1]) {
+            setMaxActiveKey(questionArr[findCurrent + 1].id)
+          } else {
+            setMaxActiveKey('')
+          }
+        }
+      }
+    }
+  }
+  
   const extraQuestion : number = 1
   return (
     <Collapse
-      activeKey={actionKey.concat(editKey)}
+      activeKey={[maxActiveKey].concat(editKey)}
     >
       <WrapperPanel
-        onContinueHandler={continueKey === firstQuestionKey ? () => {
-          setContinueKey('')
-        } : undefined}
-        onInputHandler={(value: any) => {
+        isContinue={true}
+        onUserFinishInputHandler={onUserFinishInputHandler}
+        onUserInputHandler={(value: any) => {
           dispatch({type: 'setUserPhoneInfo', value: value})
         }}
         onSave={onSaveHandler}
         status={getStatus(firstQuestionKey)}
-        onChange={panelOnChangeHandler}
+        onClickPanel={onClickPanelHandler}
         index={extraQuestion}
         total={questionArr.length + extraQuestion}
         key={firstQuestionKey}
@@ -276,15 +282,18 @@ export function ConditionForm(props: IConditionForm) {
       {questionArr.map((question: IQuestion, index) => {
         const { id } = question;
         // 外面设置 还是里面设置 谁更合理？谁该负责？里面进行参数缺省更加合理。
+        // 这两个WrapperPanel是否可以通用？
         const answerInfo = userAnswerInput.find(userAnswer => userAnswer.id === id)
         return (
           <WrapperPanel
-            onInputHandler={(value: any) => {
+            isContinue={ index === 0 }
+            onUserFinishInputHandler={onUserFinishInputHandler}
+            onUserInputHandler={(value: any) => {
               dispatch({type: 'setAnswerArr', value: value})
             }}
             onSave={onSaveHandler}
             status={getStatus(id)}
-            onChange={panelOnChangeHandler}
+            onClickPanel={onClickPanelHandler}
             index={index + extraQuestion + 1}
             total={questionArr.length + extraQuestion}
             key={id}

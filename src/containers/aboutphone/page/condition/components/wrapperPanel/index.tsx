@@ -12,19 +12,20 @@ function SaveButton(props: any) {
 // const IDispatchFunc =;
 
 interface IWrapperPanel {
-  onInputHandler: (value: any) => void,
-  onContinueHandler?: () => void,
   questionInfo: IQuestion,
   answerInfo?: IUserQuestionAnswer,
   index: number,
   total: number,
-  onChange: (onChangeKey: string) => void,
+  onClickPanel: (onChangeKey: string) => void,
+  onUserInputHandler: (action: any) => void,
+  onUserFinishInputHandler: (onChangeKey: string) => void,
   status: string,
   onSave: () => void,
+  isContinue?: boolean,
 }
 
 export function WrapperPanel(props: IWrapperPanel) {
-  const { onInputHandler, questionInfo, index, total, onChange, status, onSave, onContinueHandler } = props;
+  const { questionInfo, index, total, onClickPanel, status, onSave, isContinue, onUserInputHandler, onUserFinishInputHandler } = props;
   const { id: questionId, title, subQuestionArr } = questionInfo;
   function renderTag() {
     switch (status) {
@@ -43,7 +44,7 @@ export function WrapperPanel(props: IWrapperPanel) {
       {...props}
       showArrow={false}
       header={
-        <div onClick={() => {onChange(questionId)}}>
+        <div onClick={() => {onClickPanel(questionId)}}>
           {/*<img src={require("")} />*/}
           <span>{title} </span>
           <span> status: {status}</span>
@@ -60,11 +61,14 @@ export function WrapperPanel(props: IWrapperPanel) {
           userAnswer = subAnswer ? subAnswer.answer : [];
         }
         function sureHandler (answer: string) {
-          onInputHandler({
+          onUserInputHandler({
             questionId,
             answerId: subQuestionId,
             answer: [answer]
           })
+          if (!isContinue) {
+            onUserFinishInputHandler(questionId)
+          }
         }
         const {id: subQuestionId, content, type} = subQuestion
         return <div key={subQuestionId}>
@@ -72,10 +76,10 @@ export function WrapperPanel(props: IWrapperPanel) {
           <p>type: {type}</p>
           <Select onChange={sureHandler} defaultValue={userAnswer[0]} />
           {/*<p>answerId: {answerId}</p>*/}
-          {status === 'edit' ? <SaveButton onClick={onSave} /> : null}
         </div>
       })}
-      {onContinueHandler  ? <Button onClick={onContinueHandler}>Continue</Button> : null}
+      {status === 'edit' ? <SaveButton onClick={onSave} /> : null}
+      {(isContinue && status === 'doing') ? <Button onClick={() => {onUserFinishInputHandler(questionId)}}>Continue</Button> : null}
     </Panel>)
 }
   
