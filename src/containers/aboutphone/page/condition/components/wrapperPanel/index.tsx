@@ -1,7 +1,6 @@
 import React from "react";
 import { Collapse, Button } from 'antd';
 const {Panel} = Collapse
-import {IAction} from '@/interface/index.interface'
 import {IQuestion, IUserQuestionAnswer} from "@/containers/aboutphone/page/condition/index.interface";
 import {Select} from "../subQuestion";
 
@@ -13,7 +12,8 @@ function SaveButton(props: any) {
 // const IDispatchFunc =;
 
 interface IWrapperPanel {
-  dispatch:  (action: IAction) => void,
+  onInputHandler: (value: any) => void,
+  onContinueHandler?: () => void,
   questionInfo: IQuestion,
   answerInfo?: IUserQuestionAnswer,
   index: number,
@@ -24,7 +24,7 @@ interface IWrapperPanel {
 }
 
 export function WrapperPanel(props: IWrapperPanel) {
-  const { dispatch, questionInfo, index, total, onChange, status, onSave } = props;
+  const { onInputHandler, questionInfo, index, total, onChange, status, onSave, onContinueHandler } = props;
   const { id: questionId, title, subQuestionArr } = questionInfo;
   function renderTag() {
     switch (status) {
@@ -55,19 +55,18 @@ export function WrapperPanel(props: IWrapperPanel) {
       
       {subQuestionArr.map((subQuestion) => {
         let userAnswer : any[] = []
-        if (props.answerInfo) {
+        if (props.answerInfo && props.answerInfo.subAnswerArr && props.answerInfo.subAnswerArr.length) {
           const subAnswer = props.answerInfo.subAnswerArr.find(answer => answer.id === subQuestionId)
           userAnswer = subAnswer ? subAnswer.answer : [];
         }
         function sureHandler (answer: string) {
-          dispatch({type: 'setAnswerArr', value: {
-              questionId,
-              answerId: subQuestionId,
-              answer: [answer]
-            }})
+          onInputHandler({
+            questionId,
+            answerId: subQuestionId,
+            answer: [answer]
+          })
         }
         const {id: subQuestionId, content, type} = subQuestion
-        
         return <div key={subQuestionId}>
           <p>content: {content}</p>
           <p>type: {type}</p>
@@ -76,6 +75,7 @@ export function WrapperPanel(props: IWrapperPanel) {
           {status === 'edit' ? <SaveButton onClick={onSave} /> : null}
         </div>
       })}
+      {onContinueHandler  ? <Button onClick={onContinueHandler}>Continue</Button> : null}
     </Panel>)
 }
   

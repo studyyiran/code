@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useState } from "react";
 import './index.less';
 import { Collapse } from 'antd';
 import {IAction} from '@/interface/index.interface'
@@ -47,6 +47,26 @@ function reducer(state: any, action: IAction) {
       const finalArr = changeTargetById(questionArr, questionId, targetArr)
       return { ...state, userAnswerInput: finalArr};
     }
+    case "setUserPhoneInfo": {
+      const { questionId, answerId, answer} = value;
+      // 1 获取当前的 或者 做一个新的
+      // 2 将answer 补充上。
+      // 3 返回掉
+      // 新建一个新的
+      const newQuestionAnswer: IUserQuestionAnswer = {id: questionId, subAnswerArr: []}
+      // 获取整合后的
+      const questionArr: IUserQuestionAnswer[] = changeTargetById(state.userPhoneInfoInput, questionId, newQuestionAnswer)
+      // 再取出来
+      const targetArr = questionArr.find(item => item.id === questionId)
+      // 新建一个正确的、新answer
+      const newAnswer : IUserAnswer = {id: answerId, answer: answer}
+      // 补充替换到target中
+      // @ts-ignore
+      targetArr.subAnswerArr = changeTargetById((targetArr as IUserQuestionAnswer).subAnswerArr, answerId, newAnswer)
+      // 将target替换到原来的
+      const finalArr = changeTargetById(questionArr, questionId, targetArr)
+      return { ...state, userPhoneInfoInput: finalArr};
+    }
     case "setEditKey":
       console.log('enter')
       // state 需要使用type吗？
@@ -72,6 +92,7 @@ interface IConditions {
 export function Conditions(props: IConditions) {
   const {phoneInfo = [], phoneConditionArr = []} = props
   const initState = {
+    userPhoneInfoInput: phoneInfo,
     userAnswerInput: phoneConditionArr, // 用户输入的。
     editKey: [] // 用户输入的。
   };
@@ -100,7 +121,7 @@ export function Conditions(props: IConditions) {
     },
   ]
   const [state, dispatch] = useReducer(reducer, initState);
-  return <ConditionForm state={state} dispatch={dispatch} questionArr={questionArr} phoneInfo={phoneInfo} />;
+  return <ConditionForm state={state} dispatch={dispatch} questionArr={questionArr} />;
 }
 
 
@@ -108,12 +129,11 @@ interface IConditionForm {
   dispatch: (action: IAction) => void,
   state: any,
   questionArr: IQuestion[],
-  phoneInfo: any[],
 }
-
+const firstQuestionKey = "aboutYourPhone"
 // 关于手机情况的 写死的 问题
 const phoneInfoQuestion : IQuestion = {
-  id: 'phoneInfoQuestion',
+  id: firstQuestionKey,
   title: 'About your phone',
   subQuestionArr: [
     {
@@ -140,32 +160,48 @@ const phoneInfoQuestion : IQuestion = {
 }
 
 export function ConditionForm(props: IConditionForm) {
+  const [continueKey, setContinueKey] = useState(firstQuestionKey)
   const { state, dispatch } = props;
+  
   // 这块怎么用语法写
   const userAnswerInput : IUserQuestionAnswer[] = state.userAnswerInput
+  const userPhoneInfoInput : IUserQuestionAnswer = state.userPhoneInfoInput
+
+  // check continue
+  if (userAnswerInput && userAnswerInput[0] && userAnswerInput[0].subAnswerArr && userAnswerInput[0].subAnswerArr.length) {
+    setContinueKey('')
+  }
+  
+  userAnswerInput.forEach((item, index) => {
+    const checkIndex = 4
+    if (index === checkIndex && !item.subAnswerArr) {
+      setContinueKey(userAnswerInput[checkIndex - 1].id)
+    }
+  })
+  
   const editKey : string[] = state.editKey
   const {
     questionArr = [],
     // phoneInfo
   } = props;
 
-  let actionKey : string[] = []
-  actionKey = actionKey.concat(editKey)
-  const isDoingKey : string = isDoing()
-  if (isDoingKey) {
-    actionKey.push(isDoingKey)
+  const actionKey : string[] = []
+  
+  if (isDoing()) {
+    actionKey.push(isDoing())
+  } else {
+    actionKey.push(firstQuestionKey)
   }
+  
   function getStatus(questionId: string) {
+    if (actionKey.includes(questionId)) {
+      return 'doing'
+    }
     if (editKey.includes(questionId)) {
-      console.log(actionKey)
-      console.log(questionId)
       return 'edit'
     }
     if (isDone(questionId)) {
       return 'done'
-    }
-    if (isDoing() === questionId) {
-      return 'doing'
     }
     return 'close'
   }
@@ -183,8 +219,16 @@ export function ConditionForm(props: IConditionForm) {
   }
 
   function isDoing() {
+    // 拦截第一个continue
+    if (continueKey === firstQuestionKey) {
+      return ''
+    }
     const currentQuestion = questionArr.find((question: IQuestion) => {
       const { id: questionId, subQuestionArr } = question;
+      // 拦截题目中的continue
+      if (continueKey === questionId) {
+        return false
+      }
       return !userAnswerInput.some((answer) => {
         const {id: answerQuestionId, subAnswerArr} = answer
         const result = ((answerQuestionId === questionId) && (subAnswerArr.length === subQuestionArr.length));
@@ -211,18 +255,23 @@ export function ConditionForm(props: IConditionForm) {
   const extraQuestion : number = 1
   return (
     <Collapse
-      activeKey={actionKey}
+      activeKey={actionKey.concat(editKey)}
     >
       <WrapperPanel
+        onContinueHandler={continueKey === firstQuestionKey ? () => {
+          setContinueKey('')
+        } : undefined}
+        onInputHandler={(value: any) => {
+          dispatch({type: 'setUserPhoneInfo', value: value})
+        }}
         onSave={onSaveHandler}
-        status={getStatus('first')}
+        status={getStatus(firstQuestionKey)}
         onChange={panelOnChangeHandler}
         index={extraQuestion}
         total={questionArr.length + extraQuestion}
-        key={'first'}
-        dispatch={dispatch}
+        key={firstQuestionKey}
         questionInfo={phoneInfoQuestion}
-        // answerInfo={phoneInfo}
+        answerInfo={userPhoneInfoInput}
       />
       {questionArr.map((question: IQuestion, index) => {
         const { id } = question;
@@ -230,13 +279,15 @@ export function ConditionForm(props: IConditionForm) {
         const answerInfo = userAnswerInput.find(userAnswer => userAnswer.id === id)
         return (
           <WrapperPanel
+            onInputHandler={(value: any) => {
+              dispatch({type: 'setAnswerArr', value: value})
+            }}
             onSave={onSaveHandler}
             status={getStatus(id)}
             onChange={panelOnChangeHandler}
             index={index + extraQuestion + 1}
             total={questionArr.length + extraQuestion}
             key={id}
-            dispatch={dispatch}
             questionInfo={question}
             answerInfo={answerInfo}
           />
