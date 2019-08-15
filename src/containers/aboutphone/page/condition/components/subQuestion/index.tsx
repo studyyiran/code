@@ -14,20 +14,22 @@ function SingleButton(props: ISingleButton) {
     onClick(index)
   }
   const isSelect = currentSelect === index
-  return <Button onClick={handler}>
+  return <Button type={isSelect ? "primary" : "dashed"} onClick={handler}>
     {isSelect}
     {children}
   </Button>
 }
 
 interface ISelect {
-  defaultValue: any,
+  defaultValue?: string,
+  onChange: (s: string) => void
 }
 
 export function Select(props: ISelect) {
-  const [currentSelect, setCurrentSelect] = useState(props.defaultValue)
+  const [currentSelect, setCurrentSelect] = useState(props.defaultValue || "")
   const handler = (selectIndex: string) => {
     setCurrentSelect(selectIndex)
+    props.onChange(selectIndex)
   }
   return <div>
     <SingleButton index={"true"} currentSelect={currentSelect} onClick={handler}>true</SingleButton>

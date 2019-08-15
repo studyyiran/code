@@ -136,10 +136,11 @@ const phoneInfoQuestion : IQuestion = {
 
 export function ConditionForm(props: IConditionForm) {
   const { state, dispatch } = props;
+  console.log(state)
   const userAnswerInput : IUserQuestionAnswer[] = state.userAnswerInput
   const {
     questionArr = [],
-    phoneInfo = {}
+    // phoneInfo
   } = props;
   const currentQuestion = questionArr.find((question: IQuestion) => {
     const { id: questionId } = question;
@@ -162,18 +163,18 @@ export function ConditionForm(props: IConditionForm) {
         key={'first'}
         dispatch={dispatch}
         questionInfo={phoneInfoQuestion}
-        answerInfo={(phoneInfo as IUserQuestionAnswer)}
+        // answerInfo={phoneInfo}
       />
       {questionArr.map((question: IQuestion, index) => {
         const { id } = question;
         // 外面设置 还是里面设置 谁更合理？谁该负责？
-        const answerInfo = userAnswerInput.find(userAnswer => userAnswer.id === id) || {}
+        const answerInfo = userAnswerInput.find(userAnswer => userAnswer.id === id)
         return (
           <WrapperPanel
             key={id}
             dispatch={dispatch}
             questionInfo={question}
-            answerInfo={answerInfo as IUserQuestionAnswer}
+            answerInfo={answerInfo}
           />
         );
       })}

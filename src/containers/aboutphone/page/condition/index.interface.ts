@@ -14,7 +14,7 @@ export interface IUserQuestionAnswer {
   id: string,
   subAnswerArr: IUserAnswer[]
 }
-
+// 为了适应多种可能。answer必须是[]
 export interface IUserAnswer {
   id: string,
   answer: []
