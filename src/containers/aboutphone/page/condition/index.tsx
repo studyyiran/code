@@ -209,43 +209,98 @@ export function Conditions(props: IConditions) {
   };
   const questionArr = [
     {
-      id: "0",
-      title: "power",
+      id: "1",
+      title: "Power On",
       subQuestionArr: [
         {
-          id: "00",
+          id: "10",
           content: "Does your phone power on to the home screen?",
           type: 'default',
         }
       ]
     },
     {
-      id: "1",
-      title: "scratch",
+      id: "2",
+      title: "Scratch",
       subQuestionArr: [
         {
-          id: "10",
-          content: "Are there any scratches ib the phone",
+          id: "20",
+          content: "Are there any scratches on the phone?",
+          isMoreCondition: ["true"],
           type: 'default',
-        }
+        },
+        {
+          id: "21",
+          content: "Are there scratches on the screen itself?",
+          isMoreCondition: ["true"],
+          type: 'default',
+        },
       ]
     },
     {
-      id: "4",
+      id: "3",
       title: "Crack",
       subQuestionArr: [
         {
-          id: "40",
+          id: "30",
           content: "Are there any cracks on your phone?",
           isMoreCondition: ["true"],
           type: 'default',
         },
         {
-          id: "41",
+          id: "31",
           content: "Where is the crack located? (Select all that apply)",
           type: 'multiSelect',
           questionDesc: ['Screen', 'Back Cover', 'Back Camera']
         }
+      ]
+    },
+    {
+      id: "4",
+      title: "Functionality",
+      subQuestionArr: [
+        {
+          id: "41",
+          content: "Is your phone fully functional?",
+          isMoreCondition: ["true"],
+          type: 'default',
+        },
+        {
+          id: "42",
+          content: "Which of the following aren't working? (Select all that apply)",
+          isMoreCondition: ["true"],
+          type: 'multiSelect',
+          questionDesc: ['Charger', 'Touch ID', 'Home Button']
+        },
+      ],
+    },
+    {
+      id: "5",
+      title: "Internet Accounts",
+      subQuestionArr: [
+        {
+          id: "51",
+          content: "Has iCloud or Google account been removed from your phone?",
+          isMoreCondition: ["true"],
+          type: 'default',
+        },
+        {
+          id: "52",
+          content: "We can't accept locked phone. Can you remove before sending in?",
+          isMoreCondition: ["true"],
+          type: 'default',
+        },
+      ]
+    },
+    {
+      id: "6",
+      title: "Payoff Status",
+      subQuestionArr: [
+        {
+          id: "61",
+          content: "Is your phone fully paid off?",
+          type: 'default',
+        },
       ]
     },
   ]
