@@ -59,9 +59,9 @@ export function MultiSelect(props: IMultiSelect) {
     setCurrentSelect(result)
     props.onChange(result)
   }
-  return <div className="comp-select">
+  return <div className="comp-multi-select">
     {props.options.map(name => {
-      return <div key={name}>
+      return <div className="comp-multi-select__item" key={name}>
         <input value={currentSelect} type="checkbox" onChange={() => {handler(name)}}/>
         <label>{name}</label>
       </div>

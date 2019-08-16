@@ -32,20 +32,42 @@ function reducer(state: any, action: IAction) {
       // 1 获取当前的 或者 做一个新的
       // 2 将answer 补充上。
       // 3 返回掉
-      // 新建一个新的
+      // 新建一个新的外层  最坏打算。
       const newQuestionAnswer: IUserQuestionAnswer = {id: questionId, subAnswerArr: []}
-      // 获取整合后的
+      // 获取整合后的（有个全新的。ok的。没有变更老的。老的复制）（有 questionId，就应该用老的，不应该每次都重置。只有初始化应该重置）
       const questionArr: IUserQuestionAnswer[] = changeTargetById(state.userAnswerInput, questionId, newQuestionAnswer)
-      // 再取出来
+      // 再取出来（从新生里面拿出来需要操作）
       const targetArr = questionArr.find(item => item.id === questionId)
-      // 新建一个正确的、新answer
-      const newAnswer : IUserAnswer = {id: answerId, answer: answer}
-      // 补充替换到target中
+      // 新建一个正确的、新answer（这个是内部的必然替代项）（那也就意味着，你需要对answer的完整性，负完全责）（其实这边也有初始化的需求。如果完成了初始化，就应该是。。赋值需求。应该准确赋值。）
+      const newAnswer : IUserAnswer = {id: answerId, answer: []}
+      // 补充替换到target中（强行替换）
       // @ts-ignore
       targetArr.subAnswerArr = changeTargetById((targetArr as IUserQuestionAnswer).subAnswerArr, answerId, newAnswer)
+      // 初始化赋值结束后
+      // @ts-ignore
+      targetArr.subAnswerArr.find(item => item.id === answerId).answer = answer
+      // @ts-ignore
+      questionArr[questionArr.findIndex(item => item.id === questionId)] = targetArr
       // 将target替换到原来的
-      const finalArr = changeTargetById(questionArr, questionId, targetArr)
-      return { ...state, userAnswerInput: finalArr};
+      // const finalArr = changeTargetById(questionArr, questionId, targetArr)
+      // const { questionId, answerId, answer} = value;
+      // // 1 获取当前的 或者 做一个新的
+      // // 2 将answer 补充上。
+      // // 3 返回掉
+      // // 新建一个新的
+      // const newQuestionAnswer: IUserQuestionAnswer = {id: questionId, subAnswerArr: []}
+      // // 获取整合后的
+      // const questionArr: IUserQuestionAnswer[] = changeTargetById(state.userAnswerInput, questionId, newQuestionAnswer)
+      // // 再取出来
+      // const targetArr = questionArr.find(item => item.id === questionId)
+      // // 新建一个正确的、新answer
+      // const newAnswer : IUserAnswer = {id: answerId, answer: answer}
+      // // 补充替换到target中
+      // // @ts-ignore
+      // targetArr.subAnswerArr = changeTargetById((targetArr as IUserQuestionAnswer).subAnswerArr, answerId, newAnswer)
+      // // 将target替换到原来的
+      // const finalArr = changeTargetById(questionArr, questionId, targetArr)
+      return { ...state, userAnswerInput: questionArr};
     }
     case "setUserPhoneInfo": {
       const { questionId, answerId, answer} = value;
@@ -102,6 +124,28 @@ export function Conditions(props: IConditions) {
   };
   const questionArr = [
     {
+      id: "0",
+      title: "power",
+      subQuestionArr: [
+        {
+          id: "00",
+          content: "Does your phone power on to the home screen?",
+          type: 'default',
+        }
+      ]
+    },
+    {
+      id: "1",
+      title: "scratch",
+      subQuestionArr: [
+        {
+          id: "10",
+          content: "Are there any scratches ib the phone",
+          type: 'default',
+        }
+      ]
+    },
+    {
       id: "4",
       title: "Crack",
       subQuestionArr: [
@@ -116,28 +160,6 @@ export function Conditions(props: IConditions) {
           content: "Where is the crack located? (Select all that apply)",
           type: 'multiSelect',
           questionDesc: ['Screen', 'Back Cover', 'Back Camera']
-        }
-      ]
-    },
-    {
-      id: "0",
-      title: "power",
-      subQuestionArr: [
-        {
-          id: "00",
-          content: "Does your phone power on to the home screen?",
-          type: 'notSingle',
-        }
-      ]
-    },
-    {
-      id: "1",
-      title: "scratch",
-      subQuestionArr: [
-        {
-          id: "10",
-          content: "Are there any scratches ib the phone",
-          type: 'default',
         }
       ]
     },
@@ -306,7 +328,7 @@ export function ConditionForm(props: IConditionForm) {
             const answerInfo = userAnswerInput.find(userAnswer => userAnswer.id === id)
             return (
               <WrapperPanel
-                isContinue={ index === 0 }
+                isContinue={!isNoContinue(question, userAnswerInput)}
                 continueNextStep={nextStep}
                 onUserInputHandler={(value: any) => {
                   dispatch({type: 'setAnswerArr', value: value})
