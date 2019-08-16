@@ -23,7 +23,7 @@ function SingleButton(props: ISingleButton) {
 
 interface ISelect {
   defaultValue?: string,
-  onChange: (s: string) => void
+  onChange: (s: string) => void,
 }
 
 export function Select(props: ISelect) {
@@ -38,6 +38,33 @@ export function Select(props: ISelect) {
   </div>
 }
 
-export function Multiple() {
-  return <div>123</div>
+interface IMultiSelect {
+  defaultValue?: string[],
+  onChange: (s: string[]) => void,
+  options: string[],
+}
+
+export function MultiSelect(props: IMultiSelect) {
+  const [currentSelect, setCurrentSelect] = useState(props.defaultValue || [])
+  const handler = (current: string) => {
+    const target = currentSelect.findIndex((item) => {
+      return item === current
+    })
+    let result
+    if (target === -1) {
+      result = currentSelect.concat([current])
+    } else {
+      result = currentSelect.splice(0, target)
+    }
+    setCurrentSelect(result)
+    props.onChange(result)
+  }
+  return <div className="comp-select">
+    {props.options.map(name => {
+      return <div key={name}>
+        <input value={currentSelect} type="checkbox" onChange={() => {handler(name)}}/>
+        <label>{name}</label>
+      </div>
+    })}
+  </div>
 }

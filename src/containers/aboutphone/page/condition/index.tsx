@@ -102,6 +102,24 @@ export function Conditions(props: IConditions) {
   };
   const questionArr = [
     {
+      id: "4",
+      title: "Crack",
+      subQuestionArr: [
+        {
+          id: "40",
+          content: "Are there any cracks on your phone?",
+          isMoreCondition: ["true"],
+          type: 'default',
+        },
+        {
+          id: "41",
+          content: "Where is the crack located? (Select all that apply)",
+          type: 'multiSelect',
+          questionDesc: ['Screen', 'Back Cover', 'Back Camera']
+        }
+      ]
+    },
+    {
       id: "0",
       title: "power",
       subQuestionArr: [

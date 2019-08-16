@@ -3,7 +3,7 @@ import "./index.less";
 import { Collapse, Icon } from 'antd';
 const {Panel} = Collapse
 import {IQuestion, IUserQuestionAnswer} from "@/containers/aboutphone/page/condition/index.interface";
-import {Select} from "../subQuestion";
+import {Select, MultiSelect} from "../subQuestion";
 import {canShowMoreQuestion, findAnswerById, isCanMove} from "../../util";
 
 function SaveButton(props: any) {
@@ -59,15 +59,9 @@ export function WrapperPanel(props: IWrapperPanel) {
   }
   function renderQuestions() {
     let canRenderNext = true
-    function sureHandler (subQuestionId: string, answer: string) {
-      onUserInputHandler({
-        questionId,
-        answerId: subQuestionId,
-        answer: [answer]
-      })
-    }
+   
     return subQuestionArr.map((subQuestion) => {
-      const {id: subQuestionId, content, type, isMoreCondition} = subQuestion
+      const {id: subQuestionId, content, type, isMoreCondition, questionDesc} = subQuestion
       let userSubAnswer: any
       if (answerInfo) {
         userSubAnswer = findAnswerById([answerInfo], subQuestionId) || {answer: []}
@@ -80,7 +74,7 @@ export function WrapperPanel(props: IWrapperPanel) {
         }
         return <div className="wrapper-panel__question" key={subQuestionId}>
           <h2>{content}</h2>
-          {type === 'default' ? <Select onChange={(answer) => {sureHandler(subQuestionId, answer)}} defaultValue={userSubAnswer.answer[0]} /> : <Select onChange={(answer) => {sureHandler(subQuestionId, answer)}} defaultValue={userSubAnswer.answer[0]} />}
+          <RenderByType questionDesc={questionDesc} type={type} subQuestionId={subQuestionId} userSubAnswer={userSubAnswer} onUserInputHandler={onUserInputHandler} questionId={questionId} />
         </div>
       } else {
         return null
@@ -123,5 +117,38 @@ function RenderTagByStatus(props: any) {
       return <span data-type={status}>{index}</span>
   }
   return null
+}
+
+function RenderByType(props: any) {
+  const {type, subQuestionId, userSubAnswer, questionId, onUserInputHandler, questionDesc} = props
+  switch (type) {
+    case 'default':
+      return <Select onChange={(answer) => {
+        onUserInputHandler({
+          questionId,
+          answerId: subQuestionId,
+          answer: [answer]
+        })
+      }} defaultValue={userSubAnswer.answer[0]} />
+    case 'multiSelect':
+      return <MultiSelect 
+        options={questionDesc}
+        onChange={(answer) => {
+        onUserInputHandler({
+          questionId,
+          answerId: subQuestionId,
+          answer: answer
+        })
+      }} 
+        defaultValue={userSubAnswer.answer} />
+    default:
+      return <Select onChange={(answer) => {
+        onUserInputHandler({
+          questionId,
+          answerId: subQuestionId,
+          answer: [answer]
+        })
+      }} defaultValue={userSubAnswer.answer[0]} />
+  }
 }
   

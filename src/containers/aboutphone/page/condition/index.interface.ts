@@ -10,6 +10,7 @@ export interface ISubQuestion {
   // 用于关联。
   isMoreCondition?: string[],
   type: string,
+  questionDesc?: string[]
 }
 
 export interface IUserQuestionAnswer {
