@@ -1,6 +1,9 @@
 @import (reference) '~@/styles/color.less';
 @import (reference) '~@/styles/font.less';
 .wrapper-panel {
+  .ant-collapse-content-box {
+    padding-top: 0px;
+  }
   .ant-collapse-header {
     padding-top: 25px !important;
     padding-bottom: 25px !important;
@@ -22,10 +25,27 @@
         overflow: hidden;
         width: 24px;
         height: 24px;
+      }
+      > span[data-type="done"] {
         background: #6DD230;
         > * {
-          font-size: 24px;
+          font-size: 28px;
+          position: relative;
+          left: -2px;
+          top: -2px;
         }
+      }
+      > span[data-type="doing"], > span[data-type="edit"] {
+        background: @color-blue-liner;
+        text-align: center;
+        line-height: 24px;
+        color: @white;
+      }
+      > span[data-type="close"] {
+        background: @color-gray;
+        text-align: center;
+        line-height: 24px;
+        color: @white;
       }
       > h1 {
         font-size: @font-size-large;

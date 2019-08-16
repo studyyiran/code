@@ -78,11 +78,11 @@ export default class Footer extends React.Component<{ router: any }, IFooterStat
     ))
     return <footer className="comp-footer">
       <h1 className="footer__logo">UpTrade</h1>
-      <form className="footer__email-form">
-        <h2>Keep in touch</h2>
-        <p>123</p>
-        <input placeholder="Email"/>
-      </form>
+      {/*<form className="footer__email-form">*/}
+      {/*  <h2>Keep in touch</h2>*/}
+      {/*  <p>123</p>*/}
+      {/*  <input placeholder="Email"/>*/}
+      {/*</form>*/}
       <RenderByCondition ComponentMb={
         <div className="footer__group">
           {footerInfo.map(({className, title, arr}) => {

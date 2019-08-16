@@ -261,7 +261,9 @@ export function ConditionForm(props: IConditionForm) {
   }
   const extraQuestion : number = 1
   return (
-      <div>
+      <div className="page-condition">
+        <p>Manufacture > Phone conditions</p>
+        <h1>Phone conditions</h1>
         <Collapse
           activeKey={[maxActiveKey].concat(editKey)}
         >
@@ -302,7 +304,7 @@ export function ConditionForm(props: IConditionForm) {
             );
           })}
         </Collapse>
-        {maxActiveKey === 'allFinish' ? 'finish' : null}
+        {maxActiveKey === 'allFinish' ? <button className="common-button finish-button" >Get Quote</button> : null}
       </div>
   );
 }

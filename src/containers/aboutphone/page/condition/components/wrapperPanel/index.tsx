@@ -1,6 +1,6 @@
 import React from "react";
 import "./index.less";
-import { Collapse, Button, Icon } from 'antd';
+import { Collapse, Icon } from 'antd';
 const {Panel} = Collapse
 import {IQuestion, IUserQuestionAnswer} from "@/containers/aboutphone/page/condition/index.interface";
 import {Select} from "../subQuestion";
@@ -10,7 +10,7 @@ function SaveButton(props: any) {
   const {children, canPost} = props
   // check
   
-  return <Button type={canPost ? "primary" : "dashed"} disabled={!canPost} onClick={props.onClick}>{children}</Button>;
+  return <button className="common-button" disabled={!canPost} onClick={props.onClick}>{children}</button>;
 }
 
 // 如何为函数定义
@@ -95,9 +95,7 @@ export function WrapperPanel(props: IWrapperPanel) {
       header={
         <div className="wrapper-panel__header" onClick={() => {onClickPanel(questionId)}}>
           <div className="wrapper-panel__header__title">
-            <span>
-              <Icon type="check-circle" style={{color: "white"}}/>
-            </span>
+            <RenderTagByStatus index={index} status={status} />
             <h1>{title} </h1>
           </div>
           {renderTag()}
@@ -109,5 +107,21 @@ export function WrapperPanel(props: IWrapperPanel) {
       {status === 'edit' ? <SaveButton canPost={isAllFinish()} onClick={() => onClickPanel(questionId, true)}>Save</SaveButton> : null}
       {(isContinue && status === 'doing') ? <SaveButton canPost={isAllFinish()} onClick={() => {continueNextStep()}}>Continue</SaveButton> : null}
     </Panel>)
+}
+
+function RenderTagByStatus(props: any) {
+  const {status, index} = props
+  switch (status) {
+    case 'done':
+      return <span data-type={props.status}>
+        <Icon type="check-circle" style={{color: "white"}}/>
+      </span>
+    case 'doing':
+    case 'edit':
+      return <span data-type={status}>{index}</span>
+    case 'close':
+      return <span data-type={status}>{index}</span>
+  }
+  return null
 }
   
