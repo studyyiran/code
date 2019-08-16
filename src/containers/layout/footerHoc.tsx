@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
 import Footer from './components/footer/footer';
-import MobileFooter from './mobile/footer';
+// import MobileFooter from './mobile/footer';
 import * as PropTypes from 'prop-types';
 @observer
 export default class HeaderHoc extends React.Component<{ router: any }> {
@@ -23,7 +23,7 @@ export default class HeaderHoc extends React.Component<{ router: any }> {
   public render() {
     return (
       <>
-        {this.state.showMobileFooter && <MobileFooter />}
+        {/*{this.state.showMobileFooter && <MobileFooter />}*/}
         {!this.state.showMobileFooter && <style>
           {
             `.ismobile .layout-container .layout-content {
