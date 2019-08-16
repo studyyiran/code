@@ -26,7 +26,7 @@ interface ISelect {
   onChange: (s: string) => void,
 }
 
-export function Select(props: ISelect) {
+export function SingleSelect(props: ISelect) {
   const [currentSelect, setCurrentSelect] = useState(props.defaultValue || "")
   const handler = (selectIndex: string) => {
     setCurrentSelect(selectIndex)

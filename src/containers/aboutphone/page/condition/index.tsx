@@ -116,7 +116,92 @@ interface IConditions {
 }
 
 export function Conditions(props: IConditions) {
-  const {phoneInfo = [], phoneConditionArr = []} = props
+  const {phoneInfo = [
+  {
+    id: 'phoneInfoSubQuestion1',
+    subAnswerArr: [
+      {
+        id: 'phoneInfoSubQuestion1',
+        answer: ['1']
+      },
+      {
+        id: 'phoneInfoSubQuestion2',
+        answer: ['1']
+      },
+      {
+        id: 'phoneInfoSubQuestion3',
+        answer: ['1']
+      },
+      {
+        id: 'phoneInfoSubQuestion4',
+        answer: ['1']
+      }
+    ]
+  },
+    {
+      id: 'phoneInfoSubQuestion2',
+      subAnswerArr: [
+        {
+          id: 'phoneInfoSubQuestion1',
+          answer: ['1']
+        },
+        {
+          id: 'phoneInfoSubQuestion2',
+          answer: ['1']
+        },
+        {
+          id: 'phoneInfoSubQuestion3',
+          answer: ['1']
+        },
+        {
+          id: 'phoneInfoSubQuestion4',
+          answer: ['1']
+        }
+      ]
+    },
+    {
+      id: 'phoneInfoSubQuestion3',
+      subAnswerArr: [
+        {
+          id: 'phoneInfoSubQuestion1',
+          answer: ['1']
+        },
+        {
+          id: 'phoneInfoSubQuestion2',
+          answer: ['1']
+        },
+        {
+          id: 'phoneInfoSubQuestion3',
+          answer: ['1']
+        },
+        {
+          id: 'phoneInfoSubQuestion4',
+          answer: ['1']
+        }
+      ]
+    },
+    {
+      id: 'phoneInfoSubQuestion4',
+      subAnswerArr: [
+        {
+          id: 'phoneInfoSubQuestion1',
+          answer: ['1']
+        },
+        {
+          id: 'phoneInfoSubQuestion2',
+          answer: ['1']
+        },
+        {
+          id: 'phoneInfoSubQuestion3',
+          answer: ['1']
+        },
+        {
+          id: 'phoneInfoSubQuestion4',
+          answer: ['1']
+        }
+      ]
+    }
+  ], phoneConditionArr = []} = props
   const initState = {
     userPhoneInfoInput: phoneInfo,
     userAnswerInput: phoneConditionArr, // 用户输入的。
@@ -183,26 +268,26 @@ const phoneInfoQuestion : IQuestion = {
     {
       id: 'phoneInfoSubQuestion1',
       content: 'Phone Manufacture',
-      isMoreCondition: ["true"],
-      type: 'list',
+      questionDesc: ['Brand1', 'Brand2'],
+      type: 'select',
     },
     {
       id: 'phoneInfoSubQuestion2',
       content: 'Model',
-      isMoreCondition: ["true"],
-      type: 'list',
+      questionDesc: ['iPhone X', 'iPhone 8'],
+      type: 'select',
     },
     {
       id: 'phoneInfoSubQuestion3',
       content: 'Storage',
-      isMoreCondition: ["true"],
-      type: 'list',
+      questionDesc: ['64GB', '128GB'],
+      type: 'select',
     },
     {
       id: 'phoneInfoSubQuestion4',
       content: 'Carrier',
-      isMoreCondition: ["true"],
-      type: 'list',
+      questionDesc: ['Carrier1', 'Carrier2'],
+      type: 'select',
     }
   ]
 }

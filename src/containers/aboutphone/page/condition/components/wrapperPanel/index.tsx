@@ -1,9 +1,10 @@
 import React from "react";
 import "./index.less";
-import { Collapse, Icon } from 'antd';
+import { Collapse, Icon, Select } from 'antd';
+const {Option} = Select
 const {Panel} = Collapse
 import {IQuestion, IUserQuestionAnswer} from "@/containers/aboutphone/page/condition/index.interface";
-import {Select, MultiSelect} from "../subQuestion";
+import {SingleSelect, MultiSelect} from "../subQuestion";
 import {canShowMoreQuestion, findAnswerById, isCanMove} from "../../util";
 
 function SaveButton(props: any) {
@@ -123,7 +124,7 @@ function RenderByType(props: any) {
   const {type, subQuestionId, userSubAnswer, questionId, onUserInputHandler, questionDesc} = props
   switch (type) {
     case 'default':
-      return <Select onChange={(answer) => {
+      return <SingleSelect onChange={(answer) => {
         onUserInputHandler({
           questionId,
           answerId: subQuestionId,
@@ -141,8 +142,14 @@ function RenderByType(props: any) {
         })
       }} 
         defaultValue={userSubAnswer.answer} />
+    case 'select':
+      return <Select style={{width: '100%'}} defaultValue={questionDesc[0]}>
+        {questionDesc.map((nameValue: any) => {
+          return <Option key={nameValue} value={nameValue}>{nameValue}</Option>
+        })}
+      </Select>
     default:
-      return <Select onChange={(answer) => {
+      return <SingleSelect onChange={(answer) => {
         onUserInputHandler({
           questionId,
           answerId: subQuestionId,
