@@ -24,26 +24,6 @@ export function isCanMove(findCurrent: IQuestion, userAnswerInput: IUserQuestion
   if (!findCurrent) {
     return false
   }
-  function getCurrentSubQuestion() : ISubQuestion[] {
-    // 根据
-    const { subQuestionArr } = findCurrent;
-    let canNext = true
-    return subQuestionArr.filter((question, index) => {
-      const {id: subQuestionId, isMoreCondition} = question
-      // 找出对应的answer
-      const userAnswer = findAnswerById(userAnswerInput, subQuestionId)
-      if (canNext) {
-        // @ts-ignore
-        if (isMoreCondition && !canShowMoreQuestion(isMoreCondition, userAnswer && userAnswer.answer)) {
-          canNext = false
-        }
-        return true
-      } else {
-        return false
-      }
-    }) || []
-  }
-
   function isAllNotEmpty(arr: ISubQuestion[]) {
     // @ts-ignore
     return arr.every((question) => {
@@ -56,16 +36,39 @@ export function isCanMove(findCurrent: IQuestion, userAnswerInput: IUserQuestion
     // const userAnswer = findAnswerById(id)
     // return Boolean(userAnswer && (userAnswer.subAnswerArr.length === subQuestionArr.length))
   }
-
-  
   // 检测动态是否完整
-  const currentSubQuestion = getCurrentSubQuestion()
+  const currentSubQuestion = getCurrentSubQuestion(findCurrent, userAnswerInput)
   if (isAllNotEmpty(currentSubQuestion)) {
     return true
   }
   return false
 }
 
-export function isNoContinue(arr: ISubQuestion[]) {
-  return false
+function getCurrentSubQuestion(findCurrent: IQuestion, userAnswerInput: IUserQuestionAnswer[]) : ISubQuestion[] {
+  // 根据
+  const { subQuestionArr } = findCurrent;
+  let canNext = true
+  return subQuestionArr.filter((question, index) => {
+    const {id: subQuestionId, isMoreCondition} = question
+    // 找出对应的answer
+    const userAnswer = findAnswerById(userAnswerInput, subQuestionId)
+    if (canNext) {
+      // @ts-ignore
+      if (isMoreCondition && !canShowMoreQuestion(isMoreCondition, userAnswer && userAnswer.answer)) {
+        canNext = false
+      }
+      return true
+    } else {
+      return false
+    }
+  }) || []
+}
+
+// 根据题目判断。当前这道题目，是否有continue？
+export function isNoContinue(findCurrent: IQuestion, userAnswerInput: IUserQuestionAnswer[]) {
+  const currentSubQuestion = getCurrentSubQuestion(findCurrent, userAnswerInput)
+  return currentSubQuestion.every((subAnswer) => {
+    const {type} = subAnswer
+    return type === 'default'
+  })
 }

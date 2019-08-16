@@ -4,7 +4,7 @@ import { Collapse } from 'antd';
 import {IAction} from '@/interface/index.interface'
 import {IQuestion, IUserAnswer, IUserQuestionAnswer} from './index.interface'
 import {WrapperPanel} from './components/wrapperPanel'
-import {isCanMove} from './util'
+import {isCanMove, isNoContinue} from './util'
 
 /*
 default 和 active似乎 遵从active
@@ -108,7 +108,7 @@ export function Conditions(props: IConditions) {
         {
           id: "00",
           content: "Does your phone power on to the home screen?",
-          type: 'default',
+          type: 'notSingle',
         }
       ]
     },
@@ -240,7 +240,10 @@ export function ConditionForm(props: IConditionForm) {
       return id === maxActiveKey
     })
     if (findCurrent && isCanMove(findCurrent, userAnswerInput)) {
-      nextStep()
+      console.log('check')
+      if (isNoContinue(findCurrent, userAnswerInput)) {
+        nextStep()
+      }
     }
   }, [userAnswerInput])
   console.log(userAnswerInput)
