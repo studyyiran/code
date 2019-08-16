@@ -13,8 +13,15 @@ import Terms from '../src/containers/single/terms'
 import Howitworks from '../src/containers/single/howitworks'
 import AboutUs from '../src/containers/single/aboutUs'
 import Reviews from '../src/containers/home/reviews'
+import Test from '../src/containers/aboutphone/page/condition'
 
 export default [
+  {
+    // faq
+    component: Test,
+    exact: true,
+    path: '/demo',
+  },
   {
     // faq
     component: Faq,
