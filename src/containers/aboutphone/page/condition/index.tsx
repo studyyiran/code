@@ -365,7 +365,6 @@ export function ConditionForm(props: IConditionForm) {
       return id === maxActiveKey
     })
     if (findCurrent && isCanMove(findCurrent, userAnswerInput)) {
-      console.log('check')
       if (isNoContinue(findCurrent, userAnswerInput)) {
         nextStep()
       }

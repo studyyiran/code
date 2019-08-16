@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './index.less'
-// import {Button} from 'antd'
+import {Checkbox} from 'antd'
 
 interface ISingleButton {
   children: any,
@@ -54,7 +54,7 @@ export function MultiSelect(props: IMultiSelect) {
     if (target === -1) {
       result = currentSelect.concat([current])
     } else {
-      result = currentSelect.splice(0, target)
+      result = [...currentSelect.slice(0, target), ...currentSelect.slice(target + 1)]
     }
     setCurrentSelect(result)
     props.onChange(result)
@@ -62,8 +62,9 @@ export function MultiSelect(props: IMultiSelect) {
   return <div className="comp-multi-select">
     {props.options.map(name => {
       return <div className="comp-multi-select__item" key={name}>
-        <input value={currentSelect} type="checkbox" onChange={() => {handler(name)}}/>
-        <label>{name}</label>
+        <Checkbox onChange={() => {handler(name)}}>{name}</Checkbox>
+        {/*<Input value={} type="checkbox" />*/}
+        {/*<label>{}</label>*/}
       </div>
     })}
   </div>
