@@ -174,7 +174,7 @@ export function ConditionForm(props: IConditionForm) {
   const {
     questionArr = [],
   } = props;
-
+  const questionProcess = [firstQuestionKey].concat(questionArr.map((item) => item.id)).concat(['allFinish'])
   // 初始化设置
   useEffect(() => {
     if (geMaxActiveKey()) {
@@ -182,36 +182,24 @@ export function ConditionForm(props: IConditionForm) {
     }
   }, [])
   
-  function getStatus(questionId: string) {
-    if (maxActiveKey === questionId) {
+  function getStatus(questionId: string) : string {
+    const targetPos = questionProcess.findIndex(item => item === questionId)
+    const currentPos = questionProcess.findIndex(item => item === maxActiveKey)
+    if (currentPos === targetPos) {
       return 'doing'
+    } else if (currentPos > targetPos) {
+      if (editKey.includes(questionId)) {
+        return 'edit'
+      } else {
+        return 'done'
+      }
+    } else if (currentPos < targetPos) {
+      return 'close'
     }
-    if (editKey.includes(questionId)) {
-      return 'edit'
-    }
-    if (isDone(questionId)) {
-      return 'done'
-    }
-    return 'close'
-  }
-  // 判断是否可以。0) isFinish,is can edit  
-  function isDone(key: string) {
-    // 特殊情况 可以优化掉
-    if (key === firstQuestionKey) {
-      return true
-    }
-    const result = questionArr.find((question) => {
-      const { subQuestionArr } = question;
-      const findIt = userAnswerInput.find((answer) => {
-        const {id: answerQuestionId} = answer
-        return answerQuestionId === key
-      });
-      return Boolean(findIt && (findIt.subAnswerArr.length === subQuestionArr.length))
-    });
-    return !!result
+    return ''
   }
 
-  // 
+  // 获取当前最max的。其实目前来说。要不first。要不last。但是需要考虑要求我缓存的需求。
   function geMaxActiveKey() {
     let current = firstQuestionKey
     questionArr.forEach((question: IQuestion) => {
@@ -231,79 +219,114 @@ export function ConditionForm(props: IConditionForm) {
     return current
   }
   
-  function onClickPanelHandler(questionId: string) {
+  function onClickPanelHandler(questionId: string, isSave?: boolean) {
     // 如果已经完成 并且当前没有打开的
-    if (isDone(questionId) && !(editKey && editKey.length)) {
+    if (getStatus(questionId) === 'done' && !(editKey && editKey.length)) {
       dispatch({type: "setEditKey", value: questionId})
+    } else if (getStatus(questionId) === 'edit' && isSave) {
+      dispatch({type: "setEditKey", value: []})
     }
+    
   }
-  // 这个可以和上面的方法合并
-  function onSaveHandler() {
-    dispatch({type: "setEditKey", value: []})
-  }
-  function onUserFinishInputHandler(questionId: string) {
-    if (questionId === firstQuestionKey) {
-      setMaxActiveKey(questionArr[0].id)
-    } else {
-      // check 无误的话 就+1(暂时无法解决异步问题)
-      if (true || isDone(questionId)) {
-        const findCurrent = questionArr.findIndex(({id}) => {
-          return id === maxActiveKey
-        })
-        if (findCurrent !== -1) {
-          if (questionArr[findCurrent + 1]) {
-            setMaxActiveKey(questionArr[findCurrent + 1].id)
-          } else {
-            setMaxActiveKey('')
-          }
+  
+  function isCanMove(findCurrent: IQuestion) : boolean {
+    if (!findCurrent) {
+      return false
+    }
+    function isAllShow() {
+      return true
+    }
+    
+    function isAllNotEmpty() {
+      const { id, subQuestionArr } = findCurrent;
+      const userAnswer = userAnswerInput.find((answer) => {
+        const {id: answerQuestionId} = answer
+        return answerQuestionId === id
+      });
+      return Boolean(userAnswer && (userAnswer.subAnswerArr.length === subQuestionArr.length))
+    }
+    
+    function isNoContinue() {
+      return false
+    }
+    // 检测动态是否完整
+    if (isAllShow()) {
+      if (isAllNotEmpty()) {
+        if (isNoContinue()) {
+          return true
         }
+      }
+    }
+    return false
+  }
+  
+  // 每当用户输入变化的时候，重新跑一下。看是否触发next
+  useEffect(() => {
+    const findCurrent = questionArr.find(({id}) => {
+      return id === maxActiveKey
+    })
+    if (findCurrent && isCanMove(findCurrent)) {
+      nextStep()
+    }
+  }, [userAnswerInput])
+  console.log(userAnswerInput)
+  
+  // 将active游标移动。本来想动态化active。不可行。强行维护比较好。因为continue的存在。（这其实和当时遇到的那个进度的问题一样一样）。说明这个问题非常的典型。
+  function nextStep() {
+    const findCurrent = questionProcess.findIndex((key: string) => key === maxActiveKey)
+    if (findCurrent !== -1) {
+      if (findCurrent < questionProcess.length - 1) {
+        setMaxActiveKey(questionProcess[findCurrent + 1])
+      } else {
+        setMaxActiveKey('')
       }
     }
   }
   const extraQuestion : number = 1
   return (
-    <Collapse
-      activeKey={[maxActiveKey].concat(editKey)}
-    >
-      <WrapperPanel
-        isContinue={true}
-        onUserFinishInputHandler={onUserFinishInputHandler}
-        onUserInputHandler={(value: any) => {
-          dispatch({type: 'setUserPhoneInfo', value: value})
-        }}
-        onSave={onSaveHandler}
-        status={getStatus(firstQuestionKey)}
-        onClickPanel={onClickPanelHandler}
-        index={extraQuestion}
-        total={questionArr.length + extraQuestion}
-        key={firstQuestionKey}
-        questionInfo={phoneInfoQuestion}
-        answerInfo={userPhoneInfoInput[0]}
-      />
-      {questionArr.map((question: IQuestion, index) => {
-        const { id } = question;
-        // 外面设置 还是里面设置 谁更合理？谁该负责？里面进行参数缺省更加合理。
-        // 这两个WrapperPanel是否可以通用？
-        const answerInfo = userAnswerInput.find(userAnswer => userAnswer.id === id)
-        return (
+      <div>
+        <Collapse
+          activeKey={[maxActiveKey].concat(editKey)}
+        >
           <WrapperPanel
-            isContinue={ index === 0 }
-            onUserFinishInputHandler={onUserFinishInputHandler}
+            isContinue={true}
+            continueNextStep={nextStep}
             onUserInputHandler={(value: any) => {
-              dispatch({type: 'setAnswerArr', value: value})
+              dispatch({type: 'setUserPhoneInfo', value: value})
             }}
-            onSave={onSaveHandler}
-            status={getStatus(id)}
+            status={getStatus(firstQuestionKey)}
             onClickPanel={onClickPanelHandler}
-            index={index + extraQuestion + 1}
+            index={extraQuestion}
             total={questionArr.length + extraQuestion}
-            key={id}
-            questionInfo={question}
-            answerInfo={answerInfo}
+            key={firstQuestionKey}
+            questionInfo={phoneInfoQuestion}
+            answerInfo={userPhoneInfoInput[0]}
           />
-        );
-      })}
-    </Collapse>
+          {questionArr.map((question: IQuestion, index) => {
+            const { id } = question;
+            // 外面设置 还是里面设置 谁更合理？谁该负责？里面进行参数缺省更加合理。
+            // 这两个WrapperPanel是否可以通用？
+            const answerInfo = userAnswerInput.find(userAnswer => userAnswer.id === id)
+            return (
+              <WrapperPanel
+                isContinue={ index === 0 }
+                continueNextStep={nextStep}
+                onUserInputHandler={(value: any) => {
+                  dispatch({type: 'setAnswerArr', value: value})
+                }}
+                status={getStatus(id)}
+                onClickPanel={onClickPanelHandler}
+                index={index + extraQuestion + 1}
+                total={questionArr.length + extraQuestion}
+                key={id}
+                questionInfo={question}
+                answerInfo={answerInfo}
+              />
+            );
+          })}
+        </Collapse>
+        {maxActiveKey === 'allFinish' ? 'finish' : null}
+      </div>
   );
 }
 
@@ -463,11 +486,9 @@ export function ConditionForm(props: IConditionForm) {
 //       Object.keys(this.props.yourphone.activeConditions).forEach((key: string) => {
 //         const ppn = TBDPPNS.find(v => v.id.toString() === key);
 //         let ppv: ISubSkuPricePropertyValues | null = null;
-//         console.log(ppn)
 //         if (ppn) {
 //           ppv = ppn.pricePropertyValues.find(v => v.id === this.props.yourphone.activeConditions[key]) || null;
 //         }
-//         console.log(ppv)
 //         if (ppv) {
 //           this.props.yourphone.tbdInfo.properties.push(ppv.value);
 //         }
@@ -488,7 +509,7 @@ export function ConditionForm(props: IConditionForm) {
 //           inquiryKey: this.props.yourphone.inquiryKey,
 //           productInfo
 //         };
-//       } catch (error) { console.warn(error, 'in conditions page preOrder') }
+//       } catch (error) { }
 //
 //       let path = '/sell/yourphone/shipping'
 //       if (this.props.user.preOrder.appendOrderDetail) {
@@ -496,7 +517,6 @@ export function ConditionForm(props: IConditionForm) {
 //       }
 //       // 询价成功，提示用户，有保证金的存在，只存在于PC，因为移动端价格面板在最上面啦
 //       if (!this.props.common.isMobile) {
-//         console.log(this.props.yourphone.inquiryDetail)
 //         noteUserModal({
 //           title: 'Your UpTrade Offer',
 //           content: (<>Your {this.props.yourphone.inquiryDetail!.product.name} Guaranteed Price is ${this.props.yourphone.inquiryDetail!.priceDollar} <br /> <br />This window will be closed after 15 seconds.</>),

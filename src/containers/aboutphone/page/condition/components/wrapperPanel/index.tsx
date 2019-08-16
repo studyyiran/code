@@ -19,16 +19,15 @@ interface IWrapperPanel {
   answerInfo?: IUserQuestionAnswer,
   index: number,
   total: number,
-  onClickPanel: (onChangeKey: string) => void,
+  onClickPanel: (onChangeKey: string, isSave?: boolean) => void,
   onUserInputHandler: (action: any) => void,
-  onUserFinishInputHandler: (onChangeKey: string) => void,
+  continueNextStep: () => void,
   status: string,
-  onSave: () => void,
   isContinue?: boolean,
 }
 
 export function WrapperPanel(props: IWrapperPanel) {
-  const { questionInfo, answerInfo, index, total, onClickPanel, status, onSave, isContinue, onUserInputHandler, onUserFinishInputHandler } = props;
+  const { questionInfo, answerInfo, index, total, onClickPanel, status, isContinue, onUserInputHandler, continueNextStep } = props;
   const { id: questionId, title, subQuestionArr } = questionInfo;
   function renderTag() {
     switch (status) {
@@ -44,10 +43,7 @@ export function WrapperPanel(props: IWrapperPanel) {
   }
   function isAllFinish() {
     // 先简单进行输入判定。
-    console.log(answerInfo)
     if (answerInfo && answerInfo.subAnswerArr && questionInfo && questionInfo.subQuestionArr) {
-      console.log(answerInfo)
-      console.log(questionInfo)
       if (answerInfo.subAnswerArr.length === questionInfo.subQuestionArr.length) {
         return true
       }
@@ -76,14 +72,12 @@ export function WrapperPanel(props: IWrapperPanel) {
           userAnswer = subAnswer ? subAnswer.answer : [];
         }
         function sureHandler (answer: string) {
+          console.log('!')
           onUserInputHandler({
             questionId,
             answerId: subQuestionId,
             answer: [answer]
           })
-          if (!isContinue) {
-            onUserFinishInputHandler(questionId)
-          }
         }
         const {id: subQuestionId, content, type} = subQuestion
         return <div key={subQuestionId}>
@@ -93,8 +87,8 @@ export function WrapperPanel(props: IWrapperPanel) {
           {/*<p>answerId: {answerId}</p>*/}
         </div>
       })}
-      {status === 'edit' ? <SaveButton canPost={isAllFinish()} onClick={onSave}>Save</SaveButton> : null}
-      {(isContinue && status === 'doing') ? <SaveButton canPost={isAllFinish()} onClick={() => {onUserFinishInputHandler(questionId)}}>Continue</SaveButton> : null}
+      {status === 'edit' ? <SaveButton canPost={isAllFinish()} onClick={() => onClickPanel(questionId, true)}>Save</SaveButton> : null}
+      {(isContinue && status === 'doing') ? <SaveButton canPost={isAllFinish()} onClick={() => {continueNextStep()}}>Continue</SaveButton> : null}
     </Panel>)
 }
   
