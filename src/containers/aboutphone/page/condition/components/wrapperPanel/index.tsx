@@ -5,7 +5,10 @@ import {IQuestion, IUserQuestionAnswer} from "@/containers/aboutphone/page/condi
 import {Select} from "../subQuestion";
 
 function SaveButton(props: any) {
-  return <Button onClick={props.onClick}>Save</Button>;
+  const {children, canPost} = props
+  // check
+  
+  return <Button type={canPost ? "primary" : "dashed"} disabled={!canPost} onClick={props.onClick}>{children}</Button>;
 }
 
 // 如何为函数定义
@@ -25,7 +28,7 @@ interface IWrapperPanel {
 }
 
 export function WrapperPanel(props: IWrapperPanel) {
-  const { questionInfo, index, total, onClickPanel, status, onSave, isContinue, onUserInputHandler, onUserFinishInputHandler } = props;
+  const { questionInfo, answerInfo, index, total, onClickPanel, status, onSave, isContinue, onUserInputHandler, onUserFinishInputHandler } = props;
   const { id: questionId, title, subQuestionArr } = questionInfo;
   function renderTag() {
     switch (status) {
@@ -38,6 +41,18 @@ export function WrapperPanel(props: IWrapperPanel) {
       default:
         return null
     }
+  }
+  function isAllFinish() {
+    // 先简单进行输入判定。
+    console.log(answerInfo)
+    if (answerInfo && answerInfo.subAnswerArr && questionInfo && questionInfo.subQuestionArr) {
+      console.log(answerInfo)
+      console.log(questionInfo)
+      if (answerInfo.subAnswerArr.length === questionInfo.subQuestionArr.length) {
+        return true
+      }
+    }
+    return false
   }
   return (
     <Panel
@@ -56,8 +71,8 @@ export function WrapperPanel(props: IWrapperPanel) {
       
       {subQuestionArr.map((subQuestion) => {
         let userAnswer : any[] = []
-        if (props.answerInfo && props.answerInfo.subAnswerArr && props.answerInfo.subAnswerArr.length) {
-          const subAnswer = props.answerInfo.subAnswerArr.find(answer => answer.id === subQuestionId)
+        if (answerInfo && answerInfo.subAnswerArr && answerInfo.subAnswerArr.length) {
+          const subAnswer = answerInfo.subAnswerArr.find(answer => answer.id === subQuestionId)
           userAnswer = subAnswer ? subAnswer.answer : [];
         }
         function sureHandler (answer: string) {
@@ -78,8 +93,8 @@ export function WrapperPanel(props: IWrapperPanel) {
           {/*<p>answerId: {answerId}</p>*/}
         </div>
       })}
-      {status === 'edit' ? <SaveButton onClick={onSave} /> : null}
-      {(isContinue && status === 'doing') ? <Button onClick={() => {onUserFinishInputHandler(questionId)}}>Continue</Button> : null}
+      {status === 'edit' ? <SaveButton canPost={isAllFinish()} onClick={onSave}>Save</SaveButton> : null}
+      {(isContinue && status === 'doing') ? <SaveButton canPost={isAllFinish()} onClick={() => {onUserFinishInputHandler(questionId)}}>Continue</SaveButton> : null}
     </Panel>)
 }
   

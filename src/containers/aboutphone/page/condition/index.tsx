@@ -10,7 +10,6 @@ default 和 active似乎 遵从active
  */
 
 function reducer(state: any, action: IAction) {
-  console.log(arguments)
   const { type, value } = action;
   function changeTargetById (arr: any[], changedId: string, answer: any) {
     // copy
@@ -22,7 +21,7 @@ function reducer(state: any, action: IAction) {
     if (findItemIndex === -1) {
       changedArr.push(answer);
     } else {
-      changedArr[findItemIndex] = answer;
+      // changedArr[findItemIndex] = answer;
     }
     return changedArr
   }
@@ -52,23 +51,27 @@ function reducer(state: any, action: IAction) {
       // 1 获取当前的 或者 做一个新的
       // 2 将answer 补充上。
       // 3 返回掉
-      // 新建一个新的
+      // 新建一个新的外层  最坏打算。
       const newQuestionAnswer: IUserQuestionAnswer = {id: questionId, subAnswerArr: []}
-      // 获取整合后的
+      // 获取整合后的（有个全新的。ok的。没有变更老的。老的复制）（有 questionId，就应该用老的，不应该每次都重置。只有初始化应该重置）
       const questionArr: IUserQuestionAnswer[] = changeTargetById(state.userPhoneInfoInput, questionId, newQuestionAnswer)
-      // 再取出来
+      // 再取出来（从新生里面拿出来需要操作）
       const targetArr = questionArr.find(item => item.id === questionId)
-      // 新建一个正确的、新answer
-      const newAnswer : IUserAnswer = {id: answerId, answer: answer}
-      // 补充替换到target中
+      // 新建一个正确的、新answer（这个是内部的必然替代项）（那也就意味着，你需要对answer的完整性，负完全责）（其实这边也有初始化的需求。如果完成了初始化，就应该是。。赋值需求。应该准确赋值。）
+      const newAnswer : IUserAnswer = {id: answerId, answer: []}
+      // 补充替换到target中（强行替换）
       // @ts-ignore
       targetArr.subAnswerArr = changeTargetById((targetArr as IUserQuestionAnswer).subAnswerArr, answerId, newAnswer)
+      // 初始化赋值结束后
+      // @ts-ignore
+      targetArr.subAnswerArr.find(item => item.id === answerId).answer = answer
+      // @ts-ignore
+      questionArr[questionArr.findIndex(item => item.id === questionId)] = targetArr
       // 将target替换到原来的
-      const finalArr = changeTargetById(questionArr, questionId, targetArr)
-      return { ...state, userPhoneInfoInput: finalArr};
+      // const finalArr = changeTargetById(questionArr, questionId, targetArr)
+      return { ...state, userPhoneInfoInput: questionArr};
     }
     case "setEditKey":
-      console.log('enter')
       // state 需要使用type吗？
       return { ...state, editKey: value };
     case "setCurrentActive":
@@ -165,7 +168,7 @@ export function ConditionForm(props: IConditionForm) {
   
   // 这块怎么用语法写
   const userAnswerInput : IUserQuestionAnswer[] = state.userAnswerInput
-  const userPhoneInfoInput : IUserQuestionAnswer = state.userPhoneInfoInput
+  const userPhoneInfoInput : IUserQuestionAnswer[] = state.userPhoneInfoInput
   
   const editKey : string[] = state.editKey
   const {
@@ -242,7 +245,6 @@ export function ConditionForm(props: IConditionForm) {
     if (questionId === firstQuestionKey) {
       setMaxActiveKey(questionArr[0].id)
     } else {
-      console.log('checkcehckl')
       // check 无误的话 就+1(暂时无法解决异步问题)
       if (true || isDone(questionId)) {
         const findCurrent = questionArr.findIndex(({id}) => {
@@ -258,7 +260,6 @@ export function ConditionForm(props: IConditionForm) {
       }
     }
   }
-  
   const extraQuestion : number = 1
   return (
     <Collapse
@@ -277,7 +278,7 @@ export function ConditionForm(props: IConditionForm) {
         total={questionArr.length + extraQuestion}
         key={firstQuestionKey}
         questionInfo={phoneInfoQuestion}
-        answerInfo={userPhoneInfoInput}
+        answerInfo={userPhoneInfoInput[0]}
       />
       {questionArr.map((question: IQuestion, index) => {
         const { id } = question;
