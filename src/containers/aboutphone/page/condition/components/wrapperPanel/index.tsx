@@ -1,5 +1,6 @@
 import React from "react";
-import { Collapse, Button } from 'antd';
+import "./index.less";
+import { Collapse, Button, Icon } from 'antd';
 const {Panel} = Collapse
 import {IQuestion, IUserQuestionAnswer} from "@/containers/aboutphone/page/condition/index.interface";
 import {Select} from "../subQuestion";
@@ -35,9 +36,9 @@ export function WrapperPanel(props: IWrapperPanel) {
       case 'edit':
         
       case 'doing':
-        return <span>Step {index} of {total}</span>
+        return <span className="tag">Step {index} of {total}</span>
       case 'done':
-        return <span>ok</span>
+        return <span className="tag" data-type={"done"}>Edit</span>
       default:
         return null
     }
@@ -77,10 +78,9 @@ export function WrapperPanel(props: IWrapperPanel) {
         if (isMoreCondition && !canShowMoreQuestion(isMoreCondition, userSubAnswer && userSubAnswer.answer)) {
           canRenderNext = false
         }
-        return <div key={subQuestionId}>
-          <p>content: {content}</p>
-          <p>type: {type}</p>
-          <Select onChange={(answer) => {sureHandler(subQuestionId, answer)}} defaultValue={userSubAnswer.answer[0]} />
+        return <div className="wrapper-panel__question" key={subQuestionId}>
+          <h2>{content}</h2>
+          {type === 'default' ? <Select onChange={(answer) => {sureHandler(subQuestionId, answer)}} defaultValue={userSubAnswer.answer[0]} /> : <Select onChange={(answer) => {sureHandler(subQuestionId, answer)}} defaultValue={userSubAnswer.answer[0]} />}
         </div>
       } else {
         return null
@@ -89,17 +89,21 @@ export function WrapperPanel(props: IWrapperPanel) {
   }
   return (
     <Panel
+      className="wrapper-panel"
       {...props}
       showArrow={false}
       header={
-        <div onClick={() => {onClickPanel(questionId)}}>
-          {/*<img src={require("")} />*/}
-          <span>{title} </span>
-          <span> status: {status}</span>
+        <div className="wrapper-panel__header" onClick={() => {onClickPanel(questionId)}}>
+          <div className="wrapper-panel__header__title">
+            <span>
+              <Icon type="check-circle" style={{color: "white"}}/>
+            </span>
+            <h1>{title} </h1>
+          </div>
+          {renderTag()}
         </div>
       }
       key={questionId}
-      extra={renderTag()}
     >
       {renderQuestions()}
       {status === 'edit' ? <SaveButton canPost={isAllFinish()} onClick={() => onClickPanel(questionId, true)}>Save</SaveButton> : null}

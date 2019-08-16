@@ -1,0 +1,49 @@
+@import (reference) '~@/styles/color.less';
+@import (reference) '~@/styles/font.less';
+.wrapper-panel {
+  .ant-collapse-header {
+    padding-top: 25px !important;
+    padding-bottom: 25px !important;
+    background: @white;
+  }
+  .ant-collapse-content-active {
+    border-top: none;
+  }
+  .wrapper-panel__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .wrapper-panel__header__title {
+      display: flex;
+      align-items: center;
+      > span:first-child {
+        margin-right: 8px;
+        border-radius: 50%;
+        overflow: hidden;
+        width: 24px;
+        height: 24px;
+        background: #6DD230;
+        > * {
+          font-size: 24px;
+        }
+      }
+      > h1 {
+        font-size: @font-size-large;
+      }
+    }
+    > .tag {
+      font-weight: 600;
+      font-family:Helvetica;
+    }
+    > .tag[data-type="done"] {
+      color: #1AB4E7;
+    }
+  }
+  .wrapper-panel__question {
+    margin-bottom: 24px;
+    > h2 {
+      font-size: @font-size-bigger;
+      margin-bottom: 8px;
+    }
+  }
+}

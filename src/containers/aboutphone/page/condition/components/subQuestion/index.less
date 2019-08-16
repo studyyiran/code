@@ -1,0 +1,35 @@
+@import (reference) '~@/styles/color.less';
+@import (reference) '~@/styles/font.less';
+.comp-select {
+  width: 100%;
+  display: flex;
+  > button {
+    flex: 1;
+    
+  }
+  > button:first-child {
+    border-radius: 4px 0 0 4px;
+  }
+  > button:last-child {
+    border-radius: 0 4px 4px 0;
+  }
+  .sub-question-button {
+    width: 172px;
+    height: 64px;
+    border: 1px solid @color-gray;
+    font-size: @font-size-large;
+  }
+  .sub-question-button[data-select="true"] {
+    background: @color-blue;
+    color: @white;
+    border-color: #1AB4E7;
+  }
+
+  button {
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    color: @color-gray-deeper;
+  }
+}
+

@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import {Button} from 'antd'
+import './index.less'
+// import {Button} from 'antd'
 
 interface ISingleButton {
   children: any,
@@ -14,10 +15,10 @@ function SingleButton(props: ISingleButton) {
     onClick(index)
   }
   const isSelect = currentSelect === index
-  return <Button type={isSelect ? "primary" : "dashed"} onClick={handler}>
+  return <button className="sub-question-button" data-select={isSelect ? "true" : "false"} onClick={handler}>
     {isSelect}
     {children}
-  </Button>
+  </button>
 }
 
 interface ISelect {
@@ -31,7 +32,7 @@ export function Select(props: ISelect) {
     setCurrentSelect(selectIndex)
     props.onChange(selectIndex)
   }
-  return <div>
+  return <div className="comp-select">
     <SingleButton index={"true"} currentSelect={currentSelect} onClick={handler}>true</SingleButton>
     <SingleButton index={"false"} currentSelect={currentSelect} onClick={handler}>false</SingleButton>
   </div>
