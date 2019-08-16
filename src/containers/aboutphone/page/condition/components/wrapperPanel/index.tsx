@@ -3,6 +3,7 @@ import { Collapse, Button } from 'antd';
 const {Panel} = Collapse
 import {IQuestion, IUserQuestionAnswer} from "@/containers/aboutphone/page/condition/index.interface";
 import {Select} from "../subQuestion";
+import {canShowMoreQuestion, findAnswerById, isCanMove} from "../../util";
 
 function SaveButton(props: any) {
   const {children, canPost} = props
@@ -42,13 +43,49 @@ export function WrapperPanel(props: IWrapperPanel) {
     }
   }
   function isAllFinish() {
-    // 先简单进行输入判定。
-    if (answerInfo && answerInfo.subAnswerArr && questionInfo && questionInfo.subQuestionArr) {
-      if (answerInfo.subAnswerArr.length === questionInfo.subQuestionArr.length) {
-        return true
-      }
+    if (answerInfo) {
+      return isCanMove(questionInfo, [answerInfo])
+    } else {
+      return false
     }
-    return false
+    // 先简单进行输入判定。
+    // if (answerInfo && answerInfo.subAnswerArr && questionInfo && questionInfo.subQuestionArr) {
+    //   if (answerInfo.subAnswerArr.length === .subQuestionArr.length) {
+    //     return true
+    //   }
+    // }
+    // return false
+  }
+  function renderQuestions() {
+    let canRenderNext = true
+    function sureHandler (subQuestionId: string, answer: string) {
+      onUserInputHandler({
+        questionId,
+        answerId: subQuestionId,
+        answer: [answer]
+      })
+    }
+    return subQuestionArr.map((subQuestion) => {
+      const {id: subQuestionId, content, type, isMoreCondition} = subQuestion
+      let userSubAnswer: any
+      if (answerInfo) {
+        userSubAnswer = findAnswerById([answerInfo], subQuestionId) || {answer: []}
+      } else {
+        userSubAnswer = {answer: []}
+      }
+      if (canRenderNext) {
+        if (isMoreCondition && !canShowMoreQuestion(isMoreCondition, userSubAnswer && userSubAnswer.answer)) {
+          canRenderNext = false
+        }
+        return <div key={subQuestionId}>
+          <p>content: {content}</p>
+          <p>type: {type}</p>
+          <Select onChange={(answer) => {sureHandler(subQuestionId, answer)}} defaultValue={userSubAnswer.answer[0]} />
+        </div>
+      } else {
+        return null
+      }
+    })
   }
   return (
     <Panel
@@ -64,29 +101,7 @@ export function WrapperPanel(props: IWrapperPanel) {
       key={questionId}
       extra={renderTag()}
     >
-      
-      {subQuestionArr.map((subQuestion) => {
-        let userAnswer : any[] = []
-        if (answerInfo && answerInfo.subAnswerArr && answerInfo.subAnswerArr.length) {
-          const subAnswer = answerInfo.subAnswerArr.find(answer => answer.id === subQuestionId)
-          userAnswer = subAnswer ? subAnswer.answer : [];
-        }
-        function sureHandler (answer: string) {
-          console.log('!')
-          onUserInputHandler({
-            questionId,
-            answerId: subQuestionId,
-            answer: [answer]
-          })
-        }
-        const {id: subQuestionId, content, type} = subQuestion
-        return <div key={subQuestionId}>
-          <p>content: {content}</p>
-          <p>type: {type}</p>
-          <Select onChange={sureHandler} defaultValue={userAnswer[0]} />
-          {/*<p>answerId: {answerId}</p>*/}
-        </div>
-      })}
+      {renderQuestions()}
       {status === 'edit' ? <SaveButton canPost={isAllFinish()} onClick={() => onClickPanel(questionId, true)}>Save</SaveButton> : null}
       {(isContinue && status === 'doing') ? <SaveButton canPost={isAllFinish()} onClick={() => {continueNextStep()}}>Continue</SaveButton> : null}
     </Panel>)

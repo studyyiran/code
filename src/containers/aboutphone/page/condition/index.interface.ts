@@ -7,6 +7,8 @@ export interface IQuestion {
 export interface ISubQuestion {
   id: string,
   content: string,
+  // 用于关联。
+  isMoreCondition?: string[],
   type: string,
 }
 

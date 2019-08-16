@@ -4,6 +4,7 @@ import { Collapse } from 'antd';
 import {IAction} from '@/interface/index.interface'
 import {IQuestion, IUserAnswer, IUserQuestionAnswer} from './index.interface'
 import {WrapperPanel} from './components/wrapperPanel'
+import {isCanMove} from './util'
 
 /*
 default 和 active似乎 遵从active
@@ -142,21 +143,25 @@ const phoneInfoQuestion : IQuestion = {
     {
       id: 'phoneInfoSubQuestion1',
       content: 'Phone Manufacture',
+      isMoreCondition: ["true"],
       type: 'list',
     },
     {
       id: 'phoneInfoSubQuestion2',
       content: 'Model',
+      isMoreCondition: ["true"],
       type: 'list',
     },
     {
       id: 'phoneInfoSubQuestion3',
       content: 'Storage',
+      isMoreCondition: ["true"],
       type: 'list',
     },
     {
       id: 'phoneInfoSubQuestion4',
       content: 'Carrier',
+      isMoreCondition: ["true"],
       type: 'list',
     }
   ]
@@ -229,43 +234,12 @@ export function ConditionForm(props: IConditionForm) {
     
   }
   
-  function isCanMove(findCurrent: IQuestion) : boolean {
-    if (!findCurrent) {
-      return false
-    }
-    function isAllShow() {
-      return true
-    }
-    
-    function isAllNotEmpty() {
-      const { id, subQuestionArr } = findCurrent;
-      const userAnswer = userAnswerInput.find((answer) => {
-        const {id: answerQuestionId} = answer
-        return answerQuestionId === id
-      });
-      return Boolean(userAnswer && (userAnswer.subAnswerArr.length === subQuestionArr.length))
-    }
-    
-    function isNoContinue() {
-      return false
-    }
-    // 检测动态是否完整
-    if (isAllShow()) {
-      if (isAllNotEmpty()) {
-        if (isNoContinue()) {
-          return true
-        }
-      }
-    }
-    return false
-  }
-  
   // 每当用户输入变化的时候，重新跑一下。看是否触发next
   useEffect(() => {
     const findCurrent = questionArr.find(({id}) => {
       return id === maxActiveKey
     })
-    if (findCurrent && isCanMove(findCurrent)) {
+    if (findCurrent && isCanMove(findCurrent, userAnswerInput)) {
       nextStep()
     }
   }, [userAnswerInput])
