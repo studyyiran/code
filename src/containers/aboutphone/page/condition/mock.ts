@@ -89,24 +89,25 @@ export const serverPhoneInfo: IUserQuestionAnswer[] = [
 ];
 
 export const serverPhoneConditionQuestion: IQuestion[] = [
-  {
-    id: "0",
-    title: "Test",
-    subQuestionArr: [
-      {
-        id: "test1",
-        isMoreCondition: ["true"],
-        content: "Does your phone power on to the home screen?",
-        type: "default"
-      },
-      {
-        id: "31",
-        content: "Where is the crack located? (Select all that apply)",
-        type: "multiSelect",
-        questionDesc: ["Screen", "Back Cover", "Back Camera", "__input__"]
-      }
-    ]
-  },
+  // {
+  //   id: "0",
+  //   title: "Test",
+  //   subQuestionArr: [
+  //     {
+  //       id: "61",
+  //       content: "Is your phone fully paid off?",
+  //       isMoreCondition: ["false"],
+  //       type: "default"
+  //     },
+  //     {
+  //       id: "62",
+  //       content: 'A phone that is not fully paid off has a risk of being blacklisted; therefore the price will be significantly reduced.\n' +
+  //         '\n' +
+  //         'We suggest to fully pay off your phone before selling.',
+  //       type: "tips"
+  //     }
+  //   ]
+  // },
   {
     id: "1",
     title: "Power On",
@@ -197,7 +198,15 @@ export const serverPhoneConditionQuestion: IQuestion[] = [
       {
         id: "61",
         content: "Is your phone fully paid off?",
+        isMoreCondition: ["false"],
         type: "default"
+      },
+      {
+        id: "62",
+        content: 'A phone that is not fully paid off has a risk of being blacklisted; therefore the price will be significantly reduced.\n' +
+          '\n' +
+          'We suggest to fully pay off your phone before selling.',
+        type: "tips"
       }
     ]
   }

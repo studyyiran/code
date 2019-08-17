@@ -98,8 +98,9 @@ export function isNoContinue(
     findCurrent,
     userAnswerInput
   );
+  const noContinueType = ["default", "tips"]
   return currentSubQuestion.every(subAnswer => {
     const { type } = subAnswer;
-    return type === "default";
+    return noContinueType.some(someType => someType === type);
   });
 }

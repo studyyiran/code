@@ -246,16 +246,10 @@ function RenderByType(props: any) {
       );
     case "input":
       return (
-        <Select style={{ width: "100%" }} defaultValue={questionDesc[0]}>
-          {questionDesc.map((nameValue: any) => {
-            return (
-              <Option key={nameValue} value={nameValue}>
-                {nameValue}
-              </Option>
-            );
-          })}
-        </Select>
+        <div>input</div>
       );
+    case "tips":
+      return null
     default:
       return (
         <SingleSelect
