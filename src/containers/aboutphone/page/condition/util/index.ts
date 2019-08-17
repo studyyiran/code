@@ -5,7 +5,10 @@ import {
   IUserQuestionAnswer
 } from "@/containers/aboutphone/page/condition/index.interface";
 
-export function canShowMoreQuestion(isMoreCondition: any[], userAnswer?: string[]) {
+export function canShowMoreQuestion(
+  isMoreCondition: any[],
+  userAnswer?: string[]
+) {
   if (!userAnswer) {
     return false;
   }
@@ -16,7 +19,7 @@ export function findAnswerById(
   userAnswerInput: IUserQuestionAnswer[],
   id: string
 ): IUserAnswer {
-  let target : IUserAnswer;
+  let target: IUserAnswer;
   userAnswerInput.forEach(answer => {
     const { subAnswerArr } = answer;
     subAnswerArr.forEach(subAnswer => {
@@ -31,15 +34,13 @@ export function findAnswerById(
 
 export function isCanMove(
   findCurrent: IQuestion,
-  userAnswerInput: IUserQuestionAnswer[]
+  userAnswerInput: IUserQuestionAnswer[] | undefined
 ): boolean {
-  if (!findCurrent) {
-    return false;
-  }
-  function isAllNotEmpty(arr: ISubQuestion[]) {
+  function isAllNotEmpty(arr: ISubQuestion[]): boolean {
     // @ts-ignore
     return arr.every(question => {
       const { id: subQuestionId } = question;
+      // @ts-ignore
       const userAnswer = findAnswerById(userAnswerInput, subQuestionId);
       // @ts-ignore
       return userAnswer && userAnswer.answer && userAnswer.answer.length;
@@ -48,15 +49,17 @@ export function isCanMove(
     // const userAnswer = findAnswerById(id)
     // return Boolean(userAnswer && (userAnswer.subAnswerArr.length === subQuestionArr.length))
   }
+  console.log(userAnswerInput)
+  console.log(findCurrent)
+  if (!userAnswerInput || !findCurrent) {
+    return false;
+  }
   // 检测动态是否完整
   const currentSubQuestion = getCurrentSubQuestion(
     findCurrent,
     userAnswerInput
   );
-  if (isAllNotEmpty(currentSubQuestion)) {
-    return true;
-  }
-  return false;
+  return isAllNotEmpty(currentSubQuestion);
 }
 
 function getCurrentSubQuestion(

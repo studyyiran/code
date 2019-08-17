@@ -1,5 +1,6 @@
 import { IQuestion, IUserQuestionAnswer } from "./index.interface";
-import { firstQuestionKey } from "./index";
+// import { firstQuestionKey } from "./index";
+const firstQuestionKey = "aboutYourPhone";
 export const serverPhoneInfo: IUserQuestionAnswer[] = [
   {
     id: "phoneInfoSubQuestion1",
@@ -87,7 +88,24 @@ export const serverPhoneInfo: IUserQuestionAnswer[] = [
   }
 ];
 
-export const serverQuestionArr: IQuestion[] = [
+export const serverPhoneConditionQuestion: IQuestion[] = [
+  {
+    id: "0",
+    title: "Test",
+    subQuestionArr: [
+      {
+        id: "test1",
+        content: "Does your phone power on to the home screen?",
+        type: "default"
+      },
+      {
+        id: "test2",
+        isMoreCondition: ["true"],
+        content: "Does your phone power on to the home screen?",
+        type: "input"
+      }
+    ]
+  },
   {
     id: "1",
     title: "Power On",

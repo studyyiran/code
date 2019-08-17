@@ -73,20 +73,20 @@ export function WrapperPanel(props: IWrapperPanel) {
         return null;
     }
   }
-  function isAllFinish() {
-    if (answerInfo) {
-      return isCanMove(questionInfo, [answerInfo]);
-    } else {
-      return false;
-    }
-    // 先简单进行输入判定。
-    // if (answerInfo && answerInfo.subAnswerArr && questionInfo && questionInfo.subQuestionArr) {
-    //   if (answerInfo.subAnswerArr.length === .subQuestionArr.length) {
-    //     return true
-    //   }
-    // }
-    // return false
-  }
+  // function isAllFinish() {
+  //   if (answerInfo) {
+  //     return;
+  //   } else {
+  //     return false;
+  //   }
+  //   // 先简单进行输入判定。
+  //   // if (answerInfo && answerInfo.subAnswerArr && questionInfo && questionInfo.subQuestionArr) {
+  //   //   if (answerInfo.subAnswerArr.length === .subQuestionArr.length) {
+  //   //     return true
+  //   //   }
+  //   // }
+  //   // return false
+  // }
   function renderQuestions() {
     let canRenderNext = true;
 
@@ -134,6 +134,8 @@ export function WrapperPanel(props: IWrapperPanel) {
       }
     });
   }
+  console.log('answerInfo')
+  console.log(answerInfo)
   return (
     <Panel
       className="wrapper-panel"
@@ -158,7 +160,7 @@ export function WrapperPanel(props: IWrapperPanel) {
       {renderQuestions()}
       {status === "edit" ? (
         <SaveButton
-          canPost={isAllFinish()}
+          canPost={isCanMove(questionInfo, answerInfo && [answerInfo])}
           onClick={() => onClickPanel(questionId, true)}
         >
           Save
@@ -166,7 +168,7 @@ export function WrapperPanel(props: IWrapperPanel) {
       ) : null}
       {isContinue && status === "doing" ? (
         <SaveButton
-          canPost={isAllFinish()}
+          canPost={isCanMove(questionInfo, answerInfo && [answerInfo])}
           onClick={() => {
             continueNextStep();
           }}
