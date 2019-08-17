@@ -108,7 +108,6 @@ export function WrapperPanel(props: IWrapperPanel) {
       }
       if (canRenderNext) {
         if (
-          isMoreCondition &&
           !canShowMoreQuestion(
             isMoreCondition,
             userSubAnswer && userSubAnswer.answer
@@ -134,8 +133,6 @@ export function WrapperPanel(props: IWrapperPanel) {
       }
     });
   }
-  console.log('answerInfo')
-  console.log(answerInfo)
   return (
     <Panel
       className="wrapper-panel"
@@ -236,6 +233,18 @@ function RenderByType(props: any) {
         />
       );
     case "select":
+      return (
+        <Select style={{ width: "100%" }} defaultValue={questionDesc[0]}>
+          {questionDesc.map((nameValue: string) => {
+            return (
+              <Option key={nameValue} value={nameValue}>
+                {nameValue}
+              </Option>
+            );
+          })}
+        </Select>
+      );
+    case "input":
       return (
         <Select style={{ width: "100%" }} defaultValue={questionDesc[0]}>
           {questionDesc.map((nameValue: any) => {

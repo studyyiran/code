@@ -95,14 +95,15 @@ export const serverPhoneConditionQuestion: IQuestion[] = [
     subQuestionArr: [
       {
         id: "test1",
+        isMoreCondition: ["true"],
         content: "Does your phone power on to the home screen?",
         type: "default"
       },
       {
-        id: "test2",
-        isMoreCondition: ["true"],
-        content: "Does your phone power on to the home screen?",
-        type: "input"
+        id: "31",
+        content: "Where is the crack located? (Select all that apply)",
+        type: "multiSelect",
+        questionDesc: ["Screen", "Back Cover", "Back Camera", "__input__"]
       }
     ]
   },
@@ -130,7 +131,6 @@ export const serverPhoneConditionQuestion: IQuestion[] = [
       {
         id: "21",
         content: "Are there scratches on the screen itself?",
-        isMoreCondition: ["true"],
         type: "default"
       }
     ]
@@ -149,7 +149,7 @@ export const serverPhoneConditionQuestion: IQuestion[] = [
         id: "31",
         content: "Where is the crack located? (Select all that apply)",
         type: "multiSelect",
-        questionDesc: ["Screen", "Back Cover", "Back Camera"]
+        questionDesc: ["Screen", "Back Cover", "Back Camera", "__input__"]
       }
     ]
   },
@@ -167,7 +167,6 @@ export const serverPhoneConditionQuestion: IQuestion[] = [
         id: "42",
         content:
           "Which of the following aren't working? (Select all that apply)",
-        isMoreCondition: ["true"],
         type: "multiSelect",
         questionDesc: ["Charger", "Touch ID", "Home Button"]
       }
@@ -187,7 +186,6 @@ export const serverPhoneConditionQuestion: IQuestion[] = [
         id: "52",
         content:
           "We can't accept locked phone. Can you remove before sending in?",
-        isMoreCondition: ["true"],
         type: "default"
       }
     ]

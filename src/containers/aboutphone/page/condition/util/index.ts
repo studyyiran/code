@@ -6,13 +6,16 @@ import {
 } from "@/containers/aboutphone/page/condition/index.interface";
 
 export function canShowMoreQuestion(
-  isMoreCondition: any[],
+  isMoreCondition?: string[],
   userAnswer?: string[]
-) {
+): boolean {
   if (!userAnswer) {
     return false;
+  } else if (!isMoreCondition) {
+    return true;
+  } else {
+    return JSON.stringify(isMoreCondition) === JSON.stringify(userAnswer);
   }
-  return JSON.stringify(isMoreCondition) === JSON.stringify(userAnswer);
 }
 
 export function findAnswerById(
@@ -49,8 +52,6 @@ export function isCanMove(
     // const userAnswer = findAnswerById(id)
     // return Boolean(userAnswer && (userAnswer.subAnswerArr.length === subQuestionArr.length))
   }
-  console.log(userAnswerInput)
-  console.log(findCurrent)
   if (!userAnswerInput || !findCurrent) {
     return false;
   }
@@ -76,7 +77,6 @@ function getCurrentSubQuestion(
       const userAnswer = findAnswerById(userAnswerInput, subQuestionId);
       if (canNext) {
         if (
-          isMoreCondition &&
           !canShowMoreQuestion(isMoreCondition, userAnswer && userAnswer.answer)
         ) {
           canNext = false;

@@ -5,12 +5,11 @@ export interface IQuestion {
 }
 
 export interface ISubQuestion {
-  id: string;
-  content: string;
-  // 用于关联。
-  isMoreCondition?: string[];
-  type: string;
-  questionDesc?: string[];
+  id: string; // subQuestionId
+  content: string; // 题目描述
+  type: string; // 题目类型
+  isMoreCondition?: string[]; // 用于关联多道题目
+  questionDesc?: string[]; // 题目额外信息
 }
 
 export interface IUserQuestionAnswer {
