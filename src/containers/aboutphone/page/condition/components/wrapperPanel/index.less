@@ -1,5 +1,5 @@
-@import (reference) '~@/styles/color.less';
-@import (reference) '~@/styles/font.less';
+@import (reference) "~@/styles/color.less";
+@import (reference) "~@/styles/font.less";
 .wrapper-panel {
   .ant-collapse-content-box {
     padding-top: 0px;
@@ -27,7 +27,7 @@
         height: 24px;
       }
       > span[data-type="done"] {
-        background: #6DD230;
+        background: #6dd230;
         > * {
           font-size: 28px;
           position: relative;
@@ -35,7 +35,8 @@
           top: -2px;
         }
       }
-      > span[data-type="doing"], > span[data-type="edit"] {
+      > span[data-type="doing"],
+      > span[data-type="edit"] {
         background: @color-blue-liner;
         text-align: center;
         line-height: 24px;
@@ -53,10 +54,10 @@
     }
     > .tag {
       font-weight: 600;
-      font-family:Helvetica;
+      font-family: Helvetica;
     }
     > .tag[data-type="done"] {
-      color: #1AB4E7;
+      color: #1ab4e7;
     }
   }
   .wrapper-panel__question {
