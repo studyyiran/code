@@ -2,11 +2,11 @@ import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import { Form, Col, Row, Input } from 'antd';
 import Layout from '@/containers/aboutphone/layout';
-import './shipping.less';
-import { IShippingProps, IShippingState } from './interface/index.interface';
+import './index.less';
+import { IShippingProps, IShippingState } from '../../interface/index.interface';
 import { IProductInfo } from '@/store/interface/user.interface';
 import { shippingPageValidate } from '@/containers/aboutphone/pageValidate';
-import yourphoneStore from './store/yourphone.store';
+import yourphoneStore from '../../store/yourphone.store';
 import classnames from 'classnames';
 
 // create form value 变化时候判断 按钮是否能高亮

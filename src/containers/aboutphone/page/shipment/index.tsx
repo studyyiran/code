@@ -3,10 +3,10 @@ import classnames from 'classnames';
 import { inject, observer } from 'mobx-react';
 import { Row, Col, Collapse, Form } from 'antd';
 import Layout from '@/containers/aboutphone/layout';
-import { IPaymentProps, IPaymentStates, EShipmentType } from './interface/index.interface';
+import { IPaymentProps, IPaymentStates, EShipmentType } from '../../interface/index.interface';
 import { shipmentPageValidate } from '@/containers/aboutphone/pageValidate';
-import config from '@/config';
-import './shipment.less';
+import config from 'config';
+import './index.less';
 
 const Panel = Collapse.Panel;
 const leftHeader = <div className='fedex-bg' />;

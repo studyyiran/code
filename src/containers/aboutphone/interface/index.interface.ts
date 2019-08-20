@@ -95,7 +95,6 @@ export interface IBrandsProps {
   user: IUserStoreNew;
   common: ICommonStore;
   hideLayout?: boolean; // 用于隐藏布局标题头和导航脚，用于在done页面当modal的组件
-  // ref?: React.RefObject<React.Component<IShippingProps | IPaymentProps | IConditionsProps>>;
   onRef?: (child: React.Component) => void;
 }
 

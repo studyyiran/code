@@ -3,10 +3,10 @@ import classnames from 'classnames';
 import { inject, observer } from 'mobx-react';
 import { Row, Col, Collapse, Form, Input, message } from 'antd';
 import Layout from '@/containers/aboutphone/layout';
-import { IPaymentProps, IPaymentStates, EPayType } from './interface/index.interface';
+import { IPaymentProps, IPaymentStates, EPayType } from '../../interface/index.interface';
 import { paymentPageValidate } from '@/containers/aboutphone/pageValidate';
-import yourphoneStore from './store/yourphone.store';
-import './payment.less';
+import yourphoneStore from '../../store/yourphone.store';
+import './index.less';
 
 const Panel = Collapse.Panel;
 const leftHeader = <div className='paypal-bg' />;
