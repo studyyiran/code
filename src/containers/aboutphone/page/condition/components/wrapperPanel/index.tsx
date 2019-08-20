@@ -1,13 +1,13 @@
 import React from "react";
 import "./index.less";
-import { Collapse, Icon, Select } from "antd";
-const { Option } = Select;
+import { Collapse, Icon } from "antd";
+import { RenderByType } from "../renderByType";
 const { Panel } = Collapse;
 import {
   IQuestion,
-  IUserQuestionAnswer
+  IUserQuestionAnswer,
+  ISubQuestion
 } from "@/containers/aboutphone/page/condition/index.interface";
-import { SingleSelect, MultiSelect } from "../subQuestion";
 import { canShowMoreQuestion, findAnswerById, isCanMove } from "../../util";
 
 function SaveButton(props: any) {
@@ -28,7 +28,7 @@ function SaveButton(props: any) {
 // 如何为函数定义
 // const IDispatchFunc =;
 
-interface IWrapperPanel {
+export interface IWrapperPanel {
   questionInfo: IQuestion;
   answerInfo?: IUserQuestionAnswer;
   index: number;
@@ -38,6 +38,7 @@ interface IWrapperPanel {
   continueNextStep: () => void;
   status: string;
   isContinue?: boolean;
+  onSetShowKey?: (value: any) => void;
 }
 
 export function WrapperPanel(props: IWrapperPanel) {
@@ -49,8 +50,9 @@ export function WrapperPanel(props: IWrapperPanel) {
     onClickPanel,
     status,
     isContinue,
+    continueNextStep,
     onUserInputHandler,
-    continueNextStep
+    onSetShowKey
   } = props;
   const { id: questionId, title, subQuestionArr } = questionInfo;
   function renderTag() {
@@ -73,66 +75,6 @@ export function WrapperPanel(props: IWrapperPanel) {
         return null;
     }
   }
-  // function isAllFinish() {
-  //   if (answerInfo) {
-  //     return;
-  //   } else {
-  //     return false;
-  //   }
-  //   // 先简单进行输入判定。
-  //   // if (answerInfo && answerInfo.subAnswerArr && questionInfo && questionInfo.subQuestionArr) {
-  //   //   if (answerInfo.subAnswerArr.length === .subQuestionArr.length) {
-  //   //     return true
-  //   //   }
-  //   // }
-  //   // return false
-  // }
-  function renderQuestions() {
-    let canRenderNext = true;
-
-    return subQuestionArr.map(subQuestion => {
-      const {
-        id: subQuestionId,
-        content,
-        type,
-        isMoreCondition,
-        questionDesc
-      } = subQuestion;
-      let userSubAnswer: any;
-      if (answerInfo) {
-        userSubAnswer = findAnswerById([answerInfo], subQuestionId) || {
-          answer: []
-        };
-      } else {
-        userSubAnswer = { answer: [] };
-      }
-      if (canRenderNext) {
-        if (
-          !canShowMoreQuestion(
-            isMoreCondition,
-            userSubAnswer && userSubAnswer.answer
-          )
-        ) {
-          canRenderNext = false;
-        }
-        return (
-          <div className="wrapper-panel__question" key={subQuestionId}>
-            <h2>{content}</h2>
-            <RenderByType
-              questionDesc={questionDesc}
-              type={type}
-              subQuestionId={subQuestionId}
-              userSubAnswer={userSubAnswer}
-              onUserInputHandler={onUserInputHandler}
-              questionId={questionId}
-            />
-          </div>
-        );
-      } else {
-        return null;
-      }
-    });
-  }
   return (
     <Panel
       className="wrapper-panel"
@@ -154,7 +96,13 @@ export function WrapperPanel(props: IWrapperPanel) {
       }
       key={questionId}
     >
-      {renderQuestions()}
+      <RenderQuestions
+        answerInfo={answerInfo}
+        subQuestionArr={subQuestionArr}
+        onUserInputHandler={onUserInputHandler}
+        questionId={questionId}
+        onSetShowKey={onSetShowKey}
+      />
       {status === "edit" ? (
         <SaveButton
           canPost={isCanMove(questionInfo, answerInfo && [answerInfo])}
@@ -177,12 +125,78 @@ export function WrapperPanel(props: IWrapperPanel) {
   );
 }
 
+interface IRenderQuestions {
+  subQuestionArr: ISubQuestion[];
+  answerInfo?: IUserQuestionAnswer;
+  questionId: string;
+  onUserInputHandler: (action: any) => void;
+  onSetShowKey?: (value: any) => void;
+}
+
+function RenderQuestions(props: IRenderQuestions) {
+  const {
+    subQuestionArr,
+    answerInfo,
+    questionId,
+    onUserInputHandler,
+    onSetShowKey
+  } = props;
+  let canRenderNext = true;
+  const dom: any[] = [];
+  if (subQuestionArr && subQuestionArr.length) {
+    subQuestionArr.forEach(subQuestion => {
+      const {
+        id: subQuestionId,
+        content,
+        type,
+        isMoreCondition,
+        questionDesc,
+        isShowTips
+      } = subQuestion;
+      let userSubAnswer: any;
+      if (answerInfo) {
+        userSubAnswer = findAnswerById([answerInfo], subQuestionId) || {
+          answer: []
+        };
+      } else {
+        userSubAnswer = { answer: [] };
+      }
+      if (canRenderNext) {
+        if (
+          !canShowMoreQuestion(
+            isMoreCondition,
+            userSubAnswer && userSubAnswer.answer
+          )
+        ) {
+          canRenderNext = false;
+        }
+        dom.push(
+          <div className="wrapper-panel__question" key={subQuestionId}>
+            <h2>{content}</h2>
+            <RenderByType
+              isShowTips={isShowTips}
+              questionDesc={questionDesc}
+              type={type}
+              subQuestionId={subQuestionId}
+              userSubAnswer={userSubAnswer}
+              questionId={questionId}
+              onUserInputHandler={onUserInputHandler}
+              onSetShowKey={onSetShowKey}
+            />
+          </div>
+        );
+      }
+    });
+  }
+  return <>{dom}</>;
+}
+
 function RenderTagByStatus(props: any) {
   const { status, index } = props;
   switch (status) {
     case "done":
       return (
-        <span data-type={props.status}>
+        <span data-type={status}>
           <Icon type="check-circle" style={{ color: "white" }} />
         </span>
       );
@@ -193,75 +207,4 @@ function RenderTagByStatus(props: any) {
       return <span data-type={status}>{index}</span>;
   }
   return null;
-}
-
-function RenderByType(props: any) {
-  const {
-    type,
-    subQuestionId,
-    userSubAnswer,
-    questionId,
-    onUserInputHandler,
-    questionDesc
-  } = props;
-  switch (type) {
-    case "default":
-      return (
-        <SingleSelect
-          onChange={answer => {
-            onUserInputHandler({
-              questionId,
-              answerId: subQuestionId,
-              answer: [answer]
-            });
-          }}
-          defaultValue={userSubAnswer.answer[0]}
-        />
-      );
-    case "multiSelect":
-      return (
-        <MultiSelect
-          options={questionDesc}
-          onChange={answer => {
-            onUserInputHandler({
-              questionId,
-              answerId: subQuestionId,
-              answer: answer
-            });
-          }}
-          defaultValue={userSubAnswer.answer}
-        />
-      );
-    case "select":
-      return (
-        <Select style={{ width: "100%" }} defaultValue={questionDesc[0]}>
-          {questionDesc.map((nameValue: string) => {
-            return (
-              <Option key={nameValue} value={nameValue}>
-                {nameValue}
-              </Option>
-            );
-          })}
-        </Select>
-      );
-    case "input":
-      return (
-        <div>input</div>
-      );
-    case "tips":
-      return null
-    default:
-      return (
-        <SingleSelect
-          onChange={answer => {
-            onUserInputHandler({
-              questionId,
-              answerId: subQuestionId,
-              answer: [answer]
-            });
-          }}
-          defaultValue={userSubAnswer.answer[0]}
-        />
-      );
-  }
 }

@@ -66,26 +66,7 @@ function reducer(state: any, action: IAction) {
       // @ts-ignore
       questionArr[
         questionArr.findIndex(item => item.id === questionId)
-      ] = targetArr;
-      // 将target替换到原来的
-      // const finalArr = changeTargetById(questionArr, questionId, targetArr)
-      // const { questionId, answerId, answer} = value;
-      // // 1 获取当前的 或者 做一个新的
-      // // 2 将answer 补充上。
-      // // 3 返回掉
-      // // 新建一个新的
-      // const newQuestionAnswer: IUserQuestionAnswer = {id: questionId, subAnswerArr: []}
-      // // 获取整合后的
-      // const questionArr: IUserQuestionAnswer[] = changeTargetById(state.phoneConditionAnswer, questionId, newQuestionAnswer)
-      // // 再取出来
-      // const targetArr = questionArr.find(item => item.id === questionId)
-      // // 新建一个正确的、新answer
-      // const newAnswer : IUserAnswer = {id: answerId, answer: answer}
-      // // 补充替换到target中
-      // // @ts-ignore
-      // targetArr.subAnswerArr = changeTargetById((targetArr as IUserQuestionAnswer).subAnswerArr, answerId, newAnswer)
-      // // 将target替换到原来的
-      // const finalArr = changeTargetById(questionArr, questionId, targetArr)
+        ] = targetArr;
       return { ...state, phoneConditionAnswer: questionArr };
     }
     case "setUserPhoneInfo": {
@@ -121,11 +102,14 @@ function reducer(state: any, action: IAction) {
       // @ts-ignore
       questionArr[
         questionArr.findIndex(item => item.id === questionId)
-      ] = targetArr;
+        ] = targetArr;
       // 将target替换到原来的
       // const finalArr = changeTargetById(questionArr, questionId, targetArr)
       return { ...state, phoneInfoAnswer: questionArr };
     }
+    case "setShowKey":
+      // state 需要使用type吗？
+      return { ...state, showKey: value };
     case "setEditKey":
       // state 需要使用type吗？
       return { ...state, editKey: value };
@@ -160,6 +144,7 @@ interface IStateConditions {
   phoneInfoAnswer: IUserQuestionAnswer[]
   phoneConditionAnswer: IUserQuestionAnswer[]
   editKey: string[]
+  showKey: string[]
 }
 
 export function Conditions(props: IConditions) {
@@ -172,7 +157,8 @@ export function Conditions(props: IConditions) {
   const initState : IStateConditions = {
     phoneInfoAnswer: phoneInfoAnswer,
     phoneConditionAnswer: phoneConditionAnswer,
-    editKey: []
+    editKey: [],
+    showKey: [],
   };
   const [state, dispatch] = useReducer(reducer, initState);
   return (
@@ -195,12 +181,12 @@ interface IConditionForm {
 export function ConditionForm(props: IConditionForm) {
   const [maxActiveKey, setMaxActiveKey] = useState("");
   const { state, dispatch, phoneConditionQuestion = [], phoneInfoQuestion = [] } = props;
-  const {phoneConditionAnswer, phoneInfoAnswer, editKey} = state
+  const {phoneConditionAnswer, phoneInfoAnswer, editKey, showKey} = state
   // format
   const questionProcess = [firstQuestionKey]
     .concat(phoneConditionQuestion.map(item => item.id))
     .concat(["allFinish"]);
-  
+
   useEffect(() => {
     if (geMaxActiveKey()) {
       setMaxActiveKey(geMaxActiveKey());
@@ -280,13 +266,20 @@ export function ConditionForm(props: IConditionForm) {
       }
     }
   }
+  function setShowKey(value: boolean) {
+    dispatch({
+      type: 'setShowKey',
+      value
+    })
+  }
   const extraQuestion: number = 1;
   return (
     <div className="page-condition">
       <p>Manufacture > Phone conditions</p>
       <h1>Phone conditions</h1>
-      <Collapse activeKey={[maxActiveKey].concat(editKey)}>
+      <Collapse activeKey={[maxActiveKey].concat(editKey).concat(showKey)}>
         <WrapperPanel
+          onSetShowKey={setShowKey}
           isContinue={true}
           continueNextStep={nextStep}
           onUserInputHandler={(value: any) => {
@@ -309,6 +302,7 @@ export function ConditionForm(props: IConditionForm) {
           );
           return (
             <WrapperPanel
+              onSetShowKey={setShowKey}
               isContinue={!isNoContinue(question, phoneConditionAnswer)}
               continueNextStep={nextStep}
               onUserInputHandler={(value: any) => {

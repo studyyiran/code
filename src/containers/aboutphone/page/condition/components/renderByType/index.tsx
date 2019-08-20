@@ -1,6 +1,6 @@
 import {MultiSelect, SingleSelect} from "@/containers/aboutphone/page/condition/components/subQuestion";
 import {Select} from "antd";
-import {IWrapperPanel} from "../wrapperPanel";
+const { Option } = Select;
 import React from "react";
 
 interface IRenderByType {
@@ -11,7 +11,7 @@ interface IRenderByType {
   onUserInputHandler: (action: any) => void,
   questionDesc?: string[],
   isShowTips?: any,
-  onSetShowKey?: IWrapperPanel.onSetShowKey,
+  onSetShowKey?: (value: any) => void,
 }
 
 export function RenderByType(props: IRenderByType) {
@@ -22,7 +22,8 @@ export function RenderByType(props: IRenderByType) {
     questionId,
     onUserInputHandler,
     questionDesc,
-    isShowTips
+    isShowTips,
+    onSetShowKey
   } = props;
   const dom = []
   switch (type) {
@@ -35,6 +36,14 @@ export function RenderByType(props: IRenderByType) {
               answerId: subQuestionId,
               answer: [answer]
             });
+            // 额外的
+            if (isShowTips && onSetShowKey) {
+              if (JSON.stringify([answer]) === JSON.stringify(isShowTips.condition)) {
+                onSetShowKey([questionId])
+              } else {
+                onSetShowKey([])
+              }
+            }
           }}
           defaultValue={userSubAnswer.answer[0]}
         />
@@ -76,29 +85,11 @@ export function RenderByType(props: IRenderByType) {
       break
     default:
       dom.push(
-        <SingleSelect
-          onChange={answer => {
-            onUserInputHandler({
-              questionId,
-              answerId: subQuestionId,
-              answer: [answer]
-            });
-            // 额外的
-            if (isShowTips) {
-              if (JSON.stringify(userSubAnswer.answer) === JSON.stringify(isShowTips.condition)) {
-                onSetShowKey()
-              } else {
-                onSetShowKey()
-              }
-            }
-          }}
-          defaultValue={userSubAnswer.answer[0]}
-        />
+        
       );
   }
-  console.log(userSubAnswer.answer)
   if (isShowTips && JSON.stringify(userSubAnswer.answer) === JSON.stringify(isShowTips.condition)) {
     dom.push(isShowTips.tips)
   }
-  return dom
+  return <>{dom}</>
 }
