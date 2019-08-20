@@ -2,6 +2,7 @@ import {MultiSelect, SingleSelect} from "@/containers/aboutphone/page/condition/
 import {Select} from "antd";
 const { Option } = Select;
 import React from "react";
+import './index.less'
 
 interface IRenderByType {
   type: string,
@@ -30,6 +31,7 @@ export function RenderByType(props: IRenderByType) {
     case "default":
       dom.push(
         <SingleSelect
+          key={subQuestionId}
           onChange={answer => {
             onUserInputHandler({
               questionId,
@@ -53,6 +55,7 @@ export function RenderByType(props: IRenderByType) {
       if (questionDesc && questionDesc.length) {
         dom.push(
           <MultiSelect
+            key={subQuestionId}
             options={questionDesc || []}
             onChange={answer => {
               onUserInputHandler({
@@ -71,7 +74,7 @@ export function RenderByType(props: IRenderByType) {
     case "select":
       if (questionDesc && questionDesc.length) {
         dom.push(
-          <Select style={{ width: "100%" }} defaultValue={questionDesc[0]}>
+          <Select key={subQuestionId} style={{ width: "100%" }} defaultValue={questionDesc[0]}>
             {questionDesc.map((nameValue: string) => {
               return (
                 <Option key={nameValue} value={nameValue}>
@@ -84,12 +87,9 @@ export function RenderByType(props: IRenderByType) {
       }
       break
     default:
-      dom.push(
-        
-      );
   }
   if (isShowTips && JSON.stringify(userSubAnswer.answer) === JSON.stringify(isShowTips.condition)) {
-    dom.push(isShowTips.tips)
+    dom.push(<div key={subQuestionId + "__tips"} className="__tips" dangerouslySetInnerHTML={{__html: isShowTips.tips}}/>)
   }
   return <>{dom}</>
 }

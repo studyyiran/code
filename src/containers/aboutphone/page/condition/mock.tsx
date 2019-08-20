@@ -1,5 +1,4 @@
 import { IQuestion, IUserQuestionAnswer } from "./index.interface";
-import React from 'react';
 // import { firstQuestionKey } from "./index";
 const firstQuestionKey = "aboutYourPhone";
 export const serverPhoneInfo: IUserQuestionAnswer[] = [
@@ -182,8 +181,8 @@ export const serverPhoneConditionQuestion: IQuestion[] = [
         content: "Is your phone fully paid off?",
         isShowTips: {
           condition: ["false"],
-          tips: <p>A phone that is not fully paid off has a risk of being blacklisted; therefore the price will be significantly reduced.
-            <br />We suggest to fully pay off your phone before selling.</p>
+          tips: "<p>A phone that is not fully paid off has a risk of being blacklisted; therefore the price will be significantly reduced.</p>" +
+            "<p>We suggest to fully pay off your phone before selling.</p>"
         },
         type: "default"
       },
