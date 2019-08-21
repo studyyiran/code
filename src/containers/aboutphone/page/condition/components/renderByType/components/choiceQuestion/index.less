@@ -1,5 +1,44 @@
+@import (reference) "~@/styles/color.less";
+@import (reference) "~@/styles/font.less";
+@border-value: 6px;
+@border-size: 2px;
+
 .comp-choice-question {
-  .comp-choice-question__option {
-    display: flex;
+  .question__option--container {
+    background: @color-gray-disabled;
+    padding: @border-size;
+    border-radius: @border-value;
+    margin-bottom: 10px;
+    .comp-choice-question__option {
+      display: flex;
+      padding: 20px 10px;
+      align-items: center;
+      border-radius: @border-value - 2px;
+      background: white;
+      > .icon {
+        color: @white;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
+      }
+      > span {
+        font-weight: bold;
+        font-size: @font-size-bigger;
+      }
+    }
+    .comp-choice-question__option[data-select="true"] {
+      > .icon {
+        background: @color-blue-liner;
+      }
+    }
+    .comp-choice-question__option[data-select="false"] {
+      > .icon {
+        background: @color-gray-disabled;
+      }
+    }
+  }
+  .question__option--container[data-select="true"] {
+    background: @color-blue-liner;
   }
 }

@@ -89,6 +89,31 @@ export const serverPhoneInfo: IUserQuestionAnswer[] = [
 ];
 
 export const serverPhoneConditionQuestion: IQuestion[] = [
+  // {
+  //   id: "test",
+  //   title: "Test",
+  //   subQuestionArr: [
+  //     {
+  //       id: "test1",
+  //       content: "Does your phone power on to the home screen?",
+  //       type: "choiceQuestion",
+  //       questionDesc: [
+  //         {
+  //           id: "test1",
+  //           content: "111"
+  //         },
+  //         {
+  //           id: "test2",
+  //           content: "222"
+  //         },
+  //         {
+  //           id: "test3",
+  //           content: "333"
+  //         }
+  //       ]
+  //     }
+  //   ]
+  // },
   {
     id: "1",
     title: "Power On",

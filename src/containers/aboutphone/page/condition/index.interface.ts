@@ -13,7 +13,7 @@ export interface ISubQuestion {
     condition: string[];
     tips: any;
   };
-  questionDesc?: string[]; // 题目额外信息
+  questionDesc?: any[]; // 题目额外信息
 }
 
 export interface IUserQuestionAnswer {

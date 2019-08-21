@@ -1,9 +1,10 @@
 import { CheckBoxQuestion } from "./components/checkBoxQuestion";
 import { SingleSelect } from "./components/singleSelect";
+import { ChoiceQuestion } from "./components/choiceQuestion";
 import { Select } from "antd";
-const { Option } = Select;
 import React from "react";
 import "./index.less";
+const { Option } = Select;
 
 interface IRenderByType {
   type: string;
@@ -11,7 +12,7 @@ interface IRenderByType {
   userSubAnswer: any;
   questionId: string;
   onUserInputHandler: (action: any) => void;
-  questionDesc?: string[];
+  questionDesc?: any[];
   isShowTips?: any;
   onSetShowKey?: (value: any) => void;
 }
@@ -55,31 +56,24 @@ export function RenderByType(props: IRenderByType) {
         />
       );
       break;
-    case "test":
-      dom.push(
-        <SingleSelect
-          key={subQuestionId}
-          onChange={answer => {
-            onUserInputHandler({
-              questionId,
-              answerId: subQuestionId,
-              answer: [answer]
-            });
-            // 额外的
-            if (isShowTips && onSetShowKey) {
-              if (
-                JSON.stringify([answer]) ===
-                JSON.stringify(isShowTips.condition)
-              ) {
-                onSetShowKey([questionId]);
-              } else {
-                onSetShowKey([]);
-              }
-            }
-          }}
-          defaultValue={userSubAnswer.answer[0]}
-        />
-      );
+    case "choiceQuestion":
+      if (questionDesc && questionDesc.length) {
+        dom.push(
+          <ChoiceQuestion
+            key={subQuestionId}
+            options={questionDesc}
+            onChange={answer => {
+              console.log(answer)
+              // onUserInputHandler({
+              //   questionId,
+              //   answerId: subQuestionId,
+              //   answer: [answer]
+              // });
+            }}
+            defaultValue={userSubAnswer.answer[0]}
+          />
+        );
+      }
       break;
     case "multiSelect":
       if (questionDesc && questionDesc.length) {

@@ -280,9 +280,6 @@ export function ConditionForm(props: IConditionForm) {
   const extraQuestion: number = 1;
   return (
     <div className="page-condition">
-      <svg className="icon" aria-hidden="true" style={{color: 'red'}}>
-        <use xlinkHref="#uptrade_duigou" />
-      </svg>
       <p>Manufacture > Phone conditions</p>
       <h1>Phone conditions</h1>
       <Collapse activeKey={[maxActiveKey].concat(editKey).concat(showKey)}>
