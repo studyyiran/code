@@ -66,7 +66,7 @@ function reducer(state: any, action: IAction) {
       // @ts-ignore
       questionArr[
         questionArr.findIndex(item => item.id === questionId)
-        ] = targetArr;
+      ] = targetArr;
       return { ...state, phoneConditionAnswer: questionArr };
     }
     case "setUserPhoneInfo": {
@@ -102,7 +102,7 @@ function reducer(state: any, action: IAction) {
       // @ts-ignore
       questionArr[
         questionArr.findIndex(item => item.id === questionId)
-        ] = targetArr;
+      ] = targetArr;
       // 将target替换到原来的
       // const finalArr = changeTargetById(questionArr, questionId, targetArr)
       return { ...state, phoneInfoAnswer: questionArr };
@@ -141,10 +141,10 @@ interface IConditions {
 }
 
 interface IStateConditions {
-  phoneInfoAnswer: IUserQuestionAnswer[]
-  phoneConditionAnswer: IUserQuestionAnswer[]
-  editKey: string[]
-  showKey: string[]
+  phoneInfoAnswer: IUserQuestionAnswer[];
+  phoneConditionAnswer: IUserQuestionAnswer[];
+  editKey: string[];
+  showKey: string[];
 }
 
 export function Conditions(props: IConditions) {
@@ -154,11 +154,11 @@ export function Conditions(props: IConditions) {
     phoneConditionAnswer = [],
     phoneInfoAnswer = []
   } = props;
-  const initState : IStateConditions = {
+  const initState: IStateConditions = {
     phoneInfoAnswer: phoneInfoAnswer,
     phoneConditionAnswer: phoneConditionAnswer,
     editKey: [],
-    showKey: [],
+    showKey: []
   };
   const [state, dispatch] = useReducer(reducer, initState);
   return (
@@ -180,8 +180,13 @@ interface IConditionForm {
 
 export function ConditionForm(props: IConditionForm) {
   const [maxActiveKey, setMaxActiveKey] = useState("");
-  const { state, dispatch, phoneConditionQuestion = [], phoneInfoQuestion = [] } = props;
-  const {phoneConditionAnswer, phoneInfoAnswer, editKey, showKey} = state
+  const {
+    state,
+    dispatch,
+    phoneConditionQuestion = [],
+    phoneInfoQuestion = []
+  } = props;
+  const { phoneConditionAnswer, phoneInfoAnswer, editKey, showKey } = state;
   // format
   const questionProcess = [firstQuestionKey]
     .concat(phoneConditionQuestion.map(item => item.id))
@@ -246,7 +251,7 @@ export function ConditionForm(props: IConditionForm) {
     return current;
   }
 
-  function onClickPanelHandler(questionId: string, isSave?: boolean) : void {
+  function onClickPanelHandler(questionId: string, isSave?: boolean): void {
     // 如果已经完成 并且当前没有打开的
     if (getStatus(questionId) === "done" && !(editKey && editKey.length)) {
       dispatch({ type: "setEditKey", value: questionId });
@@ -268,9 +273,9 @@ export function ConditionForm(props: IConditionForm) {
   }
   function setShowKey(value: boolean) {
     dispatch({
-      type: 'setShowKey',
+      type: "setShowKey",
       value
-    })
+    });
   }
   const extraQuestion: number = 1;
   return (

@@ -1,6 +1,5 @@
-import React, {useState} from "react";
-import {Checkbox, Input} from "antd";
-
+import React, { useState } from "react";
+import { Checkbox, Input } from "antd";
 
 interface ICheckBoxQuestion {
   defaultValue?: string[];

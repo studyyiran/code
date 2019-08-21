@@ -181,14 +181,14 @@ export const serverPhoneConditionQuestion: IQuestion[] = [
         content: "Is your phone fully paid off?",
         isShowTips: {
           condition: ["false"],
-          tips: "<p>A phone that is not fully paid off has a risk of being blacklisted; therefore the price will be significantly reduced.</p>" +
+          tips:
+            "<p>A phone that is not fully paid off has a risk of being blacklisted; therefore the price will be significantly reduced.</p>" +
             "<p>We suggest to fully pay off your phone before selling.</p>"
         },
         type: "default"
-      },
-
+      }
     ]
-  },
+  }
 ];
 // 关于手机情况的 写死的 问题
 export const serverPhoneInfoQuestion: IQuestion[] = [

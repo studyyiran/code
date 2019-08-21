@@ -1,18 +1,19 @@
-import {MultiSelect, SingleSelect} from "@/containers/aboutphone/page/condition/components/subQuestion";
-import {Select} from "antd";
+import { CheckBoxQuestion } from "./components/checkBoxQuestion";
+import { SingleSelect } from "./components/singleSelect";
+import { Select } from "antd";
 const { Option } = Select;
 import React from "react";
-import './index.less'
+import "./index.less";
 
 interface IRenderByType {
-  type: string,
-  subQuestionId: string,
-  userSubAnswer: any,
-  questionId: string,
-  onUserInputHandler: (action: any) => void,
-  questionDesc?: string[],
-  isShowTips?: any,
-  onSetShowKey?: (value: any) => void,
+  type: string;
+  subQuestionId: string;
+  userSubAnswer: any;
+  questionId: string;
+  onUserInputHandler: (action: any) => void;
+  questionDesc?: string[];
+  isShowTips?: any;
+  onSetShowKey?: (value: any) => void;
 }
 
 export function RenderByType(props: IRenderByType) {
@@ -26,7 +27,7 @@ export function RenderByType(props: IRenderByType) {
     isShowTips,
     onSetShowKey
   } = props;
-  const dom = []
+  const dom = [];
   switch (type) {
     case "default":
       dom.push(
@@ -40,21 +41,50 @@ export function RenderByType(props: IRenderByType) {
             });
             // 额外的
             if (isShowTips && onSetShowKey) {
-              if (JSON.stringify([answer]) === JSON.stringify(isShowTips.condition)) {
-                onSetShowKey([questionId])
+              if (
+                JSON.stringify([answer]) ===
+                JSON.stringify(isShowTips.condition)
+              ) {
+                onSetShowKey([questionId]);
               } else {
-                onSetShowKey([])
+                onSetShowKey([]);
               }
             }
           }}
           defaultValue={userSubAnswer.answer[0]}
         />
       );
-      break
+      break;
+    case "test":
+      dom.push(
+        <SingleSelect
+          key={subQuestionId}
+          onChange={answer => {
+            onUserInputHandler({
+              questionId,
+              answerId: subQuestionId,
+              answer: [answer]
+            });
+            // 额外的
+            if (isShowTips && onSetShowKey) {
+              if (
+                JSON.stringify([answer]) ===
+                JSON.stringify(isShowTips.condition)
+              ) {
+                onSetShowKey([questionId]);
+              } else {
+                onSetShowKey([]);
+              }
+            }
+          }}
+          defaultValue={userSubAnswer.answer[0]}
+        />
+      );
+      break;
     case "multiSelect":
       if (questionDesc && questionDesc.length) {
         dom.push(
-          <MultiSelect
+          <CheckBoxQuestion
             key={subQuestionId}
             options={questionDesc || []}
             onChange={answer => {
@@ -68,13 +98,17 @@ export function RenderByType(props: IRenderByType) {
           />
         );
       } else {
-        return null
+        return null;
       }
-      break
+      break;
     case "select":
       if (questionDesc && questionDesc.length) {
         dom.push(
-          <Select key={subQuestionId} style={{ width: "100%" }} defaultValue={questionDesc[0]}>
+          <Select
+            key={subQuestionId}
+            style={{ width: "100%" }}
+            defaultValue={questionDesc[0]}
+          >
             {questionDesc.map((nameValue: string) => {
               return (
                 <Option key={nameValue} value={nameValue}>
@@ -85,11 +119,21 @@ export function RenderByType(props: IRenderByType) {
           </Select>
         );
       }
-      break
+      break;
     default:
   }
-  if (isShowTips && JSON.stringify(userSubAnswer.answer) === JSON.stringify(isShowTips.condition)) {
-    dom.push(<div key={subQuestionId + "__tips"} className="__tips" dangerouslySetInnerHTML={{__html: isShowTips.tips}}/>)
+  if (
+    isShowTips &&
+    JSON.stringify(userSubAnswer.answer) ===
+      JSON.stringify(isShowTips.condition)
+  ) {
+    dom.push(
+      <div
+        key={subQuestionId + "__tips"}
+        className="__tips"
+        dangerouslySetInnerHTML={{ __html: isShowTips.tips }}
+      />
+    );
   }
-  return <>{dom}</>
+  return <>{dom}</>;
 }

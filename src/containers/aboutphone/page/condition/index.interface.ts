@@ -10,9 +10,9 @@ export interface ISubQuestion {
   type: string; // 题目类型
   isMoreCondition?: string[]; // 用于关联多道题目
   isShowTips?: {
-    condition: string[],
-    tips: any,
-  }; 
+    condition: string[];
+    tips: any;
+  };
   questionDesc?: string[]; // 题目额外信息
 }
 
