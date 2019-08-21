@@ -1,70 +1,14 @@
-import React, { useState } from "react";
-import "./index.less";
-import { Checkbox, Input } from "antd";
+import React, {useState} from "react";
+import {Checkbox, Input} from "antd";
 
-interface ISingleButton {
-  children: any;
-  index: string;
-  currentSelect: string;
-  onClick: (value: string) => void;
-}
 
-function SingleButton(props: ISingleButton) {
-  const { children, index, currentSelect, onClick } = props;
-  function handler() {
-    onClick(index);
-  }
-  const isSelect = currentSelect === index;
-  return (
-    <button
-      className="sub-question-button"
-      data-select={isSelect ? "true" : "false"}
-      onClick={handler}
-    >
-      {isSelect}
-      {children}
-    </button>
-  );
-}
-
-interface ISelect {
-  defaultValue?: string;
-  onChange: (s: string) => void;
-}
-
-export function SingleSelect(props: ISelect) {
-  const [currentSelect, setCurrentSelect] = useState(props.defaultValue || "");
-  const handler = (selectIndex: string) => {
-    setCurrentSelect(selectIndex);
-    props.onChange(selectIndex);
-  };
-  return (
-    <div className="comp-select">
-      <SingleButton
-        index={"true"}
-        currentSelect={currentSelect}
-        onClick={handler}
-      >
-        true
-      </SingleButton>
-      <SingleButton
-        index={"false"}
-        currentSelect={currentSelect}
-        onClick={handler}
-      >
-        false
-      </SingleButton>
-    </div>
-  );
-}
-
-interface IMultiSelect {
+interface ICheckBoxQuestion {
   defaultValue?: string[];
   onChange: (s: string[]) => void;
   options: string[];
 }
 
-export function MultiSelect(props: IMultiSelect) {
+export function CheckBoxQuestion(props: ICheckBoxQuestion) {
   const { options } = props;
   const [currentSelect, setCurrentSelect] = useState(props.defaultValue || []);
   console.log(currentSelect);
@@ -83,7 +27,7 @@ export function MultiSelect(props: IMultiSelect) {
           });
           const inputValue: string = restAnswer.length > 0 ? restAnswer[0] : "";
           dom = (
-            <Test
+            <CheckBoxWithInput
               inputValue={inputValue}
               currentSelect={currentSelect}
               handler={handler}
@@ -123,7 +67,7 @@ export function MultiSelect(props: IMultiSelect) {
   );
 }
 
-function Test(props: any) {
+function CheckBoxWithInput(props: any) {
   const { inputValue, currentSelect, handler } = props;
   const [isSelect, setIsSelect] = useState(Boolean(inputValue));
   return (
