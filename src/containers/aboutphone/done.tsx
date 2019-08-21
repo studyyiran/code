@@ -6,7 +6,7 @@ import { Modal, Button, Tooltip } from 'antd';
 import Layout from '@/containers/aboutphone/layout';
 import ShippingPage from './page/shipping';
 import PaymentPage from './page/payment';
-import {Conditions} from './page/condition';
+import Conditions from './page/condition';
 import ChangeModal from '@/containers/aboutphone/components/changemodal';
 import { donePageValidate } from '@/containers/aboutphone/pageValidate';
 import './done.less';
