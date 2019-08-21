@@ -10,6 +10,7 @@ import {
 } from "../../interface/index.interface";
 import { shipmentPageValidate } from "@/containers/aboutphone/pageValidate";
 import config from "config";
+import { ChoiceQuestion } from "../condition/components/renderByType/components/choiceQuestion";
 import "./index.less";
 
 const Panel = Collapse.Panel;
@@ -93,45 +94,54 @@ class Shipment extends React.Component<IPaymentProps, IPaymentStates> {
       </div>
     );
     const isMobile = this.props.common.isMobile;
-
     const paymentHTML = (
-      <Row gutter={30} style={!isMobile ? { paddingTop: "42px" } : {}}>
-        <Col {...this.colLayout(12)} className="paypal-col-wrapper">
-          <Collapse
-            onChange={this.handleCollapseExtend.bind(this, EShipmentType.FEDEX)}
-            activeKey={this.props.yourphone.expressCarrier}
-            className={classnames({
-              active:
-                this.props.yourphone.expressCarrier === EShipmentType.FEDEX
-            })}
-          >
-            <Panel
-              header={leftHeader}
-              showArrow={false}
-              key={EShipmentType.FEDEX}
+      <div>
+        <RenderQuestion />
+        <Row gutter={30} style={!isMobile ? { paddingTop: "42px" } : {}}>
+          <Col {...this.colLayout(12)} className="paypal-col-wrapper">
+            <Collapse
+              onChange={this.handleCollapseExtend.bind(
+                this,
+                EShipmentType.FEDEX
+              )}
+              activeKey={this.props.yourphone.expressCarrier}
+              className={classnames({
+                active:
+                  this.props.yourphone.expressCarrier === EShipmentType.FEDEX
+              })}
             >
-              {leftContent}
-            </Panel>
-          </Collapse>
-        </Col>
-        <Col {...this.colLayout(12)} className="echeck-col-wrapper">
-          <Collapse
-            onChange={this.handleCollapseExtend.bind(this, EShipmentType.USPS)}
-            activeKey={this.props.yourphone.expressCarrier}
-            className={classnames({
-              active: this.props.yourphone.expressCarrier === EShipmentType.USPS
-            })}
-          >
-            <Panel
-              header={rightHeader}
-              showArrow={false}
-              key={EShipmentType.USPS}
+              <Panel
+                header={leftHeader}
+                showArrow={false}
+                key={EShipmentType.FEDEX}
+              >
+                {leftContent}
+              </Panel>
+            </Collapse>
+          </Col>
+          <Col {...this.colLayout(12)} className="echeck-col-wrapper">
+            <Collapse
+              onChange={this.handleCollapseExtend.bind(
+                this,
+                EShipmentType.USPS
+              )}
+              activeKey={this.props.yourphone.expressCarrier}
+              className={classnames({
+                active:
+                  this.props.yourphone.expressCarrier === EShipmentType.USPS
+              })}
             >
-              {rightContent}
-            </Panel>
-          </Collapse>
-        </Col>
-      </Row>
+              <Panel
+                header={rightHeader}
+                showArrow={false}
+                key={EShipmentType.USPS}
+              >
+                {rightContent}
+              </Panel>
+            </Collapse>
+          </Col>
+        </Row>
+      </div>
     );
 
     return (
@@ -174,6 +184,34 @@ class Shipment extends React.Component<IPaymentProps, IPaymentStates> {
     }
     this.props.history.push("/sell/yourphone/done");
   };
+}
+
+function RenderQuestion() {
+  const options = [
+    {
+      id: "1",
+      content: "Use your own box and ship by 8/3/19"
+    },
+    {
+      id: "2",
+      content: "Use your own box and ship by 8/8/19"
+    },
+    {
+      id: "3",
+      content: "Request a box and ship by 8/14/19"
+    }
+  ];
+  return (
+    <div className="question">
+      <p>Get More cash the faster you ship（Pick your option）</p>
+      <ChoiceQuestion
+        options={options}
+        onChange={(selectId: string) => {
+          console.log(selectId);
+        }}
+      />
+    </div>
+  );
 }
 
 export default Form.create()(Shipment);
