@@ -33,7 +33,7 @@ export default function Faq() {
 
   return (
     <div className="page-faq-container">
-      <h1 className="title">Frequently Asked Questions</h1>
+      <h1 className="page__title--single">Frequently Asked Questions</h1>
       <ul>
         {subjects.map(({ subjectTitle, questionAnswers }) => {
           return (

@@ -4,15 +4,26 @@
 @font-size-title-: 40px;
 
 // 有深厚的语义，表达的是，页面最顶端的h1标题。但是在命名的时候需要将样式和tag分离开
-.title {
+.page__title--single {
   font-size: 40px;
   font-weight: bold;
   text-align: center;
   margin: 58px auto 136px;
 }
 
+.ismobile {
+  .page__title--single {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin: 35px auto;
+  }
+}
+
 .page-faq-container {
   background: @white;
+  padding: 0 18px;
+  .page(1000px);
   > h1 {
   }
   
@@ -33,6 +44,9 @@
         border: none;
         .ant-collapse-header {
           font-size: 26px;
+          line-height: 1.2;
+          // padding没有height 更加明确。
+          // 但是height做自适应没法做。饶了半天，多行文本，还是得用padding + line-height
           padding: 8px 24px;
           svg {
             transform: rotate(-90deg);
@@ -54,5 +68,24 @@
 }
 
 .ismobile {
-  
+  .page-faq-container {
+    > ul {
+      > li.page-faq-container__objects {
+        margin-bottom: 40px;
+        > h2 {
+          font-size: 18px;
+        }
+        .ant-collapse-item {
+          .ant-collapse-header {
+            padding: 8px 16px 8px 8px;
+          }
+        }
+      }
+
+    }
+    > button.common-button {
+      max-width: 100%;
+      margin-top: 58px;
+    }
+  }
 }
