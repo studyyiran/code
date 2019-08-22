@@ -1,158 +1,58 @@
+@import (reference) '~@/styles/index.less';
+@import (reference) '~@/styles/color.less';
+
+@font-size-title-: 40px;
+
+// 有深厚的语义，表达的是，页面最顶端的h1标题。但是在命名的时候需要将样式和tag分离开
+.title {
+  font-size: 40px;
+  font-weight: bold;
+  text-align: center;
+  margin: 58px auto 136px;
+}
+
 .page-faq-container {
-  width:1024px;
-  background: #fff;
-  margin: 132px auto 120px;
-  padding:54px 30px 40px;
-  box-sizing: border-box;
-  h1.title {
-    color:@primary-color;
-    font-size:42px;
-    text-indent: 25px;
-    margin-bottom:10px;
-    height:42px;
-    font-weight: 400;
+  background: @white;
+  > h1 {
   }
-
-  dl {
-    margin-top:30px;
-    dt {
-      font-size:24px;
-      font-weight:bold;
-    }
-    dd {
-      margin-top:17px;
-      border-radius:4px;
-      border:1px solid #777;
-      position: relative;
-      padding:0 20px;
-      box-sizing: border-box;
-
-      &:hover {
-        box-shadow:0px 2px 8px 0px rgba(208,208,208,0.8);
-        border-radius:4px;
-        border:2px solid rgba(208,208,208,0.8);
-        margin-top:16px;
-        margin-bottom:-1px;
-        margin-left:-1px;
-        margin-right:-1px;
-
-        .default-h2 .anticon-plus {
-          color:@primary-color;
-        }
+  
+  > ul {
+    > li.page-faq-container__objects {
+      margin-bottom: 40px;
+      > h2 {
+        // 没有任何含义，语义的，写死的26
+        font-size: 26px;
       }
-      
-      input[type="checkbox"] {
-        width:0;
-        height:0;
-        position: absolute;
-        opacity: 0;
-
-        &:checked {
-          & ~ p {
-            max-height:800px;
-            padding-bottom:20px;
-            opacity: 1;
-          }
-          & ~label h2 {
-            &.default-h2 {
-              height:0;
-              opacity: 0;
-              padding:0;
-            }
-            .anticon-plus {
-              transform: rotate(45deg);
-            }
-          }
-          & ~ h2.noevent-h2 {
-            height:auto;
-            opacity: 1;
-            padding:20px 0;
-
-            .anticon-plus {
-              transform: rotate(45deg);
-            }
-          }
-
-        }
+      > .ant-collapse {
+        background-color: transparent;
+        border: none;
       }
-      h2 {
-        font-size:20px;
-        padding:20px 0;
-        overflow: hidden;
-        .anticon-plus {
-          display: block;
-          float:right;
-          position: relative;
-          top:1px;
-          transform: rotate(0);
-          transition:transform .2s .1s;
-        }
-
-        &.noevent-h2 {
-          height:0;
-          opacity: 0;
-          padding:0;
-          width: 100%;
-
-          .anticon-plus {
-            &:hover {
-              color:@primary-color;
-            }
+      .ant-collapse-item {
+        margin-bottom: 10px;
+        background: @color-gray-g1;
+        border: none;
+        .ant-collapse-header {
+          font-size: 26px;
+          padding: 8px 24px;
+          svg {
+            transform: rotate(-90deg);
           }
         }
-      }
-      p {
-        width:100%;
-        font-size:16px;
-        color:#111;
-        line-height:24px;
-        overflow: hidden;
-        max-height: 0;
-        opacity: 0;
-        padding-bottom:0;
-        transition: max-height .3s, opacity .6s, padding-bottom .5s;
+        .ant-collapse-content {
+          border: none;
+        }
       }
     }
+    
+  }
+  > button.common-button {
+    max-width: 456px;
+    display: block;
+    margin: auto;
+    margin-top: 100px;
   }
 }
 
-
 .ismobile {
-  .page-faq-container {
-    width: 3.45rem;
-    margin: 0 .15rem;
-    margin-top: .6rem;
-    margin-bottom: .7rem;
-
-    h1 {
-      font-size: .26rem;
-      text-indent: 0;
-      font-weight: normal;
-      line-height: 1;
-      height: auto;
-    }
-
-    dl {
-      margin-top: .3rem;
-      dt {
-        font-size: .2rem;
-        font-weight:bold;
-      }
-
-      dd {
-        margin-top: .2rem;
-
-        h2 {
-          font-size: .14rem;
-        }
-
-        input[type="checkbox"]:checked ~ h2.noevent-h2 {
-          padding: .1rem 0;
-        }
-        input[type="checkbox"]:checked ~ p {
-          font-size: .12rem;
-        }
-      }
-    }
-  }
+  
 }
