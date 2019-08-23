@@ -12,9 +12,9 @@ interface IStaticContent {
 }
 
 const staticContent : IStaticContent = {
-  title: 'string',
-  desc: 'string',
-  formTitle: 'string',
+  title: 'Need help with your order?',
+  desc: 'Let us know how we can assist you with your order. We will get back to you within 1 business day.',
+  formTitle: 'Fill out the form below',
 }
 
 
@@ -49,9 +49,11 @@ function HelpList () {
     <ul>
       {staticHelpContent.map(({title, desc, img} : IStaticHelpContent, index) => {
         return <li key={index} className="help-info">
+          <div className="desc-content">
+            <h3>{title}</h3>
+            <p>{desc}</p>
+          </div>
           <img src={img} />
-          <h3>{title}</h3>
-          <p>{desc}</p>
         </li>
       })}
     </ul>

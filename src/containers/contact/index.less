@@ -1,5 +1,6 @@
 @import (reference) '~@/styles/index.less';
 @bg-color-blue: #1AB4E7;
+@padding-value: 16px;
 .common-card {
   box-shadow: 0px 4px 12px 0px rgba(0,0,0,0.1);
   background: @white;
@@ -11,12 +12,15 @@
 }
 
 .bg-container {
+  padding: 0 @padding-value;
   > *:first-child {
     .page(1402px);
   }
 }
 
 .page-contact-container {
+  @img-width: 452px;
+  @help-info-margin: 40px;
   > .bg-1 {
     background: @bg-color-blue;
     height: 420px;
@@ -36,6 +40,7 @@
   > .bg-2 {
     background: @white;
     > .common-card {
+      padding: 0 @padding-value;
       position: relative;
       top: -100px;
       > section {
@@ -57,25 +62,78 @@
     }
   }
   > .bg-3 {
-    background: @bg-color-blue;
+    background: #F5F7F9;
   }
-}
-
-.comp-help-list {
-  .help-info {
-    .clearfix();
-    > h3 {
+  > .bg-4 {
+    background: @white;
+    text-align: center;
+    .leave-message {
+      padding-top: 109px;
+      padding-bottom: 48px;
+      > h2 {
+        font-size: 36px;
+        margin-bottom: 24px;
+      }
+      > p {
+        color: #444B54;
+        font-size: 16px;
+        margin-bottom: 42px;
+      }
+      > button {
+        max-width: 456px;
+      }
+    }
+  }
+  .comp-help-list {
+    padding: 50px 0 3px;
+    max-width: 2 * @img-width + 30px;
+    > h2 {
       font-size: 36px;
+      text-align: center;
+      margin-bottom: 96px;
     }
-    > p {
-      font-size: 16px;
-    }
-    > img {
-      float: left;
+    li.help-info {
+      &:nth-child(2n+1) {
+        flex-direction: row-reverse;
+      }
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      > .desc-content {
+        flex: 0 0 374px;
+        //max-width: 374px;
+        > h3 {
+          font-size: 36px;
+        }
+        > p {
+          font-size: 16px;
+        }
+      }
+      > img {
+        //flex: 0 0 0;
+        width: 49%;
+        margin-bottom: @help-info-margin;
+        //min-width: @img-width;
+        //max-width: @img-width;
+      }
+      > img {
+        border-radius:8px;
+      }
     }
   }
 }
 
-.ismobile {
+.ismobile #root {
+  @help-info-margin: 24px auto 50px;
+  .page-contact-container {
+    li.help-info {
+      display: block;
+      //text-align: center;
+      > img {
+        width: 100%;
+        margin: @help-info-margin;
+      }
+    }
+  }
   
 }
