@@ -45,93 +45,19 @@ export default class BlogList extends React.Component<IBlogListProps, IBlogListS
   public componentWillUnmount() {
     shareComponent.hide();
   }
-
+  
   public render() {
     const { features, tags, tagPageList, lastest, activeTag } = this.props.blog;
     return (
       <div className="page-blog-list-container">
         {
-          features.length >= 3 && (
-            <div className="featured-list-wrapper">
-              <header>Featured</header>
-              <div className="list-box">
-                <div className="left list">
-                  <Link to={'/' + features[0].slug}>
-                    <div className="img" style={{ backgroundImage: `url(${features[0].thumbnailFullUrl})` }} />
-                    <img src={features[0].thumbnailFullUrl} alt={features[0].thumbnailFullUrl + " | UpTradeit.com"} />
-                    <div className="tips-box">
-                      <h2>{features[0].title}</h2>
-                      <p>{features[0].summary}</p>
-                    </div>
-                  </Link>
-                </div>
-                <div className="right">
-                  <div className="list">
-                    <Link to={'/' + features[1].slug}>
-                      <div className="img" style={{ backgroundImage: `url(${features[1].thumbnailFullUrl})` }} />
-                      <img src={features[1].thumbnailFullUrl} alt={features[1].thumbnailFullUrl + " | UpTradeit.com"} />
-                      <div className="tips-box">
-                        <h2>{features[1].title}</h2>
-                        <p>{features[2].summary}</p>
-                      </div>
-                    </Link>
-                  </div>
-
-                  <div className="list">
-                    <Link to={'/' + features[2].slug}>
-                      <div className="img" style={{ backgroundImage: `url(${features[2].thumbnailFullUrl})` }} />
-                      <img src={features[2].thumbnailFullUrl} alt={features[2].thumbnailFullUrl + " | UpTradeit.com"} />
-                      <div className="tips-box">
-                        <h2>{features[2].title}</h2>
-                        <p>{features[2].summary}</p>
-                      </div>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )
+          features.length >= 3 && this.renderTop(features)
         }
         {
           tags.length > 0 && (
-            <div className="tag-list-wrapper">
-              <div className="tag-list-box">
-                <div className={classnames('tag-list', { active: !!this.state.translate })}>
-                  <div className="tag-wrapper" id="tag-wrapper">
-                    {
-                      tags.map((item: ITag, index: number) => {
-                        return <div className={classnames('tag', { active: activeTag && activeTag.id === item.id })} key={index} onClick={this.handleChangeActiveTag.bind(this, item)}>{item.name}</div>
-                      })
-                    }
-                  </div>
-                </div>
-                <div className={classnames('arrow', { active: !!this.state.translate })} onClick={this.handleChangeArrow} style={{ display: 'none' }} id="arrow-right" />
-              </div>
-              <div className="list-box">
-                {
-                  tagPageList.map((item: IBlog, index: number) => {
-                    return (
-                      <div className="list" key={index}>
-                        <Link to={'/' + item.slug}>
-                          <div className="img-box">
-                            <div className="img" style={{ backgroundImage: `url(${item.thumbnailFullUrl})` }} />
-                            <img src={item.thumbnailFullUrl} alt={item.thumbnailFullUrl + " | UpTradeit.com"} />
-                          </div>
-                          <div className="right">
-                            <h3>{item.title}</h3>
-                            <small>{moment.tz(item.releaseDt, "America/Chicago").format('MMM DD, YYYY')}</small>
-                            <p>{item.summary}</p>
-                          </div>
-                        </Link>
-                      </div>
-                    )
-                  })
-                }
-              </div>
-              <div className="button-group">
-                <Link to={`/tag/${this.props.blog.activeTag ? this.props.blog.activeTag.slug : ''}`} className="tag-link"><img src={require('@/images/yourphone/circle-arrow.png')} />More about {this.props.blog.activeTag && this.props.blog.activeTag.name}</Link>
-              </div>
-            </div>
+            this.renderSecond({
+              tagPageList, activeTag, tags
+            })
           )
         }
         <div className="bloglist-list-wrapper">
@@ -168,6 +94,89 @@ export default class BlogList extends React.Component<IBlogListProps, IBlogListS
       </div>
     )
   }
+  
+  private renderSecond(props: any) {
+    const {activeTag, tags, tagPageList} = props
+    return <div className="tag-list-wrapper">
+      <div className="tag-list-box">
+        <div className={classnames('tag-list', { active: !!this.state.translate })}>
+          <div className="tag-wrapper" id="tag-wrapper">
+            {
+              tags.map((item: ITag, index: number) => {
+                return <div className={classnames('tag', { active: activeTag && activeTag.id === item.id })} key={index} onClick={this.handleChangeActiveTag.bind(this, item)}>{item.name}</div>
+              })
+            }
+          </div>
+        </div>
+        <div className={classnames('arrow', { active: !!this.state.translate })} onClick={this.handleChangeArrow} style={{ display: 'none' }} id="arrow-right" />
+      </div>
+      <div className="list-box">
+        {
+          tagPageList.map((item: IBlog, index: number) => {
+            return (
+              <div className="list" key={index}>
+                <Link to={'/' + item.slug}>
+                  <div className="img-box">
+                    <div className="img" style={{ backgroundImage: `url(${item.thumbnailFullUrl})` }} />
+                    <img src={item.thumbnailFullUrl} alt={item.thumbnailFullUrl + " | UpTradeit.com"} />
+                  </div>
+                  <div className="right">
+                    <h3>{item.title}</h3>
+                    <small>{moment.tz(item.releaseDt, "America/Chicago").format('MMM DD, YYYY')}</small>
+                    <p>{item.summary}</p>
+                  </div>
+                </Link>
+              </div>
+            )
+          })
+        }
+      </div>
+      <div className="button-group">
+        <Link to={`/tag/${this.props.blog.activeTag ? this.props.blog.activeTag.slug : ''}`} className="tag-link"><img src={require('@/images/yourphone/circle-arrow.png')} />More about {this.props.blog.activeTag && this.props.blog.activeTag.name}</Link>
+      </div>
+    </div>
+  }
+
+  private renderTop(features: any) {
+    return <div className="featured-list-wrapper">
+      <header>Featured</header>
+      <div className="list-box">
+        <div className="left list">
+          <Link to={'/' + features[0].slug}>
+            <div className="img" style={{ backgroundImage: `url(${features[0].thumbnailFullUrl})` }} />
+            <img src={features[0].thumbnailFullUrl} alt={features[0].thumbnailFullUrl + " | UpTradeit.com"} />
+            <div className="tips-box">
+              <h2>{features[0].title}</h2>
+              <p>{features[0].summary}</p>
+            </div>
+          </Link>
+        </div>
+        <div className="right">
+          <div className="list">
+            <Link to={'/' + features[1].slug}>
+              <div className="img" style={{ backgroundImage: `url(${features[1].thumbnailFullUrl})` }} />
+              <img src={features[1].thumbnailFullUrl} alt={features[1].thumbnailFullUrl + " | UpTradeit.com"} />
+              <div className="tips-box">
+                <h2>{features[1].title}</h2>
+                <p>{features[2].summary}</p>
+              </div>
+            </Link>
+          </div>
+
+          <div className="list">
+            <Link to={'/' + features[2].slug}>
+              <div className="img" style={{ backgroundImage: `url(${features[2].thumbnailFullUrl})` }} />
+              <img src={features[2].thumbnailFullUrl} alt={features[2].thumbnailFullUrl + " | UpTradeit.com"} />
+              <div className="tips-box">
+                <h2>{features[2].title}</h2>
+                <p>{features[2].summary}</p>
+              </div>
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
 
   private handleChangeArrow = () => {
     this.setState({
@@ -184,7 +193,7 @@ export default class BlogList extends React.Component<IBlogListProps, IBlogListS
     const arrowRight = document.querySelector('#arrow-right');
     if (tagWrapper && tagWrapper['offsetHeight'] > 40) {
       if (arrowRight) {
-        arrowRight['style'].display = 'block';
+        // arrowRight['style'].display = 'block';
       }
     }
   }
