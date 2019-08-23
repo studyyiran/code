@@ -69,7 +69,7 @@ export default class BlogList extends React.Component<
           })}
         <div className="bloglist-list-wrapper">
           <header>Lastest</header>
-          <div className="list-box">{this.hehe(lastest)}</div>
+          <div className="list-box">{this.renderBlogDesc(lastest)}</div>
           {this.props.blog.viewLastestMore && (
             <div className="button-group">
               <Button
@@ -100,7 +100,7 @@ export default class BlogList extends React.Component<
             <TabPane key={item.name} tab={item.name} />
           ))}
         </Tabs>
-        <div className="list-box">{this.hehe(tagPageList)}</div>
+        {/*<div className="list-box">{this.renderBlogDesc(tagPageList)}</div>*/}
         <div className="button-group">
           <Link
             to={`/tag/${
@@ -117,7 +117,8 @@ export default class BlogList extends React.Component<
     );
   }
 
-  private hehe(list: any) {
+  private renderBlogDesc(list: any) {
+    console.log(list)
     return list.map((item: IBlog, index: number) => {
       return (
         <div className="list" key={index}>
@@ -170,56 +171,11 @@ export default class BlogList extends React.Component<
               </div>
             </Link>
           </div>
-          <div className="right">
-            <div className="list">
-              <Link to={"/" + features[1].slug}>
-                <div
-                  className="img"
-                  style={{
-                    backgroundImage: `url(${features[1].thumbnailFullUrl})`
-                  }}
-                />
-                <img
-                  src={features[1].thumbnailFullUrl}
-                  alt={features[1].thumbnailFullUrl + " | UpTradeit.com"}
-                />
-                <div className="tips-box">
-                  <h2>{features[1].title}</h2>
-                  <p>{features[2].summary}</p>
-                </div>
-              </Link>
-            </div>
-
-            <div className="list">
-              <Link to={"/" + features[2].slug}>
-                <div
-                  className="img"
-                  style={{
-                    backgroundImage: `url(${features[2].thumbnailFullUrl})`
-                  }}
-                />
-                <img
-                  src={features[2].thumbnailFullUrl}
-                  alt={features[2].thumbnailFullUrl + " | UpTradeit.com"}
-                />
-                <div className="tips-box">
-                  <h2>{features[2].title}</h2>
-                  <p>{features[2].summary}</p>
-                </div>
-              </Link>
-            </div>
-          </div>
         </div>
       </div>
     );
   }
-
-  // private handleChangeArrow = () => {
-  //   this.setState({
-  //     translate: true
-  //   });
-  // };
-
+  
   private handleChangeActiveTag = (key: string) => {
     console.log(key)
     // this.props.blog.activeTag = tag;
