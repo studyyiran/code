@@ -58,31 +58,33 @@ export default class BlogList extends React.Component<
 
   public render() {
     const { features, tags, tagPageList, lastest, activeTag } = this.props.blog;
-    console.log(activeTag)
-    console.log(tagPageList)
+    console.log(activeTag);
+    console.log(tagPageList);
     return (
       <div className="page-blog-list-container">
         <header>
           <h1>Tech Talk</h1>
         </header>
         {features && features.length ? (
-          <section className="featured-part">
-            <h2>Featured Tech Talk</h2>
-            <section className="featured">
-              <Link to={"/" + features[0].slug}>
-                <img
-                  src={features[0].thumbnailFullUrl}
-                  alt={features[0].thumbnailFullUrl + " | UpTradeit.com"}
-                />
-                <div className="intro-info">
-                  <span className="tag">tag</span>
-                  <h3>{features[0].title}</h3>
-                  <p className="summary">{features[0].summary}</p>
-                  <span className="date">date</span>
-                </div>
-              </Link>
+          <div className="bg-container">
+            <section className="featured-part">
+              <h2>Featured Tech Talk</h2>
+              <section className="featured common-card">
+                <Link to={"/" + features[0].slug}>
+                  <img
+                    src={features[0].thumbnailFullUrl}
+                    alt={features[0].thumbnailFullUrl + " | UpTradeit.com"}
+                  />
+                  <div className="intro-info">
+                    <span className="tag">tag</span>
+                    <h3 className="title">{features[0].title}</h3>
+                    <p className="summary">{features[0].summary}</p>
+                    <span className="date">date</span>
+                  </div>
+                </Link>
+              </section>
             </section>
-          </section>
+          </div>
         ) : null}
         <section className="blog-list-part">
           {tags && tags.length ? (
@@ -100,15 +102,9 @@ export default class BlogList extends React.Component<
               <Blog {...props} key={props.title} />
             ))}
           </nav>
-          <Button
-            type="primary"
-            ghost={true}
-            size="large"
-            className="view-more"
-            onClick={this.handleMore}
-          >
-            VIEW MORE
-          </Button>
+          <button className="common-button" onClick={this.handleMore}>
+            View more
+          </button>
         </section>
       </div>
     );
@@ -118,8 +114,7 @@ export default class BlogList extends React.Component<
     const tag = (this.props.blog.tags || []).find(item => item.name === key);
     if (tag) {
       console.log(tag);
-      // @ts-ignore
-      this.props.blog.activeTag = tag.name;
+      this.props.blog.activeTag = tag;
     }
   };
 
