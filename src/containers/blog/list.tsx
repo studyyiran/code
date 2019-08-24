@@ -58,127 +58,69 @@ export default class BlogList extends React.Component<
 
   public render() {
     const { features, tags, tagPageList, lastest, activeTag } = this.props.blog;
+    console.log(activeTag)
+    console.log(tagPageList)
     return (
       <div className="page-blog-list-container">
-        {features.length >= 3 && this.renderTop(features)}
-        {tags.length > 0 &&
-          this.renderSecond({
-            tagPageList,
-            activeTag,
-            tags
-          })}
-        <div className="bloglist-list-wrapper">
-          <header>Lastest</header>
-          <div className="list-box">{this.renderBlogDesc(lastest)}</div>
-          {this.props.blog.viewLastestMore && (
-            <div className="button-group">
-              <Button
-                type="primary"
-                ghost={true}
-                size="large"
-                className="view-more"
-                onClick={this.handleMore}
-              >
-                VIEW MORE
-              </Button>
-            </div>
-          )}
-        </div>
-      </div>
-    );
-  }
-
-  private renderSecond(props: any) {
-    const { activeTag, tags, tagPageList } = props;
-    return (
-      <div className="tag-list-wrapper">
-        <Tabs
-          className="tabs-container"
-          onChange={this.handleChangeActiveTag}
-        >
-          {tags.map((item: ITag, index: number) => (
-            <TabPane key={item.name} tab={item.name} />
-          ))}
-        </Tabs>
-        {/*<div className="list-box">{this.renderBlogDesc(tagPageList)}</div>*/}
-        <div className="button-group">
-          <Link
-            to={`/tag/${
-              this.props.blog.activeTag ? this.props.blog.activeTag.slug : ""
-            }`}
-            className="tag-link"
+        <header>
+          <h1>Tech Talk</h1>
+        </header>
+        {features && features.length ? (
+          <section className="featured-part">
+            <h2>Featured Tech Talk</h2>
+            <section className="featured">
+              <Link to={"/" + features[0].slug}>
+                <img
+                  src={features[0].thumbnailFullUrl}
+                  alt={features[0].thumbnailFullUrl + " | UpTradeit.com"}
+                />
+                <div className="intro-info">
+                  <span className="tag">tag</span>
+                  <h3>{features[0].title}</h3>
+                  <p className="summary">{features[0].summary}</p>
+                  <span className="date">date</span>
+                </div>
+              </Link>
+            </section>
+          </section>
+        ) : null}
+        <section className="blog-list-part">
+          {tags && tags.length ? (
+            <Tabs
+              className="tabs-container"
+              onChange={this.handleChangeActiveTag}
+            >
+              {tags.map((item: ITag, index: number) => (
+                <TabPane key={item.name} tab={item.name} />
+              ))}
+            </Tabs>
+          ) : null}
+          <nav>
+            {tagPageList.map(props => (
+              <Blog {...props} key={props.title} />
+            ))}
+          </nav>
+          <Button
+            type="primary"
+            ghost={true}
+            size="large"
+            className="view-more"
+            onClick={this.handleMore}
           >
-            <img src={require("@/images/yourphone/circle-arrow.png")} />
-            More about{" "}
-            {this.props.blog.activeTag && this.props.blog.activeTag.name}
-          </Link>
-        </div>
+            VIEW MORE
+          </Button>
+        </section>
       </div>
     );
   }
 
-  private renderBlogDesc(list: any) {
-    console.log(list)
-    return list.map((item: IBlog, index: number) => {
-      return (
-        <div className="list" key={index}>
-          <Link to={"/" + item.slug}>
-            <div className="img-box">
-              <div
-                className="img"
-                style={{ backgroundImage: `url(${item.thumbnailFullUrl})` }}
-              />
-              <img
-                src={item.thumbnailFullUrl}
-                alt={item.thumbnailFullUrl + " | UpTradeit.com"}
-              />
-            </div>
-            <div className="right">
-              <h3>{item.title}</h3>
-              <small>
-                {moment
-                  .tz(item.releaseDt, "America/Chicago")
-                  .format("MMM DD, YYYY")}
-              </small>
-              <p>{item.summary}</p>
-            </div>
-          </Link>
-        </div>
-      );
-    });
-  }
-
-  private renderTop(features: any) {
-    return (
-      <div className="featured-list-wrapper">
-        <header>Featured</header>
-        <div className="list-box">
-          <div className="left list">
-            <Link to={"/" + features[0].slug}>
-              <div
-                className="img"
-                style={{
-                  backgroundImage: `url(${features[0].thumbnailFullUrl})`
-                }}
-              />
-              <img
-                src={features[0].thumbnailFullUrl}
-                alt={features[0].thumbnailFullUrl + " | UpTradeit.com"}
-              />
-              <div className="tips-box">
-                <h2>{features[0].title}</h2>
-                <p>{features[0].summary}</p>
-              </div>
-            </Link>
-          </div>
-        </div>
-      </div>
-    );
-  }
-  
   private handleChangeActiveTag = (key: string) => {
-    console.log(key)
-    // this.props.blog.activeTag = tag;
+    const tag = (this.props.blog.tags || []).find(item => item.name === key);
+    if (tag) {
+      console.log(tag);
+      // @ts-ignore
+      this.props.blog.activeTag = tag.name;
+    }
   };
 
   private toggleArrow = () => {
@@ -196,4 +138,22 @@ export default class BlogList extends React.Component<
       this.props.blog.lastestPagination.pageIndex + 1;
     this.props.blog.getLastestList();
   };
+}
+
+function Blog(props: any) {
+  const { slug, thumbnailFullUrl, title, releaseDt, summary } = props;
+  return (
+    <Link to={"/" + slug}>
+      <img src={thumbnailFullUrl} alt={thumbnailFullUrl + " | UpTradeit.com"} />
+      <section className="blog-intro">
+        <header className="title">
+          <h3>{title}</h3>
+          <span className="date">
+            {moment.tz(releaseDt, "America/Chicago").format("MMM DD, YYYY")}
+          </span>
+        </header>
+        <p>{summary}</p>
+      </section>
+    </Link>
+  );
 }
