@@ -67,7 +67,7 @@ export default class BlogDetail extends React.Component<IBlogDetailProps> {
                 .format("MMM DD, YYYY")}
             </span>
             <div
-              className="content"
+              className="html-content"
               dangerouslySetInnerHTML={{ __html: detail.content }}
             />
           </section>
@@ -82,7 +82,10 @@ export default class BlogDetail extends React.Component<IBlogDetailProps> {
             </section>
           </div>
         </div>
-        <button className="common-button">View more</button>
+        <div className="button-container">
+          <button className="common-button">View more</button>
+        </div>
+        
       </div>
     );
   }

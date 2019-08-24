@@ -1,9 +1,11 @@
+@page-padding: 15px;
 .blog-detail {
   background: #f5f7f9;
   padding-bottom: 88px;
   > .blog-detail__content {
     display: flex;
     justify-content: space-around;
+    padding: 0 @page-padding;
     > section.content-part {
       flex: 1;
       max-width: 805px;
@@ -13,7 +15,7 @@
       }
       > .date {
       }
-      > .content {
+      > .html-content {
         margin-top: 87px;
       }
     }
@@ -22,6 +24,7 @@
       flex: 0 0 350px;
       // 为什么无法约束住呢？
       max-width: 350px;
+      margin-left: 30px;
       > section {
         > h3 {
           color: #848484;
@@ -29,12 +32,12 @@
           vertical-align: middle;
           &:after {
             vertical-align: middle;
-            content: '';
+            content: "";
             display: inline-block;
             width: 100%;
             max-width: 220px;
             height: 1px;
-            border-top: 1px solid #EBEBEB;
+            border-top: 1px solid #ebebeb;
             margin-left: 22px;
           }
         }
@@ -50,69 +53,61 @@
               margin-right: 17px;
             }
             > h3 {
-
             }
           }
         }
-        
       }
     }
   }
-  > button {
-    margin: 100px auto 0px;
-    display: block;
+  > .button-container {
+    padding: 0 @page-padding;
+    > button {
+      margin: 100px auto 0px;
+      display: block;
+    }
   }
 }
 
-.page-statig-blog-container {
-  padding: 60px 50px 95px;
-  width: 1024px;
-  background: #fff;
-  margin: 102px auto 88px;
+.ismobile #root {
+  .blog-detail {
+    .header-title {
+      background: transparent;
+    }
+    background: #f5f7f9;
+    padding-bottom: 4.32rem;
+    > .blog-detail__content {
+      > section.content-part {
+        padding-top: 0.11rem;
+        > h2 {
+          font-size: 0.48rem;
+          margin-bottom: 0.5rem;
+        }
+        > .content {
+          margin-top: 1.47rem;
+        }
+      }
+      > div.nav-part {
+        display: none;
+      }
+    }
+    > .button-container {
+      padding: 0 @page-padding;
+      > button {
+        margin: 1.17rem auto 0px;
+        display: block;
+      }
+    }
+  }
+}
+
+// 保留以往的
+.blog-detail .html-content {
   h1 {
     font-size: 30px;
     color: #111;
     line-height: 36px;
     &.blue {
       color: @primary-color;
-    }
-  }
-  .small {
-    margin-top: 30px;
-    font-size: 14px;
-    line-height: 16px;
-    color: #808080;
-    display: flex;
-    span {
-      display: inline-block;
-      margin-right: 30px;
-    }
-
-    .right {
-      flex: 1;
-      text-align: right;
-      em {
-        width: 18px;
-        height: 18px;
-        display: inline-block;
-        margin: 0 2px;
-        &:nth-of-type(1) {
-          background: url(../../images/single/twitter.png) no-repeat center /
-            80%;
-        }
-        &:nth-of-type(2) {
-          background: url(../../images/single/facebook.png) no-repeat center /
-            8px 15px;
-        }
-        &:nth-of-type(3) {
-          background: url(../../images/single/google+.png) no-repeat center /
-            100%;
-        }
-        &:nth-of-type(4) {
-          background: url(../../images/single/tumblr.png) no-repeat center / 8px
-            15px;
-        }
-      }
     }
   }
 
@@ -303,23 +298,7 @@
 
 // 响应式内容
 .ismobile {
-  // 布局模块公用
-  .layout-content {
-    // background: #fff;
-    margin: 0;
-    padding: 0;
-    // margin-top: -1rem; // 上部背景
-    // padding-top: 1rem; // 上部背景
-    // padding-bottom: .4rem; // 下部背景
-  }
-
-  // 页面模块公用
-  .page-statig-blog-container {
-    width: 100%;
-    margin: 0;
-    margin-bottom: -0.4rem; // 下部背景
-    padding: 0 5.5556% 0.7rem;
-
+  .blog-detail .html-content {
     h1,
     h2,
     h3,
@@ -385,20 +364,6 @@
       padding-top: 0.2rem;
       margin-top: 0.2rem;
       border-top: 1px solid rgba(242, 242, 242, 1);
-    }
-  }
-
-  // 部分页面公用
-  .page-privacy-policy-container,
-  .page-terms-container {
-    .layout-content {
-      padding: 0.2rem;
-    }
-
-    box-sizing: border-box;
-    h1 {
-      color: #00cfff;
-      text-align: center;
     }
   }
 }
