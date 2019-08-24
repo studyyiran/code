@@ -56,58 +56,58 @@ export default class BlogDetail extends React.Component<IBlogDetailProps> {
       return null;
     }
     return (
-      <div className="page-statig-blog-container">
-        <HeaderTitle title={detail.title} />
-        <RenderTest title="123123" list={this.props.blog.lastest} />
-        <div className="small">
-          <span>
-            {moment
-              .tz(detail.releaseDt, "America/Chicago")
-              .format("MMM DD, YYYY")}
-          </span>
-          <div className="right">
-            <em />
-            <em />
+      <div className="blog-detail">
+        <HeaderTitle title={"123123"} />
+        <div className="blog-detail__content">
+          <section className="content-part">
+            <h2>{detail.title}</h2>
+            <span className="date">
+              {moment
+                .tz(detail.releaseDt, "America/Chicago")
+                .format("MMM DD, YYYY")}
+            </span>
+            <div
+              className="content"
+              dangerouslySetInnerHTML={{ __html: detail.content }}
+            />
+          </section>
+          <div className="nav-part">
+            <section>
+              <h3>Latest Posts</h3>
+              {renderNavList(this.props.blog.lastest)}
+            </section>
+            <section>
+              <h3>Latest Posts</h3>
+              {renderNavList(this.props.blog.lastest)}
+            </section>
           </div>
         </div>
-        <div
-          className="content"
-          dangerouslySetInnerHTML={{ __html: detail.content }}
-        />
+        <button className="common-button">View more</button>
       </div>
     );
   }
 }
 
-function RenderTest(props: any) {
-  const { title, list } = props;
+function renderNavList(list: any) {
   return (
-    <ul>
-      <h2>{title}</h2>
-      {renderBlogDesc(list)}
-    </ul>
+    <nav className="url-container">
+      {(list || [])
+        .filter((item: any, index: number) => {
+          return index < 4;
+        })
+        .map((item: IBlog, index: number) => (
+          <Blog key={index} {...item} />
+        ))}
+    </nav>
   );
 }
 
-// 磨刀不误砍柴功？
-function renderBlogDesc(list: any) {
-  return (list || []).map((item: IBlog, index: number) => {
-    return (
-      <li className="list" key={index}>
-        <Link to={"/" + item.slug}>
-          <div className="img-box">
-            <h3>{item.title}</h3>
-            <div
-              className="img"
-              style={{ backgroundImage: `url(${item.thumbnailFullUrl})` }}
-            />
-            <img
-              src={item.thumbnailFullUrl}
-              alt={item.thumbnailFullUrl + " | UpTradeit.com"}
-            />
-          </div>
-        </Link>
-      </li>
-    );
-  });
+function Blog(props: any) {
+  const { slug, title, thumbnailFullUrl } = props;
+  return (
+    <Link to={"/" + slug} className="common-link">
+      <img src={thumbnailFullUrl} alt={thumbnailFullUrl + " | UpTradeit.com"} />
+      <h3>{title}</h3>
+    </Link>
+  );
 }

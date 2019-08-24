@@ -7,7 +7,7 @@ interface IPageHeader {
 
 export function HeaderTitle({ title }: IPageHeader) {
   return (
-    <header className="page-header">
+    <header className="header-title">
       <h1>{title}</h1>
     </header>
   );
