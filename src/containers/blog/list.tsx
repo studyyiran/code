@@ -93,7 +93,7 @@ export default class BlogList extends React.Component<
     return (
       <div className="tag-list-wrapper">
         <Tabs
-          className="menu-container"
+          className="tabs-container"
           onChange={this.handleChangeActiveTag}
         >
           {tags.map((item: ITag, index: number) => (
