@@ -1,10 +1,11 @@
 import * as React from "react";
 import { inject, observer } from "mobx-react";
 import { IBlog, IBlogDetailProps } from "./interface/blog.interface";
-import "./bolg.less";
+import "./detail.less";
 import * as moment from "moment-timezone";
 import { shareComponent } from "@/utils/function";
 import { Link } from "react-router-dom";
+import { HeaderTitle } from "@/components/headerTitle";
 @inject("blog")
 @observer
 export default class BlogDetail extends React.Component<IBlogDetailProps> {
@@ -56,7 +57,7 @@ export default class BlogDetail extends React.Component<IBlogDetailProps> {
     }
     return (
       <div className="page-statig-blog-container">
-        <h1>{detail.title}</h1>
+        <HeaderTitle title={detail.title} />
         <RenderTest title="123123" list={this.props.blog.lastest} />
         <div className="small">
           <span>
