@@ -66,11 +66,11 @@ export default class BlogList extends React.Component<
           <h1>Tech Talk</h1>
         </header>
         {features && features.length ? (
-          <div className="bg-container">
+          <div className="featured-part-container">
             <section className="featured-part">
               <h2>Featured Tech Talk</h2>
               <section className="featured common-card">
-                <Link to={"/" + features[0].slug}>
+                <Link to={"/" + features[0].slug} className="common-link">
                   <img
                     src={features[0].thumbnailFullUrl}
                     alt={features[0].thumbnailFullUrl + " | UpTradeit.com"}
@@ -86,26 +86,28 @@ export default class BlogList extends React.Component<
             </section>
           </div>
         ) : null}
-        <section className="blog-list-part">
-          {tags && tags.length ? (
-            <Tabs
-              className="tabs-container"
-              onChange={this.handleChangeActiveTag}
-            >
-              {tags.map((item: ITag, index: number) => (
-                <TabPane key={item.name} tab={item.name} />
+        <div className="blog-list-part-container">
+          <section className="blog-list-part">
+            {tags && tags.length ? (
+              <Tabs
+                className="tabs-container"
+                onChange={this.handleChangeActiveTag}
+              >
+                {tags.map((item: ITag, index: number) => (
+                  <TabPane key={item.name} tab={item.name} />
+                ))}
+              </Tabs>
+            ) : null}
+            <nav>
+              {tagPageList.map(props => (
+                <Blog {...props} key={props.title} />
               ))}
-            </Tabs>
-          ) : null}
-          <nav>
-            {tagPageList.map(props => (
-              <Blog {...props} key={props.title} />
-            ))}
-          </nav>
-          <button className="common-button" onClick={this.handleMore}>
-            View more
-          </button>
-        </section>
+            </nav>
+            <button className="common-button" onClick={this.handleMore}>
+              View more
+            </button>
+          </section>
+        </div>
       </div>
     );
   }
@@ -138,7 +140,7 @@ export default class BlogList extends React.Component<
 function Blog(props: any) {
   const { slug, thumbnailFullUrl, title, releaseDt, summary } = props;
   return (
-    <Link to={"/" + slug}>
+    <Link to={"/" + slug} className="common-link">
       <img src={thumbnailFullUrl} alt={thumbnailFullUrl + " | UpTradeit.com"} />
       <section className="blog-intro">
         <header className="title">
