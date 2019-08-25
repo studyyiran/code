@@ -2,6 +2,7 @@ import * as React from "react";
 import { Button } from "antd";
 import { RouteComponentProps } from "react-router";
 import "./aboutUs.less";
+import { HeaderTitle } from "@/components/headerTitle";
 
 interface IArticle {
   className: string;
@@ -67,53 +68,64 @@ const ArticleComp = (props: {
   title: string;
   text: string;
 }) => (
-    <div className={"article-comp " + props.className}>
-      <img src={props.img} alt="" />
-      <p className="article-title">{props.title}</p>
-      <p className="article-text">{props.text}</p>
-    </div>
-  );
+  <div className={"article-comp " + props.className}>
+    <img src={props.img} alt="" />
+    <p className="article-title">{props.title}</p>
+    <p className="article-text">{props.text}</p>
+  </div>
+);
 
 class AboutUs extends React.Component<RouteComponentProps> {
   public render() {
     return (
-      <section className="page-about-us">
-        <div className="article">
-          <div className="col-1">
-            <p>Mission</p>
-            <p>Statement</p>
+      <article className="page-about-us">
+        <HeaderTitle title={"Our mission"} />
+        <div className="statement">
+          <img src={require('@/images/test/bg.jpg')} />
+          <section className="statement__content">
+            <h2>Mission Statement</h2>
             <p>
-              Our vision is to make today better so that the world will be
+              Our mission is to make today better so that the world will be
               brighter tomorrow; to build a company where the life of used
               electronics is extended through the hands of others or recycled to
               help reduce carbon footprint. We are committed to providing a
               fast, easy, safe, and trustworthy service for everyone.
             </p>
-          </div>
-          <div className="col-2">
-            <img src={require("@/images/single/aboutusbanner.png")} alt="" />
-          </div>
-        </div>
-        <div className="our-values">
-          <p className="title">Our Values</p>
-          <section className="two-content">
-            {articles.map((v, i) => (
-              <ArticleComp key={i} {...v} />
-            ))}
           </section>
-          <div className="button-group">
-            <Button
-              className="sell-it-now"
-              size="large"
-              type="primary"
-              style={{ width: 232, height: 64 }}
-              onClick={this.onGoToSell}
-            >
-              SELL NOW
-            </Button>
-          </div>
         </div>
-      </section>
+        <section className="values">
+          <h2>Our Values</h2>
+          <ul className="values-list">
+            {articles.map(({ title, text }) => {
+              return (
+                <li className="values-list__item" key={title}>
+                  <svg
+                    className="icon"
+                    aria-hidden="true"
+                  >
+                    <use xlinkHref="#uptrade_duigou" />
+                  </svg>
+                  <h3>{title}</h3>
+                  <p>{text}</p>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+        {/*<section className="team">*/}
+        {/*  <h2>Our Team</h2>*/}
+        {/*  <ul className="intro-card-list">*/}
+        {/*    <li className="common-card">*/}
+        {/*      <img />*/}
+        {/*      <h3></h3>*/}
+        {/*      <span></span>*/}
+        {/*    </li>*/}
+        {/*  </ul>*/}
+        {/*</section>*/}
+        <div className="button-container">
+          <button onClick={this.onGoToSell}>Sell it now</button>
+        </div>
+      </article>
     );
   }
   private onGoToSell = () => {

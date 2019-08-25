@@ -1,182 +1,100 @@
-.page-about-us {
-    width: 1280px;
-    margin: 0 auto;
-
-    .article {
-        height: 591px;
-        display: flex;
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
-        box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.1);
-        position: relative;
-
-        .col-1 {
-            flex: 1;
-            padding: 126px 0 0 142px;
-            font-size: 68px;
-            font-family: HelveticaNeue-Medium;
-            font-weight: 500;
-            color: rgba(0, 0, 0, 1);
-            line-height: 72px;
-
-            p:last-child {
-                margin-top: 30px;
-                width: 447px;
-                font-size: 20px;
-                font-family: HelveticaNeue;
-                color: rgba(0, 0, 0, 1);
-                line-height: 28px;
-                letter-spacing: -1px;
-            }
-        }
-
-        .col-2 {
-            width: 708px;
-
-            img {
-                width: 100%;
-                height: 100%;
-            }
-        }
-    }
-
-    .article-comp {
-        margin-top: 67px;
-        width: 280px;
-        text-align: center;
-
-        img {
-            width: 80px;
-            height: auto;
-        }
-
-        .article-title {
-            margin-top: 27px;
-            font-size: 22px;
-            font-family: HelveticaNeue;
-            color: rgba(0, 0, 0, 1);
-            line-height: 28px;
-        }
-
-        .article-text {
-            margin-top: 18px;
-            font-size: 22px;
-            font-family: HelveticaNeue;
-            color: rgba(155, 155, 155, 1);
-            line-height: 28px;
-            letter-spacing: -1px;
-            padding: 3px;
-        }
-
-    }
-
-    .width320 {
-        width: 320px !important;
-        margin: 0 20px;
-        margin-top: 67px;
-    }
-
-    .our-values {
-        background-color: #ECFBFD;
-        padding: 85px 173px 0 173px;
-
-        .title {
-            font-size: 68px;
-            font-family: Helvetica;
-            color: rgba(0, 0, 0, 1);
-            line-height: 72px;
-            text-align: center;
-        }
-
-        .two-content {
-            display: inline-flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-        }
-    }
-
-    .button-group {
-        margin-top: 69px;
-        text-align: center;
-        height: 179px;
-    }
+@import (reference) '~@/styles/index.less';
+//padding-left
+.title() {
+  font-size: 32px;
+  font-weight: 500;
+  color: #040e3f;
 }
 
-.ismobile{
-    .page-about-us {
-        // padding-top: 0.7rem;
-        width: 100%;
-        margin: 0;
-        .article {
-            height: 5.21rem;
-            display: block;
-            background: url("~@/images/single/whoweare-top.png") no-repeat center center / 100% 100%;
-            box-shadow: none;
-    
-            .col-1 {
-                display: block;
-                flex: none;
-                padding: 0.42rem 0.3rem 0 0.3rem;
-                font-size: 0.5rem;
-                line-height: 0.62rem;
-    
-                p:last-child {
-                    margin-top: 0.23rem;
-                    width: 100%;
-                    font-size: 0.17rem;
-                    line-height: 0.25rem;
-                }
-            }
-    
-            .col-2 {
-                display: none;
-            }
-        }
-        .our-values {
-            background-color: #ECFBFD;
-            padding: 0 0.3rem 0.4rem 0.3rem;
-            .title {
-                padding-top: 0.3rem;
-                font-size: 0.34rem;
-                line-height: 0.44rem;
-            }
-            .two-content {
-                display: block;
-                .article-comp {
-                    margin: 0;
-                    width: 100%;
-                    padding-top: 0.3rem;
-                    img {
-                        width: 0.75rem;
-                        height: auto;
-                    }
-                    .article-title {
-                        margin-top: 0.2rem;
-                        font-size: 0.16rem;
-                        line-height: 0.28rem;
-                    }
-                    .article-text {
-                        margin-top: 0.15rem;
-                        font-size: 0.14rem;
-                        line-height: 0.2rem;
-                        padding: 0;
-                    }
-            
-                }
-                .width320 {
-                    width: 100% !important;
-                    margin: 0;
-                }
-            }
-            .button-group {
-                margin: 0;
-                padding-top: 0.3rem;
-                height: 1.1rem;
-                box-sizing: border-box;
-                .ant-btn{
-                    width: 2rem!important;
-                    height: 0.4rem!important;
-                }
-            }
-        }
+.font(@size, @weight, @color) {
+  font-size: @size;
+  font-weight: @weight;
+  color: @color;
+}
+
+.page-about-us {
+  background: @white;
+  padding-bottom: 109px;
+  > div.statement {
+    > img {
+      .pc({width: 50%; float: right;});
     }
+    > section.statement__content {
+      > h2 {
+        margin-bottom: 40px;
+        .font(36px, 500, #ffffff)
+      }
+      > p {
+        color: #ffffff;
+        font-size: 18px;
+      }
+    }
+  }
+  > section.values {
+    padding: 81px @padding-value 65px;
+    background: #f5f7f9;
+    > h2 {
+      margin-bottom: 94px;
+      .title();
+    }
+    > ul.values-list {
+      max-width: 1200px;
+      margin: 0 auto 0;
+      display: flex;
+      flex-wrap: wrap;
+      > li.values-list__item {
+        text-align: center;
+        margin: 0 30px 62px;
+        > .icon {
+          font-size: 30px;
+        }
+        > h3 {
+          margin: 30px auto 10px;
+          font-size: 18px;
+          font-weight: 500;
+          color: #222222;
+        }
+        > p {
+          font-size: 16px;
+          color: #898ea2;
+        }
+      }
+    }
+  }
+  > section.team {
+    padding-top: 62px;
+    > h2 {
+      margin-bottom: 77px;
+      .title();
+    }
+    > ul.intro-card-list {
+      max-width: 1200px;
+      margin: 0 auto 0;
+      display: flex;
+      flex-wrap: wrap;
+      > li.common-card {
+        margin: 0 60px 100px;
+        > img {
+          width: 281px;
+          border-radius: 50%;
+        }
+        > h3 {
+          font-size: 26px;
+          color: #000000;
+          font-weight: 500;
+        }
+        > span {
+          font-size: 16px;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+  > .button-container {
+    padding: @padding-value;
+    > button {
+      margin: auto;
+      display: block;
+    }
+  }
 }

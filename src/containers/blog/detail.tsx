@@ -57,7 +57,7 @@ export default class BlogDetail extends React.Component<IBlogDetailProps> {
     }
     return (
       <div className="blog-detail">
-        <HeaderTitle title={"123123"} />
+        <HeaderTitle title={"Tech Talk"} />
         <div className="blog-detail__content">
           <section className="content-part">
             <h2>{detail.title}</h2>
