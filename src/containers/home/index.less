@@ -1,4 +1,4 @@
-@import (reference) '~@/styles/index.less';
+@import (reference) "~@/styles/index.less";
 
 .page-home-container {
   margin: 0 auto;
@@ -10,7 +10,11 @@
     position: relative;
     padding-left: 142px;
     height: 774px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 1) 100%
+    );
     padding-top: 126px;
     box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.1);
 
@@ -41,7 +45,7 @@
     box-sizing: border-box;
     padding: 70px 213px 83px;
     // height: 1404px;
-    background-color: #ECFBFD;
+    background-color: #ecfbfd;
     text-align: center;
 
     .main-title {
@@ -57,7 +61,7 @@
     }
 
     .sub-content {
-      .set-font-color(22px, #9B9B9B);
+      .set-font-color(22px, #9b9b9b);
       line-height: 28px;
     }
 
@@ -97,12 +101,12 @@
           }
 
           .description {
-            .set-font-color(22px, #9B9B9B);
+            .set-font-color(22px, #9b9b9b);
             line-height: 28px;
           }
         }
 
-        .step-item+.step-item {
+        .step-item + .step-item {
           margin-left: 104px;
         }
       }
@@ -170,7 +174,7 @@
             font-size: 22px;
             line-height: 28px;
             margin-top: 20px;
-            color: #9B9B9B;
+            color: #9b9b9b;
           }
         }
       }
@@ -179,7 +183,7 @@
 
   .section-sell {
     padding: 70px 201px 80px 210px;
-    background: #ECFBFD;
+    background: #ecfbfd;
 
     h2 {
       color: #000;
@@ -242,11 +246,11 @@
 
   .ewaste-wrapper {
     overflow: hidden;
-    padding:89px 0 122px;
+    padding: 89px 0 122px;
     text-align: center;
-    background: #ECFBFD;
+    background: #ecfbfd;
     h2 {
-      font-size:68px;
+      font-size: 68px;
       font-weight: 300;
       line-height: 68px;
     }
@@ -254,24 +258,24 @@
     .number-box {
       display: flex;
       justify-content: center;
-      margin-top:67px;
+      margin-top: 67px;
       .img {
-        width:72px;
-        height:72px;
-        background: url(../../images/home/ewaste.png) no-repeat center /100%;
-        margin-right:20px;
+        width: 72px;
+        height: 72px;
+        background: url(../../images/home/ewaste.png) no-repeat center / 100%;
+        margin-right: 20px;
       }
       .number-list {
         display: flex;
         .list {
-          width:50px;
-          height:70px;
+          width: 50px;
+          height: 70px;
           line-height: 70px;
           text-align: center;
-          background: #7ED321;
-          margin-right:10px;
-          font-size:60px;
-          color:#fff;
+          background: #7ed321;
+          margin-right: 10px;
+          font-size: 60px;
+          color: #fff;
 
           &:last-child {
             margin-right: 0;
@@ -281,16 +285,16 @@
           width: 23px;
           font-size: 40px;
           line-height: 85px;
-          margin-left:-10px;
-          margin-right:10px;
+          margin-left: -10px;
+          margin-right: 10px;
         }
       }
 
       span {
-        font-size:22px;
-        color:#000;
-        line-height: 120px; 
-        margin-left:20px;
+        font-size: 22px;
+        color: #000;
+        line-height: 120px;
+        margin-left: 20px;
       }
     }
   }
@@ -336,7 +340,6 @@
   }
 }
 
-
 .ismobile {
   .page-home-container {
     width: 100%;
@@ -344,21 +347,21 @@
     letter-spacing: 0px;
 
     .sell-your-phone-wrapper {
-      padding: .3rem .3rem 0;
+      padding: 0.3rem 0.3rem 0;
       height: 4.81rem;
       overflow: hidden;
 
       .main-title {
-        font-size: .4rem;
-        line-height: .5rem;
+        font-size: 0.4rem;
+        line-height: 0.5rem;
         padding-top: 0;
-        margin-bottom: .12rem;
+        margin-bottom: 0.12rem;
       }
 
       .content-text {
-        font-size: .16rem;
-        line-height: .24rem;
-        margin-bottom: .3rem;
+        font-size: 0.16rem;
+        line-height: 0.24rem;
+        margin-bottom: 0.3rem;
 
         br {
           display: none;
@@ -368,12 +371,12 @@
       .button-link {
         display: block;
         width: 2rem;
-        height: .44rem;
+        height: 0.44rem;
         margin: 0 auto;
 
         .sell-it-now {
           width: 100%;
-          height: .44rem;
+          height: 0.44rem;
         }
       }
 
@@ -383,30 +386,30 @@
         top: initial;
         right: initial;
         bottom: -1.5rem;
-        left: -.2rem;
+        left: -0.2rem;
       }
     }
 
     .how-it-works-wrapper {
-      padding: .3rem .3rem .51rem;
+      padding: 0.3rem 0.3rem 0.51rem;
 
       .main-title {
-        font-size: .34rem;
-        line-height: .34rem;
+        font-size: 0.34rem;
+        line-height: 0.34rem;
         font-weight: normal;
       }
 
       .sub-title {
-        font-size: .16rem;
-        margin-top: .2rem;
-        line-height: .28rem;
-        margin-bottom: .15rem;
+        font-size: 0.16rem;
+        margin-top: 0.2rem;
+        line-height: 0.28rem;
+        margin-bottom: 0.15rem;
         font-weight: 300;
       }
 
       .sub-content {
-        font-size: .14rem;
-        line-height: .2rem;
+        font-size: 0.14rem;
+        line-height: 0.2rem;
       }
 
       .works-steps-wrapper {
@@ -420,22 +423,22 @@
               margin-top: 1rem;
             }
 
-            &+.step-item {
+            & + .step-item {
               margin-left: 0;
             }
 
             .glance {
-              font-size: .16rem;
-              line-height: .28rem;
-              padding-top: .2rem;
-              margin-bottom: .15rem;
+              font-size: 0.16rem;
+              line-height: 0.28rem;
+              padding-top: 0.2rem;
+              margin-bottom: 0.15rem;
             }
 
             .description {
-              font-size: .14rem;
+              font-size: 0.14rem;
               font-weight: 300;
               letter-spacing: 0px;
-              line-height: .2rem;
+              line-height: 0.2rem;
             }
           }
 
@@ -451,23 +454,23 @@
     }
 
     .section-payback {
-      padding-left: .33rem;
-      padding-right: .3rem;
-      padding-top: .3rem;
+      padding-left: 0.33rem;
+      padding-right: 0.3rem;
+      padding-top: 0.3rem;
 
       .top {
         display: block;
 
         .left {
           h2 {
-            font-size: .4rem;
-            line-height: .55rem;
+            font-size: 0.4rem;
+            line-height: 0.55rem;
           }
 
           p {
-            font-size: .18rem;
-            line-height: .24rem;
-            margin-top: .2rem;
+            font-size: 0.18rem;
+            line-height: 0.24rem;
+            margin-top: 0.2rem;
 
             br {
               display: none;
@@ -477,7 +480,7 @@
 
         img {
           width: 100%;
-          margin-top: .2rem;
+          margin-top: 0.2rem;
           margin-left: 0;
         }
       }
@@ -501,19 +504,19 @@
             flex: 1;
 
             &:last-child {
-              margin-left: .2rem;
+              margin-left: 0.2rem;
               width: 1.7rem;
               flex: none;
             }
 
             h3 {
-              font-size: .14rem;
+              font-size: 0.14rem;
             }
 
             p {
-              font-size: .13rem;
-              line-height: .2rem;
-              margin-top: .15rem;
+              font-size: 0.13rem;
+              line-height: 0.2rem;
+              margin-top: 0.15rem;
 
               text br {
                 display: none;
@@ -525,12 +528,12 @@
     }
 
     .section-sell {
-      padding: .3rem .3rem .6rem;
+      padding: 0.3rem 0.3rem 0.6rem;
 
       h2 {
         text-align: center;
-        font-size: .34rem;
-        line-height: .44rem;
+        font-size: 0.34rem;
+        line-height: 0.44rem;
       }
 
       dl {
@@ -538,19 +541,19 @@
           margin-left: auto;
           margin-right: auto;
           float: none;
-          margin-top: .3rem;
+          margin-top: 0.3rem;
           width: 100%;
           height: auto;
 
           h4 {
-            font-size: .16rem;
+            font-size: 0.16rem;
             font-weight: 300;
           }
 
           p {
-            font-size: .14rem;
+            font-size: 0.14rem;
             letter-spacing: 0px;
-            line-height: .2rem;
+            line-height: 0.2rem;
 
             br {
               display: none;
@@ -561,77 +564,77 @@
     }
     .ewaste-wrapper {
       overflow: hidden;
-      padding:.3rem 0 .52rem;
+      padding: 0.3rem 0 0.52rem;
       text-align: center;
-  
+
       h2 {
-        font-size:.34rem;
+        font-size: 0.34rem;
         font-weight: 300;
-        line-height: .44rem;
+        line-height: 0.44rem;
       }
-  
+
       .number-box {
         display: flex;
         justify-content: center;
-        margin-top:.33rem;
+        margin-top: 0.33rem;
         .img {
-          width:.25rem;
-          height:.25rem;
-          background: url(../../images/home/ewaste.png) no-repeat center /100%;
-          margin-right:.1rem;
+          width: 0.25rem;
+          height: 0.25rem;
+          background: url(../../images/home/ewaste.png) no-repeat center / 100%;
+          margin-right: 0.1rem;
         }
         .number-list {
           display: flex;
           .list {
-            width:.18rem;
-            height:.25rem;
-            line-height: .25rem;
+            width: 0.18rem;
+            height: 0.25rem;
+            line-height: 0.25rem;
             text-align: center;
-            background: #7ED321;
-            margin-right:.02rem;
-            font-size:.24rem;
-            color:#fff;
-  
+            background: #7ed321;
+            margin-right: 0.02rem;
+            font-size: 0.24rem;
+            color: #fff;
+
             &:last-child {
               margin-right: 0;
             }
           }
           .symbol {
-            width: .04rem;
-            font-size: .14rem;
-            line-height: .3rem;
-            margin-left:-.02rem;
-            margin-right:.02rem;
+            width: 0.04rem;
+            font-size: 0.14rem;
+            line-height: 0.3rem;
+            margin-left: -0.02rem;
+            margin-right: 0.02rem;
           }
         }
-  
+
         span {
-          font-size:.14rem;
-          color:#000;
-          line-height: .36rem; 
-          margin-left:.1rem;
+          font-size: 0.14rem;
+          color: #000;
+          line-height: 0.36rem;
+          margin-left: 0.1rem;
         }
       }
     }
 
     .section-just {
-      padding: .3rem .21rem .43rem;
+      padding: 0.3rem 0.21rem 0.43rem;
 
       h2 {
-        font-size: .34rem;
-        line-height: .44rem;
+        font-size: 0.34rem;
+        line-height: 0.44rem;
         width: 3rem;
         margin: 0 auto;
       }
 
       p {
-        font-size: .18rem;
+        font-size: 0.18rem;
       }
 
       .button-group {
         width: 2rem;
-        height: .4rem;
-        margin: .3rem auto 0;
+        height: 0.4rem;
+        margin: 0.3rem auto 0;
 
         .sell-it-now {
           height: 100%;
