@@ -1,7 +1,7 @@
-@import (reference) '~@/styles/index.less';
+@import (reference) "~@/styles/index.less";
 
 .comp-footer {
-  background: @bg-deep-blue;
+  background: @tab-bar-color;
   color: @white;
   padding: 30px 20px 20px;
   height: 30vh;
@@ -21,6 +21,7 @@
   .footer__group {
     display: flex;
     > ul {
+      flex: 0 0 140px;
       > h2 {
         .title-font();
       }
@@ -30,10 +31,8 @@
       }
     }
     .footer-group-buy {
-
     }
     .footer-group-sell {
-      
     }
   }
   .footer__email-form {

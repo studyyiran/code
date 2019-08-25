@@ -8,41 +8,47 @@ import config from '../../../../config';
 
 const footerInfo = [
   {
-    title: 'Buy',
-    className: 'footer-group-buy',
+    title: 'Sell',
+    className: '',
     arr: [
       {
-        subTitle: 'Smartphones',
-        href: 'Smartphones'
+        subTitle: 'How To Sell',
+        href: '/sell-my-phone'
+      },
+      // {
+      //   subTitle: 'Sell Now',
+      //   href: ''
+      // }
+    ]
+  },
+  {
+    title: 'Resources',
+    className: '',
+    arr: [
+      {
+        subTitle: 'Contact Us',
+        href: '/contact'
       },
       {
-        subTitle: 'Tablets',
-        href: 'Tablets'
+        subTitle: 'Blog',
+        href: '/blog'
       },
       {
-        subTitle: 'Macbooks',
-        href: 'Macbooks'
+        subTitle: 'FAQs',
+        href: '/faq'
       }
     ]
   },
   {
-    title: 'Sell',
-    className: 'footer-group-sell',
+    title: 'About Us',
+    className: '',
     arr: [
       {
-        subTitle: 'Smartphones',
-        href: 'Smartphones'
-      },
-      {
-        subTitle: 'Tablets',
-        href: 'Tablets'
-      },
-      {
-        subTitle: 'Macbooks',
-        href: 'Macbooks'
+        subTitle: 'Who We Are',
+        href: '/who-we-are'
       }
     ]
-  }
+  },
 ]
 
 interface IFooterState {
