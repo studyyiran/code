@@ -1,155 +1,110 @@
-import * as React from 'react';
-import { Button } from 'antd';
-import { RouteComponentProps } from 'react-router';
-import Wrong from '@/images/single/wrong.png';
-import './howitworks.less';
+import * as React from "react";
+import { Collapse } from "antd";
+import { RouteComponentProps } from "react-router";
+import "./howitworks.less";
+import { HeaderTitle } from "@/components/headerTitle";
+const { Panel } = Collapse;
 
-const Right = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAVCAYAAACzK0UYAAAAAXNSR0IArs4c6QAAAjpJREFUSA21k89rE0EUx78zCa2/KKjooSCIP5omHpV6VVA2Rjx5EDx50Uqp0kOxB5GWgkJBL/4WvPgvqNRNLdajRz3EbNNWI4Ie/EUFxR/Zeb7ZpbuZ7AQ0JgOTvPd9j/eZefNWoFOLSKDsHoOQm0RHGN5ML4jGAdrN22s/pOweBWEEAqv5f5H3UPsg5dmNEP4k32Bv0B0SZXTLYWw/uNweSOVxFsq/wqfeHAAElpBSJ7Gz8FX7MhD/58dz8/D9uxEAeM+A4RWALt36TYgkKsUhKJyIzijEMtLs73DeRlrLkIXpbih5kQH74mJE/B5nkCs8i7XQits17w7g3YM1jQkJvzS3DjV5zQQEWTdsAB0RoLk0vB9n2TzOXpX7Ocb9XEoU18LCdA98eZ37nzPiQjxBv3PO0OocCe/nVADQImEr/NQ9zM8U6nJCUwNq8lYCAD5Yz6+JRH6dIJFWN9n/EmlEq6DUJLzieZRKXYH+org2aBGQifJC4xufbBS9R7436IYbTldldhv82h2OrDejwmP/Au8xftQ9Rkw7KTGBPudhQm8Q4hEOQbc5vqEhx+5KPEUmP2oPmmo8XX0HXkGIQX6fT2aKxdPfQw2XLBGrFEN0uN95DXT9BYiuYlf+s7WiRTQhOiG7vwqoQR7nj5Z8vqh4joxz3xprIiYhOjF7qMoPfdoKErjMIGpSzyrbISsg5XPr6m5E9IhvoSfun1ZziC6TO/wGKnWKrQ+8FX6THvMOrcXiFrx0R1qt/gftTrCzLG5hggAAAABJRU5ErkJggg==";
-
-class HowItWorks extends React.Component<RouteComponentProps>{
-    public render() {
-        return (
-            <section className="page-help-howitworks">
-                <div className="article">
-                    <div className="col-1">
-                        <p>Sell My Phone In <br />Two Simple Steps </p>
-                        <p>Get cash for what it’s actually worth. Ship it and get paid. It’s that easy.</p>
-                    </div>
-                    <div className="col-2">
-                        <img src={require('@/images/single/sell_you_phone_banner.png')} alt="" />
-                    </div>
-                </div>
-                <div className="two-step-and-done">
-                    <p className="title">Two Steps And Done</p>
-                    <p className="subtitle">The only way to sell your phone</p>
-                    <section className="two-step">
-                        <div className="one">
-                            <div className="icon">
-                                <img src={require('@/images/single/shipIt.png')} alt="" />
-                                <p>Ship It</p>
-                            </div>
-                            <div className="content">
-                                <p>Find out how much my phone is worth</p>
-                                <p>Our price calculator will provide you a guaranteed price based on the condition and market value of your phone.</p>
-                                <p>Prepare your phone for shipment</p>
-                                <p>Before you send in your phone, it is important to follow your manufacturer's data reset instructions. We’ll send you instructions to help and as part of our inspection process we also wipe it again.</p>
-                                <p>Free shipping</p>
-                                <p>We will send you a shipping label for you to pack and mail your phone to us for free.</p>
-                            </div>
-                        </div>
-                        <div className="two">
-                            <div className="icon">
-                                <img src={require('@/images/single/getMoney.png')} alt="" />
-                                <p>Get Paid More</p>
-                            </div>
-                            <div className="content">
-                                <p>Multiple payment options</p>
-                                <p>Choose to get paid via PayPal or eCheck. For the fastest and easiest way to receive payment, choose PayPal.</p>
-                                <p>Fast payment</p>
-                                <p>We issue payment the next business day after we have received and verified the condition of your phone.</p>
-                                <p>Premium payout</p>
-                                <p>Unlike other trade in services, we cut out the middleman. This means, we pass on those savings directly to you. If we sell it for more, we issue a second payment within seven days.</p>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-                <section className="bg-white">
-                    <section className="uptrade-different">
-                        <p className="title">UpTrade Differentiation</p>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th />
-                                    <th>UpTrade</th>
-                                    <th>Carrier Stores</th>
-                                    <th>Online Marketplaces</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Minimum Price Guarantee</td>
-                                    <td>
-                                        <img className="right" src={Right} alt="" />
-                                    </td>
-                                    <td>
-                                        <img className="right" src={Right} alt="" />
-                                    </td>
-                                    <td>
-                                        <img className="wrong" src={Wrong} alt="" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Premium Payout</td>
-                                    <td>
-                                        <img className="right" src={Right} alt="" />
-                                    </td>
-                                    <td>
-                                        <img className="wrong" src={Wrong} alt="" />
-                                    </td>
-                                    <td>
-                                        <img className="wrong" src={Wrong} alt="" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Safe</td>
-                                    <td>
-                                        <img className="right" src={Right} alt="" />
-                                    </td>
-                                    <td>
-                                        <img className="right" src={Right} alt="" />
-                                    </td>
-                                    <td>
-                                        <img className="wrong" src={Wrong} alt="" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Easy</td>
-                                    <td>
-                                        <img className="right" src={Right} alt="" />
-                                    </td>
-                                    <td>
-                                        <img className="wrong" src={Wrong} alt="" />
-                                    </td>
-                                    <td>
-                                        <img className="wrong" src={Wrong} alt="" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Free Shipping</td>
-                                    <td>
-                                        <img className="right" src={Right} alt="" />
-                                    </td>
-                                    <td>
-                                        <img className="wrong" src={Wrong} alt="" />
-                                    </td>
-                                    <td>
-                                        <img className="wrong" src={Wrong} alt="" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Fast Payout</td>
-                                    <td>
-                                        <img className="right" src={Right} alt="" />
-                                    </td>
-                                    <td>
-                                        <img className="wrong" src={Wrong} alt="" />
-                                    </td>
-                                    <td>
-                                        <img className="wrong" src={Wrong} alt="" />
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </section>
-                    <div className="button-group">
-                        <Button className="sell-it-now" size="large" type="primary" style={{ width: 232, height: 64 }} onClick={this.onGoToSell}>Get Started</Button>
-                    </div>
-                </section>
+class HowItWorks extends React.Component<RouteComponentProps> {
+  public render() {
+    return (
+      <article className="page-help-howitworks">
+        <HeaderTitle title="How to sell my phone on UpTrade" />
+        <section className="intro">
+          <h2>Sell Your Phone For Cash in 3 Easy Steps</h2>
+          <video className="comp-video" src="https://www.w3school.com.cn/i/movie.ogg" controls={true} />
+        </section>
+        <ul className="list">
+          <li>
+            <div className="img-container">
+              <img src={require("@/images/test/bg.jpg")} />
+            </div>
+            <section>
+              <svg className="icon" aria-hidden="true">
+                <use xlinkHref="#uptrade_duigou" />
+              </svg>
+              <h3>Get your minimum guarantee price</h3>
+              <Collapse expandIconPosition="right" defaultActiveKey={['1', '2']}>
+                <Panel header={"Find out how much your phone is worth"} key={1}>
+                  <p>
+                    Our price calculator will provide you with a minimum
+                    guaranteed price based on the condition and market value of
+                    your phone. All you have to do is tell us the phone you want
+                    to sell and answer a few questions regarding its condition.
+                  </p>
+                </Panel>
+              </Collapse>
             </section>
-        );
-    }
-    private onGoToSell = () => {
-        this.props.history.push('/sell/yourphone/brand')
-    }
+          </li>
+          <div className="bg-container">
+            <li>
+              <div className="img-container">
+                <img src={require("@/images/test/bg.jpg")} />
+              </div>
+              <section>
+                <svg className="icon" aria-hidden="true">
+                  <use xlinkHref="#uptrade_duigou" />
+                </svg>
+                <h3>Prepare and ship in your phone for free</h3>
+                <Collapse expandIconPosition="right" defaultActiveKey={['1', '2']}>
+                  <Panel header={"Reset your phone"} key={1}>
+                    <p>
+                      Before you ship in your phone, it is important to follow
+                      your manufacturer's data reset instructions. We will send
+                      you instructions to help and as part of our inspection
+                      process we also wipe it again.
+                    </p>
+                  </Panel>
+                  <Panel header={"Ship your phone for free"} key={2}>
+                    <p>
+                      We provide you with a free shipping label to ship in your
+                      phone using your own box. If you don’t have a box, we can
+                      provide you one for a cost upon request.
+                    </p>
+                  </Panel>
+                </Collapse>
+              </section>
+            </li>
+          </div>
+          <li>
+            <div className="img-container">
+              <img src={require("@/images/test/bg.jpg")} />
+            </div>
+            <section>
+              <svg className="icon" aria-hidden="true">
+                <use xlinkHref="#uptrade_duigou" />
+              </svg>
+              <h3>Get paid in cash</h3>
+              <Collapse expandIconPosition="right" defaultActiveKey={['1', '2']}>
+                <Panel header={"Fast payment within 1-2 business days"} key={1}>
+                  <p>
+                    Once we have received your phone, we inspect it to ensure
+                    that everything matches with your submission. If everything
+                    matches, the minimum guarantee cash offer is issued via
+                    PayPal or eCheck within 1-2 business days.
+                  </p>
+                </Panel>
+                <Panel header={"Get a second payment"} key={2}>
+                  <p>
+                    We list your phone for sale across multiple marketplaces
+                    after inspection. If we sell your phone for more than the
+                    minimum guarantee price, we will issue a second payment.
+                  </p>
+                </Panel>
+              </Collapse>
+            </section>
+          </li>
+        </ul>
+        <div className="button-container">
+          <button className="common-button" onClick={this.onGoToSell}>
+            Get Started
+          </button>
+        </div>
+      </article>
+    );
+  }
+  private onGoToSell = () => {
+    this.props.history.push("/sell/yourphone/brand");
+  };
 }
 export default HowItWorks;
