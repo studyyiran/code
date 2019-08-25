@@ -3,6 +3,7 @@ import { Collapse } from "antd";
 const { Panel } = Collapse;
 import "./faq.less";
 import { staticSubjects } from "./faq/staticSubjects";
+import { HeaderTitle } from "@/components/headerTitle";
 
 interface ISubject {
   subjectTitle: string;
@@ -33,7 +34,7 @@ export default function Faq() {
 
   return (
     <div className="page-faq-container">
-      <h1 className="page__title--single">Frequently Asked Questions</h1>
+      <HeaderTitle title={"Frequently Asked Questions"} />
       <ul>
         {subjects.map(({ subjectTitle, questionAnswers }) => {
           return (
