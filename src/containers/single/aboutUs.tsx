@@ -62,6 +62,40 @@ const articles: IArticle[] = [
   }
 ];
 
+interface IUserIntro {
+  headimg: string;
+  name: string;
+  desc: string;
+}
+
+const userIntro: IUserIntro[] = [
+  {
+    headimg: require("@/images/test/bg.jpg"),
+    name: "Marco Mai",
+    desc: "Head of Operations"
+  },
+  {
+    headimg: require("@/images/test/bg.jpg"),
+    name: "Esteban Facundo",
+    desc: "Head of Operations"
+  },
+  {
+    headimg: require("@/images/test/bg.jpg"),
+    name: "Howard Huang",
+    desc: "Head of Operations"
+  },
+  {
+    headimg: require("@/images/test/bg.jpg"),
+    name: "Hamza Shaikh",
+    desc: "Head of Operations"
+  },
+  {
+    headimg: require("@/images/test/bg.jpg"),
+    name: "Christine Huang",
+    desc: "Head of Operations"
+  }
+];
+
 const ArticleComp = (props: {
   className: string;
   img: string;
@@ -81,17 +115,22 @@ class AboutUs extends React.Component<RouteComponentProps> {
       <article className="page-about-us">
         <HeaderTitle title={"Our mission"} />
         <div className="statement">
-          <img src={require('@/images/test/bg.jpg')} />
-          <section className="statement__content">
-            <h2>Mission Statement</h2>
-            <p>
-              Our mission is to make today better so that the world will be
-              brighter tomorrow; to build a company where the life of used
-              electronics is extended through the hands of others or recycled to
-              help reduce carbon footprint. We are committed to providing a
-              fast, easy, safe, and trustworthy service for everyone.
-            </p>
-          </section>
+          <div>
+            <img src={require("@/images/test/bg.jpg")} />
+          </div>
+          <div className="flex-center-container">
+            <section className="statement__content">
+              <h2>Mission Statement</h2>
+              <p>
+                Our mission is to make today better so that the world will be
+                brighter tomorrow; to build a company where the life of used
+                electronics is extended through the hands of others or recycled to
+                help reduce carbon footprint. We are committed to providing a
+                fast, easy, safe, and trustworthy service for everyone.
+              </p>
+            </section>
+          </div>
+          
         </div>
         <section className="values">
           <h2>Our Values</h2>
@@ -99,10 +138,7 @@ class AboutUs extends React.Component<RouteComponentProps> {
             {articles.map(({ title, text }) => {
               return (
                 <li className="values-list__item" key={title}>
-                  <svg
-                    className="icon"
-                    aria-hidden="true"
-                  >
+                  <svg className="icon" aria-hidden="true">
                     <use xlinkHref="#uptrade_duigou" />
                   </svg>
                   <h3>{title}</h3>
@@ -112,18 +148,22 @@ class AboutUs extends React.Component<RouteComponentProps> {
             })}
           </ul>
         </section>
-        {/*<section className="team">*/}
-        {/*  <h2>Our Team</h2>*/}
-        {/*  <ul className="intro-card-list">*/}
-        {/*    <li className="common-card">*/}
-        {/*      <img />*/}
-        {/*      <h3></h3>*/}
-        {/*      <span></span>*/}
-        {/*    </li>*/}
-        {/*  </ul>*/}
-        {/*</section>*/}
+        <section className="team">
+          <h2>Our Team</h2>
+          <ul className="intro-card-list">
+            {userIntro.map(({ headimg, name, desc }) => {
+              return (
+                <li className="intro-card-list__item" key="name">
+                  <img src={headimg} />
+                  <h3>{name}</h3>
+                  <span>{desc}</span>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
         <div className="button-container">
-          <button onClick={this.onGoToSell}>Sell it now</button>
+          <button className="common-button" onClick={this.onGoToSell}>Sell it now</button>
         </div>
       </article>
     );
