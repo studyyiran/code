@@ -71,7 +71,6 @@ function HelpList() {
 @observer
 export default class Contact extends React.Component<IContactProps> {
   public render() {
-    console.log(this.props);
     return (
       <div className="page-contact-container">
         <div className="bg-container bg-1">
@@ -88,16 +87,16 @@ export default class Contact extends React.Component<IContactProps> {
             </section>
           </div>
         </div>
-        <div className="bg-container bg-3">
-          <HelpList />
-        </div>
-        <div className="bg-container bg-4">
-          <section className="leave-message">
-            <h2>The simplest way to sell your phone.</h2>
-            <p>Let use know how we can help</p>
-            <button className="common-button">Leave a message</button>
-          </section>
-        </div>
+        {/*<div className="bg-container bg-3">*/}
+        {/*  <HelpList />*/}
+        {/*</div>*/}
+        {/*<div className="bg-container bg-4">*/}
+        {/*  <section className="leave-message">*/}
+        {/*    <h2>The simplest way to sell your phone.</h2>*/}
+        {/*    <p>Let use know how we can help</p>*/}
+        {/*    <button className="common-button">Leave a message</button>*/}
+        {/*  </section>*/}
+        {/*</div>*/}
       </div>
     );
   }
