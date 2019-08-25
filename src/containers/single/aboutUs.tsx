@@ -70,27 +70,27 @@ interface IUserIntro {
 
 const userIntro: IUserIntro[] = [
   {
-    headimg: require("@/images/test/bg.jpg"),
+    headimg: require("@/images/test/user-head-image.png"),
     name: "Marco Mai",
     desc: "Head of Operations"
   },
   {
-    headimg: require("@/images/test/bg.jpg"),
+    headimg: require("@/images/test/user-head-image.png"),
     name: "Esteban Facundo",
     desc: "Head of Operations"
   },
   {
-    headimg: require("@/images/test/bg.jpg"),
+    headimg: require("@/images/test/user-head-image.png"),
     name: "Howard Huang",
     desc: "Head of Operations"
   },
   {
-    headimg: require("@/images/test/bg.jpg"),
+    headimg: require("@/images/test/user-head-image.png"),
     name: "Hamza Shaikh",
     desc: "Head of Operations"
   },
   {
-    headimg: require("@/images/test/bg.jpg"),
+    headimg: require("@/images/test/user-head-image.png"),
     name: "Christine Huang",
     desc: "Head of Operations"
   }
@@ -139,7 +139,7 @@ class AboutUs extends React.Component<RouteComponentProps> {
               return (
                 <li className="values-list__item" key={title}>
                   <svg className="icon" aria-hidden="true">
-                    <use xlinkHref="#uptrade_duigou" />
+                    <use xlinkHref="#uptrade_Icon" />
                   </svg>
                   <h3>{title}</h3>
                   <p>{text}</p>

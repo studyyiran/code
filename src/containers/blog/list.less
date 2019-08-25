@@ -4,20 +4,22 @@
 }
 .bg-container(@rules) {
   @rules();
-  padding: 0 15px;
-  > * {
-    .page(1150px);
-  }
+  .page-padding();
+}
+.mb-card() {
+  border-radius: 0.21rem;
+  overflow: hidden;
+  box-shadow: 0rem 0.05rem 0.16rem -0.11rem rgba(141, 141, 148, 0.48),
+    0rem 0rem 0.05rem 0rem rgba(141, 141, 148, 0.16);
 }
 .page-blog-list-container {
   @tabs-height: 64px;
   @blog-title: 26x;
   //@border-radius-8:
   .featured-part-container {
-    .bg-container({
-      background: #f5f7f9;
-    });
+    .bg-container({background: #f5f7f9;});
     > section.featured-part {
+      .page(1392px);
       padding-top: 40px;
       padding-bottom: 88px;
       > h2 {
@@ -53,15 +55,18 @@
     }
   }
   .blog-list-part-container {
-    .bg-container({
-      background: @white;
-    });
+    .bg-container({background: @white;});
     > section.blog-list-part {
+      .page(1150px);
       padding: 64px 0 59px 0;
       > .tabs-container {
         background: white;
         margin-bottom: 52px;
+        .yr-tabs-bar {
+          justify-content: flex-start;
+        }
         .yr-tabs-tab {
+          max-width: 268px;
           @border-radius: 3px;
           &:first-child {
             border-radius: @border-radius 0 0 @border-radius;
@@ -89,6 +94,7 @@
           > img {
             .pc({float: left;});
             width: 442px;
+            height: 273px;
             border-radius: 8px;
             margin-right: 33px;
           }
@@ -117,26 +123,18 @@
   }
 }
 
-.mb-card() {
-  border-radius:0.21rem;
-  overflow: hidden;
-  box-shadow:0rem 0.05rem 0.16rem -0.11rem rgba(141,141,148,0.48),0rem 0rem 0.05rem 0rem rgba(141,141,148,0.16);
-}
-
 .ismobile #root {
   .page-blog-list-container {
     @tabs-height: 64px;
     > header {
       padding: 1rem 0 0.88rem 0;
       > h1 {
-        font-size: .64rem;
+        font-size: 0.64rem;
         font-weight: 600;
       }
     }
     .featured-part-container {
-      .bg-container({
-        background: @white;
-      });
+      .bg-container({background: @white;});
       > section.featured-part {
         padding-top: 0.27rem;
         padding-bottom: 1.07rem;
@@ -165,9 +163,7 @@
       }
     }
     .blog-list-part-container {
-      .bg-container({
-        background: @white;
-      });
+      .bg-container({background: @white;});
       > section.blog-list-part {
         padding: 0 0 1.65rem 0;
         > .tabs-container {

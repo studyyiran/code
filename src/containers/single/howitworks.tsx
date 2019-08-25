@@ -21,7 +21,7 @@ class HowItWorks extends React.Component<RouteComponentProps> {
             </div>
             <section>
               <svg className="icon" aria-hidden="true">
-                <use xlinkHref="#uptrade_duigou" />
+                <use xlinkHref="#uptrade_Icon" />
               </svg>
               <h3>Get your minimum guarantee price</h3>
               <Collapse expandIconPosition="right" defaultActiveKey={['1', '2']}>
@@ -43,7 +43,7 @@ class HowItWorks extends React.Component<RouteComponentProps> {
               </div>
               <section>
                 <svg className="icon" aria-hidden="true">
-                  <use xlinkHref="#uptrade_duigou" />
+                  <use xlinkHref="#uptrade_Icon" />
                 </svg>
                 <h3>Prepare and ship in your phone for free</h3>
                 <Collapse expandIconPosition="right" defaultActiveKey={['1', '2']}>
@@ -72,7 +72,7 @@ class HowItWorks extends React.Component<RouteComponentProps> {
             </div>
             <section>
               <svg className="icon" aria-hidden="true">
-                <use xlinkHref="#uptrade_duigou" />
+                <use xlinkHref="#uptrade_Icon" />
               </svg>
               <h3>Get paid in cash</h3>
               <Collapse expandIconPosition="right" defaultActiveKey={['1', '2']}>

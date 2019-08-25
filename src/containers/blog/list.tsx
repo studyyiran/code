@@ -14,6 +14,7 @@ import {
 import "./list.less";
 import * as moment from "moment-timezone";
 import { shareComponent } from "@/utils/function";
+import { HeaderTitle } from "@/components/headerTitle";
 
 @inject("blog")
 @observer
@@ -62,9 +63,7 @@ export default class BlogList extends React.Component<
     console.log(tagPageList);
     return (
       <div className="page-blog-list-container">
-        <header>
-          <h1>Tech Talk</h1>
-        </header>
+        <HeaderTitle title={"Tech Talk"} />
         {features && features.length ? (
           <div className="featured-part-container">
             <section className="featured-part">
@@ -93,9 +92,13 @@ export default class BlogList extends React.Component<
                 className="tabs-container"
                 onChange={this.handleChangeActiveTag}
               >
-                {tags.map((item: ITag, index: number) => (
-                  <TabPane key={item.name} tab={item.name} />
-                ))}
+                {tags
+                  .filter((item, index) => {
+                    return index < 3;
+                  })
+                  .map((item: ITag, index: number) => (
+                    <TabPane key={item.name} tab={item.name} />
+                  ))}
               </Tabs>
             ) : null}
             <nav>
