@@ -2,8 +2,6 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import { inject, observer } from "mobx-react";
 import "./index.less";
-// import "./test.less";
-import "./test2.less";
 import { Button, Icon } from "antd";
 import { IHomeProps, IHomeState } from "./interface/index.interface";
 import ReviewItem from "./components/review";
@@ -63,9 +61,9 @@ function LinkButton(props: ILinkButton) {
   const { children, url, className } = props;
   return (
     <Link to={url} className={`comp-link-button ${className}`}>
-      <Button type="primary" size="large" className="link-button__button">
+      <button className="common-button">
         {children}
-      </Button>
+      </button>
     </Link>
   );
 }
@@ -156,38 +154,41 @@ export default class Home extends React.Component<IHomeProps, IHomeState> {
   public render() {
     const { brands } = this.props.yourphone;
     const { isMobile } = this.props.common;
-    console.log(isMobile);
     return (
       <main className="page-home">
         <div className="home__intro">
-          <div className="flex-block" />
-          <section>
-            <h1>Sell your devices for the best price. No up-front fees.</h1>
-            <img className="mb-ele" src={require("./bg.jpg")} />
-            <LinkButton className={"mb-ele"} url={"/sell/yourphone/brand"}>
-              Sell Now
-            </LinkButton>
-            <div className="search__container">
-              <div className="comp-search">
-                <label htmlFor="comp-search">
-                  <Icon type="search" />
-                </label>
-                <input id="comp-search" placeholder="search" />
+          <div className="container">
+            <section className="title">
+              <h1>Sell your devices for the best price. No up-front fees.</h1>
+              <div className="intro__icon-list">
+                {brands
+                  .filter((brand, index) => index < 6)
+                  .map((brand, index) => (
+                    <BrandLogo key={index} brand={brand} />
+                  ))}
               </div>
-              <Button type="primary" size="large">
-                Search
-              </Button>
+              <Link to={"/sell/yourphone/brand"}>
+                <button className="common-button">Sell Now</button>
+              </Link>
+              {/*<LinkButton url={"/sell/yourphone/brand"}>*/}
+              {/*  */}
+              {/*</LinkButton>*/}
+              {/*<div className="search__container">*/}
+              {/*  <div className="comp-search">*/}
+              {/*    <label htmlFor="comp-search">*/}
+              {/*      <Icon type="search" />*/}
+              {/*    </label>*/}
+              {/*    <input id="comp-search" placeholder="search" />*/}
+              {/*  </div>*/}
+              {/*  <Button type="primary" size="large">*/}
+              {/*    Search*/}
+              {/*  </Button>*/}
+              {/*</div>*/}
+            </section>
+            <div className="img-container">
+              <img src={require("@/images/home/main_bg1.png")} />
             </div>
-            <div className="intro__icon-list">
-              {brands
-                .filter((brand, index) => index < 6)
-                .map((brand, index) => (
-                  <BrandLogo key={index} brand={brand} />
-                ))}
-            </div>
-          </section>
-          <div className="flex-block" />
-          <img src={require("@/images/home/main_bg1.png")} />
+          </div>
         </div>
         <SectionIcons {...descPart1}>
           <LinkButton url={"/sell/yourphone/brand"}>Sell my device</LinkButton>

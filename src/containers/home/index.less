@@ -1,645 +1,167 @@
 @import (reference) "~@/styles/index.less";
+@bg-white: #f5f7f9;
+.comp-video {
+  display: block;
+  margin: auto;
+  width: 500px;
+}
 
-.page-home-container {
-  margin: 0 auto;
-  width: @main-wrapper-width;
-  letter-spacing: -1px;
-
-  .sell-your-phone-wrapper {
-    overflow: hidden;
-    position: relative;
-    padding-left: 142px;
-    height: 774px;
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 1) 100%
-    );
-    padding-top: 126px;
-    box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.1);
-
-    .main-title {
-      padding-top: 54px;
-      margin-bottom: 35px;
-      .set-font-color(68px, #000, bold);
-      line-height: 72px;
-    }
-
-    .content-text {
-      margin-bottom: 202px;
-      .set-font-color(20px, #000);
-      line-height: 28px;
-    }
-
-    .main_bg1 {
-      position: absolute;
-      top: 117px;
-      right: 141px;
-      width: 569px;
-      height: 587px;
-    }
+.comp-search {
+  display: flex;
+  background: #575d65;
+  width: 350px;
+  padding: 10px;
+  border-radius: 5px;
+  overflow: hidden;
+  color: @white;
+  > label {
+    align-self: center;
+    margin-right: 10px;
   }
-
-  .how-it-works-wrapper {
-    overflow: hidden;
-    box-sizing: border-box;
-    padding: 70px 213px 83px;
-    // height: 1404px;
-    background-color: #ecfbfd;
-    text-align: center;
-
-    .main-title {
-      .set-font-color(62px, #000, 300);
-      font-family: HelveticaNeue-Light;
-      line-height: 72px;
-    }
-
-    .sub-title {
-      margin: 48px 0 24px;
-      .set-font-color(22px, #000);
-      line-height: 28px;
-    }
-
-    .sub-content {
-      .set-font-color(22px, #9b9b9b);
-      line-height: 28px;
-    }
-
-    .works-steps-wrapper {
-      .step-group {
-        padding-top: 169px;
-
-        .step-item {
-          position: relative;
-          display: inline-block;
-          vertical-align: top;
-          width: 375px;
-
-          .icon-group {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translate(-50%, -100%);
-
-            .number {
-              position: absolute;
-              left: 0;
-              bottom: 0;
-              transform: translateX(-100%);
-              display: inline-block;
-              width: 46px;
-              line-height: 72px;
-              .set-font-color(38px, #000, bold);
-            }
-          }
-
-          .glance {
-            padding-top: 25px;
-            margin-bottom: 24px;
-            .set-font-color(22px, #000);
-            line-height: 28px;
-          }
-
-          .description {
-            .set-font-color(22px, #9b9b9b);
-            line-height: 28px;
-          }
-        }
-
-        .step-item + .step-item {
-          margin-left: 104px;
-        }
-      }
-    }
+  > input {
+    background: transparent;
+    flex: 0 0 300px;
+    color: @white;
   }
-
-  .section-payback {
-    padding: 132px 150px 94px;
-    background: #fff;
-    box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.1);
-
-    .top {
-      display: flex;
-
-      .left {
-        h2 {
-          font-size: 68px;
-          line-height: 72px;
-        }
-
-        p {
-          font-size: 22px;
-          line-height: 28px;
-          margin-top: 36px;
-        }
-      }
-
-      img {
-        width: 496px;
-        margin-left: 10px;
-      }
-    }
-
-    .bottom {
-      margin-top: 43px;
-
-      img.progress_bar {
-        width: 100%;
-      }
-
-      img.m_progress_bar {
-        display: none;
-      }
-
-      ul {
-        display: flex;
-        margin-top: 50px;
-
-        li {
-          flex: 1;
-          padding-left: 10px;
-
-          &:last-child {
-            margin-left: 180px;
-          }
-
-          h3 {
-            font-size: 22px;
-            line-height: 28px;
-            font-weight: 300;
-            color: #000;
-          }
-
-          p {
-            font-size: 22px;
-            line-height: 28px;
-            margin-top: 20px;
-            color: #9b9b9b;
-          }
-        }
-      }
-    }
-  }
-
-  .section-sell {
-    padding: 70px 201px 80px 210px;
-    background: #ecfbfd;
-
-    h2 {
-      color: #000;
-      font-size: 68px;
-      line-height: 72px;
-      text-align: center;
-      font-weight: 300;
-    }
-
-    dl {
-      overflow: hidden;
-
-      dd {
-        margin-top: 100px;
-        float: left;
-        width: 375px;
-        height: 280px;
-        text-align: center;
-
-        &:nth-of-type(2n) {
-          margin-left: 116px;
-        }
-
-        div {
-          text-align: center;
-
-          .number {
-            font-size: 38px;
-            font-weight: bold;
-            color: rgba(0, 0, 0, 1);
-            line-height: 72px;
-            margin-right: 14px;
-          }
-
-          img {
-            max-width: 85px;
-            max-height: 94px;
-          }
-        }
-
-        h4 {
-          font-size: 22px;
-          font-weight: 300;
-          color: rgba(0, 0, 0, 1);
-          line-height: 28px;
-          margin-top: 26px;
-        }
-
-        p {
-          font-size: 22px;
-          font-weight: 300;
-          color: rgba(155, 155, 155, 1);
-          line-height: 28px;
-          letter-spacing: -1px;
-          margin-top: 24px;
-        }
-      }
-    }
-  }
-
-  .ewaste-wrapper {
-    overflow: hidden;
-    padding: 89px 0 122px;
-    text-align: center;
-    background: #ecfbfd;
-    h2 {
-      font-size: 68px;
-      font-weight: 300;
-      line-height: 68px;
-    }
-
-    .number-box {
-      display: flex;
-      justify-content: center;
-      margin-top: 67px;
-      .img {
-        width: 72px;
-        height: 72px;
-        background: url(../../images/home/ewaste.png) no-repeat center / 100%;
-        margin-right: 20px;
-      }
-      .number-list {
-        display: flex;
-        .list {
-          width: 50px;
-          height: 70px;
-          line-height: 70px;
-          text-align: center;
-          background: #7ed321;
-          margin-right: 10px;
-          font-size: 60px;
-          color: #fff;
-
-          &:last-child {
-            margin-right: 0;
-          }
-        }
-        .symbol {
-          width: 23px;
-          font-size: 40px;
-          line-height: 85px;
-          margin-left: -10px;
-          margin-right: 10px;
-        }
-      }
-
-      span {
-        font-size: 22px;
-        color: #000;
-        line-height: 120px;
-        margin-left: 20px;
-      }
-    }
-  }
-
-  .section-just {
-    padding: 76px 130px 110px;
-    background: #fff;
-
-    h2 {
-      font-size: 68px;
-      color: rgba(0, 0, 0, 1);
-      line-height: 72px;
-      font-weight: normal;
-      text-align: center;
-    }
-
-    p {
-      margin-top: 14px;
-      font-size: 22px;
-      color: rgba(0, 0, 0, 1);
-      line-height: 28px;
-      text-align: center;
-    }
-
-    .button-group {
-      display: block;
-      width: 232px;
-      margin: 38px auto;
-
-      .sell-it-now {
-        width: 232px;
-        height: 64px;
-
-        span {
-          text-shadow: none;
-        }
-      }
-    }
-  }
-
-  .sell-it-now {
-    min-width: 166px;
+  input::-webkit-input-placeholder {
+    color: @white;
   }
 }
 
-.ismobile {
-  .page-home-container {
+.comp-link-button {
+  display: block;
+  border-radius: 5px;
+  overflow: hidden;
+  width: 400px;
+  margin: auto;
+  > * {
     width: 100%;
-    overflow: hidden;
-    letter-spacing: 0px;
+  }
+}
 
-    .sell-your-phone-wrapper {
-      padding: 0.3rem 0.3rem 0;
-      height: 4.81rem;
-      overflow: hidden;
+@page-min-width: 1100px;
 
-      .main-title {
-        font-size: 0.4rem;
-        line-height: 0.5rem;
-        padding-top: 0;
-        margin-bottom: 0.12rem;
-      }
-
-      .content-text {
-        font-size: 0.16rem;
-        line-height: 0.24rem;
-        margin-bottom: 0.3rem;
-
-        br {
-          display: none;
+.page-home {
+  background: @bg-white;
+  .pc({min-width: @page-min-width;});
+  > .home__intro {
+    padding: 79px 0 169px;
+    .page-padding();
+    background: #444b54;
+    > .container {
+      .page(@page-min-width);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      > section.title {
+        flex: 9 0 0;
+        margin-right: 50px;
+        > h1 {
+          .font(40px, 600, #f5f7f9);
+        }
+        .intro__icon-list {
+          display: flex;
+          justify-content: space-between;
+          width: 640px;
+          margin: 56px 0;
+        }
+        > a {
+          .common-button {
+            max-width: 400px;
+          }
         }
       }
-
-      .button-link {
-        display: block;
-        width: 2rem;
-        height: 0.44rem;
-        margin: 0 auto;
-
-        .sell-it-now {
+      > .img-container {
+        flex: 5 0 0;
+        > img {
           width: 100%;
-          height: 0.44rem;
-        }
-      }
-
-      .main_bg1 {
-        width: 3.5rem;
-        height: auto;
-        top: initial;
-        right: initial;
-        bottom: -1.5rem;
-        left: -0.2rem;
-      }
-    }
-
-    .how-it-works-wrapper {
-      padding: 0.3rem 0.3rem 0.51rem;
-
-      .main-title {
-        font-size: 0.34rem;
-        line-height: 0.34rem;
-        font-weight: normal;
-      }
-
-      .sub-title {
-        font-size: 0.16rem;
-        margin-top: 0.2rem;
-        line-height: 0.28rem;
-        margin-bottom: 0.15rem;
-        font-weight: 300;
-      }
-
-      .sub-content {
-        font-size: 0.14rem;
-        line-height: 0.2rem;
-      }
-
-      .works-steps-wrapper {
-        .step-group {
-          padding-top: 1.1rem;
-
-          .step-item {
-            width: 100%;
-
-            &:nth-of-type(2) {
-              margin-top: 1rem;
-            }
-
-            & + .step-item {
-              margin-left: 0;
-            }
-
-            .glance {
-              font-size: 0.16rem;
-              line-height: 0.28rem;
-              padding-top: 0.2rem;
-              margin-bottom: 0.15rem;
-            }
-
-            .description {
-              font-size: 0.14rem;
-              font-weight: 300;
-              letter-spacing: 0px;
-              line-height: 0.2rem;
-            }
-          }
-
-          &:first-child {
-            .step-item {
-              &:nth-of-type(2) {
-                margin-top: 1.7rem;
-              }
-            }
-          }
         }
       }
     }
-
-    .section-payback {
-      padding-left: 0.33rem;
-      padding-right: 0.3rem;
-      padding-top: 0.3rem;
-
-      .top {
-        display: block;
-
-        .left {
-          h2 {
-            font-size: 0.4rem;
-            line-height: 0.55rem;
-          }
-
-          p {
-            font-size: 0.18rem;
-            line-height: 0.24rem;
-            margin-top: 0.2rem;
-
-            br {
-              display: none;
-            }
-          }
+  }
+  .home__how-it-work {
+    .how-it-work__container {
+      padding: 60px 0 40px;
+      background: @white;
+      > *:first-child {
+        margin-bottom: 30px;
+      }
+    }
+  }
+  .home__review {
+    > h2 {
+    }
+    .review__new-review {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: -40px auto 40px;
+      color: black;
+      > *:first-child {
+        font-size: 22px;
+        margin-right: 10px;
+      }
+    }
+    .review__reviews-container {
+      width: 895px;
+      margin: auto;
+      display: flex;
+      .comp-review-card {
+        .review-card__rate {
         }
-
-        img {
-          width: 100%;
-          margin-top: 0.2rem;
-          margin-left: 0;
+        > p {
+        }
+        .review-card__footer {
         }
       }
+    }
+  }
+}
 
-      .bottom {
-        img {
-          width: 100%;
-
-          &.progress_bar {
+.ismobile #root {
+  .page-home {
+    > .home__intro {
+      > section {
+        //img.mb-ele {
+        //  width: 100%;
+        //  margin: 30px auto;
+        //  border-radius: 10px;
+        //}
+        //> a.mb-ele {
+        //  width: 100%;
+        //  margin-bottom: 30px;
+        //}
+      }
+      .intro__icon-list {
+        width: 100%;
+        flex-wrap: wrap;
+      }
+      @space: 60px;
+      .intro__icon-list {
+        .comp-brand-logo:nth-child(3n) {
+          margin-left: @space;
+        }
+        .comp-brand-logo:nth-child(3n + 1) {
+          margin-right: @space;
+        }
+        .comp-brand-logo {
+          margin-bottom: 30px;
+        }
+        > .comp-brand-logo {
+          > span:last-child {
             display: none;
           }
-
-          &.m_progress_bar {
-            display: block;
-          }
-        }
-
-        ul {
-          li {
-            padding-left: 0;
-            flex: 1;
-
-            &:last-child {
-              margin-left: 0.2rem;
-              width: 1.7rem;
-              flex: none;
-            }
-
-            h3 {
-              font-size: 0.14rem;
-            }
-
-            p {
-              font-size: 0.13rem;
-              line-height: 0.2rem;
-              margin-top: 0.15rem;
-
-              text br {
-                display: none;
-              }
-            }
-          }
         }
       }
     }
-
-    .section-sell {
-      padding: 0.3rem 0.3rem 0.6rem;
-
-      h2 {
-        text-align: center;
-        font-size: 0.34rem;
-        line-height: 0.44rem;
+    > .home__review {
+      > .review__new-review {
+        display: none;
       }
-
-      dl {
-        dd {
-          margin-left: auto;
-          margin-right: auto;
-          float: none;
-          margin-top: 0.3rem;
-          width: 100%;
-          height: auto;
-
-          h4 {
-            font-size: 0.16rem;
-            font-weight: 300;
-          }
-
-          p {
-            font-size: 0.14rem;
-            letter-spacing: 0px;
-            line-height: 0.2rem;
-
-            br {
-              display: none;
-            }
-          }
-        }
-      }
-    }
-    .ewaste-wrapper {
-      overflow: hidden;
-      padding: 0.3rem 0 0.52rem;
-      text-align: center;
-
-      h2 {
-        font-size: 0.34rem;
-        font-weight: 300;
-        line-height: 0.44rem;
-      }
-
-      .number-box {
-        display: flex;
-        justify-content: center;
-        margin-top: 0.33rem;
-        .img {
-          width: 0.25rem;
-          height: 0.25rem;
-          background: url(../../images/home/ewaste.png) no-repeat center / 100%;
-          margin-right: 0.1rem;
-        }
-        .number-list {
-          display: flex;
-          .list {
-            width: 0.18rem;
-            height: 0.25rem;
-            line-height: 0.25rem;
-            text-align: center;
-            background: #7ed321;
-            margin-right: 0.02rem;
-            font-size: 0.24rem;
-            color: #fff;
-
-            &:last-child {
-              margin-right: 0;
-            }
-          }
-          .symbol {
-            width: 0.04rem;
-            font-size: 0.14rem;
-            line-height: 0.3rem;
-            margin-left: -0.02rem;
-            margin-right: 0.02rem;
-          }
-        }
-
-        span {
-          font-size: 0.14rem;
-          color: #000;
-          line-height: 0.36rem;
-          margin-left: 0.1rem;
-        }
-      }
-    }
-
-    .section-just {
-      padding: 0.3rem 0.21rem 0.43rem;
-
-      h2 {
-        font-size: 0.34rem;
-        line-height: 0.44rem;
-        width: 3rem;
-        margin: 0 auto;
-      }
-
-      p {
-        font-size: 0.18rem;
-      }
-
-      .button-group {
-        width: 2rem;
-        height: 0.4rem;
-        margin: 0.3rem auto 0;
-
-        .sell-it-now {
-          height: 100%;
-          width: 100%;
-        }
+      .review__reviews-container {
+        padding: 50px;
+        width: 100%;
+        overflow-x: scroll;
       }
     }
   }
