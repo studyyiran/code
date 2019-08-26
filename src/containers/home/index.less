@@ -49,21 +49,24 @@
     .page-padding();
     background: #444b54;
     > .container {
-      .page(@page-min-width);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      // 图片宽度 + 左边内容宽度
+      .page(1500px);
+      .pc(
+        {display: flex; justify-content: space-between; align-items: center;}
+      );
       > section.title {
-        flex: 9 0 0;
-        margin-right: 50px;
+        flex: 1 0 0;
         > h1 {
           .font(40px, 600, #f5f7f9);
         }
         .intro__icon-list {
           display: flex;
-          justify-content: space-between;
-          width: 640px;
           margin: 56px 0;
+          .pc({
+            > * {
+              margin-right: 48px;
+            }
+          });
         }
         > a {
           .common-button {
@@ -72,7 +75,10 @@
         }
       }
       > .img-container {
-        flex: 5 0 0;
+        // 写死的
+        flex: 0 0 0;
+        min-width: 575px;
+        max-width: 575px;
         > img {
           width: 100%;
         }
@@ -147,48 +153,101 @@
 
 .ismobile #root {
   .page-home {
+    background: @bg-white;
+    padding-bottom: 3.65rem;
     > .home__intro {
-      > section {
-        //img.mb-ele {
-        //  width: 100%;
-        //  margin: 30px auto;
-        //  border-radius: 10px;
-        //}
-        //> a.mb-ele {
-        //  width: 100%;
-        //  margin-bottom: 30px;
-        //}
-      }
-      .intro__icon-list {
-        width: 100%;
-        flex-wrap: wrap;
-      }
-      @space: 60px;
-      .intro__icon-list {
-        .comp-brand-logo:nth-child(3n) {
-          margin-left: @space;
-        }
-        .comp-brand-logo:nth-child(3n + 1) {
-          margin-right: @space;
-        }
-        .comp-brand-logo {
-          margin-bottom: 30px;
-        }
-        > .comp-brand-logo {
-          > span:last-child {
-            display: none;
+      padding: 0.61rem 0;
+      .page-padding();
+      background: #444b54;
+      > .container {
+        > section.title {
+          margin-right: 0;
+          > h1 {
+            .font(0.75rem, 600, #f5f7f9);
           }
+          > img.mb-ele {
+            width: 100%;
+          }
+          .intro__icon-list {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            width: 100%;
+            margin: 56px 0;
+          }
+          > a {
+            .common-button {
+              max-width: 400px;
+            }
+          }
+        }
+        > .img-container {
+          display: none;
         }
       }
     }
-    > .home__review {
-      > .review__new-review {
-        display: none;
+    > * {
+      > h2 {
+        .font(32px, 500, #040e3f);
+        text-align: center;
+      }
+    }
+    > section.only-way-part {
+      padding: 27px 0 65px;
+      > h2 {
+        margin-bottom: 56px;
+      }
+    }
+    > section.sell-for-more-part {
+      background: @white;
+      padding: 33px 0 97px;
+      > h2 {
+        margin-bottom: 9px;
+      }
+      > p {
+        .font(16px, 400, #898ea2);
+        margin-bottom: 70px;
+        text-align: center;
+      }
+    }
+    .easy-sell-part {
+      padding: 48px 0 0;
+      > h2 {
+        margin-bottom: 48px;
+      }
+      > video {
+        max-width: 1205px;
+        width: 100%;
+        margin-bottom: 56px;
+      }
+      > .bg-white-container {
+        background: @white;
+        padding: 104px 0 96px;
+        > a {
+          margin-top: 56px;
+        }
+      }
+    }
+    .home__review {
+      padding: 130px 0 98px;
+      > h2 {
+        margin-bottom: 70px;
+      }
+      .review__new-review {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: -40px auto 40px;
+        color: black;
+        > *:first-child {
+          font-size: 22px;
+          margin-right: 10px;
+        }
       }
       .review__reviews-container {
-        padding: 50px;
-        width: 100%;
-        overflow-x: scroll;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
     }
   }

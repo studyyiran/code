@@ -156,7 +156,8 @@ export default class Home extends React.Component<IHomeProps, IHomeState> {
         <div className="home__intro">
           <div className="container">
             <section className="title">
-              <h1>Sell your devices for the best price. No up-front fees.</h1>
+              <h1>Sell Your Used Phone. <br />Fast, Easy, & High Prices</h1>
+              <img className="mb-ele" src={require("@/images/home/main_bg1.png")} />
               <div className="intro__icon-list">
                 {brands
                   .filter((brand, index) => index < 6)
