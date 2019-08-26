@@ -1,20 +1,21 @@
-import * as React from 'react';
-import classnames from 'classnames';
-import { Link } from 'react-router-dom';
-import './footer.less';
-import { Row, Col, Input, Button } from 'antd';
+import * as React from "react";
+import classnames from "classnames";
+import { Link } from "react-router-dom";
+import "./footer.less";
+import { Row, Col, Input, Button } from "antd";
 // import commonStore from '@/store/common'
-import config from '../../../../config';
+import config from "../../../../config";
+import Svg from "@/components/svg";
 
 const footerInfo = [
   {
-    title: 'Sell',
-    className: '',
+    title: "Sell",
+    className: "",
     arr: [
       {
-        subTitle: 'How To Sell',
-        href: '/sell-my-phone'
-      },
+        subTitle: "How To Sell",
+        href: "/sell-my-phone"
+      }
       // {
       //   subTitle: 'Sell Now',
       //   href: ''
@@ -22,102 +23,159 @@ const footerInfo = [
     ]
   },
   {
-    title: 'Resources',
-    className: '',
+    title: "Resources",
+    className: "",
     arr: [
       {
-        subTitle: 'Contact Us',
-        href: '/contact'
+        subTitle: "Contact Us",
+        href: "/contact"
       },
       {
-        subTitle: 'Blog',
-        href: '/blog'
+        subTitle: "Blog",
+        href: "/blog"
       },
       {
-        subTitle: 'FAQs',
-        href: '/faq'
+        subTitle: "FAQs",
+        href: "/faq"
       }
     ]
   },
   {
-    title: 'About Us',
-    className: '',
+    title: "About Us",
+    className: "",
     arr: [
       {
-        subTitle: 'Who We Are',
-        href: '/who-we-are'
+        subTitle: "Who We Are",
+        href: "/who-we-are"
       }
     ]
-  },
-]
+  }
+];
 
 interface IFooterState {
-  email: string
+  email: string;
 }
 
 interface IRenderByCondition {
-  isMobile?: boolean,
-  ComponentMb: any,
-  ComponentPc: any,
+  isMobile?: boolean;
+  ComponentMb: any;
+  ComponentPc: any;
 }
 
 function RenderByCondition(props: IRenderByCondition) {
-  const {isMobile, ComponentMb, ComponentPc} = props
+  const { isMobile, ComponentMb, ComponentPc } = props;
   if (isMobile) {
-    return ComponentMb
+    return ComponentMb;
   } else {
-    return ComponentPc
+    return ComponentPc;
   }
 }
 
-export default class Footer extends React.Component<{ router: any }, IFooterState> {
+export default class Footer extends React.Component<
+  { router: any },
+  IFooterState
+> {
   public readonly state = {
-    email: ''
-  }
+    email: ""
+  };
   public render() {
     const linksGroup = config.FOOTERLINKS.map((group, key) => (
       <Col span={5} key={key} className="links-group">
-        {
-          group.map((link, index) => <p key={index} className={classnames('item', { nocursor: !link.href })} onClick={this.handleLink.bind(this, link)} data-href={link.href}>{link.text}</p>)
-        }
+        {group.map((link, index) => (
+          <p
+            key={index}
+            className={classnames("item", { nocursor: !link.href })}
+            onClick={this.handleLink.bind(this, link)}
+            data-href={link.href}
+          >
+            {link.text}
+          </p>
+        ))}
       </Col>
-    ))
-    return <footer className="comp-footer">
-      <h1 className="footer__logo">UpTrade</h1>
-      {/*<form className="footer__email-form">*/}
-      {/*  <h2>Keep in touch</h2>*/}
-      {/*  <p>123</p>*/}
-      {/*  <input placeholder="Email"/>*/}
-      {/*</form>*/}
-      <RenderByCondition ComponentMb={
-        <div className="footer__group">
-          {footerInfo.map(({className, title, arr}) => {
-            return <ul className={className} key={title}>
-              <h2>{title}</h2>
-              {arr.map(({subTitle, href}) => {
-                return <li key={subTitle}>
-                  <Link to={href}>{subTitle}</Link>
-                </li>
-              })}
-            </ul>
-          })}
-        </div>
-      } ComponentPc={
-        <div className="footer__group">
-          {footerInfo.map(({className, title, arr}) => {
-            return <ul className={className} key={title}>
-              <h2>{title}</h2>
-              {arr.map(({subTitle, href}) => {
-                return <li key={subTitle}>
-                  <Link to={href}>{subTitle}</Link>
-                </li>
-              })}
-            </ul>
-          })}
-        </div>
-      } />
-    </footer>
+    ));
     return (
+      <footer className="comp-footer">
+        <div className="width-container">
+          <header className="footer__logo">
+            <Svg />
+          </header>
+          <div className="container">
+            <RenderByCondition
+              ComponentMb={
+                <div className="footer__group">
+                  {footerInfo.map(({ className, title, arr }) => {
+                    return (
+                      <ul className={className} key={title}>
+                        <h2>{title}</h2>
+                        {arr.map(({ subTitle, href }) => {
+                          return (
+                            <li key={subTitle}>
+                              <Link to={href}>{subTitle}</Link>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    );
+                  })}
+                </div>
+              }
+              ComponentPc={
+                <div className="footer__group">
+                  {footerInfo.map(({ className, title, arr }) => {
+                    return (
+                      <ul className={className} key={title}>
+                        <h2>{title}</h2>
+                        {arr.map(({ subTitle, href }) => {
+                          return (
+                            <li key={subTitle}>
+                              <Link to={href}>{subTitle}</Link>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    );
+                  })}
+                </div>
+              }
+            />
+            <form className="footer__email-form">
+              <h2>Subscribe To Our Newsletter</h2>
+              <form>
+                <input placeholder="Email" aria-placeholder="Email" />
+                <button className="common-button">Subscribe</button>
+              </form>
+            </form>
+          </div>
+        </div>
+      </footer>
+    );
+  }
+
+  private handleLink = (link: { [key: string]: string }) => {
+    if (!link.href) {
+      return false;
+    }
+    console.log(this.props.router.history);
+    if (
+      /\/faq/.test(link.href) &&
+      this.props.router.history.location.pathname === "/faq"
+    ) {
+      window.location.href = location.origin + link.href;
+      return false;
+    }
+    this.props.router.history.push(link.href);
+    return true;
+  };
+
+  private handChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({
+      email: e.target.value
+    });
+  };
+}
+
+/*
+(
       <div className="comp-footer-container">
         <div className="wave-bg" />
         <div className="section-box">
@@ -153,25 +211,4 @@ export default class Footer extends React.Component<{ router: any }, IFooterStat
         </div>
       </div>
     )
-  }
-
-  private handleLink = (link: { [key: string]: string }) => {
-    if (!link.href) {
-      return false;
-    }
-    console.log(this.props.router.history)
-    if (/\/faq/.test(link.href) && this.props.router.history.location.pathname === '/faq') {
-      window.location.href = location.origin + link.href;
-      return false;
-    }
-    this.props.router.history.push(link.href);
-    return true;
-  }
-
-
-  private handChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({
-      email: e.target.value
-    })
-  }
-} 
+ */

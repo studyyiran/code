@@ -1,52 +1,62 @@
 @import (reference) "~@/styles/index.less";
 
 .comp-footer {
-  background: @tab-bar-color;
-  color: @white;
-  padding: 30px 20px 20px;
-  height: 30vh;
-  .clearfix();
   .title-font() {
     font-size: @font-size-large;
-    margin-bottom: 20px;
+    margin-bottom: 17px;
   }
   .content-font() {
-    font-size: @font-size-normal;
-    margin-bottom: 10px;
+    color: #ffffff;
+    margin-bottom: 8px;
   }
-  .footer__logo {
-    font-size: 30px;
-    margin-bottom: 30px;
-  }
-  .footer__group {
-    display: flex;
-    > ul {
-      flex: 0 0 140px;
-      > h2 {
-        .title-font();
-      }
-      > li {
-        .content-font();
-        margin-right: 50px;
+  background: @tab-bar-color;
+  color: @white;
+  padding: 40px 0 77px;
+  .page-padding();
+  height: 311px;
+  .width-container {
+    .page(1400px);
+    > .footer__logo {
+      font-size: 30px;
+      margin-bottom: 30px;
+      > svg {
+        font-size: 20px;
       }
     }
-    .footer-group-buy {
-    }
-    .footer-group-sell {
-    }
-  }
-  .footer__email-form {
-    float: right;
-    > h2 {
-      .title-font();
-    }
-    p {
-      .content-font();
-    }
-    > input {
-      height: 50px;
-      padding: 10px;
-      border-radius: 5px;
+    > .container {
+      .layout-flex-twins(700px, 700px, {});
+      > .footer__group {
+        display: flex;
+        > ul {
+          flex: 0 0 130px;
+          > h2 {
+            .title-font();
+          }
+          > li {
+            .content-font();
+            margin-right: 50px;
+          }
+        }
+      }
+      > .footer__email-form {
+        > h2 {
+          .title-font();
+        }
+        > form {
+          > input {
+            background: @white;
+            height: 56px;
+            padding: 16px;
+            border-radius: 5px;
+            display: inline-block;
+            width: 416px;
+            margin-right: 33px;
+          }
+          > button {
+            width: 236px;
+          }
+        }
+      }
     }
   }
 }

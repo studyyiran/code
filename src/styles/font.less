@@ -83,3 +83,21 @@
     @rules()
   }
 }
+
+.layout-flex-twins(@left-width, @right-width, @rules) {
+  .pc({
+    display: flex;
+    justify-content: space-between;
+    @rules();
+    & > * {
+      min-width: 0;
+      flex: 0 0 0;
+    }
+    > *:first-child {
+      flex-basis: @left-width;
+    }
+    > *:last-child {
+      flex-basis: @right-width;
+    }
+  })
+}
