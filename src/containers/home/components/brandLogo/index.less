@@ -24,3 +24,23 @@
     .font(16px, 400, #ffffff);
   }
 }
+
+.ismobile #root {
+  .comp-brand-logo {
+    > div.border {
+      @width: 2.19rem;
+      @height: 1.49rem;
+      width: @width;
+      text-align: center;
+      height: @height;
+      line-height: @height;
+      border: 1px solid @white;
+      border-radius: 0.16rem;
+      overflow: hidden;
+      margin-bottom: 0;
+      > svg {
+        font-size: 0.6rem;
+      }
+    }
+  }
+}

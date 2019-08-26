@@ -62,11 +62,13 @@
         .intro__icon-list {
           display: flex;
           margin: 56px 0;
-          .pc({
+          > .wrap-container {
+            flex: 1;
+            display: flex;
             > * {
               margin-right: 48px;
             }
-          });
+          }
         }
         > a {
           .common-button {
@@ -170,14 +172,21 @@
           }
           .intro__icon-list {
             display: flex;
+            margin: 0.85rem 0;
             justify-content: space-between;
             flex-wrap: wrap;
             width: 100%;
-            margin: 56px 0;
+            > .wrap-container {
+              justify-content: space-between;
+              margin-bottom: 0.5rem;
+              .name {
+                display: none;
+              }
+            }
           }
           > a {
             .common-button {
-              max-width: 400px;
+              max-width: 100%;
             }
           }
         }

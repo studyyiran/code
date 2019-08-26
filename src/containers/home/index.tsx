@@ -159,11 +159,20 @@ export default class Home extends React.Component<IHomeProps, IHomeState> {
               <h1>Sell Your Used Phone. <br />Fast, Easy, & High Prices</h1>
               <img className="mb-ele" src={require("@/images/home/main_bg1.png")} />
               <div className="intro__icon-list">
-                {brands
-                  .filter((brand, index) => index < 6)
-                  .map((brand, index) => (
-                    <BrandLogo key={index} brand={brand} />
-                  ))}
+                <div className="wrap-container">
+                  {brands
+                    .filter((brand, index) => index < 3)
+                    .map((brand, index) => (
+                      <BrandLogo key={index} brand={brand} />
+                    ))}
+                </div>
+                <div className="wrap-container">
+                  {brands
+                    .filter((brand, index) => index > 2 && index < 6)
+                    .map((brand, index) => (
+                      <BrandLogo key={index} brand={brand} />
+                    ))}
+                </div>
               </div>
               <Link to={"/sell/yourphone/brand"}>
                 <button className="common-button">Sell Now</button>
