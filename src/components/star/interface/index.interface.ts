@@ -2,5 +2,6 @@ type TSize = "large" | "small"
 export interface IStartProps {
   size?: TSize,
   gray?: boolean,
-  rate: number
+  rate: number,
+  className?: string,
 }

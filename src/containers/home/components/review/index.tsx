@@ -10,6 +10,7 @@ const ReviewItem = ((props: IReview) => {
       <span className="date">{props.reviewer.last_name}</span>
     </header>
     <p>{props.comments}</p>
+    <Star size="small" gray={true} rate={Number(props.rating)} className="mb-ele" />
     <footer className="review-card__footer">
       <span>{props.reviewer.first_name}</span>
     </footer>

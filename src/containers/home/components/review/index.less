@@ -4,6 +4,7 @@
   margin: 0 20px;
   padding: 40px 32px 32px;
   background: white;
+  box-shadow: 0px 1px 10px 0px rgba(0,0,0,0.07);
   width: 416px;
   > header {
     display: flex;
@@ -23,5 +24,28 @@
   }
   > footer{
     .font(16px, 400, #131339)
+  }
+}
+
+.ismobile #root {
+  .comp-review-card {
+    margin: 0;
+    padding: 0.53rem 0.59rem 0.75rem;
+    background: white;
+    box-shadow:0 0.05rem 0.13rem 0 rgba(0,0,0,0.05);
+    width: 7.47rem;
+    > header {
+      display: none;
+    }
+    > p {
+      @height: 180px;
+      .font(0.48rem, 600, #272729);
+      .two-line-process(@height, 7);
+      height: @height;
+      margin-bottom: 10px;
+    }
+    > footer{
+      .font(0.32, 400, #8D8D94)
+    }
   }
 }

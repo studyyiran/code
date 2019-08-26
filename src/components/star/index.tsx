@@ -4,7 +4,7 @@ import { IStartProps } from './interface/index.interface';
 import './index.less';
 export default (props: IStartProps) => {
   return (
-    <div className={classnames("comp-rating-list-container", { small: props.size === 'small', gray: props.gray })}>
+    <div className={classnames("comp-rating-list-container", { small: props.size === 'small', gray: props.gray }, props.className)}>
       <div className="comp-rating-list">
         <div className="progress" style={{ width: props.rate >= 1 ? '100%' : ((props.rate > 0 ? props.rate : 0) * 100) + '%' }} />
         <div className="background" />
