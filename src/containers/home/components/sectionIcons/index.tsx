@@ -3,11 +3,8 @@ import {ISectionIcons} from './index.interface'
 import './index.less'
 
 export function SectionIcons (props: ISectionIcons) {
-  const {title, descArr = [], children, className = ''} = props
-  return <section className={`comp-section-layout ${className}`}>
-    <h2>
-      {title}
-    </h2>
+  const {descArr = []} = props
+  return <section className={`comp-section-layout`}>
     <div className="section-layout__item-container">
     {(descArr || []).map((item: any, index: any) => {
       const {icon, descTitle, content} = item
@@ -18,6 +15,5 @@ export function SectionIcons (props: ISectionIcons) {
       </section>
     })}
     </div>
-    {children}
   </section>
 }

@@ -2,7 +2,6 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import { inject, observer } from "mobx-react";
 import "./index.less";
-import { Button, Icon } from "antd";
 import { IHomeProps, IHomeState } from "./interface/index.interface";
 import ReviewItem from "./components/review";
 import { IReview } from "./components/review/index.interface";
@@ -61,9 +60,7 @@ function LinkButton(props: ILinkButton) {
   const { children, url, className } = props;
   return (
     <Link to={url} className={`comp-link-button ${className}`}>
-      <button className="common-button">
-        {children}
-      </button>
+      <button className="common-button">{children}</button>
     </Link>
   );
 }
@@ -155,7 +152,7 @@ export default class Home extends React.Component<IHomeProps, IHomeState> {
     const { brands } = this.props.yourphone;
     const { isMobile } = this.props.common;
     return (
-      <main className="page-home">
+      <article className="page-home">
         <div className="home__intro">
           <div className="container">
             <section className="title">
@@ -170,49 +167,59 @@ export default class Home extends React.Component<IHomeProps, IHomeState> {
               <Link to={"/sell/yourphone/brand"}>
                 <button className="common-button">Sell Now</button>
               </Link>
-              {/*<LinkButton url={"/sell/yourphone/brand"}>*/}
-              {/*  */}
-              {/*</LinkButton>*/}
-              {/*<div className="search__container">*/}
-              {/*  <div className="comp-search">*/}
-              {/*    <label htmlFor="comp-search">*/}
-              {/*      <Icon type="search" />*/}
-              {/*    </label>*/}
-              {/*    <input id="comp-search" placeholder="search" />*/}
-              {/*  </div>*/}
-              {/*  <Button type="primary" size="large">*/}
-              {/*    Search*/}
-              {/*  </Button>*/}
-              {/*</div>*/}
             </section>
             <div className="img-container">
               <img src={require("@/images/home/main_bg1.png")} />
             </div>
           </div>
         </div>
-        <SectionIcons {...descPart1}>
-          <LinkButton url={"/sell/yourphone/brand"}>Sell my device</LinkButton>
-        </SectionIcons>
-        <SectionIcons {...descPart2} className="home__how-it-work">
-          <div className="how-it-work__container">
-            <video
-              className="comp-video"
-              src="https://www.w3school.com.cn/i/movie.ogg"
-              controls={true}
-            />
+        <section className="only-way-part">
+          <h2>The Only Way To Sell</h2>
+          <SectionIcons {...descPart1} />
+        </section>
+        <section className="sell-for-more-part">
+          <h2>We Sell It For More</h2>
+          <p>
+            Your electronics will be listed on multiple markets at the same
+            time, so you get the best possible payout.
+          </p>
+          <LinkButton url={"/sell/yourphone/brand"}>Sell Now</LinkButton>
+        </section>
+        <section className="easy-sell-part">
+          <h2>3 Easy Steps To Sell</h2>
+          <video
+            className="comp-video"
+            src="https://www.w3school.com.cn/i/movie.ogg"
+            controls={true}
+          />
+          <div>
+            <SectionIcons {...descPart2} />
             <LinkButton url={"/sell/yourphone/brand"}>Learn More</LinkButton>
           </div>
-        </SectionIcons>
-        <SectionIcons title="See why customer" className={"home__review"}>
-          <Link to="/reviews" className="review__new-review">
-            <Icon type="plus-circle" />
-            <span>Write a review</span>
-          </Link>
+        </section>
+        <section className="home__review">
+          <h2>See Why Customers Love UpTrade</h2>
           <div className="review__reviews-container">
             <RenderReviewList reviews={this.props.common.reviews} />
           </div>
-        </SectionIcons>
-      </main>
+          <LinkButton url={"/sell/yourphone/brand"}>Sell Now</LinkButton>
+        </section>
+      </article>
     );
   }
 }
+
+{/*<LinkButton url={"/sell/yourphone/brand"}>*/}
+{/*  */}
+{/*</LinkButton>*/}
+{/*<div className="search__container">*/}
+{/*  <div className="comp-search">*/}
+{/*    <label htmlFor="comp-search">*/}
+{/*      <Icon type="search" />*/}
+{/*    </label>*/}
+{/*    <input id="comp-search" placeholder="search" />*/}
+{/*  </div>*/}
+{/*  <Button type="primary" size="large">*/}
+{/*    Search*/}
+{/*  </Button>*/}
+{/*</div>*/}
