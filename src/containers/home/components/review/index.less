@@ -29,7 +29,7 @@
 
 .ismobile #root {
   .comp-review-card {
-    margin: 0;
+    margin: auto;
     padding: 0.53rem 0.59rem 0.75rem;
     background: white;
     box-shadow:0 0.05rem 0.13rem 0 rgba(0,0,0,0.05);
@@ -38,13 +38,14 @@
       display: none;
     }
     > p {
-      @height: 180px;
+      @height: 2.56rem;
       .font(0.48rem, 600, #272729);
-      .two-line-process(@height, 7);
+      .two-line-process(@height, 4);
       height: @height;
       margin-bottom: 10px;
     }
     > footer{
+      margin-top: 0.43rem;
       .font(0.32, 400, #8D8D94)
     }
   }

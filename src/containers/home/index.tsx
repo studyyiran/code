@@ -7,6 +7,7 @@ import ReviewItem from "./components/review";
 import { IReview } from "./components/review/index.interface";
 import { BrandLogo } from "./components/brandLogo";
 import { SectionIcons } from "./components/sectionIcons";
+import { Carousel } from "antd";
 
 const descPart1 = {
   title: "Hello World! Sell You Phone!",
@@ -66,13 +67,25 @@ function LinkButton(props: ILinkButton) {
 }
 
 function RenderReviewList(props: any) {
-  const { reviews } = props;
+  const { reviews, isMobile } = props;
   if (reviews && reviews.reviews) {
-    return (reviews.reviews || [])
-      .slice(0, 3)
-      .map((item: IReview, index: number) => {
-        return <ReviewItem key={index} {...item} />;
-      });
+    if (!isMobile) {
+      return (reviews.reviews || [])
+        .slice(0, 3)
+        .map((item: IReview, index: number) => {
+          return <ReviewItem key={index} {...item} />;
+        });
+    } else {
+      return (
+        <Carousel>
+          {(reviews.reviews || [])
+            .slice(0, 3)
+            .map((item: IReview, index: number) => {
+              return <ReviewItem key={index} {...item} />;
+            })}
+        </Carousel>
+      );
+    }
   } else {
     return null;
   }
@@ -156,8 +169,14 @@ export default class Home extends React.Component<IHomeProps, IHomeState> {
         <div className="home__intro">
           <div className="container">
             <section className="title">
-              <h1>Sell Your Used Phone. <br />Fast, Easy, & High Prices</h1>
-              <img className="mb-ele" src={require("@/images/home/main_bg1.png")} />
+              <h1>
+                Sell Your Used Phone. <br />
+                Fast, Easy, & High Prices
+              </h1>
+              <img
+                className="mb-ele"
+                src={require("@/images/home/main_bg1.png")}
+              />
               <div className="intro__icon-list">
                 <div className="wrap-container">
                   {brands
@@ -210,7 +229,10 @@ export default class Home extends React.Component<IHomeProps, IHomeState> {
         <section className="home__review">
           <h2>See Why Customers Love UpTrade</h2>
           <div className="review__reviews-container">
-            <RenderReviewList reviews={this.props.common.reviews} />
+            <RenderReviewList
+              reviews={this.props.common.reviews}
+              isMobile={isMobile}
+            />
           </div>
         </section>
         <LinkButton url={"/sell/yourphone/brand"}>Sell Now</LinkButton>

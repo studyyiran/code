@@ -254,25 +254,34 @@
     }
     .home__review {
       padding: 2.21rem 0 3.28rem;
+      // ant 轮播组件
+      .slick-dots,
+      .slick-dots-bottom {
+        bottom: -0.32rem;
+        > li {
+          margin: 0 4px;
+          .circle() {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+          }
+          .circle();
+          background: rgba(39, 39, 41, 0.24);
+          &.slick-active {
+            background: #272729;
+          }
+          > button {
+            .circle();
+            background: transparent;
+          }
+        }
+      }
       > h2 {
         margin-bottom: 1.28rem;
       }
-      //.review__new-review {
-      //  display: flex;
-      //  justify-content: center;
-      //  align-items: center;
-      //  margin: -40px auto 40px;
-      //  color: black;
-      //  > *:first-child {
-      //    font-size: 22px;
-      //    margin-right: 10px;
-      //  }
-      //}
-      //.review__reviews-container {
-      //  display: flex;
-      //  justify-content: center;
-      //  align-items: center;
-      //}
+      .review__reviews-container {
+        display: block;
+      }
     }
     > a:last-child {
       width: 100%;
