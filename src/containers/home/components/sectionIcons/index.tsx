@@ -1,6 +1,7 @@
 import * as React from "react";
 import { ISectionIcons } from "./index.interface";
 import "./index.less";
+import Svg from "@/components/svg";
 
 export function SectionIcons(props: ISectionIcons) {
   const { descArr = [] } = props;
@@ -12,7 +13,7 @@ export function SectionIcons(props: ISectionIcons) {
           return (
             <li key={descTitle}>
               <section className="item-container__item" key={index}>
-                <img src={icon} />
+                <Svg />
                 <h1>{descTitle}</h1>
                 <p>{content}</p>
               </section>

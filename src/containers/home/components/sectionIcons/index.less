@@ -8,8 +8,40 @@
       text-align: center;
       margin: 0 10px;
       > .item-container__item {
+        > svg {
+          font-size: 92px;
+        }
         > h1 {
+          .font(18px, 500, #444B54);
           margin: 14px auto 10px;
+        }
+        > p {
+          .font(16px, 400, #7E8396)
+        }
+      }
+    }
+  }
+}
+
+.ismobile #root {
+  .comp-section-layout {
+    .section-layout__item-container {
+      display: block;
+      > li {
+        max-width: 100%;
+        text-align: center;
+        margin: auto;
+        > .item-container__item {
+          > svg {
+            font-size: 2.13rem;
+          }
+          > h1 {
+            .font(0.67rem, 500, #444B54);
+            margin: 14px auto 10px;
+          }
+          > p {
+            .font(0.37rem, 400, #7E8396)
+          }
         }
       }
     }
