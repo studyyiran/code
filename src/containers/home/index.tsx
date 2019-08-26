@@ -192,7 +192,7 @@ export default class Home extends React.Component<IHomeProps, IHomeState> {
             src="https://www.w3school.com.cn/i/movie.ogg"
             controls={true}
           />
-          <div>
+          <div className="bg-white-container">
             <SectionIcons {...descPart2} />
             <LinkButton url={"/sell/yourphone/brand"}>Learn More</LinkButton>
           </div>
@@ -202,24 +202,52 @@ export default class Home extends React.Component<IHomeProps, IHomeState> {
           <div className="review__reviews-container">
             <RenderReviewList reviews={this.props.common.reviews} />
           </div>
-          <LinkButton url={"/sell/yourphone/brand"}>Sell Now</LinkButton>
         </section>
+        <LinkButton url={"/sell/yourphone/brand"}>Sell Now</LinkButton>
       </article>
     );
   }
 }
 
-{/*<LinkButton url={"/sell/yourphone/brand"}>*/}
-{/*  */}
-{/*</LinkButton>*/}
-{/*<div className="search__container">*/}
-{/*  <div className="comp-search">*/}
-{/*    <label htmlFor="comp-search">*/}
-{/*      <Icon type="search" />*/}
-{/*    </label>*/}
-{/*    <input id="comp-search" placeholder="search" />*/}
-{/*  </div>*/}
-{/*  <Button type="primary" size="large">*/}
-{/*    Search*/}
-{/*  </Button>*/}
-{/*</div>*/}
+{
+  /*<LinkButton url={"/sell/yourphone/brand"}>*/
+}
+{
+  /*  */
+}
+{
+  /*</LinkButton>*/
+}
+{
+  /*<div className="search__container">*/
+}
+{
+  /*  <div className="comp-search">*/
+}
+{
+  /*    <label htmlFor="comp-search">*/
+}
+{
+  /*      <Icon type="search" />*/
+}
+{
+  /*    </label>*/
+}
+{
+  /*    <input id="comp-search" placeholder="search" />*/
+}
+{
+  /*  </div>*/
+}
+{
+  /*  <Button type="primary" size="large">*/
+}
+{
+  /*    Search*/
+}
+{
+  /*  </Button>*/
+}
+{
+  /*</div>*/
+}
