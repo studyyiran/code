@@ -3,16 +3,17 @@ import { observer } from "mobx-react";
 import Star from "@/components/star";
 import { IReview } from "./index.interface";
 import "./index.less";
+import { Rate } from "antd";
 const ReviewItem = (props: IReview) => {
   return (
     <div className="comp-review-card">
       <header>
-        <Star size="small" gray={true} rate={Number(props.rating)} />
+        <Rate disabled={true} defaultValue={Number(props.rating)} />
         <span className="date">{props.reviewer.last_name}</span>
       </header>
       <p>{props.comments}</p>
       <div className="mb-ele">
-        <Star size="small" gray={true} rate={Number(props.rating)} />
+        <Rate disabled={true} defaultValue={Number(props.rating)} />
       </div>
       <footer className="review-card__footer">
         <span>{props.reviewer.first_name}</span>

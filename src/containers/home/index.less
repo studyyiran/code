@@ -160,7 +160,8 @@
 .ismobile #root {
   .page-home {
     background: @bg-white;
-    padding-bottom: 3.65rem;
+    //padding-bottom: 3.65rem;
+    padding-bottom: 1.17rem;
     > .home__intro {
       padding: 0.61rem 0;
       .page-padding();
@@ -173,6 +174,7 @@
           }
           > img.mb-ele {
             width: 100%;
+            margin-top: 0.72rem;
           }
           .intro__icon-list {
             display: flex;
@@ -253,11 +255,12 @@
       }
     }
     .home__review {
-      padding: 2.21rem 0 3.28rem;
+      padding: 2.21rem 0 2.77rem;
+      .page-padding();
       // ant 轮播组件
       .slick-dots,
       .slick-dots-bottom {
-        bottom: -0.32rem;
+        bottom: -0.4rem;
         > li {
           margin: 0 4px;
           .circle() {
