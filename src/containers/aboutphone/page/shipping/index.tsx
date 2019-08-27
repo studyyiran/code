@@ -42,10 +42,10 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
 
   public componentDidMount() {
     // 判断是否页面需要必备数据，分TBD的情况
-    if (!shippingPageValidate()) {
-      this.props.history.push("/sell/yourphone/brand");
-      return;
-    }
+    // if (!shippingPageValidate()) {
+    //   this.props.history.push("/sell/yourphone/brand");
+    //   return;
+    // }
 
     // didmount 的时候校验是否填了字段
     const { getFieldsValue } = this.props.form;
@@ -118,7 +118,7 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
     const isMobile = this.props.common.isMobile;
 
     const infomationHTML = (
-      <Form layout="vertical" style={isMobile ? {} : { paddingTop: "40px" }}>
+      <Form layout="vertical">
         {/* 在弹窗时才有 */}
         {
           // this.props.hideLayout &&

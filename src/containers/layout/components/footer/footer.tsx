@@ -6,6 +6,7 @@ import { Row, Col, Input, Button } from "antd";
 // import commonStore from '@/store/common'
 import config from "../../../../config";
 import Svg from "@/components/svg";
+import {RenderByCondition} from './RenderByCondition/index'
 
 const footerInfo = [
   {
@@ -54,21 +55,6 @@ const footerInfo = [
 
 interface IFooterState {
   email: string;
-}
-
-interface IRenderByCondition {
-  isMobile?: boolean;
-  ComponentMb: any;
-  ComponentPc: any;
-}
-
-function RenderByCondition(props: IRenderByCondition) {
-  const { isMobile, ComponentMb, ComponentPc } = props;
-  if (isMobile) {
-    return ComponentMb;
-  } else {
-    return ComponentPc;
-  }
 }
 
 export default class Footer extends React.Component<
