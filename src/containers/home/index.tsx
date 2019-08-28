@@ -10,22 +10,24 @@ import { SectionIcons } from "./components/sectionIcons";
 import { Carousel } from "antd";
 
 const descPart1 = {
-  title: "Hello World! Sell You Phone!",
   descArr: [
     {
-      descTitle: "You Get Paid Fast",
-      icon: require("@/images/home/icon_4.png"),
-      content: "Multiple payment options to get cash how you want."
+      descTitle: "Price Guarantee",
+      icon: "icon-homepage-1",
+      content:
+        "Get a minimum guaranteed price based on the condition and market value of your phone. If we sell your phone for more, we will issue a second payment."
     },
     {
-      descTitle: "You Get Paid Fast",
-      icon: require("@/images/home/icon_4.png"),
-      content: "Multiple payment options to get cash how you want."
+      descTitle: "Fast and Easy",
+      icon: "icon-homepage-5",
+      content:
+        "Get started in minutes and get cash payment within 1-2 business days once we receive your phone."
     },
     {
-      descTitle: "You Get Paid Fast",
-      icon: require("@/images/home/icon_4.png"),
-      content: "Multiple payment options to get cash how you want."
+      descTitle: "Zero Risk",
+      icon: "icon-homepage-3",
+      content:
+        "Ship your phone to us for free. If you change your mind, we will even ship it back to you for free. "
     }
   ]
 };
@@ -35,21 +37,48 @@ const descPart2 = {
   descArr: [
     {
       descTitle: "Step 1",
-      icon: require("@/images/home/icon_4.png"),
-      content: "Multiple payment options to get cash how you want."
+      icon: "icon-homepage-2",
+      content: "Get your minimum guarantee price."
     },
     {
       descTitle: "Step 2",
-      icon: require("@/images/home/icon_4.png"),
-      content: "Multiple payment options to get cash how you want."
+      icon: "icon-homepage-4",
+      content: "Reset your phone and ship it to us for free."
     },
     {
       descTitle: "Step 3",
-      icon: require("@/images/home/icon_4.png"),
-      content: "Multiple payment options to get cash how you want."
+      icon: "icon-homepage-5",
+      content: "Fast cash payment issued within 1-2 business days."
     }
   ]
 };
+
+const brands = [
+  {
+    iconName: "Apple",
+    iconUrl: "Apple.svg"
+  },
+  {
+    iconName: "Samsung",
+    iconUrl: "Samsung.svg"
+  },
+  {
+    iconName: "Google",
+    iconUrl: "Google.svg"
+  },
+  {
+    iconName: "LG",
+    iconUrl: "LG.svg"
+  },
+  {
+    iconName: "OnePlus",
+    iconUrl: "OnePlus.svg"
+  },
+  {
+    iconName: "Others",
+    iconUrl: ""
+  }
+];
 
 interface ILinkButton {
   children: string;
@@ -162,8 +191,8 @@ export default class Home extends React.Component<IHomeProps, IHomeState> {
   }
 
   public render() {
-    const { brands } = this.props.yourphone;
     const { isMobile } = this.props.common;
+    const url = require("./res/bannerPhone.png");
     return (
       <article className="page-home">
         <div className="home__intro">
@@ -173,10 +202,7 @@ export default class Home extends React.Component<IHomeProps, IHomeState> {
                 Sell Your Used Phone. <br />
                 Fast, Easy, & High Prices
               </h1>
-              <img
-                className="mb-ele"
-                src={require("@/images/home/main_bg1.png")}
-              />
+              <img className="mb-ele" src={url} />
               <div className="intro__icon-list">
                 <div className="wrap-container">
                   {brands
@@ -198,7 +224,7 @@ export default class Home extends React.Component<IHomeProps, IHomeState> {
               </Link>
             </section>
             <div className="img-container">
-              <img src={require("@/images/home/main_bg1.png")} />
+              <img src={url} />
             </div>
           </div>
         </div>
@@ -212,14 +238,16 @@ export default class Home extends React.Component<IHomeProps, IHomeState> {
             Your electronics will be listed on multiple markets at the same
             time, so you get the best possible payout.
           </p>
+          <img src={isMobile ? require('./res/chart-mb.png') : require('./res/chart-pc.svg')} />
           <LinkButton url={"/sell/yourphone/brand"}>Sell Now</LinkButton>
         </section>
         <section className="easy-sell-part">
           <h2>3 Easy Steps To Sell</h2>
           <video
             className="comp-video"
+            poster={require('./res/video-poster.png')}
             src="https://www.w3school.com.cn/i/movie.ogg"
-            controls={true}
+            controls={false}
           />
           <div className="bg-white-container">
             <SectionIcons {...descPart2} />

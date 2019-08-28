@@ -1,10 +1,10 @@
 import * as React from "react";
 
 export default function Svg(props: any) {
-  const { icon = "uptrade_duigou" } = props;
+  const { icon = "duigou" } = props;
   return (
     <svg className="icon" aria-hidden="true">
-      <use xlinkHref={`#${icon}`} />
+      <use xlinkHref={`#uptrade_${icon}`} />
     </svg>
   );
 }
