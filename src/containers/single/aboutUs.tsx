@@ -138,7 +138,7 @@ class AboutUs extends React.Component<RouteComponentProps> {
             {articles.map(({ title, text }) => {
               return (
                 <li className="values-list__item" key={title}>
-                  <svg className="icon" aria-hidden="true">
+                  <svg className="svg-icon-set" aria-hidden="true">
                     <use xlinkHref="#uptrade_Icon" />
                   </svg>
                   <h3>{title}</h3>

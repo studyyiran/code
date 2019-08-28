@@ -3,11 +3,18 @@
   background: @tab-bar-color;
   display: flex;
   justify-content: space-between;
-  padding: 10px @layout-padding 10px;
-  height: 7vh;
-  > .logo {
-    font-size: @font-size-big;
-    color: @white;
-    line-height: 1.2;
+  padding: 30px @layout-padding 30px;
+  > img.logo {
+    width: 130px;
   }
+}
+
+.ismobile #root {
+  .comp-header-container {
+    padding: 0.48rem 0.53rem 0.37rem 0.43rem ;
+    > img.logo {
+      width: 130px;
+    }
+  }
+
 }

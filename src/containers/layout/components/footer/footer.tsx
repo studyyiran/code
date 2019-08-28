@@ -83,7 +83,7 @@ export default class Footer extends React.Component<
       <footer className="comp-footer">
         <div className="width-container">
           <header className="footer__logo">
-            <Svg />
+            <img src={require('@/images/logo.svg')}/>
           </header>
           <div className="container">
             <RenderByCondition

@@ -13,7 +13,7 @@ export function SectionIcons(props: ISectionIcons) {
           return (
             <li key={descTitle}>
               <section className="item-container__item" key={index}>
-                <Svg icon={icon} />
+                <img src={icon} />
                 <h1>{descTitle}</h1>
                 <p>{content}</p>
               </section>

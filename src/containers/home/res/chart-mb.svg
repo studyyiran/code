@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="313px" height="424px" viewBox="0 0 313 424" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 57.1 (83088) - https://sketch.com -->
+    <title>Website / Mobile /  Sell Home / Assets / Sell For More Chart@2x</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Website" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Mobile-/-Sell-/-Home-/-Popup" transform="translate(-29.000000, -1878.000000)">
+            <g id="Group-12" transform="translate(-7.000000, -32.000000)">
+                <g id="Group-19">
+                    <g id="Group-6" transform="translate(3.000000, 0.000000)">
+                        <g id="Group-25" transform="translate(14.500000, 1887.500000)">
+                            <g id="Website-/-Mobile-/--Sell-Home-/-Assets-/-Sell-For-More-Chart">
+                                <g id="Mobile/data/apple">
+                                    <g id="Group-9" transform="translate(19.000000, 17.000000)">
+                                        <g id="Group-8">
+                                            <g id="row-bottom" fill="#000000" font-family="Poppins-Medium, Poppins Medium" font-size="26" font-weight="normal" line-spacing="24">
+                                                <g id="Group">
+                                                    <text id="Apple">
+                                                        <tspan x="0" y="27">Apple </tspan>
+                                                    </text>
+                                                </g>
+                                            </g>
+                                            <g id="Group-10" transform="translate(211.000000, 44.064220)" fill="#000000" font-family="Poppins-Medium, Poppins Medium" font-weight="normal">
+                                                <text id="36%" font-size="24">
+                                                    <tspan x="0" y="25.9357798">36% </tspan>
+                                                </text>
+                                                <text id="above-market-price" font-size="10" line-spacing="24">
+                                                    <tspan x="2.51928783" y="36.6995413">above market price </tspan>
+                                                </text>
+                                            </g>
+                                            <text id="5%" font-family="Poppins-Regular, Poppins" font-size="18" font-weight="normal" line-spacing="32" fill="#000000">
+                                                <tspan x="40" y="148">5% </tspan>
+                                            </text>
+                                            <text id="UpTrade" font-family="Poppins-Medium, Poppins Medium" font-size="16" font-weight="normal" line-spacing="24" fill="#000000">
+                                                <tspan x="4.76682683" y="100">UpTrade </tspan>
+                                            </text>
+                                            <text id="Leading-Competitor" opacity="0.499046689" font-family="Poppins-Medium, Poppins Medium" font-size="16" font-weight="normal" line-spacing="24" fill="#000000">
+                                                <tspan x="2.14540059" y="178">Leading Competitor </tspan>
+                                            </text>
+                                            <path d="M4.9775717,67.0229358 L184.5,67.5" id="Line-2" stroke="#FFCB3F" stroke-width="7" stroke-linecap="round"></path>
+                                            <path d="M4.97789758,145.279817 L22.5,145.5" id="Line-2-Copy" stroke-opacity="0.5" stroke="#FFCB3F" stroke-width="7" stroke-linecap="round"></path>
+                                        </g>
+                                    </g>
+                                </g>
+                                <g id="Mobile/data/apple" transform="translate(5.500000, 244.500000)">
+                                    <g id="Group-9" transform="translate(19.000000, 17.000000)">
+                                        <g id="Group-8">
+                                            <g id="row-bottom" fill="#000000" font-family="Poppins-Medium, Poppins Medium" font-size="26" font-weight="normal" line-spacing="24">
+                                                <g id="Group">
+                                                    <text id="Samsung">
+                                                        <tspan x="0" y="27">Samsung</tspan>
+                                                    </text>
+                                                </g>
+                                            </g>
+                                            <g id="Group-10" transform="translate(203.000000, 44.064220)" fill="#000000" font-family="Poppins-Medium, Poppins Medium" font-weight="normal">
+                                                <text id="32%" font-size="24">
+                                                    <tspan x="0" y="25.9357798">32% </tspan>
+                                                </text>
+                                                <text id="above-market-price" font-size="10" line-spacing="24">
+                                                    <tspan x="2.51928783" y="36.6995413">above market price </tspan>
+                                                </text>
+                                            </g>
+                                            <text id="5%" font-family="Poppins-Regular, Poppins" font-size="18" font-weight="normal" line-spacing="32" fill="#000000">
+                                                <tspan x="40" y="148">5% </tspan>
+                                            </text>
+                                            <text id="UpTrade" font-family="Poppins-Medium, Poppins Medium" font-size="16" font-weight="normal" line-spacing="24" fill="#000000">
+                                                <tspan x="4.76682683" y="100">UpTrade </tspan>
+                                            </text>
+                                            <text id="Leading-Competitor" opacity="0.499046689" font-family="Poppins-Medium, Poppins Medium" font-size="16" font-weight="normal" line-spacing="24" fill="#000000">
+                                                <tspan x="2.14540059" y="178">Leading Competitor </tspan>
+                                            </text>
+                                            <path d="M4.9775717,67.0229358 L178.5,67.5" id="Line-2" stroke="#1AB4E7" stroke-width="7" stroke-linecap="round"></path>
+                                            <path d="M4.97789758,145.279817 L22.5,145.5" id="Line-2-Copy" stroke="#1AB4E7" stroke-width="7" stroke-linecap="round"></path>
+                                        </g>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

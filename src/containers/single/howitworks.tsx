@@ -20,7 +20,7 @@ class HowItWorks extends React.Component<RouteComponentProps> {
               <img src={require("@/images/test/bg.jpg")} />
             </div>
             <section>
-              <svg className="icon" aria-hidden="true">
+              <svg className="svg-icon-set" aria-hidden="true">
                 <use xlinkHref="#uptrade_Icon" />
               </svg>
               <h3>Get your minimum guarantee price</h3>
@@ -42,7 +42,7 @@ class HowItWorks extends React.Component<RouteComponentProps> {
                 <img src={require("@/images/test/bg.jpg")} />
               </div>
               <section>
-                <svg className="icon" aria-hidden="true">
+                <svg className="svg-icon-set" aria-hidden="true">
                   <use xlinkHref="#uptrade_Icon" />
                 </svg>
                 <h3>Prepare and ship in your phone for free</h3>
@@ -71,7 +71,7 @@ class HowItWorks extends React.Component<RouteComponentProps> {
               <img src={require("@/images/test/bg.jpg")} />
             </div>
             <section>
-              <svg className="icon" aria-hidden="true">
+              <svg className="svg-icon-set" aria-hidden="true">
                 <use xlinkHref="#uptrade_Icon" />
               </svg>
               <h3>Get paid in cash</h3>

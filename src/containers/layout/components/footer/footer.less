@@ -1,5 +1,9 @@
 @import (reference) "~@/styles/index.less";
-
+body {
+  .pc({
+    min-width: 1450px;
+  });
+}
 .comp-footer {
   .title-font() {
     font-size: @font-size-large;
@@ -15,9 +19,12 @@
   .page-padding();
   .width-container {
     .page(1400px);
-    > .footer__logo {
+    > header.footer__logo {
       font-size: 20px;
       margin-bottom: 30px;
+      > img {
+        width: 92px;
+      }
     }
     > .container {
       .layout-flex-twins(700px, 700px, {});

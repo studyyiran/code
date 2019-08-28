@@ -13,19 +13,19 @@ const descPart1 = {
   descArr: [
     {
       descTitle: "Price Guarantee",
-      icon: "icon-homepage-1",
+      icon: require('./res/icon/icon-easy.svg'),
       content:
         "Get a minimum guaranteed price based on the condition and market value of your phone. If we sell your phone for more, we will issue a second payment."
     },
     {
       descTitle: "Fast and Easy",
-      icon: "icon-homepage-5",
+      icon: require('./res/icon/icon-price.svg'),
       content:
         "Get started in minutes and get cash payment within 1-2 business days once we receive your phone."
     },
     {
       descTitle: "Zero Risk",
-      icon: "icon-homepage-3",
+      icon: require('./res/icon/icon-safe.svg'),
       content:
         "Ship your phone to us for free. If you change your mind, we will even ship it back to you for free. "
     }
@@ -37,17 +37,17 @@ const descPart2 = {
   descArr: [
     {
       descTitle: "Step 1",
-      icon: "icon-homepage-2",
+      icon: require('./res/icon/icon-step-1.svg'),
       content: "Get your minimum guarantee price."
     },
     {
       descTitle: "Step 2",
-      icon: "icon-homepage-4",
+      icon: require('./res/icon/icon-step-2.svg'),
       content: "Reset your phone and ship it to us for free."
     },
     {
       descTitle: "Step 3",
-      icon: "icon-homepage-5",
+      icon: require('./res/icon/icon-step-3.svg'),
       content: "Fast cash payment issued within 1-2 business days."
     }
   ]
@@ -238,7 +238,7 @@ export default class Home extends React.Component<IHomeProps, IHomeState> {
             Your electronics will be listed on multiple markets at the same
             time, so you get the best possible payout.
           </p>
-          <img src={isMobile ? require('./res/chart-mb.png') : require('./res/chart-pc.svg')} />
+          <img src={isMobile ? require('./res/chart-mb.svg') : require('./res/chart-pc.svg')} />
           <LinkButton url={"/sell/yourphone/brand"}>Sell Now</LinkButton>
         </section>
         <section className="easy-sell-part">

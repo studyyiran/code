@@ -38,12 +38,9 @@
   }
 }
 
-@page-min-width: 1100px;
-
 .page-home {
   background: @bg-white;
   padding-bottom: 97px;
-  .pc({min-width: @page-min-width;});
   > .home__intro {
     padding: 79px 0 169px;
     .page-padding();
@@ -63,7 +60,6 @@
           display: flex;
           margin: 56px 0;
           > .wrap-container {
-            flex: 1;
             display: flex;
             > * {
               margin-right: 46px;
@@ -79,8 +75,8 @@
       > .img-container {
         // 写死的
         flex: 0 0 0;
-        min-width: 575px;
-        max-width: 575px;
+        min-width: 425px;
+        max-width: 425px;
         > img {
           width: 100%;
         }
@@ -178,8 +174,10 @@
             .font(0.75rem, 600, #f5f7f9);
           }
           > img.mb-ele {
-            width: 100%;
+            width: 50%;
+            margin: auto;
             margin-top: 0.72rem;
+            display: block;
           }
           .intro__icon-list {
             display: flex;
@@ -190,6 +188,7 @@
             > .wrap-container {
               justify-content: space-between;
               margin-bottom: 0.5rem;
+              flex: 1;
               > * {
                 margin-right: 0;
               }
