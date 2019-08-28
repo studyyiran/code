@@ -6,7 +6,9 @@ import { Row, Col, Input, Button } from "antd";
 // import commonStore from '@/store/common'
 import config from "../../../../config";
 import Svg from "@/components/svg";
-import {RenderByCondition} from './RenderByCondition/index'
+import { RenderByCondition } from "./RenderByCondition/index";
+import { Collapse } from "antd";
+const { Panel } = Collapse;
 
 const footerInfo = [
   {
@@ -83,7 +85,7 @@ export default class Footer extends React.Component<
       <footer className="comp-footer">
         <div className="width-container">
           <header className="footer__logo">
-            <img src={require('@/images/logo.svg')}/>
+            <img src={require("@/images/logo.svg")} />
           </header>
           <div className="container">
             <RenderByCondition
