@@ -53,6 +53,8 @@
       );
       > section.title {
         flex: 1 0 0;
+        max-width: 850px;
+        margin-right: 20px;
         > h1 {
           .font(40px, 600, #f5f7f9);
         }
@@ -60,9 +62,11 @@
           display: flex;
           margin: 56px 0;
           > .wrap-container {
+            flex: 1;
             display: flex;
+            justify-content: space-between;
             > * {
-              margin-right: 46px;
+              //margin-right: 46px;
             }
           }
         }
@@ -73,9 +77,11 @@
         }
       }
       > .img-container {
+        // 修改成相应的，避免写死的。因为有小屏pc的需求
+        flex: 1 0 0;
         // 写死的
-        flex: 0 0 0;
-        min-width: 425px;
+        //flex: 0 0 0;
+        //min-width: 425px;
         max-width: 425px;
         > img {
           width: 100%;

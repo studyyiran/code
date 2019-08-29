@@ -52,6 +52,16 @@ const footerInfo = [
         href: "/who-we-are"
       }
     ]
+  },
+  {
+    title: "Account",
+    className: "",
+    arr: [
+      {
+        subTitle: "Check My Order",
+        href: "/"
+      }
+    ]
   }
 ];
 
@@ -94,14 +104,19 @@ export default class Footer extends React.Component<
                   {footerInfo.map(({ className, title, arr }) => {
                     return (
                       <ul className={className} key={title}>
-                        <h2>{title}</h2>
-                        {arr.map(({ subTitle, href }) => {
-                          return (
-                            <li key={subTitle}>
-                              <Link to={href}>{subTitle}</Link>
-                            </li>
-                          );
-                        })}
+                        <Collapse expandIconPosition="right">
+                          <Panel header={<h2>{title}</h2>} key={title}>
+                            {arr.map(({ subTitle, href }) => {
+                              return (
+                                <li key={subTitle}>
+                                  <Link to={href}>
+                                    <span>{subTitle}</span>
+                                  </Link>
+                                </li>
+                              );
+                            })}
+                          </Panel>
+                        </Collapse>
                       </ul>
                     );
                   })}

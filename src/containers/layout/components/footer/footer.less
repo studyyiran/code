@@ -1,8 +1,7 @@
 @import (reference) "~@/styles/index.less";
 body {
-  .pc({
-    min-width: 1450px;
-  });
+  // 13英寸mac
+  .pc({min-width: 1280px;});
 }
 .comp-footer {
   .title-font() {
@@ -27,7 +26,7 @@ body {
       }
     }
     > .container {
-      .layout-flex-twins(700px, 700px, {});
+      .layout-flex-twins(500px, 700px, {});
       > .footer__group {
         display: flex;
         > ul {
@@ -68,7 +67,7 @@ body {
   .comp-footer {
     max-width: 100%;
     overflow: hidden;
-    border-radius: 0.21rem 0.21rem 0 0 ;
+    border-radius: 0.21rem 0.21rem 0 0;
     .title-font() {
       font-size: 0.37rem;
       margin-bottom: 0.59rem;
@@ -111,19 +110,55 @@ body {
             }
           }
         }
-        //> .footer__group {
-        //  display: flex;
-        //  > ul {
-        //    flex: 0 0 130px;
-        //    > h2 {
-        //      .title-font();
-        //    }
-        //    > li {
-        //      .content-font();
-        //      margin-right: 50px;
-        //    }
-        //  }
-        //}
+        > .footer__group {
+          display: block;
+          
+          > ul {
+            .ant-collapse-header {
+              .font(0.37rem, 500, #ffffff);
+              background: transparent;
+              border-radius: 0 !important;
+              border: none;
+              > h2 {
+                .font(0.37rem, 500, #ffffff);
+              }
+            }
+            .ant-collapse-item {
+              margin-bottom: 0.48rem;
+            }
+            .ant-collapse,
+            .ant-collapse-item,
+            .ant-collapse-item-active,
+            ant-collapse-content-box,
+            .ant-collapse-content {
+              border: none;
+              background: transparent;
+            }
+            .ant-collapse-content {
+              background: transparent;
+              .font(0.43, 400, #7e8396);
+            }
+            .ant-collapse-content-box,
+            .ant-collapse-header {
+              padding-left: 0;
+              padding-top: 0;
+            }
+            .ant-collapse-content-box {
+              padding-bottom: 0;
+              padding-left: 1rem;
+              color: @white!important;
+            }
+            .ant-collapse-content-box {
+              > li {
+                margin: 0.3rem auto;
+                .font(0.3rem, 400, #ffffff);
+              }
+            }
+            > h2 {
+              .title-font();
+            }
+          }
+        }
       }
     }
   }

@@ -8,24 +8,25 @@ import { IReview } from "./components/review/index.interface";
 import { BrandLogo } from "./components/brandLogo";
 import { SectionIcons } from "./components/sectionIcons";
 import { Carousel } from "antd";
+import { RenderByCondition } from "@/containers/layout/components/footer/RenderByCondition";
 
 const descPart1 = {
   descArr: [
     {
       descTitle: "Price Guarantee",
-      icon: require('./res/icon/icon-easy.svg'),
+      icon: require("./res/icon/icon-easy.svg"),
       content:
         "Get a minimum guaranteed price based on the condition and market value of your phone. If we sell your phone for more, we will issue a second payment."
     },
     {
       descTitle: "Fast and Easy",
-      icon: require('./res/icon/icon-price.svg'),
+      icon: require("./res/icon/icon-price.svg"),
       content:
         "Get started in minutes and get cash payment within 1-2 business days once we receive your phone."
     },
     {
       descTitle: "Zero Risk",
-      icon: require('./res/icon/icon-safe.svg'),
+      icon: require("./res/icon/icon-safe.svg"),
       content:
         "Ship your phone to us for free. If you change your mind, we will even ship it back to you for free. "
     }
@@ -37,17 +38,17 @@ const descPart2 = {
   descArr: [
     {
       descTitle: "Step 1",
-      icon: require('./res/icon/icon-step-1.svg'),
+      icon: require("./res/icon/icon-step-1.svg"),
       content: "Get your minimum guarantee price."
     },
     {
       descTitle: "Step 2",
-      icon: require('./res/icon/icon-step-2.svg'),
+      icon: require("./res/icon/icon-step-2.svg"),
       content: "Reset your phone and ship it to us for free."
     },
     {
       descTitle: "Step 3",
-      icon: require('./res/icon/icon-step-3.svg'),
+      icon: require("./res/icon/icon-step-3.svg"),
       content: "Fast cash payment issued within 1-2 business days."
     }
   ]
@@ -204,20 +205,33 @@ export default class Home extends React.Component<IHomeProps, IHomeState> {
               </h1>
               <img className="mb-ele" src={url} />
               <div className="intro__icon-list">
-                <div className="wrap-container">
-                  {brands
-                    .filter((brand, index) => index < 3)
-                    .map((brand, index) => (
-                      <BrandLogo key={index} brand={brand} />
-                    ))}
-                </div>
-                <div className="wrap-container">
-                  {brands
-                    .filter((brand, index) => index > 2 && index < 6)
-                    .map((brand, index) => (
-                      <BrandLogo key={index} brand={brand} />
-                    ))}
-                </div>
+                <RenderByCondition
+                  ComponentPc={<div className="wrap-container">
+                    {brands
+                      .filter((brand, index) => index < 6)
+                      .map((brand, index) => (
+                        <BrandLogo key={index} brand={brand} />
+                      ))}
+                  </div>}
+                  ComponentMb={
+                    <>
+                      <div className="wrap-container">
+                        {brands
+                          .filter((brand, index) => index < 3)
+                          .map((brand, index) => (
+                            <BrandLogo key={index} brand={brand} />
+                          ))}
+                      </div>
+                      <div className="wrap-container">
+                        {brands
+                          .filter((brand, index) => index > 2 && index < 6)
+                          .map((brand, index) => (
+                            <BrandLogo key={index} brand={brand} />
+                          ))}
+                      </div>
+                    </>
+                  }
+                />
               </div>
               <Link to={"/sell/yourphone/brand"}>
                 <button className="common-button">Sell Now</button>
@@ -238,14 +252,20 @@ export default class Home extends React.Component<IHomeProps, IHomeState> {
             Your electronics will be listed on multiple markets at the same
             time, so you get the best possible payout.
           </p>
-          <img src={isMobile ? require('./res/chart-mb.svg') : require('./res/chart-pc.svg')} />
+          <img
+            src={
+              isMobile
+                ? require("./res/chart-mb.svg")
+                : require("./res/chart-pc.svg")
+            }
+          />
           <LinkButton url={"/sell/yourphone/brand"}>Sell Now</LinkButton>
         </section>
         <section className="easy-sell-part">
           <h2>3 Easy Steps To Sell</h2>
           <video
             className="comp-video"
-            poster={require('./res/video-poster.png')}
+            poster={require("./res/video-poster.png")}
             src="https://www.w3school.com.cn/i/movie.ogg"
             controls={false}
           />
