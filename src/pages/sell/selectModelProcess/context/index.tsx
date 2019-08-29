@@ -1,6 +1,11 @@
-import React, { createContext, useReducer, useCallback } from "react";
+import React, {
+  createContext,
+  useReducer,
+  useCallback,
+  useEffect
+} from "react";
 import { IReducerAction } from "@/interface/index.interface";
-import {getBrandsByCid} from "../server/index.api";
+import { getBrandsByCid } from "../server/index.api";
 
 export const SelectModelContext = createContext({});
 
@@ -49,12 +54,14 @@ function useGetAction(
 ): IContextActions {
   const actions: IContextActions = {
     getBrandList: promisify(async function() {
-      const brandList = await getBrandsByCid(state.categoryId);
-      console.log(brandList)
-      dispatch({ type: "setBrandList", value: brandList });
+      if (state.categoryId) {
+        const brandList = await getBrandsByCid(state.categoryId);
+        console.log(brandList);
+        dispatch({ type: "setBrandList", value: brandList });
+      }
     })
   };
-  useCallback(actions.getBrandList, []);
+  actions.getBrandList = useCallback(actions.getBrandList, [state.categoryId]);
   return actions;
 }
 
@@ -77,6 +84,9 @@ export function ModelContextProvider(props: any) {
   };
   const [state, dispatch] = useReducer(reducer, initState);
   const action: IContextActions = useGetAction(state, dispatch);
+  useEffect(() => {
+    action.getBrandList();
+  }, [action.getBrandList]);
   const propsValue: ISelectModelContext = {
     ...action,
     selectModelContextValue: state,

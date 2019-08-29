@@ -14,8 +14,9 @@ export default function Brand(props: any) {
   } = brandContext as ISelectModelContext;
   const { brandList } = selectModelContextValue;
   useEffect(() => {
-    getBrandList();
-  }, [getBrandList]);
+    console.log('dispatch')
+    dispatch({type: 'setCategoryId', value: '1'})
+  }, []);
   function selectBrandHandler(id: string) {
     dispatch({type: 'setBrand', value: id});
     // props.canGoNext() && props.goNextPage();

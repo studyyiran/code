@@ -22,10 +22,7 @@ export default function Sell(props: any) {
       });
     };
   }
-  return wrapper(
-    <ModelContextProvider>
-      <Brand />
-    </ModelContextProvider>
-  );
-  return <div>123</div>;
+  return <ModelContextProvider>
+    <Brand />
+  </ModelContextProvider>;
 }
