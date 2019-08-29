@@ -2,7 +2,7 @@ const firstQuestionKey = "aboutYourPhone";
 import React, { useReducer, useState, useEffect } from "react";
 import "./index.less";
 import { Collapse } from "antd";
-import { IAction } from "@/interface/index.interface";
+import { IReducerAction } from "@/interface/index.interface";
 import { IQuestion, IUserAnswer, IUserQuestionAnswer } from "./index.interface";
 import { WrapperPanel } from "./components/wrapperPanel";
 import { isCanMove, isNoContinue } from "./util";
@@ -16,7 +16,7 @@ import {
 default 和 active似乎 遵从active
  */
 
-function reducer(state: any, action: IAction) {
+function reducer(state: any, action: IReducerAction) {
   const { type, value } = action;
   function changeTargetById(arr: any[], changedId: string, answer: any) {
     // copy
@@ -173,7 +173,7 @@ function Conditions(props: IConditions) {
 
 interface IConditionForm {
   state: IStateConditions;
-  dispatch: (action: IAction) => void;
+  dispatch: (action: IReducerAction) => void;
   phoneConditionQuestion: IQuestion[];
   phoneInfoQuestion: IQuestion[];
 }
