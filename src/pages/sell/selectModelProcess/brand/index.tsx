@@ -1,4 +1,5 @@
 import React, { useEffect, useContext } from "react";
+import "./index.less";
 import sellServer from "../server";
 import { SelectModelContext, ISelectModelContext } from "../context";
 import { HeaderTitle } from "@/components/headerTitle";
@@ -23,26 +24,33 @@ export default function Brand(props: any) {
     // props.canGoNext() && props.goNextPage();
   }
   function renderList() {
-    return brandList.map((item: any) => {
-      const { name, id } = item;
-      return (
-        <li className={}>
-          <div
+    return brandList
+      .filter((item, index) => {
+        return index < 6;
+      })
+      .sort((a: any, b: any) => {
+        return a.order - b.order;
+      })
+      .map((item: any) => {
+        const { name, id, iconUrl } = item;
+        console.log(item);
+        return (
+          <li
+            className="brand-icon-container"
             key={id}
             onClick={() => {
               selectBrandHandler(id);
             }}
           >
-            {name}
-          </div>
-        </li>
-      );
-    });
+            <img src={iconUrl} />
+          </li>
+        );
+      });
   }
   return (
-    <div className="brand">
+    <div className="page-select-brand">
       <HeaderTitle title={"Select a manufacturer"} />
-      <ul className="barnd-list">{renderList()}</ul>
+      <ul className="brand-list">{renderList()}</ul>
     </div>
   );
 }
