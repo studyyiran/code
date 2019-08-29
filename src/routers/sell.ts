@@ -4,6 +4,15 @@ import redirectComponent from '@/components/redirectComponent';
 export default [
   {
     component: Loadable({
+      loader: () => import('../pages/sell'),
+      loading: () => null,
+      modules: ['../pages/sell'],
+      webpack: () => [require.resolveWeak('../pages/sell') as number],
+    }),
+    path: '/newsell',
+  },
+  {
+    component: Loadable({
       loader: () => import('../containers/selllayout'),
       loading: () => null,
       modules: ['../containers/selllayout'],
