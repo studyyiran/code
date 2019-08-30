@@ -36,6 +36,12 @@ function reducer(state: IContextState, action: IReducerAction) {
         brand: value
       };
     }
+    case "setModelInfo": {
+      return {
+        ...state,
+        modelInfo: value
+      };
+    }
     default:
       return { ...state };
   }
@@ -79,8 +85,15 @@ function useGetAction(
   return actions;
 }
 
+interface IModelInfo {
+  modelId: string;
+  storageId: string;
+  carrierId: string;
+}
+
 interface IContextState {
   brandList: [];
+  modelInfo: IModelInfo;
   productsList: [];
   categoryId: string;
   brand: string;
@@ -94,6 +107,11 @@ export interface ISelectModelContext extends IContextActions {
 export function ModelContextProvider(props: any) {
   const initState: IContextState = {
     brandList: [],
+    modelInfo: {
+      modelId: '',
+      storageId: '',
+      carrierId: '',
+    },
     productsList: [],
     categoryId: "",
     brand: ""

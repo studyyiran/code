@@ -7,7 +7,8 @@ import { IReducerAction } from "@/interface/index.interface";
 // interface IBrand {}
 const attrConfig = {
   'PRODUCT_ID': 'productId',
-  'ID': 'Id',
+  'STORAGE_ID': 'storageID',
+  'CARRIER_ID': 'carrierID',
 }
 
 function reducer(state: IContextState, action: IReducerAction) {
@@ -39,7 +40,7 @@ export default function Brand(props: any) {
     selectModelContextValue,
     dispatch
   } = brandContext as ISelectModelContext;
-  const { brandList, brand, productsList } = selectModelContextValue;
+  const { modelInfo, productsList } = selectModelContextValue;
   function selectProductHandler(id: string) {
     modelDispatch({
       type: "setValueByAttr",
@@ -48,17 +49,17 @@ export default function Brand(props: any) {
   }
   // canPost?
   useEffect(() => {
-    if (modelState && modelState[attrConfig.PRODUCT_ID] && modelState[attrConfig.ID]) {
-      dispatch({ type: "setAllOfOneTime", value: modelState });
+    if (modelState && modelState[attrConfig.PRODUCT_ID] && modelState[attrConfig.STORAGE_ID] && modelState[attrConfig.CARRIER_ID]) {
+      dispatch({ type: "setModelInfo", value: modelState });
     }
   }, [modelState]);
 
   // canNext?
   useEffect(() => {
-    // if (productId && productId === brand) {
-    //   props.goNextPage();
-    // }
-  }, [brand, state.all]);
+    if (modelInfo && modelState) {
+      // props.goNextPage();
+    }
+  }, [modelInfo, modelState]);
 
   function renderList() {
     return productsList
