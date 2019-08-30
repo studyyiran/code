@@ -5,13 +5,19 @@ import React, {
   useEffect
 } from "react";
 import { IReducerAction } from "@/interface/index.interface";
-import { getBrandsByCid } from "../server/index.api";
+import { getBrandsByCid, getProductsList } from "../server/index.api";
 
 export const SelectModelContext = createContext({});
 
 function reducer(state: IContextState, action: IReducerAction) {
   const { type, value } = action;
   switch (type) {
+    case "setProductsList": {
+      return {
+        ...state,
+        productsList: value
+      };
+    }
     case "setCategoryId": {
       return {
         ...state,
@@ -46,6 +52,7 @@ function promisify(func: any) {
 
 interface IContextActions {
   getBrandList: () => void;
+  getProductsList: () => void;
 }
 
 function useGetAction(
@@ -56,17 +63,25 @@ function useGetAction(
     getBrandList: promisify(async function() {
       if (state.categoryId) {
         const brandList = await getBrandsByCid(state.categoryId);
-        console.log(brandList);
         dispatch({ type: "setBrandList", value: brandList });
+      }
+    }),
+    getProductsList: promisify(async function() {
+      if (state.categoryId && state.brand) {
+        const productsList = await getProductsList(state.brand, state.categoryId);
+        console.log(productsList)
+        dispatch({ type: "setProductsList", value: productsList });
       }
     })
   };
   actions.getBrandList = useCallback(actions.getBrandList, [state.categoryId]);
+  actions.getProductsList = useCallback(actions.getProductsList, [state.brand, state.categoryId]);
   return actions;
 }
 
 interface IContextState {
   brandList: [];
+  productsList: [];
   categoryId: string;
   brand: string;
 }
@@ -79,14 +94,20 @@ export interface ISelectModelContext extends IContextActions {
 export function ModelContextProvider(props: any) {
   const initState: IContextState = {
     brandList: [],
+    productsList: [],
     categoryId: "",
     brand: ""
   };
   const [state, dispatch] = useReducer(reducer, initState);
   const action: IContextActions = useGetAction(state, dispatch);
+  // id变化，重新拉brand
   useEffect(() => {
     action.getBrandList();
   }, [action.getBrandList]);
+  // brand变化，重新拉机型
+  useEffect(() => {
+    action.getProductsList();
+  }, [action.getProductsList])
   const propsValue: ISelectModelContext = {
     ...action,
     selectModelContextValue: state,

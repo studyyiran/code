@@ -22,7 +22,7 @@ export const getCarrier = <T>() => {
 };
 
 // 获取机型列表, 以及根据关键字搜索机型
-export const getProductsList = <T>(brandId: number, categoryId: number = 1) => {
+export const getProductsList = <T>(brandId: string, categoryId: string) => {
   const opts: IOpts = {
     url: "/products/category-and-brand",
     params: {
