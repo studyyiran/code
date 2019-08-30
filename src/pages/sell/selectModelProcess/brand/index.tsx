@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import "./index.less";
 import sellServer from "../server";
 import { SelectModelContext, ISelectModelContext } from "../context";
@@ -14,15 +14,25 @@ export default function Brand(props: any) {
     selectModelContextValue,
     dispatch
   } = brandContext as ISelectModelContext;
-  const { brandList } = selectModelContextValue;
-  useEffect(() => {
-    console.log("dispatch");
-    dispatch({ type: "setCategoryId", value: "1" });
-  }, []);
+  const { brandList, brand } = selectModelContextValue;
+  const [currentSelectBrand, setCurrentSelectBrand] = useState("");
   function selectBrandHandler(id: string) {
+    setCurrentSelectBrand(id);
     dispatch({ type: "setBrand", value: id });
     // props.canGoNext() && props.goNextPage();
   }
+  useEffect(() => {
+    console.log("dispatch");
+    dispatch({ type: "setCategoryId", value: "1" });
+    return () => {
+      console.log('will un mount')
+    }
+  }, []);
+  useEffect(() => {
+    if (currentSelectBrand && currentSelectBrand === brand) {
+      props.goNextPage();
+    }
+  }, [brand, currentSelectBrand]);
   function renderList() {
     return brandList
       .filter((item, index) => {
