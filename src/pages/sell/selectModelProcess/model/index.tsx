@@ -1,47 +1,69 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext, useReducer } from "react";
 import "./index.less";
 import { SelectModelContext, ISelectModelContext } from "../context";
 import { HeaderTitle } from "@/components/headerTitle";
+import { IReducerAction } from "@/interface/index.interface";
 
 // interface IBrand {}
+const attrConfig = {
+  'PRODUCT_ID': 'productId',
+  'ID': 'Id',
+}
+
+function reducer(state: IContextState, action: IReducerAction) {
+  const { type, value } = action;
+  const { attrName, attrValue } = value;
+  switch (type) {
+    case "setValueByAttr": {
+      const newState = { ...state };
+      newState[attrName] = attrValue;
+      return newState;
+    }
+    default:
+      return { ...state };
+  }
+}
+
+interface IContextState {
+  productId: string;
+}
 
 export default function Brand(props: any) {
-  const [productId, setProductId] = useState("");
+  const initState: IContextState = {
+    productId: ""
+  };
+  const [modelState, modelDispatch] = useReducer(reducer, initState);
   const brandContext = useContext(SelectModelContext);
-  
+
   const {
     selectModelContextValue,
     dispatch
   } = brandContext as ISelectModelContext;
   const { brandList, brand, productsList } = selectModelContextValue;
-  console.log('render')
-  console.log(productsList)
   function selectProductHandler(id: string) {
-    setProductId(id);
+    modelDispatch({
+      type: "setValueByAttr",
+      value: { attrType: attrConfig.PRODUCT_ID, attrValue: id }
+    });
   }
-  useEffect(() => {
-    if (productId) {
-      
-    }
-  }, [productId])
   // canPost?
   useEffect(() => {
-    if (productId) {
-      // post
-      dispatch({ type: "setBrand", value: productId });
+    if (modelState && modelState[attrConfig.PRODUCT_ID] && modelState[attrConfig.ID]) {
+      dispatch({ type: "setAllOfOneTime", value: modelState });
     }
-  }, [productId]);
+  }, [modelState]);
+
   // canNext?
   useEffect(() => {
-    if (productId && productId === brand) {
-      props.goNextPage();
-    }
-  }, [brand, productId]);
+    // if (productId && productId === brand) {
+    //   props.goNextPage();
+    // }
+  }, [brand, state.all]);
 
   function renderList() {
     return productsList
       .sort((a: any, b: any) => {
-        return 1
+        return 1;
         // return a.order - b.order;
       })
       .map((item: any) => {
