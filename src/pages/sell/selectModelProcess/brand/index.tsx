@@ -7,10 +7,9 @@ import { HeaderTitle } from "@/components/headerTitle";
 // interface IBrand {}
 
 export default function Brand(props: any) {
+  // 这个ts为什么带不过来？先别管，先撸。
   const brandContext = useContext(SelectModelContext);
-  console.log(brandContext);
   const {
-    getBrandList,
     selectModelContextValue,
     dispatch
   } = brandContext as ISelectModelContext;
@@ -19,15 +18,7 @@ export default function Brand(props: any) {
   function selectBrandHandler(id: string) {
     setCurrentSelectBrand(id);
     dispatch({ type: "setBrand", value: id });
-    // props.canGoNext() && props.goNextPage();
   }
-  useEffect(() => {
-    console.log("dispatch");
-    dispatch({ type: "setCategoryId", value: "1" });
-    return () => {
-      console.log('will un mount')
-    }
-  }, []);
   useEffect(() => {
     if (currentSelectBrand && currentSelectBrand === brand) {
       props.goNextPage();
@@ -43,7 +34,6 @@ export default function Brand(props: any) {
       })
       .map((item: any) => {
         const { name, id, iconUrl } = item;
-        console.log(item);
         return (
           <li
             className="brand-icon-container"

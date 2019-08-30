@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import Brand from "./selectModelProcess/brand";
 import {
   SelectModelContext,
@@ -16,19 +16,30 @@ import { Switch, Route } from "react-router";
 // ]
 // interface ISell {}
 export default function Sell(props: any) {
-  console.log("render");
   const selectModelContext = useContext(SelectModelContext);
-  console.log(selectModelContext)
-  const { selectModelContextValue } = selectModelContext as ISelectModelContext;
-  const { brand } = selectModelContextValue;
-  console.log(props);
+  const {
+    selectModelContextValue,
+    dispatch
+  } = selectModelContext as ISelectModelContext;
+  const { brand, brandList } = selectModelContextValue;
   function canGoNext(): boolean {
     return true;
   }
   function goNextPage(): void {
     console.log("goNextPage");
     console.log(brand);
+    const findTarget: any = brandList.find((item: any) => {
+      return item.id === brand;
+    });
+    if (findTarget) {
+      const next = props.match.url + "/" + findTarget.name;
+      props.history.push(next);
+    }
   }
+  useEffect(() => {
+    const CategoryId = "1";
+    dispatch({ type: "setCategoryId", value: CategoryId });
+  }, []);
 
   // function wrapper(Component: any) {
   //   return (...other: any[]) => {
@@ -48,7 +59,7 @@ export default function Sell(props: any) {
   //   };
   // }
   function wrapperWithProps(Component: any) {
-    return function (other: any[]) {
+    return function(other: any[]) {
       const newProps = {
         canGoNext,
         goNextPage,
