@@ -3,21 +3,23 @@ import "./index.less";
 import { SelectModelContext, ISelectModelContext } from "../context";
 import { HeaderTitle } from "@/components/headerTitle";
 import { IReducerAction } from "@/interface/index.interface";
+import ModelCard from "@/pages/sell/selectModelProcess/components/modelCard";
 
 // interface IBrand {}
 const attrConfig = {
-  'PRODUCT_ID': 'productId',
-  'STORAGE_ID': 'storageID',
-  'CARRIER_ID': 'carrierID',
-}
+  PRODUCT_ID: "productId",
+  STORAGE_ID: "storageID",
+  CARRIER_ID: "carrierID"
+};
 
 function reducer(state: IContextState, action: IReducerAction) {
   const { type, value } = action;
-  const { attrName, attrValue } = value;
+  const { attrKey, attrValue } = value;
   switch (type) {
     case "setValueByAttr": {
+      debugger
       const newState = { ...state };
-      newState[attrName] = attrValue;
+      newState[attrKey] = attrValue;
       return newState;
     }
     default:
@@ -44,12 +46,17 @@ export default function Brand(props: any) {
   function selectProductHandler(id: string) {
     modelDispatch({
       type: "setValueByAttr",
-      value: { attrType: attrConfig.PRODUCT_ID, attrValue: id }
+      value: { attrKey: attrConfig.PRODUCT_ID, attrValue: id }
     });
   }
   // canPost?
   useEffect(() => {
-    if (modelState && modelState[attrConfig.PRODUCT_ID] && modelState[attrConfig.STORAGE_ID] && modelState[attrConfig.CARRIER_ID]) {
+    if (
+      modelState &&
+      modelState[attrConfig.PRODUCT_ID] &&
+      modelState[attrConfig.STORAGE_ID] &&
+      modelState[attrConfig.CARRIER_ID]
+    ) {
       dispatch({ type: "setModelInfo", value: modelState });
     }
   }, [modelState]);
@@ -68,17 +75,14 @@ export default function Brand(props: any) {
         // return a.order - b.order;
       })
       .map((item: any) => {
-        const { name, id, imageUrl } = item;
+        const { id } = item;
         return (
-          <li
-            className="brand-icon-container"
-            key={id}
-            onClick={() => {
-              selectProductHandler(id);
-            }}
-          >
-            <img src={imageUrl} />
-            <span>{name}</span>
+          <li className="brand-icon-container" key={id}>
+            <ModelCard
+              {...item}
+              isSelect={modelState.productId === id}
+              selectProductHandler={selectProductHandler}
+            />
           </li>
         );
       });
