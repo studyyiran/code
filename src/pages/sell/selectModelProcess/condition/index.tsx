@@ -67,6 +67,7 @@ function reducer(state: any, action: IReducerAction) {
       questionArr[
         questionArr.findIndex(item => item.id === questionId)
       ] = targetArr;
+      console.log({ ...state, phoneConditionAnswer: questionArr });
       return { ...state, phoneConditionAnswer: questionArr };
     }
     case "setUserPhoneInfo": {
@@ -288,6 +289,7 @@ export function ConditionForm(props: IConditionForm) {
           isContinue={true}
           continueNextStep={nextStep}
           onUserInputHandler={(value: any) => {
+            console.log("onUserInputHandler");
             dispatch({ type: "setUserPhoneInfo", value: value });
           }}
           status={getStatus(firstQuestionKey)}

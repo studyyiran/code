@@ -49,14 +49,15 @@ export default function Brand(props: any) {
               selectBrandHandler(id);
             }}
           >
-            <img src={iconUrl} />
+            <div className="img-container">
+              <img src={iconUrl} />
+            </div>
           </li>
         );
       });
   }
   return (
     <div className="page-select-brand">
-      <HeaderTitle title={"Select a manufacturer"} />
       <ul className="brand-list">{renderList()}</ul>
     </div>
   );

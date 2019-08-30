@@ -7,6 +7,7 @@ import {
   ISelectModelContext
 } from "./selectModelProcess/context";
 import { Switch, Route } from "react-router";
+import {HeaderTitle} from "@/components/headerTitle";
 
 // const config = [
 //   {
@@ -117,5 +118,8 @@ export default function Sell(props: any) {
 
 function Layout(props: any) {
   const { children } = props;
-  return <div>{children}</div>;
+  return <div>
+    <HeaderTitle title={"Select a manufacturer"} />
+    <div>{children}</div>
+  </div>;
 }
