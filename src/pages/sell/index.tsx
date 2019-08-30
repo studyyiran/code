@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import Brand from "./selectModelProcess/brand";
 import Model from "./selectModelProcess/model";
+import Questionary from "./selectModelProcess/condition";
 import {
   SelectModelContext,
   ISelectModelContext
@@ -74,6 +75,14 @@ export default function Sell(props: any) {
   return (
     <Switch>
       {/*<Route path={props.match.url + "/"} component={Brand} />*/}
+      <Route
+        path={props.match.url + "/test"}
+        render={(...other) => (
+          <Layout>
+            <Questionary canGoNext={canGoNext} goNextPage={goNextPage} {...props} />
+          </Layout>
+        )}
+      />
       <Route
         path={props.match.url + "/:brandName/:model"}
         render={(...other) => (
