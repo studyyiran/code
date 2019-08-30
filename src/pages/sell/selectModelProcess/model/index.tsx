@@ -6,57 +6,63 @@ import { HeaderTitle } from "@/components/headerTitle";
 // interface IBrand {}
 
 export default function Brand(props: any) {
-  // 这个ts为什么带不过来？先别管，先撸。
+  const [productId, setProductId] = useState("");
   const brandContext = useContext(SelectModelContext);
+  
   const {
     selectModelContextValue,
     dispatch
   } = brandContext as ISelectModelContext;
-  const { brandList, brand } = selectModelContextValue;
-  const [currentSelectBrand, setCurrentSelectBrand] = useState("");
-  function selectBrandHandler(id: string) {
-    setCurrentSelectBrand(id);
+  const { brandList, brand, productsList } = selectModelContextValue;
+  console.log('render')
+  console.log(productsList)
+  function selectProductHandler(id: string) {
+    setProductId(id);
   }
+  useEffect(() => {
+    if (productId) {
+      
+    }
+  }, [productId])
   // canPost?
   useEffect(() => {
-    if (currentSelectBrand) {
+    if (productId) {
       // post
-      dispatch({ type: "setBrand", value: currentSelectBrand });
+      dispatch({ type: "setBrand", value: productId });
     }
-  }, [currentSelectBrand]);
+  }, [productId]);
   // canNext?
   useEffect(() => {
-    if (currentSelectBrand && currentSelectBrand === brand) {
+    if (productId && productId === brand) {
       props.goNextPage();
     }
-  }, [brand, currentSelectBrand]);
+  }, [brand, productId]);
 
   function renderList() {
-    return brandList
-      .filter((item, index) => {
-        return index < 6;
-      })
+    return productsList
       .sort((a: any, b: any) => {
-        return a.order - b.order;
+        return 1
+        // return a.order - b.order;
       })
       .map((item: any) => {
-        const { name, id, iconUrl } = item;
+        const { name, id, imageUrl } = item;
         return (
           <li
             className="brand-icon-container"
             key={id}
             onClick={() => {
-              selectBrandHandler(id);
+              selectProductHandler(id);
             }}
           >
-            <img src={iconUrl} />
+            <img src={imageUrl} />
+            <span>{name}</span>
           </li>
         );
       });
   }
   return (
     <div className="page-select-brand">
-      <HeaderTitle title={"Select a manufacturer"} />
+      <HeaderTitle title={"Model"} />
       <ul className="brand-list">{renderList()}</ul>
     </div>
   );

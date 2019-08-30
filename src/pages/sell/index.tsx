@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import Brand from "./selectModelProcess/brand";
+import Model from "./selectModelProcess/model";
 import {
   SelectModelContext,
   ISelectModelContext
@@ -70,14 +71,11 @@ export default function Sell(props: any) {
     };
   }
 
-  const Model = () => {
-    return <div>123</div>;
-  };
   return (
     <Switch>
       {/*<Route path={props.match.url + "/"} component={Brand} />*/}
       <Route
-        path={props.match.url + "/"}
+        path={props.match.url + "/:brandName/:model"}
         render={(...other) => (
           <Layout>
             <Brand canGoNext={canGoNext} goNextPage={goNextPage} {...props} />
@@ -86,11 +84,19 @@ export default function Sell(props: any) {
       />
       <Route
         path={props.match.url + "/:brandName"}
-        component={wrapperWithProps(Model)}
+        render={(...other) => (
+          <Layout>
+            <Model canGoNext={canGoNext} goNextPage={goNextPage} {...props} />
+          </Layout>
+        )}
       />
       <Route
-        path={props.match.url + "/:brandName/:model"}
-        component={wrapperWithProps(Model)}
+        path={props.match.url + "/"}
+        render={(...other) => (
+          <Layout>
+            <Brand canGoNext={canGoNext} goNextPage={goNextPage} {...props} />
+          </Layout>
+        )}
       />
       <Route render={() => <div>123</div>} />
     </Switch>
