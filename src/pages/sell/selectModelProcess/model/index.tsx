@@ -17,7 +17,6 @@ function reducer(state: IContextState, action: IReducerAction) {
   const { attrKey, attrValue } = value;
   switch (type) {
     case "setValueByAttr": {
-      debugger
       const newState = { ...state };
       newState[attrKey] = attrValue;
       return newState;

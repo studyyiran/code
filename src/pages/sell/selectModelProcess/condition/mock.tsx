@@ -3,85 +3,22 @@ import { IQuestion, IUserQuestionAnswer } from "./index.interface";
 const firstQuestionKey = "aboutYourPhone";
 export const serverPhoneInfo: IUserQuestionAnswer[] = [
   {
-    id: "phoneInfoSubQuestion1",
+    id: firstQuestionKey,
     subAnswerArr: [
       {
-        id: "phoneInfoSubQuestion1",
+        id: "manufacture",
         answer: ["1"]
       },
       {
-        id: "phoneInfoSubQuestion2",
+        id: "model",
         answer: ["1"]
       },
       {
-        id: "phoneInfoSubQuestion3",
+        id: "storage",
         answer: ["1"]
       },
       {
-        id: "phoneInfoSubQuestion4",
-        answer: ["1"]
-      }
-    ]
-  },
-  {
-    id: "phoneInfoSubQuestion2",
-    subAnswerArr: [
-      {
-        id: "phoneInfoSubQuestion1",
-        answer: ["1"]
-      },
-      {
-        id: "phoneInfoSubQuestion2",
-        answer: ["1"]
-      },
-      {
-        id: "phoneInfoSubQuestion3",
-        answer: ["1"]
-      },
-      {
-        id: "phoneInfoSubQuestion4",
-        answer: ["1"]
-      }
-    ]
-  },
-  {
-    id: "phoneInfoSubQuestion3",
-    subAnswerArr: [
-      {
-        id: "phoneInfoSubQuestion1",
-        answer: ["1"]
-      },
-      {
-        id: "phoneInfoSubQuestion2",
-        answer: ["1"]
-      },
-      {
-        id: "phoneInfoSubQuestion3",
-        answer: ["1"]
-      },
-      {
-        id: "phoneInfoSubQuestion4",
-        answer: ["1"]
-      }
-    ]
-  },
-  {
-    id: "phoneInfoSubQuestion4",
-    subAnswerArr: [
-      {
-        id: "phoneInfoSubQuestion1",
-        answer: ["1"]
-      },
-      {
-        id: "phoneInfoSubQuestion2",
-        answer: ["1"]
-      },
-      {
-        id: "phoneInfoSubQuestion3",
-        answer: ["1"]
-      },
-      {
-        id: "phoneInfoSubQuestion4",
+        id: "carrier",
         answer: ["1"]
       }
     ]

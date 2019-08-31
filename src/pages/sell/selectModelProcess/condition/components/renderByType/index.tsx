@@ -57,6 +57,7 @@ export function RenderByType(props: IRenderByType) {
       );
       break;
     case "choiceQuestion":
+      console.log(userSubAnswer)
       if (questionDesc && questionDesc.length) {
         dom.push(
           <ChoiceQuestion
@@ -76,6 +77,7 @@ export function RenderByType(props: IRenderByType) {
       }
       break;
     case "multiSelect":
+      console.log(userSubAnswer)
       if (questionDesc && questionDesc.length) {
         dom.push(
           <CheckBoxQuestion
@@ -96,12 +98,20 @@ export function RenderByType(props: IRenderByType) {
       }
       break;
     case "select":
+      // 传统的下拉选择框
       if (questionDesc && questionDesc.length) {
         dom.push(
           <Select
             key={subQuestionId}
             style={{ width: "100%" }}
-            defaultValue={questionDesc[0]}
+            value={userSubAnswer.answer}
+            onChange={answer => {
+              onUserInputHandler({
+                questionId,
+                answerId: subQuestionId,
+                answer: answer
+              });
+            }}
           >
             {questionDesc.map((nameValue: string) => {
               return (
