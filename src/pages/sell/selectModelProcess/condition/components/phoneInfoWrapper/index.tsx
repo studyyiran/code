@@ -87,7 +87,7 @@ export function PhoneInfoWrapper(props: any) {
     }
   );
   const {
-    dispatch: selectModelDispatch
+    selectModelContextDispatch: selectModelDispatch
   } = selectModelContext as ISelectModelContext;
   function phoneInfoHandler(value: any) {
     const { answerId, answer } = value;

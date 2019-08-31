@@ -22,7 +22,7 @@ export default function Sell(props: any) {
   const selectModelContext = useContext(SelectModelContext);
   const {
     selectModelContextValue,
-    dispatch
+    selectModelContextDispatch
   } = selectModelContext as ISelectModelContext;
   const { brand, brandList } = selectModelContextValue;
   function canGoNext(): boolean {
@@ -41,7 +41,7 @@ export default function Sell(props: any) {
   }
   useEffect(() => {
     const CategoryId = "1";
-    dispatch({ type: "setCategoryId", value: CategoryId });
+    selectModelContextDispatch({ type: "setCategoryId", value: CategoryId });
   }, []);
 
   // function wrapper(Component: any) {

@@ -39,7 +39,7 @@ export default function Brand(props: any) {
 
   const {
     selectModelContextValue,
-    dispatch
+    selectModelContextDispatch
   } = brandContext as ISelectModelContext;
   const { modelInfo, productsList } = selectModelContextValue;
   function selectProductHandler(id: string) {
@@ -56,7 +56,7 @@ export default function Brand(props: any) {
       modelState[attrConfig.STORAGE_ID] &&
       modelState[attrConfig.CARRIER_ID]
     ) {
-      dispatch({ type: "setModelInfo", value: modelState });
+      selectModelContextDispatch({ type: "setModelInfo", value: modelState });
     }
   }, [modelState]);
 

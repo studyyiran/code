@@ -1,5 +1,5 @@
 const firstQuestionKey = "aboutYourPhone";
-import React, { useReducer, useState, useEffect } from "react";
+import React, { useReducer, useState, useEffect, useContext } from "react";
 import "./index.less";
 import { Collapse } from "antd";
 import { IReducerAction } from "@/interface/index.interface";
@@ -8,6 +8,7 @@ import { WrapperPanel } from "./components/wrapperPanel";
 import { PhoneInfoWrapper } from "./components/phoneInfoWrapper";
 import { isCanMove, isNoContinue, updateReducerValue } from "./util";
 import { serverPhoneConditionQuestion } from "./mock";
+import { ISelectModelContext, SelectModelContext } from "../context";
 
 /*
 default 和 active似乎 遵从active
@@ -99,6 +100,10 @@ interface IConditionForm {
 }
 
 export function ConditionForm(props: IConditionForm) {
+  const selectModelContext = useContext(SelectModelContext);
+  const {
+    selectModelContextDispatch
+  } = selectModelContext as ISelectModelContext;
   const [maxActiveKey, setMaxActiveKey] = useState("");
   const { state, dispatch, phoneConditionQuestion = [] } = props;
   const { phoneConditionAnswer, editKey, showKey } = state;
@@ -251,7 +256,17 @@ export function ConditionForm(props: IConditionForm) {
         })}
       </Collapse>
       {maxActiveKey === "allFinish" ? (
-        <button className="common-button finish-button">Get Quote</button>
+        <button
+          onClick={() => {
+            selectModelContextDispatch({
+              type: "updateUserProductList",
+              value: ""
+            });
+          }}
+          className="common-button finish-button"
+        >
+          Get Quote
+        </button>
       ) : null}
     </div>
   );

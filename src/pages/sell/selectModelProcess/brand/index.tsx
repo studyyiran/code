@@ -10,7 +10,7 @@ export default function Brand(props: any) {
   const brandContext = useContext(SelectModelContext);
   const {
     selectModelContextValue,
-    dispatch
+    selectModelContextDispatch
   } = brandContext as ISelectModelContext;
   const { brandList, brand } = selectModelContextValue;
   const [currentSelectBrand, setCurrentSelectBrand] = useState("");
@@ -21,7 +21,7 @@ export default function Brand(props: any) {
   useEffect(() => {
     if (currentSelectBrand) {
       // post
-      dispatch({ type: "setBrand", value: currentSelectBrand });
+      selectModelContextDispatch({ type: "setBrand", value: currentSelectBrand });
     }
   }, [currentSelectBrand]);
   // canNext?

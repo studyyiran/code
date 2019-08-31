@@ -18,28 +18,35 @@ function reducer(state: IContextState, action: IReducerAction) {
   switch (type) {
     case "setProductsList": {
       newState = {
-        ...state,
+        ...newState,
         productsList: value
+      };
+      break;
+    }
+    case "setPriceList": {
+      newState = {
+        ...newState,
+        priceList: value
       };
       break;
     }
     case "setCategoryId": {
       newState = {
-        ...state,
+        ...newState,
         categoryId: value
       };
       break;
     }
     case "setBrandList": {
       newState = {
-        ...state,
+        ...newState,
         brandList: value
       };
       break;
     }
     case "setBrand": {
       newState = {
-        ...state,
+        ...newState,
         brand: value,
         modelInfo: {
           modelId: "",
@@ -50,38 +57,50 @@ function reducer(state: IContextState, action: IReducerAction) {
       break;
     }
     case "setModelInfo": {
-      if (value.modelId !== state.modelInfo.modelId) {
+      if (value.modelId !== newState.modelInfo.modelId) {
         value.storageId = "";
         value.carrierId = "";
       }
       newState = {
-        ...state,
+        ...newState,
         modelInfo: value
       };
       break;
     }
     case "updateUserProductList": {
+    debugger
+      const newProduct = {
+        brand: newState.brand,
+        modelInfo: newState.modelInfo,
+        stamp: newState.stamp
+      };
       const productTargetIndex = newState.userProductList.findIndex(
         userProduct => {
           // 首先判定，当前的状态
-          return userProduct.stamp === state.stamp;
+          return userProduct.stamp === newState.stamp;
         }
       );
       if (productTargetIndex !== -1) {
         // 更新
-        newState.userProductList[productTargetIndex] = value;
+        newState.userProductList[productTargetIndex] = newProduct;
       } else {
-        // 插入
-        value.stamp = Date.now();
-        newState.userProductList.push(value);
+        // 插入。并且更新当前的stamp
+        newProduct.stamp = String(Date.now());
+        newState.userProductList.push(newProduct);
       }
       newState = { ...newState };
       break;
     }
     default:
-      newState = { ...state };
+      newState = { ...newState };
   }
-  saveToCache(sessionKey, newState, ["modelInfo", "brand", "categoryId"]);
+  saveToCache(sessionKey, newState, [
+    "modelInfo",
+    "brand",
+    "categoryId",
+    "userProductList",
+    "stamp"
+  ]);
   return newState;
 }
 // const promisify = (func: (...param: any[]) => void) => (...args: any[]) => {
@@ -129,7 +148,7 @@ function useGetAction(
         // );
         // console.log(productsList);
         dispatch({
-          type: "setProductsList",
+          type: "setPriceList",
           value: state.userProductList.map((item, index) => ({
             price: Math.ceil(Math.random() * 100) + index
           }))
@@ -162,11 +181,12 @@ interface IContextState {
   brand: string;
   stamp: string;
   userProductList: any[];
+  priceList: any[];
 }
 
 export interface ISelectModelContext extends IContextActions {
   selectModelContextValue: IContextState;
-  dispatch: (action: IReducerAction) => void;
+  selectModelContextDispatch: (action: IReducerAction) => void;
 }
 
 export function ModelContextProvider(props: any) {
@@ -179,6 +199,7 @@ export function ModelContextProvider(props: any) {
     },
     productsList: [],
     userProductList: [],
+    priceList: [],
     categoryId: "",
     stamp: "",
     brand: ""
@@ -206,7 +227,7 @@ export function ModelContextProvider(props: any) {
   const propsValue: ISelectModelContext = {
     ...action,
     selectModelContextValue: state,
-    dispatch
+    selectModelContextDispatch: dispatch
   };
   return <SelectModelContext.Provider value={propsValue} {...props} />;
 }
