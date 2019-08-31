@@ -129,32 +129,32 @@ export const serverPhoneConditionQuestion: IQuestion[] = [
   }
 ];
 
-export const serverPhoneInfo: IUserQuestionAnswer[] = [
+export const staticPhoneInfo: IUserQuestionAnswer[] = [
   {
     id: firstQuestionKey,
     subAnswerArr: [
       {
         id: "manufacture",
-        answer: ["1"]
+        answer: []
       },
       {
         id: "model",
-        answer: ["1"]
+        answer: []
       },
       {
         id: "storage",
-        answer: ["1"]
+        answer: []
       },
       {
         id: "carrier",
-        answer: ["1"]
+        answer: []
       }
     ]
   }
 ];
 
 // 关于手机情况的 写死的 问题
-export const serverPhoneInfoQuestion: IQuestion[] = [
+export const staticPhoneInfoQuestion: IQuestion[] = [
   {
     id: firstQuestionKey,
     title: "About your phone",
@@ -162,25 +162,25 @@ export const serverPhoneInfoQuestion: IQuestion[] = [
       {
         id: "manufacture",
         content: "Phone Manufacture",
-        questionDesc: ["Brand1", "Brand2"],
+        questionDesc: [],
         type: "select"
       },
       {
         id: "model",
         content: "Model",
-        questionDesc: ["iPhone X", "iPhone 8"],
+        questionDesc: [],
         type: "select"
       },
       {
         id: "storage",
         content: "Storage",
-        questionDesc: ["64GB", "128GB"],
+        questionDesc: [],
         type: "select"
       },
       {
         id: "carrier",
         content: "Carrier",
-        questionDesc: ["Carrier1", "Carrier2"],
+        questionDesc: [],
         type: "select"
       }
     ]

@@ -54,7 +54,6 @@ function reducer(state: IContextState, action: IReducerAction) {
     default:
       newState = { ...state };
   }
-  console.log("run reducer");
   saveToCache(sessionKey, state, ["modelInfo", "brand", "categoryId"]);
   return newState;
 }

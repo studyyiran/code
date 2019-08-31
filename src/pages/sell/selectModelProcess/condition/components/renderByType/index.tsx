@@ -57,14 +57,12 @@ export function RenderByType(props: IRenderByType) {
       );
       break;
     case "choiceQuestion":
-      console.log(userSubAnswer)
       if (questionDesc && questionDesc.length) {
         dom.push(
           <ChoiceQuestion
             key={subQuestionId}
             options={questionDesc}
             onChange={answer => {
-              console.log(answer)
               // onUserInputHandler({
               //   questionId,
               //   answerId: subQuestionId,
@@ -77,7 +75,6 @@ export function RenderByType(props: IRenderByType) {
       }
       break;
     case "multiSelect":
-      console.log(userSubAnswer)
       if (questionDesc && questionDesc.length) {
         dom.push(
           <CheckBoxQuestion
@@ -109,14 +106,14 @@ export function RenderByType(props: IRenderByType) {
               onUserInputHandler({
                 questionId,
                 answerId: subQuestionId,
-                answer: answer
+                answer: [answer]
               });
             }}
           >
-            {questionDesc.map((nameValue: string) => {
+            {questionDesc.map(({ id, name }: any) => {
               return (
-                <Option key={nameValue} value={nameValue}>
-                  {nameValue}
+                <Option key={id} value={id}>
+                  {name}
                 </Option>
               );
             })}
