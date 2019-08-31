@@ -30,13 +30,12 @@ export default function Sell(props: any) {
     return true;
   }
   function goNextPage(): void {
-    console.log("goNextPage");
-    console.log(brand);
     const findTarget: any = brandList.find((item: any) => {
       return item.id === brand;
     });
     if (findTarget) {
-      const next = props.match.url + "/" + findTarget.name;
+      // const next = props.match.url + "/" + findTarget.name;
+      const next = props.match.url + "/condition";
       props.history.push(next);
     }
   }

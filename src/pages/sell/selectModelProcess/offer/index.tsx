@@ -30,17 +30,29 @@ export default function Brand(props: any) {
           ...modelInfo
         });
         return (
-          <li className="brand-icon-container" key={stamp} onClick={() => selectHandler(stamp)}>
-            <span>{nameObj.modelInfoName.modelName + nameObj.modelInfoName.storageName}</span>
+          <li
+            className="brand-icon-container"
+            key={stamp}
+            onClick={() => selectHandler(stamp)}
+          >
+            <span>
+              {nameObj.modelInfoName.modelName +
+                nameObj.modelInfoName.storageName}
+            </span>
             <span>{nameObj.modelInfoName.carrierName}</span>
             <span>{priceList[index] && priceList[index].price}</span>
           </li>
         );
       });
   }
+  function addNewHandler() {
+    selectModelContextDispatch({ type: "changeModelCache", value: "reset" });
+    props.history.push(props.match.url);
+  }
   return (
     <div className="page-offer">
       <ul className="brand-list">{renderList()}</ul>
+      <div onClick={addNewHandler}>add another</div>
     </div>
   );
 }

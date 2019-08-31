@@ -80,7 +80,7 @@ function reducer(state: IContextState, action: IReducerAction) {
         }
       );
       // 强行变更数组。深比较
-      newState.userProductList = newState.userProductList.concat([])
+      newState.userProductList = newState.userProductList.concat([]);
       if (productTargetIndex !== -1) {
         // 更新
         newState.userProductList[productTargetIndex] = newProduct;
@@ -96,18 +96,18 @@ function reducer(state: IContextState, action: IReducerAction) {
     }
     case "changeModelCache": {
       if (value === "reset") {
-        return Object.assign({}, newState, {
+        newState = Object.assign({}, newState, {
           modelInfo: {
             modelId: "",
             storageId: "",
             carrierId: ""
           },
-          categoryId: "",
+          // categoryId: "",// 不需要
           brand: "",
           stamp: ""
         });
       } else if (value) {
-        return { ...newState, ...value };
+        newState = { ...newState, ...value };
       }
       break;
     }
@@ -115,7 +115,7 @@ function reducer(state: IContextState, action: IReducerAction) {
       newState = { ...newState };
   }
   // justtest 避免覆盖
-  if (state.brand) {
+  if (state.brand || type === "changeModelCache") {
     saveToCache(sessionKey, newState, [
       "modelInfo",
       "brand",
