@@ -14,7 +14,7 @@ export const SelectModelContext = createContext({});
 
 function reducer(state: IContextState, action: IReducerAction) {
   const { type, value } = action;
-  let newState;
+  let newState = { ...state };
   switch (type) {
     case "setProductsList": {
       newState = {
@@ -60,6 +60,24 @@ function reducer(state: IContextState, action: IReducerAction) {
       };
       break;
     }
+    case "updateUserProductList": {
+      const productTargetIndex = newState.userProductList.findIndex(
+        userProduct => {
+          // 首先判定，当前的状态
+          return userProduct.stamp === state.stamp;
+        }
+      );
+      if (productTargetIndex !== -1) {
+        // 更新
+        newState.userProductList[productTargetIndex] = value;
+      } else {
+        // 插入
+        value.stamp = Date.now();
+        newState.userProductList.push(value);
+      }
+      newState = { ...newState };
+      break;
+    }
     default:
       newState = { ...state };
   }
@@ -79,6 +97,7 @@ function promisify(func: any) {
 interface IContextActions {
   getBrandList: () => void;
   getProductsList: () => void;
+  getPriceList: () => void;
 }
 
 function useGetAction(
@@ -101,12 +120,30 @@ function useGetAction(
         console.log(productsList);
         dispatch({ type: "setProductsList", value: productsList });
       }
+    }),
+    getPriceList: promisify(async function() {
+      if (state.userProductList && state.userProductList.length) {
+        // const productsList = await getProductsList(
+        //   state.brand,
+        //   state.categoryId
+        // );
+        // console.log(productsList);
+        dispatch({
+          type: "setProductsList",
+          value: state.userProductList.map((item, index) => ({
+            price: Math.ceil(Math.random() * 100) + index
+          }))
+        });
+      }
     })
   };
   actions.getBrandList = useCallback(actions.getBrandList, [state.categoryId]);
   actions.getProductsList = useCallback(actions.getProductsList, [
     state.brand,
     state.categoryId
+  ]);
+  actions.getPriceList = useCallback(actions.getProductsList, [
+    state.userProductList
   ]);
   return actions;
 }
@@ -123,6 +160,8 @@ interface IContextState {
   productsList: [];
   categoryId: string;
   brand: string;
+  stamp: string;
+  userProductList: any[];
 }
 
 export interface ISelectModelContext extends IContextActions {
@@ -139,7 +178,9 @@ export function ModelContextProvider(props: any) {
       carrierId: ""
     },
     productsList: [],
+    userProductList: [],
     categoryId: "",
+    stamp: "",
     brand: ""
   };
   if (!haveLoad) {
@@ -159,6 +200,9 @@ export function ModelContextProvider(props: any) {
   useEffect(() => {
     action.getProductsList();
   }, [action.getProductsList]);
+  useEffect(() => {
+    action.getPriceList();
+  }, [action.getPriceList]);
   const propsValue: ISelectModelContext = {
     ...action,
     selectModelContextValue: state,
