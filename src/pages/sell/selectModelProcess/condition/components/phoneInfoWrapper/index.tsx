@@ -12,6 +12,26 @@ export function PhoneInfoWrapper(props: any) {
   const selectModelContext = useContext(SelectModelContext);
   const { selectModelContextValue } = selectModelContext as ISelectModelContext;
   const { brandList, brand, productsList, modelInfo } = selectModelContextValue;
+  function justGetAttrArr() {
+    if (modelInfo && modelInfo.modelId) {
+      // 1 搜索到
+      const findProduct: {
+        skuPricePropertyNames: any[];
+      } = productsList.find(
+        (product: any) => product.id === modelInfo.modelId
+      ) || { skuPricePropertyNames: [] };
+      if (
+        findProduct &&
+        findProduct.skuPricePropertyNames &&
+        findProduct.skuPricePropertyNames.length
+      ) {
+        const attrObj = findProduct.skuPricePropertyNames[0];
+        return attrObj.pricePropertyValues.map((attrValue: any) => {
+          return { id: attrValue.id, name: attrValue.value };
+        });
+      }
+    }
+  }
   staticPhoneInfoQuestion[0].subQuestionArr = staticPhoneInfoQuestion[0].subQuestionArr.map(
     item => {
       const { id } = item;
@@ -24,10 +44,20 @@ export function PhoneInfoWrapper(props: any) {
           return { ...item, questionDesc: productsList };
           break;
         }
+        case "storage": {
+          // 根据xx计算得出
+          return { ...item, questionDesc: justGetAttrArr() };
+          break;
+        }
+        case "carrier": {
+          // 缺少运营商的数据
+          return { ...item, questionDesc: justGetAttrArr() };
+          break;
+        }
         default:
           break;
       }
-      return { ...item, questionDesc: brandList };
+      return { ...item, questionDesc: [] };
     }
   );
   staticPhoneInfo[0].subAnswerArr = staticPhoneInfo[0].subAnswerArr.map(
@@ -40,6 +70,14 @@ export function PhoneInfoWrapper(props: any) {
         }
         case "model": {
           return { ...item, answer: [modelInfo.modelId] };
+          break;
+        }
+        case "storage": {
+          return { ...item, answer: [modelInfo.storageId] };
+          break;
+        }
+        case "carrier": {
+          return { ...item, answer: [modelInfo.carrierId] };
           break;
         }
         default:
@@ -59,10 +97,21 @@ export function PhoneInfoWrapper(props: any) {
         selectModelDispatch({ type: "setBrand", value: answer[0] });
         break;
       case "model":
-        // 这边数据结构需要转换
         selectModelDispatch({
           type: "setModelInfo",
           value: { ...modelInfo, modelId: answer[0] }
+        });
+        break;
+      case "storage":
+        selectModelDispatch({
+          type: "setModelInfo",
+          value: { ...modelInfo, storageId: answer[0] }
+        });
+        break;
+      case "carrier":
+        selectModelDispatch({
+          type: "setModelInfo",
+          value: { ...modelInfo, carrierId: answer[0] }
         });
         break;
     }
