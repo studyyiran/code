@@ -10,14 +10,14 @@ export function canShowMoreQuestion(
   userAnswer?: string[]
 ): boolean {
   if (!userAnswer) {
-    return false
+    return false;
   }
-  if (userAnswer.length && userAnswer.length === 0) {
-    return false
-  }
-  if (userAnswer.length && userAnswer.length === 1 && userAnswer[0] === "") {
-    return false
-  }
+  // if (userAnswer.length && userAnswer.length === 0) {
+  //   return false;
+  // }
+  // if (userAnswer.length && userAnswer.length === 1 && userAnswer[0] === "") {
+  //   return false;
+  // }
   if (!isMoreCondition) {
     return true;
   } else {
@@ -46,7 +46,6 @@ export function isCanMove(
   findCurrent: IQuestion,
   userAnswerInput: IUserQuestionAnswer[] | undefined
 ): boolean {
-  debugger
   function isAllNotEmpty(arr: ISubQuestion[]): boolean {
     // @ts-ignore
     return arr.every(question => {
@@ -54,7 +53,12 @@ export function isCanMove(
       // @ts-ignore
       const userAnswer = findAnswerById(userAnswerInput, subQuestionId);
       // @ts-ignore
-      return userAnswer && userAnswer.answer && userAnswer.answer.length;
+      return (
+        userAnswer &&
+        userAnswer.answer &&
+        userAnswer.answer.length &&
+        userAnswer.answer[0] !== ""
+      );
     });
     // const { id, subQuestionArr } = arr;
     // const userAnswer = findAnswerById(id)
@@ -120,14 +124,10 @@ export function updateReducerValue(
   answer: any
 ) {
   // 1 查找question是否存在
-  const questionArr: IUserQuestionAnswer[] = changeTargetById(
-    arr,
-    questionId,
-    {
-      id: questionId,
-      subAnswerArr: []
-    }
-  );
+  const questionArr: IUserQuestionAnswer[] = changeTargetById(arr, questionId, {
+    id: questionId,
+    subAnswerArr: []
+  });
   const targetArr = questionArr.find(item => item.id === questionId);
   // 查找answerId是否存在
   if (targetArr) {
@@ -145,12 +145,16 @@ export function updateReducerValue(
     }
     questionArr[
       questionArr.findIndex(item => item.id === questionId)
-      ] = targetArr;
+    ] = targetArr;
     return questionArr;
   }
   return null;
-  
-  function changeTargetById(targetSearchArr: any[], changedId: string, insert: any) {
+
+  function changeTargetById(
+    targetSearchArr: any[],
+    changedId: string,
+    insert: any
+  ) {
     // copy
     const changedArr = targetSearchArr.slice(0);
     const findItemIndex = targetSearchArr.findIndex((item: any) => {

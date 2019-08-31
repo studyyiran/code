@@ -5,12 +5,9 @@ import { Collapse } from "antd";
 import { IReducerAction } from "@/interface/index.interface";
 import { IQuestion, IUserAnswer, IUserQuestionAnswer } from "./index.interface";
 import { WrapperPanel } from "./components/wrapperPanel";
+import { PhoneInfoWrapper } from "./components/phoneInfoWrapper";
 import { isCanMove, isNoContinue, updateReducerValue } from "./util";
-import {
-  serverPhoneInfoQuestion,
-  serverPhoneConditionQuestion,
-  serverPhoneInfo
-} from "./mock";
+import { serverPhoneConditionQuestion } from "./mock";
 
 /*
 default 和 active似乎 遵从active
@@ -31,18 +28,18 @@ export function reducer(state: any, action: IReducerAction) {
         )
       };
     }
-    case "setUserPhoneInfo": {
-      const { questionId, answerId, answer } = value;
-      return {
-        ...state,
-        phoneInfoAnswer: updateReducerValue(
-          state.phoneInfoAnswer,
-          questionId,
-          answerId,
-          answer
-        )
-      };
-    }
+    // case "setUserPhoneInfo": {
+    //   const { questionId, answerId, answer } = value;
+    //   return {
+    //     ...state,
+    //     phoneInfoAnswer: updateReducerValue(
+    //       state.phoneInfoAnswer,
+    //       questionId,
+    //       answerId,
+    //       answer
+    //     )
+    //   };
+    // }
     case "setShowKey":
       // state 需要使用type吗？
       return { ...state, showKey: value };
@@ -60,9 +57,7 @@ export function reducer(state: any, action: IReducerAction) {
 export default function Questionary() {
   return (
     <Conditions
-      phoneInfoQuestion={serverPhoneInfoQuestion}
       phoneConditionQuestion={serverPhoneConditionQuestion}
-      phoneInfoAnswer={serverPhoneInfo}
       phoneConditionAnswer={[]}
     />
   );
@@ -70,28 +65,19 @@ export default function Questionary() {
 // questionnaire
 // 后端接口
 interface IConditions {
-  phoneInfoQuestion?: IQuestion[];
   phoneConditionQuestion?: IQuestion[];
   phoneConditionAnswer?: IUserQuestionAnswer[];
-  phoneInfoAnswer?: IUserQuestionAnswer[];
 }
 
 interface IStateConditions {
-  phoneInfoAnswer: IUserQuestionAnswer[];
   phoneConditionAnswer: IUserQuestionAnswer[];
   editKey: string[];
   showKey: string[];
 }
 
 function Conditions(props: IConditions) {
-  const {
-    phoneInfoQuestion = [],
-    phoneConditionQuestion = [],
-    phoneConditionAnswer = [],
-    phoneInfoAnswer = []
-  } = props;
+  const { phoneConditionQuestion = [], phoneConditionAnswer = [] } = props;
   const initState: IStateConditions = {
-    phoneInfoAnswer: phoneInfoAnswer,
     phoneConditionAnswer: phoneConditionAnswer,
     editKey: [],
     showKey: []
@@ -101,7 +87,6 @@ function Conditions(props: IConditions) {
     <ConditionForm
       state={state}
       dispatch={dispatch}
-      phoneInfoQuestion={phoneInfoQuestion}
       phoneConditionQuestion={phoneConditionQuestion}
     />
   );
@@ -111,18 +96,12 @@ interface IConditionForm {
   state: IStateConditions;
   dispatch: (action: IReducerAction) => void;
   phoneConditionQuestion: IQuestion[];
-  phoneInfoQuestion: IQuestion[];
 }
 
 export function ConditionForm(props: IConditionForm) {
   const [maxActiveKey, setMaxActiveKey] = useState("");
-  const {
-    state,
-    dispatch,
-    phoneConditionQuestion = [],
-    phoneInfoQuestion = []
-  } = props;
-  const { phoneConditionAnswer, phoneInfoAnswer, editKey, showKey } = state;
+  const { state, dispatch, phoneConditionQuestion = [] } = props;
+  const { phoneConditionAnswer, editKey, showKey } = state;
   // format
   const questionProcess = [firstQuestionKey]
     .concat(phoneConditionQuestion.map(item => item.id))
@@ -219,21 +198,31 @@ export function ConditionForm(props: IConditionForm) {
       <p>Manufacture > Phone conditions</p>
       <h1>Phone conditions</h1>
       <Collapse activeKey={[maxActiveKey].concat(editKey).concat(showKey)}>
-        <WrapperPanel
-          onSetShowKey={setShowKey}
-          isContinue={true}
-          continueNextStep={nextStep}
-          onUserInputHandler={(value: any) => {
-            console.log("onUserInputHandler");
-            dispatch({ type: "setUserPhoneInfo", value: value });
-          }}
-          status={getStatus(firstQuestionKey)}
-          onClickPanel={onClickPanelHandler}
-          index={extraQuestion}
-          total={phoneConditionQuestion.length + extraQuestion}
+        <PhoneInfoWrapper
           key={firstQuestionKey}
-          questionInfo={phoneInfoQuestion[0]}
-          answerInfo={phoneInfoAnswer[0]}
+          renderComponent={({
+            phoneInfoHandler,
+            phoneInfoQuestion,
+            phoneInfoAnswer,
+            ...otherProps
+          }: any) => {
+            return (
+              <WrapperPanel
+                {...otherProps}
+                onSetShowKey={setShowKey}
+                isContinue={true}
+                continueNextStep={nextStep}
+                onUserInputHandler={phoneInfoHandler}
+                status={getStatus(firstQuestionKey)}
+                onClickPanel={onClickPanelHandler}
+                index={extraQuestion}
+                total={phoneConditionQuestion.length + extraQuestion}
+                key={firstQuestionKey}
+                questionInfo={phoneInfoQuestion}
+                answerInfo={phoneInfoAnswer}
+              />
+            );
+          }}
         />
         {phoneConditionQuestion.map((question: IQuestion, index) => {
           const { id } = question;
