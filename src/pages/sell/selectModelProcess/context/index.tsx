@@ -40,11 +40,20 @@ function reducer(state: IContextState, action: IReducerAction) {
     case "setBrand": {
       newState = {
         ...state,
-        brand: value
+        brand: value,
+        modelInfo: {
+          modelId: "",
+          storageId: "",
+          carrierId: ""
+        }
       };
       break;
     }
     case "setModelInfo": {
+      if (value.modelId !== state.modelInfo.modelId) {
+        value.storageId = "";
+        value.carrierId = "";
+      }
       newState = {
         ...state,
         modelInfo: value
@@ -54,7 +63,7 @@ function reducer(state: IContextState, action: IReducerAction) {
     default:
       newState = { ...state };
   }
-  saveToCache(sessionKey, state, ["modelInfo", "brand", "categoryId"]);
+  saveToCache(sessionKey, newState, ["modelInfo", "brand", "categoryId"]);
   return newState;
 }
 // const promisify = (func: (...param: any[]) => void) => (...args: any[]) => {

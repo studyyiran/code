@@ -9,17 +9,19 @@ import { SelectModelContext, ISelectModelContext } from "../../../context";
  */
 export function PhoneInfoWrapper(props: any) {
   const { renderComponent } = props;
-  console.log('!!!!!!!!')
-  console.log(props)
   const selectModelContext = useContext(SelectModelContext);
   const { selectModelContextValue } = selectModelContext as ISelectModelContext;
-  const { brandList, brand } = selectModelContextValue;
+  const { brandList, brand, productsList, modelInfo } = selectModelContextValue;
   staticPhoneInfoQuestion[0].subQuestionArr = staticPhoneInfoQuestion[0].subQuestionArr.map(
     item => {
       const { id } = item;
       switch (id) {
         case "manufacture": {
           return { ...item, questionDesc: brandList };
+          break;
+        }
+        case "model": {
+          return { ...item, questionDesc: productsList };
           break;
         }
         default:
@@ -34,6 +36,10 @@ export function PhoneInfoWrapper(props: any) {
       switch (id) {
         case "manufacture": {
           return { ...item, answer: [brand] };
+          break;
+        }
+        case "model": {
+          return { ...item, answer: [modelInfo.modelId] };
           break;
         }
         default:
@@ -52,10 +58,15 @@ export function PhoneInfoWrapper(props: any) {
         // 这边数据结构需要转换
         selectModelDispatch({ type: "setBrand", value: answer[0] });
         break;
+      case "model":
+        // 这边数据结构需要转换
+        selectModelDispatch({
+          type: "setModelInfo",
+          value: { ...modelInfo, modelId: answer[0] }
+        });
+        break;
     }
   }
-  console.log(staticPhoneInfoQuestion[0]);
-  console.log(staticPhoneInfo[0]);
   return renderComponent({
     ...props,
     phoneInfoHandler,
