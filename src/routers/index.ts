@@ -88,16 +88,6 @@ export default [
     path: '/notfound',
   },
   {
-    // 首页
-    component: Loadable({
-      loader: () => import('../containers/aboutphone/page/condition'),
-      loading: () => null,
-      modules: ['../containers/aboutphone/page/condition'],
-      webpack: () => [require.resolveWeak('../containers/aboutphone/page/condition') as number],
-    }),
-    path: '/demo',
-  },
-  {
     // 单页
     component: Loadable({
       loader: () => import('../containers/blog/detail'),

@@ -10,7 +10,7 @@ import {
 } from "../../interface/index.interface";
 import { shipmentPageValidate } from "@/containers/aboutphone/pageValidate";
 import config from "config";
-import { ChoiceQuestion } from "../condition/components/renderByType/components/choiceQuestion";
+import { ChoiceQuestion } from "@/pages/sell/selectModelProcess/condition/components/renderByType/components/choiceQuestion";
 import "./index.less";
 
 const Panel = Collapse.Panel;

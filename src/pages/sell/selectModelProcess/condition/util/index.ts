@@ -3,15 +3,22 @@ import {
   IUserAnswer,
   ISubQuestion,
   IUserQuestionAnswer
-} from "@/containers/aboutphone/page/condition/index.interface";
+} from "../index.interface";
 
 export function canShowMoreQuestion(
   isMoreCondition?: string[],
   userAnswer?: string[]
 ): boolean {
   if (!userAnswer) {
-    return false;
-  } else if (!isMoreCondition) {
+    return false
+  }
+  if (userAnswer.length && userAnswer.length === 0) {
+    return false
+  }
+  if (userAnswer.length && userAnswer.length === 1 && userAnswer[0] === "") {
+    return false
+  }
+  if (!isMoreCondition) {
     return true;
   } else {
     return JSON.stringify(isMoreCondition) === JSON.stringify(userAnswer);
@@ -39,6 +46,7 @@ export function isCanMove(
   findCurrent: IQuestion,
   userAnswerInput: IUserQuestionAnswer[] | undefined
 ): boolean {
+  debugger
   function isAllNotEmpty(arr: ISubQuestion[]): boolean {
     // @ts-ignore
     return arr.every(question => {

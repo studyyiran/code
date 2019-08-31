@@ -2,14 +2,13 @@ import React from "react";
 import "./index.less";
 import { Collapse, Icon } from "antd";
 import { RenderByType } from "../renderByType";
-const { Panel } = Collapse;
 import {
   IQuestion,
   IUserQuestionAnswer,
   ISubQuestion
-} from "@/containers/aboutphone/page/condition/index.interface";
+} from "../../index.interface";
 import { canShowMoreQuestion, findAnswerById, isCanMove } from "../../util";
-
+const { Panel } = Collapse;
 function SaveButton(props: any) {
   const { children, canPost } = props;
   // check
