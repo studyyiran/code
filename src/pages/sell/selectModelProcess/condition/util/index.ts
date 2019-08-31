@@ -104,3 +104,55 @@ export function isNoContinue(
     return noContinueType.some(someType => someType === type);
   });
 }
+
+export function updateReducerValue(
+  arr: any[],
+  questionId: string,
+  answerId: string,
+  answer: any
+) {
+  // 1 查找question是否存在
+  const questionArr: IUserQuestionAnswer[] = changeTargetById(
+    arr,
+    questionId,
+    {
+      id: questionId,
+      subAnswerArr: []
+    }
+  );
+  const targetArr = questionArr.find(item => item.id === questionId);
+  // 查找answerId是否存在
+  if (targetArr) {
+    targetArr.subAnswerArr = changeTargetById(
+      targetArr.subAnswerArr,
+      answerId,
+      { id: answerId, answer: [] }
+    );
+    const targetAnswer = targetArr.subAnswerArr.find(
+      item => item.id === answerId
+    );
+    if (targetAnswer) {
+      // 更新完成
+      targetAnswer.answer = answer;
+    }
+    questionArr[
+      questionArr.findIndex(item => item.id === questionId)
+      ] = targetArr;
+    return questionArr;
+  }
+  return null;
+  
+  function changeTargetById(targetSearchArr: any[], changedId: string, insert: any) {
+    // copy
+    const changedArr = targetSearchArr.slice(0);
+    const findItemIndex = targetSearchArr.findIndex((item: any) => {
+      const { id } = item;
+      return id === changedId;
+    });
+    if (findItemIndex === -1) {
+      // init insert
+      changedArr.push(insert);
+    }
+    return changedArr;
+  }
+}

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import Brand from "./selectModelProcess/brand";
 import Model from "./selectModelProcess/model";
-import Questionary from "./selectModelProcess/condition";
+import Questionary from "./selectModelProcess/condition/index";
 import {
   SelectModelContext,
   ISelectModelContext
