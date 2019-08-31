@@ -9,6 +9,7 @@ import {
 } from "./selectModelProcess/context";
 import { Switch, Route } from "react-router";
 import { HeaderTitle } from "@/components/headerTitle";
+import Breadcrumb from "./selectModelProcess/components/breadcrumb/index";
 
 // const config = [
 //   {
@@ -133,6 +134,7 @@ function Layout(props: any) {
   return (
     <div>
       <HeaderTitle title={"Select a manufacturer"} />
+      <Breadcrumb />
       <div>{children}</div>
     </div>
   );
