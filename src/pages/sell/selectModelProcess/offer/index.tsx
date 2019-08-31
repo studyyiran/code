@@ -1,6 +1,8 @@
-import React, { useEffect, useContext, useReducer } from "react";
+import React, { useContext } from "react";
 import "./index.less";
 import { SelectModelContext, ISelectModelContext } from "../context";
+import { Collapse } from "antd";
+const { Panel } = Collapse;
 
 export default function Brand(props: any) {
   const selectModelContext = useContext(SelectModelContext);
@@ -10,14 +12,18 @@ export default function Brand(props: any) {
     getNameInfo
   } = selectModelContext as ISelectModelContext;
   const { priceList, userProductList, stamp } = selectModelContextValue;
-  console.log(userProductList);
-  function selectHandler(select: any) {
-    console.log(select)
+  function selectHandler(id: any) {
     // 当前有选择
-    if (stamp) {
-      selectModelContextDispatch({ type: "changeModelCache", value: "reset" });
+    const currentTarget = userProductList.find((item: any) => {
+      return item.stamp === id;
+    });
+    if (id) {
+      selectModelContextDispatch({
+        type: "changeModelCache",
+        value: currentTarget
+      });
     } else {
-      selectModelContextDispatch({ type: "changeModelCache", value: select });
+      selectModelContextDispatch({ type: "changeModelCache", value: "reset" });
     }
   }
   function renderList() {
@@ -27,24 +33,33 @@ export default function Brand(props: any) {
         // return a.order - b.order;
       })
       .map((item: any, index: number) => {
-        const { brand, stamp: productStamp, modelInfo } = item;
+        const { brand: brandId, stamp: productStamp, modelInfo } = item;
         const nameObj = getNameInfo({
-          brandId: brand,
+          brandId,
           ...modelInfo
         });
         return (
-          <li
-            className="brand-icon-container"
+          <Panel
             key={productStamp}
-            onClick={() => selectHandler(item)}
+            header={
+              <div>
+                {nameObj.modelInfoName.modelName +
+                  nameObj.modelInfoName.storageName}
+                <span>
+                  {nameObj.modelInfoName.modelName +
+                    nameObj.modelInfoName.storageName}
+                </span>
+                <span>{nameObj.modelInfoName.carrierName}</span>
+              </div>
+            }
           >
-            <span>
-              {nameObj.modelInfoName.modelName +
-                nameObj.modelInfoName.storageName}
-            </span>
-            <span>{nameObj.modelInfoName.carrierName}</span>
-            <span>{priceList[index] && priceList[index].price}</span>
-          </li>
+            <li
+              className="brand-icon-container"
+              onClick={() => selectHandler(item)}
+            >
+              <span>{priceList[index] && priceList[index].price}</span>
+            </li>
+          </Panel>
         );
       });
   }
@@ -54,7 +69,13 @@ export default function Brand(props: any) {
   }
   return (
     <div className="page-offer">
-      <ul className="brand-list">{renderList()}</ul>
+      <Collapse
+        accordion={true}
+        onChange={selectHandler}
+        defaultActiveKey={stamp}
+      >
+        {renderList()}
+      </Collapse>
       <div onClick={addNewHandler}>add another</div>
     </div>
   );
