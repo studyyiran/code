@@ -2,12 +2,13 @@ import React, { useContext, useEffect } from "react";
 import Brand from "./selectModelProcess/brand";
 import Model from "./selectModelProcess/model";
 import Questionary from "./selectModelProcess/condition/index";
+import Offer from "./selectModelProcess/offer";
 import {
   SelectModelContext,
   ISelectModelContext
 } from "./selectModelProcess/context";
 import { Switch, Route } from "react-router";
-import {HeaderTitle} from "@/components/headerTitle";
+import { HeaderTitle } from "@/components/headerTitle";
 
 // const config = [
 //   {
@@ -77,10 +78,22 @@ export default function Sell(props: any) {
     <Switch>
       {/*<Route path={props.match.url + "/"} component={Brand} />*/}
       <Route
-        path={props.match.url + "/test"}
+        path={props.match.url + "/offer"}
         render={(...other) => (
           <Layout>
-            <Questionary canGoNext={canGoNext} goNextPage={goNextPage} {...props} />
+            <Offer canGoNext={canGoNext} goNextPage={goNextPage} {...props} />
+          </Layout>
+        )}
+      />
+      <Route
+        path={props.match.url + "/condition"}
+        render={(...other) => (
+          <Layout>
+            <Questionary
+              canGoNext={canGoNext}
+              goNextPage={goNextPage}
+              {...props}
+            />
           </Layout>
         )}
       />
@@ -118,8 +131,10 @@ export default function Sell(props: any) {
 
 function Layout(props: any) {
   const { children } = props;
-  return <div>
-    <HeaderTitle title={"Select a manufacturer"} />
-    <div>{children}</div>
-  </div>;
+  return (
+    <div>
+      <HeaderTitle title={"Select a manufacturer"} />
+      <div>{children}</div>
+    </div>
+  );
 }

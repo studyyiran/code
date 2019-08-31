@@ -68,7 +68,6 @@ function reducer(state: IContextState, action: IReducerAction) {
       break;
     }
     case "updateUserProductList": {
-    debugger
       const newProduct = {
         brand: newState.brand,
         modelInfo: newState.modelInfo,
@@ -85,7 +84,9 @@ function reducer(state: IContextState, action: IReducerAction) {
         newState.userProductList[productTargetIndex] = newProduct;
       } else {
         // 插入。并且更新当前的stamp
-        newProduct.stamp = String(Date.now());
+        const newStamp = String(Date.now());
+        newProduct.stamp = newStamp;
+        newState.stamp = newStamp;
         newState.userProductList.push(newProduct);
       }
       newState = { ...newState };
@@ -94,13 +95,17 @@ function reducer(state: IContextState, action: IReducerAction) {
     default:
       newState = { ...newState };
   }
-  saveToCache(sessionKey, newState, [
-    "modelInfo",
-    "brand",
-    "categoryId",
-    "userProductList",
-    "stamp"
-  ]);
+  // justtest 避免覆盖
+  if (state.brand) {
+    saveToCache(sessionKey, newState, [
+      "modelInfo",
+      "brand",
+      "categoryId",
+      "userProductList",
+      "stamp"
+    ]);
+  }
+
   return newState;
 }
 // const promisify = (func: (...param: any[]) => void) => (...args: any[]) => {

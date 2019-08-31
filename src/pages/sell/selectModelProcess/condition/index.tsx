@@ -55,9 +55,10 @@ export function reducer(state: any, action: IReducerAction) {
 }
 
 // for fix sell
-export default function Questionary() {
+export default function Questionary(props: any) {
   return (
     <Conditions
+      {...props}
       phoneConditionQuestion={serverPhoneConditionQuestion}
       phoneConditionAnswer={[]}
     />
@@ -86,6 +87,7 @@ function Conditions(props: IConditions) {
   const [state, dispatch] = useReducer(reducer, initState);
   return (
     <ConditionForm
+      {...props}
       state={state}
       dispatch={dispatch}
       phoneConditionQuestion={phoneConditionQuestion}
@@ -97,6 +99,7 @@ interface IConditionForm {
   state: IStateConditions;
   dispatch: (action: IReducerAction) => void;
   phoneConditionQuestion: IQuestion[];
+  history?: any;
 }
 
 export function ConditionForm(props: IConditionForm) {
@@ -262,6 +265,8 @@ export function ConditionForm(props: IConditionForm) {
               type: "updateUserProductList",
               value: ""
             });
+            console.log(props)
+            props.history.push("/newsell/offer");
           }}
           className="common-button finish-button"
         >
