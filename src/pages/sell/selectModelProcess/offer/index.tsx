@@ -9,7 +9,8 @@ export default function Brand(props: any) {
   const selectModelContext = useContext(SelectModelContext);
   const {
     selectModelContextValue,
-    selectModelContextDispatch
+    selectModelContextDispatch,
+    getNameInfo
   } = selectModelContext as ISelectModelContext;
   const { priceList, userProductList } = selectModelContextValue;
   console.log(userProductList);
@@ -22,11 +23,17 @@ export default function Brand(props: any) {
         return 1;
         // return a.order - b.order;
       })
-      .map((item: any) => {
-        const { brand, stamp } = item;
+      .map((item: any, index: number) => {
+        const { brand, stamp, modelInfo } = item;
+        const nameObj = getNameInfo({
+          brandId: brand,
+          ...modelInfo
+        });
         return (
-          <li className="brand-icon-container" key={stamp}>
-            <span onClick={() => selectHandler(stamp)}>{brand}</span>
+          <li className="brand-icon-container" key={stamp} onClick={() => selectHandler(stamp)}>
+            <span>{nameObj.modelInfoName.modelName + nameObj.modelInfoName.storageName}</span>
+            <span>{nameObj.modelInfoName.carrierName}</span>
+            <span>{priceList[index] && priceList[index].price}</span>
           </li>
         );
       });

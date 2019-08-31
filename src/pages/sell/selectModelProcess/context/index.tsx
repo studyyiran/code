@@ -79,6 +79,8 @@ function reducer(state: IContextState, action: IReducerAction) {
           return userProduct.stamp === newState.stamp;
         }
       );
+      // 强行变更数组。深比较
+      newState.userProductList = newState.userProductList.concat([])
       if (productTargetIndex !== -1) {
         // 更新
         newState.userProductList[productTargetIndex] = newProduct;
@@ -90,6 +92,23 @@ function reducer(state: IContextState, action: IReducerAction) {
         newState.userProductList.push(newProduct);
       }
       newState = { ...newState };
+      break;
+    }
+    case "changeModelCache": {
+      if (value === "reset") {
+        return Object.assign({}, newState, {
+          modelInfo: {
+            modelId: "",
+            storageId: "",
+            carrierId: ""
+          },
+          categoryId: "",
+          brand: "",
+          stamp: ""
+        });
+      } else if (value) {
+        return { ...newState, ...value };
+      }
       break;
     }
     default:
@@ -122,6 +141,16 @@ interface IContextActions {
   getBrandList: () => void;
   getProductsList: () => void;
   getPriceList: () => void;
+  getNameInfo: (
+    idObj: any
+  ) => {
+    brandName: string;
+    modelInfoName: {
+      modelName: string;
+      storageName: string;
+      carrierName: string;
+    };
+  };
 }
 
 function useGetAction(
@@ -155,20 +184,65 @@ function useGetAction(
         dispatch({
           type: "setPriceList",
           value: state.userProductList.map((item, index) => ({
-            price: Math.ceil(Math.random() * 100) + index
+            price: index + 1
           }))
         });
       }
-    })
+    }),
+    getNameInfo: function(config: any) {
+      const { brandList, productsList } = state;
+      const { brandId, modelId, storageId, carrierId } = config;
+      const nameConfig = {
+        brandName: "",
+        modelInfoName: {
+          modelName: "",
+          storageName: "",
+          carrierName: ""
+        }
+      };
+      nameConfig.brandName = (
+        brandList.find((item: any) => item.id === brandId) || { name: "" }
+      ).name;
+      const product: any = productsList.find(
+        (item: any) => item.id === modelId
+      );
+      if (product) {
+        nameConfig.modelInfoName.modelName = product.name;
+        const a =
+          product &&
+          product.skuPricePropertyNames &&
+          product.skuPricePropertyNames[0];
+        const b =
+          product &&
+          product.skuPricePropertyNames &&
+          product.skuPricePropertyNames[0];
+        if (a) {
+          nameConfig.modelInfoName.storageName = (
+            a.pricePropertyValues.find(
+              (item: any) => item.id === storageId
+            ) || { value: "" }
+          ).value;
+        }
+        if (b) {
+          nameConfig.modelInfoName.carrierName = (
+            b.pricePropertyValues.find(
+              (item: any) => item.id === carrierId
+            ) || { value: "" }
+          ).value;
+        }
+      }
+      return nameConfig;
+    }
   };
   actions.getBrandList = useCallback(actions.getBrandList, [state.categoryId]);
   actions.getProductsList = useCallback(actions.getProductsList, [
     state.brand,
     state.categoryId
   ]);
-  actions.getPriceList = useCallback(actions.getProductsList, [
+  actions.getPriceList = useCallback(actions.getPriceList, [
     state.userProductList
   ]);
+  // actions.getNameInfo = useCallback(actions.getNameInfo, []);
   return actions;
 }
 
@@ -179,14 +253,14 @@ interface IModelInfo {
 }
 
 interface IContextState {
-  brandList: [];
-  modelInfo: IModelInfo;
-  productsList: [];
-  categoryId: string;
-  brand: string;
-  stamp: string;
-  userProductList: any[];
-  priceList: any[];
+  modelInfo: IModelInfo; // 1用户数据
+  categoryId: string; // 1用户数据（但是不需要清空）
+  brand: string; // 1用户数据
+  stamp: string; // 1用户数据
+  userProductList: any[]; // 用户数据2
+  brandList: []; // 热刷新
+  priceList: any[]; // 热刷新
+  productsList: []; // 热刷新
 }
 
 export interface ISelectModelContext extends IContextActions {
