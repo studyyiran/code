@@ -3,8 +3,10 @@ import Brand from "./selectModelProcess/brand";
 import Model from "./selectModelProcess/model";
 import Questionary from "./selectModelProcess/condition/index";
 import Offer from "./selectModelProcess/offer";
+import Information from './selectModelProcess/pages/information'
 import Payment from "./selectModelProcess/pages/payment";
-import Shipping from './selectModelProcess/pages/shipment'
+import Shipping from './selectModelProcess/pages/shipping'
+
 import {
   SelectModelContext,
   ISelectModelContext
@@ -150,6 +152,18 @@ export default function Sell(props: any) {
             <Payment
               canGoNext={canGoNext}
               goNextPage={() => goNextPage("payment")}
+              {...props}
+            />
+          </Layout>
+        )}
+      />
+      <Route
+        path={props.match.url + "/information"}
+        render={other => (
+          <Layout goNextPage={goNextPage}>
+            <Information
+              canGoNext={canGoNext}
+              goNextPage={() => goNextPage("information")}
               {...props}
             />
           </Layout>
