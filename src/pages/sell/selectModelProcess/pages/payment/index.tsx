@@ -5,7 +5,7 @@ import { Row, Col, Collapse, Form, Input, message } from "antd";
 import Layout from "@/containers/aboutphone/layout";
 import { IPaymentProps, IPaymentStates, EPayType } from "../../index.interface";
 import { paymentPageValidate } from "../pageValidate";
-import yourphoneStore from "../../store/yourphone.store";
+import yourPhoneStore from "@/containers/aboutphone/store/yourphone.store";
 import "./index.less";
 
 const Panel = Collapse.Panel;
@@ -375,23 +375,16 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
         </Col>
       </Row>
     );
-
     return (
-      <div
-        className={classnames("page-payment-container", {
-          notlayout: this.props.hideLayout
-        })}
-      >
-        {!this.props.hideLayout ? (
-          <Layout
-            nextCb={this.handleNext}
-            disabled={!this.props.yourphone.isDonePayment}
-          >
-            {paymentHTML}
-          </Layout>
-        ) : (
-          paymentHTML
-        )}
+      <div className={"page-payment-container"}>
+        {paymentHTML}
+        <button
+          className="common-button"
+          onClick={this.handleNext}
+          disabled={!this.props.yourphone.isDonePayment}
+        >
+          click me1
+        </button>
       </div>
     );
   }
@@ -450,27 +443,29 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
   private handleNext = async () => {
     const isOk = await this.validateData();
     if (isOk) {
-      this.props.history.push("/sell/yourphone/shipment");
+      // @ts-ignore
+      this.props.goNextPage();
+      // this.props.history.push("/sell/yourphone/shipment");
     }
   };
 }
 
 const onValuesChange = (props: any, changedValues: any, allValues: any) => {
   console.log(allValues);
-  if (yourphoneStore.payment === EPayType.PAYPAL) {
+  if (yourPhoneStore.payment === EPayType.PAYPAL) {
     console.log(4);
     if (
       allValues.paypal_email &&
       allValues.paypal_email_confirm &&
-      yourphoneStore.isLeftOnEdit
+      yourPhoneStore.isLeftOnEdit
     ) {
       console.log(5);
-      yourphoneStore.isPaymentFormFilled = true;
+      yourPhoneStore.isPaymentFormFilled = true;
       return false;
     }
 
     console.log(6);
-    yourphoneStore.isPaymentFormFilled = false;
+    yourPhoneStore.isPaymentFormFilled = false;
     // false
     return false;
   }
@@ -481,15 +476,15 @@ const onValuesChange = (props: any, changedValues: any, allValues: any) => {
     allValues.lastName &&
     allValues.email &&
     allValues.email_confirm &&
-    yourphoneStore.isRightOnEdit
+    yourPhoneStore.isRightOnEdit
   ) {
     console.log(2);
-    yourphoneStore.isPaymentFormFilled = true;
+    yourPhoneStore.isPaymentFormFilled = true;
     return false;
   }
 
   console.log(3);
-  yourphoneStore.isPaymentFormFilled = false;
+  yourPhoneStore.isPaymentFormFilled = false;
   return true;
 };
 

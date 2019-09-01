@@ -5,7 +5,7 @@ import Layout from "@/containers/aboutphone/layout";
 import "./index.less";
 import { IShippingProps, IShippingState } from "../../index.interface";
 import { IProductInfo } from "@/store/interface/user.interface";
-import yourphoneStore from "../../store/yourphone.store";
+import yourPhoneStore from "@/containers/aboutphone/store/yourphone.store";
 import classnames from "classnames";
 
 // create form value 变化时候判断 按钮是否能高亮
@@ -24,7 +24,7 @@ const onValuesChange = (props: any, changedValues: any, allValues: any) => {
     }
   });
 
-  yourphoneStore.isAddressValuesAndDisabled = disabled;
+  yourPhoneStore.isAddressValuesAndDisabled = disabled;
 };
 
 @inject("yourphone", "user", "common")
@@ -46,8 +46,7 @@ class Information extends React.Component<IShippingProps, IShippingState> {
     // didmount 的时候校验是否填了字段
     const { getFieldsValue } = this.props.form;
     const allValus = getFieldsValue();
-
-    onValuesChange(false, false, allValus);
+    onValuesChange(this.props, false, allValus);
 
     // 显示左侧价格模块
     this.props.user.isShowLeftPrice = true;
@@ -286,23 +285,17 @@ class Information extends React.Component<IShippingProps, IShippingState> {
         </Row>
       </Form>
     );
-
     return (
-      <div
-        className={classnames("page-shipping-container", {
-          notlayout: this.props.hideLayout
-        })}
-      >
-        {!this.props.hideLayout ? (
-          <Layout
-            nextCb={this.handleNext}
-            disabled={this.props.yourphone.isAddressValuesAndDisabled}
-          >
-            {infomationHTML}
-          </Layout>
-        ) : (
-          infomationHTML
-        )}
+      <div className={"page-shipping-container"}>
+        {infomationHTML}
+        <button
+          className="common-button"
+          onClick={this.handleNext}
+          disabled={this.props.yourphone.isAddressValuesAndDisabled}
+        >
+          {this.props.yourphone.isAddressValuesAndDisabled ? "true" : "false"}
+          click me
+        </button>
       </div>
     );
   }
@@ -373,8 +366,9 @@ class Information extends React.Component<IShippingProps, IShippingState> {
       } catch (error) {
         console.warn(error, "in shipping page preOrder");
       }
-
-      this.props.history.push("/sell/yourphone/payment");
+      // this.props.history.push("/sell/yourphone/payment");
+      // @ts-ignore
+      this.props.goNextPage();
     }
   };
 
