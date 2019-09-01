@@ -3,7 +3,9 @@ import "./index.less";
 import { SelectModelContext, ISelectModelContext } from "../context";
 import { HeaderTitle } from "@/components/headerTitle";
 import { IReducerAction } from "@/interface/index.interface";
-import ModelCard from "@/pages/sell/selectModelProcess/components/modelCard";
+import ModelCard from "@/pages/sell/selectModelProcess/model/modelCard";
+import { PhoneInfoWrapper } from "@/pages/sell/selectModelProcess/condition/components/phoneInfoWrapper";
+import { findArrByKey } from "./util";
 
 // interface IBrand {}
 const attrConfig = {
@@ -30,7 +32,23 @@ interface IContextState {
   productId: string;
 }
 
-export default function Brand(props: any) {
+export default function ModelContainer(props: any) {
+  return (
+    <PhoneInfoWrapper
+      renderComponent={(wrapperProps: any) => {
+        const {
+          phoneInfoHandler,
+          phoneInfoQuestion,
+          phoneInfoAnswer
+        } = wrapperProps;
+        return <Model {...props} {...wrapperProps} />;
+      }}
+    />
+  );
+}
+
+function Model(props: any) {
+  const { phoneInfoHandler, phoneInfoQuestion, phoneInfoAnswer } = props;
   const initState: IContextState = {
     productId: ""
   };
@@ -41,7 +59,8 @@ export default function Brand(props: any) {
     selectModelContextValue,
     selectModelContextDispatch
   } = brandContext as ISelectModelContext;
-  const { modelInfo, productsList } = selectModelContextValue;
+  // 实际上，context也是modelInfo的二级消费者。这块有可能违背了single true原则
+  const { modelInfo } = selectModelContextValue;
   function selectProductHandler(id: string) {
     modelDispatch({
       type: "setValueByAttr",
@@ -68,28 +87,32 @@ export default function Brand(props: any) {
   }, [modelInfo, modelState]);
 
   function renderList() {
-    return productsList
-      .sort((a: any, b: any) => {
-        return 1;
-        // return a.order - b.order;
-      })
-      .map((item: any) => {
+    const modelArr = findArrByKey(phoneInfoQuestion, "model");
+    if (modelArr) {
+      return modelArr.map((item: any) => {
         const { id } = item;
+        const modelTarget = findArrByKey(phoneInfoAnswer, "model");
+        const isSelect = Boolean(
+          modelTarget && modelTarget[0] === id
+        );
         return (
           <li className="brand-icon-container" key={id}>
             <ModelCard
               {...item}
-              isSelect={modelState.productId === id}
+              isSelect={isSelect}
+              phoneInfoAnswer={phoneInfoAnswer}
+              phoneInfoQuestion={phoneInfoQuestion}
+              phoneInfoHandler={phoneInfoHandler}
               selectProductHandler={selectProductHandler}
             />
           </li>
         );
       });
+    }
   }
   return (
-    <div className="page-select-brand">
-      <HeaderTitle title={"Model"} />
-      <ul className="brand-list">{renderList()}</ul>
+    <div className="page-select-model">
+      <ul className="model-list">{renderList()}</ul>
     </div>
   );
 }
