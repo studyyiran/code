@@ -6,6 +6,7 @@ import Offer from "./selectModelProcess/offer";
 import Information from './selectModelProcess/pages/information'
 import Payment from "./selectModelProcess/pages/payment";
 import Shipping from './selectModelProcess/pages/shipping'
+import Summary from './selectModelProcess/pages/summary'
 
 import {
   SelectModelContext,
@@ -54,6 +55,14 @@ export default function Sell(props: any) {
       case "shipping": {
         const next = props.match.url + '/summary';
         props.history.push(removeAllSpace(next));
+        break;
+      }
+      case "summary": {
+        const next = props.match.url + '/prepare-ship';
+        props.history.push(removeAllSpace(next));
+        break;
+      }
+      case "prepareShip": {
         break;
       }
       case "firstStep": {
@@ -143,6 +152,30 @@ export default function Sell(props: any) {
   }
   return (
     <Switch>
+      <Route
+        path={props.match.url + "/prepare-ship"}
+        render={other => (
+          <Layout goNextPage={goNextPage}>
+            <Shipping
+              canGoNext={canGoNext}
+              goNextPage={() => goNextPage("prepareShip")}
+              {...props}
+            />
+          </Layout>
+        )}
+      />
+      <Route
+        path={props.match.url + "/summary"}
+        render={other => (
+          <Layout goNextPage={goNextPage}>
+            <Summary
+              canGoNext={canGoNext}
+              goNextPage={() => goNextPage("summary")}
+              {...props}
+            />
+          </Layout>
+        )}
+      />
       <Route
         path={props.match.url + "/shipping"}
         render={other => (

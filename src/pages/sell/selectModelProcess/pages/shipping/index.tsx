@@ -19,7 +19,7 @@ const rightHeader = <div className="USPS-bg" />;
 
 @inject("yourphone", "user", "common")
 @observer
-class Shippinp extends React.Component<IPaymentProps, IPaymentStates> {
+class Shipping extends React.Component<IPaymentProps, IPaymentStates> {
   public readonly state: Readonly<IPaymentStates> = {
     activeSide: this.props.yourphone.payment
   };
@@ -210,4 +210,4 @@ function RenderQuestion() {
   );
 }
 
-export default Form.create()(Shippinp);
+export default Form.create()(Shipping);
