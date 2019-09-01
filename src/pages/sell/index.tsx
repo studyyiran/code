@@ -3,6 +3,8 @@ import Brand from "./selectModelProcess/brand";
 import Model from "./selectModelProcess/model";
 import Questionary from "./selectModelProcess/condition/index";
 import Offer from "./selectModelProcess/offer";
+import Payment from "./selectModelProcess/pages/payment";
+import Shipping from './selectModelProcess/pages/shipment'
 import {
   SelectModelContext,
   ISelectModelContext
@@ -37,6 +39,11 @@ export default function Sell(props: any) {
   }
   function goNextPage(currentPage: any): void {
     switch (currentPage) {
+      case "shipping": {
+        const next = props.match.url + '/payment';
+        props.history.push(removeAllSpace(next));
+        break;
+      }
       case "firstStep": {
         const next = props.match.url;
         props.history.push(removeAllSpace(next));
@@ -124,6 +131,30 @@ export default function Sell(props: any) {
   }
   return (
     <Switch>
+      <Route
+        path={props.match.url + "/shipping"}
+        render={other => (
+          <Layout goNextPage={goNextPage}>
+            <Shipping
+              canGoNext={canGoNext}
+              goNextPage={() => goNextPage("shipping")}
+              {...props}
+            />
+          </Layout>
+        )}
+      />
+      <Route
+        path={props.match.url + "/payment"}
+        render={other => (
+          <Layout goNextPage={goNextPage}>
+            <Payment
+              canGoNext={canGoNext}
+              goNextPage={() => goNextPage("payment")}
+              {...props}
+            />
+          </Layout>
+        )}
+      />
       <Route
         path={props.match.url + "/offer"}
         render={other => (
