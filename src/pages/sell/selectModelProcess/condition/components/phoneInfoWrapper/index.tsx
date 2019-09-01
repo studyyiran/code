@@ -32,7 +32,10 @@ export function PhoneInfoWrapper(props: any) {
       }
     }
   }
-  staticPhoneInfoQuestion[0].subQuestionArr = staticPhoneInfoQuestion[0].subQuestionArr.map(
+  // 不可变类型 不然无法监听变化
+  const answer1 = JSON.parse(JSON.stringify(staticPhoneInfoQuestion[0]))
+  const answer2 = JSON.parse(JSON.stringify(staticPhoneInfo[0]))
+  answer1.subQuestionArr = staticPhoneInfoQuestion[0].subQuestionArr.map(
     item => {
       const { id } = item;
       switch (id) {
@@ -60,7 +63,7 @@ export function PhoneInfoWrapper(props: any) {
       return { ...item, questionDesc: [] };
     }
   );
-  staticPhoneInfo[0].subAnswerArr = staticPhoneInfo[0].subAnswerArr.map(
+  answer2.subAnswerArr = staticPhoneInfo[0].subAnswerArr.map(
     item => {
       const { id } = item;
       switch (id) {
@@ -119,7 +122,7 @@ export function PhoneInfoWrapper(props: any) {
   return renderComponent({
     ...props,
     phoneInfoHandler,
-    phoneInfoQuestion: staticPhoneInfoQuestion[0],
-    phoneInfoAnswer: staticPhoneInfo[0]
+    phoneInfoQuestion: answer1,
+    phoneInfoAnswer: answer2
   });
 }

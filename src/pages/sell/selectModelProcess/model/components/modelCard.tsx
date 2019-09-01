@@ -1,20 +1,85 @@
-import React from "react";
+import React, { useReducer, useEffect } from "react";
 import "./index.less";
 import { findArrByKey } from "@/pages/sell/selectModelProcess/model/util";
+import { IReducerAction } from "@/interface/index.interface";
+
+// const attrConfig = {
+//   PRODUCT_ID: "productId",
+//   STORAGE_ID: "storageID",
+//   CARRIER_ID: "carrierID"
+// };
+
+function reducer(state: IContextState, action: IReducerAction) {
+  const { type, value } = action;
+  const newState = { ...state };
+  switch (type) {
+    case "storageId": {
+      newState.storageId = value;
+      break;
+    }
+    case "carrierId": {
+      newState.carrierId = value;
+      break;
+    }
+    default:
+  }
+  return newState;
+}
+
+interface IContextState {
+  storageId: string;
+  carrierId: string;
+}
 
 export default function ModelCard(props: any) {
   const {
-    id,
+    id: modelId,
     imageUrl,
     name: modelName,
     isSelect,
-    phoneInfoAnswer,
     phoneInfoQuestion,
-    phoneInfoHandler
+    phoneInfoHandler,
+    phoneInfoAnswer
   } = props;
+
+  // 暂时放在这里。 其实可以考虑提升。
+  const initState: IContextState = {
+    storageId: "",
+    carrierId: ""
+  };
+  const [attrState, attrStateDispatch] = useReducer(reducer, initState);
+
+  // canPost?
+  useEffect(() => {
+    if (attrState.storageId && attrState.carrierId) {
+      phoneInfoHandler({
+        answerId: "storage",
+        answer: [attrState.storageId]
+      });
+      phoneInfoHandler({
+        answerId: "carrier",
+        answer: [attrState.carrierId]
+      });
+    }
+  }, [attrState]);
+
+  // canNext?
+  useEffect(() => {
+    const a = findArrByKey(phoneInfoAnswer, "storage");
+    const b = findArrByKey(phoneInfoAnswer, "carrier");
+    if (
+      a &&
+      b &&
+      a.includes(attrState.storageId) &&
+      b.includes(attrState.carrierId)
+    ) {
+      props.goNextPage();
+  }
+  }, [phoneInfoAnswer, attrState]);
+
   function renderAttrSelectList(
     title: string,
-    answerId: string,
+    attrKey: string,
     arr: [],
     currentId: string
   ) {
@@ -29,9 +94,9 @@ export default function ModelCard(props: any) {
                 String(currentId) === String(propertyId) ? "true" : "false"
               }
               onClick={() => {
-                phoneInfoHandler({
-                  answerId: answerId,
-                  answer: [propertyId]
+                attrStateDispatch({
+                  type: `${attrKey}Id`,
+                  value: [propertyId]
                 });
               }}
             >
@@ -52,13 +117,13 @@ export default function ModelCard(props: any) {
             "storage",
             "storage",
             storageArr,
-            findArrByKey(phoneInfoAnswer, "storage")
+            attrState.storageId
           )}
           {renderAttrSelectList(
             "carrier",
             "carrier",
             carrierArr,
-            findArrByKey(phoneInfoAnswer, "carrier")
+            attrState.carrierId
           )}
         </div>
       );
@@ -76,7 +141,7 @@ export default function ModelCard(props: any) {
       className="model-card"
       onClick={() => {
         // 修改当前选择的model
-        phoneInfoHandler({ answerId: "model", answer: [id] });
+        phoneInfoHandler({ answerId: "model", answer: [modelId] });
       }}
     >
       {renderByIsSelect()}

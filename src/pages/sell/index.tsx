@@ -30,14 +30,25 @@ export default function Sell(props: any) {
   function canGoNext(): boolean {
     return true;
   }
-  function goNextPage(): void {
-    const findTarget: any = brandList.find((item: any) => {
-      return item.id === brand;
-    });
-    if (findTarget) {
-      const next = props.match.url + "/" + findTarget.name;
-      // const next = props.match.url + "/condition";
-      props.history.push(next);
+  function goNextPage(currentPage: any): void {
+    switch (currentPage) {
+      case "brand": {
+        const findTarget: any = brandList.find((item: any) => {
+          return item.id === brand;
+        });
+        if (findTarget) {
+          const next = props.match.url + "/" + findTarget.name;
+          // const next = props.match.url + "/condition";
+          props.history.push(next);
+        }
+        break;
+      }
+      case "model": {
+        const next = props.match.url + "/condition";
+        props.history.push(next);
+        break;
+      }
+      default:
     }
   }
   useEffect(() => {
@@ -73,51 +84,54 @@ export default function Sell(props: any) {
       return <Component {...newProps} />;
     };
   }
-
   return (
     <Switch>
       {/*<Route path={props.match.url + "/"} component={Brand} />*/}
       <Route
         path={props.match.url + "/offer"}
-        render={(...other) => (
+        render={other => (
           <Layout>
-            <Offer canGoNext={canGoNext} goNextPage={goNextPage} {...props} />
-          </Layout>
-        )}
-      />
-      <Route
-        path={props.match.url + "/condition"}
-        render={(...other) => (
-          <Layout>
-            <Questionary
+            <Offer
               canGoNext={canGoNext}
-              goNextPage={goNextPage}
+              goNextPage={() => goNextPage("offer")}
               {...props}
             />
           </Layout>
         )}
       />
       <Route
-        path={props.match.url + "/:brandName/:model"}
-        render={(...other) => (
+        path={props.match.url + "/condition"}
+        render={other => (
           <Layout>
-            <Brand canGoNext={canGoNext} goNextPage={goNextPage} {...props} />
+            <Questionary
+              canGoNext={canGoNext}
+              goNextPage={() => goNextPage("condition")}
+              {...props}
+            />
           </Layout>
         )}
       />
       <Route
         path={props.match.url + "/:brandName"}
-        render={(...other) => (
+        render={other => (
           <Layout>
-            <Model canGoNext={canGoNext} goNextPage={goNextPage} {...props} />
+            <Model
+              canGoNext={canGoNext}
+              goNextPage={() => goNextPage("model")}
+              {...props}
+            />
           </Layout>
         )}
       />
       <Route
         path={props.match.url + "/"}
-        render={(...other) => (
+        render={other => (
           <Layout>
-            <Brand canGoNext={canGoNext} goNextPage={goNextPage} {...props} />
+            <Brand
+              canGoNext={canGoNext}
+              goNextPage={() => goNextPage("brand")}
+              {...props}
+            />
           </Layout>
         )}
       />
