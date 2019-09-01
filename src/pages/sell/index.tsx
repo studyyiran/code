@@ -41,8 +41,18 @@ export default function Sell(props: any) {
   }
   function goNextPage(currentPage: any): void {
     switch (currentPage) {
-      case "shipping": {
+      case "information": {
         const next = props.match.url + '/payment';
+        props.history.push(removeAllSpace(next));
+        break;
+      }
+      case "payment": {
+        const next = props.match.url + '/shipping';
+        props.history.push(removeAllSpace(next));
+        break;
+      }
+      case "shipping": {
+        const next = props.match.url + '/summary';
         props.history.push(removeAllSpace(next));
         break;
       }
