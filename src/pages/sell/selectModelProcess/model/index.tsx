@@ -3,7 +3,7 @@ import "./index.less";
 import { SelectModelContext, ISelectModelContext } from "../context";
 import { HeaderTitle } from "@/components/headerTitle";
 import { IReducerAction } from "@/interface/index.interface";
-import ModelCard from "@/pages/sell/selectModelProcess/model/modelCard";
+import ModelCard from "@/pages/sell/selectModelProcess/model/components/modelCard";
 import { PhoneInfoWrapper } from "@/pages/sell/selectModelProcess/condition/components/phoneInfoWrapper";
 import { findArrByKey } from "./util";
 
@@ -68,16 +68,16 @@ function Model(props: any) {
     });
   }
   // canPost?
-  useEffect(() => {
-    if (
-      modelState &&
-      modelState[attrConfig.PRODUCT_ID] &&
-      modelState[attrConfig.STORAGE_ID] &&
-      modelState[attrConfig.CARRIER_ID]
-    ) {
-      selectModelContextDispatch({ type: "setModelInfo", value: modelState });
-    }
-  }, [modelState]);
+  // useEffect(() => {
+  //   if (
+  //     modelState &&
+  //     modelState[attrConfig.PRODUCT_ID] &&
+  //     modelState[attrConfig.STORAGE_ID] &&
+  //     modelState[attrConfig.CARRIER_ID]
+  //   ) {
+  //     selectModelContextDispatch({ type: "setModelInfo", value: modelState });
+  //   }
+  // }, [modelState]);
 
   // canNext?
   useEffect(() => {

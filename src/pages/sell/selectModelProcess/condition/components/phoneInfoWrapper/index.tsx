@@ -99,19 +99,19 @@ export function PhoneInfoWrapper(props: any) {
       case "model":
         selectModelDispatch({
           type: "setModelInfo",
-          value: { ...modelInfo, modelId: answer[0] }
+          value: { modelId: answer[0] }
         });
         break;
       case "storage":
         selectModelDispatch({
           type: "setModelInfo",
-          value: { ...modelInfo, storageId: answer[0] }
+          value: { storageId: answer[0] }
         });
         break;
       case "carrier":
         selectModelDispatch({
           type: "setModelInfo",
-          value: { ...modelInfo, carrierId: answer[0] }
+          value: { carrierId: answer[0] }
         });
         break;
     }

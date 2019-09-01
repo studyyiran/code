@@ -1,4 +1,5 @@
 import React from "react";
+import "./index.less";
 import { findArrByKey } from "@/pages/sell/selectModelProcess/model/util";
 
 export default function ModelCard(props: any) {
@@ -18,13 +19,15 @@ export default function ModelCard(props: any) {
     currentId: string
   ) {
     return (
-      <ul key={title}>
+      <ul key={title} className="">
         <h2>{title}</h2>
         {arr.map(({ name, id: propertyId }: any) => {
           return (
             <li
               key={propertyId}
-              data-selected={currentId === propertyId}
+              data-selected={
+                String(currentId) === String(propertyId) ? "true" : "false"
+              }
               onClick={() => {
                 phoneInfoHandler({
                   answerId: answerId,
@@ -32,7 +35,7 @@ export default function ModelCard(props: any) {
                 });
               }}
             >
-              {name}
+              <p>{name}</p>
             </li>
           );
         })}
@@ -44,7 +47,7 @@ export default function ModelCard(props: any) {
       const storageArr = findArrByKey(phoneInfoQuestion, "storage");
       const carrierArr = findArrByKey(phoneInfoQuestion, "carrier");
       return (
-        <div>
+        <div className="attr-container">
           {renderAttrSelectList(
             "storage",
             "storage",
@@ -72,6 +75,7 @@ export default function ModelCard(props: any) {
     <div
       className="model-card"
       onClick={() => {
+        // 修改当前选择的model
         phoneInfoHandler({ answerId: "model", answer: [id] });
       }}
     >

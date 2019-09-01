@@ -45,25 +45,33 @@ function reducer(state: IContextState, action: IReducerAction) {
       break;
     }
     case "setBrand": {
-      newState = {
-        ...newState,
-        brand: value,
-        modelInfo: {
-          modelId: "",
-          storageId: "",
-          carrierId: ""
-        }
-      };
+      // 如果变更了brand
+      if (value !== newState.brand) {
+        newState = {
+          ...newState,
+          brand: value,
+          modelInfo: {
+            modelId: "",
+            storageId: "",
+            carrierId: ""
+          }
+        };
+      }
       break;
     }
     case "setModelInfo": {
-      if (value.modelId !== newState.modelInfo.modelId) {
+      // 如果变更了品牌
+      if (
+        value &&
+        value.modelId &&
+        value.modelId !== newState.modelInfo.modelId
+      ) {
         value.storageId = "";
         value.carrierId = "";
       }
       newState = {
         ...newState,
-        modelInfo: value
+        modelInfo: { ...newState.modelInfo, ...value }
       };
       break;
     }
@@ -114,6 +122,9 @@ function reducer(state: IContextState, action: IReducerAction) {
     default:
       newState = { ...newState };
   }
+  console.log("reducer Get");
+  console.log(action);
+  console.log(newState);
   // justtest 避免覆盖
   if (state.brand || type === "changeModelCache") {
     saveToCache(sessionKey, newState, [
