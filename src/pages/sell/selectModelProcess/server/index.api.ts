@@ -1,6 +1,7 @@
 import { Request } from "utils";
 import { IOpts } from "@/utils/request.interface";
-// import { IQueryParams, IAppendOrderParams } from "../interface/index.interface";
+import { IQueryParams, IAppendOrderParams } from "../index.interface";
+import config from "@/config/index";
 import { IPreOrder } from "@/store/interface/user.interface";
 
 // 根据类目获取品牌列表
@@ -54,30 +55,30 @@ export const getProductPPVN = <T>(productId: number) => {
 
 // 创建询价，获得询价key
 // 创建询价接口， 只要发生错误，都提示用户可以写邮件寻求帮助
-// export const createInquiry = <T>(inquiry: IQueryParams) => {
-//   const opts: IOpts = {
-//     url: "/inquiries",
-//     method: "post",
-//     params: inquiry
-//   };
-//
-//   return Request<T>(opts, [])
-// }
+export const createInquiry = <T>(inquiry: IQueryParams) => {
+  const opts: IOpts = {
+    url: "/inquiries",
+    method: "post",
+    params: inquiry
+  };
+
+  return Request<T>(opts, [])
+}
 
 // 获取询价详情
-// export const getInquiryDetail = <T>(
-//   key: string,
-//   agentCode: string = config.ENVCONFIG["agentCode"]
-// ) => {
-//   const opts: IOpts = {
-//     url: `/inquiries/${key}`,
-//     params: {
-//       agentCode
-//     }
-//   };
-//
-//   return Request<T>(opts);
-// };
+export const getInquiryDetail = <T>(
+  key: string,
+  agentCode: string = config.ENVCONFIG["agentCode"]
+) => {
+  const opts: IOpts = {
+    url: `/inquiries/${key}`,
+    params: {
+      agentCode
+    }
+  };
+
+  return Request<T>(opts);
+};
 
 // 根据zipCode获取美国对应的州
 export const getStateByCode = <T>(zipCode: string) => {
@@ -100,14 +101,14 @@ export const createOrder = <T>(orderParams: Pick<IPreOrder, Exclude<keyof IPreOr
 }
 
 // 追加订单
-// export const appendOrder = <T>(orderParams: IAppendOrderParams, orderNo: string) => {
-//   const opts: IOpts = {
-//     url: `/orders/${orderNo}/append`,
-//     method: 'post',
-//     params: orderParams,
-//   };
-//   return Request<T>(opts, []);
-// }
+export const appendOrder = <T>(orderParams: IAppendOrderParams, orderNo: string) => {
+  const opts: IOpts = {
+    url: `/orders/${orderNo}/append`,
+    method: 'post',
+    params: orderParams,
+  };
+  return Request<T>(opts, []);
+}
 
 // 查询多个追加订单
 export const getAllOrders = <T>(orderNo: string, userEmail: string) => {

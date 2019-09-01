@@ -3,9 +3,9 @@ import { FormComponentProps } from 'antd/lib/form';
 import * as React from 'react';
 import * as H from 'history';
 import { RouteComponentProps } from 'react-router'
-import { IUserStoreNew, IPreOrder } from '@/store/interface/user.interface';
-import { ICommonStore } from '@/store/interface/common.interface';
-import { IOrderDetail } from '@/containers/order/interface/order.inerface'
+import { IUserStoreNew, IPreOrder } from '../../../store/interface/user.interface';
+import { ICommonStore } from '../../../store/interface/common.interface';
+import { IOrderDetail } from '../../../containers/order/interface/order.inerface'
 
 export interface IYourPhoneStore {
   carriers: ICarrier[];
