@@ -35,8 +35,8 @@ export default function Sell(props: any) {
       return item.id === brand;
     });
     if (findTarget) {
-      // const next = props.match.url + "/" + findTarget.name;
-      const next = props.match.url + "/condition";
+      const next = props.match.url + "/" + findTarget.name;
+      // const next = props.match.url + "/condition";
       props.history.push(next);
     }
   }

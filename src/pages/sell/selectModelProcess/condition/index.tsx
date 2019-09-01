@@ -265,7 +265,6 @@ export function ConditionForm(props: IConditionForm) {
               type: "updateUserProductList",
               value: ""
             });
-            console.log(props)
             props.history.push("/newsell/offer");
           }}
           className="common-button finish-button"

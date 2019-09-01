@@ -10,7 +10,6 @@ interface ICheckBoxQuestion {
 export function CheckBoxQuestion(props: ICheckBoxQuestion) {
   const { options } = props;
   const [currentSelect, setCurrentSelect] = useState(props.defaultValue || []);
-  console.log(currentSelect);
   const handler = (next: string[]) => {
     setCurrentSelect(next);
     props.onChange(next);

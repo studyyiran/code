@@ -170,7 +170,6 @@ function useGetAction(
           state.brand,
           state.categoryId
         );
-        console.log(productsList);
         dispatch({ type: "setProductsList", value: productsList });
       }
     }),
