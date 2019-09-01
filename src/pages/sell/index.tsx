@@ -20,18 +20,28 @@ import Breadcrumb from "./selectModelProcess/components/breadcrumb/index";
 //   }
 // ]
 // interface ISell {}
+function removeAllSpace(str: string) {
+  return str.replace(/\s+/g, "");
+}
+
 export default function Sell(props: any) {
   const selectModelContext = useContext(SelectModelContext);
   const {
     selectModelContextValue,
-    selectModelContextDispatch
+    selectModelContextDispatch,
+    getNameInfo
   } = selectModelContext as ISelectModelContext;
-  const { brand, brandList } = selectModelContextValue;
+  const { brand, brandList, modelInfo } = selectModelContextValue;
   function canGoNext(): boolean {
     return true;
   }
   function goNextPage(currentPage: any): void {
     switch (currentPage) {
+      case "firstStep": {
+        const next = props.match.url;
+        props.history.push(removeAllSpace(next));
+        break;
+      }
       case "brand": {
         const findTarget: any = brandList.find((item: any) => {
           return item.id === brand;
@@ -39,13 +49,41 @@ export default function Sell(props: any) {
         if (findTarget) {
           const next = props.match.url + "/" + findTarget.name;
           // const next = props.match.url + "/condition";
-          props.history.push(next);
+          props.history.push(removeAllSpace(next));
         }
         break;
       }
       case "model": {
-        const next = props.match.url + "/condition";
-        props.history.push(next);
+        const findTarget: any = brandList.find((item: any) => {
+          return item.id === brand;
+        });
+        if (findTarget) {
+          if (modelInfo.modelId && modelInfo.carrierId && modelInfo.storageId) {
+            const nameConfig = getNameInfo({
+              brandId: brand,
+              modelId: modelInfo.modelId,
+              storageId: modelInfo.storageId,
+              carrierId: modelInfo.carrierId
+            });
+            const {
+              modelName,
+              storageName,
+              carrierName
+            } = nameConfig.modelInfoName;
+            const next =
+              props.match.url +
+              "/" +
+              findTarget.name +
+              `/${modelName}-${storageName}-${carrierName}`;
+            
+            props.history.push(removeAllSpace(next));
+          }
+        }
+        break;
+      }
+      case "condition": {
+        const next = props.match.url + "/offer";
+        props.history.push(removeAllSpace(next));
         break;
       }
       default:
@@ -86,11 +124,10 @@ export default function Sell(props: any) {
   }
   return (
     <Switch>
-      {/*<Route path={props.match.url + "/"} component={Brand} />*/}
       <Route
         path={props.match.url + "/offer"}
         render={other => (
-          <Layout>
+          <Layout goNextPage={goNextPage}>
             <Offer
               canGoNext={canGoNext}
               goNextPage={() => goNextPage("offer")}
@@ -100,9 +137,9 @@ export default function Sell(props: any) {
         )}
       />
       <Route
-        path={props.match.url + "/condition"}
+        path={props.match.url + "/:brandName/:modelInfo"}
         render={other => (
-          <Layout>
+          <Layout goNextPage={goNextPage}>
             <Questionary
               canGoNext={canGoNext}
               goNextPage={() => goNextPage("condition")}
@@ -114,7 +151,7 @@ export default function Sell(props: any) {
       <Route
         path={props.match.url + "/:brandName"}
         render={other => (
-          <Layout>
+          <Layout goNextPage={goNextPage}>
             <Model
               canGoNext={canGoNext}
               goNextPage={() => goNextPage("model")}
@@ -126,7 +163,7 @@ export default function Sell(props: any) {
       <Route
         path={props.match.url + "/"}
         render={other => (
-          <Layout>
+          <Layout goNextPage={goNextPage}>
             <Brand
               canGoNext={canGoNext}
               goNextPage={() => goNextPage("brand")}
@@ -138,18 +175,17 @@ export default function Sell(props: any) {
       <Route render={() => <div>123</div>} />
     </Switch>
   );
-  // return <ModelContextProvider>
-  //
-  // </ModelContextProvider>;
 }
-
-function Layout(props: any) {
-  const { children } = props;
+function Layout(layoutProps: any) {
+  const { children, goNextPage } = layoutProps;
   return (
     <div>
       <HeaderTitle title={"Select a manufacturer"} />
-      <Breadcrumb />
+      <Breadcrumb goNextPage={goNextPage} />
       <div>{children}</div>
     </div>
   );
 }
+// return <ModelContextProvider>
+//
+// </ModelContextProvider>;

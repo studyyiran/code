@@ -54,11 +54,11 @@ export default function ModelCard(props: any) {
     if (attrState.storageId && attrState.carrierId) {
       phoneInfoHandler({
         answerId: "storage",
-        answer: [attrState.storageId]
+        answer: [Number(attrState.storageId)]
       });
       phoneInfoHandler({
         answerId: "carrier",
-        answer: [attrState.carrierId]
+        answer: [Number(attrState.carrierId)]
       });
     }
   }, [attrState]);
@@ -70,8 +70,8 @@ export default function ModelCard(props: any) {
     if (
       a &&
       b &&
-      a.includes(attrState.storageId) &&
-      b.includes(attrState.carrierId)
+      a.includes(Number(attrState.storageId)) &&
+      b.includes(Number(attrState.carrierId))
     ) {
       props.goNextPage();
   }

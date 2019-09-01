@@ -122,9 +122,6 @@ function reducer(state: IContextState, action: IReducerAction) {
     default:
       newState = { ...newState };
   }
-  console.log("reducer Get");
-  console.log(action);
-  console.log(newState);
   // justtest 避免覆盖
   if (state.brand || type === "changeModelCache") {
     saveToCache(sessionKey, newState, [
@@ -190,7 +187,6 @@ function useGetAction(
         //   state.brand,
         //   state.categoryId
         // );
-        // console.log(productsList);
         dispatch({
           type: "setPriceList",
           value: state.userProductList.map((item, index) => ({
