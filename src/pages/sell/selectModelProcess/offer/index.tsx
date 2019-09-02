@@ -77,6 +77,7 @@ export default function Brand(props: any) {
         {renderList()}
       </Collapse>
       <div onClick={addNewHandler}>add another</div>
+      <div onClick={props.goNextPage}>next page</div>
     </div>
   );
 }

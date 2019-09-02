@@ -15,6 +15,7 @@ import {
 import { Switch, Route } from "react-router";
 import { HeaderTitle } from "@/components/headerTitle";
 import Breadcrumb from "./selectModelProcess/components/breadcrumb/index";
+import { staticRouter } from "@/pages/sell/selectModelProcess/config/staticRouter";
 
 // const config = [
 //   {
@@ -42,8 +43,12 @@ export default function Sell(props: any) {
   }
   function goNextPage(currentPage: any): void {
     // 这块对路由状态的借用不好。现在是自己在维护
-
     switch (currentPage) {
+      case "offer": {
+        const next = props.match.url + "/information";
+        props.history.push(removeAllSpace(next));
+        break;
+      }
       case "information": {
         const next = props.match.url + "/payment";
         props.history.push(removeAllSpace(next));
@@ -105,7 +110,7 @@ export default function Sell(props: any) {
               "/" +
               findTarget.name +
               `/${modelName}-${storageName}-${carrierName}`;
-            
+
             props.history.push(removeAllSpace(next));
           }
         }
@@ -152,127 +157,81 @@ export default function Sell(props: any) {
       return <Component {...newProps} />;
     };
   }
+  const routerConfig = {
+    brand: {
+      path: () => props.match.url + "/",
+      Component: Brand
+    },
+    model: {
+      path: () => props.match.url + "/:brandName",
+      Component: Model
+    },
+    condition: {
+      path: () => props.match.url + "/:brandName/:modelInfo",
+      Component: Questionary
+    },
+    offer: {
+      path: () => props.match.url + "/offer",
+      Component: Offer
+    },
+    information: {
+      path: () => props.match.url + "/information",
+      Component: Information
+    },
+    payment: {
+      path: () => props.match.url + "/payment",
+      Component: Payment
+    },
+    shipping: {
+      path: () => props.match.url + "/shipping",
+      Component: Shipping
+    },
+    summary: {
+      path: () => props.match.url + "/summary",
+      Component: Summary
+    },
+    prepareShip: {
+      path: () => props.match.url + "/prepare-ship",
+      Component: Summary
+    }
+  };
+  const configArr = staticRouter.map(item => {
+    const { pageKey } = item;
+    return { ...item, ...routerConfig[pageKey] };
+  });
 
-  const current = "";
   return (
     <Switch>
-      <Route
-        path={props.match.url + "/prepare-ship"}
-        render={other => (
-          <Layout goNextPage={goNextPage} currentPage="prepareShip">
-            <Shipping
-              canGoNext={canGoNext}
-              goNextPage={() => goNextPage("prepareShip")}
-              {...props}
-            />
-          </Layout>
-        )}
-      />
-      <Route
-        path={props.match.url + "/summary"}
-        render={other => (
-          <Layout goNextPage={goNextPage} currentPage="summary">
-            <Summary
-              canGoNext={canGoNext}
-              goNextPage={() => goNextPage("summary")}
-              {...props}
-            />
-          </Layout>
-        )}
-      />
-      <Route
-        path={props.match.url + "/shipping"}
-        render={other => (
-          <Layout goNextPage={goNextPage} currentPage="shipping">
-            <Shipping
-              canGoNext={canGoNext}
-              goNextPage={() => goNextPage("shipping")}
-              {...props}
-            />
-          </Layout>
-        )}
-      />
-      <Route
-        path={props.match.url + "/payment"}
-        render={other => (
-          <Layout goNextPage={goNextPage} currentPage="payment">
-            <Payment
-              canGoNext={canGoNext}
-              goNextPage={() => goNextPage("payment")}
-              {...props}
-            />
-          </Layout>
-        )}
-      />
-      <Route
-        path={props.match.url + "/information"}
-        render={other => (
-          <Layout goNextPage={goNextPage} currentPage="information">
-            <Information
-              canGoNext={canGoNext}
-              goNextPage={() => goNextPage("information")}
-              {...props}
-            />
-          </Layout>
-        )}
-      />
-      <Route
-        path={props.match.url + "/offer"}
-        render={other => (
-          <Layout goNextPage={goNextPage} currentPage="offer">
-            <Offer
-              canGoNext={canGoNext}
-              goNextPage={() => goNextPage("offer")}
-              {...props}
-            />
-          </Layout>
-        )}
-      />
-      <Route
-        path={props.match.url + "/:brandName/:modelInfo"}
-        render={other => (
-          <Layout goNextPage={goNextPage} currentPage="condition">
-            <Questionary
-              canGoNext={canGoNext}
-              goNextPage={() => goNextPage("condition")}
-              {...props}
-            />
-          </Layout>
-        )}
-      />
-      <Route
-        path={props.match.url + "/:brandName"}
-        render={other => (
-          <Layout goNextPage={goNextPage} currentPage="model">
-            <Model
-              canGoNext={canGoNext}
-              goNextPage={() => goNextPage("model")}
-              {...props}
-            />
-          </Layout>
-        )}
-      />
-      <Route
-        path={props.match.url + "/"}
-        render={other => (
-          <Layout goNextPage={goNextPage} currentPage="brand">
-            <Brand
-              canGoNext={canGoNext}
-              goNextPage={() => goNextPage("brand")}
-              {...props}
-            />
-          </Layout>
-        )}
-      />
-      <Route render={() => <div>123</div>} />
+      {configArr.map(({ path, title, Component, pageKey }) => {
+        return (
+          <Route
+            key={pageKey}
+            path={path()}
+            render={other => (
+              <Layout
+                goNextPage={goNextPage}
+                currentPage={pageKey}
+                title={title}
+              >
+                <Component
+                  canGoNext={canGoNext}
+                  goNextPage={() => goNextPage(pageKey)}
+                  {...props}
+                />
+              </Layout>
+            )}
+          />
+        );
+      })}
+      <Route render={() => <div>not match</div>} />
     </Switch>
   );
 }
 function Layout(layoutProps: any) {
-  const { children, goNextPage, currentPage } = layoutProps;
+  const { children, goNextPage, currentPage, title } = layoutProps;
   return (
     <div>
-      <HeaderTitle title={"Select a manufacturer"} />
+      <HeaderTitle title={title} />
       <Breadcrumb goNextPage={goNextPage} currentPage={currentPage} />
       <div>{children}</div>
     </div>

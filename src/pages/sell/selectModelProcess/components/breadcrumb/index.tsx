@@ -2,16 +2,18 @@ import React, { useContext } from "react";
 import "./index.less";
 import { SelectModelContext, ISelectModelContext } from "../../context";
 import { inject, observer } from "mobx-react";
+import { staticRouter } from "../../config/staticRouter";
 
 @inject("yourphone", "user", "common")
 @observer
 export default class BreadcrumbContainer extends React.Component<any, any> {
   public render() {
-    return <Breadcrumb {...this.props} />;
+    const { isMobile } = this.props.common;
+    return <Breadcrumb {...this.props} isMobile={isMobile} />;
   }
 }
 function Breadcrumb(props: any) {
-  const { currentPage, common } = props;
+  const { currentPage, isMobile } = props;
   const selectModelContext = useContext(SelectModelContext);
   const {
     selectModelContextValue,
@@ -43,76 +45,122 @@ function Breadcrumb(props: any) {
       props.goNextPage(selectTag);
     }
   }
-  const configArr = [
-    {
-      pageKey: "brand",
+  // 配置路由参数
+  const routerConfig = {
+    brand: {
       viewContent: () => {
         return nameObj.brandName || "Manufacture";
-      }
+      },
+      order: 0
     },
-    {
-      pageKey: "model",
+    model: {
       viewContent: () => {
         return nameObj.modelInfoName.modelName ? renderName() : "Model";
-      }
+      },
+      order: 1
     },
-    {
-      pageKey: "condition",
+    condition: {
       viewContent: () => {
         return "Phone Conditions";
-      }
+      },
+      order: 2
     },
-    {
-      pageKey: "offer",
+    offer: {
       viewContent: () => {
         return "Offer Details";
-      }
+      },
+      order: 3
+    },
+    information: {
+      viewContent: () => {
+        return "Information";
+      },
+      order: 4
+    },
+    payment: {
+      viewContent: () => {
+        return "Payment";
+      },
+      order: 5
+    },
+    shipping: {
+      viewContent: () => {
+        return "Shipping";
+      },
+      order: 6
+    },
+    summary: {
+      viewContent: () => {
+        return "Order summary";
+      },
+      order: 7
+    },
+    prepareShip: {
+      viewContent: () => {
+        return "Prepare and ship";
+      },
+      order: 8
     }
-  ];
-  function getCurrentPageKey(calcKey?: string) {
-    const findCurrentPageIndex = configArr.findIndex(
+  };
+  const configArr = staticRouter
+    .map(item => {
+      const { pageKey } = item;
+      return { ...item, ...routerConfig[pageKey] };
+    })
+    .sort((a, b) => {
+      return a.order - b.order;
+    });
+
+  function getCurrentPageOrder(calcKey?: string) {
+    const findCurrentPage = configArr.find(
       routeConfig => routeConfig.pageKey === (calcKey || currentPage)
     );
-    if (findCurrentPageIndex !== -1) {
-      return findCurrentPageIndex;
+    if (findCurrentPage) {
+      return findCurrentPage.order;
     } else {
       console.error("not found");
-      return findCurrentPageIndex;
+      return findCurrentPage.order;
     }
   }
-  const currentPageKey = getCurrentPageKey();
+  function getIndexByOrder(order: number) {
+    return configArr.findIndex(routeConfig => routeConfig.order === order);
+  }
+  const currentPageOrder = getCurrentPageOrder();
 
   function renderByType() {
-    const isMobile = common.isMobile;
-    const stageKey = getCurrentPageKey("offer");
-    const beginPos = currentPageKey > stageKey ? stageKey : 0;
+    const stageOrder = getCurrentPageOrder("offer");
+    const beginOrder = currentPageOrder > stageOrder ? stageOrder : 0;
     let configCache = [...configArr];
     if (isMobile) {
-      if (currentPageKey === 0) {
-        configCache = [configCache[0]];
-      } else if (currentPageKey > 0) {
+      if (currentPageOrder === 0) {
+        configCache = [configCache[getIndexByOrder(currentPageOrder)]];
+      } else if (currentPageOrder > 0) {
         configCache = [
-          configCache[currentPageKey - 1],
-          configCache[currentPageKey]
+          configCache[getIndexByOrder(currentPageOrder - 1)],
+          configCache[getIndexByOrder(currentPageOrder)]
         ];
       }
     } else {
-      configCache = configCache.slice(beginPos, currentPageKey + 1);
+      configCache = configCache.slice(
+        getIndexByOrder(beginOrder),
+        getIndexByOrder(currentPageOrder + 1)
+      );
     }
-
     return (
       <ul className="breadcrumb-list" onClick={clickHandler}>
         {configCache.map(routeConfig => {
           const { pageKey, viewContent } = routeConfig;
-          const renderPageKey = getCurrentPageKey(pageKey);
+          const renderPageOrder = getCurrentPageOrder(pageKey);
           let nextPageKey = "";
-          if (renderPageKey > stageKey) {
-            nextPageKey = configArr[renderPageKey - 1].pageKey;
+          if (renderPageOrder > stageOrder) {
+            nextPageKey =
+              configArr[getIndexByOrder(renderPageOrder - 1)].pageKey;
           } else if (nameObj.brandName) {
             // 如果可以选中跳转
-            if (renderPageKey > 0) {
-              nextPageKey = configArr[renderPageKey - 1].pageKey;
-            } else if (renderPageKey === 0) {
+            if (renderPageOrder > 0) {
+              nextPageKey =
+                configArr[getIndexByOrder(renderPageOrder - 1)].pageKey;
+            } else if (renderPageOrder === 0) {
               nextPageKey = "firstStep";
             }
           }
@@ -125,6 +173,5 @@ function Breadcrumb(props: any) {
       </ul>
     );
   }
-
   return <div className="breadcrumb">{renderByType()}</div>;
 }

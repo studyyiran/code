@@ -100,6 +100,7 @@ interface IConditionForm {
   dispatch: (action: IReducerAction) => void;
   phoneConditionQuestion: IQuestion[];
   history?: any;
+  goNextPage?: any;
 }
 
 export function ConditionForm(props: IConditionForm) {
@@ -203,8 +204,6 @@ export function ConditionForm(props: IConditionForm) {
   const extraQuestion: number = 1;
   return (
     <div className="page-condition">
-      <p>Manufacture > Phone conditions</p>
-      <h1>Phone conditions</h1>
       <Collapse activeKey={[maxActiveKey].concat(editKey).concat(showKey)}>
         <PhoneInfoWrapper
           key={firstQuestionKey}
@@ -261,11 +260,13 @@ export function ConditionForm(props: IConditionForm) {
       {maxActiveKey === "allFinish" ? (
         <button
           onClick={() => {
+            // 更新到父订单
             selectModelContextDispatch({
               type: "updateUserProductList",
-              value: ""
+              value: undefined,
             });
-            props.history.push("/newsell/offer");
+            // 同步跳转
+            props.goNextPage()
           }}
           className="common-button finish-button"
         >
