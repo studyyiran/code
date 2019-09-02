@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import classnames from "classnames";
 import { inject, observer } from "mobx-react";
-import { Row, Col, Collapse, Form } from "antd";
+import { Row, Col, Collapse, Form, Checkbox } from "antd";
 import { IPaymentProps, EShipmentType } from "../../index.interface";
 import { shipmentPageValidate } from "../pageValidate";
 import config from "config";
@@ -50,8 +50,10 @@ class Shipping extends React.Component<any, any> {
   }
 
   public render() {
-    const { selectModelContextValue, getExpressFee } = this
-      .context as ISelectModelContext;
+    const { selectModelContextDispatch, selectModelContextValue } = this.props
+      .selectModelContext as ISelectModelContext;
+    const { priceInfo, needInsurance } = selectModelContextValue;
+    const { shippingInsurance } = priceInfo;
     const leftContent = (
       <div className="left-wrapper">
         {this.props.yourphone.FedExNearStores && (
@@ -104,7 +106,10 @@ class Shipping extends React.Component<any, any> {
     const isMobile = this.props.common.isMobile;
     const paymentHTML = (
       <div>
-        <RenderQuestion optionsList={this.state.expressFeeList} />
+        <RenderQuestion
+          optionsList={this.state.expressFeeList}
+          selectModelContextDispatch={selectModelContextDispatch}
+        />
         <Row gutter={30} style={!isMobile ? { paddingTop: "42px" } : {}}>
           <Col {...this.colLayout(12)} className="paypal-col-wrapper">
             <Collapse
@@ -149,6 +154,14 @@ class Shipping extends React.Component<any, any> {
             </Collapse>
           </Col>
         </Row>
+        <Checkbox
+          checked={needInsurance}
+          onChange={e => {
+            selectModelContextDispatch({ type: "setNeedInsurance", value: e.target.checked });
+          }}
+        >
+          {shippingInsurance}
+        </Checkbox>
       </div>
     );
 
@@ -191,7 +204,7 @@ class Shipping extends React.Component<any, any> {
 }
 
 function RenderQuestion(props: any) {
-  const { optionsList } = props;
+  const { optionsList, selectModelContextDispatch } = props;
   // 直接拉接口
   {
     moment.tz(addDate(new Date(), 7), "America/Chicago").format("MMM DD");
@@ -228,7 +241,10 @@ function RenderQuestion(props: any) {
         <ChoiceQuestion
           options={afterCalcList}
           onChange={(value: any) => {
-            console.log(value);
+            selectModelContextDispatch({
+              type: "setExpressOption",
+              value
+            });
           }}
         />
       </div>

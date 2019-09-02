@@ -21,6 +21,20 @@ function reducer(state: IContextState, action: IReducerAction) {
   const { type, value } = action;
   let newState = { ...state };
   switch (type) {
+    case "setExpressOption": {
+      newState = {
+        ...newState,
+        expressOption: value
+      };
+      break;
+    }
+    case "setNeedInsurance": {
+      newState = {
+        ...newState,
+        needInsurance: value
+      };
+      break;
+    }
     case "setProductsList": {
       newState = {
         ...newState,
@@ -321,6 +335,8 @@ interface IContextState {
   brandList: []; // 热刷新
   priceInfo: any; // 热刷新
   productsList: []; // 热刷新
+  expressOption: any; // 用户数据
+  needInsurance: boolean; // 用户数据
 }
 
 export interface ISelectModelContext extends IContextActions {
@@ -341,7 +357,9 @@ export function ModelContextProvider(props: any) {
     priceInfo: {},
     categoryId: "",
     inquiryKey: "",
-    brand: ""
+    brand: "",
+    expressOption: null,
+    needInsurance: false
   };
   if (!haveLoad) {
     haveLoad = true;

@@ -1,4 +1,4 @@
-import React  from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { inject, observer } from "mobx-react";
 import classnames from "classnames";
@@ -15,8 +15,8 @@ import {
   EPayType
 } from "../../index.interface";
 import { ModalProps } from "antd/lib/modal";
+import OrderInfo from "./orderInfo";
 import { noteUserModal } from "@/containers/aboutphone/pageValidate";
-
 
 @inject("yourphone", "user", "common")
 @observer
@@ -257,6 +257,7 @@ export default class Summary extends React.Component<IDoneProps, IDoneStates> {
             {/*  </div>*/}
             {/*</div>*/}
             <div>your order</div>
+            <OrderInfo />
             <div className="terms-of-service">
               <span
                 onClick={this.handleServiceCheck}
