@@ -1,12 +1,12 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Brand from "./selectModelProcess/brand";
 import Model from "./selectModelProcess/model";
 import Questionary from "./selectModelProcess/condition/index";
 import Offer from "./selectModelProcess/offer";
-import Information from './selectModelProcess/pages/information'
+import Information from "./selectModelProcess/pages/information";
 import Payment from "./selectModelProcess/pages/payment";
-import Shipping from './selectModelProcess/pages/shipping'
-import Summary from './selectModelProcess/pages/summary'
+import Shipping from "./selectModelProcess/pages/shipping";
+import Summary from "./selectModelProcess/pages/summary";
 
 import {
   SelectModelContext,
@@ -41,24 +41,26 @@ export default function Sell(props: any) {
     return true;
   }
   function goNextPage(currentPage: any): void {
+    // 这块对路由状态的借用不好。现在是自己在维护
+
     switch (currentPage) {
       case "information": {
-        const next = props.match.url + '/payment';
+        const next = props.match.url + "/payment";
         props.history.push(removeAllSpace(next));
         break;
       }
       case "payment": {
-        const next = props.match.url + '/shipping';
+        const next = props.match.url + "/shipping";
         props.history.push(removeAllSpace(next));
         break;
       }
       case "shipping": {
-        const next = props.match.url + '/summary';
+        const next = props.match.url + "/summary";
         props.history.push(removeAllSpace(next));
         break;
       }
       case "summary": {
-        const next = props.match.url + '/prepare-ship';
+        const next = props.match.url + "/prepare-ship";
         props.history.push(removeAllSpace(next));
         break;
       }
@@ -150,12 +152,14 @@ export default function Sell(props: any) {
       return <Component {...newProps} />;
     };
   }
+
+  const current = "";
   return (
     <Switch>
       <Route
         path={props.match.url + "/prepare-ship"}
         render={other => (
-          <Layout goNextPage={goNextPage}>
+          <Layout goNextPage={goNextPage} currentPage="prepareShip">
             <Shipping
               canGoNext={canGoNext}
               goNextPage={() => goNextPage("prepareShip")}
@@ -167,7 +171,7 @@ export default function Sell(props: any) {
       <Route
         path={props.match.url + "/summary"}
         render={other => (
-          <Layout goNextPage={goNextPage}>
+          <Layout goNextPage={goNextPage} currentPage="summary">
             <Summary
               canGoNext={canGoNext}
               goNextPage={() => goNextPage("summary")}
@@ -179,7 +183,7 @@ export default function Sell(props: any) {
       <Route
         path={props.match.url + "/shipping"}
         render={other => (
-          <Layout goNextPage={goNextPage}>
+          <Layout goNextPage={goNextPage} currentPage="shipping">
             <Shipping
               canGoNext={canGoNext}
               goNextPage={() => goNextPage("shipping")}
@@ -191,7 +195,7 @@ export default function Sell(props: any) {
       <Route
         path={props.match.url + "/payment"}
         render={other => (
-          <Layout goNextPage={goNextPage}>
+          <Layout goNextPage={goNextPage} currentPage="payment">
             <Payment
               canGoNext={canGoNext}
               goNextPage={() => goNextPage("payment")}
@@ -203,7 +207,7 @@ export default function Sell(props: any) {
       <Route
         path={props.match.url + "/information"}
         render={other => (
-          <Layout goNextPage={goNextPage}>
+          <Layout goNextPage={goNextPage} currentPage="information">
             <Information
               canGoNext={canGoNext}
               goNextPage={() => goNextPage("information")}
@@ -215,7 +219,7 @@ export default function Sell(props: any) {
       <Route
         path={props.match.url + "/offer"}
         render={other => (
-          <Layout goNextPage={goNextPage}>
+          <Layout goNextPage={goNextPage} currentPage="offer">
             <Offer
               canGoNext={canGoNext}
               goNextPage={() => goNextPage("offer")}
@@ -227,7 +231,7 @@ export default function Sell(props: any) {
       <Route
         path={props.match.url + "/:brandName/:modelInfo"}
         render={other => (
-          <Layout goNextPage={goNextPage}>
+          <Layout goNextPage={goNextPage} currentPage="condition">
             <Questionary
               canGoNext={canGoNext}
               goNextPage={() => goNextPage("condition")}
@@ -239,7 +243,7 @@ export default function Sell(props: any) {
       <Route
         path={props.match.url + "/:brandName"}
         render={other => (
-          <Layout goNextPage={goNextPage}>
+          <Layout goNextPage={goNextPage} currentPage="model">
             <Model
               canGoNext={canGoNext}
               goNextPage={() => goNextPage("model")}
@@ -251,7 +255,7 @@ export default function Sell(props: any) {
       <Route
         path={props.match.url + "/"}
         render={other => (
-          <Layout goNextPage={goNextPage}>
+          <Layout goNextPage={goNextPage} currentPage="brand">
             <Brand
               canGoNext={canGoNext}
               goNextPage={() => goNextPage("brand")}
@@ -265,11 +269,11 @@ export default function Sell(props: any) {
   );
 }
 function Layout(layoutProps: any) {
-  const { children, goNextPage } = layoutProps;
+  const { children, goNextPage, currentPage } = layoutProps;
   return (
     <div>
       <HeaderTitle title={"Select a manufacturer"} />
-      <Breadcrumb goNextPage={goNextPage} />
+      <Breadcrumb goNextPage={goNextPage} currentPage={currentPage} />
       <div>{children}</div>
     </div>
   );
