@@ -38,7 +38,6 @@ export default function Brand(props: any) {
           key={productInquiryKey}
           header={
             <div>
-              {brandName}
               <span>
                 {productName + bpvIds[0].name}
               </span>

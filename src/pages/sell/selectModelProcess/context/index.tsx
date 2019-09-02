@@ -5,8 +5,12 @@ import React, {
   useEffect
 } from "react";
 import { IReducerAction } from "@/interface/index.interface";
-import { getBrandsByCid, getProductsList } from "../server/index.api";
-import { mockgetinquirybykeys } from "../../mock";
+import {
+  getBrandsByCid,
+  getExpressFee,
+  getProductsList
+} from "../server/index.api";
+import { mockgetinquirybykeys, mockgetexpressfee } from "../../mock";
 
 let haveLoad = false;
 const sessionKey = "modelContext";
@@ -159,6 +163,8 @@ interface IContextActions {
     };
   };
   getInquiryByIds: () => any;
+  getExpressFee: () => any;
+  getInquiryKeyList: () => any;
 }
 
 function useGetAction(
@@ -183,7 +189,7 @@ function useGetAction(
     }),
     getPriceList: promisify(async function() {
       if (state.userProductList && state.userProductList.length) {
-        const keys = state.userProductList.map(item => item.inquiryKey);
+        const keys = actions.getInquiryKeyList();
         // const productsList = await getProductsList(
         //   state.brand,
         //   state.categoryId
@@ -193,7 +199,7 @@ function useGetAction(
           const rNumber = Math.random();
           dispatch({
             type: "setPriceList",
-            value: keys.map((key, index) => {
+            value: keys.map((key: any, index: number) => {
               return {
                 ...mockgetinquirybykeys[index],
                 inquiryKey: key
@@ -221,6 +227,20 @@ function useGetAction(
         return Promise.reject("no brand");
       }
     }),
+    getExpressFee: promisify(async function() {
+      const keys = actions.getInquiryKeyList();
+      const productsList = await getExpressFee(keys);
+      return productsList;
+    }),
+    getInquiryKeyList: function() {
+      const keys = state.userProductList.map(item => item.inquiryKey);
+      if (keys && keys.length) {
+        return keys;
+      } else {
+        console.error("no key");
+        return null;
+      }
+    },
     getNameInfo: function(config: any) {
       const { brandList, productsList } = state;
       const { brandId, modelId, storageId, carrierId } = config;

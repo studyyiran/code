@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React  from "react";
 import { Link } from "react-router-dom";
 import { inject, observer } from "mobx-react";
 import classnames from "classnames";
@@ -16,10 +16,7 @@ import {
 } from "../../index.interface";
 import { ModalProps } from "antd/lib/modal";
 import { noteUserModal } from "@/containers/aboutphone/pageValidate";
-import {
-  SelectModelContext,
-  ISelectModelContext
-} from "../../../selectModelProcess/context";
+
 
 @inject("yourphone", "user", "common")
 @observer

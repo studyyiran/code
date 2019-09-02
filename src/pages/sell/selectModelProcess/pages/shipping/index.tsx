@@ -2,16 +2,15 @@ import * as React from "react";
 import classnames from "classnames";
 import { inject, observer } from "mobx-react";
 import { Row, Col, Collapse, Form } from "antd";
-import Layout from "../../../../../containers/aboutphone/layout";
 import {
   IPaymentProps,
-  IPaymentStates,
   EShipmentType
 } from "../../index.interface";
 import { shipmentPageValidate } from "../pageValidate";
 import config from "config";
 import { ChoiceQuestion } from "../../condition/components/renderByType/components/choiceQuestion/index";
 import "./index.less";
+import { ISelectModelContext, SelectModelContext } from "../../context";
 
 const Panel = Collapse.Panel;
 const leftHeader = <div className="fedex-bg" />;
@@ -19,19 +18,23 @@ const rightHeader = <div className="USPS-bg" />;
 
 @inject("yourphone", "user", "common")
 @observer
-class Shipping extends React.Component<IPaymentProps, IPaymentStates> {
-  public readonly state: Readonly<IPaymentStates> = {
-    activeSide: this.props.yourphone.payment
+class Shipping extends React.Component<IPaymentProps, any> {
+  public static contextType = SelectModelContext;
+  // 这个state我本来想放到context中。因为一劳永逸。但是对于封闭性不好。所以我先私有化。等以后需要的时候，再做处理
+  public readonly state: any = {
+    expressFeeList: []
   };
 
   public componentDidMount() {
-    // 显示左侧价格模块
-    this.props.user.isShowLeftPrice = true;
-    if (!shipmentPageValidate()) {
-      // this.props.history.push('/sell/yourphone/brand');
-      // return;
-    }
-
+    const { selectModelContextValue, getExpressFee } = this
+      .context as ISelectModelContext;
+    getExpressFee().then((res: any) => {
+      if (res) {
+        this.setState({
+          expressFeeList: res
+        });
+      }
+    });
     if (typeof this.props.onRef === "function") {
       this.props.onRef!(this); // 让done page里获取到这个组件实例，调用其validateData方法
     }
@@ -44,6 +47,8 @@ class Shipping extends React.Component<IPaymentProps, IPaymentStates> {
   }
 
   public render() {
+    const { selectModelContextValue, getExpressFee } = this
+      .context as ISelectModelContext;
     const leftContent = (
       <div className="left-wrapper">
         {this.props.yourphone.FedExNearStores && (
@@ -96,7 +101,7 @@ class Shipping extends React.Component<IPaymentProps, IPaymentStates> {
     const isMobile = this.props.common.isMobile;
     const paymentHTML = (
       <div>
-        <RenderQuestion />
+        <RenderQuestion optionsList={this.state.expressFeeList} />
         <Row gutter={30} style={!isMobile ? { paddingTop: "42px" } : {}}>
           <Col {...this.colLayout(12)} className="paypal-col-wrapper">
             <Collapse
@@ -182,7 +187,9 @@ class Shipping extends React.Component<IPaymentProps, IPaymentStates> {
   };
 }
 
-function RenderQuestion() {
+function RenderQuestion(props: any) {
+  const { optionsList } = props;
+  // 直接拉接口
   const options = [
     {
       id: "1",
@@ -197,17 +204,21 @@ function RenderQuestion() {
       content: "Request a box and ship by 8/14/19"
     }
   ];
-  return (
-    <div className="question">
-      <p>Get More cash the faster you ship（Pick your option）</p>
-      <ChoiceQuestion
-        options={options}
-        onChange={(selectId: string) => {
-          console.log(selectId);
-        }}
-      />
-    </div>
-  );
+  if (optionsList && optionsList.length) {
+    return (
+      <div className="question">
+        <p>Get More cash the faster you ship（Pick your option）</p>
+        <ChoiceQuestion
+          options={optionsList}
+          onChange={(selectId: string) => {
+            console.log(selectId);
+          }}
+        />
+      </div>
+    );
+  } else {
+    return null;
+  }
 }
 
 export default Form.create()(Shipping);

@@ -3,6 +3,18 @@ import { IOpts } from "@/utils/request.interface";
 import { IQueryParams, IAppendOrderParams } from "../index.interface";
 import config from "@/config/index";
 import { IPreOrder } from "@/store/interface/user.interface";
+import { mockgetexpressfee } from "../../mock";
+
+// 根据类目获取品牌列表
+export const getExpressFee = <T>(inquiryKeys: any[]) => {
+  const opts: IOpts = {
+    url: "/product/getinquirybykeys",
+    method: "post",
+    params: inquiryKeys
+  };
+  return Promise.resolve(mockgetexpressfee)
+  return Request<T>(opts, [])
+}
 
 // 根据类目获取品牌列表
 export const getBrandsByCid = <T>(categoryId: string) => {
