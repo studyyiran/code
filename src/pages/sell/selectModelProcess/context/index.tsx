@@ -157,6 +157,7 @@ interface IContextActions {
       carrierName: string;
     };
   };
+  getInquiryByIds: () => any;
 }
 
 function useGetAction(
@@ -181,20 +182,39 @@ function useGetAction(
     }),
     getPriceList: promisify(async function() {
       if (state.userProductList && state.userProductList.length) {
+        const keys = state.userProductList.map(item => item.inquiryKey);
         // const productsList = await getProductsList(
         //   state.brand,
         //   state.categoryId
         // );
+        // mock根据keyarray获取 最新的报价列表
         window.setTimeout(() => {
           const rNumber = Math.random();
           dispatch({
             type: "setPriceList",
-            value: state.userProductList.map((item, index) => ({
-              price: index + 1 + rNumber
+            value: keys.map(item => ({
+              price: item
             }))
           });
-        }, 1000)
-        
+        }, 1000);
+      }
+    }),
+    getInquiryByIds: promisify(async function() {
+      const { brand, categoryId } = state;
+      if (brand && categoryId) {
+        // 用机型信息获取询价
+        const productsList = await getProductsList(
+          state.brand,
+          state.categoryId
+        );
+        const InquiryKey = String(Math.random());
+        dispatch({
+          type: "updateUserProductListSetInquiryKey",
+          value: InquiryKey
+        });
+        return InquiryKey;
+      } else {
+        return Promise.reject("no brand");
       }
     }),
     getNameInfo: function(config: any) {
@@ -249,6 +269,11 @@ function useGetAction(
   ]);
   actions.getPriceList = useCallback(actions.getPriceList, [
     state.userProductList
+  ]);
+  // 虽然是主动调用，但是最好还是更新。需要补充更多的依赖
+  actions.getInquiryByIds = useCallback(actions.getInquiryByIds, [
+    state.brand,
+    state.categoryId
   ]);
   // actions.getNameInfo = useCallback(actions.getNameInfo, []);
   return actions;

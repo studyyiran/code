@@ -106,7 +106,7 @@ interface IConditionForm {
 export function ConditionForm(props: IConditionForm) {
   const selectModelContext = useContext(SelectModelContext);
   const {
-    selectModelContextDispatch
+    getInquiryByIds
   } = selectModelContext as ISelectModelContext;
   const [maxActiveKey, setMaxActiveKey] = useState("");
   const { state, dispatch, phoneConditionQuestion = [] } = props;
@@ -260,13 +260,11 @@ export function ConditionForm(props: IConditionForm) {
       {maxActiveKey === "allFinish" ? (
         <button
           onClick={() => {
-            // 更新到父订单
-            selectModelContextDispatch({
-              type: "updateUserProductList",
-              value: undefined,
+            // 获取最新的key
+            getInquiryByIds().then((value: any) => {
+              // 其实应该一致。监听state然后跳转
+              props.goNextPage();
             });
-            // 同步跳转
-            props.goNextPage()
           }}
           className="common-button finish-button"
         >

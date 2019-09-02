@@ -19,7 +19,7 @@ function Breadcrumb(props: any) {
     selectModelContextValue,
     getNameInfo
   } = selectModelContext as ISelectModelContext;
-  const { brand, userProductList, modelInfo } = selectModelContextValue;
+  const { brand, modelInfo } = selectModelContextValue;
   const nameObj = getNameInfo({
     brandId: brand,
     ...modelInfo

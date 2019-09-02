@@ -11,11 +11,11 @@ export default function Brand(props: any) {
     selectModelContextDispatch,
     getNameInfo
   } = selectModelContext as ISelectModelContext;
-  const { priceList, userProductList, stamp } = selectModelContextValue;
+  const { priceList, userProductList, inquiryKey } = selectModelContextValue;
   function selectHandler(id: any) {
     // 当前有选择
     const currentTarget = userProductList.find((item: any) => {
-      return item.stamp === id;
+      return item.inquiryKey === id;
     });
     if (id) {
       selectModelContextDispatch({
@@ -27,42 +27,38 @@ export default function Brand(props: any) {
     }
   }
   function renderList() {
-    return userProductList
-      .sort((a: any, b: any) => {
-        return 1;
-        // return a.order - b.order;
-      })
-      .map((item: any, index: number) => {
-        const { brand: brandId, stamp: productStamp, modelInfo } = item;
-        const nameObj = getNameInfo({
-          brandId,
-          ...modelInfo
-        });
-        return (
-          <Panel
-            key={productStamp}
-            header={
-              <div>
+    return userProductList.map((item: any, index: number) => {
+      const { brand: brandId, inquiryKey: productInquiryKey, modelInfo } = item;
+      const nameObj = getNameInfo({
+        brandId,
+        ...modelInfo
+      });
+      return (
+        <Panel
+          key={productInquiryKey}
+          header={
+            <div>
+              {nameObj.modelInfoName.modelName +
+                nameObj.modelInfoName.storageName}
+              <span>
                 {nameObj.modelInfoName.modelName +
                   nameObj.modelInfoName.storageName}
-                <span>
-                  {nameObj.modelInfoName.modelName +
-                    nameObj.modelInfoName.storageName}
-                </span>
-                <span>{nameObj.modelInfoName.carrierName}</span>
-              </div>
-            }
+              </span>
+              <span>{nameObj.modelInfoName.carrierName}</span>
+            </div>
+          }
+        >
+          <li
+            className="brand-icon-container"
+            onClick={() => selectHandler(item)}
           >
-            <li
-              className="brand-icon-container"
-              onClick={() => selectHandler(item)}
-            >
-              <span>{priceList[index] && priceList[index].price}</span>
-            </li>
-          </Panel>
-        );
-      });
+            <span>{priceList[index] && priceList[index].price}</span>
+          </li>
+        </Panel>
+      );
+    });
   }
+  // 添加新机型
   function addNewHandler() {
     selectModelContextDispatch({ type: "changeModelCache", value: "reset" });
     props.history.push(props.match.url);
@@ -72,7 +68,7 @@ export default function Brand(props: any) {
       <Collapse
         accordion={true}
         onChange={selectHandler}
-        defaultActiveKey={stamp}
+        defaultActiveKey={inquiryKey}
       >
         {renderList()}
       </Collapse>
