@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { inject, observer } from "mobx-react";
 import classnames from "classnames";
@@ -6,9 +6,7 @@ import { Modal, Button, Tooltip } from "antd";
 import Layout from "@/containers/aboutphone/layout";
 import Information from "../information";
 import PaymentPage from "../payment";
-// import Conditions from './page/condition';
 import ChangeModal from "@/containers/aboutphone/components/changemodal";
-import { donePageValidate } from "@/containers/aboutphone/pageValidate";
 import "./index.less";
 import {
   IDoneProps,
@@ -18,13 +16,14 @@ import {
 } from "../../index.interface";
 import { ModalProps } from "antd/lib/modal";
 import { noteUserModal } from "@/containers/aboutphone/pageValidate";
+import {
+  SelectModelContext,
+  ISelectModelContext
+} from "../../../selectModelProcess/context";
 
 @inject("yourphone", "user", "common")
 @observer
-export default class Summary extends React.Component<
-  IDoneProps,
-  IDoneStates
-> {
+export default class Summary extends React.Component<IDoneProps, IDoneStates> {
   public pageRef: React.Component;
   public readonly state: Readonly<IDoneStates> = {
     isChecked: false, // 勾选协议
@@ -69,20 +68,10 @@ export default class Summary extends React.Component<
 
     switch (this.state.pageType) {
       case EChangeType.SHIPPING:
-        Page = (
-          <Information
-            {...this.props}
-            onRef={this.handleOnRef}
-          />
-        );
+        Page = <Information {...this.props} onRef={this.handleOnRef} />;
         break;
       case EChangeType.PAYMENT:
-        Page = (
-          <PaymentPage
-            {...this.props}
-            onRef={this.handleOnRef}
-          />
-        );
+        Page = <PaymentPage {...this.props} onRef={this.handleOnRef} />;
         break;
       case EChangeType.CONDITION:
         Page = <div>Conditions</div>;
@@ -270,6 +259,7 @@ export default class Summary extends React.Component<
             {/*    <div className="info-wrapper">{phoneNode}</div>*/}
             {/*  </div>*/}
             {/*</div>*/}
+            <div>your order</div>
             <div className="terms-of-service">
               <span
                 onClick={this.handleServiceCheck}

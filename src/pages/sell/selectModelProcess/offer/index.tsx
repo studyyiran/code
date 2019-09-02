@@ -27,24 +27,22 @@ export default function Brand(props: any) {
     }
   }
   function renderList() {
-    return userProductList.map((item: any, index: number) => {
-      const { brand: brandId, inquiryKey: productInquiryKey, modelInfo } = item;
-      const nameObj = getNameInfo({
-        brandId,
-        ...modelInfo
-      });
+    return priceList.map((item: any, index: number) => {
+      const { brandName, productName, bpvIds, qpvIds, inquiryKey: productInquiryKey, subTotal } = item;
+      // const nameObj = getNameInfo({
+      //       //   brandId,
+      //       //   ...modelInfo
+      //       // });
       return (
         <Panel
           key={productInquiryKey}
           header={
             <div>
-              {nameObj.modelInfoName.modelName +
-                nameObj.modelInfoName.storageName}
+              {brandName}
               <span>
-                {nameObj.modelInfoName.modelName +
-                  nameObj.modelInfoName.storageName}
+                {productName + bpvIds[0].name}
               </span>
-              <span>{nameObj.modelInfoName.carrierName}</span>
+              <span>{bpvIds[1].name}</span>
             </div>
           }
         >
@@ -52,7 +50,7 @@ export default function Brand(props: any) {
             className="brand-icon-container"
             onClick={() => selectHandler(item)}
           >
-            <span>{priceList[index] && priceList[index].price}</span>
+            <span>{subTotal}</span>
           </li>
         </Panel>
       );

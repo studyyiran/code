@@ -1,4 +1,4 @@
-import { IQuestion, IUserQuestionAnswer } from "./index.interface";
+import { IQuestion, IUserQuestionAnswer } from "./selectModelProcess/condition/index.interface";
 // import { firstQuestionKey } from "./index";
 const firstQuestionKey = "aboutYourPhone";
 export const serverPhoneConditionQuestion: IQuestion[] = [
@@ -186,3 +186,131 @@ export const serverPhoneInfoQuestion: IQuestion[] = [
     ]
   }
 ];
+
+
+export const mockgetinquirybykeys = [
+  {
+    "categoryId": 1,
+    "categoryName": "mobile",
+    "brandId": 1,
+    "brandName": "apple",
+    "productId": 1,
+    "productName": "iphone x",
+    "skuId": 1,
+    "levelId": 1,
+    "levelName": "S",
+    "inquiryKey": "rCvRVXGAQcal0XSJit",
+    "deviceEstimate": 300.0000,
+    "platformFee": 30.0000,
+    "thirdPartyFee": 15.0000,
+    "subTotal": 18.0000,
+    "insuranceFee": 0.1800,
+    "expressFeess": null,
+    "bpvIds": [
+      {
+        "id": 1,
+        "name": "32G",
+        "ppId": "1",
+        "ppName": "storage",
+        "level": 1,
+        "type": null
+      },
+      {
+        "id": 4,
+        "name": "AT&T",
+        "ppId": "2",
+        "ppName": "carrier",
+        "level": 1,
+        "type": null
+      }
+    ],
+    "qpvIds": [
+      {
+        "id": 1,
+        "name": "Yes",
+        "ppId": "1",
+        "ppName": "Power On",
+        "level": 1,
+        "type": 0
+      },
+      {
+        "id": 3,
+        "name": "Yes",
+        "ppId": "2",
+        "ppName": "Crash",
+        "level": 1,
+        "type": 0
+      },
+      {
+        "id": 5,
+        "name": "Yes",
+        "ppId": "3",
+        "ppName": "Function All",
+        "level": 1,
+        "type": 0
+      }
+    ]
+  },
+  {
+    "categoryId": 1,
+    "categoryName": "mobile",
+    "brandId": 1,
+    "brandName": "apple",
+    "productId": 1,
+    "productName": "iphone x",
+    "skuId": 1,
+    "levelId": 1,
+    "levelName": "S",
+    "inquiryKey": "ud2SRSU9Yh1LczLmMg",
+    "deviceEstimate": 300.0000,
+    "platformFee": 30.0000,
+    "thirdPartyFee": 15.0000,
+    "subTotal": 18.0000,
+    "insuranceFee": 0.1800,
+    "expressFeess": null,
+    "bpvIds": [
+      {
+        "id": 1,
+        "name": "32G",
+        "ppId": "1",
+        "ppName": "storage",
+        "level": 1,
+        "type": null
+      },
+      {
+        "id": 4,
+        "name": "AT&T",
+        "ppId": "2",
+        "ppName": "carrier",
+        "level": 1,
+        "type": null
+      }
+    ],
+    "qpvIds": [
+      {
+        "id": 1,
+        "name": "Yes",
+        "ppId": "1",
+        "ppName": "Power On",
+        "level": 1,
+        "type": 0
+      },
+      {
+        "id": 3,
+        "name": "Yes",
+        "ppId": "2",
+        "ppName": "Crash",
+        "level": 1,
+        "type": 0
+      },
+      {
+        "id": 5,
+        "name": "Yes",
+        "ppId": "3",
+        "ppName": "Function All",
+        "level": 1,
+        "type": 0
+      }
+    ]
+  }
+]

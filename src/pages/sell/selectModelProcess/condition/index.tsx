@@ -7,7 +7,7 @@ import { IQuestion, IUserAnswer, IUserQuestionAnswer } from "./index.interface";
 import { WrapperPanel } from "./components/wrapperPanel";
 import { PhoneInfoWrapper } from "./components/phoneInfoWrapper";
 import { isCanMove, isNoContinue, updateReducerValue } from "./util";
-import { serverPhoneConditionQuestion } from "./mock";
+import { serverPhoneConditionQuestion } from "../../mock";
 import { ISelectModelContext, SelectModelContext } from "../context";
 
 /*

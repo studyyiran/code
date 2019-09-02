@@ -6,6 +6,7 @@ import React, {
 } from "react";
 import { IReducerAction } from "@/interface/index.interface";
 import { getBrandsByCid, getProductsList } from "../server/index.api";
+import { mockgetinquirybykeys } from "../../mock";
 
 let haveLoad = false;
 const sessionKey = "modelContext";
@@ -192,9 +193,12 @@ function useGetAction(
           const rNumber = Math.random();
           dispatch({
             type: "setPriceList",
-            value: keys.map(item => ({
-              price: item
-            }))
+            value: keys.map((key, index) => {
+              return {
+                ...mockgetinquirybykeys[index],
+                inquiryKey: key
+              };
+            })
           });
         }, 1000);
       }
