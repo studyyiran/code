@@ -75,16 +75,16 @@ function reducer(state: IContextState, action: IReducerAction) {
       };
       break;
     }
-    case "updateUserProductList": {
+    case "updateUserProductListSetInquiryKey": {
       const newProduct = {
         brand: newState.brand,
         modelInfo: newState.modelInfo,
-        stamp: newState.stamp
+        inquiryKey: value
       };
       const productTargetIndex = newState.userProductList.findIndex(
         userProduct => {
           // 首先判定，当前的状态
-          return userProduct.stamp === newState.stamp;
+          return userProduct.inquiryKey === newState.inquiryKey;
         }
       );
       // 强行变更数组。深比较
@@ -93,12 +93,10 @@ function reducer(state: IContextState, action: IReducerAction) {
         // 更新
         newState.userProductList[productTargetIndex] = newProduct;
       } else {
-        // 插入。并且更新当前的stamp
-        const newStamp = String(Date.now());
-        newProduct.stamp = newStamp;
-        newState.stamp = newStamp;
         newState.userProductList.push(newProduct);
       }
+      // 更新当前选中的key
+      newState.inquiryKey = value;
       newState = { ...newState };
       break;
     }
@@ -112,7 +110,7 @@ function reducer(state: IContextState, action: IReducerAction) {
           },
           // categoryId: "",// 不需要
           brand: "",
-          stamp: ""
+          inquiryKey: ""
         });
       } else if (value) {
         newState = { ...newState, ...value };
@@ -129,7 +127,7 @@ function reducer(state: IContextState, action: IReducerAction) {
       "brand",
       "categoryId",
       "userProductList",
-      "stamp"
+      "inquiryKey"
     ]);
   }
 
@@ -187,12 +185,16 @@ function useGetAction(
         //   state.brand,
         //   state.categoryId
         // );
-        dispatch({
-          type: "setPriceList",
-          value: state.userProductList.map((item, index) => ({
-            price: index + 1
-          }))
-        });
+        window.setTimeout(() => {
+          const rNumber = Math.random();
+          dispatch({
+            type: "setPriceList",
+            value: state.userProductList.map((item, index) => ({
+              price: index + 1 + rNumber
+            }))
+          });
+        }, 1000)
+        
       }
     }),
     getNameInfo: function(config: any) {
@@ -262,7 +264,7 @@ interface IContextState {
   modelInfo: IModelInfo; // 1用户数据
   categoryId: string; // 1用户数据（但是不需要清空）
   brand: string; // 1用户数据
-  stamp: string; // 1用户数据
+  inquiryKey: string; // 1用户数据
   userProductList: any[]; // 用户数据2
   brandList: []; // 热刷新
   priceList: any[]; // 热刷新
@@ -286,7 +288,7 @@ export function ModelContextProvider(props: any) {
     userProductList: [],
     priceList: [],
     categoryId: "",
-    stamp: "",
+    inquiryKey: "",
     brand: ""
   };
   if (!haveLoad) {
