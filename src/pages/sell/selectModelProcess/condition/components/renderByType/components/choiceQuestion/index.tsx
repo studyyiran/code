@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "./index.less";
+import * as moment from "moment-timezone";
+import { addDate } from "utils";
 
 interface IOption {
   children: any;
@@ -15,7 +17,10 @@ function Option(props: IOption) {
   }
   const isSelect = currentSelect === index;
   return (
-    <div className="question__option--container" data-select={isSelect ? "true" : "false"}>
+    <div
+      className="question__option--container"
+      data-select={isSelect ? "true" : "false"}
+    >
       <div
         className="comp-choice-question__option"
         data-select={isSelect ? "true" : "false"}
@@ -35,35 +40,45 @@ function Option(props: IOption) {
 }
 
 interface IOptionProps {
-  id: string,
-  content: string,
+  sendDateType: string;
+  content: string;
+  fee: string;
+  time: number;
 }
 
 interface ISelect {
   defaultValue?: string;
-  onChange: (s: string) => void;
-  options: IOptionProps[];
+  onChange: (s: any) => void;
+  options: any[];
 }
 
 export function ChoiceQuestion(props: ISelect) {
+  // debugger;
   const [currentSelect, setCurrentSelect] = useState(props.defaultValue || "");
-  const options = props.options
+  const options = props.options;
   const handler = (selectIndex: string) => {
     setCurrentSelect(selectIndex);
-    props.onChange(selectIndex);
+    const target = options.find(item => item.sendDateType === selectIndex);
+    props.onChange({
+      sendDateType: target.sendDateType,
+      fee: target.fee
+    });
   };
   return (
     <div className="comp-choice-question">
       {options.map(option => {
-        const { id, content } = option;
+        const { time, content, sendDateType } = option;
         return (
           <Option
-            key={id}
-            index={id}
+            key={time}
+            index={sendDateType}
             currentSelect={currentSelect}
             onClick={handler}
           >
             {content}
+            {moment
+              .tz(addDate(new Date(), time), "America/Chicago")
+              .format("MMM DD")}
           </Option>
         );
       })}

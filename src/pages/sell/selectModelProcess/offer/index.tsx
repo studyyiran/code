@@ -11,7 +11,8 @@ export default function Brand(props: any) {
     selectModelContextDispatch,
     getNameInfo
   } = selectModelContext as ISelectModelContext;
-  const { priceList, userProductList, inquiryKey } = selectModelContextValue;
+  const { priceInfo, userProductList, inquiryKey } = selectModelContextValue;
+  const { resultList, guaranteedPayout } = priceInfo;
   function selectHandler(id: any) {
     // 当前有选择
     const currentTarget = userProductList.find((item: any) => {
@@ -27,8 +28,16 @@ export default function Brand(props: any) {
     }
   }
   function renderList() {
-    return priceList.map((item: any, index: number) => {
-      const { brandName, productName, bpvIds, qpvIds, inquiryKey: productInquiryKey, subTotal } = item;
+    return resultList.map((item: any, index: number) => {
+      console.log(item)
+      const {
+        brandName,
+        productName,
+        bpvIds,
+        qpvIds,
+        inquiryKey: productInquiryKey,
+        subTotal
+      } = item;
       // const nameObj = getNameInfo({
       //       //   brandId,
       //       //   ...modelInfo
@@ -38,9 +47,7 @@ export default function Brand(props: any) {
           key={productInquiryKey}
           header={
             <div>
-              <span>
-                {productName + bpvIds[0].name}
-              </span>
+              <span>{productName + bpvIds[0].name}</span>
               <span>{bpvIds[1].name}</span>
             </div>
           }
@@ -62,15 +69,18 @@ export default function Brand(props: any) {
   }
   return (
     <div className="page-offer">
-      <Collapse
-        accordion={true}
-        onChange={selectHandler}
-        defaultActiveKey={inquiryKey}
-      >
-        {renderList()}
-      </Collapse>
+      {resultList && resultList.length ? (
+        <Collapse
+          accordion={true}
+          onChange={selectHandler}
+          defaultActiveKey={inquiryKey}
+        >
+          {renderList()}
+        </Collapse>
+      ) : null}
       <div onClick={addNewHandler}>add another</div>
       <div onClick={props.goNextPage}>next page</div>
+      <div>{guaranteedPayout}</div>
     </div>
   );
 }

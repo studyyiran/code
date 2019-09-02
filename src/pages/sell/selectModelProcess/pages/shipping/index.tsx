@@ -1,33 +1,36 @@
-import * as React from "react";
+import React, { useContext } from "react";
 import classnames from "classnames";
 import { inject, observer } from "mobx-react";
 import { Row, Col, Collapse, Form } from "antd";
-import {
-  IPaymentProps,
-  EShipmentType
-} from "../../index.interface";
+import { IPaymentProps, EShipmentType } from "../../index.interface";
 import { shipmentPageValidate } from "../pageValidate";
 import config from "config";
+import moment from "moment";
 import { ChoiceQuestion } from "../../condition/components/renderByType/components/choiceQuestion/index";
 import "./index.less";
 import { ISelectModelContext, SelectModelContext } from "../../context";
+import { addDate } from "utils";
 
 const Panel = Collapse.Panel;
 const leftHeader = <div className="fedex-bg" />;
 const rightHeader = <div className="USPS-bg" />;
 
+function ShippingContainer(props: any) {
+  const selectModelContext = useContext(SelectModelContext);
+  return <Shipping {...props} selectModelContext={selectModelContext} />;
+}
+
 @inject("yourphone", "user", "common")
 @observer
-class Shipping extends React.Component<IPaymentProps, any> {
-  public static contextType = SelectModelContext;
+class Shipping extends React.Component<any, any> {
   // 这个state我本来想放到context中。因为一劳永逸。但是对于封闭性不好。所以我先私有化。等以后需要的时候，再做处理
   public readonly state: any = {
     expressFeeList: []
   };
 
   public componentDidMount() {
-    const { selectModelContextValue, getExpressFee } = this
-      .context as ISelectModelContext;
+    const { getExpressFee } = this.props
+      .selectModelContext as ISelectModelContext;
     getExpressFee().then((res: any) => {
       if (res) {
         this.setState({
@@ -190,28 +193,42 @@ class Shipping extends React.Component<IPaymentProps, any> {
 function RenderQuestion(props: any) {
   const { optionsList } = props;
   // 直接拉接口
+  {
+    moment.tz(addDate(new Date(), 7), "America/Chicago").format("MMM DD");
+  }
   const options = [
     {
-      id: "1",
-      content: "Use your own box and ship by 8/3/19"
+      time: 3,
+      content: "Use your own box and ship by "
     },
     {
-      id: "2",
-      content: "Use your own box and ship by 8/8/19"
+      time: 7,
+      content: "Use your own box and ship by "
     },
     {
-      id: "3",
-      content: "Request a box and ship by 8/14/19"
+      time: 14,
+      content: "Request a box and ship by "
     }
   ];
+  let afterCalcList: any[] = [];
   if (optionsList && optionsList.length) {
+    if (optionsList.length === 1) {
+      afterCalcList = afterCalcList.concat([optionsList[1]]);
+    } else {
+      afterCalcList = options.map((item, index) => ({
+        ...item,
+        ...optionsList[index]
+      }));
+    }
+  }
+  if (afterCalcList && afterCalcList.length) {
     return (
       <div className="question">
         <p>Get More cash the faster you ship（Pick your option）</p>
         <ChoiceQuestion
-          options={optionsList}
-          onChange={(selectId: string) => {
-            console.log(selectId);
+          options={afterCalcList}
+          onChange={(value: any) => {
+            console.log(value);
           }}
         />
       </div>
@@ -221,4 +238,4 @@ function RenderQuestion(props: any) {
   }
 }
 
-export default Form.create()(Shipping);
+export default Form.create()(ShippingContainer);

@@ -10,7 +10,7 @@ import {
   getExpressFee,
   getProductsList
 } from "../server/index.api";
-import { mockgetinquirybykeys, mockgetexpressfee } from "../../mock";
+import { mockgetinquirybykeys } from "../../mock";
 
 let haveLoad = false;
 const sessionKey = "modelContext";
@@ -28,10 +28,10 @@ function reducer(state: IContextState, action: IReducerAction) {
       };
       break;
     }
-    case "setPriceList": {
+    case "setPriceInfo": {
       newState = {
         ...newState,
-        priceList: value
+        priceInfo: value
       };
       break;
     }
@@ -151,7 +151,7 @@ function promisify(func: any) {
 interface IContextActions {
   getBrandList: () => void;
   getProductsList: () => void;
-  getPriceList: () => void;
+  getPriceInfo: () => void;
   getNameInfo: (
     idObj: any
   ) => {
@@ -187,7 +187,7 @@ function useGetAction(
         dispatch({ type: "setProductsList", value: productsList });
       }
     }),
-    getPriceList: promisify(async function() {
+    getPriceInfo: promisify(async function() {
       if (state.userProductList && state.userProductList.length) {
         const keys = actions.getInquiryKeyList();
         // const productsList = await getProductsList(
@@ -198,13 +198,16 @@ function useGetAction(
         window.setTimeout(() => {
           const rNumber = Math.random();
           dispatch({
-            type: "setPriceList",
-            value: keys.map((key: any, index: number) => {
-              return {
-                ...mockgetinquirybykeys[index],
-                inquiryKey: key
-              };
-            })
+            type: "setPriceInfo",
+            value: {
+              ...mockgetinquirybykeys,
+              resultList: keys.map((key: any, index: number) => {
+                return {
+                  ...mockgetinquirybykeys.resultList[index],
+                  inquiryKey: key
+                };
+              })
+            }
           });
         }, 1000);
       }
@@ -291,7 +294,7 @@ function useGetAction(
     state.brand,
     state.categoryId
   ]);
-  actions.getPriceList = useCallback(actions.getPriceList, [
+  actions.getPriceInfo = useCallback(actions.getPriceInfo, [
     state.userProductList
   ]);
   // 虽然是主动调用，但是最好还是更新。需要补充更多的依赖
@@ -316,7 +319,7 @@ interface IContextState {
   inquiryKey: string; // 1用户数据
   userProductList: any[]; // 用户数据2
   brandList: []; // 热刷新
-  priceList: any[]; // 热刷新
+  priceInfo: any; // 热刷新
   productsList: []; // 热刷新
 }
 
@@ -335,7 +338,7 @@ export function ModelContextProvider(props: any) {
     },
     productsList: [],
     userProductList: [],
-    priceList: [],
+    priceInfo: {},
     categoryId: "",
     inquiryKey: "",
     brand: ""
@@ -358,8 +361,8 @@ export function ModelContextProvider(props: any) {
     action.getProductsList();
   }, [action.getProductsList]);
   useEffect(() => {
-    action.getPriceList();
-  }, [action.getPriceList]);
+    action.getPriceInfo();
+  }, [action.getPriceInfo]);
   const propsValue: ISelectModelContext = {
     ...action,
     selectModelContextValue: state,
