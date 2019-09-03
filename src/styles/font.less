@@ -43,14 +43,23 @@
   //transition: background 0.5s;
   font-size: @font-size-large;
 }
-.common-button[disabled] {
-  background: linear-gradient(@color-gray-2, @color-gray-2);
-  background: linear-gradient(@color-gray-2, @color-gray-2);
+.common-button.second {
+  background: #F5F7F9;
+  color: #1AB4E7;
 }
-.common-button:hover {
-  background: #1AB4E7;
+.common-button:not(.second) {
+  &:hover:not([disabled]) {
+    background: #1AB4E7;
+  }
+  &[disabled] {
+    //&:hover {
+    //  background: linear-gradient(@color-gray-2, @color-gray-2);
+    //  background: linear-gradient(@color-gray-2, @color-gray-2);
+    //};
+    background: linear-gradient(@color-gray-2, @color-gray-2);
+    background: linear-gradient(@color-gray-2, @color-gray-2);
+  }
 }
-
 .common-card {
   box-shadow: 0px 4px 12px 0px rgba(0,0,0,0.1);
   background: @white;

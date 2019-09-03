@@ -1,0 +1,28 @@
+@import (reference) "~@/styles/index.less";
+
+.page-offer {
+  .page(724px);
+  padding: 32px 0 85px;
+  .func-space-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  > * {
+    ul {
+      > li {
+        .func-space-between();
+      }
+    }
+  }
+  > .payout-container {
+    .big-font {
+      .font(26px, 500, #000000);
+    }
+    .func-space-between();
+  }
+  > div.button-container {
+    .func-space-between();
+  }
+}
+

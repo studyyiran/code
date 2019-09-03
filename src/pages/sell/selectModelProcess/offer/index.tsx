@@ -9,6 +9,7 @@ export default function Brand(props: any) {
   const {
     selectModelContextValue,
     selectModelContextDispatch,
+    removeFromList,
     getNameInfo
   } = selectModelContext as ISelectModelContext;
   const { priceInfo, userProductList, inquiryKey } = selectModelContextValue;
@@ -27,50 +28,79 @@ export default function Brand(props: any) {
       selectModelContextDispatch({ type: "changeModelCache", value: "reset" });
     }
   }
+  // 添加新机型
+  function addNewHandler() {
+    selectModelContextDispatch({ type: "changeModelCache", value: "reset" });
+    props.history.push(props.match.url);
+  }
   function renderList() {
     return resultList.map((item: any, index: number) => {
-      console.log(item)
       const {
         brandName,
         productName,
         bpvIds,
         qpvIds,
         inquiryKey: productInquiryKey,
+        deviceEstimate,
+        platformFee,
+        thirdPartyFee,
         subTotal
       } = item;
-      // const nameObj = getNameInfo({
-      //       //   brandId,
-      //       //   ...modelInfo
-      //       // });
       return (
         <Panel
           key={productInquiryKey}
           header={
             <div>
-              <span>{productName + bpvIds[0].name}</span>
-              <span>{bpvIds[1].name}</span>
+              <img />
+              <div>
+                <span>{productName + bpvIds[0].name}</span>
+                <span>{bpvIds[1].name}</span>
+              </div>
             </div>
           }
         >
-          <li
-            className="brand-icon-container"
-            onClick={() => selectHandler(item)}
-          >
-            <span>{subTotal}</span>
-          </li>
+          <ul className="">
+            {resultList.length > 1 ? (
+              <li
+                className="edit-panel-line"
+                onClick={() => {
+                  debugger
+                  removeFromList(productInquiryKey);
+                }}
+              >
+                Remove
+              </li>
+            ) : null}
+            <li className="estimate-line">
+              <span>Device Estimate</span>
+              <span>{deviceEstimate}</span>
+            </li>
+            <li>
+              <span>10% Service Fee</span>
+              <span>{platformFee}</span>
+            </li>
+            <li>
+              <span>3rd Party Seller Fees</span>
+              <span>{thirdPartyFee}</span>
+            </li>
+            <li className="subtotal">
+              <span>Subtotal</span>
+              <span>{subTotal}</span>
+            </li>
+          </ul>
         </Panel>
       );
     });
-  }
-  // 添加新机型
-  function addNewHandler() {
-    selectModelContextDispatch({ type: "changeModelCache", value: "reset" });
-    props.history.push(props.match.url);
   }
   return (
     <div className="page-offer">
       {resultList && resultList.length ? (
         <Collapse
+          expandIconPosition="right"
+          expandIcon={panelProps => {
+            console.log(panelProps);
+            return <div>+</div>;
+          }}
           accordion={true}
           onChange={selectHandler}
           defaultActiveKey={inquiryKey}
@@ -78,9 +108,26 @@ export default function Brand(props: any) {
           {renderList()}
         </Collapse>
       ) : null}
-      <div onClick={addNewHandler}>add another</div>
-      <div onClick={props.goNextPage}>next page</div>
-      <div>{guaranteedPayout}</div>
+      <section className="payout-container">
+        <div>
+          <span className="big-font">Total Payout</span>
+          <TipsIcon tips={"123"} />
+        </div>
+        <span className="big-font">{guaranteedPayout}</span>
+      </section>
+      <div className="button-container">
+        <button className="common-button second" onClick={addNewHandler}>
+          Add another device
+        </button>
+        <button className="common-button" onClick={props.goNextPage}>
+          Next
+        </button>
+      </div>
     </div>
   );
+}
+
+function TipsIcon(props: any) {
+  const { tips } = props;
+  return <span className="comp-tips">?</span>;
 }

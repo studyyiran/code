@@ -94,6 +94,21 @@ function reducer(state: IContextState, action: IReducerAction) {
       };
       break;
     }
+    case "removeFromUserProductList": {
+      const productTargetIndex = newState.userProductList.findIndex(
+        userProduct => {
+          // 首先判定，当前的状态
+          return userProduct.inquiryKey === newState.inquiryKey;
+        }
+      );
+      // 强行变更数组。深比较
+      newState.userProductList = newState.userProductList.concat([]);
+      if (productTargetIndex !== -1) {
+        // 删除
+        newState.userProductList.splice(productTargetIndex, 1);
+      }
+      break;
+    }
     case "updateUserProductListSetInquiryKey": {
       const newProduct = {
         brand: newState.brand,
@@ -179,6 +194,7 @@ interface IContextActions {
   getInquiryByIds: () => any;
   getExpressFee: () => any;
   getInquiryKeyList: () => any;
+  removeFromList: (key: any) => any;
 }
 
 function useGetAction(
@@ -211,25 +227,18 @@ function useGetAction(
         // mock根据keyarray获取 最新的报价列表
         window.setTimeout(() => {
           const rNumber = Math.random();
-          if (keys.length > 2) {
-            dispatch({
-              type: "setPriceInfo",
-              value: mockgetinquirybykeys
-            });
-          } else {
-            dispatch({
-              type: "setPriceInfo",
-              value: {
-                ...mockgetinquirybykeys,
-                resultList: keys.map((key: any, index: number) => {
-                  return {
-                    ...mockgetinquirybykeys.resultList[index],
-                    inquiryKey: key
-                  };
-                })
-              }
-            });
-          }
+          dispatch({
+            type: "setPriceInfo",
+            value: {
+              ...mockgetinquirybykeys,
+              resultList: keys.map((key: any, index: number) => {
+                return {
+                  ...mockgetinquirybykeys.resultList[index],
+                  inquiryKey: key,
+                };
+              })
+            }
+          });
         }, 1000);
       }
     }),
@@ -263,6 +272,21 @@ function useGetAction(
       } else {
         console.error("no key");
         return null;
+      }
+    },
+    removeFromList: function(inquiryKey) {
+      const target = state.userProductList.find(
+        item => item.inquiryKey === inquiryKey
+      );
+      if (target) {
+        dispatch({
+          type: "removeFromUserProductList",
+          value: inquiryKey
+        });
+        dispatch({
+          type: "changeModelCache",
+          value: "reset"
+        });
       }
     },
     getNameInfo: function(config: any) {
@@ -369,7 +393,9 @@ export function ModelContextProvider(props: any) {
     needInsurance: false
   };
   if (!haveLoad) {
-    haveLoad = true;
+    // haveLoad = true;
+    // JUST DEBUG
+    haveLoad = haveLoad;
     const cache = reloadFromCache(sessionKey);
     if (cache) {
       initState = { ...initState, ...cache };
