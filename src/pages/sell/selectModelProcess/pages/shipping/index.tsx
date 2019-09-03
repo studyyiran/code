@@ -55,7 +55,7 @@ class Shipping extends React.Component<any, any> {
   public render() {
     const { selectModelContextDispatch, selectModelContextValue } = this.props
       .selectModelContext as ISelectModelContext;
-    const { priceInfo, needInsurance } = selectModelContextValue;
+    const { priceInfo, needInsurance, expressOption } = selectModelContextValue;
     const { shippingInsurance } = priceInfo;
     const leftContent = (
       <div className="left-wrapper">
@@ -112,6 +112,7 @@ class Shipping extends React.Component<any, any> {
       <div className="page-payment-container">
         <PriceTitle>The faster you ship, the more you get paid</PriceTitle>
         <RenderQuestion
+          currentExpressOption={expressOption}
           optionsList={this.state.expressFeeList}
           selectModelContextDispatch={selectModelContextDispatch}
         />
@@ -212,7 +213,7 @@ class Shipping extends React.Component<any, any> {
 }
 
 function RenderQuestion(props: any) {
-  const { optionsList, selectModelContextDispatch } = props;
+  const { optionsList, selectModelContextDispatch, currentExpressOption } = props;
   // 直接拉接口
   {
     moment.tz(addDate(new Date(), 7), "America/Chicago").format("MMM DD");
@@ -246,6 +247,7 @@ function RenderQuestion(props: any) {
     return (
       <div className="question">
         <ChoiceQuestion
+          defaultValue={currentExpressOption.sendDateType}
           options={afterCalcList}
           onChange={(value: any) => {
             selectModelContextDispatch({

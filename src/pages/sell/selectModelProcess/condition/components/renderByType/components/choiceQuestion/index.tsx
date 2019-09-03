@@ -68,7 +68,7 @@ export function ChoiceQuestion(props: ISelect) {
         const { time, content, sendDateType } = option;
         return (
           <Option
-            key={time}
+            key={sendDateType}
             index={sendDateType}
             currentSelect={currentSelect}
             onClick={handler}
