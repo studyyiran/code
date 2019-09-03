@@ -101,3 +101,89 @@
     }
   }
 }
+
+.page-payment-container {
+  .page-padding();
+  .page(790px);
+  padding-bottom: 28px;
+  h3 {
+    .font(24px, 600, #131339);
+    margin-bottom: 32px;
+  }
+  .question {
+    .comp-choice-question {
+      display: grid;
+      grid-template-columns: repeat(2, auto);
+      grid-column-gap: 30px;
+    }
+    .question__option--container {
+      margin-bottom: 24px;
+    }
+  }
+  .check-box-container {
+    text-align: center;
+    padding-top: 17px;
+    .insurance-tips {
+      color: #272729;
+      font-weight: 600;
+      margin-left: 2px;
+    }
+  }
+  .buttons-container {
+    padding-top: 19px;
+  }
+  .comp-top-tag {
+    &.recommand {
+      background: #6dd230;
+    }
+    position: absolute;
+    top: -12px;
+    right: -12px;
+    background: #ff0048;
+  }
+  .question__option--container {
+    position: relative;
+  }
+}
+
+.ismobile #root {
+  .page-payment-container {
+    padding-bottom: 2.13rem;
+    h3 {
+      .font(24px, 600, #131339);
+      margin-bottom: 0.27rem;
+    }
+    .question {
+      .comp-choice-question {
+        display: flex;
+        flex-direction: column;
+      }
+      .question__option--container {
+        margin-bottom: 0.64rem;
+      }
+    }
+    .check-box-container {
+      text-align: left;
+      padding-top: 0.61rem;
+      .insurance-tips {
+        color: #272729;
+        font-weight: 600;
+      }
+    }
+    .buttons-container {
+      padding-top: 0.59rem;
+    }
+    .comp-top-tag {
+      &.recommand {
+        background: #6dd230;
+      }
+      position: absolute;
+      top: -0.32rem;
+      right: -0.32rem;
+      background: #ff0048;
+    }
+    .question__option--container {
+      position: relative;
+    }
+  }
+}

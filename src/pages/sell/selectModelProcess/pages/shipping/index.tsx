@@ -12,6 +12,7 @@ import { ISelectModelContext, SelectModelContext } from "../../context";
 import { addDate } from "utils";
 import ButtonGroup from "@/pages/sell/selectModelProcess/components/buttonGroup";
 import PriceTitle from "@/pages/sell/selectModelProcess/components/priceTitle";
+import TipsIcon from "@/pages/sell/selectModelProcess/components/tipsIcon";
 
 const Panel = Collapse.Panel;
 const leftHeader = <div className="fedex-bg" />;
@@ -159,17 +160,24 @@ class Shipping extends React.Component<any, any> {
             </Collapse>
           </Col>
         </Row>
-        <Checkbox
-          checked={needInsurance}
-          onChange={e => {
-            selectModelContextDispatch({
-              type: "setNeedInsurance",
-              value: e.target.checked
-            });
-          }}
-        >
-          {shippingInsurance}
-        </Checkbox>
+        {shippingInsurance ? (
+          <div className="check-box-container">
+            <Checkbox
+              checked={needInsurance}
+              onChange={e => {
+                selectModelContextDispatch({
+                  type: "setNeedInsurance",
+                  value: e.target.checked
+                });
+              }}
+            >
+              <span className="insurance-tips">
+                Add shipping insurance for ${shippingInsurance}
+                <TipsIcon tips={"456456"} />
+              </span>
+            </Checkbox>
+          </div>
+        ) : null}
         <ButtonGroup
           handleNext={this.handleNext}
           disabled={!this.props.yourphone.isDoneShipment}
@@ -249,7 +257,11 @@ function RenderQuestion(props: any) {
               if (index === 0) {
                 return <div className="recommand comp-top-tag">recommand</div>;
               } else {
-                return <div className="comp-top-tag">-${afterCalcList[index].fee}</div>;
+                return (
+                  <div className="comp-top-tag">
+                    -${afterCalcList[index].fee}
+                  </div>
+                );
               }
             } else {
               return null;
