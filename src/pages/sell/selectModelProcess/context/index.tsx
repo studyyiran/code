@@ -232,15 +232,29 @@ function useGetAction(
             type: "setPriceInfo",
             value: {
               ...mockgetinquirybykeys,
-              resultList: keys.map((key: any, index: number) => {
-                return {
-                  ...mockgetinquirybykeys.resultList[index],
-                  inquiryKey: key,
-                };
-              })
+              resultList: state.userProductList.map(
+                (item: any, index: number) => {
+                  const { brand: brandId, modelInfo } = item;
+                  const { carrierId, modelId, storageId } = modelInfo;
+                  return {
+                    ...mockgetinquirybykeys.resultList[0],
+                    inquiryKey: item.inquiryKey,
+                    brandName: "手机品牌" + brandId,
+                    productName: "手机型号" + modelId,
+                    bpvIds: [
+                      {
+                        name: '手机内存' + storageId
+                      },
+                      {
+                        name: '运营商' + carrierId
+                      },
+                    ]
+                  };
+                }
+              )
             }
           });
-        }, 1000);
+        }, 400);
       }
     }),
     getInquiryByIds: promisify(async function() {
@@ -299,7 +313,7 @@ function useGetAction(
         modelInfoName: {
           modelName: "",
           storageName: "",
-          carrierName: "",
+          carrierName: ""
         }
       };
       nameConfig.brandName = (
