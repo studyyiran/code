@@ -7,6 +7,8 @@ import { IPaymentProps, IPaymentStates, EPayType } from "../../index.interface";
 import { paymentPageValidate } from "../pageValidate";
 import yourPhoneStore from "@/containers/aboutphone/store/yourphone.store";
 import "./index.less";
+import ButtonGroup from "@/pages/sell/selectModelProcess/components/buttonGroup";
+import PriceTitle from "@/pages/sell/selectModelProcess/components/priceTitle";
 
 const Panel = Collapse.Panel;
 const leftHeader = <div className="paypal-bg" />;
@@ -377,14 +379,13 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
     );
     return (
       <div className={"page-payment-container"}>
+        <PriceTitle>How would you like to get paid?</PriceTitle>
         {paymentHTML}
-        <button
-          className="common-button"
-          onClick={this.handleNext}
+        <ButtonGroup
+          {...this.props}
+          handleNext={this.handleNext}
           disabled={!this.props.yourphone.isDonePayment}
-        >
-          click me1
-        </button>
+        />
       </div>
     );
   }
