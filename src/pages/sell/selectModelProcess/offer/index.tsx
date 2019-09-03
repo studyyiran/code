@@ -3,6 +3,7 @@ import "./index.less";
 import { SelectModelContext, ISelectModelContext } from "../context";
 import { Collapse } from "antd";
 import Svg from "@/components/svg";
+import TipsIcon from "@/pages/sell/selectModelProcess/components/tipsIcon";
 const { Panel } = Collapse;
 
 const priceUnit = "$";
@@ -155,14 +156,5 @@ export default function Brand(props: any) {
         </button>
       </div>
     </div>
-  );
-}
-
-function TipsIcon(props: any) {
-  const { tips } = props;
-  return (
-    <span className="comp-tips">
-      <Svg icon="wenhao" />
-    </span>
   );
 }
