@@ -161,6 +161,8 @@ function reducer(state: IContextState, action: IReducerAction) {
       "brand",
       "categoryId",
       "userProductList",
+      "needInsurance",
+      "expressOption",
       "inquiryKey"
     ]);
   }

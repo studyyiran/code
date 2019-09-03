@@ -1,5 +1,6 @@
 @import (reference) "~@/styles/index.less";
 .page-summary {
+  padding-top: 37px;
   padding-bottom: 121px;
   > h2 {
     .font(26px, 500, #000000);
@@ -15,4 +16,24 @@
     margin-top: 54px
   }
   .page(1000px);
+}
+
+ul {
+  &.information {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+  }
+  li {
+    > h3 {
+      .font(14px, 400, #848484);
+    }
+    > p {
+      .font(16px, 400, #000000);
+    }
+    margin-bottom: 30px;
+  }
+}
+
+.paypal-logo {
+  float: right;
 }

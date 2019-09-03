@@ -283,6 +283,7 @@ class Information extends React.Component<IShippingProps, IShippingState> {
         <h2>Information</h2>
         {infomationHTML}
         <ButtonGroup
+          {...this.props}
           handleNext={this.handleNext}
           disabled={this.props.yourphone.isAddressValuesAndDisabled}
         />

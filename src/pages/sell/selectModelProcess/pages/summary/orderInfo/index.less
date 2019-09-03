@@ -1,14 +1,50 @@
+@import (reference) "~@/styles/index.less";
+
 .com-order-info {
-  ul.one-order {
-    
+  > ul {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid red;
+    > li {
+      flex: 1 1 0;
+    }
   }
-  li {
-    margin: 22px 0;
-    > h4 {
-      color: #848484;
+  .collapse-clear-border();
+  .ant-collapse-header {
+    background: @white;
+  }
+  //> li {
+  //  flex: 1 1 auto;
+  //  margin: 22px 0;
+  //}
+}
+
+
+.ismobile #root {
+  .com-order-info {
+    > ul {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid red;
+      > li {
+        flex: 1 1 0;
+      }
     }
-    > p {
-      color: #000000;
+    .collapse-clear-border();
+    .ant-collapse-header {
+      background: @white;
     }
+    //> li {
+    //  flex: 1 1 auto;
+    //  margin: 22px 0;
+    //}
+  }
+}
+
+.one-order {
+  //display: flex;
+  //justify-content: space-between;
+  > div.open {
+    text-align: center;
   }
 }

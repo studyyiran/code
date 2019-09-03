@@ -1,4 +1,5 @@
 import React from "react";
+import "./index.less";
 
 export default function RenderCard(props: any) {
   const { title, children, onEdit } = props;

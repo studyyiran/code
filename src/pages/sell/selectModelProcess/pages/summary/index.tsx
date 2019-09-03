@@ -83,33 +83,32 @@ export default class Summary extends React.Component<IDoneProps, IDoneStates> {
         payment = (
           <>
             <img className="paypal-logo" src={require("@/images/paypal.png")} />
-            <p className="email-info">
-              <span className="label">E-mail</span>
-              <span className="address">{yourphone.paypal.email}</span>
-            </p>
-            <p className="tips">
-              Cash will be deposited directly to your PayPal account as soon as
-              we recieve your phone. Please make sure it is correct!
-            </p>
+            <ul>
+              <li>
+                <h3>Name</h3>
+                <p>{`${yourphone.addressInfo.firstName} ${yourphone.addressInfo.lastName}`}</p>
+              </li>
+              <li>
+                <h3>Email</h3>
+                <p>{yourphone.paypal.email}</p>
+              </li>
+            </ul>
           </>
         );
         break;
       case EPayType.ECHECK:
         payment = (
           <>
-            <p className="echeck-title">eCheck</p>
-            <p className="email-info">
-              <span className="label">Name</span>
-              <span className="address">{`${yourphone.echeck.firstName} ${yourphone.echeck.lastName}`}</span>
-            </p>
-            <p className="email-info">
-              <span className="label">E-mail</span>
-              <span className="address">{`${yourphone.echeck.email}`}</span>
-            </p>
-            <p className="tips">
-              You will get paid by eCheck. Please make sure the name and email
-              is correct!
-            </p>
+            <ul>
+              <li>
+                <h3>Name</h3>
+                <p>{`${yourphone.addressInfo.firstName} ${yourphone.addressInfo.lastName}`}</p>
+              </li>
+              <li>
+                <h3>Email</h3>
+                <p>{yourphone.paypal.email}</p>
+              </li>
+            </ul>
           </>
         );
         break;
@@ -196,28 +195,24 @@ export default class Summary extends React.Component<IDoneProps, IDoneStates> {
             title={"Your Information"}
             onEdit={this.handlePageChoose.bind(this, EChangeType.SHIPPING)}
           >
-            <div className="show-content">
-              <p className="info-item">
-                <span className="label">E-mail</span>
-                <span className="content">{user.preOrder.userEmail}</span>
-              </p>
-              <p className="info-item">
-                <span className="label">Name</span>
-                <span className="content">{`${yourphone.addressInfo.firstName} ${yourphone.addressInfo.lastName}`}</span>
-              </p>
-              <p className="info-item">
-                <span className="label">Address</span>
-                <span className="content">{shippingAddress.join(", ")}</span>
-              </p>
-              {yourphone.addressInfo.mobile && (
-                <p className="info-item">
-                  <span className="label">Phone No. </span>
-                  <span className="content">
-                    +1 {yourphone.addressInfo.mobile}
-                  </span>
-                </p>
-              )}
-            </div>
+            <ul className="information">
+              <li>
+                <h3>Email</h3>
+                <p>{user.preOrder.userEmail}</p>
+              </li>
+              <li>
+                <h3>Name</h3>
+                <p>{`${yourphone.addressInfo.firstName} ${yourphone.addressInfo.lastName}`}</p>
+              </li>
+              <li>
+                <h3>Address</h3>
+                <p>{shippingAddress.join(", ")}</p>
+              </li>
+              <li>
+                <h3>Phone No. </h3>
+                <p>+1 {yourphone.addressInfo.mobile}</p>
+              </li>
+            </ul>
           </RenderCard>
         </div>
         <RenderCard title={"Your Order"}>
@@ -225,6 +220,7 @@ export default class Summary extends React.Component<IDoneProps, IDoneStates> {
         </RenderCard>
         {this.renderTerms()}
         <ButtonGroup
+          {...this.props}
           disabled={!this.state.isChecked}
           handleNext={this.handleShip}
         >

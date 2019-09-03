@@ -179,6 +179,7 @@ class Shipping extends React.Component<any, any> {
           </div>
         ) : null}
         <ButtonGroup
+          {...this.props}
           handleNext={this.handleNext}
           disabled={!this.props.yourphone.isDoneShipment}
         />
