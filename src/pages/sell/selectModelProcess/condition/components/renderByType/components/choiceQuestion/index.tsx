@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./index.less";
 import * as moment from "moment-timezone";
 import { addDate } from "utils";
+import Svg from "@/components/svg";
 
 interface IOption {
   children: any;
@@ -26,13 +27,9 @@ function Option(props: IOption) {
         data-select={isSelect ? "true" : "false"}
         onClick={handler}
       >
-        <svg
-          className="icon"
-          aria-hidden="true"
-          data-select={isSelect ? "true" : "false"}
-        >
-          <use xlinkHref="#uptrade_duigou" />
-        </svg>
+        <span data-select={isSelect ? "true" : "false"} className="icon">
+          <Svg icon={"duigou"} />
+        </span>
         <span>{children}</span>
       </div>
     </div>

@@ -236,7 +236,6 @@ function RenderQuestion(props: any) {
   if (afterCalcList && afterCalcList.length) {
     return (
       <div className="question">
-        <p>Get More cash the faster you ship（Pick your option）</p>
         <ChoiceQuestion
           options={afterCalcList}
           onChange={(value: any) => {
@@ -248,9 +247,9 @@ function RenderQuestion(props: any) {
           render={(index: any) => {
             if (afterCalcList && afterCalcList.length === 3 && index < 3) {
               if (index === 0) {
-                return <div className="recommand tag">recommand</div>;
+                return <div className="recommand comp-top-tag">recommand</div>;
               } else {
-                return <div className="recommand tag">{afterCalcList[index].fee}</div>;
+                return <div className="comp-top-tag">-${afterCalcList[index].fee}</div>;
               }
             } else {
               return null;
