@@ -4,7 +4,7 @@
   > ul {
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px solid red;
+    border-bottom: 1px solid rgba(233,233,233,1);
     > li {
       flex: 1 1 0;
     }
@@ -23,9 +23,7 @@
 .ismobile #root {
   .com-order-info {
     > ul {
-      display: flex;
-      justify-content: space-between;
-      border-bottom: 1px solid red;
+      display: block;
       > li {
         flex: 1 1 0;
       }
@@ -44,7 +42,31 @@
 .one-order {
   //display: flex;
   //justify-content: space-between;
-  > div.open {
+  div.open {
+    width: 100%;
+    bottom: 25px;
+    position: relative;
     text-align: center;
+    color: #1ab4e7;
   }
+}
+
+.last-order-info {
+  h3 {
+    display: inline;
+    margin-right: 10px;
+  }
+  text-align: right;
+}
+
+.new-payout {
+  padding-right: 20px;
+  > h3 {
+    margin-right: 10px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #848484;
+    display: inline;
+  }
+  text-align: right;
 }

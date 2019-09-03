@@ -16,7 +16,7 @@ export default function OrderInfo() {
   const { resultList, guaranteedPayout, shippingInsurance } = priceInfo;
 
   function RenderOneProductOrder(props: any) {
-    const { productName, bpvIds, inquiryKey, subTotal } = props;
+    const { productName, bpvIds, inquiryKey, subTotal, children } = props;
     return (
       <div className="com-order-info">
         <ul key={inquiryKey}>
@@ -36,6 +36,7 @@ export default function OrderInfo() {
             </p>
           </li>
         </ul>
+        {children}
       </div>
     );
   }
@@ -50,15 +51,16 @@ export default function OrderInfo() {
             key={1}
             header={
               <div className="one-order">
-                <RenderOneProductOrder {...firstOrderInfo} />
-                <div className="open">Check Details</div>
+                <RenderOneProductOrder {...firstOrderInfo}>
+                  <div className="open">Check Details</div>
+                </RenderOneProductOrder>
               </div>
             }
           >
             {renderProductList.map(orderInfo => (
               <RenderOneProductOrder {...orderInfo} />
             ))}
-            <ul>
+            <ul className="last-order-info">
               <li>
                 <h3>guaranteedPayout</h3>
                 <span>
@@ -70,7 +72,7 @@ export default function OrderInfo() {
                 <li>
                   <h3>expressOption</h3>
                   <span>
-                    {priceUnit}
+                    -{priceUnit}
                     {expressOption.fee}
                   </span>
                 </li>
@@ -79,18 +81,18 @@ export default function OrderInfo() {
                 <li>
                   <h3>shippingInsurance</h3>
                   <span>
-                    {priceUnit}
+                    -{priceUnit}
                     {shippingInsurance}
                   </span>
                 </li>
               ) : null}
             </ul>
-            <div>
-              <h3>New Payout</h3>
-              <span>{}</span>
-            </div>
           </Panel>
         </Collapse>
+        <div className="new-payout">
+          <h3>New Payout</h3>
+          <span>${guaranteedPayout - ((expressOption && expressOption.fee) || 0) - (shippingInsurance || 0) }</span>
+        </div>
       </div>
     );
   } else {

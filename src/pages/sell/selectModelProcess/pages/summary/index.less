@@ -2,6 +2,7 @@
 .page-summary {
   padding-top: 37px;
   padding-bottom: 121px;
+  .page-padding();
   > h2 {
     .font(26px, 500, #000000);
     margin-bottom: 21px;
@@ -16,24 +17,71 @@
     margin-top: 54px
   }
   .page(1000px);
+
+
+  ul {
+    margin-top: 10px;
+    &.information {
+      display: grid;
+      grid-template-columns: repeat(2, auto);
+    }
+    li {
+      > h3 {
+        .font(14px, 400, #848484);
+      }
+      > p {
+        .font(16px, 400, #000000);
+      }
+      margin-bottom: 30px;
+    }
+  }
+
+  .paypal-logo {
+    float: right;
+  }
 }
 
-ul {
-  &.information {
-    display: grid;
-    grid-template-columns: repeat(2, auto);
-  }
-  li {
-    > h3 {
-      .font(14px, 400, #848484);
+.ismobile #root {
+  .page-summary {
+    padding-top: 0.56rem;
+    padding-bottom: 2.69rem;
+    .page-padding();
+    > h2 {
+      .font(26px, 500, #000000);
+      margin-bottom: 21px;
     }
-    > p {
-      .font(16px, 400, #000000);
+    > div.top-card-container {
+      display: flex;
+      flex-direction: column;
+      > *:first-child {
+        margin-bottom: 20px;
+      }
+      margin-bottom: 32px;
     }
-    margin-bottom: 30px;
-  }
-}
+    > div.buttons-container {
+      margin-top: 54px
+    }
+    .page(1000px);
 
-.paypal-logo {
-  float: right;
+
+    ul {
+      margin-top: 10px;
+      &.information {
+        display: block;
+      }
+      li {
+        > h3 {
+          .font(14px, 400, #848484);
+        }
+        > p {
+          .font(16px, 400, #000000);
+        }
+        margin-bottom: 0.6rem;
+      }
+    }
+
+    .paypal-logo {
+      float: right;
+    }
+  }
 }
