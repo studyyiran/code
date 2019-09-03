@@ -148,7 +148,7 @@ function Breadcrumb(props: any) {
     }
     return (
       <ul className="breadcrumb-list" onClick={clickHandler}>
-        {configCache.map(routeConfig => {
+        {configCache.map((routeConfig, index) => {
           const { pageKey, viewContent } = routeConfig;
           const renderPageOrder = getCurrentPageOrder(pageKey);
           let nextPageKey = "";
@@ -166,7 +166,10 @@ function Breadcrumb(props: any) {
           }
           return (
             <li data-step={nextPageKey} key={pageKey}>
-              {` ${viewContent()} > `}
+              {` ${viewContent()}`}
+              {index !== configCache.length - 1 ? (
+                <span className="tag">{`>`}</span>
+              ) : null}
             </li>
           );
         })}

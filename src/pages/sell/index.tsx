@@ -1,4 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
+import "./index.less";
+
 import Brand from "./selectModelProcess/brand";
 import Model from "./selectModelProcess/model";
 import Questionary from "./selectModelProcess/condition/index";
@@ -271,9 +273,8 @@ class Layout extends React.Component<any, any> {
   public render() {
     const { children, goNextPage, currentPage, title } = this.props;
     return (
-      <div className="layout">
-        <HeaderTitle title={title} />
-        <header>
+      <div className="sell-layout">
+        <div className="header-container">
           <Breadcrumb
             goNextPage={(...params: any[]) => {
               // 注入
@@ -281,7 +282,8 @@ class Layout extends React.Component<any, any> {
             }}
             currentPage={currentPage}
           />
-        </header>
+          <HeaderTitle title={title} />
+        </div>
         <div className={"content"}>{children}</div>
       </div>
     );
