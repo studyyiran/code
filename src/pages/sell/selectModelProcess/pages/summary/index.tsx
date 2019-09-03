@@ -179,7 +179,6 @@ export default class Summary extends React.Component<IDoneProps, IDoneStates> {
       onCancel: this.toggleChangeModal
     };
 
-    customizeModalProps["width"] = this.props.common.isMobile ? "3.33rem" : 900;
     return (
       <div className="page-summary">
         <h2>Review your order</h2>
