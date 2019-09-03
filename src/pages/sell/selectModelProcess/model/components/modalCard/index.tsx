@@ -150,6 +150,10 @@ export default function ModelCard(props: any) {
       <div data-selected={isSelect} className="model-name-container">
         <span>{modelName}</span>
       </div>
+      <div data-selected={isSelect} className="extra mb-ele">
+        <span>{modelName}</span>
+        <button>Select</button>
+      </div>
     </div>
   );
 }
