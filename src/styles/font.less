@@ -127,3 +127,21 @@
     vertical-align: middle;
   }
 }
+
+.buttons-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  > button {
+    max-width: 346px;
+  }
+}
+
+.ismobile #root {
+  .buttons-container {
+    flex-direction: column-reverse;
+    > .common-button:not(.second) {
+      margin-bottom: 16px;
+    }
+  }
+}

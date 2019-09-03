@@ -1,7 +1,7 @@
 import * as Api from "./api/user.api";
 import { IUserStoreNew, IPreOrder } from "./interface/user.interface";
 import { action, observable, autorun } from "mobx";
-let haveInit = false
+let haveInit = false;
 class User implements IUserStoreNew {
   @observable public canUpdatePreOrder = false;
   // @observable public preOrder: Partial<IPreOrder> = {
@@ -44,9 +44,11 @@ class User implements IUserStoreNew {
 
   constructor() {
     if (!haveInit) {
-      haveInit = true
+      haveInit = true;
       const preOrder: any = sessionStorage.getItem("preOrder");
-      this.preOrder = JSON.parse(preOrder);
+      if (preOrder && preOrder.userEmail) {
+        this.preOrder = JSON.parse(preOrder);
+      }
     }
     autorun(() => {
       this.updatePreOrder(this.preOrder);
@@ -63,8 +65,8 @@ class User implements IUserStoreNew {
 
     // let res: IPreOrder;
     // try {
-      // this.preOrder = await Api.getPreOrderKey<IPreOrder>(params); // 抛弃耿饭返回的数据
-      // res = await Api.getPreOrderKey<IPreOrder>(preOrder);
+    // this.preOrder = await Api.getPreOrderKey<IPreOrder>(params); // 抛弃耿饭返回的数据
+    // res = await Api.getPreOrderKey<IPreOrder>(preOrder);
     // } catch (error) {
     //   console.warn(error, "in user store getPreOrderKey");
     //   return false;

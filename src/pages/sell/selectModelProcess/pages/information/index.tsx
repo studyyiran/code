@@ -48,7 +48,6 @@ class Information extends React.Component<IShippingProps, IShippingState> {
     const allValus = getFieldsValue();
     onValuesChange(this.props, false, allValus);
 
-
     if (typeof this.props.onRef === "function") {
       this.props.onRef!(this);
     }
@@ -101,8 +100,6 @@ class Information extends React.Component<IShippingProps, IShippingState> {
   }
 
   public render() {
-    console.log(this.props.yourphone)
-    console.log(this.props.user.preOrder)
     const { getFieldDecorator } = this.props.form;
     const { addressInfo } = this.props.yourphone;
     const isMobile = this.props.common.isMobile;
@@ -282,15 +279,25 @@ class Information extends React.Component<IShippingProps, IShippingState> {
     );
     return (
       <div className={"page-shipping-container"}>
+        <h2>Information</h2>
         {infomationHTML}
-        <button
-          className="common-button"
-          onClick={this.handleNext}
-          disabled={this.props.yourphone.isAddressValuesAndDisabled}
-        >
-          {this.props.yourphone.isAddressValuesAndDisabled ? "true" : "false"}
-          click me
-        </button>
+        <div className="buttons-container">
+          <button
+            className="common-button second"
+            onClick={() => {
+              this.props.history.goBack();
+            }}
+          >
+            {`< Go back`}
+          </button>
+          <button
+            className="common-button"
+            onClick={this.handleNext}
+            disabled={this.props.yourphone.isAddressValuesAndDisabled}
+          >
+            Next
+          </button>
+        </div>
       </div>
     );
   }
