@@ -1,8 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { inject, observer } from "mobx-react";
-import classnames from "classnames";
-import { Modal, Button, Tooltip } from "antd";
+import {Modal, Checkbox} from "antd";
 import Information from "../information";
 import PaymentPage from "../payment";
 import ChangeModal from "@/containers/aboutphone/components/changemodal";
@@ -238,14 +237,13 @@ export default class Summary extends React.Component<IDoneProps, IDoneStates> {
   public renderTerms() {
     return (
       <div className="terms-of-service">
-        <span
-          onClick={this.handleServiceCheck}
-          className={classnames("text-with-icon", {
-            checked: this.state.isChecked
-          })}
+        <Checkbox
+          checked={this.state.isChecked}
+          onChange={this.handleServiceCheck}
         >
           By checking this box, you agree to our{" "}
-        </span>
+        </Checkbox>
+        
         {this.props.common.isMobile ? (
           <Link to="/terms" className="highlight" target="_blank">
             Terms of &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Service{" "}
