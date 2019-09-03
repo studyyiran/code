@@ -50,6 +50,7 @@ interface ISelect {
   defaultValue?: string;
   onChange: (s: any) => void;
   options: any[];
+  render?: any;
 }
 
 export function ChoiceQuestion(props: ISelect) {
@@ -66,7 +67,7 @@ export function ChoiceQuestion(props: ISelect) {
   };
   return (
     <div className="comp-choice-question">
-      {options.map(option => {
+      {options.map((option, index) => {
         const { time, content, sendDateType } = option;
         return (
           <Option
@@ -79,6 +80,7 @@ export function ChoiceQuestion(props: ISelect) {
             {moment
               .tz(addDate(new Date(), time), "America/Chicago")
               .format("MMM DD")}
+            {props.render ? props.render(index) : null}
           </Option>
         );
       })}

@@ -10,6 +10,8 @@ import { ChoiceQuestion } from "../../condition/components/renderByType/componen
 import "./index.less";
 import { ISelectModelContext, SelectModelContext } from "../../context";
 import { addDate } from "utils";
+import ButtonGroup from "@/pages/sell/selectModelProcess/components/buttonGroup";
+import PriceTitle from "@/pages/sell/selectModelProcess/components/priceTitle";
 
 const Panel = Collapse.Panel;
 const leftHeader = <div className="fedex-bg" />;
@@ -104,13 +106,16 @@ class Shipping extends React.Component<any, any> {
       </div>
     );
     const isMobile = this.props.common.isMobile;
-    const paymentHTML = (
-      <div>
+
+    return (
+      <div className="page-payment-container">
+        <PriceTitle>The faster you ship, the more you get paid</PriceTitle>
         <RenderQuestion
           optionsList={this.state.expressFeeList}
           selectModelContextDispatch={selectModelContextDispatch}
         />
-        <Row gutter={30} style={!isMobile ? { paddingTop: "42px" } : {}}>
+        <h3>Choose your carrier</h3>
+        <Row gutter={30}>
           <Col {...this.colLayout(12)} className="paypal-col-wrapper">
             <Collapse
               onChange={this.handleCollapseExtend.bind(
@@ -157,24 +162,18 @@ class Shipping extends React.Component<any, any> {
         <Checkbox
           checked={needInsurance}
           onChange={e => {
-            selectModelContextDispatch({ type: "setNeedInsurance", value: e.target.checked });
+            selectModelContextDispatch({
+              type: "setNeedInsurance",
+              value: e.target.checked
+            });
           }}
         >
           {shippingInsurance}
         </Checkbox>
-      </div>
-    );
-
-    return (
-      <div className={"page-payment-container"}>
-        {paymentHTML}
-        <button
-          className="common-button"
-          onClick={this.handleNext}
+        <ButtonGroup
+          handleNext={this.handleNext}
           disabled={!this.props.yourphone.isDoneShipment}
-        >
-          click me
-        </button>
+        />
       </div>
     );
   }
@@ -245,6 +244,17 @@ function RenderQuestion(props: any) {
               type: "setExpressOption",
               value
             });
+          }}
+          render={(index: any) => {
+            if (afterCalcList && afterCalcList.length === 3 && index < 3) {
+              if (index === 0) {
+                return <div className="recommand tag">recommand</div>;
+              } else {
+                return <div className="recommand tag">{afterCalcList[index].fee}</div>;
+              }
+            } else {
+              return null;
+            }
           }}
         />
       </div>

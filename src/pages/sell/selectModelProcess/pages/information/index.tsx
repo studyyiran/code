@@ -6,6 +6,7 @@ import "./index.less";
 import { IShippingProps, IShippingState } from "../../index.interface";
 import { IProductInfo } from "@/store/interface/user.interface";
 import yourPhoneStore from "@/containers/aboutphone/store/yourphone.store";
+import ButtonGroup from "../../components/buttonGroup";
 import classnames from "classnames";
 
 // create form value 变化时候判断 按钮是否能高亮
@@ -281,23 +282,10 @@ class Information extends React.Component<IShippingProps, IShippingState> {
       <div className={"page-shipping-container"}>
         <h2>Information</h2>
         {infomationHTML}
-        <div className="buttons-container">
-          <button
-            className="common-button second"
-            onClick={() => {
-              this.props.history.goBack();
-            }}
-          >
-            {`< Go back`}
-          </button>
-          <button
-            className="common-button"
-            onClick={this.handleNext}
-            disabled={this.props.yourphone.isAddressValuesAndDisabled}
-          >
-            Next
-          </button>
-        </div>
+        <ButtonGroup
+          handleNext={this.handleNext}
+          disabled={this.props.yourphone.isAddressValuesAndDisabled}
+        />
       </div>
     );
   }
