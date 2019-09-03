@@ -2,9 +2,10 @@ import React, { useContext } from "react";
 import "./index.less";
 import { SelectModelContext, ISelectModelContext } from "../context";
 import { Collapse } from "antd";
+import Svg from "@/components/svg";
 const { Panel } = Collapse;
 
-const priceUnit = "$"
+const priceUnit = "$";
 
 export default function Brand(props: any) {
   const selectModelContext = useContext(SelectModelContext);
@@ -53,7 +54,7 @@ export default function Brand(props: any) {
           key={productInquiryKey}
           header={
             <div className="panel-header">
-              <img className="phone-image"/>
+              <img className="phone-image" />
               <div className="phone-model">
                 <span>{productName + bpvIds[0].name}</span>
                 <span>{bpvIds[1].name}</span>
@@ -66,7 +67,6 @@ export default function Brand(props: any) {
               <li
                 className="edit-panel-line"
                 onClick={() => {
-                  debugger
                   removeFromList(productInquiryKey);
                 }}
               >
@@ -75,15 +75,24 @@ export default function Brand(props: any) {
             ) : null}
             <li className="estimate-line">
               <span>Device Estimate</span>
-              <span>{priceUnit}{deviceEstimate}</span>
+              <span>
+                {priceUnit}
+                {deviceEstimate}
+              </span>
             </li>
             <li className="service-fee-line">
               <span>10% Service Fee</span>
-              <span>-{priceUnit}{platformFee}</span>
+              <span>
+                -{priceUnit}
+                {platformFee}
+              </span>
             </li>
             <li className="seller-fee-line">
               <span>3rd Party Seller Fees</span>
-              <span>-{priceUnit}{thirdPartyFee}</span>
+              <span>
+                -{priceUnit}
+                {thirdPartyFee}
+              </span>
             </li>
             <li className="subtotal">
               <span>Subtotal</span>
@@ -96,28 +105,30 @@ export default function Brand(props: any) {
   }
   return (
     <div className="page-offer">
-      <div className="product-container">
-        {resultList && resultList.length ? (
-          <Collapse
-            expandIconPosition="right"
-            expandIcon={panelProps => {
-              return <div className="circle-tag">{panelProps.isActive ? "-" : "+"}</div>;
-            }}
-            accordion={true}
-            onChange={selectHandler}
-            defaultActiveKey={inquiryKey}
-          >
-            {renderList()}
-          </Collapse>
-        ) : null}
-      </div>
-      <section className="payout-container">
-        <div>
-          <span className="big-font">Total Payout</span>
-          <TipsIcon tips={"123"} />
+      <div className="padding-container">
+        <div className="product-container">
+          {resultList && resultList.length ? (
+            <Collapse
+              expandIconPosition="right"
+              expandIcon={panelProps => {
+                return <div className="circle-tag">{panelProps.isActive ? <Svg icon="jian" /> : <Svg icon="jia" />}</div>;
+              }}
+              accordion={true}
+              onChange={selectHandler}
+              defaultActiveKey={inquiryKey}
+            >
+              {renderList()}
+            </Collapse>
+          ) : null}
         </div>
-        <span className="big-font">{guaranteedPayout}</span>
-      </section>
+        <section className="payout-container">
+          <div>
+            <span className="big-font">Total Payout</span>
+            <TipsIcon tips={"123"} />
+          </div>
+          <span className="big-font">{priceUnit}{guaranteedPayout}</span>
+        </section>
+      </div>
       <div className="buttons-container">
         <button className="common-button second" onClick={addNewHandler}>
           Add another device
@@ -132,5 +143,9 @@ export default function Brand(props: any) {
 
 function TipsIcon(props: any) {
   const { tips } = props;
-  return <span className="comp-tips">?</span>;
+  return (
+    <span className="comp-tips">
+      <Svg icon="wenhao" />
+    </span>
+  );
 }
