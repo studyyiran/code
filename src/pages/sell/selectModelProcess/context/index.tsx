@@ -211,18 +211,25 @@ function useGetAction(
         // mock根据keyarray获取 最新的报价列表
         window.setTimeout(() => {
           const rNumber = Math.random();
-          dispatch({
-            type: "setPriceInfo",
-            value: {
-              ...mockgetinquirybykeys,
-              resultList: keys.map((key: any, index: number) => {
-                return {
-                  ...mockgetinquirybykeys.resultList[index],
-                  inquiryKey: key
-                };
-              })
-            }
-          });
+          if (keys.length > 2) {
+            dispatch({
+              type: "setPriceInfo",
+              value: mockgetinquirybykeys
+            });
+          } else {
+            dispatch({
+              type: "setPriceInfo",
+              value: {
+                ...mockgetinquirybykeys,
+                resultList: keys.map((key: any, index: number) => {
+                  return {
+                    ...mockgetinquirybykeys.resultList[index],
+                    inquiryKey: key
+                  };
+                })
+              }
+            });
+          }
         }, 1000);
       }
     }),
