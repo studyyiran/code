@@ -18,7 +18,7 @@ import Breadcrumb from "./selectModelProcess/components/breadcrumb/index";
 import { staticRouter } from "@/pages/sell/selectModelProcess/config/staticRouter";
 import { inject, observer } from "mobx-react";
 
-let haveinit = false
+let haveinit = false;
 
 // const config = [
 //   {
@@ -236,8 +236,8 @@ export default function Sell(props: any) {
 class Layout extends React.Component<any, any> {
   public componentDidMount(): void {
     if (!haveinit) {
-      haveinit = true
-      const preOrder = sessionStorage.getItem('preOrder');
+      haveinit = true;
+      const preOrder = sessionStorage.getItem("preOrder");
       if (preOrder) {
         this.props.user.preOrder = JSON.parse(preOrder);
 
@@ -271,16 +271,18 @@ class Layout extends React.Component<any, any> {
   public render() {
     const { children, goNextPage, currentPage, title } = this.props;
     return (
-      <div>
+      <div className="layout">
         <HeaderTitle title={title} />
-        <Breadcrumb
-          goNextPage={(...params: any[]) => {
-            // 注入
-            goNextPage(...params);
-          }}
-          currentPage={currentPage}
-        />
-        <div>{children}</div>
+        <header>
+          <Breadcrumb
+            goNextPage={(...params: any[]) => {
+              // 注入
+              goNextPage(...params);
+            }}
+            currentPage={currentPage}
+          />
+        </header>
+        <div className={"content"}>{children}</div>
       </div>
     );
   }

@@ -180,122 +180,95 @@ export default class Summary extends React.Component<IDoneProps, IDoneStates> {
       onCancel: this.toggleChangeModal
     };
 
+    function RenderCard(props: any) {
+      const { title, children, onEdit } = props;
+      return (
+        <div className="comp-info-card">
+          <header>
+            <h3>{title}</h3>
+            {onEdit ? <span onClick={onEdit}>Edit</span> : null}
+          </header>
+          <div>{children}</div>
+        </div>
+      );
+    }
+
     customizeModalProps["width"] = this.props.common.isMobile ? "3.33rem" : 900;
     return (
-      <div className="page-youredone-container">
-        <Layout hideBottom={true}>
-          <div className="content-wrapper">
-            <div className="top-part-wrapper">
-              <div className="show-module">
-                <div className="show-header">
-                  <span className="name">Your Payment</span>
-                  {!user.preOrder.appendOrderDetail && (
-                    <span
-                      className="edit-bg"
-                      onClick={this.handlePageChoose.bind(
-                        this,
-                        EChangeType.PAYMENT
-                      )}
-                    />
-                  )}
-                </div>
-                <div className="show-content">{payment}</div>
-              </div>
-              <div className="show-module">
-                <div className="show-header">
-                  <span className="name">Your Information</span>
-                  {!user.preOrder.appendOrderDetail && (
-                    <span
-                      className="edit-bg"
-                      onClick={this.handlePageChoose.bind(
-                        this,
-                        EChangeType.SHIPPING
-                      )}
-                    />
-                  )}
-                </div>
-                <div className="show-content">
-                  <p className="info-item">
-                    <span className="label">E-mail</span>
-                    <span className="content">{user.preOrder.userEmail}</span>
-                  </p>
-                  <p className="info-item">
-                    <span className="label">Name</span>
-                    <span className="content">{`${yourphone.addressInfo.firstName} ${yourphone.addressInfo.lastName}`}</span>
-                  </p>
-                  <p className="info-item">
-                    <span className="label">Address</span>
-                    <span className="content">
-                      {shippingAddress.join(", ")}
+      <div className="page-summary">
+        <RenderCard
+          title={"Your Payment"}
+          onEdit={this.handlePageChoose.bind(this, EChangeType.PAYMENT)}
+        >
+          {payment}
+        </RenderCard>
+        <RenderCard
+          title={"Your Information"}
+          onEdit={this.handlePageChoose.bind(this, EChangeType.SHIPPING)}
+        >
+          <div className="show-content">
+            <p className="info-item">
+              <span className="label">E-mail</span>
+              <span className="content">{user.preOrder.userEmail}</span>
+            </p>
+            <p className="info-item">
+              <span className="label">Name</span>
+              <span className="content">{`${yourphone.addressInfo.firstName} ${yourphone.addressInfo.lastName}`}</span>
+            </p>
+            <p className="info-item">
+              <span className="label">Address</span>
+              <span className="content">{shippingAddress.join(", ")}</span>
+            </p>
+            {yourphone.addressInfo.mobile && (
+              <p className="info-item">
+                <span className="label">Phone No. </span>
+                <span className="content">
+                      +1 {yourphone.addressInfo.mobile}
                     </span>
-                  </p>
-                  {yourphone.addressInfo.mobile && (
-                    <p className="info-item">
-                      <span className="label">Phone No. </span>
-                      <span className="content">
-                        +1 {yourphone.addressInfo.mobile}
-                      </span>
-                    </p>
-                  )}
-                </div>
-              </div>
-            </div>
-            {/*<div className="bottom-part-wrapper">*/}
-            {/*  <p className="phone-name">Your Phone</p>*/}
-            {/*  <div className="phone-info-wrapper">*/}
-            {/*    {!this.props.common.isMobile && (*/}
-            {/*      <img*/}
-            {/*        className="img"*/}
-            {/*        src={*/}
-            {/*          yourphone.inquiryDetail && !yourphone.isTBD*/}
-            {/*            ? yourphone.inquiryDetail.product.imageUrl*/}
-            {/*            : require("@/images/noprice.png")*/}
-            {/*        }*/}
-            {/*      />*/}
-            {/*    )}*/}
-            {/*    <div className="info-wrapper">{phoneNode}</div>*/}
-            {/*  </div>*/}
-            {/*</div>*/}
-            <div>your order</div>
-            <OrderInfo />
-            <div className="terms-of-service">
-              <span
-                onClick={this.handleServiceCheck}
-                className={classnames("text-with-icon", {
-                  checked: this.state.isChecked
-                })}
-              >
-                By checking this box, you agree to our{" "}
-              </span>
-              {this.props.common.isMobile ? (
-                <Link to="/terms" className="highlight" target="_blank">
-                  Terms of &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Service{" "}
-                </Link>
-              ) : (
-                <Link to="/terms" className="highlight" target="_blank">
-                  Terms of Service{" "}
-                </Link>
-              )}
-            </div>
-            <div className="button-group">
-              <Button
-                disabled={!this.state.isChecked}
-                onClick={this.handleShip}
-                className="ship-btn"
-                type="primary"
-                size="large"
-                loading={this.state.loadingComplete}
-              >
-                COMPLETE
-              </Button>
-            </div>
+              </p>
+            )}
           </div>
-        </Layout>
+        </RenderCard>
+        <RenderCard title={"Your Order"}>
+          <OrderInfo />
+        </RenderCard>
+        {this.renderTerms()}
+        <button
+          className="common-button"
+          disabled={!this.state.isChecked}
+          onClick={this.handleShip}
+        >
+          COMPLETE
+        </button>
         <Modal {...customizeModalProps}>
           <ChangeModal type={this.state.pageType} onSave={this.onSave}>
             {Page}
           </ChangeModal>
         </Modal>
+      </div>
+    );
+  }
+
+  public renderTerms() {
+    return (
+      <div className="terms-of-service">
+        <span
+          onClick={this.handleServiceCheck}
+          className={classnames("text-with-icon", {
+            checked: this.state.isChecked
+          })}
+        >
+          By checking this box, you agree to our{" "}
+        </span>
+        {this.props.common.isMobile ? (
+          <Link to="/terms" className="highlight" target="_blank">
+            Terms of &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Service{" "}
+          </Link>
+        ) : (
+          <Link to="/terms" className="highlight" target="_blank">
+            Terms of Service{" "}
+          </Link>
+        )}
       </div>
     );
   }
