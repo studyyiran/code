@@ -202,7 +202,21 @@ export default function Sell(props: any) {
   };
   const configArr = staticRouter.map(item => {
     const { pageKey } = item;
-    return { ...item, ...routerConfig[pageKey] };
+    const result = { ...item, ...routerConfig[pageKey] };
+    if (true) {
+      const { carrierId, modelId, storageId } = modelInfo;
+      const nameConfig = getNameInfo({
+        brandId: brand,
+        carrierId,
+        modelId,
+        storageId
+      });
+      if (nameConfig && nameConfig.modelInfoName) {
+        const {modelName, storageName, carrierName} = nameConfig.modelInfoName
+        return {...result, title: `Sell My${modelName} ${storageName} ${carrierName}`}
+      }
+    }
+    return {...result}
   });
 
   return (
