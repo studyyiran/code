@@ -1,4 +1,18 @@
 @import (reference) "~@/styles/index.less";
 .page-summary {
-  
+  padding-bottom: 121px;
+  > h2 {
+    .font(26px, 500, #000000);
+    margin-bottom: 21px;
+  }
+  > div.top-card-container {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    grid-column-gap: 30px;
+    margin-bottom: 32px;
+  }
+  > div.buttons-container {
+    margin-top: 54px
+  }
+  .page(1000px);
 }

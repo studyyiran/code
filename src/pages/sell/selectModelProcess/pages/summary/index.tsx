@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { inject, observer } from "mobx-react";
 import classnames from "classnames";
 import { Modal, Button, Tooltip } from "antd";
-import Layout from "@/containers/aboutphone/layout";
 import Information from "../information";
 import PaymentPage from "../payment";
 import ChangeModal from "@/containers/aboutphone/components/changemodal";
@@ -18,6 +17,7 @@ import { ModalProps } from "antd/lib/modal";
 import OrderInfo from "./orderInfo";
 import { noteUserModal } from "@/containers/aboutphone/pageValidate";
 import ButtonGroup from "@/pages/sell/selectModelProcess/components/buttonGroup";
+import RenderCard from "./renderCard";
 
 @inject("yourphone", "user", "common")
 @observer
@@ -181,24 +181,11 @@ export default class Summary extends React.Component<IDoneProps, IDoneStates> {
       onCancel: this.toggleChangeModal
     };
 
-    function RenderCard(props: any) {
-      const { title, children, onEdit } = props;
-      return (
-        <div className="comp-info-card">
-          <header>
-            <h3>{title}</h3>
-            {onEdit ? <span onClick={onEdit}>Edit</span> : null}
-          </header>
-          <div>{children}</div>
-        </div>
-      );
-    }
-
     customizeModalProps["width"] = this.props.common.isMobile ? "3.33rem" : 900;
     return (
       <div className="page-summary">
         <h2>Review your order</h2>
-        <div>
+        <div className="top-card-container">
           <RenderCard
             title={"Your Payment"}
             onEdit={this.handlePageChoose.bind(this, EChangeType.PAYMENT)}
@@ -226,8 +213,8 @@ export default class Summary extends React.Component<IDoneProps, IDoneStates> {
                 <p className="info-item">
                   <span className="label">Phone No. </span>
                   <span className="content">
-                      +1 {yourphone.addressInfo.mobile}
-                    </span>
+                    +1 {yourphone.addressInfo.mobile}
+                  </span>
                 </p>
               )}
             </div>
@@ -237,7 +224,12 @@ export default class Summary extends React.Component<IDoneProps, IDoneStates> {
           <OrderInfo />
         </RenderCard>
         {this.renderTerms()}
-        <ButtonGroup disabled={!this.state.isChecked} handleNext={this.handleShip}>Confirm</ButtonGroup>
+        <ButtonGroup
+          disabled={!this.state.isChecked}
+          handleNext={this.handleShip}
+        >
+          Confirm
+        </ButtonGroup>
         <Modal {...customizeModalProps}>
           <ChangeModal type={this.state.pageType} onSave={this.onSave}>
             {Page}
