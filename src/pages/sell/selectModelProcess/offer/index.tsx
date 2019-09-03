@@ -4,6 +4,8 @@ import { SelectModelContext, ISelectModelContext } from "../context";
 import { Collapse } from "antd";
 const { Panel } = Collapse;
 
+const priceUnit = "$"
+
 export default function Brand(props: any) {
   const selectModelContext = useContext(SelectModelContext);
   const {
@@ -50,9 +52,9 @@ export default function Brand(props: any) {
         <Panel
           key={productInquiryKey}
           header={
-            <div>
-              <img />
-              <div>
+            <div className="panel-header">
+              <img className="phone-image"/>
+              <div className="phone-model">
                 <span>{productName + bpvIds[0].name}</span>
                 <span>{bpvIds[1].name}</span>
               </div>
@@ -73,15 +75,15 @@ export default function Brand(props: any) {
             ) : null}
             <li className="estimate-line">
               <span>Device Estimate</span>
-              <span>{deviceEstimate}</span>
+              <span>{priceUnit}{deviceEstimate}</span>
             </li>
-            <li>
+            <li className="service-fee-line">
               <span>10% Service Fee</span>
-              <span>{platformFee}</span>
+              <span>-{priceUnit}{platformFee}</span>
             </li>
-            <li>
+            <li className="seller-fee-line">
               <span>3rd Party Seller Fees</span>
-              <span>{thirdPartyFee}</span>
+              <span>-{priceUnit}{thirdPartyFee}</span>
             </li>
             <li className="subtotal">
               <span>Subtotal</span>
@@ -94,20 +96,21 @@ export default function Brand(props: any) {
   }
   return (
     <div className="page-offer">
-      {resultList && resultList.length ? (
-        <Collapse
-          expandIconPosition="right"
-          expandIcon={panelProps => {
-            console.log(panelProps);
-            return <div>+</div>;
-          }}
-          accordion={true}
-          onChange={selectHandler}
-          defaultActiveKey={inquiryKey}
-        >
-          {renderList()}
-        </Collapse>
-      ) : null}
+      <div className="product-container">
+        {resultList && resultList.length ? (
+          <Collapse
+            expandIconPosition="right"
+            expandIcon={panelProps => {
+              return <div className="circle-tag">{panelProps.isActive ? "-" : "+"}</div>;
+            }}
+            accordion={true}
+            onChange={selectHandler}
+            defaultActiveKey={inquiryKey}
+          >
+            {renderList()}
+          </Collapse>
+        ) : null}
+      </div>
       <section className="payout-container">
         <div>
           <span className="big-font">Total Payout</span>
@@ -115,7 +118,7 @@ export default function Brand(props: any) {
         </div>
         <span className="big-font">{guaranteedPayout}</span>
       </section>
-      <div className="button-container">
+      <div className="buttons-container">
         <button className="common-button second" onClick={addNewHandler}>
           Add another device
         </button>
