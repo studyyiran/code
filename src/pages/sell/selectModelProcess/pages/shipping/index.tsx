@@ -247,7 +247,7 @@ function RenderQuestion(props: any) {
     return (
       <div className="question">
         <ChoiceQuestion
-          defaultValue={currentExpressOption.sendDateType}
+          defaultValue={currentExpressOption ? currentExpressOption.sendDateType : ""}
           options={afterCalcList}
           onChange={(value: any) => {
             selectModelContextDispatch({
