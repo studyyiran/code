@@ -281,7 +281,7 @@ class Information extends React.Component<IShippingProps, IShippingState> {
     return (
       <div className={"page-shipping-container"}>
         <h2>Information</h2>
-        {infomationHTML}
+        <div className="container">{infomationHTML}</div>
         <ButtonGroup
           {...this.props}
           handleNext={this.handleNext}

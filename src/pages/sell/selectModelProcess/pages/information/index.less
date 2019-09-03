@@ -1,15 +1,26 @@
 @import (reference) "~@/styles/index.less";
 .page-shipping-container {
+  padding-top: 30px;
+  padding-bottom: 214px;
+  .page-padding();
+  .container {
+    border-radius: 6px;
+    border: 1px solid rgba(233, 233, 233, 1);
+    padding: 18px;
+  }
   > h2 {
-    
+    padding-bottom: 35px;
   }
   height: 100%;
   overflow: hidden;
-  .page(724px);
+  .page(764px);
   &.notlayout {
     & > .ant-form {
       padding-top: 0 !important;
     }
+  }
+  .buttons-container {
+    margin-top: 24px;
   }
 }
 
@@ -28,6 +39,32 @@
           }
         }
       }
+    }
+  }
+}
+
+.ismobile #root {
+  .page-shipping-container {
+    padding-top: 0.61rem;
+    padding-bottom: 2.16rem;
+    .page-padding();
+    .container {
+      border-radius:0.16rem;
+      border: 1px solid rgba(233, 233, 233, 1);
+      padding: 0.27rem 0.43rem;
+    }
+    > h2 {
+      padding-bottom: 0.64rem;
+    }
+    height: 100%;
+    overflow: hidden;
+    &.notlayout {
+      & > .ant-form {
+        padding-top: 0 !important;
+      }
+    }
+    .buttons-container {
+      margin-top: 0.48rem;
     }
   }
 }
