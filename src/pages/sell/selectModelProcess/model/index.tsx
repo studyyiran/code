@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useReducer } from "react";
 import "./index.less";
 import { SelectModelContext, ISelectModelContext } from "../context";
-import ModelCard from "@/pages/sell/selectModelProcess/model/components/modelCard";
+import ModalCard from "@/pages/sell/selectModelProcess/model/components/modalCard";
 import { PhoneInfoWrapper } from "@/pages/sell/selectModelProcess/condition/components/phoneInfoWrapper";
 import { findArrByKey } from "./util";
 
@@ -40,7 +40,7 @@ function Model(props: any) {
         const isSelect = Boolean(modelTarget && modelTarget[0] === id);
         return (
           <li className="brand-icon-container" key={id}>
-            <ModelCard
+            <ModalCard
               {...item}
               goNextPage={goNextPage}
               isSelect={isSelect}

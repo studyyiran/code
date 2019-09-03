@@ -1,0 +1,57 @@
+@import (reference) "~@/styles/index.less";
+.model-card {
+  width: 20%;
+  .model-content-container {
+    height: 332px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    overflow: auto;
+    background: @white;
+    > img {
+      min-width: 204px;
+      max-width: 204px;
+    }
+    > ul.attr-panel {
+      > li.container {
+        > ul.one-attr-container {
+          display: flex;
+          padding: 5px 16px 10px;
+          > li.one-attr-option {
+            &[data-selected="true"] {
+              background: #444b54;
+              color: @white;
+            }
+            > h3 {
+              .font(26px, 500, #000000);
+              margin: 3px 0 12px;
+            }
+            &:nth-child(2n) {
+              margin: 0 15px 12px;
+            }
+            @content-height: 48px;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(34, 34, 34, 1);
+            text-align: center;
+            line-height: @content-height;
+            height: @content-height;
+            .font(12px, 500, #000000);
+          }
+        }
+      }
+    }
+  }
+  .model-name-container {
+    background: #d8d8d8;
+    padding: 19px 0 29px;
+    &[data-selected="true"] {
+      background: #444b54;
+      color: @white;
+    }
+    > span {
+      .font(18px, 600, #444b54);
+    }
+  }
+}

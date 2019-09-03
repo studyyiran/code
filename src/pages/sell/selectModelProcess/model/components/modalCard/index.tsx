@@ -74,7 +74,7 @@ export default function ModelCard(props: any) {
       b.includes(Number(attrState.carrierId))
     ) {
       props.goNextPage();
-  }
+    }
   }, [phoneInfoAnswer, attrState]);
 
   function renderAttrSelectList(
@@ -84,27 +84,30 @@ export default function ModelCard(props: any) {
     currentId: string
   ) {
     return (
-      <ul key={title} className="">
+      <li className="container">
         <h2>{title}</h2>
-        {arr.map(({ name, id: propertyId }: any) => {
-          return (
-            <li
-              key={propertyId}
-              data-selected={
-                String(currentId) === String(propertyId) ? "true" : "false"
-              }
-              onClick={() => {
-                attrStateDispatch({
-                  type: `${attrKey}Id`,
-                  value: [propertyId]
-                });
-              }}
-            >
-              <p>{name}</p>
-            </li>
-          );
-        })}
-      </ul>
+        <ul key={title} className="one-attr-container">
+          {arr.map(({ name, id: propertyId }: any) => {
+            return (
+              <li
+                className="one-attr-option"
+                key={propertyId}
+                data-selected={
+                  String(currentId) === String(propertyId) ? "true" : "false"
+                }
+                onClick={() => {
+                  attrStateDispatch({
+                    type: `${attrKey}Id`,
+                    value: [propertyId]
+                  });
+                }}
+              >
+                {name}
+              </li>
+            );
+          })}
+        </ul>
+      </li>
     );
   }
   function renderByIsSelect() {
@@ -112,28 +115,23 @@ export default function ModelCard(props: any) {
       const storageArr = findArrByKey(phoneInfoQuestion, "storage");
       const carrierArr = findArrByKey(phoneInfoQuestion, "carrier");
       return (
-        <div className="attr-container">
+        <ul className="attr-panel">
           {renderAttrSelectList(
-            "storage",
+            "Size",
             "storage",
             storageArr,
             attrState.storageId
           )}
           {renderAttrSelectList(
-            "carrier",
+            "Carrier",
             "carrier",
             carrierArr,
             attrState.carrierId
           )}
-        </div>
+        </ul>
       );
     } else {
-      return (
-        <div>
-          <img src={imageUrl} />
-          <span>{modelName}</span>
-        </div>
-      );
+      return <img src={imageUrl} />;
     }
   }
   return (
@@ -144,7 +142,10 @@ export default function ModelCard(props: any) {
         phoneInfoHandler({ answerId: "model", answer: [modelId] });
       }}
     >
-      {renderByIsSelect()}
+      <div className="model-content-container">{renderByIsSelect()}</div>
+      <div className="model-name-container">
+        <span>{modelName}</span>
+      </div>
     </div>
   );
 }
