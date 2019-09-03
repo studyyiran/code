@@ -106,7 +106,9 @@ interface IConditionForm {
 export function ConditionForm(props: IConditionForm) {
   const selectModelContext = useContext(SelectModelContext);
   const {
-    getInquiryByIds
+    getInquiryByIds,
+    selectModelContextValue,
+    getNameInfo
   } = selectModelContext as ISelectModelContext;
   const [maxActiveKey, setMaxActiveKey] = useState("");
   const { state, dispatch, phoneConditionQuestion = [] } = props;
@@ -202,8 +204,21 @@ export function ConditionForm(props: IConditionForm) {
     });
   }
   const extraQuestion: number = 1;
+  function renderLeftPic() {
+    const { brand: brandId, modelInfo } = selectModelContextValue;
+    const { carrierId, modelId, storageId } = modelInfo;
+    const nameConfig = getNameInfo({
+      brandId,
+      carrierId,
+      modelId,
+      storageId
+    });
+    return <img className="product-bg" src={nameConfig.imgUrl} />;
+  }
   return (
     <div className="page-condition">
+      {renderLeftPic()}
+      <div>
       <Collapse activeKey={[maxActiveKey].concat(editKey).concat(showKey)}>
         <PhoneInfoWrapper
           key={firstQuestionKey}
@@ -257,20 +272,21 @@ export function ConditionForm(props: IConditionForm) {
           );
         })}
       </Collapse>
-      {maxActiveKey === "allFinish" ? (
-        <button
-          onClick={() => {
-            // 获取最新的key
-            getInquiryByIds().then((value: any) => {
-              // 其实应该一致。监听state然后跳转
-              props.goNextPage();
-            });
-          }}
-          className="common-button finish-button"
-        >
-          Get Quote
-        </button>
-      ) : null}
+        {maxActiveKey === "allFinish" ? (
+          <button
+            onClick={() => {
+              // 获取最新的key
+              getInquiryByIds().then((value: any) => {
+                // 其实应该一致。监听state然后跳转
+                props.goNextPage();
+              });
+            }}
+            className="common-button finish-button"
+          >
+            Get Quote
+          </button>
+        ) : null}
+      </div>
     </div>
   );
 }
