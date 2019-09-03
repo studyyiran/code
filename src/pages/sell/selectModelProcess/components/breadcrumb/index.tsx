@@ -167,7 +167,7 @@ function Breadcrumb(props: any) {
           }
           return (
             <li data-step={nextPageKey} key={pageKey}>
-              <span>{` ${viewContent()}`}</span>
+              <span data-step={nextPageKey}>{` ${viewContent()}`}</span>
               {index !== configCache.length - 1 ? (
                 <Svg icon="arrow-right" />
               ) : null}
