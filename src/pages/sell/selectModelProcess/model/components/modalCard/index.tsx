@@ -115,7 +115,7 @@ export default function ModelCard(props: any) {
       const storageArr = findArrByKey(phoneInfoQuestion, "storage");
       const carrierArr = findArrByKey(phoneInfoQuestion, "carrier");
       return (
-        <ul className="attr-panel">
+        <ul className="attr-panel-container">
           {renderAttrSelectList(
             "Size",
             "storage",
@@ -131,7 +131,11 @@ export default function ModelCard(props: any) {
         </ul>
       );
     } else {
-      return <img src={imageUrl} />;
+      return (
+        <div className="img-container">
+          <img src={imageUrl} />
+        </div>
+      );
     }
   }
   return (
