@@ -2,13 +2,32 @@
   .breadcrumb-list {
     display: flex;
     > li {
-      fonr-size: 16px;
+      > * {
+        vertical-align: middle;
+      }
+      font-size: 16px;
       color: #444444;
       &:last-child {
         color: #000000;
       }
-      .tag {
-        margin: 0 8px;
+      svg {
+        margin: 0 6px;
+        font-size: 10px;
+      }
+    }
+  }
+}
+
+.ismobile #root {
+  .breadcrumb {
+    padding: 0.24rem 0 0.24rem 0.43rem;
+    .breadcrumb-list {
+      > li {
+        font-size: 0.32rem;
+        svg {
+          margin: 0 0.1rem;
+          font-size: 0.1rem;
+        }
       }
     }
   }

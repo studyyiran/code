@@ -185,6 +185,7 @@ interface IContextActions {
     idObj: any
   ) => {
     brandName: string;
+    imgUrl: string;
     modelInfoName: {
       modelName: string;
       storageName: string;
@@ -294,10 +295,11 @@ function useGetAction(
       const { brandId, modelId, storageId, carrierId } = config;
       const nameConfig = {
         brandName: "",
+        imgUrl: "https://sr.aihuishou.com/image/5ba3685de38bb01c30000054.png",
         modelInfoName: {
           modelName: "",
           storageName: "",
-          carrierName: ""
+          carrierName: "",
         }
       };
       nameConfig.brandName = (
@@ -307,6 +309,7 @@ function useGetAction(
         (item: any) => item.id === modelId
       );
       if (product) {
+        nameConfig.imgUrl = product.imageUrl;
         nameConfig.modelInfoName.modelName = product.name;
         const a =
           product &&

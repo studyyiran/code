@@ -3,6 +3,7 @@ import "./index.less";
 import { SelectModelContext, ISelectModelContext } from "../../context";
 import { inject, observer } from "mobx-react";
 import { staticRouter } from "../../config/staticRouter";
+import Svg from "@/components/svg";
 
 @inject("yourphone", "user", "common")
 @observer
@@ -166,9 +167,9 @@ function Breadcrumb(props: any) {
           }
           return (
             <li data-step={nextPageKey} key={pageKey}>
-              {` ${viewContent()}`}
+              <span>{` ${viewContent()}`}</span>
               {index !== configCache.length - 1 ? (
-                <span className="tag">{`>`}</span>
+                <Svg icon="arrow-right" />
               ) : null}
             </li>
           );

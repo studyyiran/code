@@ -47,14 +47,20 @@ export default function Brand(props: any) {
         deviceEstimate,
         platformFee,
         thirdPartyFee,
+        brand: brandId,
+        modelInfo,
         subTotal
       } = item;
+      const nameObj = getNameInfo({
+        brandId,
+        ...modelInfo
+      });
       return (
         <Panel
           key={productInquiryKey}
           header={
             <div className="panel-header">
-              <img className="phone-image" />
+              <img className="phone-image" src={nameObj.imgUrl} />
               <div className="phone-model">
                 <span>{productName + bpvIds[0].name}</span>
                 <span>{bpvIds[1].name}</span>
@@ -111,7 +117,15 @@ export default function Brand(props: any) {
             <Collapse
               expandIconPosition="right"
               expandIcon={panelProps => {
-                return <div className="circle-tag">{panelProps.isActive ? <Svg icon="jian" /> : <Svg icon="jia" />}</div>;
+                return (
+                  <div className="circle-tag">
+                    {panelProps.isActive ? (
+                      <Svg icon="jian" />
+                    ) : (
+                      <Svg icon="jia" />
+                    )}
+                  </div>
+                );
               }}
               accordion={true}
               onChange={selectHandler}
@@ -126,7 +140,10 @@ export default function Brand(props: any) {
             <span className="big-font">Total Payout</span>
             <TipsIcon tips={"123"} />
           </div>
-          <span className="big-font">{priceUnit}{guaranteedPayout}</span>
+          <span className="big-font">
+            {priceUnit}
+            {guaranteedPayout}
+          </span>
         </section>
       </div>
       <div className="buttons-container">

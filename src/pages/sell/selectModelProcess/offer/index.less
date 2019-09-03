@@ -1,19 +1,5 @@
 @import (reference) "~@/styles/index.less";
 
-.ant-collapse-arrow {
-  //display: flex;
-  //align-items: center;
-  //justify-content: center;
-  //width: 32px;
-  //height: 32px !important;
-  //line-height: 32px !important;
-  //background: #F0F0F0;
-  //color: #808080;
-  //font-size: 30px !important;
-  //border-radius: 50%;
-  //text-align: center;
-}
-
 .comp-tips {
   font-size: 14px;
   background: #E9E9E9;
@@ -37,15 +23,20 @@
     align-items: center;
   }
   .padding-container {
-    padding: 0 @padding-value 30px;
+    padding: 30px @padding-value 30px;
     border: 1px solid #E9E9E9;
     border-radius: 6px;
     > .product-container {
       padding: 0 @padding-value;
-      //.collapse-clear-border();
+      .collapse-clear-border();
+      .ant-collapse-item {
+        &:not(:last-child) {
+          border-bottom: 1px solid #E9E9E9;
+        }
+        padding-bottom: 10px;
+      }
       @padding-left-value: 90px;
       .ant-collapse-header {
-        margin-left: @padding-left-value;
         padding-left: 0;
         padding-bottom: 30px;
       }
@@ -58,8 +49,12 @@
       }
 
       .panel-header {
+        margin-left: @padding-left-value;
+        position: initial;
         > .phone-image {
-
+          width: 64px;
+          position: absolute;
+          left: 0px;
         }
         > .phone-model {
           > span:first-child {
@@ -123,7 +118,13 @@
       .func-space-between();
     }
   }
-  > div.button-container {
-    .func-space-between();
+  > .buttons-container {
+    margin-top: 64px;
+  }
+}
+
+.ismobile #root {
+  .padding-container {
+    border: none;
   }
 }
