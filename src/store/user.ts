@@ -46,7 +46,7 @@ class User implements IUserStoreNew {
     if (!haveInit) {
       haveInit = true;
       const preOrder: any = sessionStorage.getItem("preOrder");
-      if (preOrder && preOrder.userEmail) {
+      if (preOrder && preOrder.includes("userEmail")) {
         this.preOrder = JSON.parse(preOrder);
       }
     }
