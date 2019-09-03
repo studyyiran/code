@@ -152,7 +152,7 @@ function Breadcrumb(props: any) {
           const { pageKey, viewContent } = routeConfig;
           const renderPageOrder = getCurrentPageOrder(pageKey);
           let nextPageKey = "";
-          if (renderPageOrder > stageOrder) {
+          if (renderPageOrder >= stageOrder) {
             nextPageKey =
               configArr[getIndexByOrder(renderPageOrder - 1)].pageKey;
           } else if (nameObj.brandName) {
