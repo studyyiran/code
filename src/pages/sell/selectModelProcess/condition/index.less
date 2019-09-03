@@ -25,3 +25,29 @@
     border-right: none;
   }
 }
+
+.ismobile #root {
+  .page-condition {
+    padding: 0 0.48rem 1rem;
+    > img.product-bg {
+      display: none;
+      &+* {
+        margin-left: 0;
+      }
+    }
+    > h1 {
+      color: @bg-deep-blue;
+      text-align: center;
+      margin: 20px auto 20px;
+    }
+    .finish-button {
+      margin: 30px auto 0px;
+      display: block;
+    }
+    .ant-collapse {
+      border-top: none;
+      border-left: none;
+      border-right: none;
+    }
+  }
+}
