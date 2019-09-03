@@ -147,7 +147,7 @@ export default function ModelCard(props: any) {
       }}
     >
       <div className="model-content-container">{renderByIsSelect()}</div>
-      <div className="model-name-container">
+      <div data-selected={isSelect} className="model-name-container">
         <span>{modelName}</span>
       </div>
     </div>

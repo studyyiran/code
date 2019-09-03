@@ -4,11 +4,12 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+  border-radius: 8px;
+  overflow: hidden;
   .model-content-container {
     flex: 1;
     display: flex;
     flex-direction: column;
-    border-radius: 8px;
     overflow: auto;
     background: @white;
     > div.img-container {
@@ -22,8 +23,13 @@
       }
     }
     > ul.attr-panel-container {
+      padding: 16px 8px;
       height: 100%;
       > li.container {
+        > h2 {
+          .font(26px, 500, #000000);
+          margin: 3px 0 12px;
+        }
         > ul.one-attr-container {
           display: flex;
           padding: 5px 16px 10px;
@@ -32,15 +38,11 @@
               background: #444b54;
               color: @white;
             }
-            > h3 {
-              .font(26px, 500, #000000);
-              margin: 3px 0 12px;
-            }
             &:nth-child(2n) {
               margin: 0 15px 12px;
             }
             @content-height: 48px;
-            padding: 10px;
+            width: 90px;
             border-radius: 8px;
             border: 1px solid rgba(34, 34, 34, 1);
             text-align: center;
@@ -54,14 +56,16 @@
   }
   .model-name-container {
     background: #d8d8d8;
-    padding: 19px 0 29px;
+    padding: 21px 0 25px 15px;
     height: 73px;
+    color: #444b54;
     &[data-selected="true"] {
       background: #444b54;
       color: @white;
     }
     > span {
-      .font(18px, 600, #444b54);
+      font-size: 18px;
+      font-weight: 600;
     }
   }
 }
