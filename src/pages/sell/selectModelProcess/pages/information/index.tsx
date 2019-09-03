@@ -48,17 +48,10 @@ class Information extends React.Component<IShippingProps, IShippingState> {
     const allValus = getFieldsValue();
     onValuesChange(this.props, false, allValus);
 
-    // 显示左侧价格模块
-    this.props.user.isShowLeftPrice = true;
-    this.props.user.isShowLeftPriceMobile = true;
 
     if (typeof this.props.onRef === "function") {
       this.props.onRef!(this);
     }
-  }
-
-  public componentWillUnmount() {
-    this.props.user.isShowLeftPriceMobile = false;
   }
 
   public validateData = (): Promise<boolean> => {
@@ -108,6 +101,8 @@ class Information extends React.Component<IShippingProps, IShippingState> {
   }
 
   public render() {
+    console.log(this.props.yourphone)
+    console.log(this.props.user.preOrder)
     const { getFieldDecorator } = this.props.form;
     const { addressInfo } = this.props.yourphone;
     const isMobile = this.props.common.isMobile;

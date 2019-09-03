@@ -16,6 +16,9 @@ import { Switch, Route } from "react-router";
 import { HeaderTitle } from "@/components/headerTitle";
 import Breadcrumb from "./selectModelProcess/components/breadcrumb/index";
 import { staticRouter } from "@/pages/sell/selectModelProcess/config/staticRouter";
+import { inject, observer } from "mobx-react";
+
+let haveinit = false
 
 // const config = [
 //   {
@@ -227,13 +230,58 @@ export default function Sell(props: any) {
     </Switch>
   );
 }
-function Layout(layoutProps: any) {
-  const { children, goNextPage, currentPage, title } = layoutProps;
-  return (
-    <div>
-      <HeaderTitle title={title} />
-      <Breadcrumb goNextPage={goNextPage} currentPage={currentPage} />
-      <div>{children}</div>
-    </div>
-  );
+
+@inject("yourphone", "user", "common")
+@observer
+class Layout extends React.Component<any, any> {
+  public componentDidMount(): void {
+    if (!haveinit) {
+      haveinit = true
+      const preOrder = sessionStorage.getItem('preOrder');
+      if (preOrder) {
+        this.props.user.preOrder = JSON.parse(preOrder);
+
+        if (this.props.user.preOrder.addressInfo) {
+          this.props.yourphone.addressInfo = this.props.user.preOrder.addressInfo;
+        }
+
+        if (this.props.user.preOrder.inquiryKey) {
+          this.props.yourphone.inquiryKey = this.props.user.preOrder.inquiryKey;
+        }
+
+        if (this.props.user.preOrder.payment) {
+          this.props.yourphone.payment = this.props.user.preOrder.payment;
+        }
+        if (this.props.user.preOrder.expressCarrier) {
+          this.props.yourphone.expressCarrier = this.props.user.preOrder.expressCarrier;
+        }
+
+        if (this.props.user.preOrder.checkInfo) {
+          this.props.yourphone.echeck = this.props.user.preOrder.checkInfo;
+        }
+
+        if (this.props.user.preOrder.paypalInfo) {
+          this.props.yourphone.paypal = this.props.user.preOrder.paypalInfo;
+        }
+      }
+      this.setState({ isSetedPreOrder: true });
+    }
+  }
+
+  public render() {
+    const { children, goNextPage, currentPage, title } = this.props;
+    return (
+      <div>
+        <HeaderTitle title={title} />
+        <Breadcrumb
+          goNextPage={(...params: any[]) => {
+            // 注入
+            goNextPage(...params);
+          }}
+          currentPage={currentPage}
+        />
+        <div>{children}</div>
+      </div>
+    );
+  }
 }

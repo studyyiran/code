@@ -1,7 +1,7 @@
-import * as Api from './api/user.api';
-import { IUserStoreNew, IPreOrder } from './interface/user.interface';
-import { action, observable, autorun } from 'mobx';
-
+import * as Api from "./api/user.api";
+import { IUserStoreNew, IPreOrder } from "./interface/user.interface";
+import { action, observable, autorun } from "mobx";
+let haveInit = false
 class User implements IUserStoreNew {
   @observable public canUpdatePreOrder = false;
   // @observable public preOrder: Partial<IPreOrder> = {
@@ -39,15 +39,20 @@ class User implements IUserStoreNew {
   @observable public isShowLeftPrice: boolean = false;
   @observable public isShowLeftPriceMobile: boolean = false;
   @observable public preOrder: Partial<IPreOrder> = {
-    userEmail: '',
+    userEmail: ""
   };
 
   constructor() {
+    if (!haveInit) {
+      haveInit = true
+      const preOrder: any = sessionStorage.getItem("preOrder");
+      this.preOrder = JSON.parse(preOrder);
+    }
     autorun(() => {
-      console.log(this.preOrder)
-      if (this.preOrder.productInfo && this.preOrder.productInfo.brandId && this.preOrder.key) {
-        this.updatePreOrder(this.preOrder);
-      }
+      this.updatePreOrder(this.preOrder);
+      // if (this.preOrder.productInfo && this.preOrder.productInfo.brandId && this.preOrder.key) {
+      //
+      // }
     });
   }
 
@@ -56,30 +61,30 @@ class User implements IUserStoreNew {
     //   userEmail
     // };
 
-    let res: IPreOrder;
-    try {
+    // let res: IPreOrder;
+    // try {
       // this.preOrder = await Api.getPreOrderKey<IPreOrder>(params); // 抛弃耿饭返回的数据
-      res = await Api.getPreOrderKey<IPreOrder>(preOrder);
-    } catch (error) {
-      console.warn(error, 'in user store getPreOrderKey');
-      return false;
-    }
+      // res = await Api.getPreOrderKey<IPreOrder>(preOrder);
+    // } catch (error) {
+    //   console.warn(error, "in user store getPreOrderKey");
+    //   return false;
+    // }
 
-    this.preOrder = {
-      ...this.preOrder,
-      key: res.key
-    }
+    // this.preOrder = {
+    //   ...this.preOrder,
+    //   key: res.key
+    // };
 
     return true;
   }
 
   @action public async updatePreOrder(preOrder: Partial<IPreOrder>) {
-    try {
-      await Api.updatePreOrder(preOrder);
-    } catch (error) {
-      console.warn(error, 'in user store');
-      return false;
-    }
+    // try {
+    //   await Api.updatePreOrder(preOrder);
+    // } catch (error) {
+    //   console.warn(error, 'in user store');
+    //   return false;
+    // }
 
     this.updateSession();
     return true;
@@ -87,9 +92,9 @@ class User implements IUserStoreNew {
 
   @action private updateSession = () => {
     if (this.preOrder && Object.keys(this.preOrder).length !== 0) {
-      sessionStorage.setItem('preOrder', JSON.stringify(this.preOrder));
+      sessionStorage.setItem("preOrder", JSON.stringify(this.preOrder));
     }
-  }
+  };
 }
 
-export default new User(); 
+export default new User();
