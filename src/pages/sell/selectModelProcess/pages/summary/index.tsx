@@ -17,6 +17,7 @@ import {
 import { ModalProps } from "antd/lib/modal";
 import OrderInfo from "./orderInfo";
 import { noteUserModal } from "@/containers/aboutphone/pageValidate";
+import ButtonGroup from "@/pages/sell/selectModelProcess/components/buttonGroup";
 
 @inject("yourphone", "user", "common")
 @observer
@@ -196,50 +197,47 @@ export default class Summary extends React.Component<IDoneProps, IDoneStates> {
     customizeModalProps["width"] = this.props.common.isMobile ? "3.33rem" : 900;
     return (
       <div className="page-summary">
-        <RenderCard
-          title={"Your Payment"}
-          onEdit={this.handlePageChoose.bind(this, EChangeType.PAYMENT)}
-        >
-          {payment}
-        </RenderCard>
-        <RenderCard
-          title={"Your Information"}
-          onEdit={this.handlePageChoose.bind(this, EChangeType.SHIPPING)}
-        >
-          <div className="show-content">
-            <p className="info-item">
-              <span className="label">E-mail</span>
-              <span className="content">{user.preOrder.userEmail}</span>
-            </p>
-            <p className="info-item">
-              <span className="label">Name</span>
-              <span className="content">{`${yourphone.addressInfo.firstName} ${yourphone.addressInfo.lastName}`}</span>
-            </p>
-            <p className="info-item">
-              <span className="label">Address</span>
-              <span className="content">{shippingAddress.join(", ")}</span>
-            </p>
-            {yourphone.addressInfo.mobile && (
+        <h2>Review your order</h2>
+        <div>
+          <RenderCard
+            title={"Your Payment"}
+            onEdit={this.handlePageChoose.bind(this, EChangeType.PAYMENT)}
+          >
+            {payment}
+          </RenderCard>
+          <RenderCard
+            title={"Your Information"}
+            onEdit={this.handlePageChoose.bind(this, EChangeType.SHIPPING)}
+          >
+            <div className="show-content">
               <p className="info-item">
-                <span className="label">Phone No. </span>
-                <span className="content">
+                <span className="label">E-mail</span>
+                <span className="content">{user.preOrder.userEmail}</span>
+              </p>
+              <p className="info-item">
+                <span className="label">Name</span>
+                <span className="content">{`${yourphone.addressInfo.firstName} ${yourphone.addressInfo.lastName}`}</span>
+              </p>
+              <p className="info-item">
+                <span className="label">Address</span>
+                <span className="content">{shippingAddress.join(", ")}</span>
+              </p>
+              {yourphone.addressInfo.mobile && (
+                <p className="info-item">
+                  <span className="label">Phone No. </span>
+                  <span className="content">
                       +1 {yourphone.addressInfo.mobile}
                     </span>
-              </p>
-            )}
-          </div>
-        </RenderCard>
+                </p>
+              )}
+            </div>
+          </RenderCard>
+        </div>
         <RenderCard title={"Your Order"}>
           <OrderInfo />
         </RenderCard>
         {this.renderTerms()}
-        <button
-          className="common-button"
-          disabled={!this.state.isChecked}
-          onClick={this.handleShip}
-        >
-          COMPLETE
-        </button>
+        <ButtonGroup disabled={!this.state.isChecked} handleNext={this.handleShip}>Confirm</ButtonGroup>
         <Modal {...customizeModalProps}>
           <ChangeModal type={this.state.pageType} onSave={this.onSave}>
             {Page}

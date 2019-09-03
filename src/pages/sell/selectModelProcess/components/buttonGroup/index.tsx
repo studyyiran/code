@@ -1,7 +1,7 @@
 import React from "react";
 
 export default function ButtonGroup(props: any) {
-  const { handleNext, disabled } = props;
+  const { handleNext, disabled, children } = props;
   return (
     <div className="buttons-container">
       <button
@@ -17,7 +17,7 @@ export default function ButtonGroup(props: any) {
         onClick={handleNext}
         disabled={disabled}
       >
-        Next
+        {children ? children : "Next"}
       </button>
     </div>
   );
