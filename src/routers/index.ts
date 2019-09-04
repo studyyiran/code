@@ -62,6 +62,15 @@ export default [
   },
   {
     component: Loadable({
+      loader: () => import('../containers/order/container'),
+      loading: () => null,
+      modules: ['../containers/order/container'],
+      webpack: () => [require.resolveWeak('../containers/order/container') as number],
+    }),
+    path: '/neworder'
+  },
+  {
+    component: Loadable({
       loader: () => import('../containers/home/reviews'),
       loading: () => null,
       modules: ['../containers/home/reviews'],

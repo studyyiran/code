@@ -6,6 +6,7 @@ import Layout from "./containers/layout/index";
 import routes from "./routers";
 import store from "./store";
 import { ModelContextProvider } from "./pages/sell/selectModelProcess/context";
+import { TotalOrderInfoProvider } from "./containers/order/container/context";
 const setIsMobile = (fn?: () => void) => {
   const clientWidth = document.documentElement.clientWidth;
   // const dpr = window.devicePixelRatio || 1;
@@ -37,13 +38,15 @@ document.body.classList.add("isrender");
 export default () => {
   return (
     <Provider {...store}>
-      <ModelContextProvider>
-        <BrowserRouter>
-          <Layout>
-            <Switch>{renderRoutes(routes)}</Switch>
-          </Layout>
-        </BrowserRouter>
-      </ModelContextProvider>
+      <TotalOrderInfoProvider>
+        <ModelContextProvider>
+          <BrowserRouter>
+            <Layout>
+              <Switch>{renderRoutes(routes)}</Switch>
+            </Layout>
+          </BrowserRouter>
+        </ModelContextProvider>
+      </TotalOrderInfoProvider>
     </Provider>
   );
 };

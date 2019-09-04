@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import "./index.less";
 import { SelectModelContext, ISelectModelContext } from "../context";
-import { Collapse } from "antd";
 import Svg from "@/components/svg";
 import TipsIcon from "@/pages/sell/selectModelProcess/components/tipsIcon";
+import { Collapse } from "antd";
 const { Panel } = Collapse;
 
 const priceUnit = "$";

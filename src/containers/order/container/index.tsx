@@ -38,14 +38,14 @@ function CollapseWithPanelList(props: {
   );
 }
 
-export class OrderContainerWrapper extends React.Component<any, any> {
+
+export default class OrderListContainer extends React.Component {
   public render() {
-    return <div>123123</div>;
-    // return <OrderContainer {...this.props} />;
+    return <OrderList />;
   }
 }
 
-function OrderContainer(props: any) {
+function OrderList(props: any) {
   // 监听
   const totalOrderInfoContext = useContext(TotalOrderInfoContext);
   // 获取
@@ -78,9 +78,9 @@ function OrderContainer(props: any) {
   }
   // 渲染
   if (totalOrderInfo.groupOrderNo) {
-    return totalOrderInfo.groupOrderNo;
+    return <div>{totalOrderInfo.groupOrderNo}</div>;
   } else {
-    return null;
+    return <div>123</div>;
   }
   return (
     <CollapseWithPanelList
