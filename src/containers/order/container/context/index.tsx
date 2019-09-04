@@ -6,7 +6,7 @@ import React, {
 } from "react";
 import { IReducerAction } from "@/interface/index.interface";
 import { getOrderDetail } from "../../api/order.api";
-// import { mockgetinquirybykeys } from "../../mock";
+import { checkforordermock } from "./mock";
 
 export const TotalOrderInfoContext = createContext({});
 
@@ -41,7 +41,8 @@ function useGetAction(
 ): IContextActions {
   const actions: IContextActions = {
     getAjax: promisify(async function(a: any, b: any) {
-      const res = await getOrderDetail(a, b);
+      // const res = await getOrderDetail(a, b);
+      const res = checkforordermock;
       dispatch({ type: actionTypes.setTotalOrderInfo, value: res });
     })
   };
@@ -56,7 +57,7 @@ interface ITotalOrderInfo {
 }
 
 interface IContextState {
-  totalOrderInfo: ITotalOrderInfo; 
+  totalOrderInfo: ITotalOrderInfo;
 }
 
 export interface ITotalOrderInfoContext extends IContextActions {
@@ -64,7 +65,7 @@ export interface ITotalOrderInfoContext extends IContextActions {
   totalOrderInfoContextDispatch: (action: IReducerAction) => void;
 }
 
-export function ModelContextProvider(props: any) {
+export function TotalOrderInfoProvider(props: any) {
   const initState: any = {
     totalOrderInfo: {}
   };
