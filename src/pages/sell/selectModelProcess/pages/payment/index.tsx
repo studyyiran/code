@@ -1,18 +1,11 @@
 import * as React from "react";
-import classnames from "classnames";
 import { inject, observer } from "mobx-react";
-import { Row, Col, Collapse, Form, Input, message } from "antd";
-import Layout from "@/containers/aboutphone/layout";
+import { Row, Col, Form, Input, message } from "antd";
 import { IPaymentProps, IPaymentStates, EPayType } from "../../index.interface";
-import { paymentPageValidate } from "../pageValidate";
 import yourPhoneStore from "@/containers/aboutphone/store/yourphone.store";
 import "./index.less";
 import ButtonGroup from "@/pages/sell/selectModelProcess/components/buttonGroup";
 import PriceTitle from "@/pages/sell/selectModelProcess/components/priceTitle";
-
-const Panel = Collapse.Panel;
-const leftHeader = <div className="paypal-bg" />;
-
 /**
  * 根据yourphone的payment来判断用户选择哪种收款方式： PAYPAL | ECHECK
  */
@@ -173,19 +166,16 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
               Confirm your PayPal address so we can send you the payment for
               your phone.
             </p>
-            <p className="email">
-              <span className="title">PayPal email address</span>
-              <br />
-              <span className="address">
-                {this.props.user.preOrder.userEmail}
-              </span>
-            </p>
-            <p
-              className="difference"
-              onClick={this.changeEditState.bind(this, "paypal")}
-            >
-              My email for PayPal is not the same as my contact email
-            </p>
+            <div className="form-wrapper">
+              <Form layout="vertical">
+                <Form.Item label="PayPal email address">
+                  <Input value={this.props.user.preOrder.userEmail} />
+                </Form.Item>
+                <Form.Item label="Confirm PayPal email address">
+                  <Input />
+                </Form.Item>
+              </Form>
+            </div>
           </div>
         );
         break;
@@ -208,7 +198,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
                         message: "Please enter a valid email."
                       }
                     ],
-                    initialValue: paypal.email,
+                    initialValue: this.props.user.preOrder.userEmail,
                     validateTrigger: "onBlur"
                   })(<Input />)}
                 </Form.Item>
@@ -222,17 +212,11 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
                       }
                     ],
                     validateTrigger: "onBlur",
-                    initialValue: paypal.email
+                    initialValue: ""
                   })(<Input />)}
                 </Form.Item>
               </Form>
             </div>
-            <p
-              className="difference"
-              onClick={this.changeEditState.bind(this, "paypal")}
-            >
-              My email for PayPal is the same as my contact email
-            </p>
           </div>
         );
         break;
@@ -246,25 +230,26 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
             <p className="description">
               Confirm your address so we can send you the check of your phone.
             </p>
-            <p className="name">
-              <span className="title">Name</span>
-              <br />
-              <span className="address">{`${this.props.yourphone.addressInfo.firstName} ${this.props.yourphone.addressInfo.lastName}`}</span>
-            </p>
-            <p className="email">
-              <span className="title">eCheck email address</span>
-              <br />
-              <span className="address">
-                {this.props.user.preOrder.userEmail}
-              </span>
-            </p>
-            <p
-              className="difference"
-              onClick={this.changeEditState.bind(this, "check")}
-            >
-              The name and email for eCheck is not the same as my contact
-              information
-            </p>
+            <div className="form-wrapper">
+              <Form layout="vertical">
+                <Form.Item label="First Name">
+                  <Input
+                    value={this.props.yourphone.addressInfo.firstName}
+                  />
+                </Form.Item>
+                <Form.Item label="Last Name">
+                  <Input
+                    value={this.props.yourphone.addressInfo.lastName}
+                  />
+                </Form.Item>
+                <Form.Item label="eCheck email address">
+                  <Input value={this.props.user.preOrder.userEmail} />
+                </Form.Item>
+                <Form.Item label="confirm eCheck email address">
+                  <Input value={""} />
+                </Form.Item>
+              </Form>
+            </div>
           </div>
         );
         break;
@@ -285,7 +270,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
                       }
                     ],
                     validateTrigger: "onBlur",
-                    initialValue: echeck.firstName
+                    initialValue: this.props.yourphone.addressInfo.firstName
                   })(<Input />)}
                 </Form.Item>
                 <Form.Item label="Last Name">
@@ -298,7 +283,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
                       }
                     ],
                     validateTrigger: "onBlur",
-                    initialValue: echeck.lastName
+                    initialValue: this.props.yourphone.addressInfo.lastName
                   })(<Input />)}
                 </Form.Item>
                 <Form.Item label="eCheck email address">
@@ -311,7 +296,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
                       }
                     ],
                     validateTrigger: "onBlur",
-                    initialValue: echeck.email
+                    initialValue: this.props.user.preOrder.userEmail
                   })(<Input />)}
                 </Form.Item>
                 <Form.Item label="confirm eCheck email address">
@@ -324,18 +309,11 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
                       }
                     ],
                     validateTrigger: "onBlur",
-                    initialValue: echeck.email
+                    initialValue: ""
                   })(<Input />)}
                 </Form.Item>
               </Form>
             </div>
-            <p
-              className="difference"
-              onClick={this.changeEditState.bind(this, "check")}
-            >
-              The name and email for eCheck is the same as my contact
-              information
-            </p>
           </div>
         );
         break;
@@ -344,36 +322,24 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
     const paymentHTML = (
       <Row gutter={30} style={!isMobile ? { paddingTop: "42px" } : {}}>
         <Col {...this.colLayout(12)} className="paypal-col-wrapper">
-          <Collapse
-            onChange={this.handlePaypalCollapseExtend}
-            activeKey={this.props.yourphone.payment}
-            // defaultActiveKey={[this.props.yourphone.payment]}
-            className={classnames({
-              active: this.props.yourphone.payment === EPayType.PAYPAL
-            })}
+          <div
+            className="paypal-container"
+            data-selected={this.props.yourphone.payment === EPayType.PAYPAL}
+            onClick={this.handlePaypalCollapseExtend}
           >
-            <Panel header={leftHeader} showArrow={false} key={EPayType.PAYPAL}>
-              {leftContent}
-            </Panel>
-          </Collapse>
+            <div className="paypal-bg" />
+            {leftContent}
+          </div>
         </Col>
         <Col {...this.colLayout(12)} className="echeck-col-wrapper">
-          <Collapse
-            onChange={this.handleEcheckCollapseExtend}
-            activeKey={this.props.yourphone.payment}
-            // defaultActiveKey={[this.props.yourphone.payment]}
-            className={classnames({
-              active: this.props.yourphone.payment === EPayType.ECHECK
-            })}
+          <div
+            className="echeck-container"
+            data-selected={this.props.yourphone.payment === EPayType.ECHECK}
+            onClick={this.handleEcheckCollapseExtend}
           >
-            <Panel
-              header={<h3>eCheck</h3>}
-              showArrow={false}
-              key={EPayType.ECHECK}
-            >
-              {rightContent}
-            </Panel>
-          </Collapse>
+            <h3>eCheck</h3>
+            {rightContent}
+          </div>
         </Col>
       </Row>
     );
@@ -390,57 +356,18 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
     );
   }
 
-  private handlePaypalCollapseExtend = (type: string[]) => {
-    console.log(type);
-    console.log(this.props.yourphone.payment);
-    if (this.props.yourphone.payment === EPayType.PAYPAL && !type.length) {
-      this.props.yourphone.payment = "";
-    }
-
-    if (!type.length) {
-      return;
-    }
-
-    this.props.yourphone.payment = type[1] ? type[1] : type[0];
+  private handlePaypalCollapseExtend = () => {
+    this.props.yourphone.isLeftOnEdit = true;
     this.props.yourphone.isRightOnEdit = false;
+    this.props.yourphone.payment = "PAYPAL";
   };
 
-  private handleEcheckCollapseExtend = (type: string[]) => {
-    console.log(type);
-    console.log(this.props.yourphone.payment);
-    if (this.props.yourphone.payment === EPayType.ECHECK && !type.length) {
-      this.props.yourphone.payment = "";
-    }
-
-    if (!type.length) {
-      return;
-    }
-
-    this.props.yourphone.payment = type[1] ? type[1] : type[0];
+  private handleEcheckCollapseExtend = () => {
     this.props.yourphone.isLeftOnEdit = false;
+    this.props.yourphone.isRightOnEdit = true;
+    this.props.yourphone.payment = "CHECK";
   };
-
-  private changeEditState = (type: string): void => {
-    // 切换成可编辑状态
-    if (type === "paypal") {
-      this.props.yourphone.isLeftOnEdit = !this.props.yourphone.isLeftOnEdit;
-      this.props.yourphone.paypal = {
-        email: ""
-      };
-      onValuesChange(false, false, this.props.yourphone.paypal);
-    }
-
-    if (type === "check") {
-      this.props.yourphone.isRightOnEdit = !this.props.yourphone.isRightOnEdit;
-      this.props.yourphone.echeck = {
-        email: "",
-        firstName: "",
-        lastName: ""
-      };
-      onValuesChange(false, false, this.props.yourphone.echeck);
-    }
-  };
-
+  
   private handleNext = async () => {
     const isOk = await this.validateData();
     if (isOk) {
