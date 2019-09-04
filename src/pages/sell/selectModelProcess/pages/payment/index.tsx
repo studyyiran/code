@@ -184,8 +184,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
         leftContent = (
           <div className="left-wrapper">
             <p className="description">
-              Confirm your PayPal address so we can send you the payment of
-              ryour phone.
+              Confirm your PayPal address so we can send you the payment for your phone.
             </p>
             <div className="form-wrapper">
               <Form layout="vertical">
@@ -228,7 +227,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
         rightContent = (
           <div className="right-wrapper">
             <p className="description">
-              Confirm your address so we can send you the check of your phone.
+              eChecks works just like regular checks. We email it to you and you print it. After you print, it works just like a regular check.
             </p>
             <div className="form-wrapper">
               <Form layout="vertical">
@@ -257,7 +256,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
         rightContent = (
           <div className="right-wrapper">
             <p className="description">
-              Confirm your address so we can send you the check of your phone.
+              eChecks works just like regular checks. We email it to you and you print it. After you print, it works just like a regular check.
             </p>
             <div className="form-wrapper">
               <Form layout="vertical">
@@ -323,21 +322,23 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
       <Row gutter={30} style={!isMobile ? { paddingTop: "42px" } : {}}>
         <Col {...this.colLayout(12)} className="paypal-col-wrapper">
           <div
-            className="paypal-container"
+            className="paypal-container container-border"
             data-selected={this.props.yourphone.payment === EPayType.PAYPAL}
             onClick={this.handlePaypalCollapseExtend}
           >
             <div className="paypal-bg" />
+            <span>- 2.9% + $0.30 fee</span>
             {leftContent}
           </div>
         </Col>
         <Col {...this.colLayout(12)} className="echeck-col-wrapper">
           <div
-            className="echeck-container"
+            className="echeck-container container-border"
             data-selected={this.props.yourphone.payment === EPayType.ECHECK}
             onClick={this.handleEcheckCollapseExtend}
           >
             <h3>eCheck</h3>
+            <span>- No Fees</span>
             {rightContent}
           </div>
         </Col>

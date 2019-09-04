@@ -109,7 +109,7 @@ class Shipping extends React.Component<any, any> {
     const isMobile = this.props.common.isMobile;
 
     return (
-      <div className="page-payment-container">
+      <div className="page-shipping-container">
         <PriceTitle>The faster you ship, the more you get paid</PriceTitle>
         <RenderQuestion
           currentExpressOption={expressOption}

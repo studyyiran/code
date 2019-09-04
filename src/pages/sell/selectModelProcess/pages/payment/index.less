@@ -12,12 +12,15 @@
   .paypal-bg {
     width: 91px;
     height: 22px;
+    display: inline-block;
+    margin-right: 10px;
     background: url("~@/images/paypal.png") no-repeat;
     background-size: 100%;
   }
 
   .left-wrapper,
   .right-wrapper {
+    margin-top: 15px;
     .description {
       .set-font-color(14px, #9b9b9b);
       line-height: 18px;
@@ -95,15 +98,36 @@
   }
 }
 
+.page-payment-container {
+  padding-bottom: 286px;
+  .page(750px);
+  .page-padding();
+  .buttons-container {
+    margin-top: 30px;
+  }
+  .paypal-container {
+  }
 
-.paypal-container{
-  &[data-selected="true"] {
-    border: 1px solid red;
+  .echeck-container {
+    > h3 {
+      display: inline-block;
+      margin-right: 10px;
+    }
+  }
+  .container-border {
+    border: 1px solid #e9e9e9;
+    border-radius: 8px;
+    padding: 22px 17px;
+    &[data-selected="true"] {
+      border: 1px solid @color-blue-liner-use;
+    }
   }
 }
 
-.echeck-container{
-  &[data-selected="true"] {
-    border: 1px solid red;
+.ismobile #root {
+  .page-payment-container {
+    .paypal-container {
+      margin-bottom: 0.5rem;
+    }
   }
 }
