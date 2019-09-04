@@ -258,7 +258,7 @@ function RenderQuestion(props: any) {
           render={(index: any) => {
             if (afterCalcList && afterCalcList.length === 3 && index < 3) {
               if (index === 0) {
-                return <div className="recommand comp-top-tag">recommand</div>;
+                return <div className="recommended comp-top-tag">Recommended</div>;
               } else {
                 return (
                   <div className="comp-top-tag">

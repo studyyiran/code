@@ -184,7 +184,8 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
         leftContent = (
           <div className="left-wrapper">
             <p className="description">
-              Confirm your PayPal address so we can send you the payment for your phone.
+              Confirm your PayPal address so we can send you the payment for
+              your phone.
             </p>
             <div className="form-wrapper">
               <Form layout="vertical">
@@ -227,19 +228,16 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
         rightContent = (
           <div className="right-wrapper">
             <p className="description">
-              eChecks works just like regular checks. We email it to you and you print it. After you print, it works just like a regular check.
+              eChecks works just like regular checks. We email it to you and you
+              print it. After you print, it works just like a regular check.
             </p>
             <div className="form-wrapper">
               <Form layout="vertical">
                 <Form.Item label="First Name">
-                  <Input
-                    value={this.props.yourphone.addressInfo.firstName}
-                  />
+                  <Input value={this.props.yourphone.addressInfo.firstName} />
                 </Form.Item>
                 <Form.Item label="Last Name">
-                  <Input
-                    value={this.props.yourphone.addressInfo.lastName}
-                  />
+                  <Input value={this.props.yourphone.addressInfo.lastName} />
                 </Form.Item>
                 <Form.Item label="eCheck email address">
                   <Input value={this.props.user.preOrder.userEmail} />
@@ -256,7 +254,8 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
         rightContent = (
           <div className="right-wrapper">
             <p className="description">
-              eChecks works just like regular checks. We email it to you and you print it. After you print, it works just like a regular check.
+              eChecks works just like regular checks. We email it to you and you
+              print it. After you print, it works just like a regular check.
             </p>
             <div className="form-wrapper">
               <Form layout="vertical">
@@ -320,6 +319,18 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
 
     const paymentHTML = (
       <Row gutter={30} style={!isMobile ? { paddingTop: "42px" } : {}}>
+        <Col {...this.colLayout(12)} className="echeck-col-wrapper">
+          <div
+            className="echeck-container container-border"
+            data-selected={this.props.yourphone.payment === EPayType.ECHECK}
+            onClick={this.handleEcheckCollapseExtend}
+          >
+            <div className="recommended comp-top-tag">Recommended</div>
+            <h3>eCheck</h3>
+            <span>- No Fees</span>
+            {rightContent}
+          </div>
+        </Col>
         <Col {...this.colLayout(12)} className="paypal-col-wrapper">
           <div
             className="paypal-container container-border"
@@ -329,17 +340,6 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
             <div className="paypal-bg" />
             <span>- 2.9% + $0.30 fee</span>
             {leftContent}
-          </div>
-        </Col>
-        <Col {...this.colLayout(12)} className="echeck-col-wrapper">
-          <div
-            className="echeck-container container-border"
-            data-selected={this.props.yourphone.payment === EPayType.ECHECK}
-            onClick={this.handleEcheckCollapseExtend}
-          >
-            <h3>eCheck</h3>
-            <span>- No Fees</span>
-            {rightContent}
           </div>
         </Col>
       </Row>
@@ -368,7 +368,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
     this.props.yourphone.isRightOnEdit = true;
     this.props.yourphone.payment = "CHECK";
   };
-  
+
   private handleNext = async () => {
     const isOk = await this.validateData();
     if (isOk) {
