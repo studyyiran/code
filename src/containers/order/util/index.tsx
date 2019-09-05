@@ -150,3 +150,12 @@ export function getDeliverInfos(trackingInfo: any[]) {
   }
   return infos;
 }
+
+export function getDeliverNoInfo(info: any[]) {
+  const deliverNoInfo: any = {};
+  if (info && info.length) {
+    deliverNoInfo.trackingNumber = info[0].trackingNumber;
+    deliverNoInfo.carrier = info[0].carrier;
+  }
+  return deliverNoInfo;
+}

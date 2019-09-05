@@ -7,7 +7,7 @@ import {
 import UPSICON from "@/images/order/upsIcon.png";
 import "./deliverSatus.less";
 import { Modal } from "antd";
-import { getDeliverInfos } from "../util";
+import { getDeliverInfos, getDeliverNoInfo } from "../util";
 
 export default function(props: any) {
   // function wraper(props: any) {
@@ -185,11 +185,4 @@ class DeliverSatus extends React.Component<IOrderProps, IDeliverSatus> {
 }
 
 // export default DeliverSatus;
-function getDeliverNoInfo(info: any[]) {
-  const deliverNoInfo: any = {};
-  if (info && info.length) {
-    deliverNoInfo.trackingNumber = info[0].trackingNumber;
-    deliverNoInfo.carrier = info[0].carrier;
-  }
-  return deliverNoInfo;
-}
+
