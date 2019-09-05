@@ -1,8 +1,49 @@
-import * as React from 'react';
-import { IOrderProps, IDeliverSatus, IShippingAddress } from '@/containers/order/interface/order.inerface';
-import UPSICON from '@/images/order/upsIcon.png';
-import './deliverSatus.less';
-import { Modal } from 'antd';
+import * as React from "react";
+import {
+  IOrderProps,
+  IDeliverSatus,
+  IShippingAddress
+} from "@/containers/order/interface/order.inerface";
+import UPSICON from "@/images/order/upsIcon.png";
+import "./deliverSatus.less";
+import { Modal } from "antd";
+import * as moment from "moment-timezone";
+
+function packageDate(b: string | undefined) {
+  if (b) {
+    const date = moment.tz(b, "America/Chicago");
+    return date.format("MMM DD");
+  }
+  return b;
+}
+
+export default function(props: any) {
+  const { sendInfo, returnInfo } = props.shippingInfo;
+  let currentRender = [];
+  if (returnInfo && returnInfo.length) {
+    currentRender = returnInfo;
+  } else if (sendInfo && sendInfo.length) {
+    currentRender = sendInfo;
+  }
+  currentRender = currentRender.map((item: any) => {
+    const { updatedDt } = item;
+    return {
+      date: packageDate(updatedDt),
+      listData: [{
+        time: 'time',
+        listData: ["info", "pos"]
+      }]
+    };
+  });
+  const deliverNoInfo = {
+    trackingNumber: "trackingNumber",
+    carrier: "carrier"
+  };
+  const fakeProps: any = {
+    order: { deliverInfos: currentRender, deliverNoInfo: deliverNoInfo }
+  };
+  return <DeliverSatus {...fakeProps} />;
+}
 
 class DeliverSatus extends React.Component<IOrderProps, IDeliverSatus> {
   constructor(props: IOrderProps) {
@@ -10,18 +51,18 @@ class DeliverSatus extends React.Component<IOrderProps, IDeliverSatus> {
     this.state = {
       loading: false,
       visible: false
-    }
+    };
   }
   public showModal = () => {
     this.setState({
-      visible: true,
+      visible: true
     });
-  }
+  };
   public closeModal = () => {
     this.setState({
-      visible: false,
+      visible: false
     });
-  }
+  };
   public render() {
     // 条数大于1，只显示第一条
     const deliverInfos: IShippingAddress[] = [];
@@ -62,32 +103,42 @@ class DeliverSatus extends React.Component<IOrderProps, IDeliverSatus> {
                         <div className="date-item" key={i + "_" + j}>
                           <div className="time">{v.time}</div>
                           <div className="desc">
-                            {v.listData[0] && <p className="info">{v.listData[0]}</p>}
-                            {v.listData[1] && <p className="pos">{v.listData[1]}</p>}
+                            {v.listData[0] && (
+                              <p className="info">{v.listData[0]}</p>
+                            )}
+                            {v.listData[1] && (
+                              <p className="pos">{v.listData[1]}</p>
+                            )}
                           </div>
                         </div>
                       ))}
                     </div>
                   </div>
                 </div>
-              )
+              );
             })}
           </div>
           <div className="col-2">
             <div>
               <img src={UPSICON} alt="" />
-              {shippoTransaction && (<div>
-                <p className="name">{shippoTransaction.carrier}</p>
-                {shippoTransaction.trackingNumber && (
-                  <p className="orderNo">{shippoTransaction.trackingNumber}</p>
-                )}
-              </div>)}
+              {shippoTransaction && (
+                <div>
+                  <p className="name">{shippoTransaction.carrier}</p>
+                  {shippoTransaction.trackingNumber && (
+                    <p className="orderNo">
+                      {shippoTransaction.trackingNumber}
+                    </p>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>
-        {hasMuch && <div className="footer">
-          <div onClick={this.showModal}>Check Detail ></div>
-        </div>}
+        {hasMuch && (
+          <div className="footer">
+            <div onClick={this.showModal}>Check Detail ></div>
+          </div>
+        )}
         <Modal
           visible={this.state.visible}
           title=""
@@ -100,10 +151,14 @@ class DeliverSatus extends React.Component<IOrderProps, IDeliverSatus> {
             <div className="col-2">
               <div>
                 <img src={UPSICON} alt="" />
-                {shippoTransaction && (<div>
-                  <p className="name">{shippoTransaction.carrier}</p>
-                  <p className="orderNo">{shippoTransaction.trackingNumber}</p>
-                </div>)}
+                {shippoTransaction && (
+                  <div>
+                    <p className="name">{shippoTransaction.carrier}</p>
+                    <p className="orderNo">
+                      {shippoTransaction.trackingNumber}
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
             <div className="col-1">
@@ -118,22 +173,26 @@ class DeliverSatus extends React.Component<IOrderProps, IDeliverSatus> {
                           <div className="date-item" key={i + "_" + j}>
                             <div className="time">{v.time}</div>
                             <div className="desc">
-                              {v.listData[0] && <p className="info">{v.listData[0]}</p>}
-                              {v.listData[1] && <p className="pos">{v.listData[1]}</p>}
+                              {v.listData[0] && (
+                                <p className="info">{v.listData[0]}</p>
+                              )}
+                              {v.listData[1] && (
+                                <p className="pos">{v.listData[1]}</p>
+                              )}
                             </div>
                           </div>
                         ))}
                       </div>
                     </div>
                   </div>
-                )
+                );
               })}
             </div>
           </div>
         </Modal>
-      </div >
+      </div>
     );
   }
 }
 
-export default DeliverSatus;
+// export default DeliverSatus;
