@@ -6,7 +6,6 @@ class UserInfo extends React.Component<IUserInformation> {
   public render() {
     return (
       <div className="comp-order-userInfo">
-        <p className="title">Your Information</p>
         <div className="properties">
           <div>
             <div>Shipping Address</div>

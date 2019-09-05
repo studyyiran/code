@@ -1,3 +1,20 @@
+@import (reference) "~@/styles/index.less";
+
 .comp-collapse-panel-list {
-  
+  .collapse-clear-border();
+  .ant-collapse-icon-position-right > .ant-collapse-item > .ant-collapse-header {
+    border-bottom: 1px solid @color-border;
+    padding-left: 0;
+    padding-top: 17px;
+    padding-bottom: 22px;
+    .ant-collapse-arrow {
+      width: 32px;
+      height: 32px;
+      background: #F0F0F0;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
 }

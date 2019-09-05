@@ -79,10 +79,14 @@ export function TotalOrderInfoProvider(props: any) {
   // 监听变化
   useEffect(() => {
     if (state.totalOrderInfo) {
-      // 1 确认当前的。
-
-      //
-      dispatch({ type: reducerActionTypes.setCurrentSubOrderNo, value: "123" });
+      const { subOrders } = state.totalOrderInfo;
+      if (subOrders && subOrders.length) {
+        let no = "";
+        if (subOrders.length === 1) {
+          no = subOrders[0].subOrderNo;
+        }
+        dispatch({ type: reducerActionTypes.setCurrentSubOrderNo, value: no });
+      }
     }
   }, [state.totalOrderInfo]);
   const propsValue: ITotalOrderInfoContext = {
@@ -104,6 +108,7 @@ interface ITotalOrderInfo {
   groupOrderNo: string;
   orderCreateDate: string;
   userInfo: any;
+  subOrders: any[];
 }
 
 // 抽出去

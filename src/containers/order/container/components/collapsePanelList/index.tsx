@@ -2,6 +2,7 @@ import { Collapse } from "antd";
 import Svg from "@/components/svg";
 import React from "react";
 const { Panel } = Collapse;
+import "./index.less";
 
 export default function CollapsePanelList(props: {
   onChange: (s: string) => void;
@@ -15,7 +16,7 @@ export default function CollapsePanelList(props: {
         expandIconPosition="right"
         expandIcon={panelProps => {
           return (
-            <div className="circle-tag">
+            <div>
               {panelProps.isActive ? <Svg icon="jian" /> : <Svg icon="jia" />}
             </div>
           );
