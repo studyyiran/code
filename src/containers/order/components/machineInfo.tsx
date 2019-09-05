@@ -20,18 +20,18 @@ class MachineInfo extends React.Component<IMachineInfo & { productName: string }
                             </div>
                         )
                     }
-                    {
-                        this.props.condition !== "" && (
-                            <div>
-                                <div>Condition</div>
-                                <div>{this.props.condition}</div>
-                            </div>
-                        )
-                    }
+                    {/*{*/}
+                    {/*    this.props.condition !== "" && (*/}
+                    {/*        <div>*/}
+                    {/*            <div>Condition</div>*/}
+                    {/*            <div>{this.props.condition}</div>*/}
+                    {/*        </div>*/}
+                    {/*    )*/}
+                    {/*}*/}
                 </div>
                 <div className="line" />
                 <p className="total">
-                    <span>Guaranteed Price</span>
+                    <span>subTotal</span>
                     <span>{this.props.guaranteedPrice}</span>
                 </p>
             </div>
