@@ -29,55 +29,9 @@ class Store implements IOrderStore {
   // 订单email
   @observable public email = "";
   // 订单详情
-  @observable public totalOrderDetail = {} as any;
-  @observable public currentSubOrderNo = "" as string;
-  // @observable public orderDetail = {} as IOrderDetail;
+  @observable public orderDetail = {} as IOrderDetail;
   // 订单物流
   @observable public trackingInfo: ITrackingModel | null = null;
-
-  @computed get orderDetail() {
-    console.log(this.totalOrderDetail)
-    return this.totalOrderDetail as IOrderDetail
-  }
-  @computed get userInformation2() {
-    const shippingAddress: string[] = [];
-    const telAndEmail: string[] = [];
-    const paymentMethod: string[] = [];
-    if (this.orderDetail.orderNo) {
-      // 缺少物流目的地
-      const addressInfo = this.orderDetail.addressInfo;
-      shippingAddress.push(addressInfo.firstName + " " + addressInfo.lastName);
-      shippingAddress.push(addressInfo.addressLine);
-      if (
-        addressInfo.addressLineOptional &&
-        addressInfo.addressLineOptional !== ""
-      ) {
-        shippingAddress.push(addressInfo.addressLineOptional);
-      }
-      shippingAddress.push(addressInfo.city + "," + addressInfo.state);
-      shippingAddress.push(addressInfo.zipCode);
-      // 电话和email
-      telAndEmail.push(addressInfo.mobile);
-      telAndEmail.push(this.orderDetail.userEmail);
-      if (this.orderDetail.payment === "PAYPAL") {
-        paymentMethod.push("PayPal");
-        paymentMethod.push(this.orderDetail.paypalInfo.email);
-      }
-      if (this.orderDetail.payment === "CHECK") {
-        paymentMethod.push("eCheck");
-        paymentMethod.push(this.orderDetail.checkInfo.email);
-      }
-    }
-    return {
-      shippingAddress,
-      telAndEmail,
-      paymentMethod,
-      orderNumber: this.orderDetail.orderNo || "",
-      orderDate: moment
-        .tz(this.orderDetail.createdDt, "America/Chicago")
-        .format("MMM DD, YYYY")
-    };
-  }
 
   // 用户信息
   @computed get userInformation() {
@@ -151,7 +105,10 @@ class Store implements IOrderStore {
     const infos: IShippingAddress[] = [];
     if (this.trackingInfo) {
       this.trackingInfo.trackingHistory.map(t => {
-        const time = moment.tz(t.statusDate, "America/Chicago");
+        const time = moment.tz(
+          t.statusDate,
+          "America/Chicago"
+        );
         const now = new Date();
         let dateStr = time.format("MMM DD");
         if (time.year() !== now.getFullYear()) {
@@ -536,41 +493,38 @@ class Store implements IOrderStore {
   @action public setOrderDetail = (b: IOrderDetail) => {
     // 检测是否为空对象的兼容数据
     if (b.orderNo) {
-      debugger
-      this.totalOrderDetail = b;
+      this.orderDetail = b;
     }
   };
   @action public approveRevisedPrice = async () => {
-    return true
-    // try {
-    //   const res = await OrderApi.approveRevisedPrice<IOrderDetail>(
-    //     this.email,
-    //     this.orderNo
-    //   );
-    //   // 更新订单详情
-    //   this.orderDetail = res;
-    //   return true;
-    // } catch (e) {
-    //   console.error(e);
-    //   this.tellUserToReportError(e);
-    //   return false;
-    // }
+    try {
+      const res = await OrderApi.approveRevisedPrice<IOrderDetail>(
+        this.email,
+        this.orderNo
+      );
+      // 更新订单详情
+      this.orderDetail = res;
+      return true;
+    } catch (e) {
+      console.error(e);
+      this.tellUserToReportError(e);
+      return false;
+    }
   };
   @action public returnProduct = async () => {
-    return true
-    // try {
-    //   const res = await OrderApi.returnProduct<IOrderDetail>(
-    //     this.email,
-    //     this.orderNo
-    //   );
-    //   // 更新订单详情
-    //   this.orderDetail = res;
-    //   return true;
-    // } catch (e) {
-    //   console.error(e);
-    //   this.tellUserToReportError(e);
-    //   return false;
-    // }
+    try {
+      const res = await OrderApi.returnProduct<IOrderDetail>(
+        this.email,
+        this.orderNo
+      );
+      // 更新订单详情
+      this.orderDetail = res;
+      return true;
+    } catch (e) {
+      console.error(e);
+      this.tellUserToReportError(e);
+      return false;
+    }
   };
   @action public tellUserToReportError = (error: any) => {
     // noteUserModal({
@@ -595,7 +549,7 @@ class Store implements IOrderStore {
     //   }
     // });
     EmailModal();
-  };
+  }
   private packageDate(b: string | undefined) {
     if (b) {
       const date = moment.tz(b, "America/Chicago");
@@ -603,11 +557,7 @@ class Store implements IOrderStore {
     }
     return b;
   }
-  private findDate(
-    status: IProgressType,
-    afterStatus?: IProgressType,
-    isSale?: boolean
-  ) {
+  private findDate(status: IProgressType, afterStatus?: IProgressType, isSale?: boolean) {
     const orderRecords = this.orderDetail.orderRecords;
     let target: IOrderRecord | null;
     // 为sale 这个状态单独处理
