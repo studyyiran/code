@@ -29,10 +29,12 @@ export default function(props: any) {
     const { updatedDt } = item;
     return {
       date: packageDate(updatedDt),
-      listData: [{
-        time: 'time',
-        listData: ["info", "pos"]
-      }]
+      listData: [
+        {
+          time: "time",
+          listData: ["info", "pos"]
+        }
+      ]
     };
   });
   const deliverNoInfo = {

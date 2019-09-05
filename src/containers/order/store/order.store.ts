@@ -19,7 +19,7 @@ import OrderCompleteIcon from "@/images/order/orderComplete.png";
 import ReturnRequestIcon from "@/images/order/returnRequest.png";
 import * as moment from "moment-timezone";
 // import { noteUserModal } from '@/containers/aboutphone/pageValidate';
-import EmailModal from '@/components/emailModal/index';
+import EmailModal from "@/components/emailModal/index";
 // import config from '@/config';
 moment.locale("en");
 
@@ -105,10 +105,7 @@ class Store implements IOrderStore {
     const infos: IShippingAddress[] = [];
     if (this.trackingInfo) {
       this.trackingInfo.trackingHistory.map(t => {
-        const time = moment.tz(
-          t.statusDate,
-          "America/Chicago"
-        );
+        const time = moment.tz(t.statusDate, "America/Chicago");
         const now = new Date();
         let dateStr = time.format("MMM DD");
         if (time.year() !== now.getFullYear()) {
@@ -549,7 +546,7 @@ class Store implements IOrderStore {
     //   }
     // });
     EmailModal();
-  }
+  };
   private packageDate(b: string | undefined) {
     if (b) {
       const date = moment.tz(b, "America/Chicago");
@@ -557,7 +554,11 @@ class Store implements IOrderStore {
     }
     return b;
   }
-  private findDate(status: IProgressType, afterStatus?: IProgressType, isSale?: boolean) {
+  private findDate(
+    status: IProgressType,
+    afterStatus?: IProgressType,
+    isSale?: boolean
+  ) {
     const orderRecords = this.orderDetail.orderRecords;
     let target: IOrderRecord | null;
     // 为sale 这个状态单独处理

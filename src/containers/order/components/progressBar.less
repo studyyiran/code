@@ -1,219 +1,219 @@
 .comp-order-progressBar {
-    height: 192px;
-    background-color: #383D50;
-    display: flex;
-    padding: 0 63px;
-    align-items: center;
+  height: 192px;
+  background-color: #383d50;
+  display: flex;
+  padding: 0 63px;
+  align-items: center;
 
-    .dot {
-        flex: 1;
-        height: 100%;
-        text-align: center;
-        position: relative;
+  .dot {
+    flex: 1;
+    height: 100%;
+    text-align: center;
+    position: relative;
 
-        &::before {
-            content: " ";
-            display: block;
-            height: 1px;
-            width: calc(50% - 7px);
-            background-color: #BBBBBB;
-            top: 77px;
-            position: absolute;
-        }
+    &::before {
+      content: " ";
+      display: block;
+      height: 1px;
+      width: calc(50% - 7px);
+      background-color: #bbbbbb;
+      top: 77px;
+      position: absolute;
+    }
 
-        &:first-child {
-            &::before {
-                display: none;
-            }
-        }
+    &:first-child {
+      &::before {
+        display: none;
+      }
+    }
 
-        &:last-child {
-            &::after {
-                display: none;
-            }
-        }
+    &:last-child {
+      &::after {
+        display: none;
+      }
+    }
 
+    &::after {
+      content: " ";
+      display: block;
+      height: 1px;
+      width: calc(50% - 7px);
+      background-color: #bbbbbb;
+      left: calc(50% + 7px);
+      top: 77px;
+      position: absolute;
+    }
+
+    .dot-icon {
+      display: inline-block;
+      vertical-align: top;
+      width: 14px;
+      height: 14px;
+      background-color: #fff;
+      border-radius: 50%;
+      position: absolute;
+      top: 70px;
+      left: 50%;
+      transform: translate(-50%, 0);
+    }
+
+    &.dot-active {
+      .dot-icon {
+        background-color: #00cfff;
+      }
+
+      &::before,
+      &::after {
+        background-color: #00cfff;
+      }
+
+      &.dot-current {
         &::after {
-            content: " ";
-            display: block;
-            height: 1px;
-            width: calc(50% - 7px);
-            background-color: #BBBBBB;
-            left: calc(50% + 7px);
-            top: 77px;
-            position: absolute;
+          background-color: #bbbbbb !important;
         }
+      }
 
-        .dot-icon {
-            display: inline-block;
-            vertical-align: top;
-            width: 14px;
-            height: 14px;
-            background-color: #fff;
-            border-radius: 50%;
-            position: absolute;
-            top: 70px;
-            left: 50%;
-            transform: translate(-50%, 0);
-        }
-
-        &.dot-active {
-            .dot-icon {
-                background-color: #00CFFF;
-            }
-
-            &::before,
-            &::after {
-                background-color: #00CFFF;
-            }
-
-            &.dot-current {
-                &::after {
-                    background-color: #BBBBBB !important;
-                }
-            }
-
-            .title {
-                color: #fff;
-            }
-        }
-
-        .currentMark {
-            width: 0;
-            height: 0;
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-
-            &::after {
-                content: " ";
-                display: block;
-                width: 0;
-                height: 0;
-                border-width: 0 9px 9px;
-                border-style: solid;
-                border-color: transparent transparent #fff;
-                position: relative;
-                top: -9px;
-                left: -9px;
-            }
-        }
-
-        .child-mark {
-            position: absolute;
-            color: #bbb;
-            top: 112px;
-            width: 100%;
-
-            &.child-mark-current {
-                top: 53px;
-                z-index: 1;
-
-                .title {
-                    margin-top: 15px;
-                    font-weight: bold;
-                }
-            }
-        }
+      .title {
+        color: #fff;
+      }
     }
 
-    // children css propertities
-    .title {
-        font-size: 14px;
-        font-family: HelveticaNeue;
-        color: #bbb;
-        line-height: 14px;
+    .currentMark {
+      width: 0;
+      height: 0;
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+
+      &::after {
+        content: " ";
+        display: block;
+        width: 0;
+        height: 0;
+        border-width: 0 9px 9px;
+        border-style: solid;
+        border-color: transparent transparent #fff;
+        position: relative;
+        top: -9px;
+        left: -9px;
+      }
     }
 
-    .date {
-        font-size: 10px;
-        font-family: HelveticaNeue;
-        color: #EBEDF0;
-        line-height: 10px;
-        margin-top: 11px;
-    }
+    .child-mark {
+      position: absolute;
+      color: #bbb;
+      top: 112px;
+      width: 100%;
 
-    .icon {
-        width: 44px;
-        height: 44px;
-        display: inline-block;
-        vertical-align: top;
+      &.child-mark-current {
+        top: 53px;
+        z-index: 1;
 
-        &>img {
-            height: 100%;
+        .title {
+          margin-top: 15px;
+          font-weight: bold;
         }
+      }
     }
+  }
+
+  // children css propertities
+  .title {
+    font-size: 14px;
+    font-family: HelveticaNeue;
+    color: #bbb;
+    line-height: 14px;
+  }
+
+  .date {
+    font-size: 10px;
+    font-family: HelveticaNeue;
+    color: #ebedf0;
+    line-height: 10px;
+    margin-top: 11px;
+  }
+
+  .icon {
+    width: 44px;
+    height: 44px;
+    display: inline-block;
+    vertical-align: top;
+
+    & > img {
+      height: 100%;
+    }
+  }
 }
 
 .ismobile {
-    .comp-order-progressBar {
-        height: 1.3rem;
-        padding: 0;
-        display: block;
-        overflow: hidden;
+  .comp-order-progressBar {
+    height: 1.3rem;
+    padding: 0;
+    display: block;
+    overflow: hidden;
 
-        &.mobileHideLeft {
-            position: relative;
-            left: -1.83rem;
-            width: 5.58rem;
-        }
-
-        .dot {
-            display: inline-block;
-            min-width: 0.9rem;
-
-            .dot-icon {
-                top: .32rem;
-            }
-
-            &::after {
-                width: .39rem;
-                top: .38rem;
-            }
-
-            &::before {
-                width: .39rem;
-                top: .38rem;
-            }
-
-            .child-mark {
-                top: .62rem;
-
-                &.child-mark-current {
-                    top: .2rem;
-
-                    .title {
-                        margin-top: .06rem;
-                        font-weight: 500;
-                    }
-
-                    .icon {
-                        width: .36rem;
-                        height: .36rem;
-                    }
-                }
-
-                .title {
-                    padding: 0 0.135rem;
-                    font-size: .12rem;
-                    line-height: .16rem;
-                }
-
-                .date {
-                    margin-top: .04rem;
-                    font-size: .1rem;
-                    line-height: .1rem;
-                    color: rgba(235, 237, 240, 1);
-                }
-            }
-
-            .currentMark {
-                &::after {
-                    border-width: 0 .05rem .06rem;
-                    top: -.06rem;
-                    left: -.05rem;
-                }
-            }
-        }
+    &.mobileHideLeft {
+      position: relative;
+      left: -1.83rem;
+      width: 5.58rem;
     }
+
+    .dot {
+      display: inline-block;
+      min-width: 0.9rem;
+
+      .dot-icon {
+        top: 0.32rem;
+      }
+
+      &::after {
+        width: 0.39rem;
+        top: 0.38rem;
+      }
+
+      &::before {
+        width: 0.39rem;
+        top: 0.38rem;
+      }
+
+      .child-mark {
+        top: 0.62rem;
+
+        &.child-mark-current {
+          top: 0.2rem;
+
+          .title {
+            margin-top: 0.06rem;
+            font-weight: 500;
+          }
+
+          .icon {
+            width: 0.36rem;
+            height: 0.36rem;
+          }
+        }
+
+        .title {
+          padding: 0 0.135rem;
+          font-size: 0.12rem;
+          line-height: 0.16rem;
+        }
+
+        .date {
+          margin-top: 0.04rem;
+          font-size: 0.1rem;
+          line-height: 0.1rem;
+          color: rgba(235, 237, 240, 1);
+        }
+      }
+
+      .currentMark {
+        &::after {
+          border-width: 0 0.05rem 0.06rem;
+          top: -0.06rem;
+          left: -0.05rem;
+        }
+      }
+    }
+  }
 }

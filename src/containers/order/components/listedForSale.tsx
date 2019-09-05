@@ -1,8 +1,8 @@
-import * as React from 'react';
-import { Icon } from 'antd';
-import { IOrderProps } from '@/containers/order/interface/order.inerface';
-import Tag from '@/components/tag';
-import './listedForSale.less';
+import * as React from "react";
+import { Icon } from "antd";
+import { IOrderProps } from "@/containers/order/interface/order.inerface";
+import Tag from "@/components/tag";
+import "./listedForSale.less";
 
 class ListedForSale extends React.Component<IOrderProps> {
   public render() {
@@ -19,20 +19,17 @@ class ListedForSale extends React.Component<IOrderProps> {
           <div>
             <div>Final Sale Price</div>
             <div>Pending</div>
-            <div>Price Guarantee
-                            {
-                paymentInfo.priceGuaranteeStatus && (
-                  <span className="paid">
-                    Paid
-                      <Icon className="paid-check" type="check" />
-                  </span>
-                )
-              }
-              {
-                !paymentInfo.priceGuaranteeStatus && (
-                  <span className="not-paid">To Be Paid</span>
-                )
-              }
+            <div>
+              Price Guarantee
+              {paymentInfo.priceGuaranteeStatus && (
+                <span className="paid">
+                  Paid
+                  <Icon className="paid-check" type="check" />
+                </span>
+              )}
+              {!paymentInfo.priceGuaranteeStatus && (
+                <span className="not-paid">To Be Paid</span>
+              )}
             </div>
             <div>${paymentInfo.priceGuarantee}</div>
           </div>
@@ -43,25 +40,31 @@ class ListedForSale extends React.Component<IOrderProps> {
             <Tag className="inspect-title-tag" {...tag} />
           </p>
           {/* match */}
-          {tag.type === "success" && (<div>
-            <div>Price Guarantee</div>
-            <div>${inspectionInfo.amount}</div>
-          </div>)}
-          {/* wrong condition */}
-          {tag.type === "fail" && (<div>
-            <div>Revised Price Guarantee</div>
-            <div style={{ color: "#FF5858" }}>${inspectionInfo.revisedPrice}</div>
-            <div>Difference</div>
-            <div style={{ height: "auto" }}>
-              {inspectionInfo.productName !== "" && (
-                <>
-                  {inspectionInfo.productName}
-                  <br />
-                </>
-              )}
-              {inspectionInfo.differentCondition.join(",")}
+          {tag.type === "success" && (
+            <div>
+              <div>Price Guarantee</div>
+              <div>${inspectionInfo.amount}</div>
             </div>
-          </div>)}
+          )}
+          {/* wrong condition */}
+          {tag.type === "fail" && (
+            <div>
+              <div>Revised Price Guarantee</div>
+              <div style={{ color: "#FF5858" }}>
+                ${inspectionInfo.revisedPrice}
+              </div>
+              <div>Difference</div>
+              <div style={{ height: "auto" }}>
+                {inspectionInfo.productName !== "" && (
+                  <>
+                    {inspectionInfo.productName}
+                    <br />
+                  </>
+                )}
+                {inspectionInfo.differentCondition.join(",")}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     );

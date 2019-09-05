@@ -1,266 +1,266 @@
 .comp-order-deliverSatus {
-    padding-bottom: 27px;
-    margin: 0 33px;
-    margin-top: 37px;
-    border-radius: 4px;
-    border: 1px solid rgba(245, 245, 245, 1);
+  padding-bottom: 27px;
+  margin: 0 33px;
+  margin-top: 37px;
+  border-radius: 4px;
+  border: 1px solid rgba(245, 245, 245, 1);
 
-    .title {
-        height: 44px;
-        line-height: 44px;
-        background: rgba(248, 249, 251, 1);
-        border-radius: 2px;
-        padding: 0 20px;
-    }
+  .title {
+    height: 44px;
+    line-height: 44px;
+    background: rgba(248, 249, 251, 1);
+    border-radius: 2px;
+    padding: 0 20px;
+  }
 
-    .deliverSatus-body {
-        box-sizing: border-box;
-        padding: 27px 18px;
+  .deliverSatus-body {
+    box-sizing: border-box;
+    padding: 27px 18px;
+    display: flex;
+
+    .col-1 {
+      flex: 1;
+
+      .list-item {
         display: flex;
 
-        .col-1 {
+        .date {
+          font-size: 14px;
+          font-family: HelveticaNeue-Medium;
+          font-weight: 500;
+          color: rgba(51, 51, 51, 1);
+          line-height: 17px;
+        }
+
+        .time {
+          font-size: 12px;
+          font-family: HelveticaNeue;
+          color: rgba(128, 128, 128, 1);
+          line-height: 14px;
+          padding-top: 3px;
+        }
+
+        .desc {
+          flex: 1;
+          margin-left: 38px;
+
+          .info {
+            font-size: 14px;
+            font-family: HelveticaNeue;
+            color: rgba(17, 17, 17, 1);
+            line-height: 16px;
+          }
+
+          .pos {
+            margin-top: 12px;
+            font-size: 12px;
+            font-family: HelveticaNeue;
+            color: rgba(128, 128, 128, 1);
+            line-height: 14px;
+          }
+        }
+
+        .date-list {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          margin-left: 17px;
+
+          .date-item {
             flex: 1;
-
-            .list-item {
-                display: flex;
-
-                .date {
-                    font-size: 14px;
-                    font-family: HelveticaNeue-Medium;
-                    font-weight: 500;
-                    color: rgba(51, 51, 51, 1);
-                    line-height: 17px;
-                }
-
-                .time {
-                    font-size: 12px;
-                    font-family: HelveticaNeue;
-                    color: rgba(128, 128, 128, 1);
-                    line-height: 14px;
-                    padding-top: 3px;
-                }
-
-                .desc {
-                    flex: 1;
-                    margin-left: 38px;
-
-                    .info {
-                        font-size: 14px;
-                        font-family: HelveticaNeue;
-                        color: rgba(17, 17, 17, 1);
-                        line-height: 16px;
-                    }
-
-                    .pos {
-                        margin-top: 12px;
-                        font-size: 12px;
-                        font-family: HelveticaNeue;
-                        color: rgba(128, 128, 128, 1);
-                        line-height: 14px;
-                    }
-                }
-
-                .date-list {
-                    flex: 1;
-                    display: flex;
-                    flex-direction: column;
-                    margin-left: 17px;
-
-                    .date-item {
-                        flex: 1;
-                        display: flex;
-                        margin-top: 18px;
-
-                        &:first-child {
-                            margin-top: 0;
-                        }
-                    }
-                }
-            }
-
-            .line {
-                margin: 16px 0;
-                height: 1px;
-                background-color: rgba(234, 234, 234, 1);
-            }
-        }
-
-        .col-2 {
-            width: 383px;
-            box-sizing: border-box;
-            padding-left: 109px;
             display: flex;
-            align-items: center;
+            margin-top: 18px;
 
-            &>div {
-                img {
-                    width: 64px;
-                    height: auto;
-                }
-
-                &>div {
-                    display: inline-block;
-                    height: 64px;
-                    padding-left: 24px;
-
-                    .name {
-                        font-size: 20px;
-                        font-family: HelveticaNeue-Medium;
-                        font-weight: 500;
-                        color: rgba(51, 51, 51, 1);
-                        line-height: 25px;
-                    }
-
-                    .orderNo {
-                        margin-top: 10px;
-                        font-size: 16px;
-                        font-family: HelveticaNeue;
-                        color: rgba(128, 128, 128, 1);
-                        line-height: 18px;
-                    }
-                }
+            &:first-child {
+              margin-top: 0;
             }
+          }
         }
+      }
+
+      .line {
+        margin: 16px 0;
+        height: 1px;
+        background-color: rgba(234, 234, 234, 1);
+      }
     }
 
-    .footer {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 12px;
-        color: rgba(0, 186, 229, 1);
-        font-family: HelveticaNeue;
+    .col-2 {
+      width: 383px;
+      box-sizing: border-box;
+      padding-left: 109px;
+      display: flex;
+      align-items: center;
 
-        &>div {
-            cursor: pointer;
+      & > div {
+        img {
+          width: 64px;
+          height: auto;
         }
+
+        & > div {
+          display: inline-block;
+          height: 64px;
+          padding-left: 24px;
+
+          .name {
+            font-size: 20px;
+            font-family: HelveticaNeue-Medium;
+            font-weight: 500;
+            color: rgba(51, 51, 51, 1);
+            line-height: 25px;
+          }
+
+          .orderNo {
+            margin-top: 10px;
+            font-size: 16px;
+            font-family: HelveticaNeue;
+            color: rgba(128, 128, 128, 1);
+            line-height: 18px;
+          }
+        }
+      }
     }
+  }
+
+  .footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: rgba(0, 186, 229, 1);
+    font-family: HelveticaNeue;
+
+    & > div {
+      cursor: pointer;
+    }
+  }
 }
 
 .ismobile {
-    .comp-order-deliverSatus {
-        padding-bottom: 0;
-        margin: 0 .3rem;
-        margin-top: .2rem;
-        border-radius: .02rem;
-        border: 1px solid rgba(245, 245, 245, 1);
+  .comp-order-deliverSatus {
+    padding-bottom: 0;
+    margin: 0 0.3rem;
+    margin-top: 0.2rem;
+    border-radius: 0.02rem;
+    border: 1px solid rgba(245, 245, 245, 1);
 
-        .title {
-            height: .44rem;
-            line-height: .44rem;
-            background: rgba(248, 249, 251, 1);
-            border-radius: .02rem;
-            padding: 0 .15rem;
-        }
-
-        .deliverSatus-body {
-            box-sizing: border-box;
-            padding: .2rem;
-            padding-bottom: .3rem;
-            display: flex;
-            flex-direction: column-reverse;
-
-            .col-1 {
-                flex: 1;
-
-                .list-item {
-                    margin-top: .2rem;
-                    display: flex;
-                    flex-direction: column;
-
-                    .date {
-                        font-size: .14rem;
-                        line-height: .14rem;
-                    }
-
-                    .time {
-                        font-size: .1rem;
-                        line-height: .12rem;
-                        padding-top: 0;
-                    }
-
-                    .desc {
-                        flex: 1;
-                        margin-left: .15rem;
-
-                        .info {
-                            font-size: .12rem;
-                            font-family: HelveticaNeue;
-                            color: rgba(51, 51, 51, 1);
-                            line-height: .14rem;
-                        }
-
-                        .pos {
-                            margin-top: .1rem;
-                            font-size: .1rem;
-                            line-height: .1rem;
-                        }
-                    }
-
-                    .date-list {
-                        flex: 1;
-                        display: flex;
-                        flex-direction: column;
-                        margin-left: 0;
-                        margin-top: .15rem;
-
-                        .date-item {
-                            flex: 1;
-                            display: flex;
-                            margin-top: .18rem;
-
-                            &:first-child {
-                                margin-top: 0;
-                            }
-                        }
-                    }
-                }
-
-                .line {
-                    margin-top: .16rem;
-                    margin-bottom: .2rem;
-                    height: 1px;
-                    background-color: rgba(234, 234, 234, 1);
-                }
-            }
-
-            .col-2 {
-                width: auto;
-                box-sizing: border-box;
-                padding-left: 0;
-                display: flex;
-                align-items: center;
-
-                &>div {
-                    img {
-                        width: .45rem;
-                        height: auto;
-                    }
-
-                    &>div {
-                        display: inline-block;
-                        height: .45rem;
-                        padding-left: .13rem;
-
-                        .name {
-                            font-size: .16rem;
-                            line-height: .18rem;
-                        }
-
-                        .orderNo {
-                            margin-top: .1rem;
-                            font-size: .12rem;
-                            line-height: .14rem;
-                        }
-                    }
-                }
-            }
-        }
-
-        .footer {
-            font-size: .12rem;
-            line-height: .12rem;
-            padding-bottom: .25rem;
-        }
+    .title {
+      height: 0.44rem;
+      line-height: 0.44rem;
+      background: rgba(248, 249, 251, 1);
+      border-radius: 0.02rem;
+      padding: 0 0.15rem;
     }
+
+    .deliverSatus-body {
+      box-sizing: border-box;
+      padding: 0.2rem;
+      padding-bottom: 0.3rem;
+      display: flex;
+      flex-direction: column-reverse;
+
+      .col-1 {
+        flex: 1;
+
+        .list-item {
+          margin-top: 0.2rem;
+          display: flex;
+          flex-direction: column;
+
+          .date {
+            font-size: 0.14rem;
+            line-height: 0.14rem;
+          }
+
+          .time {
+            font-size: 0.1rem;
+            line-height: 0.12rem;
+            padding-top: 0;
+          }
+
+          .desc {
+            flex: 1;
+            margin-left: 0.15rem;
+
+            .info {
+              font-size: 0.12rem;
+              font-family: HelveticaNeue;
+              color: rgba(51, 51, 51, 1);
+              line-height: 0.14rem;
+            }
+
+            .pos {
+              margin-top: 0.1rem;
+              font-size: 0.1rem;
+              line-height: 0.1rem;
+            }
+          }
+
+          .date-list {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            margin-left: 0;
+            margin-top: 0.15rem;
+
+            .date-item {
+              flex: 1;
+              display: flex;
+              margin-top: 0.18rem;
+
+              &:first-child {
+                margin-top: 0;
+              }
+            }
+          }
+        }
+
+        .line {
+          margin-top: 0.16rem;
+          margin-bottom: 0.2rem;
+          height: 1px;
+          background-color: rgba(234, 234, 234, 1);
+        }
+      }
+
+      .col-2 {
+        width: auto;
+        box-sizing: border-box;
+        padding-left: 0;
+        display: flex;
+        align-items: center;
+
+        & > div {
+          img {
+            width: 0.45rem;
+            height: auto;
+          }
+
+          & > div {
+            display: inline-block;
+            height: 0.45rem;
+            padding-left: 0.13rem;
+
+            .name {
+              font-size: 0.16rem;
+              line-height: 0.18rem;
+            }
+
+            .orderNo {
+              margin-top: 0.1rem;
+              font-size: 0.12rem;
+              line-height: 0.14rem;
+            }
+          }
+        }
+      }
+    }
+
+    .footer {
+      font-size: 0.12rem;
+      line-height: 0.12rem;
+      padding-bottom: 0.25rem;
+    }
+  }
 }
