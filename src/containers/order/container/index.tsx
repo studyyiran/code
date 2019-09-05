@@ -10,6 +10,7 @@ import DeliverSatus from "@/containers/order/components/deliverSatus";
 import { HeaderTitle } from "@/components/headerTitle";
 import "./index.less";
 import CollapsePanelList from "./components/collapsePanelList";
+import { getReactNodeConfig } from "../util/index";
 
 @inject("order")
 @observer
@@ -42,10 +43,7 @@ function OrderList(props: { order: IOrderStore }) {
   // 获取
   const { totalOrderInfo, currentSubOrderNo } = totalOrderInfoContextValue;
 
-  // effect请求
-  useEffect(() => {
-    getAjax();
-  }, []);
+
   // 赋值
   // useEffect(() => {
   //   if (totalOrderInfo) {
@@ -71,8 +69,7 @@ function OrderList(props: { order: IOrderStore }) {
     //   selectModelContextDispatch({ type: "changeModelCache", value: "reset" });
     // }
   }
-
-  let list : any[] = [
+  let list: any[] = [
     {
       header: "Your Information",
       key: "Your Information",
@@ -89,8 +86,10 @@ function OrderList(props: { order: IOrderStore }) {
       const {
         subOrderNo,
         productDisplayName,
-        subOrderStatusDisplayName
+        subOrderStatusDisplayName,
+        subOrderStatus
       } = order;
+      const reactNodeConfig = getReactNodeConfig(subOrderStatus);
       return {
         header: `${productDisplayName}-${subOrderStatusDisplayName}`,
         key: subOrderNo,
@@ -103,7 +102,7 @@ function OrderList(props: { order: IOrderStore }) {
               carrier={order.inquiryInfo.submitted.productPns[1].name}
               {...order}
             />
-            <DeliverSatus {...order} />
+            {!reactNodeConfig.deliver && <DeliverSatus {...order} />}
             {/*<ListedForSale {...currentModel} />*/}
           </div>
         )
