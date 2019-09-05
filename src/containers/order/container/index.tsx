@@ -1,52 +1,15 @@
 import React, { useContext, useEffect } from "react";
-import { Collapse } from "antd";
-const { Panel } = Collapse;
+
 import { ITotalOrderInfoContext, TotalOrderInfoContext } from "./context";
-import Svg from "@/components/svg";
-import OrderSummary from "@/containers/order/components/orderSummary";
 import { IOrderStore } from "../interface/order.inerface";
 import { inject, observer } from "mobx-react";
 import UserInfo from "@/containers/order/components/userInfo";
-import ArrowToTop from "@/images/order/arrowToTop.png";
 import * as moment from "moment-timezone";
 import MachineInfo from "@/containers/order/components/machineInfo";
 import DeliverSatus from "@/containers/order/components/deliverSatus";
-import ListedForSale from "@/containers/order/components/listedForSale";
 import { HeaderTitle } from "@/components/headerTitle";
-
-function CollapseWithPanelList(props: {
-  onChange: (s: string) => void;
-  defaultActiveKey?: string;
-  list: any[];
-}) {
-  const { onChange, defaultActiveKey, list } = props;
-  return (
-    <div className="comp-collapse-panel-list">
-      <Collapse
-        expandIconPosition="right"
-        expandIcon={panelProps => {
-          return (
-            <div className="circle-tag">
-              {panelProps.isActive ? <Svg icon="jian" /> : <Svg icon="jia" />}
-            </div>
-          );
-        }}
-        accordion={true}
-        onChange={onChange}
-        defaultActiveKey={defaultActiveKey}
-      >
-        {list.map((item: any) => {
-          const { header, children, key } = item;
-          return (
-            <Panel header={header} key={key}>
-              {children}
-            </Panel>
-          );
-        })}
-      </Collapse>
-    </div>
-  );
-}
+import "./index.less";
+import CollapsePanelList from "./components/collapsePanelList";
 
 @inject("order")
 @observer
@@ -109,7 +72,7 @@ function OrderList(props: { order: IOrderStore }) {
     // }
   }
 
-  let list = [
+  let list : any[] = [
     {
       header: "Your Information",
       key: "Your Information",
@@ -147,17 +110,27 @@ function OrderList(props: { order: IOrderStore }) {
       };
     })
   );
+  if (list && list.length) {
+    list = list.map(item => {
+      return {
+        ...item,
+        header: <span className="panel-header-title">{item.header}</span>
+      };
+    });
+  }
   return (
-    <div>
+    <div className="order-information-page">
       <HeaderTitle title={"Check My Order"} />
       {totalOrderInfo && totalOrderInfo.groupOrderNo ? (
-        <p>Order Number - {totalOrderInfo.groupOrderNo}</p>
+        <h2>Order Number - {totalOrderInfo.groupOrderNo}</h2>
       ) : null}
-      <CollapseWithPanelList
-        onChange={selectHandler}
-        list={list}
-        defaultActiveKey={""}
-      />
+      <div className="order-container">
+        <CollapsePanelList
+          onChange={selectHandler}
+          list={list}
+          defaultActiveKey={""}
+        />
+      </div>
     </div>
   );
   // 渲染
