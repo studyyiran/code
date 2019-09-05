@@ -12,6 +12,7 @@ import * as moment from "moment-timezone";
 import MachineInfo from "@/containers/order/components/machineInfo";
 import DeliverSatus from "@/containers/order/components/deliverSatus";
 import ListedForSale from "@/containers/order/components/listedForSale";
+import { HeaderTitle } from "@/components/headerTitle";
 
 function CollapseWithPanelList(props: {
   onChange: (s: string) => void;
@@ -108,7 +109,7 @@ function OrderList(props: { order: IOrderStore }) {
     // }
   }
 
-  const list = [
+  let list = [
     {
       header: "Your Information",
       key: "Your Information",
@@ -120,30 +121,44 @@ function OrderList(props: { order: IOrderStore }) {
         )
     }
   ];
-  if (currentModel) {
-    list.push({
-      header: "Your Information2",
-      key: "Your Information2",
-      children: (
-        <div>
-          <MachineInfo
-            productName={currentModel.productDisplayName}
-            {...currentModel}
-            guaranteedPrice={currentModel.subTotal}
-            carrier={currentModel.inquiryInfo.submitted.productPns[1].name}
-          />
-          <DeliverSatus {...currentModel} />
-          <ListedForSale {...currentModel} />
-        </div>
-      )
-    });
-  }
+  list = list.concat(
+    (totalOrderInfo.subOrders || []).map(order => {
+      const {
+        subOrderNo,
+        productDisplayName,
+        subOrderStatusDisplayName
+      } = order;
+      return {
+        header: `${productDisplayName}-${subOrderStatusDisplayName}`,
+        key: subOrderNo,
+        children: (
+          <div>
+            <MachineInfo
+              key={subOrderNo}
+              productName={order.productDisplayName}
+              guaranteedPrice={order.subTotal}
+              carrier={order.inquiryInfo.submitted.productPns[1].name}
+              {...order}
+            />
+            <DeliverSatus {...order} />
+            {/*<ListedForSale {...currentModel} />*/}
+          </div>
+        )
+      };
+    })
+  );
   return (
-    <CollapseWithPanelList
-      onChange={selectHandler}
-      list={list}
-      defaultActiveKey={""}
-    />
+    <div>
+      <HeaderTitle title={"Check My Order"} />
+      {totalOrderInfo && totalOrderInfo.groupOrderNo ? (
+        <p>Order Number - {totalOrderInfo.groupOrderNo}</p>
+      ) : null}
+      <CollapseWithPanelList
+        onChange={selectHandler}
+        list={list}
+        defaultActiveKey={""}
+      />
+    </div>
   );
   // 渲染
 }

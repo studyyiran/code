@@ -36,10 +36,10 @@ class UserInfo extends React.Component<IUserInformation> {
             </div>
           </div>
           <div className="specials">
-            <div>
-              <div>Order Number</div>
-              <div>{this.props.orderNumber}</div>
-            </div>
+            {/*<div>*/}
+            {/*  <div>Order Number</div>*/}
+            {/*  <div>{this.props.orderNumber}</div>*/}
+            {/*</div>*/}
             <div>
               <div>Order Date</div>
               <div>{this.props.orderDate}</div>
