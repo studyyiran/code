@@ -10,18 +10,28 @@ import { checkforordermock } from "./mock";
 
 export const TotalOrderInfoContext = createContext({});
 
-const actionTypes = {
-  setTotalOrderInfo: "setTotalOrderInfo"
+// action types
+const reducerActionTypes = {
+  setTotalOrderInfo: "setTotalOrderInfo",
+  setCurrentSubOrderNo: "setCurrentSubOrderNo"
 };
 
+// reducer
 function reducer(state: IContextState, action: IReducerAction) {
   const { type, value } = action;
   let newState = { ...state };
   switch (type) {
-    case actionTypes.setTotalOrderInfo: {
+    case reducerActionTypes.setTotalOrderInfo: {
       newState = {
         ...newState,
         totalOrderInfo: value
+      };
+      break;
+    }
+    case reducerActionTypes.setCurrentSubOrderNo: {
+      newState = {
+        ...newState,
+        currentSubOrderNo: value
       };
       break;
     }
@@ -31,10 +41,12 @@ function reducer(state: IContextState, action: IReducerAction) {
   return newState;
 }
 
+// @actions
 interface IContextActions {
   getAjax: () => void;
 }
 
+// useCreateActions
 function useGetAction(
   state: IContextState,
   dispatch: (action: IReducerAction) => void
@@ -43,41 +55,55 @@ function useGetAction(
     getAjax: promisify(async function(a: any, b: any) {
       // const res = await getOrderDetail(a, b);
       const res = checkforordermock;
-      dispatch({ type: actionTypes.setTotalOrderInfo, value: res });
+      dispatch({ type: reducerActionTypes.setTotalOrderInfo, value: res });
     })
   };
   // actions.getAjax = useCallback(actions.getAjax, []);
   return actions;
 }
 
-interface ITotalOrderInfo {
-  groupOrderNo: string;
-  orderCreateDate: string;
-  userInfo: any;
-}
-
+// state
 interface IContextState {
   totalOrderInfo: ITotalOrderInfo;
+  currentSubOrderNo: string;
 }
 
-export interface ITotalOrderInfoContext extends IContextActions {
-  totalOrderInfoContextValue: IContextState;
-  totalOrderInfoContextDispatch: (action: IReducerAction) => void;
-}
-
+// @provider
 export function TotalOrderInfoProvider(props: any) {
-  const initState: any = {
-    totalOrderInfo: {}
+  const initState: IContextState = {
+    totalOrderInfo: {} as ITotalOrderInfo,
+    currentSubOrderNo: ""
   };
   const [state, dispatch] = useReducer(reducer, initState);
   const action: IContextActions = useGetAction(state, dispatch);
+  // 监听变化
+  useEffect(() => {
+    if (state.totalOrderInfo) {
+      // 1 确认当前的。
 
+      //
+      dispatch({ type: reducerActionTypes.setCurrentSubOrderNo, value: "123" });
+    }
+  }, [state.totalOrderInfo]);
   const propsValue: ITotalOrderInfoContext = {
     ...action,
     totalOrderInfoContextValue: state,
     totalOrderInfoContextDispatch: dispatch
   };
   return <TotalOrderInfoContext.Provider value={propsValue} {...props} />;
+}
+
+// interface
+export interface ITotalOrderInfoContext extends IContextActions {
+  totalOrderInfoContextValue: IContextState;
+  totalOrderInfoContextDispatch: (action: IReducerAction) => void;
+}
+
+// order
+interface ITotalOrderInfo {
+  groupOrderNo: string;
+  orderCreateDate: string;
+  userInfo: any;
 }
 
 // 抽出去
