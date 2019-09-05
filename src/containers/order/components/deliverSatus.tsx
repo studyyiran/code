@@ -7,42 +7,29 @@ import {
 import UPSICON from "@/images/order/upsIcon.png";
 import "./deliverSatus.less";
 import { Modal } from "antd";
-import * as moment from "moment-timezone";
-
-function packageDate(b: string | undefined) {
-  if (b) {
-    const date = moment.tz(b, "America/Chicago");
-    return date.format("MMM DD");
-  }
-  return b;
-}
+import { getDeliverInfos } from "../util";
 
 export default function(props: any) {
+  // function wraper(props: any) {
   const { sendInfo, returnInfo } = props.shippingInfo;
-  let currentRender = [];
+  let currentInfo = [];
   if (returnInfo && returnInfo.length) {
-    currentRender = returnInfo;
+    currentInfo = returnInfo;
   } else if (sendInfo && sendInfo.length) {
-    currentRender = sendInfo;
+    currentInfo = sendInfo;
   }
-  currentRender = currentRender.map((item: any) => {
-    const { updatedDt } = item;
-    return {
-      date: packageDate(updatedDt),
-      listData: [
-        {
-          time: "time",
-          listData: ["info", "pos"]
-        }
-      ]
-    };
-  });
-  const deliverNoInfo = {
-    trackingNumber: "trackingNumber",
-    carrier: "carrier"
-  };
+  currentInfo = getDeliverInfos(
+    currentInfo.map((item: any) => {
+      return {
+        ...item,
+        statusDate: item.updateDt,
+        location: "locationlocation",
+        statusDetails: "statusDetailsstatusDetails"
+      };
+    })
+  );
   const fakeProps: any = {
-    order: { deliverInfos: currentRender, deliverNoInfo: deliverNoInfo }
+    order: { deliverInfos: currentInfo, deliverNoInfo: getDeliverNoInfo(currentInfo) }
   };
   return <DeliverSatus {...fakeProps} />;
 }
@@ -198,3 +185,11 @@ class DeliverSatus extends React.Component<IOrderProps, IDeliverSatus> {
 }
 
 // export default DeliverSatus;
+function getDeliverNoInfo(info: any[]) {
+  const deliverNoInfo: any = {};
+  if (info && info.length) {
+    deliverNoInfo.trackingNumber = info[0].trackingNumber;
+    deliverNoInfo.carrier = info[0].carrier;
+  }
+  return deliverNoInfo;
+}
