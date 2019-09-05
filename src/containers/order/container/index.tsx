@@ -11,6 +11,7 @@ import ArrowToTop from "@/images/order/arrowToTop.png";
 import * as moment from "moment-timezone";
 import MachineInfo from "@/containers/order/components/machineInfo";
 import DeliverSatus from "@/containers/order/components/deliverSatus";
+import ListedForSale from "@/containers/order/components/listedForSale";
 
 function CollapseWithPanelList(props: {
   onChange: (s: string) => void;
@@ -132,6 +133,7 @@ function OrderList(props: { order: IOrderStore }) {
             carrier={currentModel.inquiryInfo.submitted.productPns[1].name}
           />
           <DeliverSatus {...currentModel} />
+          <ListedForSale {...currentModel} />
         </div>
       )
     });

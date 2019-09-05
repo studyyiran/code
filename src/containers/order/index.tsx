@@ -109,7 +109,7 @@ class Order extends React.Component<IOrderProps & RouteComponentProps> {
             {ReactNodeConfig.productDispatch && (
               <DeliverSatus {...this.props} />
             )}
-            {ReactNodeConfig.listedForSale && <ListedForSale {...this.props} />}
+            {/*{ReactNodeConfig.listedForSale && <ListedForSale {...this.props} />}*/}
             {ReactNodeConfig.orderComplete && <OrderComplete {...this.props} />}
             {alreadyLoadData && (
               <OrderSummary
