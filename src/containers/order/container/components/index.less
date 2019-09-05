@@ -1,0 +1,69 @@
+@import (reference) "~@/styles/index.less";
+
+.page-difference {
+  > div.content-container {
+    display: flex;
+    justify-content: space-between;
+    > section.revised-part {
+      flex: 1;
+      margin-top: 24px;
+      max-width: 448px;
+      .revised-line {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 21px;
+        border-bottom: 1px solid @color-border;
+        margin-bottom: 30px;
+        > h3 {
+          .font(26px, 500, #000000);
+        }
+        > div {
+          .font(26px, 500, #222222);
+        }
+      }
+      .accept-line {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 19px;
+        > button.common-button {
+          max-width: 200px;
+          height: 40px;
+        }
+        .tips {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          > span:first-child {
+            .font(16px, 500, #1ab4e7);
+          }
+        }
+      }
+    }
+    > section.video-part {
+      max-width: 448px;
+      > p {
+        font-size: 18px;
+      }
+      > video {
+        width: 100%;
+      }
+      > .tips {
+        .font(16px, 500, #1ab4e7);
+        display: block;
+        text-align: center;
+      }
+    }
+  }
+}
+
+.comp-inspection-result {
+  display: flex;
+  align-items: center;
+  padding-bottom: 17px;
+  border-bottom: 1px solid @color-border;
+  > h3 {
+    .font(18px, 600, #222222);
+    margin-right: 100px;
+  }
+}
