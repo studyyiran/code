@@ -131,7 +131,6 @@ function useGetAction(
               type: totalOrderInfoReducerActionTypes.setSubOrderInfo,
               value: mapFunc
             });
-            console.log(res);
           }
         } else {
           const mapFunc = (item: any) => {

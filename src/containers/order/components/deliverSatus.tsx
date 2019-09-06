@@ -7,30 +7,10 @@ import {
 import UPSICON from "@/images/order/upsIcon.png";
 import "./deliverSatus.less";
 import { Modal } from "antd";
-import { getDeliverInfos, getDeliverNoInfo } from "../util";
 
 export default function(props: any) {
-  // function wraper(props: any) {
-  // 无用的mock
-  // currentInfo = getDeliverInfos(
-  //   currentInfo.map((item: any) => {
-  //     return {
-  //       ...item,
-  //       statusDate: item.updateDt,
-  //       location: "locationlocation",
-  //       statusDetails: "statusDetailsstatusDetails"
-  //     };
-  //   })
-  // );
-  const { transInfo } = props;
-  if (transInfo && transInfo.deliverNoInfo && transInfo.deliverInfos) {
-    const orderProps: any = {
-      order: { deliverInfos: transInfo.deliverInfos, deliverNoInfo: transInfo.deliverNoInfo }
-    };
-    return <DeliverSatus {...orderProps} />;
-  } else {
-    return null;
-  }
+  // 纯函数外面简单的数据封装
+  return <DeliverSatus order={props.transInfo || {}} />;
 }
 
 class DeliverSatus extends React.Component<IOrderProps, IDeliverSatus> {
@@ -55,6 +35,9 @@ class DeliverSatus extends React.Component<IOrderProps, IDeliverSatus> {
     // 条数大于1，只显示第一条
     const deliverInfos: IShippingAddress[] = [];
     const deliverInfosProps = this.props.order.deliverInfos;
+    if (!deliverInfosProps) {
+      return null
+    }
     if (deliverInfosProps.length > 2) {
       deliverInfos.push(deliverInfosProps[0]);
       deliverInfos.push(deliverInfosProps[1]);
