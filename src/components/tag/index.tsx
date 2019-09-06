@@ -3,15 +3,8 @@ import "./index.less";
 
 export default function Tag(props: any) {
   return (
-    <span
-      className={
-        "comp-tag " +
-        (props.isDifferent ? "fail" : "success") +
-        " " +
-        props.className
-      }
-    >
-      {props.differentReason}
+    <span className={"comp-tag " + props.status + " " + props.className}>
+      {props.children}
     </span>
   );
 }

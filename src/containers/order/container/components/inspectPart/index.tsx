@@ -4,13 +4,12 @@ import Tag from "@/components/tag";
 import CheckInspectDiff from "@/containers/order/container/components/checkInspectDiff";
 const priceUnit = "$";
 export default function InspectPart(props: any) {
-  console.log(props);
-  const { isDifferent, price } = props;
+  const { isDifferent, price, differentReason } = props;
   return (
     <div className="comp-inspect-part">
       <section className="line-with-title">
         <h3>Inspection Result</h3>
-        <Tag {...props} />
+        <Tag status={isDifferent ? "fail" : "success"}>{differentReason || 'Matched'}</Tag>
       </section>
       <ul className="information-list">
         <li className="price-view">

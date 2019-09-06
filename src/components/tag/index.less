@@ -1,25 +1,27 @@
 @import (reference) "~@/styles/index.less";
 .comp-tag {
-    display: inline-block;
-    padding: 0 18px;
-    .font(18px, 500, #FFFFFF);
-    border-radius: 4px;
+  display: inline-block;
+  padding: 0 18px;
+  .font(18px, 500, #ffffff);
+  border-radius: 4px;
 
-    &.success {
-        background-color: #6DD230;
-    }
+  &.success {
+    background-color: #6dd230;
+  }
 
-    &.fail {
-        background-color: #FF0048;
-    }
-
+  &.fail {
+    background-color: #ff0048;
+  }
+  &.padding {
+    background-color: #00AEEF;
+  }
 }
 
 .ismobile {
   .comp-tag {
     display: inline-block;
-    padding: 0 .18rem;
-    .font(.18rem, 500, #FFFFFF);
+    padding: 0 0.18rem;
+    .font(0.18rem, 500, #ffffff);
     border-radius: 4px;
   }
 }

@@ -3,7 +3,7 @@ import { IOrderProps } from "@/containers/order/interface/order.inerface";
 import "./inspection.less";
 import Tag from "@/components/tag";
 import TipsIcon from "@/pages/sell/selectModelProcess/components/tipsIcon";
-import CheckInspectDiff from '../container/components/checkInspectDiff'
+import CheckInspectDiff from "../container/components/checkInspectDiff";
 
 const priceUnit = "$";
 export default function InspectionWrapper(props: any) {
@@ -47,7 +47,7 @@ class Inspection extends React.Component<any> {
       <div className="page-difference">
         <section className="line-with-title">
           <h3>Inspection Result</h3>
-          <Tag isDifferent={isDifferent} differentReason={differentReason} />
+          <Tag status={isDifferent ? "fail" : "success"}>{differentReason || 'Matched'}</Tag>
         </section>
         {!isDifferent && (
           <section>
