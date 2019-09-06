@@ -41,7 +41,7 @@ class Inspection extends React.Component<IOrderProps> {
     const isMatch = inspectionInfo.diffStatus === "success";
     return (
       <div className="page-difference">
-        <section className="comp-inspection-result">
+        <section className="line-with-title">
           <h3>Inspection Result</h3>
           <Tag {...tag} />
         </section>

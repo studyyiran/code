@@ -19,3 +19,27 @@ ul.information-list {
     }
   }
 }
+
+.line-with-title {
+  display: flex;
+  align-items: center;
+  padding-bottom: 10px;
+  border-bottom: 1px solid @color-border;
+  > h3 {
+    .font(18px, 600, #222222);
+    margin-right: 60px;
+  }
+}
+
+.ismobile {
+  .line-with-title {
+    display: flex;
+    align-items: center;
+    padding-bottom: .1rem;
+    border-bottom: 1px solid @color-border;
+    > h3 {
+      .font(.18rem, 600, #222222);
+      margin-right: .60rem;
+    }
+  }
+}
