@@ -1,0 +1,20 @@
+// 模块公用css
+ul.information-list {
+  display: flex;
+  > * {
+    flex: 1 1 0;
+  }
+  //display: grid;
+  //grid-template-columns: repeat(3, 33.33%);
+  > li {
+    > span:first-child {
+      font-size: 14px;
+      color: #848484;
+      margin-bottom: 8px;
+    }
+    span {
+      font-size: 16px;
+      display: block;
+    }
+  }
+}

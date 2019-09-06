@@ -8,18 +8,24 @@ class MachineInfo extends React.Component<
   public render() {
     return (
       <div className="comp-order-machineInfo">
-        <p className="title">Your Phone</p>
         <div className="properties">
-          <div>
-            <div>Model</div>
-            <div>{this.props.productName}</div>
-          </div>
-          {this.props.carrier !== "" && (
-            <div>
-              <div>Carrier</div>
-              <div>{this.props.carrier}</div>
-            </div>
-          )}
+          <ul className="information-list">
+            <li>
+              <span>Model</span>
+              <span>{this.props.productName}</span>
+            </li>
+            {this.props.carrier !== "" && (
+              <li>
+                <span>Carrier</span>
+                <span>{this.props.carrier}</span>
+              </li>
+            )}
+          </ul>
+          <div className="line" />
+          <p className="total">
+            <span>subTotal</span>
+            <span>{this.props.guaranteedPrice}</span>
+          </p>
           {/*{*/}
           {/*    this.props.condition !== "" && (*/}
           {/*        <div>*/}
@@ -29,11 +35,6 @@ class MachineInfo extends React.Component<
           {/*    )*/}
           {/*}*/}
         </div>
-        <div className="line" />
-        <p className="total">
-          <span>subTotal</span>
-          <span>{this.props.guaranteedPrice}</span>
-        </p>
       </div>
     );
   }

@@ -9,6 +9,7 @@ import MachineInfo from "@/containers/order/components/machineInfo";
 import DeliverSatus from "@/containers/order/components/deliverSatus";
 import { HeaderTitle } from "@/components/headerTitle";
 import "./index.less";
+import "./common.less";
 import CollapsePanelList from "./components/collapsePanelList";
 import { getReactNodeConfig } from "../util/index";
 
@@ -42,7 +43,6 @@ function OrderList(props: { order: IOrderStore }) {
   } = totalOrderInfoContext as ITotalOrderInfoContext;
   // 获取
   const { totalOrderInfo, currentSubOrderNo } = totalOrderInfoContextValue;
-
 
   // 赋值
   // useEffect(() => {
@@ -141,12 +141,14 @@ function test({ userInfo, paymentInfo, groupOrderNo, orderCreateDate }: any) {
   const shippingAddress: string[] = [];
   shippingAddress.push(userInfo.firstName + " " + userInfo.lastName);
   const optionalAddress = userInfo.street;
-  let addressString = userInfo.apartment
+  let addressString = userInfo.apartment;
   if (optionalAddress && optionalAddress !== "") {
-    addressString = addressString + ',' + optionalAddress;
+    addressString = addressString + "," + optionalAddress;
   }
   shippingAddress.push(addressString);
-  shippingAddress.push(`${userInfo.city},${userInfo.state} ${userInfo.zipCode}`);
+  shippingAddress.push(
+    `${userInfo.city},${userInfo.state} ${userInfo.zipCode}`
+  );
   // 2电话和email
   const telAndEmail: string[] = [];
   telAndEmail.push(userInfo.userPhone);
