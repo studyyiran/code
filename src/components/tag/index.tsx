@@ -10,7 +10,7 @@ interface ITagProps {
 class Tag extends React.Component<ITagProps>{
     public render() {
         return (
-            <span className={"comp-tag " + (this.props.type === "success" ? "success" : "fail") + " " + this.props.className}>
+            <span className={"comp-tag " + (this.props.type ? "fail" : "success") + " " + this.props.className}>
                 {this.props.text}
             </span>
         );

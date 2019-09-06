@@ -5,26 +5,37 @@ import Tag from "@/components/tag";
 import TipsIcon from "@/pages/sell/selectModelProcess/components/tipsIcon";
 const priceUnit = "$";
 export default function InspectionWrapper(props: any) {
-  const innerProps: any = {
+  const { inquiryInfo } = props;
+  const { submitted, revised, isDifferent, differentReason } = inquiryInfo;
+  // const innerProps: any = {
+  //   order: {
+  //     inspectionInfo: {
+  //       // diffStatus: "fail",
+  //       diffStatus: "success",
+  //       differenceText: "differenceText",
+  //       amount: "amount",
+  //       revisedPrice: "revisedPrice",
+  //       productName: "productName",
+  //       differentCondition: [1, 2, 3, 4, 5]
+  //     },
+  //     paymentInfo: {
+  //       priceGuaranteeStatus: "priceGuaranteeStatus",
+  //       priceGuarantee: "priceGuarantee"
+  //     }
+  //   }
+  // };
+  const innerProps = {
     order: {
-      inspectionInfo: {
-        diffStatus: "fail",
-        // diffStatus: "success",
-        differenceText: "differenceText",
-        amount: "amount",
-        revisedPrice: "revisedPrice",
-        productName: "productName",
-        differentCondition: [1, 2, 3, 4, 5]
-      },
-      paymentInfo: {
-        priceGuaranteeStatus: "priceGuaranteeStatus",
-        priceGuarantee: "priceGuarantee"
+      inquiryInfo: {
+        isDifferent: true,
+        differentReason,
+        price: revised.amount
       }
     }
   };
   return <Inspection {...innerProps} />;
 }
-class Inspection extends React.Component<IOrderProps> {
+class Inspection extends React.Component<any> {
   public handleApprove = () => {
     this.props.order.approveRevisedPrice();
   };
@@ -32,26 +43,28 @@ class Inspection extends React.Component<IOrderProps> {
     this.props.order.returnProduct();
   };
   public render() {
-    const inspectionInfo = this.props.order.inspectionInfo;
+    const { inquiryInfo } = this.props.order;
+    const { isDifferent, differentReason, price } = inquiryInfo;
+    console.log(isDifferent)
     const tag = {
-      type: inspectionInfo.diffStatus,
-      text: inspectionInfo.differenceText
+      type: isDifferent,
+      text: differentReason
     };
     // 是否match
-    const isMatch = inspectionInfo.diffStatus === "success";
     return (
       <div className="page-difference">
         <section className="line-with-title">
           <h3>Inspection Result</h3>
           <Tag {...tag} />
         </section>
-        {isMatch && (
+        {!isDifferent && (
           <section>
             <ul className="information-list">
               <li className="price-view">
                 <span>Price Guarantee</span>
-                <span data-matched={true ? "true" : "false"}>
-                  ${inspectionInfo.amount}
+                <span data-matched={isDifferent ? "false" : "true"}>
+                  {priceUnit}
+                  {price}
                 </span>
               </li>
               <li>
@@ -63,7 +76,7 @@ class Inspection extends React.Component<IOrderProps> {
             </ul>
           </section>
         )}
-        {!isMatch && (
+        {isDifferent && (
           <div className="content-container">
             <section className="revised-part">
               <div className="revised-line">
@@ -71,7 +84,7 @@ class Inspection extends React.Component<IOrderProps> {
                 <div>
                   <span>
                     {priceUnit}
-                    {`after price`}
+                    {price}
                   </span>
                 </div>
               </div>
