@@ -1,6 +1,7 @@
 @import (reference) "~@/styles/index.less";
 
 .order-information-page {
+  .page-padding();
   padding-bottom: 158px;
   .page(960px);
   .header-title {
@@ -15,7 +16,23 @@
     border: 1px solid @color-border;
     border-radius: 8px;
   }
-  .panel-header-title {
-    .font(18px, 600, #222222);
+}
+
+.ismobile {
+  .order-information-page {
+    .page-padding();
+    padding-bottom: 1.58rem;
+    .header-title {
+      margin-bottom: 0.15rem;
+    }
+    > h2 {
+      .font(0.26rem, 500, #131339);
+      margin-bottom: 0.25rem;
+    }
+    .order-container {
+      padding: 0.15rem;
+      border: 0.01rem solid @color-border;
+      border-radius: 0.08rem;
+    }
   }
 }
