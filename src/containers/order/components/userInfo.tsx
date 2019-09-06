@@ -8,41 +8,35 @@ class UserInfo extends React.Component<IUserInformation> {
       <div className="comp-order-userInfo">
         <div className="properties">
           <div>
-            <div>Shipping Address</div>
-            <div>
-              {this.props.shippingAddress.map((t, i) => (
-                <div className="address-item" key={i}>
-                  {t}
+            <ul className="information-list">
+              <li>
+                <span>Shipping Address</span>
+                <div className="block">
+                  {this.props.shippingAddress.map((t, i) => (
+                    <span key={i}>{t}</span>
+                  ))}
                 </div>
-              ))}
-            </div>
-            <div className="telAndEmail">
-              {this.props.telAndEmail.map((t, i) => (
-                <div className="address-item" key={i}>
-                  {t}
+                <div className="block">
+                  {this.props.telAndEmail.map((t, i) => (
+                    <span className="address-item" key={i}>
+                    {t}
+                  </span>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </div>
-          <div>
-            <div>Payment Method</div>
-            <div>
-              {this.props.paymentMethod.map((t, i) => (
-                <div className="address-item" key={i}>
-                  {t}
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="specials">
-            {/*<div>*/}
-            {/*  <div>Order Number</div>*/}
-            {/*  <div>{this.props.orderNumber}</div>*/}
-            {/*</div>*/}
-            <div>
-              <div>Order Date</div>
-              <div>{this.props.orderDate}</div>
-            </div>
+              </li>
+              <li>
+                <span>Payment Method</span>
+                {this.props.paymentMethod.map((t, i) => (
+                  <span key={i}>
+                    {t}
+                  </span>
+                ))}
+              </li>
+              <li>
+                <span>Order Date</span>
+                <span>{this.props.orderDate}</span>
+              </li>
+            </ul>
           </div>
         </div>
       </div>

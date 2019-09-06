@@ -140,13 +140,13 @@ function test({ userInfo, paymentInfo, groupOrderNo, orderCreateDate }: any) {
   // 1
   const shippingAddress: string[] = [];
   shippingAddress.push(userInfo.firstName + " " + userInfo.lastName);
-  shippingAddress.push(userInfo.street);
-  const optionalAddress = userInfo.apartment;
+  const optionalAddress = userInfo.street;
+  let addressString = userInfo.apartment
   if (optionalAddress && optionalAddress !== "") {
-    shippingAddress.push(optionalAddress);
+    addressString = addressString + ',' + optionalAddress;
   }
-  shippingAddress.push(userInfo.city + "," + userInfo.state);
-  shippingAddress.push(userInfo.zipCode);
+  shippingAddress.push(addressString);
+  shippingAddress.push(`${userInfo.city},${userInfo.state} ${userInfo.zipCode}`);
   // 2电话和email
   const telAndEmail: string[] = [];
   telAndEmail.push(userInfo.userPhone);
