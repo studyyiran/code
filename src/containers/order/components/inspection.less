@@ -1,12 +1,4 @@
 @import (reference) "~@/styles/index.less";
-.price-view {
-  > [data-matched="true"] {
-    color: #1AB4E7;
-  }  
-  > [data-matched="false"] {
-    color: #FF0000;
-  }
-}
 
 .page-difference {
   > div.content-container {
@@ -30,36 +22,108 @@
           .font(26px, 500, #222222);
         }
       }
-      .accept-line {
+    }
+    > section.video-part {
+      max-width: 448px;
+      > p {
+        font-size: 16px;
+        margin-bottom: 21px;
+      }
+      > video {
+        width: 100%;
+        margin-bottom: 21px;
+      }
+      > .tips {
+        .font(16px, 500, #1ab4e7);
+        display: block;
+        text-align: center;
+        margin-bottom: 30px;
+      }
+    }
+    .accept-line {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      > button.common-button {
+        max-width: 200px;
+        height: 40px;
+      }
+      .tips {
         display: flex;
+        justify-content: center;
+        align-items: center;
+        > span:first-child {
+          .font(16px, 500, #1ab4e7);
+        }
+      }
+    }
+  }
+}
+
+.ismobile {
+  .page-difference {
+    > div.content-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding-top: 0.24rem;
+      > section.revised-part {
+        flex: 1;
+        .revised-line {
+          display: block;
+          text-align: center;
+          padding-bottom: 0.21rem;
+          border-bottom: none;
+          margin-bottom: 0.3rem;
+          > h3 {
+            .font(0.26rem, 500, #000000);
+            padding-bottom: 0.21rem;
+            margin-bottom: 0.15rem;
+            border-bottom: 1px solid @color-border;
+          }
+          > div {
+            //position: absolute;
+            display: block;
+            .font(0.26rem, 500, #222222);
+          }
+        }
+      }
+      > section.video-part {
+        max-width: 100%;
+        width: 100%;
+        > p {
+          font-size: 0.16rem;
+          margin-bottom: .21rem;
+        }
+        > video {
+          width: 100%;
+          margin-bottom: .21rem;
+        }
+        > .tips {
+          .font(0.16rem, 500, #1ab4e7);
+          display: block;
+          text-align: center;
+          margin-bottom: 0.3rem;
+        }
+      }
+      .accept-line {
+        text-align: center;
+        display: block;
         justify-content: space-between;
-        margin-bottom: 15px;
+        margin-bottom: 0.15rem;
         > button.common-button {
-          max-width: 200px;
-          height: 40px;
+          max-width: 2rem;
+          height: 0.40rem;
+          margin-bottom: 25px;
         }
         .tips {
           display: flex;
           justify-content: center;
           align-items: center;
           > span:first-child {
-            .font(16px, 500, #1ab4e7);
+            .font(0.16rem, 500, #1ab4e7);
           }
         }
-      }
-    }
-    > section.video-part {
-      max-width: 448px;
-      > p {
-        font-size: 16px;
-      }
-      > video {
-        width: 100%;
-      }
-      > .tips {
-        .font(16px, 500, #1ab4e7);
-        display: block;
-        text-align: center;
       }
     }
   }

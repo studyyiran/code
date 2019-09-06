@@ -45,11 +45,22 @@ class Inspection extends React.Component<any> {
   public render() {
     const { inquiryInfo } = this.props.order;
     const { isDifferent, differentReason, price } = inquiryInfo;
-    console.log(isDifferent)
     const tag = {
       type: isDifferent,
       text: differentReason
     };
+
+    function renderAcceptLine() {
+      return (
+        <div className="accept-line">
+          <button className="common-button">Accept</button>
+          <div className="tips">
+            <span>{`< Return Device`}</span>
+            <TipsIcon />
+          </div>
+        </div>
+      );
+    }
     // 是否match
     return (
       <div className="page-difference">
@@ -88,13 +99,7 @@ class Inspection extends React.Component<any> {
                   </span>
                 </div>
               </div>
-              <div className="accept-line">
-                <button className="common-button">Accept</button>
-                <div className="tips">
-                  <span>{`< Return Device`}</span>
-                  <TipsIcon />
-                </div>
-              </div>
+              {renderAcceptLine()}
             </section>
             <section className="video-part">
               <p>
@@ -103,6 +108,7 @@ class Inspection extends React.Component<any> {
               </p>
               <video className="comp-video" />
               <span className="tips">{`View Inspection Result >`}</span>
+              <div className="mb-ele">{renderAcceptLine()}</div>
             </section>
           </div>
         )}
