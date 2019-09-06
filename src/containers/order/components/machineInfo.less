@@ -1,29 +1,16 @@
-@import (reference) '~@/styles/index.less';
+@import (reference) "~@/styles/index.less";
 
 .comp-order-machineInfo {
-  .line {
-    height: 1px;
-    margin: 24px 21px;
-    background: rgba(234, 234, 234, 1);
-  }
-
-  .total {
-    padding: 0 21px;
+  p.total {
     text-align: right;
-    padding-bottom: 46px;
-
+    padding-top: 20px;
     & > span {
-      display: inline-block;
-      vertical-align: top;
-      font-size: 14px;
-      font-family: HelveticaNeue;
-      color: rgba(128, 128, 128, 1);
-
+      &:first-child {
+        color: #848484;
+        margin-right: 55px;
+      }
       &:last-child {
-        min-width: 110px;
-        font-family: HelveticaNeue-Bold;
-        font-weight: bold;
-        color: rgba(51, 51, 51, 1);
+        .font(16px, 500, #000000);
       }
     }
   }
@@ -31,18 +18,16 @@
 
 .ismobile {
   .comp-order-machineInfo {
-    .total {
-      font-size: 0.14rem;
-      line-height: 0.18rem;
-      padding: 0 0.2rem;
-      padding-bottom: 0.3rem;
-
+    p.total {
+      text-align: right;
+      padding-top: 0.2rem;
       & > span {
-        font-size: 0.14rem;
-
+        &:first-child {
+          color: #848484;
+          margin-right: 0.55rem;
+        }
         &:last-child {
-          font-size: 0.14rem;
-          min-width: 0.52rem;
+          .font(0.16rem, 500, #000000);
         }
       }
     }
