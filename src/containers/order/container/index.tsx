@@ -62,6 +62,7 @@ function OrderList(props: { order: IOrderStore }) {
   function selectHandler(key: string) {
     if (key === informationKey) {
       setCurrentPageKey(key);
+      totalOrderInfoContextDispatch({type: totalOrderInfoReducerActionTypes.setCurrentSubOrderNo, value: ""})
     } else {
       setCurrentPageKey("false");
       totalOrderInfoContextDispatch({type: totalOrderInfoReducerActionTypes.setCurrentSubOrderNo, value: key})
