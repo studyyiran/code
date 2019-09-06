@@ -12,6 +12,8 @@ import "./index.less";
 import "./common.less";
 import CollapsePanelList from "./components/collapsePanelList";
 import { getReactNodeConfig } from "../util/index";
+import ListedForSale from "@/containers/order/components/listedForSale";
+import Inspection from "@/containers/order/components/inspection";
 
 @inject("order")
 @observer
@@ -41,8 +43,6 @@ function OrderList(props: { order: IOrderStore }) {
   // 获取
   const {
     totalOrderInfoContextValue,
-    getAjax,
-    getTranshipping,
     totalOrderInfoContextDispatch,
   } = totalOrderInfoContext as ITotalOrderInfoContext;
   // 获取
@@ -67,18 +67,6 @@ function OrderList(props: { order: IOrderStore }) {
       setCurrentPageKey("false");
       totalOrderInfoContextDispatch({type: totalOrderInfoReducerActionTypes.setCurrentSubOrderNo, value: key})
     }
-    // 当前有选择
-    // const currentTarget = userProductList.find((item: any) => {
-    //   return item.inquiryKey === id;
-    // });
-    // if (id) {
-    //   selectModelContextDispatch({
-    //     type: "changeModelCache",
-    //     value: currentTarget
-    //   });
-    // } else {
-    //   selectModelContextDispatch({ type: "changeModelCache", value: "reset" });
-    // }
   }
   let list: any[] = [
     {
@@ -101,6 +89,7 @@ function OrderList(props: { order: IOrderStore }) {
         subOrderStatus
       } = order;
       const reactNodeConfig = getReactNodeConfig(subOrderStatus);
+      console.log(reactNodeConfig)
       return {
         header: `${productDisplayName}-${subOrderStatusDisplayName}`,
         key: subOrderNo,
@@ -113,8 +102,9 @@ function OrderList(props: { order: IOrderStore }) {
               carrier={order.inquiryInfo.submitted.productPns[1].name}
               {...order}
             />
-            {!reactNodeConfig.deliver && <DeliverSatus {...order} />}
-            {/*<ListedForSale {...currentModel} />*/}
+            {reactNodeConfig.deliver && <DeliverSatus {...order} />}
+            {reactNodeConfig.inspected && <Inspection {...order} />}
+            {reactNodeConfig.listedForSale && <ListedForSale {...order} />}
           </div>
         )
       };
