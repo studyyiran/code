@@ -39,7 +39,8 @@ function OrderList(props: { order: IOrderStore }) {
   // 获取
   const {
     totalOrderInfoContextValue,
-    getAjax
+    getAjax,
+    getTranshipping
   } = totalOrderInfoContext as ITotalOrderInfoContext;
   // 获取
   const { totalOrderInfo, currentSubOrderNo } = totalOrderInfoContextValue;

@@ -11,27 +11,31 @@ import { getDeliverInfos, getDeliverNoInfo } from "../util";
 
 export default function(props: any) {
   // function wraper(props: any) {
-  const { sendInfo, returnInfo } = props.shippingInfo;
-  let currentInfo = [];
-  if (returnInfo && returnInfo.length) {
-    currentInfo = returnInfo;
-  } else if (sendInfo && sendInfo.length) {
-    currentInfo = sendInfo;
+  // 无用的mock
+  // currentInfo = getDeliverInfos(
+  //   currentInfo.map((item: any) => {
+  //     return {
+  //       ...item,
+  //       statusDate: item.updateDt,
+  //       location: "locationlocation",
+  //       statusDetails: "statusDetailsstatusDetails"
+  //     };
+  //   })
+  // );
+  const { transInfo, getTranshipping } = props;
+  if (transInfo) {
+    const { deliverNoInfo, deliverInfos } = transInfo;
+    if (!deliverInfos || !deliverNoInfo) {
+      getTranshipping(props.subOrderNo);
+      return null;
+    }
+    const fakeProps: any = {
+      order: { deliverInfos, deliverNoInfo }
+    };
+    return <DeliverSatus {...fakeProps} />;
+  } else {
+    return null;
   }
-  currentInfo = getDeliverInfos(
-    currentInfo.map((item: any) => {
-      return {
-        ...item,
-        statusDate: item.updateDt,
-        location: "locationlocation",
-        statusDetails: "statusDetailsstatusDetails"
-      };
-    })
-  );
-  const fakeProps: any = {
-    order: { deliverInfos: currentInfo, deliverNoInfo: getDeliverNoInfo(currentInfo) }
-  };
-  return <DeliverSatus {...fakeProps} />;
 }
 
 class DeliverSatus extends React.Component<IOrderProps, IDeliverSatus> {
@@ -185,4 +189,3 @@ class DeliverSatus extends React.Component<IOrderProps, IDeliverSatus> {
 }
 
 // export default DeliverSatus;
-

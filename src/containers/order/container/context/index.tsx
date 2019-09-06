@@ -5,15 +5,30 @@ import React, {
   useEffect
 } from "react";
 import { IReducerAction } from "@/interface/index.interface";
-import { getOrderDetail } from "../../api/order.api";
-import { checkforordermock } from "./mock";
+import { getOrderDetail, getTranshipping } from "../../api/order.api";
+import { checkforordermock, getTranshippingmock } from "./mock";
+import {getDeliverInfos, getDeliverNoInfo} from "../../util";
+
+// 然后还需要获取订单物流信息
+// just mock
+if (
+  checkforordermock &&
+  checkforordermock.subOrders &&
+  checkforordermock.subOrders.length
+) {
+  checkforordermock.subOrders = checkforordermock.subOrders.map((obj: any) => {
+    obj.transInfo = addDeliver(obj);
+    return obj;
+  });
+}
 
 export const TotalOrderInfoContext = createContext({});
 
 // action types
 const reducerActionTypes = {
   setTotalOrderInfo: "setTotalOrderInfo",
-  setCurrentSubOrderNo: "setCurrentSubOrderNo"
+  setCurrentSubOrderNo: "setCurrentSubOrderNo",
+  setSubOrderInfo: "setSubOrderInfo"
 };
 
 // reducer
@@ -35,6 +50,22 @@ function reducer(state: IContextState, action: IReducerAction) {
       };
       break;
     }
+    case reducerActionTypes.setSubOrderInfo: {
+      if (
+        state.totalOrderInfo &&
+        state.totalOrderInfo &&
+        state.totalOrderInfo.subOrders &&
+        state.totalOrderInfo.subOrders.length
+      ) {
+        newState.totalOrderInfo.subOrders = state.totalOrderInfo.subOrders.map(
+          value
+        );
+      }
+      newState = {
+        ...newState
+      };
+      break;
+    }
     default:
       newState = { ...newState };
   }
@@ -44,6 +75,25 @@ function reducer(state: IContextState, action: IReducerAction) {
 // @actions
 interface IContextActions {
   getAjax: () => void;
+  getTranshipping: () => void;
+  getSubOrderByNo: (s: string) => void;
+}
+
+// 添加物流信息
+function addDeliver(res: any) {
+  const { sendInfo, returnInfo } = res.shippingInfo;
+  let currentInfo = [];
+  if (returnInfo && returnInfo.length) {
+    currentInfo = returnInfo;
+  } else if (sendInfo && sendInfo.length) {
+    currentInfo = sendInfo;
+  }
+  const transInfo = {
+    current: currentInfo,
+    deliverInfos: undefined,
+    deliverNoInfo: getDeliverNoInfo(currentInfo)
+  };
+  return transInfo;
 }
 
 // useCreateActions
@@ -57,10 +107,55 @@ function useGetAction(
         // const res = await getOrderDetail(a, b);
         const res = checkforordermock;
         // 然后还需要获取订单物流信息
+        if (res && res.subOrders && res.subOrders.length) {
+          res.subOrders = res.subOrders.map((obj: any) => {
+            obj.transInfo = addDeliver(obj);
+            return obj;
+          });
+        }
         dispatch({ type: reducerActionTypes.setTotalOrderInfo, value: res });
         return res;
       } catch (e) {
         return e;
+      }
+    }),
+    // 快捷的获取当前的。
+    getSubOrderByNo: function(subOrderNo: string) {
+      let target;
+      if (
+        state.totalOrderInfo &&
+        state.totalOrderInfo &&
+        state.totalOrderInfo.subOrders &&
+        state.totalOrderInfo.subOrders.length
+      ) {
+        target = state.totalOrderInfo.subOrders.find((item: any) => {
+          return item.subOrderNo === subOrderNo;
+        });
+      }
+      return target;
+    },
+    // 请求获取当前的物流信息
+    getTranshipping: promisify(async function(subOrderNo: any) {
+      const current: any = actions.getSubOrderByNo(subOrderNo);
+      debugger;
+      if (current && current.transInfo && current.transInfo.deliverNoInfo) {
+        const { carrier, trackingNumber } = current.transInfo.deliverNoInfo;
+        console.log(carrier);
+        console.log(trackingNumber);
+        // const res = await getTranshipping(carrier, trackingNumber);
+        const res = getTranshippingmock;
+        const mapFunc = (item: any) => {
+          if (item.subOrderNo === subOrderNo) {
+            item.transInfo.deliverInfos = getDeliverInfos(res);
+            return { ...item };
+          }
+          return item;
+        };
+        dispatch({
+          type: reducerActionTypes.setSubOrderInfo,
+          value: mapFunc
+        });
+        console.log(res);
       }
     })
   };
@@ -77,7 +172,8 @@ interface IContextState {
 // @provider
 export function TotalOrderInfoProvider(props: any) {
   const initState: IContextState = {
-    totalOrderInfo: {} as ITotalOrderInfo,
+    // totalOrderInfo: {} as ITotalOrderInfo,
+    totalOrderInfo: checkforordermock as ITotalOrderInfo,
     currentSubOrderNo: ""
   };
   const [state, dispatch] = useReducer(reducer, initState);

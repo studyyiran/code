@@ -1,7 +1,10 @@
-import {IProgressType, IShippingAddress} from "@/containers/order/interface/order.inerface";
+import {
+  IProgressType,
+  IShippingAddress
+} from "@/containers/order/interface/order.inerface";
 import * as moment from "moment-timezone";
 
-export function getReactNodeConfig (status: any) {
+export function getReactNodeConfig(status: any) {
   const ReactNodeConfig = {
     deliver: false,
     inspected: false,
@@ -20,9 +23,7 @@ export function getReactNodeConfig (status: any) {
     ReactNodeConfig.orderSummary = false;
   }
   // 是否展示质检模块
-  if (
-    status === IProgressType.DIFFERENCE_INSPECTED
-  ) {
+  if (status === IProgressType.DIFFERENCE_INSPECTED) {
     ReactNodeConfig.inspected = true;
     ReactNodeConfig.orderSummary = false;
   }
@@ -32,9 +33,7 @@ export function getReactNodeConfig (status: any) {
     ReactNodeConfig.orderSummary = false;
   }
   // 是否退货发货
-  if (
-    status === IProgressType.TRANSACTION_FAILED
-  ) {
+  if (status === IProgressType.TRANSACTION_FAILED) {
     ReactNodeConfig.productDispatch = true;
     ReactNodeConfig.orderSummary = false;
   }
@@ -45,13 +44,11 @@ export function getReactNodeConfig (status: any) {
     ReactNodeConfig.orderSummary = false;
   }
   // 展示订单完成模块
-  if (
-    status === IProgressType.TRANSACTION_SUCCEED
-  ) {
+  if (status === IProgressType.TRANSACTION_SUCCEED) {
     ReactNodeConfig.orderComplete = true;
     ReactNodeConfig.orderSummary = false;
   }
-  return ReactNodeConfig
+  return ReactNodeConfig;
 }
 
 export function packageDate(b: string | undefined) {
@@ -62,11 +59,19 @@ export function packageDate(b: string | undefined) {
   return b;
 }
 
-export function getDeliverInfos(trackingInfo: any[]) {
+export function getDeliverNoInfo(info: any[]) {
+  const deliverNoInfo: any = {};
+  if (info && info.length) {
+    deliverNoInfo.trackingNumber = info[0].trackingNumber;
+    deliverNoInfo.carrier = info[0].carrier;
+  }
+  return deliverNoInfo;
+}
+
+export function getDeliverInfos(trackingInfo: any) {
   const infos: IShippingAddress[] = [];
   if (trackingInfo) {
-    trackingInfo.map(t => {
-      // time
+    trackingInfo.trackingHistory.map((t: any) => {
       const time = moment.tz(t.statusDate, "America/Chicago");
       const now = new Date();
       let dateStr = time.format("MMM DD");
@@ -77,9 +82,7 @@ export function getDeliverInfos(trackingInfo: any[]) {
       let locationCtiy = "";
       let locationCountry = "";
       if (t.location) {
-        const matchCity = t.location.match(
-          /(\[|\,\s)city=([^\,\s]*)(\,\s|\])/
-        );
+        const matchCity = t.location.match(/(\[|\,\s)city=([^\,\s]*)(\,\s|\])/);
         const matchCountry = t.location.match(
           /(\[|\,\s)country=([^\,\s]*)(\,\s|\])/
         );
@@ -149,13 +152,4 @@ export function getDeliverInfos(trackingInfo: any[]) {
     // }
   }
   return infos;
-}
-
-export function getDeliverNoInfo(info: any[]) {
-  const deliverNoInfo: any = {};
-  if (info && info.length) {
-    deliverNoInfo.trackingNumber = info[0].trackingNumber;
-    deliverNoInfo.carrier = info[0].carrier;
-  }
-  return deliverNoInfo;
 }
