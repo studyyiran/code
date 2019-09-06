@@ -1,9 +1,11 @@
 import * as React from "react";
+import './index.less'
+
 const priceUnit = "$";
 export default function ResultPart(props: any) {
   const { price } = props;
   return (
-    <div>
+    <div className="comp-result-part">
       <section className="line-with-title">
         <h3>Action Result</h3>
       </section>

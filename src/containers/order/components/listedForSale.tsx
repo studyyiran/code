@@ -31,8 +31,8 @@ class ListedForSale extends React.Component<any> {
     };
     // const paymentInfo = this.props.order.paymentInfo;
     return (
-      <div className="comp-order-lisedForSale">
-        <ResultPart />
+      <div className="comp-order-sale">
+        <ResultPart {...inquiryInfo} />
         <InspectPart {...inquiryInfo} />
       </div>
     );
