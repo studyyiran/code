@@ -1,13 +1,25 @@
 @import (reference) "~@/styles/index.less";
 // 模块公用css
+.line-with-title {
+  display: flex;
+  align-items: center;
+  padding-bottom: 10px;
+  border-bottom: 1px solid @color-border;
+  > h3 {
+    .font(18px, 600, #222222);
+    margin-right: 60px;
+  }
+}
+
+
 ul.information-list {
   display: flex;
+  border-bottom: 1px solid @color-border;
   > * {
     flex: 1 1 0;
   }
-  //display: grid;
-  //grid-template-columns: repeat(3, 33.33%);
   > li {
+    margin-bottom: 20px;
     > span:first-child {
       font-size: 14px;
       color: #848484;
@@ -20,14 +32,25 @@ ul.information-list {
   }
 }
 
-.line-with-title {
-  display: flex;
-  align-items: center;
-  padding-bottom: 10px;
-  border-bottom: 1px solid @color-border;
-  > h3 {
-    .font(18px, 600, #222222);
-    margin-right: 60px;
+.ismobile {
+  ul.information-list {
+    display: flex;
+    flex-direction: column;
+    > * {
+      flex: 1 1 0;
+    }
+    > li {
+      margin-bottom: 0.20rem;
+      > span:first-child {
+        font-size: 0.14rem;
+        color: #848484;
+        margin-bottom: 0.08rem;
+      }
+      span {
+        font-size: 0.16rem;
+        display: block;
+      }
+    }
   }
 }
 
@@ -42,4 +65,11 @@ ul.information-list {
       margin-right: .60rem;
     }
   }
+  
+  
+}
+
+
+.ismobile {
+
 }
