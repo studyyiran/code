@@ -7,9 +7,10 @@ import "./index.less";
 export default function CollapsePanelList(props: {
   onChange: (s: string) => void;
   defaultActiveKey?: string;
+  activeKey?: string;
   list: any[];
 }) {
-  const { onChange, defaultActiveKey, list } = props;
+  const { onChange, defaultActiveKey, list, activeKey } = props;
   return (
     <div className="comp-collapse-panel-list">
       <Collapse
@@ -24,6 +25,7 @@ export default function CollapsePanelList(props: {
         accordion={true}
         onChange={onChange}
         defaultActiveKey={defaultActiveKey}
+        activeKey={activeKey}
       >
         {list.map((item: any) => {
           const { header, children, key } = item;

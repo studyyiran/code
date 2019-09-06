@@ -22,17 +22,12 @@ export default function(props: any) {
   //     };
   //   })
   // );
-  const { transInfo, getTranshipping } = props;
-  if (transInfo) {
-    const { deliverNoInfo, deliverInfos } = transInfo;
-    if (!deliverInfos || !deliverNoInfo) {
-      getTranshipping(props.subOrderNo);
-      return null;
-    }
-    const fakeProps: any = {
-      order: { deliverInfos, deliverNoInfo }
+  const { transInfo } = props;
+  if (transInfo && transInfo.deliverNoInfo && transInfo.deliverInfos) {
+    const orderProps: any = {
+      order: { deliverInfos: transInfo.deliverInfos, deliverNoInfo: transInfo.deliverNoInfo }
     };
-    return <DeliverSatus {...fakeProps} />;
+    return <DeliverSatus {...orderProps} />;
   } else {
     return null;
   }

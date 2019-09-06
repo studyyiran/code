@@ -1,6 +1,6 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
-import { ITotalOrderInfoContext, TotalOrderInfoContext } from "./context";
+import {ITotalOrderInfoContext, TotalOrderInfoContext, totalOrderInfoReducerActionTypes} from "./context";
 import { IOrderStore } from "../interface/order.inerface";
 import { inject, observer } from "mobx-react";
 import UserInfo from "@/containers/order/components/userInfo";
@@ -34,13 +34,16 @@ export default class OrderListContainer extends React.Component<any, any> {
 }
 
 function OrderList(props: { order: IOrderStore }) {
+  const informationKey = "informaion";
+  const [currentPageKey, setCurrentPageKey] = useState("");
   // 监听
   const totalOrderInfoContext = useContext(TotalOrderInfoContext);
   // 获取
   const {
     totalOrderInfoContextValue,
     getAjax,
-    getTranshipping
+    getTranshipping,
+    totalOrderInfoContextDispatch,
   } = totalOrderInfoContext as ITotalOrderInfoContext;
   // 获取
   const { totalOrderInfo, currentSubOrderNo } = totalOrderInfoContextValue;
@@ -57,6 +60,12 @@ function OrderList(props: { order: IOrderStore }) {
   });
   // 方法
   function selectHandler(key: string) {
+    if (key === informationKey) {
+      setCurrentPageKey(key);
+    } else {
+      setCurrentPageKey("false");
+      totalOrderInfoContextDispatch({type: totalOrderInfoReducerActionTypes.setCurrentSubOrderNo, value: key})
+    }
     // 当前有选择
     // const currentTarget = userProductList.find((item: any) => {
     //   return item.inquiryKey === id;
@@ -73,7 +82,7 @@ function OrderList(props: { order: IOrderStore }) {
   let list: any[] = [
     {
       header: "Your Information",
-      key: "Your Information",
+      key: informationKey,
       children:
         totalOrderInfo && totalOrderInfo.groupOrderNo ? (
           <UserInfo {...test(totalOrderInfo)} />
@@ -128,7 +137,7 @@ function OrderList(props: { order: IOrderStore }) {
         <CollapsePanelList
           onChange={selectHandler}
           list={list}
-          defaultActiveKey={""}
+          activeKey={currentSubOrderNo || currentPageKey}
         />
       </div>
     </div>
