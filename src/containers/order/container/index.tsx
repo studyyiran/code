@@ -1,6 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 
-import {ITotalOrderInfoContext, TotalOrderInfoContext, totalOrderInfoReducerActionTypes} from "./context";
+import {
+  ITotalOrderInfoContext,
+  TotalOrderInfoContext,
+  totalOrderInfoReducerActionTypes
+} from "./context";
 import { IOrderStore } from "../interface/order.inerface";
 import { inject, observer } from "mobx-react";
 import UserInfo from "@/containers/order/components/userInfo";
@@ -11,9 +15,11 @@ import { HeaderTitle } from "@/components/headerTitle";
 import "./index.less";
 import "./common.less";
 import CollapsePanelList from "./components/collapsePanelList";
-import { getReactNodeConfig } from "../util/index";
+import { getReactNodeConfig, getProgressType, getInfo } from "../util/index";
 import ListedForSale from "@/containers/order/components/listedForSale";
 import Inspection from "@/containers/order/components/inspection";
+
+import ProgressBar from "@/containers/order/components/progressBar";
 
 @inject("order")
 @observer
@@ -43,7 +49,7 @@ function OrderList(props: { order: IOrderStore }) {
   // 获取
   const {
     totalOrderInfoContextValue,
-    totalOrderInfoContextDispatch,
+    totalOrderInfoContextDispatch
   } = totalOrderInfoContext as ITotalOrderInfoContext;
   // 获取
   const { totalOrderInfo, currentSubOrderNo } = totalOrderInfoContextValue;
@@ -62,10 +68,16 @@ function OrderList(props: { order: IOrderStore }) {
   function selectHandler(key: string) {
     if (key === informationKey) {
       setCurrentPageKey(key);
-      totalOrderInfoContextDispatch({type: totalOrderInfoReducerActionTypes.setCurrentSubOrderNo, value: ""})
+      totalOrderInfoContextDispatch({
+        type: totalOrderInfoReducerActionTypes.setCurrentSubOrderNo,
+        value: ""
+      });
     } else {
       setCurrentPageKey("false");
-      totalOrderInfoContextDispatch({type: totalOrderInfoReducerActionTypes.setCurrentSubOrderNo, value: key})
+      totalOrderInfoContextDispatch({
+        type: totalOrderInfoReducerActionTypes.setCurrentSubOrderNo,
+        value: key
+      });
     }
   }
   let list: any[] = [
@@ -74,7 +86,7 @@ function OrderList(props: { order: IOrderStore }) {
       key: informationKey,
       children:
         totalOrderInfo && totalOrderInfo.groupOrderNo ? (
-          <UserInfo {...test(totalOrderInfo)} />
+          <UserInfo {...getInfo(totalOrderInfo)} />
         ) : (
           ""
         )
@@ -86,10 +98,11 @@ function OrderList(props: { order: IOrderStore }) {
         subOrderNo,
         productDisplayName,
         subOrderStatusDisplayName,
-        subOrderStatus
+        subOrderStatus,
+        orderStatusHistories
       } = order;
       const reactNodeConfig = getReactNodeConfig(subOrderStatus);
-      console.log(reactNodeConfig)
+      console.log(reactNodeConfig);
       return {
         header: `${productDisplayName}-${subOrderStatusDisplayName}`,
         key: subOrderNo,
@@ -102,9 +115,18 @@ function OrderList(props: { order: IOrderStore }) {
               carrier={order.inquiryInfo.submitted.productPns[1].name}
               {...order}
             />
+            <ProgressBar
+              data={getProgressType({
+                orderStatusHistories,
+                orderCreateDate: totalOrderInfo.orderCreateDate,
+                subOrderStatus
+              })}
+            />
             {reactNodeConfig.deliver && <DeliverSatus {...order} />}
             {reactNodeConfig.inspected && <Inspection {...order} />}
-            {reactNodeConfig.listedForSale && <ListedForSale {...order} />}
+            {reactNodeConfig.listedForSale || reactNodeConfig.orderComplete ? (
+              <ListedForSale {...order} />
+            ) : null}
           </div>
         )
       };
@@ -134,44 +156,4 @@ function OrderList(props: { order: IOrderStore }) {
     </div>
   );
   // 渲染
-}
-
-// 自家用的数据。
-function test({ userInfo, paymentInfo, groupOrderNo, orderCreateDate }: any) {
-  // 1
-  const shippingAddress: string[] = [];
-  shippingAddress.push(userInfo.firstName + " " + userInfo.lastName);
-  const optionalAddress = userInfo.street;
-  let addressString = userInfo.apartment;
-  if (optionalAddress && optionalAddress !== "") {
-    addressString = addressString + "," + optionalAddress;
-  }
-  shippingAddress.push(addressString);
-  shippingAddress.push(
-    `${userInfo.city},${userInfo.state} ${userInfo.zipCode}`
-  );
-  // 2电话和email
-  const telAndEmail: string[] = [];
-  telAndEmail.push(userInfo.userPhone);
-  telAndEmail.push(userInfo.userEmail);
-
-  // 3
-  const paymentMethod: string[] = [];
-  if (paymentInfo.payment === "PAYPAL") {
-    paymentMethod.push("PayPal");
-    paymentMethod.push(paymentInfo.payPalInfo.email);
-  }
-  if (paymentInfo.payment === "CHECK") {
-    paymentMethod.push("eCheck");
-    paymentMethod.push(paymentInfo.checkInfo.email);
-  }
-  return {
-    shippingAddress,
-    telAndEmail,
-    paymentMethod,
-    orderNumber: groupOrderNo || "",
-    orderDate: moment
-      .tz(orderCreateDate, "America/Chicago")
-      .format("MMM DD, YYYY")
-  };
 }

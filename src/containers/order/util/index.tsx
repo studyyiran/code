@@ -1,8 +1,16 @@
 import {
   IProgressType,
-  IShippingAddress
+  IShippingAddress,
+  IProgressDot
 } from "@/containers/order/interface/order.inerface";
 import * as moment from "moment-timezone";
+import OrderPlacedIcon from "@/images/order/orderPlaced.png";
+import PackageSentIcon from "@/images/order/packageSent.png";
+import PackageReceivedIcon from "@/images/order/packageReceived.png";
+import InspectionCompleteIcon from "@/images/order/inspectionComplete.png";
+import ListSaleIcon from "@/images/order/listForSale.png";
+import OrderCompleteIcon from "@/images/order/orderComplete.png";
+import ReturnRequestIcon from "@/images/order/returnRequest.png";
 
 export function getReactNodeConfig(status: any) {
   const ReactNodeConfig = {
@@ -152,4 +160,193 @@ export function getDeliverInfos(trackingInfo: any) {
     // }
   }
   return infos;
+}
+
+// 自家用的数据。
+export function getInfo({ userInfo, paymentInfo, groupOrderNo, orderCreateDate }: any) {
+  // 1
+  const shippingAddress: string[] = [];
+  shippingAddress.push(userInfo.firstName + " " + userInfo.lastName);
+  const optionalAddress = userInfo.street;
+  let addressString = userInfo.apartment;
+  if (optionalAddress && optionalAddress !== "") {
+    addressString = addressString + "," + optionalAddress;
+  }
+  shippingAddress.push(addressString);
+  shippingAddress.push(
+    `${userInfo.city},${userInfo.state} ${userInfo.zipCode}`
+  );
+  // 2电话和email
+  const telAndEmail: string[] = [];
+  telAndEmail.push(userInfo.userPhone);
+  telAndEmail.push(userInfo.userEmail);
+
+  // 3
+  const paymentMethod: string[] = [];
+  if (paymentInfo.payment === "PAYPAL") {
+    paymentMethod.push("PayPal");
+    paymentMethod.push(paymentInfo.payPalInfo.email);
+  }
+  if (paymentInfo.payment === "CHECK") {
+    paymentMethod.push("eCheck");
+    paymentMethod.push(paymentInfo.checkInfo.email);
+  }
+  return {
+    shippingAddress,
+    telAndEmail,
+    paymentMethod,
+    orderNumber: groupOrderNo || "",
+    orderDate: moment
+      .tz(orderCreateDate, "America/Chicago")
+      .format("MMM DD, YYYY")
+  };
+}
+
+function findDate(status: IProgressType, orderStatusHistories: any) {
+  function findFirstEleFromTarget(b: any, f: any) {
+    const vArray = b.filter(f);
+    if (vArray.length > 0) {
+      return vArray[0];
+    }
+    return null;
+  }
+  const orderRecords: any = orderStatusHistories;
+  const target = findFirstEleFromTarget(
+    orderRecords,
+    (t: any) => t.orderStatus === status
+  );
+  return (target && target.date) || undefined;
+}
+
+export function getProgressType({
+  orderStatusHistories,
+  orderCreateDate,
+  subOrderStatus
+}: {
+  orderStatusHistories: any;
+  orderCreateDate: any;
+  subOrderStatus: any;
+}) {
+  let currentIndex = 0;
+  let dataList: IProgressDot[] = [
+    {
+      name: "Order Placed",
+      img: OrderPlacedIcon
+    },
+    {
+      name: "Package Sent",
+      img: PackageSentIcon
+    },
+    {
+      name: "Package Received",
+      img: PackageReceivedIcon
+    },
+    {
+      name: "Inspection Completed",
+      img: InspectionCompleteIcon
+    },
+    {
+      name: "Listed For Sale",
+      img: ListSaleIcon
+    },
+    {
+      name: "Order Completed",
+      img: OrderCompleteIcon
+    }
+  ];
+  if (orderStatusHistories && orderStatusHistories.length > 0) {
+    dataList = [
+      {
+        name: "Order Placed",
+        img: OrderPlacedIcon,
+        date: packageDate(orderCreateDate)
+      },
+      {
+        name: "Package Sent",
+        img: PackageSentIcon,
+        date: packageDate(
+          findDate(IProgressType.TO_BE_SHIPPED, orderStatusHistories)
+        )
+      },
+      {
+        name: "Package Received",
+        img: PackageReceivedIcon,
+        date: packageDate(
+          findDate(IProgressType.TO_BE_RECEIVED, orderStatusHistories)
+        )
+      },
+      {
+        name: "Inspection Completed",
+        img: InspectionCompleteIcon,
+        date: packageDate(
+          findDate(IProgressType.TO_BE_INSPECTED, orderStatusHistories)
+        )
+      },
+      {
+        name: "Listed For Sale",
+        img: ListSaleIcon,
+        date: packageDate(
+          findDate(IProgressType.LISTED_FOR_SALE, orderStatusHistories)
+        )
+      },
+      {
+        name: "Order Completed",
+        img: OrderCompleteIcon,
+        date: packageDate(
+          findDate(IProgressType.LISTED_FOR_SALE, orderStatusHistories)
+        )
+      }
+    ];
+  }
+  // 退货
+  if (
+    subOrderStatus === IProgressType.TO_BE_RETURNED ||
+    subOrderStatus === IProgressType.TRANSACTION_FAILED
+  ) {
+    dataList[4] = {
+      name: "Return Requested",
+      img: ReturnRequestIcon,
+      date: packageDate(
+        findDate(IProgressType.DIFFERENCE_INSPECTED, orderStatusHistories)
+      )
+    };
+    dataList[5] = {
+      name: "Product Dispatched",
+      img: PackageReceivedIcon,
+      date: packageDate(
+        findDate(IProgressType.TO_BE_RETURNED, orderStatusHistories)
+      )
+    };
+  }
+  switch (subOrderStatus) {
+    case IProgressType.TO_BE_SHIPPED:
+      currentIndex = 0;
+      break;
+    case IProgressType.TO_BE_RECEIVED:
+      currentIndex = 1;
+      break;
+    case IProgressType.TO_BE_INSPECTED:
+      currentIndex = 2;
+      break;
+    case IProgressType.DIFFERENCE_INSPECTED:
+      currentIndex = 3;
+      break;
+    case IProgressType.LISTED_FOR_SALE:
+      currentIndex = 4;
+      break;
+    case IProgressType.TRANSACTION_SUCCEED:
+      currentIndex = 5;
+      break;
+    // 退回商品
+    case IProgressType.TO_BE_RETURNED:
+      currentIndex = 4;
+      break;
+    case IProgressType.TRANSACTION_FAILED:
+      currentIndex = 5;
+      break;
+  }
+  return {
+    currentIndex,
+    dataList
+  };
 }
