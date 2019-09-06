@@ -8,8 +8,8 @@ export default function InspectionWrapper(props: any) {
   const innerProps: any = {
     order: {
       inspectionInfo: {
-        // diffStatus: "fail",
-        diffStatus: "success",
+        diffStatus: "fail",
+        // diffStatus: "success",
         differenceText: "differenceText",
         amount: "amount",
         revisedPrice: "revisedPrice",
@@ -48,13 +48,17 @@ class Inspection extends React.Component<IOrderProps> {
         {isMatch && (
           <section>
             <ul className="information-list">
-              <li>
+              <li className="price-view">
                 <span>Price Guarantee</span>
-                <span>${inspectionInfo.amount}</span>
+                <span data-matched={true ? "true" : "false"}>
+                  ${inspectionInfo.amount}
+                </span>
               </li>
               <li>
                 <span>Congratulations!</span>
-                <span>The condition you selected matches our inspection result.</span>
+                <span>
+                  The condition you selected matches our inspection result.
+                </span>
               </li>
             </ul>
           </section>
@@ -65,10 +69,10 @@ class Inspection extends React.Component<IOrderProps> {
               <div className="revised-line">
                 <h3>Your revised offer is</h3>
                 <div>
-              <span>
-                {priceUnit}
-                {`after price`}
-              </span>
+                  <span>
+                    {priceUnit}
+                    {`after price`}
+                  </span>
                 </div>
               </div>
               <div className="accept-line">
@@ -81,8 +85,8 @@ class Inspection extends React.Component<IOrderProps> {
             </section>
             <section className="video-part">
               <p>
-                We had to revise your offer based on the following results during
-                our inspection process
+                We had to revise your offer based on the following results
+                during our inspection process
               </p>
               <video className="comp-video" />
               <span className="tips">{`View Inspection Result >`}</span>
