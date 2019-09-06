@@ -12,7 +12,7 @@ class Dot extends React.Component<IDot> {
     let childCls = "child-mark";
     if (this.props.isCurrent) {
       cls = cls + " dot-current";
-      childCls = childCls + " child-mark-current";
+      childCls = childCls + " child-mark-current" + " current";
     }
     return (
       <div className={cls}>
@@ -37,7 +37,7 @@ class ProgressBar extends React.Component<{ data: IProgressData }> {
       <div className={cls.join(" ")}>
         {props.dataList.map((t, i) => (
           <Dot
-            isActive={i < props.currentIndex + 1}
+            isActive={true}
             key={i}
             isCurrent={i === props.currentIndex}
           >

@@ -1,10 +1,25 @@
-.comp-order-progressBar {
-  height: 192px;
-  background-color: #383d50;
-  display: flex;
-  padding: 0 63px;
-  align-items: center;
+@import (reference) "~@/styles/index.less";
 
+.comp-order-progressBar {
+  margin: 0 -15px;
+  height: 192px;
+  display: flex;
+  padding: 0;
+  align-items: center;
+  padding-bottom: 31px;
+  border-bottom: 1px solid @color-border;
+  .current {
+    .font(14px, 500, #131339);
+  }
+
+  .title {
+    color: #848484;
+  }
+
+  .date {
+    font-size: 10px;
+    color: #7E8396;
+  }
   .dot {
     flex: 1;
     height: 100%;
@@ -59,22 +74,12 @@
 
     &.dot-active {
       .dot-icon {
-        background-color: #00cfff;
+        background-color: #848484;
       }
 
       &::before,
       &::after {
-        background-color: #00cfff;
-      }
-
-      &.dot-current {
-        &::after {
-          background-color: #bbbbbb !important;
-        }
-      }
-
-      .title {
-        color: #fff;
+        background-color: #848484;
       }
     }
 
@@ -111,28 +116,12 @@
 
         .title {
           margin-top: 15px;
-          font-weight: bold;
         }
       }
     }
   }
 
   // children css propertities
-  .title {
-    font-size: 14px;
-    font-family: HelveticaNeue;
-    color: #bbb;
-    line-height: 14px;
-  }
-
-  .date {
-    font-size: 10px;
-    font-family: HelveticaNeue;
-    color: #ebedf0;
-    line-height: 10px;
-    margin-top: 11px;
-  }
-
   .icon {
     width: 44px;
     height: 44px;
@@ -147,6 +136,7 @@
 
 .ismobile {
   .comp-order-progressBar {
+    margin: 0 -0.15rem;
     height: 1.3rem;
     padding: 0;
     display: block;
@@ -198,13 +188,7 @@
           font-size: 0.12rem;
           line-height: 0.16rem;
         }
-
-        .date {
-          margin-top: 0.04rem;
-          font-size: 0.1rem;
-          line-height: 0.1rem;
-          color: rgba(235, 237, 240, 1);
-        }
+        
       }
 
       .currentMark {
