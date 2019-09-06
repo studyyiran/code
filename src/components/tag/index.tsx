@@ -1,20 +1,17 @@
-import * as React from 'react';
-import './index.less';
+import * as React from "react";
+import "./index.less";
 
-interface ITagProps {
-    type: string;
-    text: string;
-    className?: string;
+export default function Tag(props: any) {
+  return (
+    <span
+      className={
+        "comp-tag " +
+        (props.isDifferent ? "fail" : "success") +
+        " " +
+        props.className
+      }
+    >
+      {props.differentReason}
+    </span>
+  );
 }
-
-class Tag extends React.Component<ITagProps>{
-    public render() {
-        return (
-            <span className={"comp-tag " + (this.props.type ? "fail" : "success") + " " + this.props.className}>
-                {this.props.text}
-            </span>
-        );
-    }
-}
-
-export default Tag;

@@ -3,33 +3,18 @@ import { IOrderProps } from "@/containers/order/interface/order.inerface";
 import "./inspection.less";
 import Tag from "@/components/tag";
 import TipsIcon from "@/pages/sell/selectModelProcess/components/tipsIcon";
+import CheckInspectDiff from '../container/components/checkInspectDiff'
+
 const priceUnit = "$";
 export default function InspectionWrapper(props: any) {
   const { inquiryInfo } = props;
   const { submitted, revised, isDifferent, differentReason } = inquiryInfo;
-  // const innerProps: any = {
-  //   order: {
-  //     inspectionInfo: {
-  //       // diffStatus: "fail",
-  //       diffStatus: "success",
-  //       differenceText: "differenceText",
-  //       amount: "amount",
-  //       revisedPrice: "revisedPrice",
-  //       productName: "productName",
-  //       differentCondition: [1, 2, 3, 4, 5]
-  //     },
-  //     paymentInfo: {
-  //       priceGuaranteeStatus: "priceGuaranteeStatus",
-  //       priceGuarantee: "priceGuarantee"
-  //     }
-  //   }
-  // };
   const innerProps = {
     order: {
       inquiryInfo: {
-        isDifferent: true,
+        isDifferent: isDifferent,
         differentReason,
-        price: revised.amount
+        price: revised ? revised.amount : submitted.amount
       }
     }
   };
@@ -45,10 +30,6 @@ class Inspection extends React.Component<any> {
   public render() {
     const { inquiryInfo } = this.props.order;
     const { isDifferent, differentReason, price } = inquiryInfo;
-    const tag = {
-      type: isDifferent,
-      text: differentReason
-    };
 
     function renderAcceptLine() {
       return (
@@ -66,7 +47,7 @@ class Inspection extends React.Component<any> {
       <div className="page-difference">
         <section className="line-with-title">
           <h3>Inspection Result</h3>
-          <Tag {...tag} />
+          <Tag isDifferent={isDifferent} differentReason={differentReason} />
         </section>
         {!isDifferent && (
           <section>
@@ -107,7 +88,7 @@ class Inspection extends React.Component<any> {
                 during our inspection process
               </p>
               <video className="comp-video" />
-              <span className="tips">{`View Inspection Result >`}</span>
+              <CheckInspectDiff />
               <div className="mb-ele">{renderAcceptLine()}</div>
             </section>
           </div>

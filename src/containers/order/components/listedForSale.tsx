@@ -6,39 +6,34 @@ import InspectPart from "../container/components/inspectPart";
 import ResultPart from "../container/components/resultPart";
 import "./listedForSale.less";
 
-export default function() {
-  const fakeProps: any = {
+export default function(props: any) {
+  const { inquiryInfo } = props;
+  const { submitted, revised, isDifferent, differentReason } = inquiryInfo;
+  const innerProps = {
     order: {
-      inspectionInfo: {
-        // diffStatus: "fail",
-        diffStatus: "success",
-        differenceText: "differenceText",
-        amount: "amount",
-        revisedPrice: "revisedPrice",
-        productName: "productName",
-        differentCondition: [1, 2, 3, 4, 5]
-      },
-      paymentInfo: {
-        priceGuaranteeStatus: "priceGuaranteeStatus",
-        priceGuarantee: "priceGuarantee"
+      inquiryInfo: {
+        isDifferent: isDifferent,
+        differentReason,
+        price: revised.amount
       }
     }
   };
-  return <ListedForSale {...fakeProps} />;
+  return <ListedForSale {...innerProps} />;
 }
 
-class ListedForSale extends React.Component<IOrderProps> {
+class ListedForSale extends React.Component<any> {
   public render() {
-    const inspectionInfo = this.props.order.inspectionInfo;
+    const { inquiryInfo } = this.props.order;
+    const { isDifferent, differentReason, price } = inquiryInfo;
     const tag = {
-      type: inspectionInfo.diffStatus,
-      text: inspectionInfo.differenceText
+      type: isDifferent,
+      text: differentReason
     };
-    const paymentInfo = this.props.order.paymentInfo;
+    // const paymentInfo = this.props.order.paymentInfo;
     return (
       <div className="comp-order-lisedForSale">
         <ResultPart />
-        <InspectPart />
+        <InspectPart {...inquiryInfo} />
       </div>
     );
   }
