@@ -54,8 +54,8 @@ function useGetAction(
   const actions: IContextActions = {
     getAjax: promisify(async function(a: any, b: any) {
       try {
-        let res = await getOrderDetail(a, b);
-        res = checkforordermock;
+        // const res = await getOrderDetail(a, b);
+        const res = checkforordermock;
         // 然后还需要获取订单物流信息
         dispatch({ type: reducerActionTypes.setTotalOrderInfo, value: res });
         return res;

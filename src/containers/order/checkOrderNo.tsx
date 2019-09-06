@@ -7,12 +7,12 @@ import {
   ITotalOrderInfoContext
 } from "./container/context";
 
-const nextUrl = "/order";
+const nextUrl = "/neworder";
 
-export default function CheckOrderNoContainer() {
+export default function CheckOrderNoContainer(props: any) {
   const totalOrderInfoContext = useContext(TotalOrderInfoContext);
   const { getAjax } = totalOrderInfoContext as ITotalOrderInfoContext;
-  return <CheckOrderNo getAjax={getAjax} />;
+  return <CheckOrderNo getAjax={getAjax} {...props} />;
 }
 
 @inject("order")
