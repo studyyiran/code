@@ -25,7 +25,7 @@ export const checkforordermock = {
   subOrders: [
     {
       subOrderNo: "20190902190345905377",
-      subOrderStatus: "DIFFERENCE_INSPECTED",
+      subOrderStatus: "LISTED_FOR_SALE",
       sendTrackingNo: "92612902416755000000000014",
       returnTrackingNo: null,
       subOrderStatusDisplayName: "Listed for Sale",
@@ -211,7 +211,7 @@ export const checkforordermock = {
     },
     {
       subOrderNo: "20190902190345256323",
-      subOrderStatus: "TO_BE_SHIPPED",
+      subOrderStatus: "DIFFERENCE_INSPECTED",
       sendTrackingNo: "92612902416755000000000014",
       returnTrackingNo: null,
       subOrderStatusDisplayName: "Order Placed",
