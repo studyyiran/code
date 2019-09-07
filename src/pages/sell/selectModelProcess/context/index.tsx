@@ -430,6 +430,7 @@ export function ModelContextProvider(props: any) {
   useEffect(() => {
     action.getProductsList();
   }, [action.getProductsList]);
+  // 询价条件变化，拉去新的价格
   useEffect(() => {
     action.getPriceInfo();
   }, [action.getPriceInfo]);
