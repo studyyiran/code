@@ -206,12 +206,11 @@ export function ConditionForm(props: IConditionForm) {
   const extraQuestion: number = 1;
   function renderLeftPic() {
     const { brand: brandId, modelInfo } = selectModelContextValue;
-    const { carrierId, modelId, storageId } = modelInfo;
+    const { modelId, othersAttr } = modelInfo;
     const nameConfig = getNameInfo({
       brandId,
-      carrierId,
       modelId,
-      storageId
+      othersAttr
     });
     return <img className="product-bg" src={nameConfig.imgUrl} />;
   }
@@ -219,59 +218,59 @@ export function ConditionForm(props: IConditionForm) {
     <div className="page-condition">
       {renderLeftPic()}
       <div>
-      <Collapse activeKey={[maxActiveKey].concat(editKey).concat(showKey)}>
-        <PhoneInfoWrapper
-          key={firstQuestionKey}
-          renderComponent={({
-            phoneInfoHandler,
-            phoneInfoQuestion,
-            phoneInfoAnswer,
-            ...otherProps
-          }: any) => {
+        <Collapse activeKey={[maxActiveKey].concat(editKey).concat(showKey)}>
+          <PhoneInfoWrapper
+            key={firstQuestionKey}
+            renderComponent={({
+              phoneInfoHandler,
+              phoneInfoQuestion,
+              phoneInfoAnswer,
+              ...otherProps
+            }: any) => {
+              return (
+                <WrapperPanel
+                  {...otherProps}
+                  onSetShowKey={setShowKey}
+                  isContinue={true}
+                  continueNextStep={nextStep}
+                  onUserInputHandler={phoneInfoHandler}
+                  status={getStatus(firstQuestionKey)}
+                  onClickPanel={onClickPanelHandler}
+                  index={extraQuestion}
+                  total={phoneConditionQuestion.length + extraQuestion}
+                  key={firstQuestionKey}
+                  questionInfo={phoneInfoQuestion}
+                  answerInfo={phoneInfoAnswer}
+                />
+              );
+            }}
+          />
+          {phoneConditionQuestion.map((question: IQuestion, index) => {
+            const { id } = question;
+            // 外面设置 还是里面设置 谁更合理？谁该负责？里面进行参数缺省更加合理。
+            // 这两个WrapperPanel是否可以通用？
+            const answerInfo = phoneConditionAnswer.find(
+              userAnswer => userAnswer.id === id
+            );
             return (
               <WrapperPanel
-                {...otherProps}
                 onSetShowKey={setShowKey}
-                isContinue={true}
+                isContinue={!isNoContinue(question, phoneConditionAnswer)}
                 continueNextStep={nextStep}
-                onUserInputHandler={phoneInfoHandler}
-                status={getStatus(firstQuestionKey)}
+                onUserInputHandler={(value: any) => {
+                  dispatch({ type: "setAnswerArr", value: value });
+                }}
+                status={getStatus(id)}
                 onClickPanel={onClickPanelHandler}
-                index={extraQuestion}
+                index={index + extraQuestion + 1}
                 total={phoneConditionQuestion.length + extraQuestion}
-                key={firstQuestionKey}
-                questionInfo={phoneInfoQuestion}
-                answerInfo={phoneInfoAnswer}
+                key={id}
+                questionInfo={question}
+                answerInfo={answerInfo}
               />
             );
-          }}
-        />
-        {phoneConditionQuestion.map((question: IQuestion, index) => {
-          const { id } = question;
-          // 外面设置 还是里面设置 谁更合理？谁该负责？里面进行参数缺省更加合理。
-          // 这两个WrapperPanel是否可以通用？
-          const answerInfo = phoneConditionAnswer.find(
-            userAnswer => userAnswer.id === id
-          );
-          return (
-            <WrapperPanel
-              onSetShowKey={setShowKey}
-              isContinue={!isNoContinue(question, phoneConditionAnswer)}
-              continueNextStep={nextStep}
-              onUserInputHandler={(value: any) => {
-                dispatch({ type: "setAnswerArr", value: value });
-              }}
-              status={getStatus(id)}
-              onClickPanel={onClickPanelHandler}
-              index={index + extraQuestion + 1}
-              total={phoneConditionQuestion.length + extraQuestion}
-              key={id}
-              questionInfo={question}
-              answerInfo={answerInfo}
-            />
-          );
-        })}
-      </Collapse>
+          })}
+        </Collapse>
         {maxActiveKey === "allFinish" ? (
           <button
             onClick={() => {

@@ -33,8 +33,8 @@ export function PhoneInfoWrapper(props: any) {
     }
   }
   // 不可变类型 不然无法监听变化
-  const answer1 = JSON.parse(JSON.stringify(staticPhoneInfoQuestion[0]))
-  const answer2 = JSON.parse(JSON.stringify(staticPhoneInfo[0]))
+  const answer1 = JSON.parse(JSON.stringify(staticPhoneInfoQuestion[0]));
+  const answer2 = JSON.parse(JSON.stringify(staticPhoneInfo[0]));
   answer1.subQuestionArr = staticPhoneInfoQuestion[0].subQuestionArr.map(
     item => {
       const { id } = item;
@@ -47,48 +47,46 @@ export function PhoneInfoWrapper(props: any) {
           return { ...item, questionDesc: productsList };
           break;
         }
-        case "storage": {
-          // 根据xx计算得出
-          return { ...item, questionDesc: justGetAttrArr() };
-          break;
-        }
-        case "carrier": {
-          // 缺少运营商的数据
-          return { ...item, questionDesc: justGetAttrArr() };
-          break;
-        }
+        // case "storage": {
+        //   // 根据xx计算得出
+        //   return { ...item, questionDesc: justGetAttrArr() };
+        //   break;
+        // }
+        // case "carrier": {
+        //   // 缺少运营商的数据
+        //   return { ...item, questionDesc: justGetAttrArr() };
+        //   break;
+        // }
         default:
           break;
       }
       return { ...item, questionDesc: [] };
     }
   );
-  answer2.subAnswerArr = staticPhoneInfo[0].subAnswerArr.map(
-    item => {
-      const { id } = item;
-      switch (id) {
-        case "manufacture": {
-          return { ...item, answer: [brand] };
-          break;
-        }
-        case "model": {
-          return { ...item, answer: [modelInfo.modelId] };
-          break;
-        }
-        case "storage": {
-          return { ...item, answer: [modelInfo.storageId] };
-          break;
-        }
-        case "carrier": {
-          return { ...item, answer: [modelInfo.carrierId] };
-          break;
-        }
-        default:
-          break;
+  answer2.subAnswerArr = staticPhoneInfo[0].subAnswerArr.map(item => {
+    const { id } = item;
+    switch (id) {
+      case "manufacture": {
+        return { ...item, answer: [brand] };
+        break;
       }
-      return { ...item, answer: [brand] };
+      case "model": {
+        return { ...item, answer: [modelInfo.modelId] };
+        break;
+      }
+      // case "storage": {
+      //   return { ...item, answer: [modelInfo.storageId] };
+      //   break;
+      // }
+      // case "carrier": {
+      //   return { ...item, answer: [modelInfo.carrierId] };
+      //   break;
+      // }
+      default:
+        break;
     }
-  );
+    return { ...item, answer: [brand] };
+  });
   const {
     selectModelContextDispatch: selectModelDispatch
   } = selectModelContext as ISelectModelContext;
@@ -105,18 +103,16 @@ export function PhoneInfoWrapper(props: any) {
           value: { modelId: answer[0] }
         });
         break;
-      case "storage":
+      default:
         selectModelDispatch({
           type: "setModelInfo",
-          value: { storageId: answer[0] }
+          value: {
+            othersAttr: {
+              attrValue: answer[0],
+              attrType: answerId
+            }
+          }
         });
-        break;
-      case "carrier":
-        selectModelDispatch({
-          type: "setModelInfo",
-          value: { carrierId: answer[0] }
-        });
-        break;
     }
   }
   return renderComponent({

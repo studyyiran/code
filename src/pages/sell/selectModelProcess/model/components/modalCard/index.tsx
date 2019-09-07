@@ -9,26 +9,14 @@ import { IReducerAction } from "@/interface/index.interface";
 //   CARRIER_ID: "carrierID"
 // };
 
-function reducer(state: IContextState, action: IReducerAction) {
+function reducer(state: any, action: IReducerAction) {
   const { type, value } = action;
   const newState = { ...state };
   switch (type) {
-    case "storageId": {
-      newState.storageId = value;
-      break;
-    }
-    case "carrierId": {
-      newState.carrierId = value;
-      break;
-    }
     default:
+      newState[type] = value;
   }
   return newState;
-}
-
-interface IContextState {
-  storageId: string;
-  carrierId: string;
 }
 
 export default function ModelCard(props: any) {
@@ -37,28 +25,29 @@ export default function ModelCard(props: any) {
     photo: imageUrl,
     displayName: modelName,
     isSelect,
-    phoneInfoQuestion,
+    list: phoneInfoQuestion,
     phoneInfoHandler,
     phoneInfoAnswer
   } = props;
 
   // 暂时放在这里。 其实可以考虑提升。
-  const initState: IContextState = {
-    storageId: "",
-    carrierId: ""
-  };
+  const initState: any = {};
   const [attrState, attrStateDispatch] = useReducer(reducer, initState);
 
   // canPost?
   useEffect(() => {
-    if (attrState.storageId && attrState.carrierId) {
-      phoneInfoHandler({
-        answerId: "storage",
-        answer: [Number(attrState.storageId)]
-      });
-      phoneInfoHandler({
-        answerId: "carrier",
-        answer: [Number(attrState.carrierId)]
+    const findEmpty = phoneInfoQuestion.find((item: any) => {
+      const key = item.id;
+      const result = attrState && attrState[key];
+      return !result;
+    });
+    if (!findEmpty) {
+      phoneInfoQuestion.forEach((item: any) => {
+        const key = item.id;
+        phoneInfoHandler({
+          answerId: key,
+          answer: [Number(attrState[key])]
+        });
       });
     }
   }, [attrState]);
@@ -87,7 +76,7 @@ export default function ModelCard(props: any) {
       <li className="container">
         <h2>{title}</h2>
         <ul key={title} className="one-attr-container">
-          {arr.map(({ name, id: propertyId }: any) => {
+          {arr.map(({ displayName: name, id: propertyId }: any) => {
             return (
               <li
                 className="one-attr-option"
@@ -97,7 +86,7 @@ export default function ModelCard(props: any) {
                 }
                 onClick={() => {
                   attrStateDispatch({
-                    type: `${attrKey}Id`,
+                    type: attrKey,
                     value: [propertyId]
                   });
                 }}
@@ -112,22 +101,20 @@ export default function ModelCard(props: any) {
   }
   function renderByIsSelect() {
     if (isSelect) {
-      const storageArr = findArrByKey(phoneInfoQuestion, "storage");
-      const carrierArr = findArrByKey(phoneInfoQuestion, "carrier");
+      // const storageArr = findArrByKey(phoneInfoQuestion, "storage");
+      // const carrierArr = findArrByKey(phoneInfoQuestion, "carrier");
       return (
         <ul className="attr-panel-container">
-          {renderAttrSelectList(
-            "Size",
-            "storage",
-            storageArr,
-            attrState.storageId
-          )}
-          {renderAttrSelectList(
-            "Carrier",
-            "carrier",
-            carrierArr,
-            attrState.carrierId
-          )}
+          {phoneInfoQuestion.map((item: any) => {
+            const { displayName, id, propertyValue } = item;
+            // const renderArr = findArrByKey(phoneInfoQuestion, id);
+            return renderAttrSelectList(
+              displayName,
+              id,
+              propertyValue,
+              attrState[id]
+            );
+          })}
         </ul>
       );
     } else {

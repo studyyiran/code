@@ -98,24 +98,19 @@ export default function Sell(props: any) {
           return item.id === brand;
         });
         if (findTarget) {
-          if (modelInfo.modelId && modelInfo.carrierId && modelInfo.storageId) {
+          // 暂时不判断过多的。信任页面的判断
+          if (modelInfo.modelId) {
             const nameConfig = getNameInfo({
               brandId: brand,
               modelId: modelInfo.modelId,
-              storageId: modelInfo.storageId,
-              carrierId: modelInfo.carrierId
+              othersAttr: modelInfo.othersAttr
             });
-            const {
-              modelName,
-              storageName,
-              carrierName
-            } = nameConfig.modelInfoName;
-            const next =
-              props.match.url +
-              "/" +
-              findTarget.name +
-              `/${modelName}-${storageName}-${carrierName}`;
-
+            const { modelName, othersAttrName } = nameConfig.modelInfoName;
+            let next =
+              props.match.url + "/" + findTarget.name + `/${modelName}`;
+            Object.keys(othersAttrName).forEach((key: any) => {
+              next += `-${othersAttrName[key]}`;
+            });
             props.history.push(removeAllSpace(next));
           }
         }
@@ -204,19 +199,25 @@ export default function Sell(props: any) {
     const { pageKey } = item;
     const result = { ...item, ...routerConfig[pageKey] };
     if (pageKey === "condition") {
-      const { carrierId, modelId, storageId } = modelInfo;
+      const { othersAttr, modelId } = modelInfo;
       const nameConfig = getNameInfo({
         brandId: brand,
-        carrierId,
         modelId,
-        storageId
+        othersAttr
       });
       if (nameConfig && nameConfig.modelInfoName) {
-        const {modelName, storageName, carrierName} = nameConfig.modelInfoName
-        return {...result, title: `Sell My${modelName} ${storageName} ${carrierName}`}
+        const { modelName, othersAttrName } = nameConfig.modelInfoName;
+        let next = `Sell My${modelName}`;
+        Object.keys(othersAttrName).forEach((key: any) => {
+          next += ` ${othersAttrName[key]}`;
+        });
+        return {
+          ...result,
+          title: next
+        };
       }
     }
-    return {...result}
+    return { ...result };
   });
 
   return (

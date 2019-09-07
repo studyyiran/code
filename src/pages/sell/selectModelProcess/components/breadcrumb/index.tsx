@@ -35,8 +35,11 @@ function Breadcrumb(props: any) {
       }
     }
     name = append(name, nameObj.modelInfoName.modelName);
-    name = append(name, nameObj.modelInfoName.storageName);
-    name = append(name, nameObj.modelInfoName.carrierName);
+
+    const { othersAttrName } = nameObj.modelInfoName;
+    Object.keys(othersAttrName).forEach((key: any) => {
+      name = append(name, othersAttrName[key]);
+    });
     return name;
   }
   function clickHandler(e: any) {

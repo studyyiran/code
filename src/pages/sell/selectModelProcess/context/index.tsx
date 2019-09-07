@@ -73,8 +73,7 @@ function reducer(state: IContextState, action: IReducerAction) {
           brand: value,
           modelInfo: {
             modelId: "",
-            storageId: "",
-            carrierId: ""
+            othersAttr: {}
           }
         };
       }
@@ -87,12 +86,18 @@ function reducer(state: IContextState, action: IReducerAction) {
         value.modelId &&
         value.modelId !== newState.modelInfo.modelId
       ) {
-        value.storageId = "";
-        value.carrierId = "";
+        value.othersAttr = {};
+      }
+      const next: any = {};
+      if (value.othersAttr) {
+        const { attrValue, attrType } = value.othersAttr;
+        next.othersAttr[attrType] = attrValue;
+      } else if (value.modelId) {
+        next.modeId = value.modelId;
       }
       newState = {
         ...newState,
-        modelInfo: { ...newState.modelInfo, ...value }
+        modelInfo: { ...newState.modelInfo, ...next }
       };
       break;
     }
@@ -141,8 +146,7 @@ function reducer(state: IContextState, action: IReducerAction) {
         newState = Object.assign({}, newState, {
           modelInfo: {
             modelId: "",
-            storageId: "",
-            carrierId: ""
+            othersAttr: {}
           },
           // categoryId: "",// 不需要
           brand: "",
@@ -192,8 +196,7 @@ interface IContextActions {
     imgUrl: string;
     modelInfoName: {
       modelName: string;
-      storageName: string;
-      carrierName: string;
+      othersAttrName: any;
     };
   };
   getInquiryByIds: () => any;
@@ -236,17 +239,14 @@ function useGetAction(
     getInquiryByIds: promisify(async function() {
       const { brand, categoryId, modelInfo } = state;
       if (brand && categoryId && modelInfo) {
-        const { modelId, storageId, carrierId } = modelInfo;
+        const { modelId, othersAttr } = modelInfo;
         const inquiryInfoInfo = {
           categoryId,
           brandId: brand,
           productId: modelId,
-          bpvIds: [
-            {
-              id: storageId
-            },
-            { id: carrierId }
-          ],
+          bpvIds: Object.keys(othersAttr).map((key: any) => ({
+            id: othersAttr[key]
+          })),
           qpvIds: [
             {
               id: 1
@@ -299,14 +299,13 @@ function useGetAction(
     },
     getNameInfo: function(config: any) {
       const { brandList, productsList } = state;
-      const { brandId, modelId, storageId, carrierId } = config;
+      const { brandId, modelId, othersAttr } = config;
       const nameConfig = {
         brandName: "",
         imgUrl: "https://sr.aihuishou.com/image/5ba3685de38bb01c30000054.png",
         modelInfoName: {
           modelName: "",
-          storageName: "",
-          carrierName: ""
+          othersAttrName: {}
         }
       };
       nameConfig.brandName = (
@@ -318,28 +317,10 @@ function useGetAction(
       if (product) {
         nameConfig.imgUrl = product.imageUrl;
         nameConfig.modelInfoName.modelName = product.name;
-        const a =
-          product &&
-          product.skuPricePropertyNames &&
-          product.skuPricePropertyNames[0];
-        const b =
-          product &&
-          product.skuPricePropertyNames &&
-          product.skuPricePropertyNames[0];
-        if (a) {
-          nameConfig.modelInfoName.storageName = (
-            a.pricePropertyValues.find(
-              (item: any) => item.id === storageId
-            ) || { value: "" }
-          ).value;
-        }
-        if (b) {
-          nameConfig.modelInfoName.carrierName = (
-            b.pricePropertyValues.find(
-              (item: any) => item.id === carrierId
-            ) || { value: "" }
-          ).value;
-        }
+        product.list.forEach((item: any) => {
+          const { id } = item;
+          nameConfig.modelInfoName.othersAttrName[id] = othersAttr[id];
+        });
       }
       return nameConfig;
     }
@@ -363,8 +344,7 @@ function useGetAction(
 
 interface IModelInfo {
   modelId: string;
-  storageId: string;
-  carrierId: string;
+  othersAttr: any;
 }
 
 interface IContextState {
@@ -390,8 +370,7 @@ export function ModelContextProvider(props: any) {
     brandList: [],
     modelInfo: {
       modelId: "",
-      storageId: "",
-      carrierId: ""
+      othersAttr: {}
     },
     productsList: [],
     userProductList: [],
