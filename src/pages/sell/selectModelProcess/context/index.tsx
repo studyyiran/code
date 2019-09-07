@@ -8,7 +8,9 @@ import { IReducerAction } from "@/interface/index.interface";
 import {
   getBrandsByCid,
   getExpressFee,
-  getProductsList
+  getProductsList,
+  getinquirybyids,
+  getinquirybykeys
 } from "../server/index.api";
 import { mockgetinquirybykeys } from "../../mock";
 
@@ -223,56 +225,48 @@ function useGetAction(
     getPriceInfo: promisify(async function() {
       if (state.userProductList && state.userProductList.length) {
         const keys = actions.getInquiryKeyList();
-        // const productsList = await getProductsList(
-        //   state.brand,
-        //   state.categoryId
-        // );
         // mock根据keyarray获取 最新的报价列表
+        const info: any = await getinquirybykeys(keys);
         window.setTimeout(() => {
           const rNumber = Math.random();
           dispatch({
             type: "setPriceInfo",
-            value: {
-              ...mockgetinquirybykeys,
-              resultList: state.userProductList.map(
-                (item: any, index: number) => {
-                  const { brand: brandId, modelInfo } = item;
-                  const { carrierId, modelId, storageId } = modelInfo;
-                  return {
-                    ...mockgetinquirybykeys.resultList[0],
-                    inquiryKey: item.inquiryKey,
-                    brandName: "手机品牌" + brandId,
-                    productName: "手机型号" + modelId,
-                    bpvIds: [
-                      {
-                        name: '手机内存' + storageId
-                      },
-                      {
-                        name: '运营商' + carrierId
-                      },
-                    ]
-                  };
-                }
-              )
-            }
+            value: info
           });
         }, 400);
       }
     }),
     getInquiryByIds: promisify(async function() {
-      const { brand, categoryId } = state;
-      if (brand && categoryId) {
+      const { brand, categoryId, modelInfo } = state;
+      if (brand && categoryId && modelInfo) {
+        const { modelId, storageId, carrierId } = modelInfo;
+        const inquiryInfoInfo = {
+          categoryId,
+          brandId: brand,
+          productId: modelId,
+          bpvIds: [
+            {
+              id: storageId
+            },
+            { id: carrierId }
+          ],
+          qpvIds: [
+            {
+              id: 1
+            },
+            {
+              id: 2
+            }
+          ]
+        };
         // 用机型信息获取询价
-        const productsList = await getProductsList(
-          state.brand,
-          state.categoryId
-        );
-        const InquiryKey = String(Math.random());
+        const info: any = await getinquirybyids(inquiryInfoInfo);
+        const { inquiryKey } = info;
         dispatch({
           type: "updateUserProductListSetInquiryKey",
-          value: InquiryKey
+          value: inquiryKey
         });
-        return InquiryKey;
+        return inquiryKey;
       } else {
         return Promise.reject("no brand");
       }

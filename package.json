@@ -201,6 +201,14 @@
         "/up-api": ""
       }
     },
+    "/api": {
+      "target": "http://10.180.11.106:9003",
+      "ws": true,
+      "changeOrigin": true,
+      "pathRewrite": {
+        "/api": ""
+      }
+    },
     "/mock": {
       "target": "http://staging-mock.aihuishou.com/mock/5c60eef60d75f12b20535a6f/uptradeit/crm",
       "ws": true,

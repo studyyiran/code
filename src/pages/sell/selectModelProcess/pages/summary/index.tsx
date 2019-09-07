@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { inject, observer } from "mobx-react";
-import {Modal, Checkbox} from "antd";
+import { Modal, Checkbox } from "antd";
 import Information from "../information";
 import PaymentPage from "../payment";
 import ChangeModal from "@/containers/aboutphone/components/changemodal";
@@ -242,7 +242,7 @@ export default class Summary extends React.Component<IDoneProps, IDoneStates> {
         >
           By checking this box, you agree to our{" "}
         </Checkbox>
-        
+
         {this.props.common.isMobile ? (
           <Link to="/terms" className="highlight" target="_blank">
             Terms of &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Service{" "}
@@ -395,6 +395,32 @@ export default class Summary extends React.Component<IDoneProps, IDoneStates> {
         }
       );
     } else {
+      // 临时func
+      // userInfo
+      const {
+        userEmail,
+        firstName,
+        lastName,
+        addressLine: street,
+        addressLineOptional: apartment,
+        city,
+        state,
+        zipCode,
+        country,
+        mobile: userPhone
+      } = this.props.yourphone.addressInfo;
+      const userInfo = {
+        userEmail,
+        firstName,
+        lastName,
+        city,
+        state,
+        zipCode,
+        country,
+        userPhone,
+        street,
+        apartment,
+      };
       isOrderCreated = await this.props.yourphone.createOrder();
     }
     this.setState({
