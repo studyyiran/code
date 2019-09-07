@@ -171,7 +171,7 @@ class YourPhone implements IYourPhoneStore {
   @action public getBrandsByCid = async () => {
     let res: IBrands[] = [];
     try {
-      res = await Api.getBrandsByCid<IBrands[]>("1");
+      res = await Api.getBrandsByCid<IBrands[]>(1);
     } catch (error) {
       console.warn(error, "in brand store");
       return false;
@@ -202,8 +202,8 @@ class YourPhone implements IYourPhoneStore {
     let res: IProductModel[] = [];
     try {
       res = await Api.getProductsList<IProductModel[]>(
-        String(this.activeBrandsId),
-        "1"
+        this.activeBrandsId,
+        1
       );
     } catch (error) {
       console.warn(error, "in brand store getProductsList");
