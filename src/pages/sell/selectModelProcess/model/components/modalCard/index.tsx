@@ -34,8 +34,8 @@ interface IContextState {
 export default function ModelCard(props: any) {
   const {
     id: modelId,
-    imageUrl,
-    name: modelName,
+    photo: imageUrl,
+    displayName: modelName,
     isSelect,
     phoneInfoQuestion,
     phoneInfoHandler,

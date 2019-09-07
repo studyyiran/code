@@ -43,7 +43,7 @@ export default function Brand(props: any) {
         return a.order - b.order;
       })
       .map((item: any) => {
-        const { name, id, iconUrl } = item;
+        const { displayName: name, id, goodLogo: iconUrl } = item;
         return (
           <li
             className="brand-icon-container"

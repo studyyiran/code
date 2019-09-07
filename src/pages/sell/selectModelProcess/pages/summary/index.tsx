@@ -421,6 +421,17 @@ export default class Summary extends React.Component<IDoneProps, IDoneStates> {
         street,
         apartment,
       };
+      const {payment, echeck: checkInfo, paypal: payPalInfo, expressCarrier: express} = this.props.yourphone
+      const paymentInfo = {
+        payment,
+        checkInfo,
+        payPalInfo,
+      } 
+      const expressInfo = {
+        express,
+        needInsurance: true,
+      }
+      
       isOrderCreated = await this.props.yourphone.createOrder();
     }
     this.setState({

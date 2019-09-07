@@ -6,9 +6,9 @@ import React, {
 } from "react";
 import { IReducerAction } from "@/interface/index.interface";
 import {
-  getBrandsByCid,
+  getBrands,
   getExpressFee,
-  getProductsList,
+  getProducts,
   getinquirybyids,
   getinquirybykeys
 } from "../server/index.api";
@@ -209,17 +209,14 @@ function useGetAction(
   const actions: IContextActions = {
     getBrandList: promisify(async function() {
       if (state.categoryId) {
-        const brandList = await getBrandsByCid(state.categoryId);
-        dispatch({ type: "setBrandList", value: brandList });
+        const res: any = await getBrands(state.categoryId);
+        dispatch({ type: "setBrandList", value: res && res.list });
       }
     }),
     getProductsList: promisify(async function() {
       if (state.categoryId && state.brand) {
-        const productsList = await getProductsList(
-          state.brand,
-          state.categoryId
-        );
-        dispatch({ type: "setProductsList", value: productsList });
+        const res: any = await getProducts(state.brand, state.categoryId);
+        dispatch({ type: "setProductsList", value: res && res.list });
       }
     }),
     getPriceInfo: promisify(async function() {
