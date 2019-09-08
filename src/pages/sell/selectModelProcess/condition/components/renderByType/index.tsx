@@ -33,6 +33,7 @@ export function RenderByType(props: IRenderByType) {
     case "default":
       dom.push(
         <SingleSelect
+          options={questionDesc || []}
           key={subQuestionId}
           onChange={answer => {
             onUserInputHandler({

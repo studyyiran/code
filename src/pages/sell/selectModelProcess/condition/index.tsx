@@ -56,6 +56,7 @@ export function reducer(state: any, action: IReducerAction) {
 }
 
 function test(phoneConditionQuestion: any, phoneConditionAnswer: any) {
+  console.log('look')
   console.log(phoneConditionQuestion);
   console.log(phoneConditionAnswer);
   const staticAnswer: any[] = [];
