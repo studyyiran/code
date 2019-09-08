@@ -102,11 +102,17 @@ function test(phoneConditionQuestion: any, phoneConditionAnswer: any) {
   });
   console.log("finish");
   console.log(staticAnswer);
+  test3(phoneConditionQuestion, staticAnswer);
 }
 
-function test3(question: any, staticAnswer: any, myReducer: any) {
-  let initState: any = {};
-  initState = {};
+function test3(question: any, staticAnswer: any) {
+  debugger;
+  let initState: any = {
+    phoneConditionAnswer: []
+  };
+  initState = {
+    phoneConditionAnswer: []
+  };
   staticAnswer.forEach((item: any) => {
     const { optionId, optionContent } = item;
     const result = {
@@ -148,13 +154,15 @@ function test3(question: any, staticAnswer: any, myReducer: any) {
       }
     });
     if (target) {
-      initState = myReducer(initState, {
-        type: "setAnswerArr",
-        value: result
-      });
+      initState.phoneConditionAnswer = updateReducerValue(
+        initState.phoneConditionAnswer,
+        result.questionId,
+        result.answerId,
+        result.answer
+      );
     }
   });
-  console.log()
+  console.log(initState);
 }
 
 function test2(staticAnswer: any, staticQuestion: any) {
