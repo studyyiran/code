@@ -10,7 +10,8 @@ import {
   getExpressFee,
   getProducts,
   getinquirybyids,
-  getinquirybykeys
+  getinquirybykeys,
+  createOrderStart
 } from "../server/index.api";
 import { mockgetinquirybykeys } from "../../mock";
 
@@ -205,6 +206,7 @@ interface IContextActions {
   };
   getInquiryByIds: () => any;
   getExpressFee: () => any;
+  createOrderStart: () => any;
   getInquiryKeyList: () => any;
   removeFromList: (key: any) => any;
 }
@@ -279,9 +281,27 @@ function useGetAction(
     }),
     getExpressFee: promisify(async function() {
       const keys = actions.getInquiryKeyList();
-      const productsList = await getExpressFee(keys);
-      return productsList;
+      try {
+        const productsList = await getExpressFee({ inquieyKeys: keys });
+        return productsList;
+      } catch (e) {
+        console.log(e);
+        alert("wrong!");
+        return e;
+      }
     }),
+    createOrderStart: promisify(async function(postData: any) {
+      const keys = actions.getInquiryKeyList();
+      try {
+        const res = await createOrderStart(postData);
+        return res;
+      } catch (e) {
+        console.log(e);
+        alert("wrong!");
+        return e;
+      }
+    }),
+
     getInquiryKeyList: function() {
       const keys = state.userProductList.map(item => item.inquiryKey);
       if (keys && keys.length) {

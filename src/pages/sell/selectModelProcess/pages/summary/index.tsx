@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { inject, observer } from "mobx-react";
 import { Modal, Checkbox } from "antd";
@@ -17,10 +17,45 @@ import OrderInfo from "./orderInfo";
 import { noteUserModal } from "@/containers/aboutphone/pageValidate";
 import ButtonGroup from "@/pages/sell/selectModelProcess/components/buttonGroup";
 import RenderCard from "./renderCard";
+import {
+  SelectModelContext,
+  ISelectModelContext
+} from "@/pages/sell/selectModelProcess/context";
+
+export default function SummaryWrapper(props: any) {
+  const selectModelContext = useContext(SelectModelContext);
+  const {
+    selectModelContextValue,
+    createOrderStart
+  } = selectModelContext as ISelectModelContext;
+  const {
+    needInsurance,
+    expressOption,
+    userProductList
+  } = selectModelContextValue;
+  const staticMap = {
+    "1": "THREE_DAYS",
+    "2": "SEVEN_DAYS",
+    "3": "SEND_BOX"
+  };
+  const myProps: any = {
+    needInsurance,
+    createOrderStart,
+    sendBox: staticMap[expressOption.sendDateType] === "SEND_BOX",
+    expreeSendDateType: staticMap[expressOption.sendDateType],
+    subOrders: userProductList.map((item: any) => {
+      return {
+        brandId: item.brand,
+        inquiryKey: item.inquiryKey
+      };
+    })
+  };
+  return <Summary {...myProps} />;
+}
 
 @inject("yourphone", "user", "common")
 @observer
-export default class Summary extends React.Component<IDoneProps, IDoneStates> {
+class Summary extends React.Component<IDoneProps, IDoneStates> {
   public pageRef: React.Component;
   public readonly state: Readonly<IDoneStates> = {
     isChecked: false, // 勾选协议
@@ -395,8 +430,14 @@ export default class Summary extends React.Component<IDoneProps, IDoneStates> {
         }
       );
     } else {
-      // 临时func
-      // userInfo
+      // 整合数据
+      const {
+        needInsurance,
+        sendBox,
+        expreeSendDateType,
+        subOrders,
+        createOrderStart
+      } = this.props as any;
       const {
         userEmail,
         firstName,
@@ -419,20 +460,33 @@ export default class Summary extends React.Component<IDoneProps, IDoneStates> {
         country,
         userPhone,
         street,
-        apartment,
+        apartment
       };
-      const {payment, echeck: checkInfo, paypal: payPalInfo, expressCarrier: express} = this.props.yourphone
+      const {
+        payment,
+        echeck: checkInfo,
+        paypal: payPalInfo,
+        expressCarrier: express
+      } = this.props.yourphone;
       const paymentInfo = {
         payment,
         checkInfo,
-        payPalInfo,
-      } 
+        payPalInfo
+      };
       const expressInfo = {
         express,
-        needInsurance: true,
-      }
-      
-      isOrderCreated = await this.props.yourphone.createOrder();
+        needInsurance
+      };
+      const postData = {
+        sendBox,
+        expreeSendDateType,
+        userInfo,
+        paymentInfo,
+        expressInfo,
+        subOrders
+      };
+      console.log(postData);
+      isOrderCreated = await createOrderStart(postData);
     }
     this.setState({
       loadingComplete: false
