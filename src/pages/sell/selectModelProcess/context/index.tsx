@@ -230,7 +230,7 @@ function useGetAction(
       if (state.userProductList && state.userProductList.length) {
         const keys = actions.getInquiryKeyList();
         // mock根据keyarray获取 最新的报价列表
-        const info: any = await getinquirybykeys(keys);
+        const info: any = await getinquirybykeys({ keys });
         window.setTimeout(() => {
           const rNumber = Math.random();
           dispatch({
@@ -245,20 +245,25 @@ function useGetAction(
       if (brand && categoryId && modelInfo) {
         const { modelId, othersAttr } = modelInfo;
         const inquiryInfoInfo = {
-          categoryId,
-          brandId: brand,
-          productId: modelId,
-          bpvIds: Object.keys(othersAttr).map((key: any) => ({
-            id: othersAttr[key]
-          })),
-          qpvIds: [
-            {
-              id: 1
-            },
-            {
-              id: 2
-            }
-          ]
+          inquirySearch: {
+            categoryId,
+            brandId: brand,
+            productId: modelId,
+            bpvIds: Object.keys(othersAttr).map((key: any) => ({
+              id: othersAttr[key]
+            })),
+            qpvIds: [
+              {
+                id: 1
+              },
+              {
+                id: 3
+              },
+              {
+                id: 5
+              }
+            ]
+          }
         };
         // 用机型信息获取询价
         const info: any = await getinquirybyids(inquiryInfoInfo);
@@ -323,10 +328,8 @@ function useGetAction(
       if (product) {
         nameConfig.imgUrl = product.photo;
         nameConfig.modelInfoName.modelName = product.displayName;
-        debugger;
         product.list.forEach((item: any) => {
           const { id, propertyValue } = item;
-          debugger;
           nameConfig.modelInfoName.othersAttrName[id] = (
             propertyValue.find(
               (attr: any) => String(attr.id) === String(othersAttr[id])

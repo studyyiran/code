@@ -193,20 +193,20 @@
     ]
   },
   "proxy": {
-    "/api": {
-      "target": "http://10.180.11.106:9003",
-      "ws": true,
-      "changeOrigin": true,
-      "pathRewrite": {
-        "/api": "/api"
-      }
-    },
     "/up-api": {
       "target": "http://47.96.53.33",
       "ws": true,
       "changeOrigin": true,
       "pathRewrite": {
         "/up-api": ""
+      }
+    },
+    "/api": {
+      "target": "http://10.180.11.106:9003",
+      "ws": true,
+      "changeOrigin": true,
+      "pathRewrite": {
+        "/api": "/api"
       }
     },
     "/mock": {

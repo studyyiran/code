@@ -51,7 +51,6 @@ interface ISelect {
 }
 
 export function ChoiceQuestion(props: ISelect) {
-  // debugger;
   const [currentSelect, setCurrentSelect] = useState(props.defaultValue || "");
   const options = props.options;
   const handler = (selectIndex: string) => {

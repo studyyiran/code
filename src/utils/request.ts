@@ -52,7 +52,6 @@ const Request = <T>(opts: IOpts, code?: number[]): Promise<T> => {
   opts.headers = {
     ...opts.headers,
   };
-  // debugger
   // 默认method
   opts.method = (opts.method || 'GET').toLocaleUpperCase();
 

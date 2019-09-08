@@ -19,14 +19,16 @@ export function reducer(state: any, action: IReducerAction) {
   switch (type) {
     case "setAnswerArr": {
       const { questionId, answerId, answer } = value;
+      const arr = updateReducerValue(
+        state.phoneConditionAnswer,
+        questionId,
+        answerId,
+        answer
+      );
+      debugger
       return {
         ...state,
-        phoneConditionAnswer: updateReducerValue(
-          state.phoneConditionAnswer,
-          questionId,
-          answerId,
-          answer
-        )
+        phoneConditionAnswer: arr
       };
     }
     // case "setUserPhoneInfo": {
