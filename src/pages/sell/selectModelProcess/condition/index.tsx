@@ -104,6 +104,25 @@ function test(phoneConditionQuestion: any, phoneConditionAnswer: any) {
   console.log(staticAnswer);
 }
 
+function test3(question: any, staticAnswer: any, myReducer: any) {
+  const initState: any = {};
+  staticAnswer.forEach((item: any) => {
+    const { optionId, optionContent } = item;
+    // 查找对对应的属性。
+    // 1 从现有的树种查找
+    const { phoneConditionAnswer } = initState;
+    // phoneConditionAnswer
+
+    // 2 从问题中查找
+    // question;
+    const { questionId, answerId, answer } = {} as any;
+    myReducer(initState, {
+      type: "setAnswerArr",
+      value: { questionId, answerId, answer }
+    });
+  });
+}
+
 function test2(staticAnswer: any, staticQuestion: any) {
   const arr = [];
   const staticMap = {
