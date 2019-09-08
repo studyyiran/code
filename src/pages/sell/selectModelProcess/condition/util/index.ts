@@ -33,7 +33,7 @@ export function findAnswerById(
   userAnswerInput.forEach(answer => {
     const { subAnswerArr } = answer;
     subAnswerArr.forEach(subAnswer => {
-      if (subAnswer.id === id) {
+      if (String(subAnswer.id) === String(id)) {
         target = subAnswer;
       }
     });
