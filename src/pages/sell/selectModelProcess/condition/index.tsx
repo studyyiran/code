@@ -105,22 +105,56 @@ function test(phoneConditionQuestion: any, phoneConditionAnswer: any) {
 }
 
 function test3(question: any, staticAnswer: any, myReducer: any) {
-  const initState: any = {};
+  let initState: any = {};
+  initState = {};
   staticAnswer.forEach((item: any) => {
     const { optionId, optionContent } = item;
+    const result = {
+      questionId: "",
+      answerId: "",
+      answer: [item]
+    };
     // 查找对对应的属性。
     // 1 从现有的树种查找
     const { phoneConditionAnswer } = initState;
     // phoneConditionAnswer
 
-    // 2 从问题中查找
-    // question;
-    const { questionId, answerId, answer } = {} as any;
-    myReducer(initState, {
-      type: "setAnswerArr",
-      value: { questionId, answerId, answer }
+    // 2 从整合后的问题中查找
+    const target = question.find((parentQuestion: any) => {
+      const { id: parentQuestionId, subQuestionArr } = parentQuestion;
+      if (
+        subQuestionArr.find((subQuestion: any) => {
+          const { id: subQuestionId, questionDesc } = subQuestion;
+          if (
+            questionDesc.find((options: any) => {
+              if (String(options.optionId) === String(optionId)) {
+                return true;
+              } else {
+                return false;
+              }
+            })
+          ) {
+            result.answerId = subQuestionId;
+            return true;
+          } else {
+            return false;
+          }
+        })
+      ) {
+        result.questionId = parentQuestionId;
+        return true;
+      } else {
+        return false;
+      }
     });
+    if (target) {
+      initState = myReducer(initState, {
+        type: "setAnswerArr",
+        value: result
+      });
+    }
   });
+  console.log()
 }
 
 function test2(staticAnswer: any, staticQuestion: any) {
