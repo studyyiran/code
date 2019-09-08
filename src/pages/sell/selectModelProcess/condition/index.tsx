@@ -7,7 +7,7 @@ import { IQuestion, IUserAnswer, IUserQuestionAnswer } from "./index.interface";
 import { WrapperPanel } from "./components/wrapperPanel";
 import { PhoneInfoWrapper } from "./components/phoneInfoWrapper";
 import { isCanMove, isNoContinue, updateReducerValue } from "./util";
-import { serverPhoneConditionQuestion } from "../../mock";
+import { serverPhoneConditionQuestion, treemock } from "../../mock";
 import { ISelectModelContext, SelectModelContext } from "../context";
 
 /*
@@ -94,27 +94,86 @@ function test(phoneConditionQuestion: any, phoneConditionAnswer: any) {
 }
 
 function test2(staticAnswer: any, staticQuestion: any) {
+  debugger
   const arr = [];
   const staticMap = {
     "0": "default",
-    "1": "mulit",
-  }
-  staticQuestion.forEach((parentQuestion: any) => {
+    "1": "multiSelect"
+  };
+  const makeNewQuestionList = staticQuestion.map((parentQuestion: any) => {
     const {
       id,
+      name,
       displayName,
       type,
       question,
       qualityPropertyValueDtos
     } = parentQuestion;
-    const newQuestion = {
-      id: id,
-      title: displayName,
-      subQuestionArr: [],
-      type: staticMap[type],
-    }
+    const newQuestion: any = {
+      id: `parent${id}`,
+      title: name,
+      subQuestionArr: []
+    };
+    justPush(newQuestion.subQuestionArr, {
+      subQuestionContent: displayName,
+      tips: question,
+      type,
+      subQuestionId: id,
+      qualityPropertyValueDtos
+    });
+    return newQuestion
   });
-  return [];
+  console.log("makeNewQuestionList!");
+  console.log(makeNewQuestionList);
+  return makeNewQuestionList;
+
+  function justPush(root: any, obj: any) {
+    const newObj = {
+      that: undefined
+    };
+    root.push(newObj);
+    newObj.that = insertSubQuestion({ ...obj, root });
+  }
+  function insertSubQuestion({
+    root,
+    subQuestionContent,
+    type,
+    subQuestionId,
+    qualityPropertyValueDtos
+  }: any) {
+    let subQuesiton: any = {};
+    subQuesiton = Object.assign(subQuesiton, {
+      id: subQuestionId,
+      content: subQuestionContent,
+      type: staticMap[type],
+      questionDesc: qualityPropertyValueDtos.map((questionOption: any) => {
+        const {
+          id: optionId,
+          displayName: optionContent,
+          qualityPropertyDtos,
+          type: questionOptionType
+        } = questionOption;
+        if (qualityPropertyDtos && qualityPropertyDtos.length) {
+          subQuesiton.isMoreCondition = optionId;
+          // 目前看只有0
+          justPush(root, {
+            subQuestionContent: qualityPropertyDtos[0].displayName,
+            tips: qualityPropertyDtos[0].question,
+            type: qualityPropertyDtos[0].type,
+            subQuestionId: qualityPropertyDtos[0].id,
+            qualityPropertyValueDtos:
+              qualityPropertyDtos[0].qualityPropertyValueDtos
+          });
+        }
+        return {
+          optionContent,
+          optionId,
+          type: questionOptionType
+        };
+      })
+    });
+    return subQuesiton;
+  }
 }
 
 // for fix sell
@@ -149,6 +208,7 @@ function Conditions(props: IConditions) {
   };
   const [state, dispatch] = useReducer(reducer, initState);
   test(phoneConditionQuestion, state.phoneConditionAnswer);
+  test2([], treemock);
   return (
     <ConditionForm
       {...props}
