@@ -318,6 +318,17 @@ export function getProgressType({
       )
     };
   }
+  /*
+  TO_BE_SHIPPED(1,"Order Placed"),
+    TO_BE_RECEIVED(2,"Package Sent"),
+    TO_BE_INSPECTED(3,"Package Received"),
+    DIFFERENCE_INSPECTED(4,"Difference Inspected"),
+    TO_BE_RETURNED(5,"Return Requested"),
+    TRANSACTION_FAILED(6,"Transaction Failed"),
+    LISTED_FOR_SALE(7,"Listed for Sale"),
+    TRANSACTION_SUCCEED(8,"Device Sold"),
+    TO_BE_LISTED(9,"Payment Sent"),
+   */
   switch (subOrderStatus) {
     case IProgressType.TO_BE_SHIPPED:
       currentIndex = 0;

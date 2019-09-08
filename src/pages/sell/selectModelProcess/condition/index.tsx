@@ -25,7 +25,6 @@ export function reducer(state: any, action: IReducerAction) {
         answerId,
         answer
       );
-      debugger
       return {
         ...state,
         phoneConditionAnswer: arr
@@ -54,6 +53,68 @@ export function reducer(state: any, action: IReducerAction) {
     case "set":
       return { ...state };
   }
+}
+
+function test(phoneConditionQuestion: any, phoneConditionAnswer: any) {
+  console.log(phoneConditionQuestion);
+  console.log(phoneConditionAnswer);
+  const staticAnswer: any[] = [];
+  phoneConditionAnswer.forEach(({ id, subAnswerArr }: any) => {
+    const question = phoneConditionQuestion.find(({ id: questionId }: any) => {
+      return id === questionId;
+    });
+    if (question && question.subQuestionArr) {
+      // 对于每一个答案，去找对应的子问题
+      let needStop = false;
+      subAnswerArr.forEach(({ id: subAnswerId, answer }: any) => {
+        if (!needStop) {
+          const subQuestion = question.subQuestionArr.find(
+            ({ id: subQuestionId }: any) => {
+              return subQuestionId === subAnswerId;
+            }
+          );
+          if (
+            subQuestion &&
+            subQuestion.isMoreCondition &&
+            JSON.stringify(subQuestion.isMoreCondition) !==
+              JSON.stringify(answer)
+          ) {
+            needStop = true;
+          }
+          staticAnswer.push({
+            id: subAnswerId,
+            name: answer
+          });
+        }
+      });
+    }
+  });
+  console.log("finish");
+  console.log(staticAnswer);
+}
+
+function test2(staticAnswer: any, staticQuestion: any) {
+  const arr = [];
+  const staticMap = {
+    "0": "default",
+    "1": "mulit",
+  }
+  staticQuestion.forEach((parentQuestion: any) => {
+    const {
+      id,
+      displayName,
+      type,
+      question,
+      qualityPropertyValueDtos
+    } = parentQuestion;
+    const newQuestion = {
+      id: id,
+      title: displayName,
+      subQuestionArr: [],
+      type: staticMap[type],
+    }
+  });
+  return [];
 }
 
 // for fix sell
@@ -87,6 +148,7 @@ function Conditions(props: IConditions) {
     showKey: []
   };
   const [state, dispatch] = useReducer(reducer, initState);
+  test(phoneConditionQuestion, state.phoneConditionAnswer);
   return (
     <ConditionForm
       {...props}
