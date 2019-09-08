@@ -157,7 +157,7 @@ function test2(staticAnswer: any, staticQuestion: any) {
           type: questionOptionType
         } = questionOption;
         if (qualityPropertyDtos && qualityPropertyDtos.length) {
-          subQuesiton.isMoreCondition = optionId;
+          subQuesiton.isMoreCondition = [optionId];
           // 目前看只有0
           justPush(root, {
             subQuestionContent: qualityPropertyDtos[0].displayName,
