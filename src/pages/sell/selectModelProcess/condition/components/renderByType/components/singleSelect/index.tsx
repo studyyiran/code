@@ -28,16 +28,18 @@ function SingleButton(props: ISingleButton) {
 interface ISelect {
   defaultValue?: any;
   options: any[];
-  onChange: (s: string) => void;
+  onChange: (s: any) => void;
 }
 
 export function SingleSelect(props: ISelect) {
   const [currentSelect, setCurrentSelect] = useState(
-    props.defaultValue ? props.defaultValue.id : ""
+    props.defaultValue ? props.defaultValue.optiondId : ""
   );
   const handler = (selectIndex: string) => {
     setCurrentSelect(selectIndex);
-    props.onChange(selectIndex);
+    props.onChange({
+      optionId: selectIndex
+    });
   };
   return (
     <div className="comp-select">

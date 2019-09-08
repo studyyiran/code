@@ -56,10 +56,10 @@ export function reducer(state: any, action: IReducerAction) {
 }
 
 function test(phoneConditionQuestion: any, phoneConditionAnswer: any) {
-  console.log('look')
+  console.log("look");
   console.log(phoneConditionQuestion);
   console.log(phoneConditionAnswer);
-  const staticAnswer: any[] = [];
+  let staticAnswer: any[] = [];
   phoneConditionAnswer.forEach(({ id, subAnswerArr }: any) => {
     const question = phoneConditionQuestion.find(({ id: questionId }: any) => {
       return id === questionId;
@@ -82,10 +82,20 @@ function test(phoneConditionQuestion: any, phoneConditionAnswer: any) {
           ) {
             needStop = true;
           }
-          staticAnswer.push({
-            id: subAnswerId,
-            name: answer
-          });
+          staticAnswer = staticAnswer.concat(
+            answer.map((answerValue: any) => {
+              return {
+                optionId:
+                  answerValue && answerValue.optionId
+                    ? answerValue.optionId
+                    : answerValue,
+                optionContent:
+                  answerValue && answerValue.optionContent
+                    ? answerValue.optionContent
+                    : ""
+              };
+            })
+          );
         }
       });
     }
@@ -124,7 +134,7 @@ function test2(staticAnswer: any, staticQuestion: any) {
     newQuestion.subQuestionArr = newQuestion.subQuestionArr.map(
       (item: any) => item.that
     );
-    return newQuestion
+    return newQuestion;
   });
   console.log("makeNewQuestionList!");
   console.log(makeNewQuestionList);
