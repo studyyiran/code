@@ -5,7 +5,13 @@ import React, {
   useEffect
 } from "react";
 import { IReducerAction } from "@/interface/index.interface";
-import { getOrderDetail, getTranshipping } from "../../api/order.api";
+import {
+  getOrderDetail,
+  getTranshipping,
+  createforinspect,
+  revisedPriceConfirm,
+  revisedPriceReject
+} from "../../api/order.api";
 import { checkforordermock, getTranshippingmock } from "./mock";
 import { getDeliverInfos, getDeliverNoInfo } from "../../util";
 
@@ -63,6 +69,9 @@ function reducer(state: IContextState, action: IReducerAction) {
 interface IContextActions {
   getAjax: () => void;
   getTranshipping: () => void;
+  postEmailForm: () => void;
+  revisedPriceConfirm: () => void;
+  revisedPriceReject: () => void;
 }
 
 // 添加物流信息
@@ -146,6 +155,34 @@ function useGetAction(
           });
         }
       }
+    }),
+    postEmailForm: promisify(async function(data: any) {
+      const { userInfo } = state.totalOrderInfo;
+      const { userEmail, firstName, lastName } = userInfo;
+      const postData = {
+        userEmail,
+        userName: firstName + " " + lastName,
+        ...data
+      };
+      const res = await createforinspect(postData);
+    }),
+    revisedPriceConfirm: promisify(async function(data: any) {
+      const { userInfo } = state.totalOrderInfo;
+      const { userEmail } = userInfo;
+      const postData = {
+        userEmail,
+        ...data
+      };
+      const res = await revisedPriceConfirm(postData);
+    }),
+    revisedPriceReject: promisify(async function(data: any) {
+      const { userInfo } = state.totalOrderInfo;
+      const { userEmail } = userInfo;
+      const postData = {
+        userEmail,
+        ...data
+      };
+      const res = await revisedPriceReject(postData);
     })
   };
   // actions.getAjax = useCallback(actions.getAjax, []);

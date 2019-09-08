@@ -1,13 +1,27 @@
-import * as React from "react";
+import React from "react";
 import { IOrderProps } from "@/containers/order/interface/order.inerface";
 import "./inspection.less";
 import Tag from "@/components/tag";
 import TipsIcon from "@/pages/sell/selectModelProcess/components/tipsIcon";
 import CheckInspectDiff from "../container/components/checkInspectDiff";
+import { Modal, Form, Input, Button } from "antd";
+const { TextArea } = Input;
 
 const priceUnit = "$";
 export default function InspectionWrapper(props: any) {
-  const { inquiryInfo } = props;
+  const {
+    inquiryInfo,
+    postEmailForm,
+    subOrderNo,
+    revisedPriceConfirm,
+    revisedPriceReject
+  } = props;
+  function postEmailFormHandler(data: any) {
+    postEmailForm({
+      subOrderNo,
+      ...data
+    });
+  }
   const { submitted, revised, isDifferent, differentReason } = inquiryInfo;
   const innerProps = {
     order: {
@@ -18,9 +32,30 @@ export default function InspectionWrapper(props: any) {
       }
     }
   };
-  return <Inspection {...innerProps} />;
+  return (
+    <Inspection
+      {...innerProps}
+      postEmailFormHandler={postEmailFormHandler}
+      revisedPriceConfirm={() => {
+        revisedPriceConfirm({
+          subOrderNo
+        });
+      }}
+      revisedPriceReject={() => {
+        revisedPriceReject({
+          subOrderNo
+        });
+      }}
+    />
+  );
 }
-class Inspection extends React.Component<any> {
+class Inspection extends React.Component<any, any> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      showModal: false
+    };
+  }
   public handleApprove = () => {
     this.props.order.approveRevisedPrice();
   };
@@ -28,26 +63,22 @@ class Inspection extends React.Component<any> {
     this.props.order.returnProduct();
   };
   public render() {
+    const {
+      postEmailFormHandler,
+      revisedPriceConfirm,
+      revisedPriceReject
+    } = this.props;
     const { inquiryInfo } = this.props.order;
     const { isDifferent, differentReason, price } = inquiryInfo;
 
-    function renderAcceptLine() {
-      return (
-        <div className="accept-line">
-          <button className="common-button">Accept</button>
-          <div className="tips">
-            <span>{`< Return Device`}</span>
-            <TipsIcon />
-          </div>
-        </div>
-      );
-    }
     // 是否match
     return (
       <div className="page-difference">
         <section className="line-with-title">
           <h3>Inspection Result</h3>
-          <Tag status={isDifferent ? "fail" : "success"}>{differentReason || 'Matched'}</Tag>
+          <Tag status={isDifferent ? "fail" : "success"}>
+            {differentReason || "Matched"}
+          </Tag>
         </section>
         {!isDifferent && (
           <section>
@@ -80,7 +111,11 @@ class Inspection extends React.Component<any> {
                   </span>
                 </div>
               </div>
-              {renderAcceptLine()}
+              {this.renderAcceptLine({
+                postEmailFormHandler,
+                revisedPriceConfirm,
+                revisedPriceReject
+              })}
             </section>
             <section className="video-part">
               <p>
@@ -89,43 +124,106 @@ class Inspection extends React.Component<any> {
               </p>
               <video className="comp-video" />
               <CheckInspectDiff />
-              <div className="mb-ele">{renderAcceptLine()}</div>
+              <div className="mb-ele">
+                {this.renderAcceptLine({
+                  postEmailFormHandler,
+                  revisedPriceConfirm,
+                  revisedPriceReject
+                })}
+              </div>
             </section>
           </div>
         )}
-        {/*{!isMatch && (*/}
-        {/*  <div className="inspected-fail-body">*/}
-        {/*    <div className="col-1">*/}
-        {/*      <p>Difference</p>*/}
-        {/*      <p>*/}
-        {/*        {inspectionInfo.productName !== "" && (*/}
-        {/*          <>*/}
-        {/*            {inspectionInfo.productName}*/}
-        {/*            <br />*/}
-        {/*          </>*/}
-        {/*        )}*/}
-        {/*        {inspectionInfo.differentCondition.join(",")}*/}
-        {/*        {this.props.order.orderDetail.orderItem.notice &&*/}
-        {/*          ", " + this.props.order.orderDetail.orderItem.notice}*/}
-        {/*      </p>*/}
-        {/*    </div>*/}
-        {/*    <div className="col-2">*/}
-        {/*      <p>Revised Price Guarantee</p>*/}
-        {/*      <p>${inspectionInfo.revisedPrice} </p>*/}
-        {/*    </div>*/}
-        {/*    <div className="col-3">*/}
-        {/*      <div className="approve-btn" onClick={this.handleApprove}>*/}
-        {/*        APPROVE REVISED PRICE*/}
-        {/*      </div>*/}
-        {/*      <div className="unapprove-btn" onClick={this.handleReturnProduct}>*/}
-        {/*        Return Product*/}
-        {/*      </div>*/}
-        {/*    </div>*/}
-        {/*  </div>*/}
-        {/*)}*/}
       </div>
     );
   }
+  private setModalHandler = (showModal: boolean) => {
+    this.setState({
+      showModal
+    });
+  };
+  private renderAcceptLine = (props: any) => {
+    const that = this;
+    const {
+      postEmailFormHandler,
+      revisedPriceConfirm,
+      revisedPriceReject
+    } = props;
+    function SubmitForm(formProps: any) {
+      function handleSubmit(e: any) {
+        e.preventDefault();
+        formProps.form.validateFields((err: any, values: any) => {
+          if (!err && values) {
+            postEmailFormHandler(values);
+            that.setModalHandler(false);
+          }
+        });
+      }
+      return (
+        <Form onSubmit={handleSubmit}>
+          <Form.Item>
+            {formProps.form.getFieldDecorator("subject", {
+              rules: [
+                { required: true, message: "Please input your question" }
+              ]
+            })(<Input placeholder="Please input your question" />)}
+          </Form.Item>
+          <Form.Item>
+            {formProps.form.getFieldDecorator("content", {
+              rules: [
+                { required: true, message: "Please input your question" }
+              ]
+            })(<TextArea placeholder="Please input your question" />)}
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+
+          {/*<label>123123</label>*/}
+          {/*<TextArea />*/}
+          {/*<label>123123</label>*/}
+          {/*<Form.Item>*/}
+          {/*  <Button className="common-button" type="primary" htmlType="submit">*/}
+          {/*    Log in*/}
+          {/*  </Button>*/}
+          {/*</Form.Item>*/}
+        </Form>
+      );
+    }
+    const WrappedForm = Form.create({
+      name: "horizontal_login"
+    })(SubmitForm);
+    return (
+      <div className="accept-line">
+        <button className="common-button" onClick={revisedPriceConfirm}>
+          Accept
+        </button>
+        <div className="tips">
+          <span onClick={this.setModalHandler.bind(this, true)}>{`< Return Device`}</span>
+          <TipsIcon />
+        </div>
+        <Modal
+          title="Have questions? Send us a message."
+          visible={this.state.showModal}
+          onCancel={this.setModalHandler.bind(this, false)}
+          footer={null}
+        >
+          <WrappedForm />
+          <button
+            className="common-button"
+            onClick={() => {
+              this.setModalHandler(false);
+              revisedPriceReject();
+            }}
+          >
+            Initiate Device Return
+          </button>
+        </Modal>
+      </div>
+    );
+  };
 }
 
 // export default Inspection;

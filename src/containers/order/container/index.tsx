@@ -48,8 +48,11 @@ function OrderList(props: { order: IOrderStore }) {
   const totalOrderInfoContext = useContext(TotalOrderInfoContext);
   // 获取
   const {
+    postEmailForm,
     totalOrderInfoContextValue,
-    totalOrderInfoContextDispatch
+    totalOrderInfoContextDispatch,
+    revisedPriceConfirm,
+    revisedPriceReject
   } = totalOrderInfoContext as ITotalOrderInfoContext;
   // 获取
   const { totalOrderInfo, currentSubOrderNo } = totalOrderInfoContextValue;
@@ -123,7 +126,13 @@ function OrderList(props: { order: IOrderStore }) {
               })}
             />
             {reactNodeConfig.deliver && <DeliverSatus {...order} />}
-            {reactNodeConfig.inspected && <Inspection {...order} />}
+            {reactNodeConfig.inspected && <Inspection
+              {...order}
+              postEmailForm={postEmailForm}
+              revisedPriceConfirm={revisedPriceConfirm}
+              revisedPriceReject={revisedPriceReject}
+            />}
+            
             {reactNodeConfig.listedForSale || reactNodeConfig.orderComplete ? (
               <ListedForSale {...order} />
             ) : null}

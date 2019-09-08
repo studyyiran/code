@@ -18,16 +18,6 @@ export function getOrderDetail<T>(
   return Request<T>(opts, []);
 }
 
-// 采用一次性token获取订单详情
-export function getOrderDetailByToken<T>(token: string): Promise<T> {
-  const opts: IOpts = {
-    method: "GET",
-    url: `/orders/token/${token}`,
-    loading: false
-  };
-  return Request<T>(opts, [201]); // 201表示token已经被使用过了
-}
-
 // 获取物流
 export function getTranshipping<T>(
   carrier: string,
@@ -43,6 +33,50 @@ export function getTranshipping<T>(
   };
 
   return Request<T>(opts);
+}
+
+// 发送意见邮件
+export function createforinspect<T>(postData: any): Promise<T> {
+  const opts: IOpts = {
+    method: "POST",
+    url: `/message_books/createforinspect`,
+    params: postData,
+    loading: false
+  };
+
+  return Request<T>(opts);
+}
+
+// 接受质检报价
+export function revisedPriceConfirm<T>(params: any): Promise<T> {
+  const opts: IOpts = {
+    url: `/sub_order/confirm`,
+    params,
+    loading: false
+  };
+  return Request<T>(opts, []);
+}
+
+// 不接受质检报价
+export function revisedPriceReject<T>(params: any): Promise<T> {
+  const opts: IOpts = {
+    url: `/sub_order/applyreturn`,
+    params,
+    loading: false
+  };
+  return Request<T>(opts, []);
+}
+
+/*________________________________________________________*/
+
+// 采用一次性token获取订单详情
+export function getOrderDetailByToken<T>(token: string): Promise<T> {
+  const opts: IOpts = {
+    method: "GET",
+    url: `/orders/token/${token}`,
+    loading: false
+  };
+  return Request<T>(opts, [201]); // 201表示token已经被使用过了
 }
 
 // 接受质检报价
