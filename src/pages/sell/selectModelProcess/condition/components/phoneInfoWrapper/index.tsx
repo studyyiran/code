@@ -15,54 +15,47 @@ export function PhoneInfoWrapper(props: any) {
   function justGetAttrArr() {
     if (modelInfo && modelInfo.modelId) {
       // 1 搜索到
-      const findProduct: {
-        skuPricePropertyNames: any[];
-      } = productsList.find(
+      const findProduct: { list: any[] } = productsList.find(
         (product: any) => product.id === modelInfo.modelId
-      ) || { skuPricePropertyNames: [] };
-      if (
-        findProduct &&
-        findProduct.skuPricePropertyNames &&
-        findProduct.skuPricePropertyNames.length
-      ) {
-        const attrObj = findProduct.skuPricePropertyNames[0];
-        return attrObj.pricePropertyValues.map((attrValue: any) => {
-          return { id: attrValue.id, name: attrValue.value };
+      ) || { list: [] };
+      // 拿到product之后 根据选项的Id进行匹配。其实也可以直接导出？
+
+      if (findProduct && findProduct.list && findProduct.list.length) {
+        return findProduct.list.map((item: any) => {
+          return {
+            id: item.id,
+            content: item.id,
+            type: "select", 
+            questionDesc: item.propertyValue.map((attrValue: any) => ({
+              id: attrValue.id,
+              displayName: attrValue.displayName
+            }))
+          };
         });
+      } else {
+        return [];
       }
+    } else {
+      return [];
     }
   }
   // 不可变类型 不然无法监听变化
   const answer1 = JSON.parse(JSON.stringify(staticPhoneInfoQuestion[0]));
   const answer2 = JSON.parse(JSON.stringify(staticPhoneInfo[0]));
-  answer1.subQuestionArr = staticPhoneInfoQuestion[0].subQuestionArr.map(
-    item => {
-      const { id } = item;
-      switch (id) {
-        case "manufacture": {
-          return { ...item, questionDesc: brandList };
-          break;
-        }
-        case "model": {
-          return { ...item, questionDesc: productsList };
-          break;
-        }
-        // case "storage": {
-        //   // 根据xx计算得出
-        //   return { ...item, questionDesc: justGetAttrArr() };
-        //   break;
-        // }
-        // case "carrier": {
-        //   // 缺少运营商的数据
-        //   return { ...item, questionDesc: justGetAttrArr() };
-        //   break;
-        // }
-        default:
-          break;
-      }
-      return { ...item, questionDesc: [] };
+  answer1.subQuestionArr = staticPhoneInfoQuestion[0].subQuestionArr = [
+    {
+      id: "manufacture",
+      content: "Phone Manufacture",
+      type: "select",
+      questionDesc: brandList
+    },
+    {
+      id: "model",
+      content: "Model",
+      type: "select",
+      questionDesc: productsList
     }
-  );
+  ].concat(justGetAttrArr());
   answer2.subAnswerArr = [
     {
       id: "manufacture",

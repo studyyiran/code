@@ -110,7 +110,7 @@ export function RenderByType(props: IRenderByType) {
               });
             }}
           >
-            {questionDesc.map(({ id, name }: any) => {
+            {questionDesc.map(({ id, displayName: name }: any) => {
               return (
                 <Option key={id} value={id}>
                   {name}
