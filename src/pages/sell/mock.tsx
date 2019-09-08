@@ -9,6 +9,7 @@ export const treemock =  [
   {
     "id": 12,
     "displayName": "Pow on",
+    "name": '问题1',
     "type": 0,
     "question": "is phone pow on",
     "qualityPropertyValueDtos": [
@@ -29,6 +30,7 @@ export const treemock =  [
   {
     "id": 13,
     "displayName": "是否磨损",
+    "name": '问题2',
     "type": 0,
     "question": null,
     "qualityPropertyValueDtos": [

@@ -94,7 +94,6 @@ function test(phoneConditionQuestion: any, phoneConditionAnswer: any) {
 }
 
 function test2(staticAnswer: any, staticQuestion: any) {
-  debugger
   const arr = [];
   const staticMap = {
     "0": "default",
@@ -121,6 +120,9 @@ function test2(staticAnswer: any, staticQuestion: any) {
       subQuestionId: id,
       qualityPropertyValueDtos
     });
+    newQuestion.subQuestionArr = newQuestion.subQuestionArr.map(
+      (item: any) => item.that
+    );
     return newQuestion
   });
   console.log("makeNewQuestionList!");
@@ -181,7 +183,7 @@ export default function Questionary(props: any) {
   return (
     <Conditions
       {...props}
-      phoneConditionQuestion={serverPhoneConditionQuestion}
+      phoneConditionQuestion={test2([], treemock)}
       phoneConditionAnswer={[]}
     />
   );
