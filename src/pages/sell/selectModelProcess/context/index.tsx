@@ -89,12 +89,16 @@ function reducer(state: IContextState, action: IReducerAction) {
         value.othersAttr = {};
       }
       const next: any = {};
-      if (value.othersAttr) {
-        const { attrValue, attrType } = value.othersAttr;
-        next.othersAttr[attrType] = attrValue;
-      } else if (value.modelId) {
-        next.modeId = value.modelId;
+      if (value) {
+        if (value.othersAttr && Object.keys(value.othersAttr).length) {
+          const { attrValue, attrType } = value.othersAttr;
+          next.othersAttr = { ...newState.modelInfo.othersAttr } || {};
+          next.othersAttr[attrType] = attrValue;
+        } else if (value.modelId) {
+          next.modelId = value.modelId;
+        }
       }
+
       newState = {
         ...newState,
         modelInfo: { ...newState.modelInfo, ...next }
@@ -309,17 +313,25 @@ function useGetAction(
         }
       };
       nameConfig.brandName = (
-        brandList.find((item: any) => item.id === brandId) || { name: "" }
-      ).name;
+        brandList.find((item: any) => item.id === brandId) || {
+          displayName: ""
+        }
+      ).displayName;
       const product: any = productsList.find(
         (item: any) => item.id === modelId
       );
       if (product) {
-        nameConfig.imgUrl = product.imageUrl;
-        nameConfig.modelInfoName.modelName = product.name;
+        nameConfig.imgUrl = product.photo;
+        nameConfig.modelInfoName.modelName = product.displayName;
+        debugger;
         product.list.forEach((item: any) => {
-          const { id } = item;
-          nameConfig.modelInfoName.othersAttrName[id] = othersAttr[id];
+          const { id, propertyValue } = item;
+          debugger;
+          nameConfig.modelInfoName.othersAttrName[id] = (
+            propertyValue.find(
+              (attr: any) => String(attr.id) === String(othersAttr[id])
+            ) || { displayName: "" }
+          ).displayName;
         });
       }
       return nameConfig;

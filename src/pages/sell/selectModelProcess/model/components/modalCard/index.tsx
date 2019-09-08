@@ -54,15 +54,25 @@ export default function ModelCard(props: any) {
 
   // canNext?
   useEffect(() => {
-    const a = findArrByKey(phoneInfoAnswer, "storage");
-    const b = findArrByKey(phoneInfoAnswer, "carrier");
+    // const a = findArrByKey(phoneInfoAnswer, "storage");
+    // const b = findArrByKey(phoneInfoAnswer, "carrier");
     if (
-      a &&
-      b &&
-      a.includes(Number(attrState.storageId)) &&
-      b.includes(Number(attrState.carrierId))
+      Object.keys(attrState).length &&
+      !Object.keys(attrState).find((key: string) => {
+        const findTarget = phoneInfoAnswer.subAnswerArr.find(
+          (item: any) => item.id === String(key)
+        );
+        return (
+          !findTarget ||
+          !findTarget.answer ||
+          String(attrState[key]) !== String(findTarget.answer[0])
+        );
+      })
     ) {
       props.goNextPage();
+    } else {
+      console.log(attrState);
+      console.log(phoneInfoAnswer.subAnswerArr);
     }
   }, [phoneInfoAnswer, attrState]);
 

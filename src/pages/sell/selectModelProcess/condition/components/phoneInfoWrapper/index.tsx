@@ -63,30 +63,23 @@ export function PhoneInfoWrapper(props: any) {
       return { ...item, questionDesc: [] };
     }
   );
-  answer2.subAnswerArr = staticPhoneInfo[0].subAnswerArr.map(item => {
-    const { id } = item;
-    switch (id) {
-      case "manufacture": {
-        return { ...item, answer: [brand] };
-        break;
-      }
-      case "model": {
-        return { ...item, answer: [modelInfo.modelId] };
-        break;
-      }
-      // case "storage": {
-      //   return { ...item, answer: [modelInfo.storageId] };
-      //   break;
-      // }
-      // case "carrier": {
-      //   return { ...item, answer: [modelInfo.carrierId] };
-      //   break;
-      // }
-      default:
-        break;
+  answer2.subAnswerArr = [
+    {
+      id: "manufacture",
+      answer: [brand]
+    },
+    {
+      id: "model",
+      answer: [modelInfo.modelId]
     }
-    return { ...item, answer: [brand] };
-  });
+  ].concat(
+    Object.keys(modelInfo.othersAttr).map((item: any) => {
+      return {
+        id: item,
+        answer: [modelInfo.othersAttr[item]]
+      };
+    })
+  );
   const {
     selectModelContextDispatch: selectModelDispatch
   } = selectModelContext as ISelectModelContext;
