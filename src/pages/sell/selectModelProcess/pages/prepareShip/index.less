@@ -53,6 +53,9 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      > span:first-child {
+        .font(18px, 600, #222222);
+      }
       > a {
         .font(16px, 500, #1ab4e7);
       }
@@ -73,5 +76,85 @@
   > button {
     margin: 88px auto 0 ;
     display: block;
+  }
+}
+
+.ismobile {
+  .page-prepare {
+    padding: 14rem * @px2rem 0 54rem * @px2rem;
+    .page-padding();
+    > section {
+      padding: 0;
+      border: none;
+      border-radius: 0px;
+      > h2 {
+        .font(18rem * @px2rem, 500, #131339);
+        margin-bottom: 6rem * @px2rem;
+      }
+    }
+    > section.step1 {
+      margin-bottom: 16rem * @px2rem;
+      > p {
+        .font(14rem * @px2rem, 400, #888888);
+        margin-bottom: 17rem * @px2rem;
+      }
+      a {
+        display: block;
+        margin: 40rem * @px2rem auto 54rem * @px2rem;
+        text-align: center;
+        .font(16rem * @px2rem, 500, #1ab4e7);
+      }
+    }
+    > section.step2 {
+      .container {
+        .line-card {
+          margin-top: 20rem * @px2rem;
+          padding: 0 8rem * @px2rem;
+          background: #6dd230;
+          box-shadow: 0px 2rem * @px2rem 5rem * @px2rem 0px rgba(0, 0, 0, 0.05);
+          border-radius: 2rem * @px2rem;
+          margin-bottom: 30rem * @px2rem;
+          text-align: center;
+          > div {
+            background: @white;
+            padding: 14rem * @px2rem 0 23rem * @px2rem;
+            .font(16rem * @px2rem, 500, #000000);
+          }
+        }
+        > button {
+          margin-bottom: 32rem * @px2rem;
+        }
+      }
+      > .check-order {
+        border-bottom: 1rem * @px2rem solid @color-border;
+        border-top: none;
+        padding: 0 0 18rem * @px2rem 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        > span:first-child {
+          .font(14rem * @px2rem, 600, #222222);
+        }
+        > a {
+          .font(16rem * @px2rem, 500, #1ab4e7);
+        }
+      }
+    }
+    section.video {
+      > h3 {
+        .font(14rem * @px2rem, 400, #00000);
+        margin-bottom: 13rem * @px2rem;
+        text-align: center;
+      }
+      video {
+        width: 100%;
+        display: block;
+        margin: 0 auto;
+      }
+    }
+    > button {
+      margin: 24rem * @px2rem auto 0 ;
+      display: block;
+    }
   }
 }
