@@ -308,6 +308,9 @@ function useGetAction(
             qpvIds: phoneConditionServerAnswer
           }
         };
+        debugger
+        console.log("**getinquirybyids**");
+        console.log(JSON.stringify(inquiryInfoInfo));
         // 用机型信息获取询价
         const info: any = await getinquirybyids(inquiryInfoInfo);
         const { inquiryKey } = info;

@@ -27,7 +27,9 @@ export const getProducts = <T>(brandId: string, categoryId: string) => {
     url: "/product/getProducts",
     params: {
       categoryId,
-      brandId
+      brandId,
+      pageName: '1',
+      pageSize: '100'
     }
   };
 

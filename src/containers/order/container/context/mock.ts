@@ -587,7 +587,7 @@ export const checkforordermock = {
       sendTrackingNo: "92612902416755000000000014",
       returnTrackingNo: null,
       subOrderStatusDisplayName: "Listed for Sale",
-      productDisplayName: "iphone x (64G T-Mobile)",
+      productDisplayName: "iphone x (64G T-Mobile) DIFFERENCE_INSPECTED",
       subTotal: 6,
       shippingInfo: {
         sendInfo: [
