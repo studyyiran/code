@@ -11,9 +11,14 @@ import {
   getProducts,
   getinquirybyids,
   getinquirybykeys,
-  createOrderStart
+  createOrderStart,
+  getQuality
 } from "../server/index.api";
 import { mockgetinquirybykeys } from "../../mock";
+import {
+  getServerAnswerFormat,
+  tranServerQuestionToLocalRender
+} from "../condition/util";
 
 let haveLoad = false;
 const sessionKey = "modelContext";
@@ -63,6 +68,23 @@ function reducer(state: IContextState, action: IReducerAction) {
       newState = {
         ...newState,
         brandList: value
+      };
+      break;
+    }
+    case "setQualityList": {
+      newState = {
+        ...newState,
+        qualityList: value
+      };
+      break;
+    }
+    case "postConditionAnswerRenderVersion": {
+      newState = {
+        ...newState,
+        phoneConditionServerAnswer: getServerAnswerFormat(
+          state.qualityList,
+          value
+        )
       };
       break;
     }
@@ -174,7 +196,8 @@ function reducer(state: IContextState, action: IReducerAction) {
       "userProductList",
       "needInsurance",
       "expressOption",
-      "inquiryKey"
+      "inquiryKey",
+      "phoneConditionServerAnswer"
     ]);
   }
 
@@ -192,6 +215,7 @@ function promisify(func: any) {
 
 interface IContextActions {
   getBrandList: () => void;
+  getQuality: () => void;
   getProductsList: () => void;
   getPriceInfo: () => void;
   getNameInfo: (
@@ -220,6 +244,15 @@ function useGetAction(
       if (state.categoryId) {
         const res: any = await getBrands(state.categoryId);
         dispatch({ type: "setBrandList", value: res && res.list });
+      }
+    }),
+    getQuality: promisify(async function() {
+      if (state.categoryId) {
+        const res: any = await getQuality(state.categoryId);
+        dispatch({
+          type: "setQualityList",
+          value: tranServerQuestionToLocalRender(res && res.list)
+        });
       }
     }),
     getProductsList: promisify(async function() {
@@ -361,6 +394,7 @@ function useGetAction(
     }
   };
   actions.getBrandList = useCallback(actions.getBrandList, [state.categoryId]);
+  actions.getQuality = useCallback(actions.getQuality, [state.categoryId]);
   actions.getProductsList = useCallback(actions.getProductsList, [
     state.brand,
     state.categoryId
@@ -386,8 +420,10 @@ interface IContextState {
   modelInfo: IModelInfo; // 1用户数据
   categoryId: string; // 1用户数据（但是不需要清空）
   brand: string; // 1用户数据
+  phoneConditionServerAnswer: any[]; // 用户数据
   inquiryKey: string; // 1用户数据
   userProductList: any[]; // 用户数据2
+  qualityList: any[]; // 热刷新
   brandList: []; // 热刷新
   priceInfo: any; // 热刷新
   productsList: []; // 热刷新
@@ -407,6 +443,8 @@ export function ModelContextProvider(props: any) {
       modelId: "",
       othersAttr: {}
     },
+    qualityList: [],
+    phoneConditionServerAnswer: [],
     productsList: [],
     userProductList: [],
     priceInfo: {},
@@ -430,7 +468,8 @@ export function ModelContextProvider(props: any) {
   // id变化，重新拉brand
   useEffect(() => {
     action.getBrandList();
-  }, [action.getBrandList]);
+    action.getQuality();
+  }, [state.categoryId]);
   // brand变化，重新拉机型
   useEffect(() => {
     action.getProductsList();

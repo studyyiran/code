@@ -83,6 +83,19 @@ export const getBrands = <T>(categoryId: string) => {
 };
 
 // 根据类目获取品牌列表
+export const getQuality = <T>(categoryId: string) => {
+  const opts: IOpts = {
+    url: `/product/getQuality?id=${categoryId}`,
+    isFullUrl: true
+  };
+
+  return getResponse(Request<T>(wrapper(opts)));
+};
+
+/*
+___________________________________________________________________________
+ */
+// 根据类目获取品牌列表
 export const getBrandsByCid = <T>(categoryId = 1) => {
   const opts: IOpts = {
     url: `/brands/category/${categoryId}`

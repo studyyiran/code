@@ -30,6 +30,12 @@ export function reducer(state: any, action: IReducerAction) {
         phoneConditionAnswer: arr
       };
     }
+    case "resetFromStore": {
+      return {
+        ...state,
+        phoneConditionAnswer: value
+      };
+    }
     // case "setUserPhoneInfo": {
     //   const { questionId, answerId, answer } = value;
     //   return {
@@ -54,289 +60,35 @@ export function reducer(state: any, action: IReducerAction) {
       return { ...state };
   }
 }
-/*
-将本地答案，format为服务器的答案。
-需要本地渲染的题目来帮助。
- */
-function test(phoneConditionQuestion: any, phoneConditionAnswer: any) {
-  console.log("look");
-  console.log(phoneConditionQuestion);
-  console.log(phoneConditionAnswer);
-  let staticAnswer: any[] = [];
-  phoneConditionAnswer.forEach(({ id, subAnswerArr }: any) => {
-    const question = phoneConditionQuestion.find(({ id: questionId }: any) => {
-      return id === questionId;
-    });
-    if (question && question.subQuestionArr) {
-      // 对于每一个答案，去找对应的子问题
-      let needStop = false;
-      subAnswerArr.forEach(({ id: subAnswerId, answer }: any) => {
-        if (!needStop) {
-          const subQuestion = question.subQuestionArr.find(
-            ({ id: subQuestionId }: any) => {
-              return subQuestionId === subAnswerId;
-            }
-          );
-          if (
-            subQuestion &&
-            subQuestion.isMoreCondition &&
-            JSON.stringify(subQuestion.isMoreCondition) !==
-              JSON.stringify(answer.map((item: any) => item.optionId))
-          ) {
-            needStop = true;
-          }
-          staticAnswer = staticAnswer.concat(
-            answer.map((answerValue: any) => {
-              return {
-                optionId:
-                  answerValue && answerValue.optionId
-                    ? answerValue.optionId
-                    : answerValue,
-                optionContent:
-                  answerValue && answerValue.optionContent
-                    ? answerValue.optionContent
-                    : ""
-              };
-            })
-          );
-        }
-      });
-    }
-  });
-  console.log("finish");
-  console.log(staticAnswer);
-  test3(phoneConditionQuestion, staticAnswer);
-}
-
-// 将静态答案转化为渲染答案
-function test3(question: any, staticAnswer: any) {
-  let finalResult: any;
-  finalResult = {
-    phoneConditionAnswer: []
-  };
-  staticAnswer.forEach((item: any) => {
-    const { optionId, optionContent } = item;
-    const result = {
-      questionId: "",
-      answerId: "",
-      answer: [item]
-    };
-    // 查找对对应的属性。
-    // 1 从现有的树种查找
-    function testFromCurrentAnswer(targetAnswerId: any) {
-      const { phoneConditionAnswer } = finalResult;
-      const target = phoneConditionAnswer.find(
-        ({ subAnswerArr, id: parentQuestionId }: any) => {
-          if (
-            subAnswerArr.find(({ id: subQuestionId, answer }: any) => {
-              if (String(subQuestionId) === String(targetAnswerId)) {
-                result.answer = answer.concat([item]);
-                return true;
-              } else {
-                return false;
-              }
-            })
-          ) {
-            result.questionId = parentQuestionId;
-            return true;
-          } else {
-            return false;
-          }
-        }
-      );
-      if (target) {
-        return result;
-      } else {
-        return null;
-      }
-    }
-
-    function testFromAllTree() {
-      // 2 从整合后的问题中查找
-      const target = question.find((parentQuestion: any) => {
-        const { id: parentQuestionId, subQuestionArr } = parentQuestion;
-        if (
-          subQuestionArr.find((subQuestion: any) => {
-            const { id: subQuestionId, questionDesc } = subQuestion;
-            if (
-              questionDesc.find((options: any) => {
-                if (String(options.optionId) === String(optionId)) {
-                  return true;
-                } else {
-                  return false;
-                }
-              })
-            ) {
-              result.answerId = subQuestionId;
-              return true;
-            } else {
-              return false;
-            }
-          })
-        ) {
-          result.questionId = parentQuestionId;
-          return true;
-        } else {
-          return false;
-        }
-      });
-      if (target) {
-        return result;
-      } else {
-        return null;
-      }
-      return Boolean(target);
-    }
-
-    if (testFromAllTree()) {
-      // 试图从现有中寻找
-      testFromCurrentAnswer(result.answerId);
-      finalResult.phoneConditionAnswer = updateReducerValue(
-        finalResult.phoneConditionAnswer,
-        result.questionId,
-        result.answerId,
-        result.answer
-      );
-    }
-  });
-  console.log(finalResult);
-}
-/*
-将服务器下发的问题转为
-渲染问题
- */
-function test2(staticQuestion: any) {
-  const arr = [];
-  const staticMap = {
-    "0": "default",
-    "1": "multiSelect"
-  };
-  const makeNewQuestionList = staticQuestion.map((parentQuestion: any) => {
-    const {
-      id,
-      name,
-      displayName,
-      type,
-      question,
-      qualityPropertyValueDtos
-    } = parentQuestion;
-    const newQuestion: any = {
-      id: `parent${id}`,
-      title: name,
-      subQuestionArr: []
-    };
-    justPush(newQuestion.subQuestionArr, {
-      subQuestionContent: displayName,
-      tips: question,
-      type,
-      subQuestionId: id,
-      qualityPropertyValueDtos
-    });
-    newQuestion.subQuestionArr = newQuestion.subQuestionArr.map(
-      (item: any) => item.that
-    );
-    return newQuestion;
-  });
-  console.log("makeNewQuestionList!");
-  console.log(makeNewQuestionList);
-  return makeNewQuestionList;
-
-  function justPush(root: any, obj: any) {
-    const newObj = {
-      that: undefined
-    };
-    root.push(newObj);
-    newObj.that = insertSubQuestion({ ...obj, root });
-  }
-  function insertSubQuestion({
-    root,
-    subQuestionContent,
-    type,
-    subQuestionId,
-    qualityPropertyValueDtos
-  }: any) {
-    let subQuesiton: any = {};
-    subQuesiton = Object.assign(subQuesiton, {
-      id: subQuestionId,
-      content: subQuestionContent,
-      type: staticMap[type],
-      questionDesc: qualityPropertyValueDtos.map((questionOption: any) => {
-        const {
-          id: optionId,
-          displayName: optionContent,
-          qualityPropertyDtos,
-          type: questionOptionType
-        } = questionOption;
-        if (qualityPropertyDtos && qualityPropertyDtos.length) {
-          subQuesiton.isMoreCondition = [optionId];
-          // 目前看只有0
-          justPush(root, {
-            subQuestionContent: qualityPropertyDtos[0].displayName,
-            tips: qualityPropertyDtos[0].question,
-            type: qualityPropertyDtos[0].type,
-            subQuestionId: qualityPropertyDtos[0].id,
-            qualityPropertyValueDtos:
-              qualityPropertyDtos[0].qualityPropertyValueDtos
-          });
-        }
-        return {
-          optionContent,
-          optionId,
-          type: questionOptionType
-        };
-      })
-    });
-    return subQuesiton;
-  }
-}
 
 // for fix sell
 export default function Questionary(props: any) {
-  return (
-    <Conditions
-      {...props}
-      phoneConditionQuestion={test2([], treemock)}
-      phoneConditionAnswer={[]}
-    />
-  );
+  return <Conditions {...props} />;
 }
 // questionnaire
 // 后端接口
-interface IConditions {
-  phoneConditionQuestion?: IQuestion[];
-  phoneConditionAnswer?: IUserQuestionAnswer[];
-}
 
 interface IStateConditions {
-  phoneConditionAnswer: IUserQuestionAnswer[];
+  phoneConditionAnswer: any[];
   editKey: string[];
   showKey: string[];
 }
 
-function Conditions(props: IConditions) {
-  const { phoneConditionQuestion = [], phoneConditionAnswer = [] } = props;
+function Conditions(props: any) {
   const initState: IStateConditions = {
-    phoneConditionAnswer: phoneConditionAnswer,
+    phoneConditionAnswer: [],
     editKey: [],
     showKey: []
   };
   const [state, dispatch] = useReducer(reducer, initState);
-  test(phoneConditionQuestion, state.phoneConditionAnswer);
-  test2([], treemock);
-  return (
-    <ConditionForm
-      {...props}
-      state={state}
-      dispatch={dispatch}
-      phoneConditionQuestion={phoneConditionQuestion}
-    />
-  );
+  // test(phoneConditionQuestion, state.phoneConditionAnswer);
+  // test2([], treemock);
+  return <ConditionForm {...props} state={state} dispatch={dispatch} />;
 }
 
 interface IConditionForm {
   state: IStateConditions;
   dispatch: (action: IReducerAction) => void;
-  phoneConditionQuestion: IQuestion[];
   history?: any;
   goNextPage?: any;
 }
@@ -346,10 +98,22 @@ export function ConditionForm(props: IConditionForm) {
   const {
     getInquiryByIds,
     selectModelContextValue,
-    getNameInfo
+    getNameInfo,
+    selectModelContextDispatch
   } = selectModelContext as ISelectModelContext;
+
+  const {
+    qualityList: phoneConditionQuestion,
+    phoneConditionServerAnswer
+  } = selectModelContextValue;
   const [maxActiveKey, setMaxActiveKey] = useState("");
-  const { state, dispatch, phoneConditionQuestion = [] } = props;
+  const { state, dispatch } = props;
+
+  // 初始化本地数据（props -》 state的过程不可避免 因为需要回滚用户操作）
+  useEffect(() => {
+    dispatch({ type: "resetFromStore", value: phoneConditionServerAnswer });
+  }, []);
+  
   const { phoneConditionAnswer, editKey, showKey } = state;
   // format
   const questionProcess = [firstQuestionKey]
@@ -512,6 +276,12 @@ export function ConditionForm(props: IConditionForm) {
         {maxActiveKey === "allFinish" ? (
           <button
             onClick={() => {
+              // canPost if enter here
+              // post
+              selectModelContextDispatch({
+                type: "postConditionAnswerRenderVersion",
+                value: state.phoneConditionAnswer
+              });
               // 获取最新的key
               getInquiryByIds().then((value: any) => {
                 // 其实应该一致。监听state然后跳转

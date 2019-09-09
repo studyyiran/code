@@ -21,7 +21,10 @@ export function canShowMoreQuestion(
   if (!isMoreCondition) {
     return true;
   } else {
-    return JSON.stringify(isMoreCondition) === JSON.stringify(userAnswer.map((item: any) => item.optionId));
+    return (
+      JSON.stringify(isMoreCondition) ===
+      JSON.stringify(userAnswer.map((item: any) => item.optionId))
+    );
   }
 }
 
@@ -167,4 +170,245 @@ export function updateReducerValue(
     }
     return changedArr;
   }
+}
+
+/*
+将服务器下发的问题转为
+渲染问题
+ */
+export function tranServerQuestionToLocalRender(staticQuestion: any) {
+  const arr = [];
+  const staticMap = {
+    "0": "default",
+    "1": "multiSelect"
+  };
+  const makeNewQuestionList = staticQuestion.map((parentQuestion: any) => {
+    const {
+      id,
+      name,
+      displayName,
+      type,
+      question,
+      qualityPropertyValueDtos
+    } = parentQuestion;
+    const newQuestion: any = {
+      id: `parent${id}`,
+      title: name,
+      subQuestionArr: []
+    };
+    justPush(newQuestion.subQuestionArr, {
+      subQuestionContent: displayName,
+      tips: question,
+      type,
+      subQuestionId: id,
+      qualityPropertyValueDtos
+    });
+    newQuestion.subQuestionArr = newQuestion.subQuestionArr.map(
+      (item: any) => item.that
+    );
+    return newQuestion;
+  });
+  console.log("makeNewQuestionList!");
+  console.log(makeNewQuestionList);
+  return makeNewQuestionList;
+
+  function justPush(root: any, obj: any) {
+    const newObj = {
+      that: undefined
+    };
+    root.push(newObj);
+    newObj.that = insertSubQuestion({ ...obj, root });
+  }
+  function insertSubQuestion({
+    root,
+    subQuestionContent,
+    type,
+    subQuestionId,
+    qualityPropertyValueDtos
+  }: any) {
+    let subQuesiton: any = {};
+    subQuesiton = Object.assign(subQuesiton, {
+      id: subQuestionId,
+      content: subQuestionContent,
+      type: staticMap[type],
+      questionDesc: qualityPropertyValueDtos.map((questionOption: any) => {
+        const {
+          id: optionId,
+          displayName: optionContent,
+          qualityPropertyDtos,
+          type: questionOptionType
+        } = questionOption;
+        if (qualityPropertyDtos && qualityPropertyDtos.length) {
+          subQuesiton.isMoreCondition = [optionId];
+          // 目前看只有0
+          justPush(root, {
+            subQuestionContent: qualityPropertyDtos[0].displayName,
+            tips: qualityPropertyDtos[0].question,
+            type: qualityPropertyDtos[0].type,
+            subQuestionId: qualityPropertyDtos[0].id,
+            qualityPropertyValueDtos:
+              qualityPropertyDtos[0].qualityPropertyValueDtos
+          });
+        }
+        return {
+          optionContent,
+          optionId,
+          type: questionOptionType
+        };
+      })
+    });
+    return subQuesiton;
+  }
+}
+
+/*
+将本地答案，format为服务器的答案。
+需要本地渲染的题目来帮助。
+ */
+export function getServerAnswerFormat(
+  phoneConditionQuestion: any,
+  phoneConditionAnswer: any
+) {
+  console.log("look");
+  console.log(phoneConditionQuestion);
+  console.log(phoneConditionAnswer);
+  let staticAnswer: any[] = [];
+  phoneConditionAnswer.forEach(({ id, subAnswerArr }: any) => {
+    const question = phoneConditionQuestion.find(({ id: questionId }: any) => {
+      return id === questionId;
+    });
+    if (question && question.subQuestionArr) {
+      // 对于每一个答案，去找对应的子问题
+      let needStop = false;
+      subAnswerArr.forEach(({ id: subAnswerId, answer }: any) => {
+        if (!needStop) {
+          const subQuestion = question.subQuestionArr.find(
+            ({ id: subQuestionId }: any) => {
+              return subQuestionId === subAnswerId;
+            }
+          );
+          if (
+            subQuestion &&
+            subQuestion.isMoreCondition &&
+            JSON.stringify(subQuestion.isMoreCondition) !==
+              JSON.stringify(answer.map((item: any) => item.optionId))
+          ) {
+            needStop = true;
+          }
+          staticAnswer = staticAnswer.concat(
+            answer.map((answerValue: any) => {
+              return {
+                optionId:
+                  answerValue && answerValue.optionId
+                    ? answerValue.optionId
+                    : answerValue,
+                optionContent:
+                  answerValue && answerValue.optionContent
+                    ? answerValue.optionContent
+                    : ""
+              };
+            })
+          );
+        }
+      });
+    }
+  });
+  console.log("finish");
+  console.log(staticAnswer);
+  return staticAnswer;
+  // test3(phoneConditionQuestion, staticAnswer);
+}
+
+// 将静态答案转化为渲染答案(借助整合后的答案)
+function serverAnswerToRenderAnswer(question: any, staticAnswer: any) {
+  let finalResult: any;
+  finalResult = {
+    phoneConditionAnswer: []
+  };
+  staticAnswer.forEach((item: any) => {
+    const { optionId, optionContent } = item;
+    const result = {
+      questionId: "",
+      answerId: "",
+      answer: [item]
+    };
+    // 查找对对应的属性。
+    // 1 从现有的树种查找
+    function testFromCurrentAnswer(targetAnswerId: any) {
+      const { phoneConditionAnswer } = finalResult;
+      const target = phoneConditionAnswer.find(
+        ({ subAnswerArr, id: parentQuestionId }: any) => {
+          if (
+            subAnswerArr.find(({ id: subQuestionId, answer }: any) => {
+              if (String(subQuestionId) === String(targetAnswerId)) {
+                result.answer = answer.concat([item]);
+                return true;
+              } else {
+                return false;
+              }
+            })
+          ) {
+            result.questionId = parentQuestionId;
+            return true;
+          } else {
+            return false;
+          }
+        }
+      );
+      if (target) {
+        return result;
+      } else {
+        return null;
+      }
+    }
+
+    function testFromAllTree() {
+      // 2 从整合后的问题中查找
+      const target = question.find((parentQuestion: any) => {
+        const { id: parentQuestionId, subQuestionArr } = parentQuestion;
+        if (
+          subQuestionArr.find((subQuestion: any) => {
+            const { id: subQuestionId, questionDesc } = subQuestion;
+            if (
+              questionDesc.find((options: any) => {
+                if (String(options.optionId) === String(optionId)) {
+                  return true;
+                } else {
+                  return false;
+                }
+              })
+            ) {
+              result.answerId = subQuestionId;
+              return true;
+            } else {
+              return false;
+            }
+          })
+        ) {
+          result.questionId = parentQuestionId;
+          return true;
+        } else {
+          return false;
+        }
+      });
+      if (target) {
+        return result;
+      } else {
+        return null;
+      }
+      return Boolean(target);
+    }
+
+    if (testFromAllTree()) {
+      // 试图从现有中寻找
+      testFromCurrentAnswer(result.answerId);
+      finalResult.phoneConditionAnswer = updateReducerValue(
+        finalResult.phoneConditionAnswer,
+        result.questionId,
+        result.answerId,
+        result.answer
+      );
+    }
+  });
+  console.log(finalResult);
 }
