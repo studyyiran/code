@@ -4,10 +4,10 @@ import { IQueryParams, IAppendOrderParams } from "../index.interface";
 import config from "@/config/index";
 import { IPreOrder } from "@/store/interface/user.interface";
 import { mockgetexpressfee } from "../../mock";
-function wrapper(obj: any) {
+function wrapper(obj: any, all?: boolean) {
   return {
     ...obj,
-    url: "/api" + obj.url,
+    url: all ? obj.url : "/api" + obj.url,
     isFullUrl: true
   };
 }
@@ -28,8 +28,8 @@ export const getProducts = <T>(brandId: string, categoryId: string) => {
     params: {
       categoryId,
       brandId,
-      pageName: '1',
-      pageSize: '100'
+      pageName: "1",
+      pageSize: "100"
     }
   };
 
@@ -56,22 +56,25 @@ export const getinquirybykeys = <T>(inquiryInfo: any) => {
 };
 // 创建订单接口， 只要发生错误，都提示用户可以写邮件寻求帮助
 export const createOrderStart = <T>(orderParams: any) => {
+  console.log("**createOrderStart**")
+  console.log(JSON.stringify(orderParams))
   const opts: IOpts = {
-    url: `/group_order/create`,
+    url: `/up-trade-it/api/group_order/create`,
     method: "post",
     params: orderParams
   };
-  return Request<T>(opts, []);
+  return getResponse(Request<T>(wrapper(opts, true), []));
 };
 
 // 根据类目获取品牌列表
 export const getExpressFee = <T>(inquiryKeys: any) => {
   const opts: IOpts = {
-    url: "/group_order/getexpressfee",
+    url: "/up-trade-it/api/group_order/getexpressfee",
     method: "post",
     params: inquiryKeys
   };
-  return Request<T>(opts, []);
+  return getResponse(Request<T>(wrapper(opts, true)));
+  // return Request<T>(opts, []);
 };
 
 // 根据类目获取品牌列表

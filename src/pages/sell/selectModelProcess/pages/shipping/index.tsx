@@ -213,7 +213,11 @@ class Shipping extends React.Component<any, any> {
 }
 
 function RenderQuestion(props: any) {
-  const { optionsList, selectModelContextDispatch, currentExpressOption } = props;
+  const {
+    optionsList,
+    selectModelContextDispatch,
+    currentExpressOption
+  } = props;
   // 直接拉接口
   {
     moment.tz(addDate(new Date(), 7), "America/Chicago").format("MMM DD");
@@ -247,7 +251,9 @@ function RenderQuestion(props: any) {
     return (
       <div className="question">
         <ChoiceQuestion
-          defaultValue={currentExpressOption ? currentExpressOption.sendDateType : ""}
+          defaultValue={
+            currentExpressOption ? currentExpressOption.sendDateType : ""
+          }
           options={afterCalcList}
           onChange={(value: any) => {
             selectModelContextDispatch({
@@ -258,7 +264,9 @@ function RenderQuestion(props: any) {
           render={(index: any) => {
             if (afterCalcList && afterCalcList.length === 3 && index < 3) {
               if (index === 0) {
-                return <div className="recommended comp-top-tag">Recommended</div>;
+                return (
+                  <div className="recommended comp-top-tag">Recommended</div>
+                );
               } else {
                 return (
                   <div className="comp-top-tag">

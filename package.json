@@ -201,6 +201,14 @@
         "/up-api": ""
       }
     },
+    "/up-trade-it/api": {
+      "target": "http://10.180.11.106:8080",
+      "ws": true,
+      "changeOrigin": true,
+      "pathRewrite": {
+        "/up-trade-it/api": "/up-trade-it/api"
+      }
+    },
     "/api": {
       "target": "http://10.180.11.106:9003",
       "ws": true,

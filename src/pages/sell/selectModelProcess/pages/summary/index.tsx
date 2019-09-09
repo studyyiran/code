@@ -485,7 +485,6 @@ class Summary extends React.Component<IDoneProps, IDoneStates> {
         expressInfo,
         subOrders
       };
-      console.log(postData);
       isOrderCreated = await createOrderStart(postData);
     }
     this.setState({
