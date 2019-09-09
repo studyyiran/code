@@ -78,7 +78,7 @@ function test(phoneConditionQuestion: any, phoneConditionAnswer: any) {
             subQuestion &&
             subQuestion.isMoreCondition &&
             JSON.stringify(subQuestion.isMoreCondition) !==
-              JSON.stringify(answer)
+              JSON.stringify(answer.map((item: any) => item.optionId))
           ) {
             needStop = true;
           }
@@ -106,7 +106,6 @@ function test(phoneConditionQuestion: any, phoneConditionAnswer: any) {
 }
 
 function test3(question: any, staticAnswer: any) {
-  debugger;
   let initState: any = {
     phoneConditionAnswer: []
   };
@@ -123,7 +122,37 @@ function test3(question: any, staticAnswer: any) {
     // 查找对对应的属性。
     // 1 从现有的树种查找
     const { phoneConditionAnswer } = initState;
-    // phoneConditionAnswer
+    const target = phoneConditionAnswer.find(
+      ({ subAnswerArr, id: parentQuestionId }: any) => {
+        if (
+          subAnswerArr.find(({ id: subQuestionId, answer }: any) => {
+            if (
+              answer.find((options: any) => {
+                return String(options.optionId) === String(optionId);
+              })
+            ) {
+              result.answerId = subQuestionId;
+              return true;
+            } else {
+              return false;
+            }
+          })
+        ) {
+          result.questionId = parentQuestionId;
+          return true;
+        } else {
+          return false;
+        }
+      }
+    );
+    if (target) {
+      initState.phoneConditionAnswer = updateReducerValue(
+        initState.phoneConditionAnswer,
+        result.questionId,
+        result.answerId,
+        result.answer
+      );
+    }
 
     // 2 从整合后的问题中查找
     const target = question.find((parentQuestion: any) => {
@@ -416,7 +445,7 @@ export function ConditionForm(props: IConditionForm) {
     <div className="page-condition">
       {renderLeftPic()}
       <div>
-        <Collapse activeKey={[maxActiveKey].concat(editKey).concat(showKey)}>
+        <Collapse>
           <PhoneInfoWrapper
             key={firstQuestionKey}
             renderComponent={({

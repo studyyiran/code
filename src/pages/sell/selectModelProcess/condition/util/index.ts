@@ -21,7 +21,7 @@ export function canShowMoreQuestion(
   if (!isMoreCondition) {
     return true;
   } else {
-    return JSON.stringify(isMoreCondition) === JSON.stringify(userAnswer);
+    return JSON.stringify(isMoreCondition) === JSON.stringify(userAnswer.map((item: any) => item.optionId));
   }
 }
 
