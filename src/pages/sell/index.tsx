@@ -124,11 +124,6 @@ export default function Sell(props: any) {
       default:
     }
   }
-  useEffect(() => {
-    const CategoryId = "1";
-    selectModelContextDispatch({ type: "setCategoryId", value: CategoryId });
-  }, []);
-
   // function wrapper(Component: any) {
   //   return (...other: any[]) => {
   //     const NewA = React.cloneElement(Component, {

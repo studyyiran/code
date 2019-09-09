@@ -8,13 +8,46 @@ import { Modal, Form, Input, Button } from "antd";
 const { TextArea } = Input;
 
 const priceUnit = "$";
+function renderModel(props: any) {
+  const { inquiryInfo, phoneConditionQuestion } = props;
+  console.log("!!!");
+  console.log(inquiryInfo);
+  console.log(phoneConditionQuestion);
+  const { submitted, revised, isDifferent, differentReason } = inquiryInfo;
+  function RenderItem(itemProps: any) {
+    const { title, value } = itemProps;
+    return (
+      <li>
+        <span>{title}</span>
+        <span>{value}</span>
+      </li>
+    );
+  }
+  const { brandName, displayName, pricePns, productPns } = revised;
+  return (
+    <div>
+      <h2>Inspection Report</h2>
+      <span>{differentReason}</span>
+      <ul>
+        <RenderItem title="Phone adasda" value={brandName} />
+        <RenderItem title="Model" value={displayName} />
+        <RenderItem title="Model" value={1} />
+        {productPns.map(({ name, ppnName }: any) => (
+          <RenderItem title={ppnName} value={name} />
+        ))}
+        {/*{b.map((item: any) => <RenderItem title={} value={2} />)}*/}
+      </ul>
+    </div>
+  );
+}
 export default function InspectionWrapper(props: any) {
   const {
     inquiryInfo,
     postEmailForm,
     subOrderNo,
     revisedPriceConfirm,
-    revisedPriceReject
+    revisedPriceReject,
+    phoneConditionQuestion
   } = props;
   function postEmailFormHandler(data: any) {
     postEmailForm({
@@ -32,6 +65,10 @@ export default function InspectionWrapper(props: any) {
       }
     }
   };
+  return renderModel({
+    phoneConditionQuestion,
+    inquiryInfo
+  });
   return (
     <Inspection
       {...innerProps}
@@ -163,16 +200,12 @@ class Inspection extends React.Component<any, any> {
         <Form onSubmit={handleSubmit}>
           <Form.Item>
             {formProps.form.getFieldDecorator("subject", {
-              rules: [
-                { required: true, message: "Please input your question" }
-              ]
+              rules: [{ required: true, message: "Please input your question" }]
             })(<Input placeholder="Please input your question" />)}
           </Form.Item>
           <Form.Item>
             {formProps.form.getFieldDecorator("content", {
-              rules: [
-                { required: true, message: "Please input your question" }
-              ]
+              rules: [{ required: true, message: "Please input your question" }]
             })(<TextArea placeholder="Please input your question" />)}
           </Form.Item>
           <Form.Item>
@@ -201,7 +234,9 @@ class Inspection extends React.Component<any, any> {
           Accept
         </button>
         <div className="tips">
-          <span onClick={this.setModalHandler.bind(this, true)}>{`< Return Device`}</span>
+          <span
+            onClick={this.setModalHandler.bind(this, true)}
+          >{`< Return Device`}</span>
           <TipsIcon />
         </div>
         <Modal

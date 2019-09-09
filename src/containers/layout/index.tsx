@@ -7,7 +7,26 @@ import FooterHoc from "./footerHoc";
 // import { getQueryString } from 'utils';
 import commonStore from "@/store/common";
 import Raven from "raven-js";
-export default class LayoutIndex extends React.Component {
+import { useContext, useEffect } from "react";
+import {
+  ISelectModelContext,
+  SelectModelContext
+} from "@/pages/sell/selectModelProcess/context";
+
+export default function LayoutIndexWrapper(props: any) {
+  const selectModelContext = useContext(SelectModelContext);
+  const {
+    selectModelContextDispatch
+  } = selectModelContext as ISelectModelContext;
+
+  useEffect(() => {
+    const CategoryId = "1";
+    selectModelContextDispatch({ type: "setCategoryId", value: CategoryId });
+  }, []);
+  return <LayoutIndex {...props} />;
+}
+
+class LayoutIndex extends React.Component {
   // 通过context 拿到 router 对象
   public static contextTypes = {
     router: PropTypes.shape({

@@ -5,6 +5,10 @@ import {
   TotalOrderInfoContext,
   totalOrderInfoReducerActionTypes
 } from "./context";
+import {
+  ISelectModelContext,
+  SelectModelContext
+} from "../../../pages/sell/selectModelProcess/context";
 import { IOrderStore } from "../interface/order.inerface";
 import { inject, observer } from "mobx-react";
 import UserInfo from "@/containers/order/components/userInfo";
@@ -57,6 +61,9 @@ function OrderList(props: { order: IOrderStore }) {
   // 获取
   const { totalOrderInfo, currentSubOrderNo } = totalOrderInfoContextValue;
 
+  const selectModelContext = useContext(SelectModelContext);
+  const { selectModelContextValue } = selectModelContext as ISelectModelContext;
+  const { qualityList: phoneConditionQuestion } = selectModelContextValue;
   // 赋值
   // useEffect(() => {
   //   if (totalOrderInfo) {
@@ -126,13 +133,16 @@ function OrderList(props: { order: IOrderStore }) {
               })}
             />
             {reactNodeConfig.deliver && <DeliverSatus {...order} />}
-            {reactNodeConfig.inspected && <Inspection
-              {...order}
-              postEmailForm={postEmailForm}
-              revisedPriceConfirm={revisedPriceConfirm}
-              revisedPriceReject={revisedPriceReject}
-            />}
-            
+            {reactNodeConfig.inspected && (
+              <Inspection
+                {...order}
+                phoneConditionQuestion={phoneConditionQuestion}
+                postEmailForm={postEmailForm}
+                revisedPriceConfirm={revisedPriceConfirm}
+                revisedPriceReject={revisedPriceReject}
+              />
+            )}
+
             {reactNodeConfig.listedForSale || reactNodeConfig.orderComplete ? (
               <ListedForSale {...order} />
             ) : null}
