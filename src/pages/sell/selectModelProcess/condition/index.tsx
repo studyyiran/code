@@ -134,7 +134,7 @@ export function ConditionForm(props: IConditionForm) {
     if (geMaxActiveKey()) {
       setMaxActiveKey(geMaxActiveKey());
     }
-  }, []);
+  }, [state.phoneConditionAnswer]);
 
   // 每当用户输入变化的时候，重新跑一下。看是否触发next
   useEffect(() => {
@@ -186,6 +186,10 @@ export function ConditionForm(props: IConditionForm) {
         }
       }
     });
+    // 这里面判断有bug。暂时处理
+    if (current !== firstQuestionKey) {
+      current = "allFinish";
+    }
     return current;
   }
 

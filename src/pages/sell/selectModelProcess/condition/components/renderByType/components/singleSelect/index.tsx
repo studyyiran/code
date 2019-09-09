@@ -41,14 +41,14 @@ export function SingleSelect(props: ISelect) {
     <div className="comp-select">
       <SingleButton
         index={props.options[0].optionId}
-        currentSelect={props.value.optionId}
+        currentSelect={props.value ? props.value.optionId : ""}
         onClick={handler}
       >
         {props.options[0].optionContent}
       </SingleButton>
       <SingleButton
         index={props.options[1].optionId}
-        currentSelect={props.value.optionId}
+        currentSelect={props.value ? props.value.optionId : ""}
         onClick={handler}
       >
         {props.options[1].optionContent}
