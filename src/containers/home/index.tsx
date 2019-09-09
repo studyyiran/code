@@ -57,27 +57,33 @@ const descPart2 = {
 const brands = [
   {
     iconName: "Apple",
-    iconUrl: "Apple.svg"
+    iconUrl: "Apple.svg",
+    id: 52
   },
   {
     iconName: "Samsung",
-    iconUrl: "Samsung.svg"
+    iconUrl: "Samsung.svg",
+    id: 7
   },
   {
     iconName: "Google",
-    iconUrl: "Google.svg"
+    iconUrl: "Google.svg",
+    id: 20
   },
   {
     iconName: "LG",
-    iconUrl: "LG.svg"
+    iconUrl: "LG.svg",
+    id: 3
   },
   {
     iconName: "OnePlus",
-    iconUrl: "OnePlus.svg"
+    iconUrl: "OnePlus.svg",
+    id: 357
   },
   {
     iconName: "Others",
-    iconUrl: ""
+    iconUrl: "",
+    id: "others"
   }
 ];
 
@@ -206,13 +212,15 @@ export default class Home extends React.Component<IHomeProps, IHomeState> {
               <img className="mb-ele" src={url} />
               <div className="intro__icon-list">
                 <RenderByCondition
-                  ComponentPc={<div className="wrap-container">
-                    {brands
-                      .filter((brand, index) => index < 6)
-                      .map((brand, index) => (
-                        <BrandLogo key={index} brand={brand} />
-                      ))}
-                  </div>}
+                  ComponentPc={
+                    <div className="wrap-container">
+                      {brands
+                        .filter((brand, index) => index < 6)
+                        .map((brand, index) => (
+                          <BrandLogo key={index} brand={brand} />
+                        ))}
+                    </div>
+                  }
                   ComponentMb={
                     <>
                       <div className="wrap-container">

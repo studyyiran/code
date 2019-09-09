@@ -4,7 +4,7 @@ import React from "react";
 import "./index.less";
 import Svg from "@/components/svg";
 
-export function ReportModalContent(props: any) {
+export default function ReportModalContent(props: any) {
   const { inquiryInfo, phoneConditionQuestion } = props;
   const { submitted, revised, isDifferent, differentReason } = inquiryInfo;
   function RenderItem(itemProps: any) {

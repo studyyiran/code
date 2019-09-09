@@ -6,7 +6,7 @@ import TipsIcon from "@/pages/sell/selectModelProcess/components/tipsIcon";
 import CheckInspectDiff from "../container/components/checkInspectDiff";
 import { Modal, Form, Input, Button } from "antd";
 import { getIdFromAllQuestion } from "@/pages/sell/selectModelProcess/condition/util";
-import { ReportModalContent } from "@/containers/order/components/modal";
+import ReportModalContent from "./reportModalContent";
 const { TextArea } = Input;
 
 const priceUnit = "$";
