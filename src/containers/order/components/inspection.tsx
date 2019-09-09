@@ -5,37 +5,89 @@ import Tag from "@/components/tag";
 import TipsIcon from "@/pages/sell/selectModelProcess/components/tipsIcon";
 import CheckInspectDiff from "../container/components/checkInspectDiff";
 import { Modal, Form, Input, Button } from "antd";
+import { getIdFromAllQuestion } from "@/pages/sell/selectModelProcess/condition/util";
 const { TextArea } = Input;
 
 const priceUnit = "$";
 function renderModel(props: any) {
   const { inquiryInfo, phoneConditionQuestion } = props;
-  console.log("!!!");
-  console.log(inquiryInfo);
-  console.log(phoneConditionQuestion);
   const { submitted, revised, isDifferent, differentReason } = inquiryInfo;
   function RenderItem(itemProps: any) {
-    const { title, value } = itemProps;
+    const { title, value, isSame } = itemProps;
     return (
       <li>
+        <span>{isSame ? "same" : "not same"}</span>
         <span>{title}</span>
         <span>{value}</span>
       </li>
     );
   }
   const { brandName, displayName, pricePns, productPns } = revised;
+  function checkIsSame(attrKey: string) {
+    return revised[revised] === brandName[revised];
+  }
+  function checkSameFromArr(targetId: string, attrKey: string) {
+    let isSame = false;
+    if (
+      submitted &&
+      submitted[attrKey] &&
+      submitted[attrKey].find(
+        ({ id: submitAttrValueId }: any) =>
+          submitAttrValueId === targetId
+      )
+    ) {
+      isSame = true;
+    }
+    return isSame;
+  }
   return (
     <div>
       <h2>Inspection Report</h2>
       <span>{differentReason}</span>
       <ul>
-        <RenderItem title="Phone adasda" value={brandName} />
-        <RenderItem title="Model" value={displayName} />
+        <RenderItem
+          title="Phone adasda"
+          value={brandName}
+          isSame={checkIsSame("brandId")}
+        />
+        <RenderItem
+          title="Model"
+          value={displayName}
+          isSame={checkIsSame("productId")}
+        />
         <RenderItem title="Model" value={1} />
-        {productPns.map(({ name, ppnName }: any) => (
-          <RenderItem title={ppnName} value={name} />
+        {productPns.map(({ name, ppnName, id }: any) => (
+          <RenderItem
+            title={ppnName}
+            value={name}
+            isSame={checkSameFromArr(id, "pricePns")}
+          />
         ))}
-        {/*{b.map((item: any) => <RenderItem title={} value={2} />)}*/}
+        {pricePns.map(({ id, type, name }: any, index: number) => {
+          const { answerId } = getIdFromAllQuestion(phoneConditionQuestion, id);
+          let currentQuestion: any;
+          phoneConditionQuestion.find((parent: any) => {
+            const { subQuestionArr } = parent;
+            return subQuestionArr.find((subQuestion: any) => {
+              const { id: subQuestionId, content } = subQuestion;
+              if (subQuestionId === answerId) {
+                currentQuestion = subQuestion;
+                return true;
+              } else {
+                return false;
+              }
+              return;
+            });
+          });
+          return (
+            <RenderItem
+              isSame={checkSameFromArr(id, "pricePns")}
+              key={index}
+              title={currentQuestion && currentQuestion.content}
+              value={name}
+            />
+          );
+        })}
       </ul>
     </div>
   );

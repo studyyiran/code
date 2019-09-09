@@ -343,12 +343,7 @@ export function serverAnswerToRenderAnswer(question: any, staticAnswer: any) {
   staticAnswer.forEach((item2: any) => {
     const newItem = {
       optionId: item2.id,
-      optionContent: item2.name,
-    }
-    const result = {
-      questionId: "",
-      answerId: "",
-      answer: [newItem]
+      optionContent: item2.name
     };
     // 查找对对应的属性。
     // 1 从现有的树种查找
@@ -379,45 +374,10 @@ export function serverAnswerToRenderAnswer(question: any, staticAnswer: any) {
         return null;
       }
     }
-
-    function testFromAllTree() {
-      // 2 从整合后的问题中查找
-      const target = question.find((parentQuestion: any) => {
-        const { id: parentQuestionId, subQuestionArr } = parentQuestion;
-        if (
-          subQuestionArr.find((subQuestion: any) => {
-            const { id: subQuestionId, questionDesc } = subQuestion;
-            if (
-              questionDesc.find((options: any) => {
-                if (String(options.optionId) === String(newItem.optionId)) {
-                  return true;
-                } else {
-                  return false;
-                }
-              })
-            ) {
-              result.answerId = subQuestionId;
-              return true;
-            } else {
-              return false;
-            }
-          })
-        ) {
-          result.questionId = parentQuestionId;
-          return true;
-        } else {
-          return false;
-        }
-      });
-      if (target) {
-        return result;
-      } else {
-        return null;
-      }
-      return Boolean(target);
-    }
-
-    if (testFromAllTree()) {
+    const result = Object.assign(getIdFromAllQuestion(question, newItem.optionId), {
+      answer: [newItem]
+    });
+    if (result.answerId) {
       // 试图从现有中寻找
       testFromCurrentAnswer(result.answerId);
       finalResult.phoneConditionAnswer = updateReducerValue(
@@ -429,4 +389,44 @@ export function serverAnswerToRenderAnswer(question: any, staticAnswer: any) {
     }
   });
   return finalResult.phoneConditionAnswer;
+}
+
+/*
+找出属性值对应的信息
+ */
+export function getIdFromAllQuestion(question: any, optionId: any) {
+  const result = {
+    questionId: "",
+    answerId: ""
+  };
+
+  // 2 从整合后的问题中查找
+  const target = question.find((parentQuestion: any) => {
+    const { id: parentQuestionId, subQuestionArr } = parentQuestion;
+    if (
+      subQuestionArr.find((subQuestion: any) => {
+        const { id: subQuestionId, questionDesc } = subQuestion;
+        if (
+          questionDesc.find((options: any) => {
+            if (String(options.optionId) === String(optionId)) {
+              return true;
+            } else {
+              return false;
+            }
+          })
+        ) {
+          result.answerId = subQuestionId;
+          return true;
+        } else {
+          return false;
+        }
+      })
+    ) {
+      result.questionId = parentQuestionId;
+      return true;
+    } else {
+      return false;
+    }
+  });
+  return result;
 }
