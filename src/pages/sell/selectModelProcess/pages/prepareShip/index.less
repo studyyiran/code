@@ -1,2 +1,77 @@
+@import (reference) "~@/styles/index.less";
 
-
+.page-prepare {
+  padding: 60px 0 80px;
+  .page(724px);
+  .page-padding();
+  > section {
+    padding: 21px 18px 0;
+    border: 1px solid rgba(233, 233, 233, 1);
+    border-radius: 6px;
+    > h2 {
+      .font(26px, 500, #000000);
+      margin-bottom: 27px;
+    }
+  }
+  > section.step1 {
+    margin-bottom: 16px;
+    > p {
+      .font(16px, 500, #000000);
+      margin-bottom: 20px;
+    }
+    a {
+      display: block;
+      margin: 40px auto 30px;
+      text-align: center;
+      .font(16px, 500, #1ab4e7);
+    }
+  }
+  @videoWidth: 448px;
+  > section.step2 {
+    .container {
+      .page(@videoWidth);
+      .line-card {
+        padding: 0 8px;
+        background: #6dd230;
+        box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.05);
+        border-radius: 2px;
+        margin-bottom: 30px;
+        text-align: center;
+        > div {
+          background: @white;
+          padding: 12px 0 20px;
+          .font(16px, 500, #000000);
+        }
+      }
+      > button {
+        margin-bottom: 26px;
+      }
+    }
+    > .check-order {
+      border-top: 1px solid @color-border;
+      padding: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      > a {
+        .font(16px, 500, #1ab4e7);
+      }
+    }
+  }
+  section.video {
+    > h3 {
+      .font(16px, 400, #00000);
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    video {
+      width: @videoWidth;
+      display: block;
+      margin: 0 auto;
+    }
+  }
+  > button {
+    margin: 88px auto 0 ;
+    display: block;
+  }
+}

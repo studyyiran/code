@@ -308,7 +308,6 @@ function useGetAction(
             qpvIds: phoneConditionServerAnswer
           }
         };
-        debugger
         console.log("**getinquirybyids**");
         console.log(JSON.stringify(inquiryInfoInfo));
         // 用机型信息获取询价
