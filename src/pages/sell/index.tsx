@@ -9,6 +9,7 @@ import Information from "./selectModelProcess/pages/information";
 import Payment from "./selectModelProcess/pages/payment";
 import Shipping from "./selectModelProcess/pages/shipping";
 import Summary from "./selectModelProcess/pages/summary";
+import PrepareShip from "./selectModelProcess/pages/prepareShip";
 
 import {
   SelectModelContext,
@@ -187,7 +188,7 @@ export default function Sell(props: any) {
     },
     prepareShip: {
       path: () => props.match.url + "/prepare-ship",
-      Component: Summary
+      Component: PrepareShip
     }
   };
   const configArr = staticRouter.map(item => {

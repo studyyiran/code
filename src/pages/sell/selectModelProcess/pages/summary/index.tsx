@@ -39,6 +39,7 @@ export default function SummaryWrapper(props: any) {
     "3": "SEND_BOX"
   };
   const myProps: any = {
+    goNextPage: props.goNextPage,
     needInsurance,
     createOrderStart,
     sendBox: staticMap[expressOption.sendDateType] === "SEND_BOX",
@@ -485,7 +486,12 @@ class Summary extends React.Component<IDoneProps, IDoneStates> {
         expressInfo,
         subOrders
       };
-      isOrderCreated = await createOrderStart(postData);
+      try {
+        isOrderCreated = await createOrderStart(postData);
+        (this.props as any).goNextPage();
+      } catch (e) {
+        console.error(e);
+      }
     }
     this.setState({
       loadingComplete: false
