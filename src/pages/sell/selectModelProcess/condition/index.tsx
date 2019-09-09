@@ -236,6 +236,25 @@ export function ConditionForm(props: IConditionForm) {
     });
     return <img className="product-bg" src={nameConfig.imgUrl} />;
   }
+  
+  // canPost?
+
+  // canNext?
+  useEffect(() => {
+    if (
+      phoneConditionServerAnswer &&
+      phoneConditionServerAnswer.length &&
+      phoneConditionAnswer &&
+      phoneConditionAnswer.length
+    ) {
+      // 获取最新的key
+      getInquiryByIds().then((value: any) => {
+        // 其实应该一致。监听state然后跳转
+        props.goNextPage();
+      });
+    }
+  }, [phoneConditionServerAnswer]);
+
   return (
     <div className="page-condition">
       {renderLeftPic()}
@@ -302,13 +321,6 @@ export function ConditionForm(props: IConditionForm) {
                 type: "postConditionAnswerRenderVersion",
                 value: state.phoneConditionAnswer
               });
-              setTimeout(() => {
-                // 获取最新的key
-                getInquiryByIds().then((value: any) => {
-                  // 其实应该一致。监听state然后跳转
-                  props.goNextPage();
-                });
-              }, 100);
             }}
             className="common-button finish-button"
           >
