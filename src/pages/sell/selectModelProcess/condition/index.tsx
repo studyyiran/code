@@ -54,7 +54,10 @@ export function reducer(state: any, action: IReducerAction) {
       return { ...state };
   }
 }
-
+/*
+将本地答案，format为服务器的答案。
+需要本地渲染的题目来帮助。
+ */
 function test(phoneConditionQuestion: any, phoneConditionAnswer: any) {
   console.log("look");
   console.log(phoneConditionQuestion);
@@ -105,11 +108,10 @@ function test(phoneConditionQuestion: any, phoneConditionAnswer: any) {
   test3(phoneConditionQuestion, staticAnswer);
 }
 
+// 将静态答案转化为渲染答案
 function test3(question: any, staticAnswer: any) {
-  let initState: any = {
-    phoneConditionAnswer: []
-  };
-  initState = {
+  let finalResult: any;
+  finalResult = {
     phoneConditionAnswer: []
   };
   staticAnswer.forEach((item: any) => {
@@ -121,14 +123,48 @@ function test3(question: any, staticAnswer: any) {
     };
     // 查找对对应的属性。
     // 1 从现有的树种查找
-    const { phoneConditionAnswer } = initState;
-    const target = phoneConditionAnswer.find(
-      ({ subAnswerArr, id: parentQuestionId }: any) => {
+    function testFromCurrentAnswer(targetAnswerId: any) {
+      const { phoneConditionAnswer } = finalResult;
+      const target = phoneConditionAnswer.find(
+        ({ subAnswerArr, id: parentQuestionId }: any) => {
+          if (
+            subAnswerArr.find(({ id: subQuestionId, answer }: any) => {
+              if (String(subQuestionId) === String(targetAnswerId)) {
+                result.answer = answer.concat([item]);
+                return true;
+              } else {
+                return false;
+              }
+            })
+          ) {
+            result.questionId = parentQuestionId;
+            return true;
+          } else {
+            return false;
+          }
+        }
+      );
+      if (target) {
+        return result;
+      } else {
+        return null;
+      }
+    }
+
+    function testFromAllTree() {
+      // 2 从整合后的问题中查找
+      const target = question.find((parentQuestion: any) => {
+        const { id: parentQuestionId, subQuestionArr } = parentQuestion;
         if (
-          subAnswerArr.find(({ id: subQuestionId, answer }: any) => {
+          subQuestionArr.find((subQuestion: any) => {
+            const { id: subQuestionId, questionDesc } = subQuestion;
             if (
-              answer.find((options: any) => {
-                return String(options.optionId) === String(optionId);
+              questionDesc.find((options: any) => {
+                if (String(options.optionId) === String(optionId)) {
+                  return true;
+                } else {
+                  return false;
+                }
               })
             ) {
               result.answerId = subQuestionId;
@@ -143,58 +179,33 @@ function test3(question: any, staticAnswer: any) {
         } else {
           return false;
         }
+      });
+      if (target) {
+        return result;
+      } else {
+        return null;
       }
-    );
-    if (target) {
-      initState.phoneConditionAnswer = updateReducerValue(
-        initState.phoneConditionAnswer,
-        result.questionId,
-        result.answerId,
-        result.answer
-      );
+      return Boolean(target);
     }
 
-    // 2 从整合后的问题中查找
-    const target = question.find((parentQuestion: any) => {
-      const { id: parentQuestionId, subQuestionArr } = parentQuestion;
-      if (
-        subQuestionArr.find((subQuestion: any) => {
-          const { id: subQuestionId, questionDesc } = subQuestion;
-          if (
-            questionDesc.find((options: any) => {
-              if (String(options.optionId) === String(optionId)) {
-                return true;
-              } else {
-                return false;
-              }
-            })
-          ) {
-            result.answerId = subQuestionId;
-            return true;
-          } else {
-            return false;
-          }
-        })
-      ) {
-        result.questionId = parentQuestionId;
-        return true;
-      } else {
-        return false;
-      }
-    });
-    if (target) {
-      initState.phoneConditionAnswer = updateReducerValue(
-        initState.phoneConditionAnswer,
+    if (testFromAllTree()) {
+      // 试图从现有中寻找
+      testFromCurrentAnswer(result.answerId);
+      finalResult.phoneConditionAnswer = updateReducerValue(
+        finalResult.phoneConditionAnswer,
         result.questionId,
         result.answerId,
         result.answer
       );
     }
   });
-  console.log(initState);
+  console.log(finalResult);
 }
-
-function test2(staticAnswer: any, staticQuestion: any) {
+/*
+将服务器下发的问题转为
+渲染问题
+ */
+function test2(staticQuestion: any) {
   const arr = [];
   const staticMap = {
     "0": "default",
