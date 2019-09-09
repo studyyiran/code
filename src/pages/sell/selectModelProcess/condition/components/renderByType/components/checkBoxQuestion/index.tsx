@@ -2,18 +2,14 @@ import React, { useState } from "react";
 import { Checkbox, Input } from "antd";
 
 interface ICheckBoxQuestion {
-  defaultValue?: any[];
+  value?: any[];
   onChange: (s: string[]) => void;
   options: any[];
 }
 
 export function CheckBoxQuestion(props: ICheckBoxQuestion) {
-  const { options } = props;
-  const [currentSelect, setCurrentSelect] = useState(
-    props.defaultValue ? props.defaultValue : []
-  );
+  const { options, value } = props;
   const handler = (next: any[]) => {
-    setCurrentSelect(next);
     props.onChange(next);
   };
   return (
@@ -22,7 +18,7 @@ export function CheckBoxQuestion(props: ICheckBoxQuestion) {
         let dom;
         if (option.type === 1) {
           // 计算现有选项中
-          const currentInput = currentSelect.find(currentAnswer => {
+          const currentInput = (value || []).find(currentAnswer => {
             return currentAnswer.optionId === option.optionId;
           }) || {
             optionId: option.optionId,
@@ -32,7 +28,7 @@ export function CheckBoxQuestion(props: ICheckBoxQuestion) {
           dom = (
             <CheckBoxWithInput
               currentInput={currentInput}
-              currentSelect={currentSelect}
+              currentSelect={value}
               handler={handler}
             />
           );
@@ -40,25 +36,28 @@ export function CheckBoxQuestion(props: ICheckBoxQuestion) {
           dom = (
             <Checkbox
               checked={Boolean(
-                currentSelect.find((item: any) => {
+                (value || []).find((item: any) => {
                   return item.optionId === option.optionId;
                 })
               )}
               onChange={() => {
-                const target = currentSelect.findIndex((item: any) => {
+                const target = (value || []).findIndex((item: any) => {
                   return item.optionId === option.optionId;
                 });
                 let result;
                 if (target === -1) {
-                  result = currentSelect.concat([
+                  result = (value || []).concat([
                     { optionId: option.optionId }
                   ]);
                 } else {
-                  result = [
-                    ...currentSelect.slice(0, target),
-                    ...currentSelect.slice(target + 1)
-                  ];
+                  if (value) {
+                    result = [
+                      ...value.slice(0, target),
+                      ...value.slice(target + 1)
+                    ];
+                  }
                 }
+                // @ts-ignore
                 handler(result);
               }}
             >
@@ -119,17 +118,16 @@ function CheckBoxWithInput(props: any) {
                 currentAnswer.optionId === currentInput.optionId
             );
             if (target) {
-              target.optionContent = e.currentTarget.value
+              target.optionContent = e.currentTarget.value;
               handler(currentSelect);
             } else {
-              handler(currentSelect.concat([next]))
+              handler(currentSelect.concat([next]));
             }
             // const nextAnswer = [
             //   ...currentSelect.slice(0, target),
             //   next,
             //   ...currentSelect.slice(target + 1)
             // ];
-            
           } else {
             // handler(currentSelect.concat([next]));
           }

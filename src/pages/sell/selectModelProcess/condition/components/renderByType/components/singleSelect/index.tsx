@@ -26,17 +26,13 @@ function SingleButton(props: ISingleButton) {
 }
 
 interface ISelect {
-  defaultValue?: any;
+  value?: any;
   options: any[];
   onChange: (s: any) => void;
 }
 
 export function SingleSelect(props: ISelect) {
-  const [currentSelect, setCurrentSelect] = useState(
-    props.defaultValue ? props.defaultValue.optiondId : ""
-  );
   const handler = (selectIndex: string) => {
-    setCurrentSelect(selectIndex);
     props.onChange({
       optionId: selectIndex
     });
@@ -45,14 +41,14 @@ export function SingleSelect(props: ISelect) {
     <div className="comp-select">
       <SingleButton
         index={props.options[0].optionId}
-        currentSelect={currentSelect}
+        currentSelect={props.value.optionId}
         onClick={handler}
       >
         {props.options[0].optionContent}
       </SingleButton>
       <SingleButton
         index={props.options[1].optionId}
-        currentSelect={currentSelect}
+        currentSelect={props.value.optionId}
         onClick={handler}
       >
         {props.options[1].optionContent}

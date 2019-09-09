@@ -116,7 +116,6 @@ export function ConditionForm(props: IConditionForm) {
   // 初始化本地数据（props -》 state的过程不可避免 因为需要回滚用户操作）
   useEffect(() => {
     if (phoneConditionQuestion && phoneConditionServerAnswer) {
-      debugger
       const localStateAnswer = serverAnswerToRenderAnswer(
         phoneConditionQuestion,
         phoneConditionServerAnswer

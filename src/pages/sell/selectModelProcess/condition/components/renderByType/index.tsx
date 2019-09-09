@@ -53,7 +53,7 @@ export function RenderByType(props: IRenderByType) {
               }
             }
           }}
-          defaultValue={userSubAnswer.answer[0]}
+          value={userSubAnswer.answer[0]}
         />
       );
       break;
@@ -88,7 +88,7 @@ export function RenderByType(props: IRenderByType) {
                 answer: answer
               });
             }}
-            defaultValue={userSubAnswer.answer}
+            value={userSubAnswer.answer}
           />
         );
       } else {
