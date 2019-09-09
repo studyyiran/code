@@ -1,4 +1,5 @@
 const firstQuestionKey = "aboutYourPhone";
+const lastQuestionKey = "allFinish";
 import React, { useReducer, useState, useEffect, useContext } from "react";
 import "./index.less";
 import { Collapse } from "antd";
@@ -121,6 +122,11 @@ export function ConditionForm(props: IConditionForm) {
         phoneConditionServerAnswer
       );
       dispatch({ type: "resetFromStore", value: localStateAnswer });
+      if (localStateAnswer && localStateAnswer.length) {
+        setMaxActiveKey(lastQuestionKey);
+      } else {
+        setMaxActiveKey(firstQuestionKey);
+      }
     }
   }, [phoneConditionQuestion, phoneConditionServerAnswer]);
 
@@ -128,13 +134,11 @@ export function ConditionForm(props: IConditionForm) {
   // format
   const questionProcess = [firstQuestionKey]
     .concat(phoneConditionQuestion.map(item => item.id))
-    .concat(["allFinish"]);
+    .concat([lastQuestionKey]);
 
-  useEffect(() => {
-    if (geMaxActiveKey()) {
-      setMaxActiveKey(geMaxActiveKey());
-    }
-  }, [state.phoneConditionAnswer]);
+  // useEffect(() => {
+  //
+  // }, [state.phoneConditionAnswer]);
 
   // 每当用户输入变化的时候，重新跑一下。看是否触发next
   useEffect(() => {
@@ -188,7 +192,7 @@ export function ConditionForm(props: IConditionForm) {
     });
     // 这里面判断有bug。暂时处理
     if (current !== firstQuestionKey) {
-      current = "allFinish";
+      current = lastQuestionKey;
     }
     return current;
   }
@@ -287,7 +291,7 @@ export function ConditionForm(props: IConditionForm) {
             );
           })}
         </Collapse>
-        {maxActiveKey === "allFinish" ? (
+        {maxActiveKey === lastQuestionKey ? (
           <button
             onClick={() => {
               // canPost if enter here

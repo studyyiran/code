@@ -250,8 +250,7 @@ function useGetAction(
     }),
     getQuality: promisify(async function() {
       if (state.categoryId) {
-        // const res: any = await getQuality(state.categoryId);
-        const res: any = getQualitymock;
+        const res: any = await getQuality(state.categoryId);
         dispatch({
           type: "setQualityList",
           value: tranServerQuestionToLocalRender(res && res.list)
@@ -287,7 +286,6 @@ function useGetAction(
       } = state;
       if (brand && categoryId && modelInfo) {
         const { modelId, othersAttr } = modelInfo;
-        debugger;
         const linshimock = [
           {
             id: 1
@@ -308,7 +306,7 @@ function useGetAction(
             bpvIds: Object.keys(othersAttr).map((key: any) => ({
               id: othersAttr[key]
             })),
-            qpvIds: linshimock || phoneConditionServerAnswer
+            qpvIds: phoneConditionServerAnswer
           }
         };
         // 用机型信息获取询价
