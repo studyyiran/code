@@ -16,12 +16,12 @@
   .line-with-title {
     display: flex;
     align-items: center;
-    padding-top: .14rem;
-    padding-bottom: 0.1rem;
+    padding-top: .14rem * @px2rem;
+    padding-bottom: 0.1rem * @px2rem;
     border-bottom: 1px solid @color-border;
     > h3 {
-      .font(0.18rem, 600, #222222);
-      margin-right: 0.6rem;
+      .font(0.18rem * @px2rem, 600, #222222);
+      margin-right: 0.6rem * @px2rem;
     }
   }
 }
@@ -50,19 +50,19 @@ ul.information-list {
   ul.information-list {
     display: flex;
     flex-direction: column;
-    padding: 0.18rem 0.09rem;
+    padding: 18rem * @px2rem 9rem * @px2rem;
     > * {
       flex: 1 1 0;
     }
     li {
-      margin-bottom: 0.2rem;
+      margin-bottom: 20rem * @px2rem;
       > span:first-child {
-        font-size: 0.14rem;
+        font-size: 14rem * @px2rem;
         color: #848484;
-        margin-bottom: 0.08rem;
+        margin-bottom: 8rem * @px2rem;
       }
       span {
-        font-size: 0.16rem;
+        font-size: 16rem * @px2rem;
         display: block;
       }
     }

@@ -1,3 +1,5 @@
+@import (reference) "~@/styles/index.less";
+
 .comp-order-deliverSatus {
   padding-bottom: 27px;
   margin: 0 33px;
@@ -140,23 +142,23 @@
 .ismobile {
   .comp-order-deliverSatus {
     padding-bottom: 0;
-    margin: 0 0.3rem;
-    margin-top: 0.2rem;
-    border-radius: 0.02rem;
+    margin: 0 30rem * @px2rem;
+    margin-top: 20rem * @px2rem;
+    border-radius: 2rem * @px2rem;
     border: 1px solid rgba(245, 245, 245, 1);
 
     .title {
-      height: 0.44rem;
-      line-height: 0.44rem;
+      height: 44rem * @px2rem;
+      line-height: 44rem * @px2rem;
       background: rgba(248, 249, 251, 1);
-      border-radius: 0.02rem;
-      padding: 0 0.15rem;
+      border-radius: 2rem * @px2rem;
+      padding: 0 15rem * @px2rem;
     }
 
     .deliverSatus-body {
       box-sizing: border-box;
-      padding: 0.2rem;
-      padding-bottom: 0.3rem;
+      padding: 20rem * @px2rem;
+      padding-bottom: 30rem * @px2rem;
       display: flex;
       flex-direction: column-reverse;
 
@@ -164,36 +166,36 @@
         flex: 1;
 
         .list-item {
-          margin-top: 0.2rem;
+          margin-top: 20rem * @px2rem;
           display: flex;
           flex-direction: column;
 
           .date {
-            font-size: 0.14rem;
-            line-height: 0.14rem;
+            font-size: 14rem * @px2rem;
+            line-height: 14rem * @px2rem;
           }
 
           .time {
-            font-size: 0.1rem;
-            line-height: 0.12rem;
+            font-size: 10rem * @px2rem;
+            line-height: 12rem * @px2rem;
             padding-top: 0;
           }
 
           .desc {
             flex: 1;
-            margin-left: 0.15rem;
+            margin-left: 15rem * @px2rem;
 
             .info {
-              font-size: 0.12rem;
+              font-size: 12rem * @px2rem;
               font-family: HelveticaNeue;
               color: rgba(51, 51, 51, 1);
-              line-height: 0.14rem;
+              line-height: 14rem * @px2rem;
             }
 
             .pos {
-              margin-top: 0.1rem;
-              font-size: 0.1rem;
-              line-height: 0.1rem;
+              margin-top: 10rem * @px2rem;
+              font-size: 10rem * @px2rem;
+              line-height: 10rem * @px2rem;
             }
           }
 
@@ -202,12 +204,12 @@
             display: flex;
             flex-direction: column;
             margin-left: 0;
-            margin-top: 0.15rem;
+            margin-top: 15rem * @px2rem;
 
             .date-item {
               flex: 1;
               display: flex;
-              margin-top: 0.18rem;
+              margin-top: 18rem * @px2rem;
 
               &:first-child {
                 margin-top: 0;
@@ -217,8 +219,8 @@
         }
 
         .line {
-          margin-top: 0.16rem;
-          margin-bottom: 0.2rem;
+          margin-top: 16rem * @px2rem;
+          margin-bottom: 20rem * @px2rem;
           height: 1px;
           background-color: rgba(234, 234, 234, 1);
         }
@@ -233,24 +235,24 @@
 
         & > div {
           img {
-            width: 0.45rem;
+            width: 45rem * @px2rem;
             height: auto;
           }
 
           & > div {
             display: inline-block;
-            height: 0.45rem;
-            padding-left: 0.13rem;
+            height:45rem * @px2rem;
+            padding-left: 13rem * @px2rem;
 
             .name {
-              font-size: 0.16rem;
-              line-height: 0.18rem;
+              font-size: 16rem * @px2rem;
+              line-height: 18rem * @px2rem;
             }
 
             .orderNo {
-              margin-top: 0.1rem;
-              font-size: 0.12rem;
-              line-height: 0.14rem;
+              margin-top: 10rem * @px2rem;
+              font-size: 12rem * @px2rem;
+              line-height: 14rem * @px2rem;
             }
           }
         }
@@ -258,9 +260,9 @@
     }
 
     .footer {
-      font-size: 0.12rem;
-      line-height: 0.12rem;
-      padding-bottom: 0.25rem;
+      font-size: 12rem * @px2rem;
+      line-height: 12rem * @px2rem;
+      padding-bottom: 25rem * @px2rem;
     }
   }
 }

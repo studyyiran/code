@@ -136,66 +136,68 @@
 
 .ismobile {
   .comp-order-progressBar {
-    margin: 0 -0.15rem;
-    height: 1.3rem;
+    margin: 0 -15rem * @px2rem;
+    height: 130rem * @px2rem;
     padding: 0;
-    display: block;
+    display: flex;
+    justify-content: center;
     overflow: hidden;
 
     &.mobileHideLeft {
       position: relative;
-      left: -1.83rem;
-      width: 5.58rem;
+      left: -183rem * @px2rem;
+      width: 558rem * @px2rem;
     }
 
     .dot {
+      flex: 0 0 0;
       display: inline-block;
-      min-width: 0.9rem;
+      min-width: 90rem * @px2rem;
 
       .dot-icon {
-        top: 0.32rem;
+        top: 32rem * @px2rem;
       }
 
       &::after {
-        width: 0.39rem;
-        top: 0.38rem;
+        width: 39rem * @px2rem;
+        top: 38rem * @px2rem;
       }
 
       &::before {
-        width: 0.39rem;
-        top: 0.38rem;
+        width: 39rem * @px2rem;
+        top: 38rem * @px2rem;
       }
 
       .child-mark {
-        top: 0.62rem;
+        top: 62rem * @px2rem;
 
         &.child-mark-current {
-          top: 0.2rem;
+          top: 20rem * @px2rem;
 
           .title {
-            margin-top: 0.06rem;
+            margin-top: 6rem * @px2rem;
             font-weight: 500;
           }
 
           .icon {
-            width: 0.36rem;
-            height: 0.36rem;
+            width: 36rem * @px2rem;
+            height: 36rem * @px2rem;
           }
         }
 
         .title {
-          padding: 0 0.135rem;
-          font-size: 0.12rem;
-          line-height: 0.16rem;
+          padding: 0 13.5rem * @px2rem;
+          font-size: 12rem * @px2rem;
+          line-height: 16rem * @px2rem;
         }
         
       }
 
       .currentMark {
         &::after {
-          border-width: 0 0.05rem 0.06rem;
-          top: -0.06rem;
-          left: -0.05rem;
+          border-width: 0 5rem * @px2rem 6rem * @px2rem;
+          top: -6rem * @px2rem;
+          left: -5rem * @px2rem;
         }
       }
     }
