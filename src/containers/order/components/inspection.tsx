@@ -5,8 +5,7 @@ import Tag from "@/components/tag";
 import TipsIcon from "@/pages/sell/selectModelProcess/components/tipsIcon";
 import CheckInspectDiff from "../container/components/checkInspectDiff";
 import { Modal, Form, Input, Button } from "antd";
-import { getIdFromAllQuestion } from "@/pages/sell/selectModelProcess/condition/util";
-import ReportModalContent from "./reportModalContent";
+import ReportModalContent from "@/containers/order/container/components/reportModalContent";
 const { TextArea } = Input;
 
 const priceUnit = "$";
@@ -26,25 +25,10 @@ export default function InspectionWrapper(props: any) {
       ...data
     });
   }
-  const { submitted, revised, isDifferent, differentReason } = inquiryInfo;
-  const innerProps = {
-    order: {
-      inquiryInfo: {
-        isDifferent: isDifferent,
-        differentReason,
-        price: revised ? revised.amount : submitted.amount
-      }
-    }
-  };
-  return (
-    <ReportModalContent
-      phoneConditionQuestion={phoneConditionQuestion}
-      inquiryInfo={inquiryInfo}
-    />
-  );
   return (
     <Inspection
-      {...innerProps}
+      inquiryInfo={inquiryInfo}
+      phoneConditionQuestion={phoneConditionQuestion}
       postEmailFormHandler={postEmailFormHandler}
       revisedPriceConfirm={() => {
         revisedPriceConfirm({
@@ -76,11 +60,12 @@ class Inspection extends React.Component<any, any> {
     const {
       postEmailFormHandler,
       revisedPriceConfirm,
-      revisedPriceReject
+      revisedPriceReject,
+      phoneConditionQuestion,
+      inquiryInfo
     } = this.props;
-    const { inquiryInfo } = this.props.order;
-    const { isDifferent, differentReason, price } = inquiryInfo;
-
+    const { submitted, revised, isDifferent, differentReason } = inquiryInfo;
+    const price = revised ? revised.amount : submitted.amount;
     // 是否match
     return (
       <div className="page-difference">
@@ -133,7 +118,10 @@ class Inspection extends React.Component<any, any> {
                 during our inspection process
               </p>
               <video className="comp-video" />
-              <CheckInspectDiff />
+              <CheckInspectDiff
+                phoneConditionQuestion={phoneConditionQuestion}
+                inquiryInfo={inquiryInfo}
+              />
               <div className="mb-ele">
                 {this.renderAcceptLine({
                   postEmailFormHandler,

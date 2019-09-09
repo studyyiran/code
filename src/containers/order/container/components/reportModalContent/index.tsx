@@ -5,6 +5,7 @@ import "./index.less";
 import Svg from "@/components/svg";
 
 export default function ReportModalContent(props: any) {
+  debugger
   const { inquiryInfo, phoneConditionQuestion } = props;
   const { submitted, revised, isDifferent, differentReason } = inquiryInfo;
   function RenderItem(itemProps: any) {
