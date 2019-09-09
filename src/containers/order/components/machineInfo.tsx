@@ -21,7 +21,7 @@ class MachineInfo extends React.Component<
           )}
         </ul>
         <p className="total">
-          <span>subTotal</span>
+          <span>SubTotal</span>
           <span>{this.props.guaranteedPrice}</span>
         </p>
         {/*{*/}
