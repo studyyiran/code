@@ -14,7 +14,7 @@ import {
   createOrderStart,
   getQuality
 } from "../server/index.api";
-import {getQualitymock, mockgetinquirybykeys} from "../../mock";
+import { getQualitymock, mockgetinquirybykeys } from "../../mock";
 import {
   getServerAnswerFormat,
   tranServerQuestionToLocalRender
@@ -286,18 +286,17 @@ function useGetAction(
       } = state;
       if (brand && categoryId && modelInfo) {
         const { modelId, othersAttr } = modelInfo;
-        const linshimock = [
-          {
-            id: 1
-          },
-          {
-            id: 3
-          },
-          {
-            id: 5
-          }
-        ];
-        console.log(phoneConditionServerAnswer);
+        // const linshimock = [
+        //   {
+        //     id: 1
+        //   },
+        //   {
+        //     id: 3
+        //   },
+        //   {
+        //     id: 5
+        //   }
+        // ];
         const inquiryInfoInfo = {
           inquirySearch: {
             categoryId,

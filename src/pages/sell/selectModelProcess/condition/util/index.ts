@@ -232,6 +232,7 @@ export function tranServerQuestionToLocalRender(staticQuestion: any) {
       content: subQuestionContent,
       type: staticMap[type],
       questionDesc: qualityPropertyValueDtos.map((questionOption: any) => {
+        // 为了防止会后一个违题目提示文本的bug
         const {
           id: optionId,
           displayName: optionContent,
@@ -239,16 +240,30 @@ export function tranServerQuestionToLocalRender(staticQuestion: any) {
           type: questionOptionType
         } = questionOption;
         if (qualityPropertyDtos && qualityPropertyDtos.length) {
-          subQuesiton.isMoreCondition = [optionId];
           // 目前看只有0
-          justPush(root, {
-            subQuestionContent: qualityPropertyDtos[0].displayName,
-            tips: qualityPropertyDtos[0].question,
-            type: qualityPropertyDtos[0].type,
-            subQuestionId: qualityPropertyDtos[0].id,
-            qualityPropertyValueDtos:
-              qualityPropertyDtos[0].qualityPropertyValueDtos
-          });
+          // 为了防止会后一个违题目提示文本的bug
+          if (
+            qualityPropertyDtos[0].qualityPropertyValueDtos &&
+            qualityPropertyDtos[0].qualityPropertyValueDtos.length
+          ) {
+            subQuesiton.isMoreCondition = [optionId];
+            justPush(root, {
+              subQuestionContent: qualityPropertyDtos[0].displayName,
+              tips: qualityPropertyDtos[0].question,
+              type: qualityPropertyDtos[0].type,
+              subQuestionId: qualityPropertyDtos[0].id,
+              qualityPropertyValueDtos:
+                qualityPropertyDtos[0].qualityPropertyValueDtos
+            });
+          } else {
+            subQuesiton.isShowTips = {
+              condition: [optionId],
+              tips: qualityPropertyDtos[0].displayName
+                .split(".")
+                .map((content: any) => `<p>${content}</p>`)
+                .join("")
+            };
+          }
         }
         return {
           optionContent,
@@ -269,9 +284,6 @@ export function getServerAnswerFormat(
   phoneConditionQuestion: any,
   phoneConditionAnswer: any
 ) {
-  console.log("look");
-  console.log(phoneConditionQuestion);
-  console.log(phoneConditionAnswer);
   let staticAnswer: any[] = [];
   phoneConditionAnswer.forEach(({ id, subAnswerArr }: any) => {
     const question = phoneConditionQuestion.find(({ id: questionId }: any) => {
@@ -313,9 +325,12 @@ export function getServerAnswerFormat(
       });
     }
   });
-  console.log("finish");
-  console.log(staticAnswer);
-  return staticAnswer;
+  return staticAnswer.map((item: any) => {
+    return {
+      id: item.optionId,
+      name: item.optionContent
+    };
+  });
   // test3(phoneConditionQuestion, staticAnswer);
 }
 
@@ -325,12 +340,15 @@ export function serverAnswerToRenderAnswer(question: any, staticAnswer: any) {
   finalResult = {
     phoneConditionAnswer: []
   };
-  staticAnswer.forEach((item: any) => {
-    const { optionId, optionContent } = item;
+  staticAnswer.forEach((item2: any) => {
+    const newItem = {
+      optionId: item2.id,
+      optionContent: item2.name,
+    }
     const result = {
       questionId: "",
       answerId: "",
-      answer: [item]
+      answer: [newItem]
     };
     // 查找对对应的属性。
     // 1 从现有的树种查找
@@ -341,7 +359,7 @@ export function serverAnswerToRenderAnswer(question: any, staticAnswer: any) {
           if (
             subAnswerArr.find(({ id: subQuestionId, answer }: any) => {
               if (String(subQuestionId) === String(targetAnswerId)) {
-                result.answer = answer.concat([item]);
+                result.answer = answer.concat([newItem]);
                 return true;
               } else {
                 return false;
@@ -371,7 +389,7 @@ export function serverAnswerToRenderAnswer(question: any, staticAnswer: any) {
             const { id: subQuestionId, questionDesc } = subQuestion;
             if (
               questionDesc.find((options: any) => {
-                if (String(options.optionId) === String(optionId)) {
+                if (String(options.optionId) === String(newItem.optionId)) {
                   return true;
                 } else {
                   return false;
@@ -410,5 +428,5 @@ export function serverAnswerToRenderAnswer(question: any, staticAnswer: any) {
       );
     }
   });
-  return finalResult.phoneConditionAnswer
+  return finalResult.phoneConditionAnswer;
 }

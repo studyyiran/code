@@ -111,6 +111,8 @@ export function ConditionForm(props: IConditionForm) {
     qualityList: phoneConditionQuestion,
     phoneConditionServerAnswer
   } = selectModelContextValue;
+  console.log("**phoneConditionQuestion**");
+  console.log(phoneConditionQuestion);
   const [maxActiveKey, setMaxActiveKey] = useState("");
   const { state, dispatch } = props;
 
@@ -306,7 +308,7 @@ export function ConditionForm(props: IConditionForm) {
                   // 其实应该一致。监听state然后跳转
                   props.goNextPage();
                 });
-              }, 2000);
+              }, 100);
             }}
             className="common-button finish-button"
           >

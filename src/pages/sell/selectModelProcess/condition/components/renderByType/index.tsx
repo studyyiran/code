@@ -44,7 +44,7 @@ export function RenderByType(props: IRenderByType) {
             // 额外的
             if (isShowTips && onSetShowKey) {
               if (
-                JSON.stringify([answer]) ===
+                JSON.stringify([answer.optionId]) ===
                 JSON.stringify(isShowTips.condition)
               ) {
                 onSetShowKey([questionId]);
@@ -126,7 +126,7 @@ export function RenderByType(props: IRenderByType) {
   }
   if (
     isShowTips &&
-    JSON.stringify(userSubAnswer.answer) ===
+    JSON.stringify(userSubAnswer.answer.map((item: any) => item.optionId)) ===
       JSON.stringify(isShowTips.condition)
   ) {
     dom.push(
