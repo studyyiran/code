@@ -6,8 +6,12 @@ import { IReducerAction } from "@/interface/index.interface";
 import { IQuestion, IUserAnswer, IUserQuestionAnswer } from "./index.interface";
 import { WrapperPanel } from "./components/wrapperPanel";
 import { PhoneInfoWrapper } from "./components/phoneInfoWrapper";
-import { isCanMove, isNoContinue, updateReducerValue } from "./util";
-import { serverPhoneConditionQuestion, treemock } from "../../mock";
+import {
+  isCanMove,
+  isNoContinue,
+  updateReducerValue,
+  serverAnswerToRenderAnswer
+} from "./util";
 import { ISelectModelContext, SelectModelContext } from "../context";
 
 /*
@@ -69,7 +73,7 @@ export default function Questionary(props: any) {
 // 后端接口
 
 interface IStateConditions {
-  phoneConditionAnswer: any[];
+  phoneConditionAnswer: IUserQuestionAnswer[];
   editKey: string[];
   showKey: string[];
 }
@@ -111,9 +115,16 @@ export function ConditionForm(props: IConditionForm) {
 
   // 初始化本地数据（props -》 state的过程不可避免 因为需要回滚用户操作）
   useEffect(() => {
-    dispatch({ type: "resetFromStore", value: phoneConditionServerAnswer });
-  }, []);
-  
+    if (phoneConditionQuestion && phoneConditionServerAnswer) {
+      debugger
+      const localStateAnswer = serverAnswerToRenderAnswer(
+        phoneConditionQuestion,
+        phoneConditionServerAnswer
+      );
+      dispatch({ type: "resetFromStore", value: localStateAnswer });
+    }
+  }, [phoneConditionQuestion, phoneConditionServerAnswer]);
+
   const { phoneConditionAnswer, editKey, showKey } = state;
   // format
   const questionProcess = [firstQuestionKey]
@@ -220,7 +231,7 @@ export function ConditionForm(props: IConditionForm) {
     <div className="page-condition">
       {renderLeftPic()}
       <div>
-        <Collapse>
+        <Collapse activeKey={[maxActiveKey].concat(editKey).concat(showKey)}>
           <PhoneInfoWrapper
             key={firstQuestionKey}
             renderComponent={({
@@ -282,11 +293,13 @@ export function ConditionForm(props: IConditionForm) {
                 type: "postConditionAnswerRenderVersion",
                 value: state.phoneConditionAnswer
               });
-              // 获取最新的key
-              getInquiryByIds().then((value: any) => {
-                // 其实应该一致。监听state然后跳转
-                props.goNextPage();
-              });
+              setTimeout(() => {
+                // 获取最新的key
+                getInquiryByIds().then((value: any) => {
+                  // 其实应该一致。监听state然后跳转
+                  props.goNextPage();
+                });
+              }, 2000);
             }}
             className="common-button finish-button"
           >

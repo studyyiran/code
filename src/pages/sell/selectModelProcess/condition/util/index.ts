@@ -320,7 +320,7 @@ export function getServerAnswerFormat(
 }
 
 // 将静态答案转化为渲染答案(借助整合后的答案)
-function serverAnswerToRenderAnswer(question: any, staticAnswer: any) {
+export function serverAnswerToRenderAnswer(question: any, staticAnswer: any) {
   let finalResult: any;
   finalResult = {
     phoneConditionAnswer: []
@@ -410,5 +410,5 @@ function serverAnswerToRenderAnswer(question: any, staticAnswer: any) {
       );
     }
   });
-  console.log(finalResult);
+  return finalResult.phoneConditionAnswer
 }

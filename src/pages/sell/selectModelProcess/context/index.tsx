@@ -14,7 +14,7 @@ import {
   createOrderStart,
   getQuality
 } from "../server/index.api";
-import { mockgetinquirybykeys } from "../../mock";
+import {getQualitymock, mockgetinquirybykeys} from "../../mock";
 import {
   getServerAnswerFormat,
   tranServerQuestionToLocalRender
@@ -147,7 +147,8 @@ function reducer(state: IContextState, action: IReducerAction) {
       const newProduct = {
         brand: newState.brand,
         modelInfo: newState.modelInfo,
-        inquiryKey: value
+        inquiryKey: value,
+        phoneConditionServerAnswer: newState.phoneConditionServerAnswer
       };
       const productTargetIndex = newState.userProductList.findIndex(
         userProduct => {
@@ -177,7 +178,8 @@ function reducer(state: IContextState, action: IReducerAction) {
           },
           // categoryId: "",// 不需要
           brand: "",
-          inquiryKey: ""
+          inquiryKey: "",
+          phoneConditionServerAnswer: []
         });
       } else if (value) {
         newState = { ...newState, ...value };
@@ -248,7 +250,8 @@ function useGetAction(
     }),
     getQuality: promisify(async function() {
       if (state.categoryId) {
-        const res: any = await getQuality(state.categoryId);
+        // const res: any = await getQuality(state.categoryId);
+        const res: any = getQualitymock;
         dispatch({
           type: "setQualityList",
           value: tranServerQuestionToLocalRender(res && res.list)
@@ -276,9 +279,27 @@ function useGetAction(
       }
     }),
     getInquiryByIds: promisify(async function() {
-      const { brand, categoryId, modelInfo } = state;
+      const {
+        brand,
+        categoryId,
+        modelInfo,
+        phoneConditionServerAnswer
+      } = state;
       if (brand && categoryId && modelInfo) {
         const { modelId, othersAttr } = modelInfo;
+        debugger;
+        const linshimock = [
+          {
+            id: 1
+          },
+          {
+            id: 3
+          },
+          {
+            id: 5
+          }
+        ];
+        console.log(phoneConditionServerAnswer);
         const inquiryInfoInfo = {
           inquirySearch: {
             categoryId,
@@ -287,17 +308,7 @@ function useGetAction(
             bpvIds: Object.keys(othersAttr).map((key: any) => ({
               id: othersAttr[key]
             })),
-            qpvIds: [
-              {
-                id: 1
-              },
-              {
-                id: 3
-              },
-              {
-                id: 5
-              }
-            ]
+            qpvIds: linshimock || phoneConditionServerAnswer
           }
         };
         // 用机型信息获取询价
@@ -405,6 +416,7 @@ function useGetAction(
   // 虽然是主动调用，但是最好还是更新。需要补充更多的依赖
   actions.getInquiryByIds = useCallback(actions.getInquiryByIds, [
     state.brand,
+    state.phoneConditionServerAnswer,
     state.categoryId
   ]);
   // actions.getNameInfo = useCallback(actions.getNameInfo, []);

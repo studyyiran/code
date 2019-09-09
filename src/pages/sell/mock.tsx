@@ -5,104 +5,106 @@ import {
 // import { firstQuestionKey } from "./index";
 const firstQuestionKey = "aboutYourPhone";
 
-export const treemock = [
-  {
-    id: 12,
-    displayName: "Pow on",
-    name: "问题1",
-    type: 0,
-    question: "is phone pow on",
-    qualityPropertyValueDtos: [
-      {
-        id: 19,
-        displayName: "yes",
-        type: 0,
-        qualityPropertyDtos: []
-      },
-      {
-        id: 20,
-        displayName: "no",
-        type: 0,
-        qualityPropertyDtos: []
-      }
-    ]
-  },
-  {
-    id: 13,
-    displayName: "是否磨损",
-    name: "问题2",
-    type: 0,
-    question: null,
-    qualityPropertyValueDtos: [
-      {
-        id: 210,
-        displayName: "yes",
-        type: 0,
-        qualityPropertyDtos: [
-          // {
-          //   "id": 120,
-          //   "displayName": "Pow on",
-          //   "name": '问题1',
-          //   "type": 0,
-          //   "question": "is phone pow on",
-          //   "qualityPropertyValueDtos": [
-          //     {
-          //       "id": 190,
-          //       "displayName": "yes",
-          //       "type": 0,
-          //       "qualityPropertyDtos": []
-          //     },
-          //     {
-          //       "id": 200,
-          //       "displayName": "no",
-          //       "type": 0,
-          //       "qualityPropertyDtos": []
-          //     }
-          //   ]
-          // }
-          {
-            id: 14,
-            displayName: "磨损部位在哪",
-            type: 1,
-            question: "可以自己写磨损部位",
-            qualityPropertyValueDtos: [
-              {
-                id: 23,
-                displayName: "上",
-                type: 0,
-                qualityPropertyDtos: []
-              },
-              {
-                id: 24,
-                displayName: "左",
-                type: 0,
-                qualityPropertyDtos: []
-              },
-              {
-                id: 25,
-                displayName: "下",
-                type: 0,
-                qualityPropertyDtos: []
-              },
-              {
-                id: 26,
-                displayName: "右",
-                type: 1,
-                qualityPropertyDtos: []
-              }
-            ]
-          }
-        ]
-      },
-      {
-        id: 22,
-        displayName: "no",
-        type: 0,
-        qualityPropertyDtos: []
-      }
-    ]
-  }
-];
+export const getQualitymock = {
+  list: [
+    {
+      id: 12,
+      displayName: "Pow on",
+      name: "问题1",
+      type: 0,
+      question: "is phone pow on",
+      qualityPropertyValueDtos: [
+        {
+          id: 19,
+          displayName: "yes",
+          type: 0,
+          qualityPropertyDtos: []
+        },
+        {
+          id: 20,
+          displayName: "no",
+          type: 0,
+          qualityPropertyDtos: []
+        }
+      ]
+    },
+    {
+      id: 13,
+      displayName: "是否磨损",
+      name: "问题2",
+      type: 0,
+      question: null,
+      qualityPropertyValueDtos: [
+        {
+          id: 210,
+          displayName: "yes",
+          type: 0,
+          qualityPropertyDtos: [
+            // {
+            //   "id": 120,
+            //   "displayName": "Pow on",
+            //   "name": '问题1',
+            //   "type": 0,
+            //   "question": "is phone pow on",
+            //   "qualityPropertyValueDtos": [
+            //     {
+            //       "id": 190,
+            //       "displayName": "yes",
+            //       "type": 0,
+            //       "qualityPropertyDtos": []
+            //     },
+            //     {
+            //       "id": 200,
+            //       "displayName": "no",
+            //       "type": 0,
+            //       "qualityPropertyDtos": []
+            //     }
+            //   ]
+            // }
+            {
+              id: 14,
+              displayName: "磨损部位在哪",
+              type: 1,
+              question: "可以自己写磨损部位",
+              qualityPropertyValueDtos: [
+                {
+                  id: 23,
+                  displayName: "上",
+                  type: 0,
+                  qualityPropertyDtos: []
+                },
+                {
+                  id: 24,
+                  displayName: "左",
+                  type: 0,
+                  qualityPropertyDtos: []
+                },
+                {
+                  id: 25,
+                  displayName: "下",
+                  type: 0,
+                  qualityPropertyDtos: []
+                },
+                {
+                  id: 26,
+                  displayName: "右",
+                  type: 1,
+                  qualityPropertyDtos: []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: 22,
+          displayName: "no",
+          type: 0,
+          qualityPropertyDtos: []
+        }
+      ]
+    }
+  ]
+};
 
 export const serverPhoneConditionQuestion: IQuestion[] = [
   // {
