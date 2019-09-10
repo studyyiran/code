@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Checkbox, Input } from "antd";
+import "./index.less";
 
 interface ICheckBoxQuestion {
   value?: any[];
@@ -82,7 +83,7 @@ function CheckBoxWithInput(props: any) {
     Boolean(currentInput && currentInput.optionId && currentInput.optionContent)
   );
   return (
-    <div>
+    <div className="check-box-input-container">
       <Checkbox
         className="comp-answer-input"
         checked={isSelect}
@@ -104,39 +105,35 @@ function CheckBoxWithInput(props: any) {
           }
         }}
       >
-        <span>{content}</span>
+        {!isSelect ? <span>{content}</span> : null}
       </Checkbox>
-      <Input
-        placeholder="Enter Text"
-        disabled={!isSelect}
-        value={currentInput.optionContent}
-        onChange={e => {
-          // 更新的时候，首先搜索到，然后替换掉
-          const next = {
-            optionId: currentInput.optionId,
-            optionContent: e.currentTarget.value
-          };
-          if (isSelect) {
-            const target = currentSelect.find(
-              (currentAnswer: any) =>
-                currentAnswer.optionId === currentInput.optionId
-            );
-            if (target) {
-              target.optionContent = e.currentTarget.value;
-              handler(currentSelect);
-            } else {
-              handler(currentSelect.concat([next]));
+      {isSelect ? (
+        <Input
+          className="check-box-input"
+          placeholder="Enter Text"
+          disabled={!isSelect}
+          value={currentInput.optionContent}
+          onChange={e => {
+            // 更新的时候，首先搜索到，然后替换掉
+            const next = {
+              optionId: currentInput.optionId,
+              optionContent: e.currentTarget.value
+            };
+            if (isSelect) {
+              const target = currentSelect.find(
+                (currentAnswer: any) =>
+                  currentAnswer.optionId === currentInput.optionId
+              );
+              if (target) {
+                target.optionContent = e.currentTarget.value;
+                handler(currentSelect);
+              } else {
+                handler(currentSelect.concat([next]));
+              }
             }
-            // const nextAnswer = [
-            //   ...currentSelect.slice(0, target),
-            //   next,
-            //   ...currentSelect.slice(target + 1)
-            // ];
-          } else {
-            // handler(currentSelect.concat([next]));
-          }
-        }}
-      />
+          }}
+        />
+      ) : null}
     </div>
   );
 }

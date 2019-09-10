@@ -1,5 +1,5 @@
-@import (reference) '~@/styles/index.less';
-@import './done--mobile.less';
+@import (reference) "~@/styles/index.less";
+@import "./done--mobile.less";
 
 .page-youredone-container {
   height: 100%;
@@ -12,15 +12,15 @@
         overflow: hidden;
         // display: inline-block;
         width: 344px;
-        height:220px;
+        height: 220px;
         box-sizing: border-box;
-        background:rgba(255,255,255,1);
-        border-radius:4px;
-        border:1px solid rgba(245,245,245,1);
+        background: rgba(255, 255, 255, 1);
+        border-radius: 4px;
+        border: 1px solid rgba(245, 245, 245, 1);
         .show-header {
           padding: 0 20px;
           line-height: 44px;
-          background-color: #F8F9FB;
+          background-color: #f8f9fb;
           .name {
             .set-font-color(12px, #666);
           }
@@ -83,26 +83,26 @@
 
       .show-module + .show-module {
         margin-left: 10px;
-        float:right;
+        float: right;
       }
     }
 
     .bottom-part-wrapper {
       margin-top: 30px;
-      min-height:180px;
-      background:rgba(255,255,255,1);
-      border-radius:4px;
-      border:1px solid rgba(245,245,245,1);
+      min-height: 180px;
+      background: rgba(255, 255, 255, 1);
+      border-radius: 4px;
+      border: 1px solid rgba(245, 245, 245, 1);
       .phone-name {
         text-indent: 20px;
         .set-font-color(12px, #666);
         line-height: 40px;
         border-radius: 4px 4px 0 0;
-        background-color: #F8F9FB;
+        background-color: #f8f9fb;
       }
       .phone-info-wrapper {
         padding: 20px 20px 0;
-        min-height:116px;
+        min-height: 116px;
         box-sizing: border-box;
         overflow: hidden;
         .img {
@@ -123,10 +123,10 @@
                 /* autoprefixer: off */
                 -webkit-line-clamp: 2;
                 -webkit-box-orient: vertical;
-                height:36px;
+                height: 36px;
                 &:hover {
                   display: inline-block !important;
-                  height:auto;
+                  height: auto;
                 }
               }
             }
@@ -144,7 +144,7 @@
               .edit-bg {
                 position: absolute;
                 // bottom: 1px;
-                top:16px;
+                top: 16px;
                 right: -40px;
                 width: 20px;
                 height: 20px;
@@ -173,19 +173,21 @@
           width: 20px;
           height: 20px;
           margin-right: 10px;
-          background: url("~@/images/yourphone/check_icon--normal.png") no-repeat;
+          background: url("~@/images/yourphone/check_icon--normal.png")
+            no-repeat;
           background-size: 100%;
           cursor: pointer;
         }
         &.checked {
           &::before {
-            background: url("~@/images/yourphone/check_icon--active.png") no-repeat;
+            background: url("~@/images/yourphone/check_icon--active.png")
+              no-repeat;
             background-size: 100%;
           }
         }
       }
       .highlight {
-        color: #00BAE5;
+        color: #00bae5;
         cursor: pointer;
       }
     }
@@ -200,16 +202,16 @@
 
         &:hover {
           button {
-            border:2px solid #00CFFF;
-            color:#00CFFF;
+            border: 2px solid #00cfff;
+            color: #00cfff;
             background: #fff;
           }
         }
         button {
-          width:100%;
+          width: 100%;
           &:not(:disabled) {
-            border:2px solid #00CFFF;
-            color:#00CFFF;
+            border: 2px solid #00cfff;
+            color: #00cfff;
             background: #fff;
           }
         }
@@ -217,16 +219,18 @@
 
       button.ghost {
         &:not(:disabled) {
-          border:2px solid #00CFFF;
-          color:#00CFFF;
+          border: 2px solid #00cfff;
+          color: #00cfff;
           background: #fff;
         }
         &:hover {
-          border:2px solid #00CFFF;
-          color:#00CFFF;
+          border: 2px solid #00cfff;
+          color: #00cfff;
           background: #fff;
         }
       }
     }
   }
 }
+
+
