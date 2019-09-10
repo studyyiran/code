@@ -1,7 +1,7 @@
 export function requestWrapper(obj: any, all?: boolean) {
   return {
     ...obj,
-    url: all ? obj.url : "/api" + obj.url,
+    url: all ? obj.url : "http://112.124.128.55/api" + obj.url,
     isFullUrl: true
   };
 }
