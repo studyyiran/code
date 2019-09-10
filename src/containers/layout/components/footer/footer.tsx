@@ -158,7 +158,6 @@ export default class Footer extends React.Component<
     if (!link.href) {
       return false;
     }
-    console.log(this.props.router.history);
     if (
       /\/faq/.test(link.href) &&
       this.props.router.history.location.pathname === "/faq"

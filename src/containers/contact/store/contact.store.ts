@@ -3,7 +3,6 @@ import * as Api from '../api/contact.api';
 import { IContact, IContactStore } from '../interface/contact.interface';
 import { notification } from 'antd';
 
-console.log(Api)
 class Contact implements IContactStore {
   @observable public contact: IContact | null = null;
 

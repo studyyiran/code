@@ -460,7 +460,7 @@ class Store implements IOrderStore {
       this.autoSaveLoginMes();
       return true;
     } catch (e) {
-      console.log(e);
+      console.error(e);
       return false;
     }
   };

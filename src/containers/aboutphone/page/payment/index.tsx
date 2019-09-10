@@ -401,8 +401,6 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
   }
 
   private handlePaypalCollapseExtend = (type: string[]) => {
-    console.log(type);
-    console.log(this.props.yourphone.payment);
     if (this.props.yourphone.payment === EPayType.PAYPAL && !type.length) {
       this.props.yourphone.payment = "";
     }
@@ -416,8 +414,6 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
   };
 
   private handleEcheckCollapseExtend = (type: string[]) => {
-    console.log(type);
-    console.log(this.props.yourphone.payment);
     if (this.props.yourphone.payment === EPayType.ECHECK && !type.length) {
       this.props.yourphone.payment = "";
     }
@@ -460,26 +456,21 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
 }
 
 const onValuesChange = (props: any, changedValues: any, allValues: any) => {
-  console.log(allValues);
   if (yourphoneStore.payment === EPayType.PAYPAL) {
-    console.log(4);
     if (
       allValues.paypal_email &&
       allValues.paypal_email_confirm &&
       yourphoneStore.isLeftOnEdit
     ) {
-      console.log(5);
       yourphoneStore.isPaymentFormFilled = true;
       return false;
     }
 
-    console.log(6);
     yourphoneStore.isPaymentFormFilled = false;
     // false
     return false;
   }
 
-  console.log(1);
   if (
     allValues.firstName &&
     allValues.lastName &&
@@ -487,12 +478,10 @@ const onValuesChange = (props: any, changedValues: any, allValues: any) => {
     allValues.email_confirm &&
     yourphoneStore.isRightOnEdit
   ) {
-    console.log(2);
     yourphoneStore.isPaymentFormFilled = true;
     return false;
   }
 
-  console.log(3);
   yourphoneStore.isPaymentFormFilled = false;
   return true;
 };

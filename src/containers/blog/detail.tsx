@@ -49,8 +49,6 @@ export default class BlogDetail extends React.Component<IBlogDetailProps> {
     shareComponent.hide();
   }
   public render() {
-    console.log("render");
-    console.log();
     const detail = this.props.blog.detail;
     if (!detail) {
       return null;

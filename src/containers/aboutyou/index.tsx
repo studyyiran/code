@@ -99,7 +99,6 @@ class AboutYou extends React.Component<IAboutYouProps, IAboutYouState> {
   }
 
   private handleValidate = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(222)
     const value = e.target.value;
     const state = {
       isValidate: false,
@@ -112,7 +111,6 @@ class AboutYou extends React.Component<IAboutYouProps, IAboutYouState> {
   }
 
   private handleValidateBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    console.log(111)
     const state: IAboutYouState = {
       isValidate: this.state.isValidate,
       help: undefined,

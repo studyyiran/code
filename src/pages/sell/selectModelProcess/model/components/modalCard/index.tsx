@@ -53,11 +53,15 @@ export default function ModelCard(props: any) {
   }, [attrState]);
 
   // canNext?
+  // TODO 这块放在子上面不好
+  // TODo 这种判断会引起bug
   useEffect(() => {
+    console.log(phoneInfoAnswer.subAnswerArr);
     // const a = findArrByKey(phoneInfoAnswer, "storage");
     // const b = findArrByKey(phoneInfoAnswer, "carrier");
     if (
       Object.keys(attrState).length &&
+      Object.keys(attrState).length === phoneInfoAnswer.subAnswerArr.length &&
       !Object.keys(attrState).find((key: string) => {
         const findTarget = phoneInfoAnswer.subAnswerArr.find(
           (item: any) => item.id === String(key)
@@ -71,8 +75,7 @@ export default function ModelCard(props: any) {
     ) {
       props.goNextPage();
     } else {
-      console.log(attrState);
-      console.log(phoneInfoAnswer.subAnswerArr);
+      console.warn('?')
     }
   }, [phoneInfoAnswer, attrState]);
 

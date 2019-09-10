@@ -46,7 +46,6 @@ const Request = <T>(opts: IOpts, code?: number[]): Promise<T> => {
   if (opts.isMock) {
     defaultProxyName = "/mock";
   }
-  console.log(opts);
   // headers 增加slug
   opts.headers = {
     ...opts.headers
@@ -58,7 +57,8 @@ const Request = <T>(opts: IOpts, code?: number[]): Promise<T> => {
   if (!opts.isFullUrl) {
     opts.url = defaultProxyName + basePath + opts.url;
   }
-  console.log(opts.url);
+  console.log("##opts##");
+  console.log(opts);
   // 合并默认参数和业务参数
   opts.whitecode = code || null;
   opts = { ...defaultopts, ...opts };
@@ -72,7 +72,6 @@ const Request = <T>(opts: IOpts, code?: number[]): Promise<T> => {
   if (opts.loading) {
     hide = message.loading("loading...", 0);
   }
-  console.log(opts.url);
   // 返回一个promise 用来 await调用
   return new Promise((resolve, reject) => {
     Axios(opts)

@@ -51,7 +51,6 @@ class Common implements ICommonStore {
     }
     this.positionInfo = result;
     this.positionInfo.baiduPoi = gcj02ToBd09(result.position.lat, result.position.lng);
-    console.log(result);
     return true;
   }
 

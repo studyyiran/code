@@ -35,7 +35,7 @@ export default function Brand(props: any) {
   // 添加新机型
   function addNewHandler() {
     selectModelContextDispatch({ type: "changeModelCache", value: "reset" });
-    props.history.push(props.match.url);
+    props.history.push(props.route.path);
   }
   function renderList() {
     return resultList.map((item: any, index: number) => {

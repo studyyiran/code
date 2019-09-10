@@ -59,8 +59,6 @@ export default class BlogList extends React.Component<
 
   public render() {
     const { features, tags, tagPageList, lastest, activeTag } = this.props.blog;
-    console.log(activeTag);
-    console.log(tagPageList);
     return (
       <div className="page-blog-list-container">
         <HeaderTitle title={"Tech Talk"} />
@@ -118,7 +116,6 @@ export default class BlogList extends React.Component<
   private handleChangeActiveTag = (key: string) => {
     const tag = (this.props.blog.tags || []).find(item => item.name === key);
     if (tag) {
-      console.log(tag);
       this.props.blog.activeTag = tag;
     }
   };

@@ -41,7 +41,6 @@ export default class NavigatorWithBar extends React.Component<IProps, IStates> {
     if (this.state.navigatorObj === null) {
       return null;
     }
-    console.log(this.props.disabled)
 
     const { navigatorObj } = this.state;
     return (

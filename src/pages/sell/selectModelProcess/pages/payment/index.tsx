@@ -381,24 +381,20 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
 
 const onValuesChange = (props: any, changedValues: any, allValues: any) => {
   if (yourPhoneStore.payment === EPayType.PAYPAL) {
-    console.log(4);
     if (
       allValues.paypal_email &&
       allValues.paypal_email_confirm &&
       yourPhoneStore.isLeftOnEdit
     ) {
-      console.log(5);
       yourPhoneStore.isPaymentFormFilled = true;
       return false;
     }
 
-    console.log(6);
     yourPhoneStore.isPaymentFormFilled = false;
     // false
     return false;
   }
 
-  console.log(1);
   if (
     allValues.firstName &&
     allValues.lastName &&
@@ -406,12 +402,10 @@ const onValuesChange = (props: any, changedValues: any, allValues: any) => {
     allValues.email_confirm &&
     yourPhoneStore.isRightOnEdit
   ) {
-    console.log(2);
     yourPhoneStore.isPaymentFormFilled = true;
     return false;
   }
 
-  console.log(3);
   yourPhoneStore.isPaymentFormFilled = false;
   return true;
 };
