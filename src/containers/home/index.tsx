@@ -272,7 +272,7 @@ class Home extends React.Component<IHomeProps, IHomeState> {
                   }
                 />
               </div>
-              <Link to={"/sell/yourphone/brand"}>
+              <Link to={"/newsell"}>
                 <button className="common-button">Sell Now</button>
               </Link>
             </section>
@@ -298,7 +298,7 @@ class Home extends React.Component<IHomeProps, IHomeState> {
                 : require("./res/chart-pc.svg")
             }
           />
-          <LinkButton url={"/sell/yourphone/brand"}>Sell Now</LinkButton>
+          <LinkButton url={"/newsell"}>Sell Now</LinkButton>
         </section>
         <section className="easy-sell-part">
           <h2>3 Easy Steps To Sell</h2>
@@ -310,7 +310,7 @@ class Home extends React.Component<IHomeProps, IHomeState> {
           />
           <div className="bg-white-container">
             <SectionIcons {...descPart2} />
-            <LinkButton url={"/sell/yourphone/brand"}>Learn More</LinkButton>
+            <LinkButton url={"/newsell"}>Learn More</LinkButton>
           </div>
         </section>
         <section className="home__review">
@@ -322,14 +322,14 @@ class Home extends React.Component<IHomeProps, IHomeState> {
             />
           </div>
         </section>
-        <LinkButton url={"/sell/yourphone/brand"}>Sell Now</LinkButton>
+        <LinkButton url={"/newsell"}>Sell Now</LinkButton>
       </article>
     );
   }
 }
 
 {
-  /*<LinkButton url={"/sell/yourphone/brand"}>*/
+  /*<LinkButton url={"/newsell"}>*/
 }
 {
   /*  */

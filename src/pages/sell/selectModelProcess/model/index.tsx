@@ -38,7 +38,6 @@ function Model(props: any) {
   const { modelInfo, brandList } = selectModelContextValue;
   // 重定向为名称
   if (props.match && props.match.params && props.match.params.brandName) {
-    debugger;
     const findTarget: any = brandList.find((item: any) => {
       return String(item.id) === String(props.match.params.brandName);
     });

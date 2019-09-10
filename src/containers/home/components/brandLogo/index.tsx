@@ -8,7 +8,7 @@ export function BrandLogo(props: any) {
 
   function clickHandler() {
     if (id !== "others") {
-      onClick(brand);
+      onClick(id);
       props.history.push(`/newsell/${id}`);
     }
   }
