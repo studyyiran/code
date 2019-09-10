@@ -46,8 +46,11 @@ class Information extends React.Component<IShippingProps, IShippingState> {
 
     // didmount 的时候校验是否填了字段
     const { getFieldsValue } = this.props.form;
-    const allValus = getFieldsValue();
-    onValuesChange(this.props, false, allValus);
+    // cache填充是异步的
+    window.setTimeout(() => {
+      const allValus = getFieldsValue();
+      onValuesChange(this.props, false, allValus);
+    }, 200)
 
     if (typeof this.props.onRef === "function") {
       this.props.onRef!(this);
