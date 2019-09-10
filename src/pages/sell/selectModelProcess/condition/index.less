@@ -2,19 +2,24 @@
 .page-condition {
   padding: 10px 10px 40px 10px;
   min-height: 63vh;
+  display: flex;
+  justify-content: center;
   .page(800px);
-  > img.product-bg {
+  .img-container {
     width: 273px;
-    float: left;
-    &+* {
-      margin-left: 300px;
+    > img.product-bg {
+      width: 100%;
+    }
+    p {
+      .font(12px, 500, #222222);
+      text-align: right;
+      padding-right: 30px;
     }
   }
-  > h1 {
-    color: @bg-deep-blue;
-    text-align: center;
-    margin: 20px auto 20px;
+  > .list-container {
+    min-width: 448px;
   }
+
   .finish-button {
     margin: 30px auto 0px;
     display: block;
@@ -28,18 +33,32 @@
 
 .ismobile #root {
   .page-condition {
-    padding: 0 0.48rem 1rem;
-    > img.product-bg {
-      display: none;
-      &+* {
-        margin-left: 0;
+    padding: 10px 10px 40px 10px;
+    min-height: 63vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    .page(800px);
+    .img-container {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      > img.product-bg {
+        max-width: 60px;
       }
+      p {
+        .font(12px, 500, #222222);
+        text-align: left;
+        flex: 1;
+        margin-left: 20px;
+      }
+      padding-bottom: 17px;
+      border-bottom: 1px solid @color-border;
     }
-    > h1 {
-      color: @bg-deep-blue;
-      text-align: center;
-      margin: 20px auto 20px;
+    > .list-container {
+      min-width: 448px;
     }
+
     .finish-button {
       margin: 30px auto 0px;
       display: block;

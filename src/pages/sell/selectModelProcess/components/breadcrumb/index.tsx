@@ -38,7 +38,7 @@ function Breadcrumb(props: any) {
 
     const { othersAttrName } = nameObj.modelInfoName;
     Object.keys(othersAttrName).forEach((key: any) => {
-      name = append(name, othersAttrName[key]);
+      name = append(`${name} `, othersAttrName[key]);
     });
     return name;
   }

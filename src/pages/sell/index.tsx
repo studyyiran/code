@@ -202,10 +202,10 @@ export default function Sell(props: any) {
       });
       if (nameConfig && nameConfig.modelInfoName) {
         const { modelName, othersAttrName } = nameConfig.modelInfoName;
-        let next = `Sell My${modelName}`;
-        Object.keys(othersAttrName).forEach((key: any) => {
-          next += ` ${othersAttrName[key]}`;
-        });
+        const next = modelName ? `Sell My ${modelName}` : 'Sell My Phone';
+        // Object.keys(othersAttrName).forEach((key: any) => {
+        //   next += ` ${othersAttrName[key]}`;
+        // });
         return {
           ...result,
           title: next

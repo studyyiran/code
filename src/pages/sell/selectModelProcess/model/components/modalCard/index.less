@@ -32,9 +32,9 @@
         }
         > ul.one-attr-container {
           display: grid;
-          grid-template-columns: repeat(3, auto);
+          grid-template-columns: repeat(2, 1fr);
           grid-column-gap: 10px;
-          padding: 5px 16px 10px;
+          padding: 5px 0 10px;
           > li.one-attr-option {
             &[data-selected="true"] {
               background: #444b54;
@@ -123,8 +123,8 @@
           }
           > ul.one-attr-container {
             display: grid;
-            grid-template-columns: repeat(3, auto);
-            grid-column-gap: 0.43rem;
+            grid-template-columns: 1fr 1fr;
+            //grid-column-gap: 0.43rem;
             padding: 0;
             padding-top: 0.03rem;
             > li.one-attr-option {

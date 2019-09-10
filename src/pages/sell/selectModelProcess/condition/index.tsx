@@ -118,7 +118,12 @@ export function ConditionForm(props: IConditionForm) {
 
   // 初始化本地数据（props -》 state的过程不可避免 因为需要回滚用户操作）
   useEffect(() => {
-    if (phoneConditionQuestion && phoneConditionQuestion.length && phoneConditionStaticAnswer && phoneConditionStaticAnswer.length) {
+    if (
+      phoneConditionQuestion &&
+      phoneConditionQuestion.length &&
+      phoneConditionStaticAnswer &&
+      phoneConditionStaticAnswer.length
+    ) {
       const localStateAnswer = serverAnswerToRenderAnswer(
         phoneConditionQuestion,
         phoneConditionStaticAnswer
@@ -234,7 +239,17 @@ export function ConditionForm(props: IConditionForm) {
       modelId,
       othersAttr
     });
-    return <img className="product-bg" src={nameConfig.imgUrl} />;
+    const { modelName, othersAttrName } = nameConfig.modelInfoName;
+    let next = modelName;
+    Object.keys(othersAttrName).forEach((key: any) => {
+      next += ` ${othersAttrName[key]}`;
+    });
+    return (
+      <div className="img-container">
+        <img className="product-bg" src={nameConfig.imgUrl} />
+        <p>{next}</p>
+      </div>
+    );
   }
 
   // canPost?
@@ -258,7 +273,7 @@ export function ConditionForm(props: IConditionForm) {
   return (
     <div className="page-condition">
       {renderLeftPic()}
-      <div>
+      <div className="list-container">
         <Collapse activeKey={[maxActiveKey].concat(editKey).concat(showKey)}>
           <PhoneInfoWrapper
             key={firstQuestionKey}
