@@ -224,10 +224,12 @@ export function tranServerQuestionToLocalRender(staticQuestion: any) {
     subQuestionContent,
     type,
     subQuestionId,
-    qualityPropertyValueDtos
+    qualityPropertyValueDtos,
+    tips
   }: any) {
     let subQuesiton: any = {};
     subQuesiton = Object.assign(subQuesiton, {
+      tipsContent: tips,
       id: subQuestionId,
       content: subQuestionContent,
       type: staticMap[type],

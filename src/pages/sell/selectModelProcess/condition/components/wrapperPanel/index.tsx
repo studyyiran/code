@@ -8,6 +8,7 @@ import {
   ISubQuestion
 } from "../../index.interface";
 import { canShowMoreQuestion, findAnswerById, isCanMove } from "../../util";
+import TipsIcon from "@/pages/sell/selectModelProcess/components/tipsIcon";
 const { Panel } = Collapse;
 function SaveButton(props: any) {
   const { children, canPost } = props;
@@ -150,7 +151,8 @@ function RenderQuestions(props: IRenderQuestions) {
         type,
         isMoreCondition,
         questionDesc,
-        isShowTips
+        isShowTips,
+        tipsContent
       } = subQuestion;
       let userSubAnswer: any;
       if (answerInfo) {
@@ -171,7 +173,11 @@ function RenderQuestions(props: IRenderQuestions) {
         }
         dom.push(
           <div className="wrapper-panel__question" key={subQuestionId}>
-            <h2>{content}</h2>
+            <div className="content-container">
+              <h2>{content}</h2>
+              {tipsContent ? <TipsIcon>{tipsContent}</TipsIcon> : null}
+            </div>
+
             <RenderByType
               isShowTips={isShowTips}
               questionDesc={questionDesc}

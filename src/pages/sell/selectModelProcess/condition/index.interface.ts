@@ -14,6 +14,7 @@ export interface ISubQuestion {
     tips: any;
   };
   questionDesc?: any[]; // 题目额外信息
+  tipsContent?: string; // 点击弹框
 }
 
 export interface IUserQuestionAnswer {

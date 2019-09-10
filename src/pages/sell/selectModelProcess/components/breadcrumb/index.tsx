@@ -172,6 +172,8 @@ function Breadcrumb(props: any) {
             if (renderPageOrder > 0) {
               nextPageKey =
                 configArr[getIndexByOrder(renderPageOrder - 1)].pageKey;
+            } else if (renderPageOrder === 0) {
+              nextPageKey = "firstStep";
             }
           }
           return (
