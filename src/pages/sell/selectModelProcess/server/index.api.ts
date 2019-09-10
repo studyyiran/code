@@ -4,23 +4,8 @@ import { IQueryParams, IAppendOrderParams } from "../index.interface";
 import config from "@/config/index";
 import { IPreOrder } from "@/store/interface/user.interface";
 import { mockgetexpressfee } from "../../mock";
-function wrapper(obj: any, all?: boolean) {
-  return {
-    ...obj,
-    url: all ? obj.url : "/api" + obj.url,
-    isFullUrl: true
-  };
-}
+import { requestGetResponse, requestWrapper } from "@/utils/util";
 
-function getResponse(promise: any) {
-  return new Promise((resolve, reject) => {
-    promise.then((res: any) => {
-      if (res && res.data) {
-        resolve(res.data);
-      }
-    });
-  });
-}
 // 获取机型列表, 以及根据关键字搜索机型
 export const getProducts = <T>(brandId: string, categoryId: string) => {
   const opts: IOpts = {
@@ -33,7 +18,7 @@ export const getProducts = <T>(brandId: string, categoryId: string) => {
     }
   };
 
-  return getResponse(Request<T>(wrapper(opts)));
+  return requestGetResponse(Request<T>(requestWrapper(opts)));
 };
 export const getinquirybyids = <T>(inquiryInfo: any) => {
   const opts: IOpts = {
@@ -42,7 +27,7 @@ export const getinquirybyids = <T>(inquiryInfo: any) => {
     params: inquiryInfo
   };
 
-  return getResponse(Request<T>(wrapper(opts), []));
+  return requestGetResponse(Request<T>(requestWrapper(opts), []));
 };
 
 export const getinquirybykeys = <T>(inquiryInfo: any) => {
@@ -52,19 +37,19 @@ export const getinquirybykeys = <T>(inquiryInfo: any) => {
     params: inquiryInfo
   };
 
-  return getResponse(Request<T>(wrapper(opts), []));
+  return requestGetResponse(Request<T>(requestWrapper(opts), []));
 };
 // 创建订单接口， 只要发生错误，都提示用户可以写邮件寻求帮助
 export const createOrderStart = <T>(orderParams: any) => {
-  console.log("**createOrderStart**")
-  console.log(JSON.stringify(orderParams))
+  console.log("**createOrderStart**");
+  console.log(JSON.stringify(orderParams));
   const opts: IOpts = {
     url: `/group_order/create`,
     method: "post",
     params: orderParams
   };
-  return getResponse(Request<T>(wrapper(opts)));
-  // return getResponse(Request<T>(wrapper(opts, true), []));
+  return requestGetResponse(Request<T>(requestWrapper(opts)));
+  // return requestGetResponse(Request<T>(requestWrapper(opts, true), []));
 };
 
 // 根据类目获取品牌列表
@@ -75,8 +60,8 @@ export const getExpressFee = <T>(inquiryKeys: any) => {
     method: "post",
     params: inquiryKeys
   };
-  return getResponse(Request<T>(wrapper(opts)));
-  // return getResponse(Request<T>(wrapper(opts, true)));
+  return requestGetResponse(Request<T>(requestWrapper(opts)));
+  // return requestGetResponse(Request<T>(requestWrapper(opts, true)));
   // return Request<T>(opts, []);
 };
 
@@ -87,7 +72,7 @@ export const getBrands = <T>(categoryId: string) => {
     isFullUrl: true
   };
 
-  return getResponse(Request<T>(wrapper(opts)));
+  return requestGetResponse(Request<T>(requestWrapper(opts)));
 };
 
 // 根据类目获取品牌列表
@@ -97,7 +82,7 @@ export const getQuality = <T>(categoryId: string) => {
     isFullUrl: true
   };
 
-  return getResponse(Request<T>(wrapper(opts)));
+  return requestGetResponse(Request<T>(requestWrapper(opts)));
 };
 
 /*

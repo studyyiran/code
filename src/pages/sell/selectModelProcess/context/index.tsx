@@ -19,6 +19,7 @@ import {
   getServerAnswerFormat,
   tranServerQuestionToLocalRender
 } from "../condition/util";
+import { setOrderCache } from "@/containers/order/util";
 
 let haveLoad = false;
 const sessionKey = "modelContext";
@@ -334,10 +335,20 @@ function useGetAction(
       }
     }),
     createOrderStart: promisify(async function(postData: any) {
-      const keys = actions.getInquiryKeyList();
       try {
-        const res = await createOrderStart(postData);
-        return res;
+        const res: any = await createOrderStart(postData);
+        if (res) {
+          // 调用成功后，cache用户邮箱，便于跳转
+          const { groupOrderNo, userInfo } = res;
+          const { userEmail } = userInfo;
+          if (groupOrderNo && userEmail) {
+            setOrderCache({
+              email: userEmail,
+              orderId: groupOrderNo
+            });
+          }
+          return res;
+        }
       } catch (e) {
         console.error(e);
         alert("wrong!");

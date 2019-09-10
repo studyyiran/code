@@ -1,7 +1,8 @@
 import React from "react";
 import "./index.less";
 import VideoComponent from "@/components/video";
-
+import RouterLink from "@/components/routerLink";
+// subOrders[0].shippingInfo.sendInfo[0].lableCode
 export default function(props: any) {
   const {} = props;
   return (
@@ -22,7 +23,10 @@ export default function(props: any) {
         <h2>Step 2 - Print your label</h2>
         <div className="container">
           <div className="line-card">
-            <div>Use your own box and ship by<br/> Tuesday, Aug. 13</div>
+            <div>
+              Use your own box and ship by
+              <br /> Tuesday, Aug. 13
+            </div>
           </div>
           <button className="common-button">Print Label</button>
           <section className="video">
@@ -32,7 +36,7 @@ export default function(props: any) {
         </div>
         <div className="check-order">
           <span>Your order #121464654</span>
-          <a>{`Check Order >`}</a>
+          <RouterLink to="/neworder">{`Check Order >`}</RouterLink>
         </div>
       </section>
       <button className="common-button second">Go back home</button>

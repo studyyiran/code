@@ -163,7 +163,12 @@ export function getDeliverInfos(trackingInfo: any) {
 }
 
 // 自家用的数据。
-export function getInfo({ userInfo, paymentInfo, groupOrderNo, orderCreateDate }: any) {
+export function getInfo({
+  userInfo,
+  paymentInfo,
+  groupOrderNo,
+  orderCreateDate
+}: any) {
   // 1
   const shippingAddress: string[] = [];
   shippingAddress.push(userInfo.firstName + " " + userInfo.lastName);
@@ -360,4 +365,23 @@ export function getProgressType({
     currentIndex,
     dataList
   };
+}
+
+export function setOrderCache({ email, orderId }: any) {
+  if (email && orderId) {
+    const orderCache = {
+      email,
+      orderId
+    };
+    sessionStorage.setItem("orderCache", JSON.stringify(orderCache));
+  }
+}
+
+export function getOrderCache() {
+  const data: any = sessionStorage.getItem("orderCache");
+  try {
+    return JSON.parse(data);
+  } catch (e) {
+    return null;
+  }
 }

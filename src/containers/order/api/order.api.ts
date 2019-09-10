@@ -1,22 +1,23 @@
 import { Request } from "utils";
 import { IOpts } from "@/utils/request.interface";
+import {requestGetResponse, requestWrapper} from "@/utils/util";
 
-// 获取订单详情
-export function getOrderDetail<T>(
-  userEmail: string,
-  orderNo: string
-): Promise<T> {
+
+// 新的获取订单详情
+export function checkForOrder<T>(userEmail: string, orderNo: string) {
   const opts: IOpts = {
     method: "POST",
-    url: `/orders/check`,
+    url: `/group_order/checkfororder`,
     params: {
       userEmail,
       orderNo
     },
     loading: false
   };
-  return Request<T>(opts, []);
+  return requestGetResponse(Request<T>(requestWrapper(opts)));
 }
+
+
 
 // 获取物流
 export function getTranshipping<T>(
@@ -77,6 +78,23 @@ export function getOrderDetailByToken<T>(token: string): Promise<T> {
     loading: false
   };
   return Request<T>(opts, [201]); // 201表示token已经被使用过了
+}
+
+// 获取订单详情
+export function getOrderDetail<T>(
+  userEmail: string,
+  orderNo: string
+): Promise<T> {
+  const opts: IOpts = {
+    method: "POST",
+    url: `/orders/check`,
+    params: {
+      userEmail,
+      orderNo
+    },
+    loading: false
+  };
+  return Request<T>(opts, []);
 }
 
 // 接受质检报价

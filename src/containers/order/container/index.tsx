@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import {
   ITotalOrderInfoContext,
@@ -19,7 +19,13 @@ import { HeaderTitle } from "@/components/headerTitle";
 import "./index.less";
 import "./common.less";
 import CollapsePanelList from "./components/collapsePanelList";
-import { getReactNodeConfig, getProgressType, getInfo } from "../util/index";
+import {
+  getReactNodeConfig,
+  getProgressType,
+  getInfo,
+  setOrderCache,
+  getOrderCache
+} from "../util/index";
 import ListedForSale from "@/containers/order/components/listedForSale";
 import Inspection from "@/containers/order/components/inspection";
 
@@ -28,18 +34,17 @@ import ProgressBar from "@/containers/order/components/progressBar";
 @inject("order")
 @observer
 export default class OrderListContainer extends React.Component<any, any> {
-  // public async componentDidMount() {
-  //   const order = this.props.order;
-  //   if (order.orderNo === "") {
-  //     // 自动登陆
-  //     const isLogined = await order.autoLogin();
-  //     // 登录失败
-  //     if (!isLogined) {
-  //       this.props.history.replace("/check-order");
-  //     }
-  //   }
-  //   this.props.order.test = "test done";
-  // }
+  public async componentDidMount() {
+    // const order = this.props.order;
+    // if (order.orderNo === "") {
+    //   // 自动登陆
+    //   const isLogined = await order.autoLogin();
+    //   // 登录失败
+    //   if (!isLogined) {
+    //     this.props.history.replace("/check-order");
+    //   }
+    // }
+  }
   public render() {
     return <OrderList order={this.props.order} />;
   }
@@ -56,7 +61,8 @@ function OrderList(props: { order: IOrderStore }) {
     totalOrderInfoContextValue,
     totalOrderInfoContextDispatch,
     revisedPriceConfirm,
-    revisedPriceReject
+    revisedPriceReject,
+    checkForOrder
   } = totalOrderInfoContext as ITotalOrderInfoContext;
   // 获取
   const { totalOrderInfo, currentSubOrderNo } = totalOrderInfoContextValue;
@@ -74,6 +80,15 @@ function OrderList(props: { order: IOrderStore }) {
   const currentModel = (totalOrderInfo.subOrders || []).find(subOrder => {
     return subOrder.subOrderNo === currentSubOrderNo;
   });
+
+  useEffect(() => {
+    // 1 查看session登录
+    const orderCache = getOrderCache();
+    if (orderCache) {
+      const { email, orderId } = orderCache;
+      checkForOrder(email, orderId);
+    }
+  }, []);
   // 方法
   function selectHandler(key: string) {
     if (key === informationKey) {

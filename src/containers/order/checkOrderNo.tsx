@@ -11,8 +11,8 @@ const nextUrl = "/neworder";
 
 export default function CheckOrderNoContainer(props: any) {
   const totalOrderInfoContext = useContext(TotalOrderInfoContext);
-  const { getAjax } = totalOrderInfoContext as ITotalOrderInfoContext;
-  return <CheckOrderNo getAjax={getAjax} {...props} />;
+  const { checkForOrder } = totalOrderInfoContext as ITotalOrderInfoContext;
+  return <CheckOrderNo checkForOrder={checkForOrder} {...props} />;
 }
 
 @inject("order")
@@ -154,7 +154,7 @@ class CheckOrderNo extends React.Component<any, any> {
     }
     if (canSubmit) {
       try {
-        const b = await this.props.getAjax(
+        const b = await this.props.checkForOrder(
           this.state.email,
           this.state.orderNo
         );

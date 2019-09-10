@@ -6,7 +6,7 @@ import React, {
 } from "react";
 import { IReducerAction } from "@/interface/index.interface";
 import {
-  getOrderDetail,
+  checkForOrder,
   getTranshipping,
   createforinspect,
   revisedPriceConfirm,
@@ -67,7 +67,7 @@ function reducer(state: IContextState, action: IReducerAction) {
 
 // @actions
 interface IContextActions {
-  getAjax: () => void;
+  checkForOrder: (email: string, orderId: string) => void;
   getTranshipping: () => void;
   postEmailForm: () => void;
   revisedPriceConfirm: () => void;
@@ -98,10 +98,10 @@ function useGetAction(
 ): IContextActions {
   const actions: IContextActions = {
     // 拉取订单信息
-    getAjax: promisify(async function(a: any, b: any) {
+    checkForOrder: promisify(async function(email: any, orderId: any) {
       try {
-        // const res = await getOrderDetail(a, b);
-        const res = checkforordermock;
+        const res: any = await checkForOrder(email, orderId);
+        // const res = checkforordermock;
         // 然后还需要获取订单物流信息
         if (res && res.subOrders && res.subOrders.length) {
           res.subOrders = res.subOrders.map((obj: any) => {
@@ -185,7 +185,7 @@ function useGetAction(
       const res = await revisedPriceReject(postData);
     })
   };
-  // actions.getAjax = useCallback(actions.getAjax, []);
+  // actions.checkForOrder = useCallback(actions.checkForOrder, []);
   actions.getTranshipping = useCallback(actions.getTranshipping, [
     state.totalOrderInfo.subOrders,
     state.currentSubOrderNo
@@ -203,7 +203,7 @@ interface IContextState {
 export function TotalOrderInfoProvider(props: any) {
   const initState: IContextState = {
     // totalOrderInfo: {} as ITotalOrderInfo,
-    totalOrderInfo: checkforordermock as ITotalOrderInfo,
+    totalOrderInfo: {} as ITotalOrderInfo,
     currentSubOrderNo: ""
   };
   const [state, dispatch] = useReducer(reducer, initState);
