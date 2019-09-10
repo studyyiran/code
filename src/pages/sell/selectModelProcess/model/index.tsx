@@ -4,6 +4,7 @@ import { SelectModelContext, ISelectModelContext } from "../context";
 import ModalCard from "@/pages/sell/selectModelProcess/model/components/modalCard";
 import { PhoneInfoWrapper } from "@/pages/sell/selectModelProcess/condition/components/phoneInfoWrapper";
 import { findArrByKey } from "./util";
+import { removeAllSpace } from "@/pages/sell/util";
 
 export default function ModelContainer(props: any) {
   return (
@@ -21,7 +22,12 @@ export default function ModelContainer(props: any) {
 }
 
 function Model(props: any) {
-  const { phoneInfoHandler, phoneInfoQuestion, phoneInfoAnswer, goNextPage } = props;
+  const {
+    phoneInfoHandler,
+    phoneInfoQuestion,
+    phoneInfoAnswer,
+    goNextPage
+  } = props;
   const brandContext = useContext(SelectModelContext);
 
   const {
@@ -29,7 +35,19 @@ function Model(props: any) {
     selectModelContextDispatch
   } = brandContext as ISelectModelContext;
   // 实际上，context也是modelInfo的二级消费者。这块有可能违背了single true原则
-  const { modelInfo } = selectModelContextValue;
+  const { modelInfo, brandList } = selectModelContextValue;
+  // 重定向为名称
+  if (props.match && props.match.params && props.match.params.brandName) {
+    debugger;
+    const findTarget: any = brandList.find((item: any) => {
+      return String(item.id) === String(props.match.params.brandName);
+    });
+    if (findTarget) {
+      const next = props.route.path + "/" + findTarget.displayName;
+      // const next = props.match.url + "/condition";
+      props.history.replace(removeAllSpace(next));
+    }
+  }
 
   function renderList() {
     const modelArr = findArrByKey(phoneInfoQuestion, "model");

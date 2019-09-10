@@ -9,6 +9,11 @@ import { BrandLogo } from "./components/brandLogo";
 import { SectionIcons } from "./components/sectionIcons";
 import { Carousel } from "antd";
 import { RenderByCondition } from "@/containers/layout/components/footer/RenderByCondition";
+import { useContext } from "react";
+import {
+  ISelectModelContext,
+  SelectModelContext
+} from "@/pages/sell/selectModelProcess/context";
 
 const descPart1 = {
   descArr: [
@@ -127,9 +132,20 @@ function RenderReviewList(props: any) {
   }
 }
 
+export default function HomeWrapper(props: any) {
+  const selectModelContext = useContext(SelectModelContext);
+  const {
+    selectModelContextDispatch
+  } = selectModelContext as ISelectModelContext;
+  function clickBrandHandler(value: any) {
+    selectModelContextDispatch({ type: "setBrand", value });
+  }
+  return <Home clickBrandHandler={clickBrandHandler} {...props} />;
+}
+
 @inject("yourphone", "common")
 @observer
-export default class Home extends React.Component<IHomeProps, IHomeState> {
+class Home extends React.Component<IHomeProps, IHomeState> {
   public readonly state: Readonly<IHomeState> = {
     howitworksGroup: [
       [
@@ -217,7 +233,12 @@ export default class Home extends React.Component<IHomeProps, IHomeState> {
                       {brands
                         .filter((brand, index) => index < 6)
                         .map((brand, index) => (
-                          <BrandLogo key={index} brand={brand} />
+                          <BrandLogo
+                            key={index}
+                            brand={brand}
+                            {...this.props}
+                            onClick={(this.props as any).clickBrandHandler}
+                          />
                         ))}
                     </div>
                   }
@@ -227,14 +248,24 @@ export default class Home extends React.Component<IHomeProps, IHomeState> {
                         {brands
                           .filter((brand, index) => index < 3)
                           .map((brand, index) => (
-                            <BrandLogo key={index} brand={brand} />
+                            <BrandLogo
+                              key={index}
+                              brand={brand}
+                              {...this.props}
+                              onClick={(this.props as any).clickBrandHandler}
+                            />
                           ))}
                       </div>
                       <div className="wrap-container">
                         {brands
                           .filter((brand, index) => index > 2 && index < 6)
                           .map((brand, index) => (
-                            <BrandLogo key={index} brand={brand} />
+                            <BrandLogo
+                              key={index}
+                              brand={brand}
+                              {...this.props}
+                              onClick={(this.props as any).clickBrandHandler}
+                            />
                           ))}
                       </div>
                     </>

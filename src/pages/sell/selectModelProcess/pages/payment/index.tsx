@@ -380,7 +380,6 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
 }
 
 const onValuesChange = (props: any, changedValues: any, allValues: any) => {
-  console.log(allValues);
   if (yourPhoneStore.payment === EPayType.PAYPAL) {
     console.log(4);
     if (

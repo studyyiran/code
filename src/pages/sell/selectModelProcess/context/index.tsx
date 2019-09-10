@@ -328,7 +328,7 @@ function useGetAction(
         const productsList = await getExpressFee({ inquieyKeys: keys });
         return productsList;
       } catch (e) {
-        console.log(e);
+        console.error(e);
         alert("wrong!");
         return e;
       }
@@ -339,7 +339,7 @@ function useGetAction(
         const res = await createOrderStart(postData);
         return res;
       } catch (e) {
-        console.log(e);
+        console.error(e);
         alert("wrong!");
         return e;
       }

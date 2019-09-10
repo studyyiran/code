@@ -20,6 +20,7 @@ import { HeaderTitle } from "@/components/headerTitle";
 import Breadcrumb from "./selectModelProcess/components/breadcrumb/index";
 import { staticRouter } from "@/pages/sell/selectModelProcess/config/staticRouter";
 import { inject, observer } from "mobx-react";
+import {removeAllSpace} from "@/pages/sell/util";
 
 let haveinit = false;
 
@@ -32,9 +33,7 @@ let haveinit = false;
 //   }
 // ]
 // interface ISell {}
-function removeAllSpace(str: string) {
-  return str.replace(/\s+/g, "");
-}
+
 
 export default function Sell(props: any) {
   const selectModelContext = useContext(SelectModelContext);
@@ -84,14 +83,15 @@ export default function Sell(props: any) {
         break;
       }
       case "brand": {
-        const findTarget: any = brandList.find((item: any) => {
-          return item.id === brand;
-        });
-        if (findTarget) {
-          const next = props.match.url + "/" + findTarget.displayName;
-          // const next = props.match.url + "/condition";
-          props.history.push(removeAllSpace(next));
-        }
+        const next = props.match.url + "/" + brand;
+        props.history.push(removeAllSpace(next));
+        // const findTarget: any = brandList.find((item: any) => {
+        //   return item.id === brand;
+        // });
+        // if (findTarget) {
+        //   const next = props.match.url + "/" + findTarget.displayName;
+        //  
+        // }
         break;
       }
       case "model": {
@@ -236,6 +236,7 @@ export default function Sell(props: any) {
                   canGoNext={canGoNext}
                   goNextPage={() => goNextPage(pageKey)}
                   {...props}
+                  {...other}
                 />
               </Layout>
             )}
