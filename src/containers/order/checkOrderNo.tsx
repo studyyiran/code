@@ -6,6 +6,7 @@ import {
   TotalOrderInfoContext,
   ITotalOrderInfoContext
 } from "./container/context";
+import { setOrderCache } from "@/containers/order/util";
 
 const nextUrl = "/neworder";
 
@@ -158,7 +159,6 @@ class CheckOrderNo extends React.Component<any, any> {
           this.state.email,
           this.state.orderNo
         );
-        console.log(b);
         if (b.groupOrderNo) {
           // 应该不能单独取消一个子订单？这个应该放在内部去判断。
           // 根据操作记录判断CRM取消订单
@@ -180,6 +180,10 @@ class CheckOrderNo extends React.Component<any, any> {
           // email, orderNo 存入缓存
           // this.props.order.autoSaveLoginMes();
           // 跳转订单详情
+          setOrderCache({
+            email: this.state.email,
+            orderId: this.state.orderNo
+          });
           this.props.history.push(nextUrl);
         } else {
           this.setState({

@@ -83,12 +83,14 @@ function OrderList(props: { order: IOrderStore }) {
 
   useEffect(() => {
     // 1 查看session登录
-    const orderCache = getOrderCache();
-    if (orderCache) {
-      const { email, orderId } = orderCache;
-      checkForOrder(email, orderId);
+    if (!totalOrderInfo || !totalOrderInfo.groupOrderNo) {
+      const orderCache = getOrderCache();
+      if (orderCache) {
+        const { email, orderId } = orderCache;
+        checkForOrder(email, orderId);
+      }
     }
-  }, []);
+  }, [totalOrderInfo]);
   // 方法
   function selectHandler(key: string) {
     if (key === informationKey) {
