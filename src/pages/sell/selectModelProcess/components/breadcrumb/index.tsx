@@ -105,7 +105,7 @@ function Breadcrumb(props: any) {
     },
     prepareShip: {
       viewContent: () => {
-        return "Prepare and ship";
+        return "Order complete";
       },
       order: 8
     }
@@ -149,9 +149,9 @@ function Breadcrumb(props: any) {
         ];
       }
     } else {
-      configCache = configCache.slice(
+      configCache = configArr.slice(
         getIndexByOrder(beginOrder),
-        getIndexByOrder(currentPageOrder + 1)
+        getIndexByOrder(currentPageOrder) + 1
       );
     }
     return (
