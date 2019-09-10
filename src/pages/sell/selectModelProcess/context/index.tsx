@@ -82,7 +82,7 @@ function reducer(state: IContextState, action: IReducerAction) {
     case "postConditionAnswerRenderVersion": {
       newState = {
         ...newState,
-        phoneConditionServerAnswer: getServerAnswerFormat(
+        phoneConditionStaticAnswer: getServerAnswerFormat(
           state.qualityList,
           value
         )
@@ -95,7 +95,7 @@ function reducer(state: IContextState, action: IReducerAction) {
         newState = {
           ...newState,
           brand: value,
-          phoneConditionServerAnswer: [],
+          phoneConditionStaticAnswer: [],
           modelInfo: {
             modelId: "",
             othersAttr: {}
@@ -126,7 +126,7 @@ function reducer(state: IContextState, action: IReducerAction) {
 
       newState = {
         ...newState,
-        phoneConditionServerAnswer: [],
+        phoneConditionStaticAnswer: [],
         modelInfo: { ...newState.modelInfo, ...next }
       };
       break;
@@ -151,7 +151,7 @@ function reducer(state: IContextState, action: IReducerAction) {
         brand: newState.brand,
         modelInfo: newState.modelInfo,
         inquiryKey: value,
-        phoneConditionServerAnswer: newState.phoneConditionServerAnswer
+        phoneConditionStaticAnswer: newState.phoneConditionStaticAnswer
       };
       const productTargetIndex = newState.userProductList.findIndex(
         userProduct => {
@@ -172,6 +172,26 @@ function reducer(state: IContextState, action: IReducerAction) {
       newState = { ...newState };
       break;
     }
+    case "resetAllUserInputData": {
+      (newState as any) = {
+        brandList: [],
+        modelInfo: {
+          modelId: "",
+          othersAttr: {}
+        },
+        qualityList: [],
+        phoneConditionStaticAnswer: [],
+        productsList: [],
+        userProductList: [],
+        priceInfo: {},
+        // categoryId: "",
+        inquiryKey: "",
+        brand: "",
+        expressOption: null,
+        needInsurance: false
+      };
+      break;
+    }
     case "changeModelCache": {
       if (value === "reset") {
         newState = Object.assign({}, newState, {
@@ -182,7 +202,7 @@ function reducer(state: IContextState, action: IReducerAction) {
           // categoryId: "",// 不需要
           brand: "",
           inquiryKey: "",
-          phoneConditionServerAnswer: []
+          phoneConditionStaticAnswer: []
         });
       } else if (value) {
         newState = { ...newState, ...value };
@@ -202,7 +222,7 @@ function reducer(state: IContextState, action: IReducerAction) {
       "needInsurance",
       "expressOption",
       "inquiryKey",
-      "phoneConditionServerAnswer"
+      "phoneConditionStaticAnswer"
     ]);
   }
 
@@ -292,7 +312,7 @@ function useGetAction(
         brand,
         categoryId,
         modelInfo,
-        phoneConditionServerAnswer
+        phoneConditionStaticAnswer
       } = state;
       if (brand && categoryId && modelInfo) {
         const { modelId, othersAttr } = modelInfo;
@@ -315,7 +335,7 @@ function useGetAction(
             bpvIds: Object.keys(othersAttr).map((key: any) => ({
               id: othersAttr[key]
             })),
-            qpvIds: phoneConditionServerAnswer
+            qpvIds: phoneConditionStaticAnswer
           }
         };
         console.warn("**getinquirybyids**");
@@ -372,6 +392,7 @@ function useGetAction(
               })
             );
           }
+          dispatch({ type: "resetAllUserInputData" });
           return res;
         }
       } catch (e) {
@@ -453,7 +474,7 @@ function useGetAction(
   // 虽然是主动调用，但是最好还是更新。需要补充更多的依赖
   actions.getInquiryByIds = useCallback(actions.getInquiryByIds, [
     state.brand,
-    state.phoneConditionServerAnswer,
+    state.phoneConditionStaticAnswer,
     state.categoryId
   ]);
   // actions.getNameInfo = useCallback(actions.getNameInfo, []);
@@ -469,7 +490,7 @@ interface IContextState {
   modelInfo: IModelInfo; // 1用户数据
   categoryId: string; // 1用户数据（但是不需要清空）
   brand: string; // 1用户数据
-  phoneConditionServerAnswer: any[]; // 用户数据
+  phoneConditionStaticAnswer: any[]; // 用户数据
   inquiryKey: string; // 1用户数据
   userProductList: any[]; // 用户数据2
   qualityList: any[]; // 热刷新
@@ -493,7 +514,7 @@ export function ModelContextProvider(props: any) {
       othersAttr: {}
     },
     qualityList: [],
-    phoneConditionServerAnswer: [],
+    phoneConditionStaticAnswer: [],
     productsList: [],
     userProductList: [],
     priceInfo: {},

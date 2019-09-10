@@ -109,7 +109,7 @@ export function ConditionForm(props: IConditionForm) {
 
   const {
     qualityList: phoneConditionQuestion,
-    phoneConditionServerAnswer
+    phoneConditionStaticAnswer
   } = selectModelContextValue;
   console.warn("**phoneConditionQuestion**");
   console.warn(phoneConditionQuestion);
@@ -118,10 +118,10 @@ export function ConditionForm(props: IConditionForm) {
 
   // 初始化本地数据（props -》 state的过程不可避免 因为需要回滚用户操作）
   useEffect(() => {
-    if (phoneConditionQuestion && phoneConditionQuestion.length && phoneConditionServerAnswer && phoneConditionServerAnswer.length) {
+    if (phoneConditionQuestion && phoneConditionQuestion.length && phoneConditionStaticAnswer && phoneConditionStaticAnswer.length) {
       const localStateAnswer = serverAnswerToRenderAnswer(
         phoneConditionQuestion,
-        phoneConditionServerAnswer
+        phoneConditionStaticAnswer
       );
       dispatch({ type: "resetFromStore", value: localStateAnswer });
       if (localStateAnswer && localStateAnswer.length) {
@@ -130,7 +130,7 @@ export function ConditionForm(props: IConditionForm) {
         setMaxActiveKey(firstQuestionKey);
       }
     }
-  }, [phoneConditionQuestion, phoneConditionServerAnswer]);
+  }, [phoneConditionQuestion, phoneConditionStaticAnswer]);
 
   const { phoneConditionAnswer, editKey, showKey } = state;
   // format
@@ -242,8 +242,8 @@ export function ConditionForm(props: IConditionForm) {
   // canNext?
   useEffect(() => {
     if (
-      phoneConditionServerAnswer &&
-      phoneConditionServerAnswer.length &&
+      phoneConditionStaticAnswer &&
+      phoneConditionStaticAnswer.length &&
       phoneConditionAnswer &&
       phoneConditionAnswer.length
     ) {
@@ -253,7 +253,7 @@ export function ConditionForm(props: IConditionForm) {
         props.goNextPage();
       });
     }
-  }, [phoneConditionServerAnswer]);
+  }, [phoneConditionStaticAnswer]);
 
   return (
     <div className="page-condition">
