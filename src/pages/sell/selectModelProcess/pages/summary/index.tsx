@@ -42,8 +42,14 @@ export default function SummaryWrapper(props: any) {
     goNextPage: props.goNextPage,
     needInsurance,
     createOrderStart,
-    sendBox: expressOption && expressOption.sendDateType && staticMap[expressOption.sendDateType] === "SEND_BOX",
-    expreeSendDateType: expressOption && expressOption.sendDateType && staticMap[expressOption.sendDateType],
+    sendBox:
+      expressOption &&
+      expressOption.sendDateType &&
+      staticMap[expressOption.sendDateType] === "SEND_BOX",
+    expreeSendDateType:
+      expressOption &&
+      expressOption.sendDateType &&
+      staticMap[expressOption.sendDateType],
     subOrders: userProductList.map((item: any) => {
       return {
         brandId: item.brand,
@@ -132,7 +138,7 @@ class Summary extends React.Component<IDoneProps, IDoneStates> {
         );
         break;
       case EPayType.ECHECK:
-        console.log(yourphone)
+        console.log(yourphone);
         payment = (
           <>
             <ul>
@@ -279,16 +285,9 @@ class Summary extends React.Component<IDoneProps, IDoneStates> {
         >
           By checking this box, you agree to our{" "}
         </Checkbox>
-
-        {this.props.common.isMobile ? (
-          <Link to="/terms" className="highlight" target="_blank">
-            Terms of &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Service{" "}
-          </Link>
-        ) : (
-          <Link to="/terms" className="highlight" target="_blank">
-            Terms of Service{" "}
-          </Link>
-        )}
+        <Link to="/terms" className="highlight" target="_blank">
+          Terms of Service{" "}
+        </Link>
       </div>
     );
   }

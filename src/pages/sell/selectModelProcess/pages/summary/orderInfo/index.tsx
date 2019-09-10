@@ -2,14 +2,16 @@ import {
   SelectModelContext,
   ISelectModelContext
 } from "../../../../selectModelProcess/context";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Collapse } from "antd";
 const { Panel } = Collapse;
 import "./index.less";
+import Svg from "@/components/svg";
 
 const priceUnit = "$";
 
 export default function OrderInfo() {
+  const [open, setOpen] = useState(0);
   const selectModelContext = useContext(SelectModelContext);
   const { selectModelContextValue } = selectModelContext as ISelectModelContext;
   const { priceInfo, needInsurance, expressOption } = selectModelContextValue;
@@ -45,15 +47,13 @@ export default function OrderInfo() {
     const firstOrderInfo = renderProductList.shift();
     return (
       <div className="com-order-info">
-        <Collapse>
+        <Collapse activeKey={open}>
           <Panel
             showArrow={false}
             key={1}
             header={
               <div className="one-order">
-                <RenderOneProductOrder {...firstOrderInfo}>
-                  <div className="open">Check Details</div>
-                </RenderOneProductOrder>
+                <RenderOneProductOrder {...firstOrderInfo} />
               </div>
             }
           >
@@ -62,7 +62,7 @@ export default function OrderInfo() {
             ))}
             <ul className="last-order-info">
               <li>
-                <h3>guaranteedPayout</h3>
+                <h3>Guaranteed Payout</h3>
                 <span>
                   {priceUnit}
                   {guaranteedPayout}
@@ -70,7 +70,7 @@ export default function OrderInfo() {
               </li>
               {expressOption ? (
                 <li>
-                  <h3>expressOption</h3>
+                  <h3>Slow Shipping</h3>
                   <span>
                     -{priceUnit}
                     {expressOption.fee}
@@ -79,7 +79,7 @@ export default function OrderInfo() {
               ) : null}
               {needInsurance ? (
                 <li>
-                  <h3>shippingInsurance</h3>
+                  <h3>Shipping Insurance</h3>
                   <span>
                     -{priceUnit}
                     {shippingInsurance}
@@ -90,8 +90,28 @@ export default function OrderInfo() {
           </Panel>
         </Collapse>
         <div className="new-payout">
-          <h3>New Payout</h3>
-          <span>${guaranteedPayout - ((expressOption && expressOption.fee) || 0) - (shippingInsurance || 0) }</span>
+          <h3>Net Payout</h3>
+          <span>
+            $
+            {guaranteedPayout -
+              ((expressOption && expressOption.fee) || 0) -
+              (shippingInsurance || 0)}
+          </span>
+        </div>
+        <div
+          data-open={open ? "true" : "false"}
+          className="open"
+          onClick={() => {
+            setOpen((current: any) => {
+              if (current) {
+                return 0;
+              } else {
+                return 1;
+              }
+            });
+          }}
+        >
+          <Svg icon={"arrow_down"} />
         </div>
       </div>
     );

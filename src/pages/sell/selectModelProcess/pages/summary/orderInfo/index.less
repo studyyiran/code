@@ -4,7 +4,7 @@
   > ul {
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px solid rgba(233,233,233,1);
+    border-bottom: 1px solid rgba(233, 233, 233, 1);
     > li {
       flex: 1 1 0;
     }
@@ -17,8 +17,27 @@
   //  flex: 1 1 auto;
   //  margin: 22px 0;
   //}
+  .ant-collapse > .ant-collapse-item > .ant-collapse-header {
+    cursor: initial;
+  }
+  .open {
+    width: 100%;
+    bottom: -15px;
+    position: relative;
+    text-align: center;
+    color: #1ab4e7;
+    &[data-open="true"] {
+      svg {
+        transform: rotate(180deg);
+      }
+    }
+    > svg {
+      cursor: pointer;
+      font-size: 24px;
+      transition: transform 0.24s, -webkit-transform 0.24s;
+    }
+  }
 }
-
 
 .ismobile #root {
   .com-order-info {
@@ -42,13 +61,6 @@
 .one-order {
   //display: flex;
   //justify-content: space-between;
-  div.open {
-    width: 100%;
-    bottom: 25px;
-    position: relative;
-    text-align: center;
-    color: #1ab4e7;
-  }
 }
 
 .last-order-info {

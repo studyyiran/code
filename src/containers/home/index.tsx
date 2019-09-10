@@ -14,6 +14,7 @@ import {
   ISelectModelContext,
   SelectModelContext
 } from "@/pages/sell/selectModelProcess/context";
+import VideoComponent from "@/components/video";
 
 const descPart1 = {
   descArr: [
@@ -302,12 +303,7 @@ class Home extends React.Component<IHomeProps, IHomeState> {
         </section>
         <section className="easy-sell-part">
           <h2>3 Easy Steps To Sell</h2>
-          <video
-            className="comp-video"
-            poster={require("./res/video-poster.png")}
-            src="https://www.w3school.com.cn/i/movie.ogg"
-            controls={false}
-          />
+          <VideoComponent />
           <div className="bg-white-container">
             <SectionIcons {...descPart2} />
             <LinkButton url={"/newsell"}>Learn More</LinkButton>
