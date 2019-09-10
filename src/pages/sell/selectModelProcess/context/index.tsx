@@ -339,13 +339,29 @@ function useGetAction(
         const res: any = await createOrderStart(postData);
         if (res) {
           // 调用成功后，cache用户邮箱，便于跳转
-          const { groupOrderNo, userInfo } = res;
+          const {
+            needBox,
+            shipDeadLine,
+            groupOrderNo,
+            userInfo,
+            subOrders
+          } = res;
+          const lableCode = subOrders[0].shippingInfo.sendInfo[0].lableCode;
           const { userEmail } = userInfo;
           if (groupOrderNo && userEmail) {
             setOrderCache({
               email: userEmail,
               orderId: groupOrderNo
             });
+            sessionStorage.setItem(
+              "orderInfo",
+              JSON.stringify({
+                needBox,
+                shipDeadLine,
+                groupOrderNo,
+                lableCode
+              })
+            );
           }
           return res;
         }

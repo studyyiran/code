@@ -1,23 +1,20 @@
 import { Request } from "utils";
 import { IOpts } from "@/utils/request.interface";
-import {requestGetResponse, requestWrapper} from "@/utils/util";
-
+import { requestGetResponse, requestWrapper } from "@/utils/util";
 
 // 新的获取订单详情
-export function checkForOrder<T>(userEmail: string, orderNo: string) {
+export function checkForOrder<T>(userEmail: string, groupOrderNo: string) {
   const opts: IOpts = {
     method: "POST",
     url: `/group_order/checkfororder`,
     params: {
       userEmail,
-      orderNo
+      groupOrderNo
     },
     loading: false
   };
   return requestGetResponse(Request<T>(requestWrapper(opts)));
 }
-
-
 
 // 获取物流
 export function getTranshipping<T>(

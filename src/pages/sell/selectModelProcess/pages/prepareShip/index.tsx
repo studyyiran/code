@@ -1,45 +1,61 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./index.less";
 import VideoComponent from "@/components/video";
 import RouterLink from "@/components/routerLink";
 // subOrders[0].shippingInfo.sendInfo[0].lableCode
 export default function(props: any) {
+  const [orderInfo, setOrderInfo] = useState();
+  useEffect(() => {
+    const orderInfoCache: any = sessionStorage.getItem("orderInfo");
+    try {
+      setOrderInfo(JSON.parse(orderInfoCache));
+    } catch (e) {
+      console.error(e);
+    }
+  }, []);
   const {} = props;
-  return (
-    <div className="page-prepare">
-      <section className="card step1">
-        <h2>Step 1 - Reset your phone</h2>
-        <p>
-          Thank you for placing your order here is what you need to next and
-          link to an article showing what they need to do
-        </p>
-        <section className="video">
-          <h3>Reset your device by following the video below</h3>
-          <VideoComponent />
-        </section>
-        <a>{`< Get Help`}</a>
-      </section>
-      <section className="card step2">
-        <h2>Step 2 - Print your label</h2>
-        <div className="container">
-          <div className="line-card">
-            <div>
-              Use your own box and ship by
-              <br /> Tuesday, Aug. 13
-            </div>
-          </div>
-          <button className="common-button">Print Label</button>
+  if (orderInfo) {
+    const { needBox, shipDeadLine, groupOrderNo, lableCode } = orderInfo;
+    return (
+      <div className="page-prepare">
+        <section className="card step1">
+          <h2>Step 1 - Reset your phone</h2>
+          <p>
+            Thank you for placing your order here is what you need to next and
+            link to an article showing what they need to do
+          </p>
           <section className="video">
-            <h3>How to Ship</h3>
+            <h3>Reset your device by following the video below</h3>
             <VideoComponent />
           </section>
-        </div>
-        <div className="check-order">
-          <span>Your order #121464654</span>
-          <RouterLink to="/neworder">{`Check Order >`}</RouterLink>
-        </div>
-      </section>
-      <button className="common-button second">Go back home</button>
-    </div>
-  );
+          <a>{`< Get Help`}</a>
+        </section>
+        <section className="card step2">
+          <h2>Step 2 - Print your label</h2>
+          <div className="container">
+            <div className="line-card">
+              <div>
+                {needBox
+                  ? "wait our send you a box and ship by"
+                  : "Use your own box and ship by"}
+                <br /> {shipDeadLine}
+              </div>
+            </div>
+            <button className="common-button">Print Label</button>
+            <section className="video">
+              <h3>How to Ship</h3>
+              <VideoComponent />
+            </section>
+          </div>
+          <div className="check-order">
+            <span>Your order #{groupOrderNo}</span>
+            <RouterLink to="/neworder">{`Check Order >`}</RouterLink>
+          </div>
+        </section>
+        <button className="common-button second">Go back home</button>
+      </div>
+    );
+  } else {
+    return null;
+  }
 }
