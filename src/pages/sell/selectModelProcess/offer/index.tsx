@@ -63,8 +63,12 @@ export default function Brand(props: any) {
             <div className="panel-header">
               <img className="phone-image" src={nameObj.imgUrl} />
               <div className="phone-model">
-                <span>{productName + bpvIds[0].name}</span>
-                <span>{bpvIds[1].name}</span>
+                <span>{productName}</span>
+                <span>
+                  {bpvIds.map((attr: any) => {
+                    return <span key={attr}>{` ${attr.name} `}</span>;
+                  })}
+                </span>
               </div>
             </div>
           }

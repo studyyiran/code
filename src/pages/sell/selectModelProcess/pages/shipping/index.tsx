@@ -31,7 +31,13 @@ function ShippingContainer(props: any) {
     });
   }
 
-  return <Shipping {...props} selectModelContext={selectModelContext} />;
+  return (
+    <Shipping
+      {...props}
+      selectModelContext={selectModelContext}
+      onPushSelectOption={handler}
+    />
+  );
 }
 
 @inject("yourphone", "user", "common")
@@ -44,12 +50,16 @@ class Shipping extends React.Component<any, any> {
   };
 
   public componentDidMount() {
-    const { getExpressFee } = this.props
+    const { getExpressFee, selectModelContextValue } = this.props
       .selectModelContext as ISelectModelContext;
+    const { expressOption } = selectModelContextValue;
     getExpressFee().then((res: any) => {
       if (res) {
         this.setState({
-          expressFeeList: res
+          expressFeeList: res,
+          currentSelect: this.getCurrentIndex(res, expressOption)
+            ? this.getCurrentIndex(res, expressOption)
+            : this.state.currentSelect
         });
       }
     });
@@ -67,7 +77,7 @@ class Shipping extends React.Component<any, any> {
   public render() {
     const { selectModelContextDispatch, selectModelContextValue } = this.props
       .selectModelContext as ISelectModelContext;
-    const { priceInfo, needInsurance, expressOption } = selectModelContextValue;
+    const { priceInfo, needInsurance } = selectModelContextValue;
     const { shippingInsurance } = priceInfo;
     const leftContent = (
       <div className="left-wrapper">
@@ -119,15 +129,6 @@ class Shipping extends React.Component<any, any> {
       </div>
     );
     const isMobile = this.props.common.isMobile;
-    const getCurrentIndex = () => {
-      let target = -1;
-      if (expressOption && expressOption.sendDateType) {
-        target = this.state.expressFeeList.findIndex((item: any) => {
-          return safeEqual(item.sendDateType, expressOption.sendDateType);
-        });
-      }
-      return target === -1 ? this.state.currentSelect : target;
-    };
     return (
       <div className="page-shipping-container">
         <PriceTitle>The faster you ship, the more you get paid</PriceTitle>
@@ -137,7 +138,7 @@ class Shipping extends React.Component<any, any> {
               currentSelect: value
             });
           }}
-          currentSelect={getCurrentIndex()}
+          currentSelect={this.state.currentSelect}
           optionsList={this.state.expressFeeList}
         />
         <h3>Choose your carrier</h3>
@@ -212,6 +213,16 @@ class Shipping extends React.Component<any, any> {
     );
   }
 
+  private getCurrentIndex(list: any, expressOption: any) {
+    let target = 0;
+    if (expressOption && expressOption.sendDateType) {
+      target = list.findIndex((item: any) => {
+        return safeEqual(item.sendDateType, expressOption.sendDateType);
+      });
+    }
+    return target === -1 ? 0 : target;
+  }
+
   // 选中并展开当前的。
   private handleCollapseExtend = (type: string) => {
     if (this.props.yourphone.expressCarrier === type) {
@@ -231,6 +242,9 @@ class Shipping extends React.Component<any, any> {
     } catch (error) {
       console.warn(error, "in payment page preOrder");
     }
+    this.props.onPushSelectOption(
+      this.state.expressFeeList[this.state.currentSelect]
+    );
     // @ts-ignore
     this.props.goNextPage();
   };

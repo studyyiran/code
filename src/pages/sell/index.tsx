@@ -217,7 +217,7 @@ export default function Sell(props: any) {
   // 如果当前
   if (!userProductList || !userProductList.length) {
     if (!brand) {
-      if (props.location.pathname && props.location.pathname !== "/newsell") {
+      if (props.location.pathname && props.location.pathname !== "/newsell" && !props.location.pathname.includes("prepare-ship")) {
         // 首页
         goNextPage();
       }
