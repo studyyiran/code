@@ -42,7 +42,9 @@ export default function register() {
 
         // Add some additional logging to localhost, pointing developers to the
         // service worker/PWA documentation.
-        navigator.serviceWorker.ready.then(() => {console.warn('?')});
+        navigator.serviceWorker.ready.then(() => {
+          console.warn("?");
+        });
       } else {
         // Is not local host. Just register service worker
         registerValidSW(swUrl);
@@ -100,7 +102,9 @@ function checkValidServiceWorker(swUrl: string) {
         registerValidSW(swUrl);
       }
     })
-    .catch(() => {});
+    .catch(() => {
+      console.warn("?");
+    });
 }
 
 export function unregister() {

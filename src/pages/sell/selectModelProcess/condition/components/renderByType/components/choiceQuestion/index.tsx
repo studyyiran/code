@@ -64,21 +64,25 @@ export function ChoiceQuestion(props: ISelect) {
   return (
     <div className="comp-choice-question">
       {options.map((option, index) => {
-        const { time, content, sendDateType } = option;
-        return (
-          <Option
-            key={sendDateType}
-            index={sendDateType}
-            currentSelect={currentSelect}
-            onClick={handler}
-          >
-            {content}
-            {moment
-              .tz(addDate(new Date(), time), "America/Chicago")
-              .format("MMM DD")}
-            {props.render ? props.render(index) : null}
-          </Option>
-        );
+        if (option) {
+          const { time, content, sendDateType } = option;
+          return (
+            <Option
+              key={sendDateType}
+              index={sendDateType}
+              currentSelect={currentSelect}
+              onClick={handler}
+            >
+              {content}
+              {moment
+                .tz(addDate(new Date(), time), "America/Chicago")
+                .format("MMM DD")}
+              {props.render ? props.render(index) : null}
+            </Option>
+          );
+        } else {
+          return null;
+        }
       })}
     </div>
   );

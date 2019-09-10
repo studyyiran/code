@@ -113,12 +113,12 @@ export function ConditionForm(props: IConditionForm) {
   } = selectModelContextValue;
   console.warn("**phoneConditionQuestion**");
   console.warn(phoneConditionQuestion);
-  const [maxActiveKey, setMaxActiveKey] = useState("");
+  const [maxActiveKey, setMaxActiveKey] = useState(firstQuestionKey);
   const { state, dispatch } = props;
 
   // 初始化本地数据（props -》 state的过程不可避免 因为需要回滚用户操作）
   useEffect(() => {
-    if (phoneConditionQuestion && phoneConditionServerAnswer) {
+    if (phoneConditionQuestion && phoneConditionQuestion.length && phoneConditionServerAnswer && phoneConditionServerAnswer.length) {
       const localStateAnswer = serverAnswerToRenderAnswer(
         phoneConditionQuestion,
         phoneConditionServerAnswer

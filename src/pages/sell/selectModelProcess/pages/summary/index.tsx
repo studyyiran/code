@@ -51,7 +51,7 @@ export default function SummaryWrapper(props: any) {
       };
     })
   };
-  return <Summary {...myProps} />;
+  return <Summary {...props} {...myProps} />;
 }
 
 @inject("yourphone", "user", "common")
@@ -132,16 +132,17 @@ class Summary extends React.Component<IDoneProps, IDoneStates> {
         );
         break;
       case EPayType.ECHECK:
+        console.log(yourphone)
         payment = (
           <>
             <ul>
               <li>
                 <h3>Name</h3>
-                <p>{`${yourphone.addressInfo.firstName} ${yourphone.addressInfo.lastName}`}</p>
+                <p>{`${yourphone.echeck.firstName} ${yourphone.echeck.lastName}`}</p>
               </li>
               <li>
                 <h3>Email</h3>
-                <p>{yourphone.paypal.email}</p>
+                <p>{yourphone.echeck.email}</p>
               </li>
             </ul>
           </>

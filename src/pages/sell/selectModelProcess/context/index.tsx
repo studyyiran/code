@@ -95,6 +95,7 @@ function reducer(state: IContextState, action: IReducerAction) {
         newState = {
           ...newState,
           brand: value,
+          phoneConditionServerAnswer: [],
           modelInfo: {
             modelId: "",
             othersAttr: {}
@@ -125,6 +126,7 @@ function reducer(state: IContextState, action: IReducerAction) {
 
       newState = {
         ...newState,
+        phoneConditionServerAnswer: [],
         modelInfo: { ...newState.modelInfo, ...next }
       };
       break;
