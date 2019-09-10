@@ -53,7 +53,11 @@ function Breadcrumb(props: any) {
   const routerConfig = {
     brand: {
       viewContent: () => {
-        return nameObj.brandName || "Manufacture";
+        if (currentPage === "brand") {
+          return "Manufacture";
+        } else {
+          return nameObj.brandName || "Manufacture";
+        }
       },
       order: 0
     },

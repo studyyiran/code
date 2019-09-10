@@ -169,7 +169,12 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
             <div className="form-wrapper">
               <Form layout="vertical">
                 <Form.Item label="PayPal email address">
-                  <Input value={this.props.user.preOrder.userEmail} />
+                  <Input
+                    value={
+                      this.props.yourphone.paypal.email ||
+                      this.props.yourphone.addressInfo.userEmail
+                    }
+                  />
                 </Form.Item>
                 <Form.Item label="Confirm PayPal email address">
                   <Input />
@@ -198,7 +203,9 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
                         message: "Please enter a valid email."
                       }
                     ],
-                    initialValue: this.props.user.preOrder.userEmail,
+                    initialValue:
+                      this.props.yourphone.paypal.email ||
+                      this.props.yourphone.addressInfo.userEmail,
                     validateTrigger: "onBlur"
                   })(<Input />)}
                 </Form.Item>
@@ -234,13 +241,28 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
             <div className="form-wrapper">
               <Form layout="vertical">
                 <Form.Item label="First Name">
-                  <Input value={this.props.yourphone.addressInfo.firstName} />
+                  <Input
+                    value={
+                      this.props.yourphone.addressInfo.firstName ||
+                      this.props.yourphone.echeck.firstName
+                    }
+                  />
                 </Form.Item>
                 <Form.Item label="Last Name">
-                  <Input value={this.props.yourphone.addressInfo.lastName} />
+                  <Input
+                    value={
+                      this.props.yourphone.addressInfo.lastName ||
+                      this.props.yourphone.echeck.lastName
+                    }
+                  />
                 </Form.Item>
                 <Form.Item label="eCheck email address">
-                  <Input value={this.props.user.preOrder.userEmail} />
+                  <Input
+                    value={
+                      this.props.user.preOrder.userEmail ||
+                      this.props.yourphone.echeck.email
+                    }
+                  />
                 </Form.Item>
                 <Form.Item label="confirm eCheck email address">
                   <Input value={""} />

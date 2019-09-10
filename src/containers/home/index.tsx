@@ -63,27 +63,27 @@ const brands = [
   {
     iconName: "Apple",
     iconUrl: "Apple.svg",
-    id: 52
+    id: 1
   },
   {
     iconName: "Samsung",
     iconUrl: "Samsung.svg",
-    id: 7
+    id: 2
   },
   {
     iconName: "Google",
     iconUrl: "Google.svg",
-    id: 20
+    id: 3
   },
   {
     iconName: "LG",
     iconUrl: "LG.svg",
-    id: 3
+    id: 4
   },
   {
     iconName: "OnePlus",
     iconUrl: "OnePlus.svg",
-    id: 357
+    id: 5
   },
   {
     iconName: "Others",
