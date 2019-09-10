@@ -52,6 +52,7 @@ export default function(props: any) {
             </div>
             <button className="common-button">
               <a
+                target="_blank"
                 href={`/api/shippo/downloadlabel?shippolablecode=${encodeURIComponent(
                   lableCode
                 )}`}
@@ -69,7 +70,11 @@ export default function(props: any) {
             <RouterLink to="/neworder">{`Check Order >`}</RouterLink>
           </div>
         </section>
-        <button className="common-button second">Go back home</button>
+        <button className="common-button second">
+          <RouterLink className="common-button second" to="/">
+            Go back home
+          </RouterLink>
+        </button>
       </div>
     );
   } else {
