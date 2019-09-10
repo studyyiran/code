@@ -41,8 +41,8 @@ export const getinquirybykeys = <T>(inquiryInfo: any) => {
 };
 // 创建订单接口， 只要发生错误，都提示用户可以写邮件寻求帮助
 export const createOrderStart = <T>(orderParams: any) => {
-  console.log("**createOrderStart**");
-  console.log(JSON.stringify(orderParams));
+  console.warn("**createOrderStart**");
+  console.warn(JSON.stringify(orderParams));
   const opts: IOpts = {
     url: `/group_order/create`,
     method: "post",

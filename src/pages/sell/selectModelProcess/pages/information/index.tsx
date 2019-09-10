@@ -317,7 +317,6 @@ class Information extends React.Component<IShippingProps, IShippingState> {
     const { getFieldError, setFields } = this.props.form;
     const something: any = getFieldError("zipCode");
     const err = something ? (something[0] as string) : false;
-    console.log(err);
     if (err) {
       const value = e.target.value;
       setTimeout(() => {

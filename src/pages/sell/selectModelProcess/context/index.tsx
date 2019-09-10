@@ -105,13 +105,6 @@ function reducer(state: IContextState, action: IReducerAction) {
     }
     case "setModelInfo": {
       // 如果变更了品牌
-      if (
-        value &&
-        value.modelId &&
-        value.modelId !== newState.modelInfo.modelId
-      ) {
-        value.othersAttr = {};
-      }
       const next: any = {};
       if (value) {
         if (value.othersAttr && Object.keys(value.othersAttr).length) {
@@ -121,6 +114,13 @@ function reducer(state: IContextState, action: IReducerAction) {
         } else if (value.modelId) {
           next.modelId = value.modelId;
         }
+      }
+      if (
+        value &&
+        value.modelId &&
+        value.modelId !== newState.modelInfo.modelId
+      ) {
+        next.othersAttr = {};
       }
 
       newState = {
@@ -316,8 +316,8 @@ function useGetAction(
             qpvIds: phoneConditionServerAnswer
           }
         };
-        console.log("**getinquirybyids**");
-        console.log(JSON.stringify(inquiryInfoInfo));
+        console.warn("**getinquirybyids**");
+        console.warn(JSON.stringify(inquiryInfoInfo));
         // 用机型信息获取询价
         const info: any = await getinquirybyids(inquiryInfoInfo);
         const { inquiryKey } = info;

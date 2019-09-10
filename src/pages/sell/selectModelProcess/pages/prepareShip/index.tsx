@@ -17,7 +17,6 @@ export default function(props: any) {
       const data = JSON.parse(orderInfoCache);
       setOrderInfo(data);
       // getDownloadLabel(data.lableCode).then((res: any) => {
-      //   console.log(res);
       // });
     } catch (e) {
       console.error(e);

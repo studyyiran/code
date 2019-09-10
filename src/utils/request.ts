@@ -57,8 +57,8 @@ const Request = <T>(opts: IOpts, code?: number[]): Promise<T> => {
   if (!opts.isFullUrl) {
     opts.url = defaultProxyName + basePath + opts.url;
   }
-  console.log("##opts##");
-  console.log(opts);
+  console.warn("##opts##");
+  console.warn(opts);
   // 合并默认参数和业务参数
   opts.whitecode = code || null;
   opts = { ...defaultopts, ...opts };

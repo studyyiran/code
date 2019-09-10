@@ -135,10 +135,6 @@ export default function Sell(props: any) {
   //     })
   //     // return <Component />
   //     // @ts-ignore
-  //     console.log(<NewA />)
-  //     console.log(Component)
-  //     console.log('end')
-  //     // @ts-ignore
   //     return <NewA />;
   //   };
   // }

@@ -208,8 +208,8 @@ export function tranServerQuestionToLocalRender(staticQuestion: any) {
     );
     return newQuestion;
   });
-  console.log("makeNewQuestionList!");
-  console.log(makeNewQuestionList);
+  console.warn("makeNewQuestionList!");
+  console.warn(makeNewQuestionList);
   return makeNewQuestionList;
 
   function justPush(root: any, obj: any) {

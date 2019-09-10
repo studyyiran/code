@@ -24,7 +24,7 @@ export function PhoneInfoWrapper(props: any) {
         return findProduct.list.map((item: any) => {
           return {
             id: item.id,
-            content: item.id,
+            content: item.displayName,
             type: "select", 
             questionDesc: item.propertyValue.map((attrValue: any) => ({
               id: attrValue.id,

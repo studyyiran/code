@@ -43,7 +43,6 @@ export default class Brands extends React.Component<IBrandsProps> {
   }
 
   private onCarrierItemClick = (carrier: ICarrier) => {
-    console.log(carrier, 'inin');
     try {
       // const productInfo = { ...this.props.user.preOrder.productInfo, carrier: carrier.name }
       this.props.user.preOrder = {

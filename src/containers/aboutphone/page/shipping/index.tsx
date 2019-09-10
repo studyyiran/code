@@ -340,7 +340,6 @@ class ShippingAddress extends React.Component<IShippingProps, IShippingState> {
       // @ts-ignore
       ? (getFieldError("zipCode")[0] as string)
       : false;
-    console.log(err);
     if (err) {
       const value = e.target.value;
       setTimeout(() => {

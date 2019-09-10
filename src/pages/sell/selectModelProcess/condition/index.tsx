@@ -111,8 +111,8 @@ export function ConditionForm(props: IConditionForm) {
     qualityList: phoneConditionQuestion,
     phoneConditionServerAnswer
   } = selectModelContextValue;
-  console.log("**phoneConditionQuestion**");
-  console.log(phoneConditionQuestion);
+  console.warn("**phoneConditionQuestion**");
+  console.warn(phoneConditionQuestion);
   const [maxActiveKey, setMaxActiveKey] = useState("");
   const { state, dispatch } = props;
 
@@ -236,7 +236,7 @@ export function ConditionForm(props: IConditionForm) {
     });
     return <img className="product-bg" src={nameConfig.imgUrl} />;
   }
-  
+
   // canPost?
 
   // canNext?

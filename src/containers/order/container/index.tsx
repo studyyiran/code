@@ -129,7 +129,6 @@ function OrderList(props: { order: IOrderStore }) {
         orderStatusHistories
       } = order;
       const reactNodeConfig = getReactNodeConfig(subOrderStatus);
-      console.log(reactNodeConfig);
       return {
         header: `${productDisplayName}-${subOrderStatusDisplayName}`,
         key: subOrderNo,

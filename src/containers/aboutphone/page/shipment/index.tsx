@@ -207,7 +207,7 @@ function RenderQuestion() {
       <ChoiceQuestion
         options={options}
         onChange={(selectId: string) => {
-          console.log(selectId);
+          console.warn('?')
         }}
       />
     </div>

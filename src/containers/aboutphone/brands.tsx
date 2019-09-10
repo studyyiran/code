@@ -17,7 +17,6 @@ export default class Brands extends React.Component<IBrandsProps> {
     this.props.user.isShowLeftPrice = true;
     this.props.yourphone.getBrandsByCid();
     // const a = new Clipboard('.testtttt-btn');
-    // console.log(a);
   }
 
   public render() {
