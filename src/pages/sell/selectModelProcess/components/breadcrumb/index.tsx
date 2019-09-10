@@ -20,7 +20,7 @@ function Breadcrumb(props: any) {
     selectModelContextValue,
     getNameInfo
   } = selectModelContext as ISelectModelContext;
-  const { brand, modelInfo } = selectModelContextValue;
+  const { brand, modelInfo, userProductList } = selectModelContextValue;
   const nameObj = getNameInfo({
     brandId: brand,
     ...modelInfo
@@ -160,7 +160,11 @@ function Breadcrumb(props: any) {
           const { pageKey, viewContent } = routeConfig;
           const renderPageOrder = getCurrentPageOrder(pageKey);
           let nextPageKey = "";
-          if (renderPageOrder >= stageOrder) {
+          if (
+            renderPageOrder >= stageOrder &&
+            userProductList &&
+            userProductList.length
+          ) {
             nextPageKey =
               configArr[getIndexByOrder(renderPageOrder - 1)].pageKey;
           } else if (nameObj.brandName) {
@@ -168,8 +172,6 @@ function Breadcrumb(props: any) {
             if (renderPageOrder > 0) {
               nextPageKey =
                 configArr[getIndexByOrder(renderPageOrder - 1)].pageKey;
-            } else if (renderPageOrder === 0) {
-              nextPageKey = "firstStep";
             }
           }
           return (

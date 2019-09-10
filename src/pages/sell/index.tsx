@@ -20,7 +20,7 @@ import { HeaderTitle } from "@/components/headerTitle";
 import Breadcrumb from "./selectModelProcess/components/breadcrumb/index";
 import { staticRouter } from "@/pages/sell/selectModelProcess/config/staticRouter";
 import { inject, observer } from "mobx-react";
-import {removeAllSpace} from "@/pages/sell/util";
+import { removeAllSpace } from "@/pages/sell/util";
 
 let haveinit = false;
 
@@ -34,7 +34,6 @@ let haveinit = false;
 // ]
 // interface ISell {}
 
-
 export default function Sell(props: any) {
   const selectModelContext = useContext(SelectModelContext);
   const {
@@ -42,11 +41,16 @@ export default function Sell(props: any) {
     selectModelContextDispatch,
     getNameInfo
   } = selectModelContext as ISelectModelContext;
-  const { brand, brandList, modelInfo } = selectModelContextValue;
+  const {
+    brand,
+    brandList,
+    modelInfo,
+    userProductList
+  } = selectModelContextValue;
   function canGoNext(): boolean {
     return true;
   }
-  function goNextPage(currentPage: any): void {
+  function goNextPage(currentPage?: any): void {
     // 这块对路由状态的借用不好。现在是自己在维护
     switch (currentPage) {
       case "offer": {
@@ -77,11 +81,6 @@ export default function Sell(props: any) {
       case "prepareShip": {
         break;
       }
-      case "firstStep": {
-        const next = props.match.url;
-        props.history.push(removeAllSpace(next));
-        break;
-      }
       case "brand": {
         const next = props.match.url + "/" + brand;
         props.history.push(removeAllSpace(next));
@@ -90,7 +89,7 @@ export default function Sell(props: any) {
         // });
         // if (findTarget) {
         //   const next = props.match.url + "/" + findTarget.displayName;
-        //  
+        //
         // }
         break;
       }
@@ -122,7 +121,11 @@ export default function Sell(props: any) {
         props.history.push(removeAllSpace(next));
         break;
       }
-      default:
+      default: {
+        const next = props.match.url;
+        props.history.push(removeAllSpace(next));
+        break;
+      }
     }
   }
   // function wrapper(Component: any) {
@@ -211,7 +214,15 @@ export default function Sell(props: any) {
     }
     return { ...result };
   });
-
+  // 如果当前
+  if (!userProductList || !userProductList.length) {
+    if (!brand) {
+      if (props.location.pathname && props.location.pathname !== "/newsell") {
+        // 首页
+        goNextPage();
+      }
+    }
+  }
   return (
     <Switch>
       {/*<Route path="/" render={() => (*/}
