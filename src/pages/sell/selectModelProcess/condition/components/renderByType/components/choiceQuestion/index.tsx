@@ -28,7 +28,7 @@ function Option(props: IOption) {
         onClick={handler}
       >
         <span data-select={isSelect ? "true" : "false"} className="icon">
-          <Svg icon={"duigou"} />
+          <Svg />
         </span>
         <span>{children}</span>
       </div>

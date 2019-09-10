@@ -29,6 +29,7 @@ export function CheckBoxQuestion(props: ICheckBoxQuestion) {
             <CheckBoxWithInput
               currentInput={currentInput}
               currentSelect={value}
+              content={option.optionContent}
               handler={handler}
             />
           );
@@ -76,32 +77,35 @@ export function CheckBoxQuestion(props: ICheckBoxQuestion) {
 }
 
 function CheckBoxWithInput(props: any) {
-  const { currentInput, currentSelect, handler } = props;
+  const { currentInput, currentSelect, handler, content } = props;
   const [isSelect, setIsSelect] = useState(
     Boolean(currentInput && currentInput.optionId && currentInput.optionContent)
   );
   return (
-    <Checkbox
-      className="comp-answer-input"
-      checked={isSelect}
-      onChange={() => {
-        setIsSelect(value => {
-          return !value;
-        });
-        // 清空的作用。
-        if (isSelect) {
-          const target = currentSelect.findIndex(
-            (currentAnswer: any) =>
-              currentAnswer.optionId === currentInput.optionId
-          );
-          const nextAnswer = [
-            ...currentSelect.slice(0, target),
-            ...currentSelect.slice(target + 1)
-          ];
-          handler(nextAnswer);
-        }
-      }}
-    >
+    <div>
+      <Checkbox
+        className="comp-answer-input"
+        checked={isSelect}
+        onChange={() => {
+          setIsSelect(value => {
+            return !value;
+          });
+          // 清空的作用。
+          if (isSelect) {
+            const target = currentSelect.findIndex(
+              (currentAnswer: any) =>
+                currentAnswer.optionId === currentInput.optionId
+            );
+            const nextAnswer = [
+              ...currentSelect.slice(0, target),
+              ...currentSelect.slice(target + 1)
+            ];
+            handler(nextAnswer);
+          }
+        }}
+      >
+        <span>{content}</span>
+      </Checkbox>
       <Input
         placeholder="Enter Text"
         disabled={!isSelect}
@@ -133,6 +137,6 @@ function CheckBoxWithInput(props: any) {
           }
         }}
       />
-    </Checkbox>
+    </div>
   );
 }

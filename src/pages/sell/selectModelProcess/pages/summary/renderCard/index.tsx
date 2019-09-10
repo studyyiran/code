@@ -7,7 +7,7 @@ export default function RenderCard(props: any) {
     <div className="comp-info-card">
       <header>
         <h3>{title}</h3>
-        {onEdit ? <span onClick={onEdit}>Edit</span> : null}
+        {onEdit ? <span className="edit-button" onClick={onEdit}>Edit</span> : null}
       </header>
       <div>{children}</div>
     </div>

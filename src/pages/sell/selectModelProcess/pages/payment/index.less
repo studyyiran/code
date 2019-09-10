@@ -2,7 +2,9 @@
 @import "payment--mobile.less";
 .page-payment-container {
   height: 100%;
-
+  .ant-form-item-required::before {
+    display: none;
+  }
   &.notlayout {
     & > .ant-row {
       padding-top: 0 !important;
@@ -135,7 +137,7 @@
 
 .ismobile #root {
   .page-payment-container {
-    .paypal-container {
+    .container-border {
       margin-bottom: 0.5rem;
     }
   }
