@@ -236,6 +236,7 @@ interface IContextActions {
   createOrderStart: () => any;
   getInquiryKeyList: () => any;
   removeFromList: (key: any) => any;
+  getDownloadLabel: (key: any) => any;
 }
 
 function useGetAction(
@@ -243,6 +244,12 @@ function useGetAction(
   dispatch: (action: IReducerAction) => void
 ): IContextActions {
   const actions: IContextActions = {
+    getDownloadLabel: promisify(async function(label: string) {
+      if (label) {
+        // const res: any = await getDownloadLabel(label);
+        // return res;
+      }
+    }),
     getBrandList: promisify(async function() {
       if (state.categoryId) {
         const res: any = await getBrands(state.categoryId);
@@ -381,6 +388,7 @@ function useGetAction(
         return null;
       }
     },
+
     removeFromList: function(inquiryKey) {
       const target = state.userProductList.find(
         item => item.inquiryKey === inquiryKey
@@ -431,6 +439,7 @@ function useGetAction(
     }
   };
   actions.getBrandList = useCallback(actions.getBrandList, [state.categoryId]);
+  actions.getDownloadLabel = useCallback(actions.getDownloadLabel, []);
   actions.getQuality = useCallback(actions.getQuality, [state.categoryId]);
   actions.getProductsList = useCallback(actions.getProductsList, [
     state.brand,

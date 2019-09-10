@@ -1,14 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./index.less";
 import VideoComponent from "@/components/video";
 import RouterLink from "@/components/routerLink";
+import {
+  ISelectModelContext,
+  SelectModelContext
+} from "@/pages/sell/selectModelProcess/context";
 // subOrders[0].shippingInfo.sendInfo[0].lableCode
 export default function(props: any) {
+  // const selectModelContext = useContext(SelectModelContext);
+  // const { getDownloadLabel } = selectModelContext as ISelectModelContext;
   const [orderInfo, setOrderInfo] = useState();
   useEffect(() => {
     const orderInfoCache: any = sessionStorage.getItem("orderInfo");
     try {
-      setOrderInfo(JSON.parse(orderInfoCache));
+      const data = JSON.parse(orderInfoCache);
+      setOrderInfo(data);
+      // getDownloadLabel(data.lableCode).then((res: any) => {
+      //   console.log(res);
+      // });
     } catch (e) {
       console.error(e);
     }
@@ -41,7 +51,15 @@ export default function(props: any) {
                 <br /> {shipDeadLine}
               </div>
             </div>
-            <button className="common-button">Print Label</button>
+            <button className="common-button">
+              <a
+                href={`/api/shippo/downloadlabel?shippolablecode=${encodeURIComponent(
+                  lableCode
+                )}`}
+              >
+                Print Label
+              </a>
+            </button>
             <section className="video">
               <h3>How to Ship</h3>
               <VideoComponent />

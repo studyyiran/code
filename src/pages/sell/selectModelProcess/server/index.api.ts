@@ -85,13 +85,25 @@ export const getQuality = <T>(categoryId: string) => {
   return requestGetResponse(Request<T>(requestWrapper(opts)));
 };
 
+// 获取print label
+// export const getDownloadLabel = <T>(shippolablecode: string) => {
+//   const opts: IOpts = {
+//     url: `/shippo/downloadlabel`,
+//     params: {
+//       shippolablecode: shippolablecode
+//     }
+//   };
+//
+//   return requestGetResponse(Request<T>(requestWrapper(opts)));
+// };
+
 /*
 ___________________________________________________________________________
  */
 // 根据类目获取品牌列表
 export const getBrandsByCid = <T>(categoryId = 1) => {
   const opts: IOpts = {
-    url: `/brands/category/${categoryId}`
+    url: `/brands/category/${categoryId}`,
   };
 
   return Request<T>(opts);
