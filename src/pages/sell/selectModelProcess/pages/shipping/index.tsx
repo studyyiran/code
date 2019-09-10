@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import classnames from "classnames";
 import { inject, observer } from "mobx-react";
 import { Row, Col, Collapse, Form, Checkbox } from "antd";
@@ -13,6 +13,7 @@ import { addDate } from "utils";
 import ButtonGroup from "@/pages/sell/selectModelProcess/components/buttonGroup";
 import PriceTitle from "@/pages/sell/selectModelProcess/components/priceTitle";
 import TipsIcon from "@/pages/sell/selectModelProcess/components/tipsIcon";
+import { safeEqual } from "@/utils/util";
 
 const Panel = Collapse.Panel;
 const leftHeader = <div className="fedex-bg" />;
@@ -20,6 +21,16 @@ const rightHeader = <div className="USPS-bg" />;
 
 function ShippingContainer(props: any) {
   const selectModelContext = useContext(SelectModelContext);
+  const {
+    selectModelContextDispatch
+  } = selectModelContext as ISelectModelContext;
+  function handler(value: any) {
+    selectModelContextDispatch({
+      type: "setExpressOption",
+      value
+    });
+  }
+
   return <Shipping {...props} selectModelContext={selectModelContext} />;
 }
 
@@ -28,7 +39,8 @@ function ShippingContainer(props: any) {
 class Shipping extends React.Component<any, any> {
   // 这个state我本来想放到context中。因为一劳永逸。但是对于封闭性不好。所以我先私有化。等以后需要的时候，再做处理
   public readonly state: any = {
-    expressFeeList: []
+    expressFeeList: [],
+    currentSelect: 0
   };
 
   public componentDidMount() {
@@ -107,14 +119,26 @@ class Shipping extends React.Component<any, any> {
       </div>
     );
     const isMobile = this.props.common.isMobile;
-
+    const getCurrentIndex = () => {
+      let target = -1;
+      if (expressOption && expressOption.sendDateType) {
+        target = this.state.expressFeeList.findIndex((item: any) => {
+          return safeEqual(item.sendDateType, expressOption.sendDateType);
+        });
+      }
+      return target === -1 ? this.state.currentSelect : target;
+    };
     return (
       <div className="page-shipping-container">
         <PriceTitle>The faster you ship, the more you get paid</PriceTitle>
         <RenderQuestion
-          currentExpressOption={expressOption}
+          onChange={(value: string) => {
+            this.setState({
+              currentSelect: value
+            });
+          }}
+          currentSelect={getCurrentIndex()}
           optionsList={this.state.expressFeeList}
-          selectModelContextDispatch={selectModelContextDispatch}
         />
         <h3>Choose your carrier</h3>
         <Row gutter={30}>
@@ -213,11 +237,7 @@ class Shipping extends React.Component<any, any> {
 }
 
 function RenderQuestion(props: any) {
-  const {
-    optionsList,
-    selectModelContextDispatch,
-    currentExpressOption
-  } = props;
+  const { currentSelect, onChange, optionsList } = props;
   // 直接拉接口
   {
     moment.tz(addDate(new Date(), 7), "America/Chicago").format("MMM DD");
@@ -239,7 +259,12 @@ function RenderQuestion(props: any) {
   let afterCalcList: any[] = [];
   if (optionsList && optionsList.length) {
     if (optionsList.length === 1) {
-      afterCalcList = afterCalcList.concat([optionsList[1]]);
+      afterCalcList = afterCalcList.concat([
+        {
+          ...options[1],
+          ...optionsList[0]
+        }
+      ]);
     } else {
       afterCalcList = options.map((item, index) => ({
         ...item,
@@ -251,15 +276,18 @@ function RenderQuestion(props: any) {
     return (
       <div className="question">
         <ChoiceQuestion
-          defaultValue={
-            currentExpressOption ? currentExpressOption.sendDateType : ""
+          value={
+            afterCalcList[currentSelect]
+              ? afterCalcList[currentSelect].sendDateType
+              : ""
           }
           options={afterCalcList}
           onChange={(value: any) => {
-            selectModelContextDispatch({
-              type: "setExpressOption",
-              value
-            });
+            onChange(
+              afterCalcList.findIndex((item: any) => {
+                return safeEqual(item.sendDateType, value.sendDateType);
+              })
+            );
           }}
           render={(index: any) => {
             if (afterCalcList && afterCalcList.length === 3 && index < 3) {

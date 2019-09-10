@@ -70,7 +70,7 @@ export function RenderByType(props: IRenderByType) {
               //   answer: [answer]
               // });
             }}
-            defaultValue={userSubAnswer.answer[0]}
+            value={userSubAnswer.answer[0]}
           />
         );
       }

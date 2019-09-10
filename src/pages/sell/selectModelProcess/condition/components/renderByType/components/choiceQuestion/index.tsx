@@ -44,17 +44,15 @@ interface IOptionProps {
 }
 
 interface ISelect {
-  defaultValue?: string;
+  value?: string;
   onChange: (s: any) => void;
   options: any[];
   render?: any;
 }
 
 export function ChoiceQuestion(props: ISelect) {
-  const [currentSelect, setCurrentSelect] = useState(props.defaultValue || "");
   const options = props.options;
   const handler = (selectIndex: string) => {
-    setCurrentSelect(selectIndex);
     const target = options.find(item => item.sendDateType === selectIndex);
     props.onChange({
       sendDateType: target.sendDateType,
@@ -70,7 +68,7 @@ export function ChoiceQuestion(props: ISelect) {
             <Option
               key={sendDateType}
               index={sendDateType}
-              currentSelect={currentSelect}
+              currentSelect={props.value || ""}
               onClick={handler}
             >
               {content}
