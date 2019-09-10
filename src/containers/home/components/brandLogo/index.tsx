@@ -1,6 +1,8 @@
 import * as React from "react";
 import "./index.less";
 
+
+// 先简单处理吧
 export function BrandLogo(props: any) {
   const { brand } = props;
   const { iconUrl, iconName, id } = brand;

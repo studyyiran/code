@@ -15,7 +15,7 @@ import {
   SelectModelContext,
   ISelectModelContext
 } from "./selectModelProcess/context";
-import { Switch, Route } from "react-router";
+import { Switch, Route, Redirect } from "react-router";
 import { HeaderTitle } from "@/components/headerTitle";
 import Breadcrumb from "./selectModelProcess/components/breadcrumb/index";
 import { staticRouter } from "@/pages/sell/selectModelProcess/config/staticRouter";
@@ -218,6 +218,9 @@ export default function Sell(props: any) {
 
   return (
     <Switch>
+      {/*<Route path="/" render={() => (*/}
+      {/*  <Redirect to="/test"/>*/}
+      {/*)}/>*/}
       {configArr.map(({ path, title, Component, pageKey }) => {
         return (
           <Route

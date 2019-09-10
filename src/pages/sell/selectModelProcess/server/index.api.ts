@@ -59,21 +59,24 @@ export const createOrderStart = <T>(orderParams: any) => {
   console.log("**createOrderStart**")
   console.log(JSON.stringify(orderParams))
   const opts: IOpts = {
-    url: `/up-trade-it/api/group_order/create`,
+    url: `/group_order/create`,
     method: "post",
     params: orderParams
   };
-  return getResponse(Request<T>(wrapper(opts, true), []));
+  return getResponse(Request<T>(wrapper(opts)));
+  // return getResponse(Request<T>(wrapper(opts, true), []));
 };
 
 // 根据类目获取品牌列表
 export const getExpressFee = <T>(inquiryKeys: any) => {
   const opts: IOpts = {
-    url: "/up-trade-it/api/group_order/getexpressfee",
+    // url: "/up-trade-it/api/group_order/getexpressfee",
+    url: "/product/getexpressfee",
     method: "post",
     params: inquiryKeys
   };
-  return getResponse(Request<T>(wrapper(opts, true)));
+  return getResponse(Request<T>(wrapper(opts)));
+  // return getResponse(Request<T>(wrapper(opts, true)));
   // return Request<T>(opts, []);
 };
 

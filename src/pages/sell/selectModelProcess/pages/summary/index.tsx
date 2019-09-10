@@ -42,8 +42,8 @@ export default function SummaryWrapper(props: any) {
     goNextPage: props.goNextPage,
     needInsurance,
     createOrderStart,
-    sendBox: staticMap[expressOption.sendDateType] === "SEND_BOX",
-    expreeSendDateType: staticMap[expressOption.sendDateType],
+    sendBox: expressOption && expressOption.sendDateType && staticMap[expressOption.sendDateType] === "SEND_BOX",
+    expreeSendDateType: expressOption && expressOption.sendDateType && staticMap[expressOption.sendDateType],
     subOrders: userProductList.map((item: any) => {
       return {
         brandId: item.brand,
