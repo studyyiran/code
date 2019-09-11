@@ -6,8 +6,7 @@
   justify-content: center;
   .page(800px);
   .img-container {
-    min-width: 273px;
-    max-width: 273px;
+   flex: 0 0 273px;
     > img.product-bg {
       width: 100%;
     }
@@ -40,11 +39,12 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
+    align-items: stretch;
     .page(800rem * @px2rem);
     .img-container {
       display: flex;
       align-items: center;
-      width: 100%;
+      flex: 0 0 auto;
       > img.product-bg {
         max-width: 60rem * @px2rem;
       }

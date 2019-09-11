@@ -146,13 +146,13 @@ class CheckOrderNo extends React.Component<any, any> {
         )
       });
     }
-    if (!/^[0-9]*$/.test(this.state.orderNo)) {
-      canSubmit = false;
-      this.setState({
-        validateOrderNo: "error",
-        orderInputHelp: "Please enter a valid order number"
-      });
-    }
+    // if (!/^[0-9]*$/.test(this.state.orderNo)) {
+    //   canSubmit = false;
+    //   this.setState({
+    //     validateOrderNo: "error",
+    //     orderInputHelp: "Please enter a valid order number"
+    //   });
+    // }
     if (canSubmit) {
       try {
         const b = await this.props.checkForOrder(

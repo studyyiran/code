@@ -127,8 +127,7 @@ function useGetAction(
           const { deliverNoInfo, deliverInfos } = current.transInfo;
           if (!deliverInfos) {
             const { carrier, trackingNumber } = deliverNoInfo;
-            // const res = await getTranshipping(carrier, trackingNumber);
-            const res = getTranshippingmock;
+            const res = await getTranshipping(carrier, trackingNumber);
             const mapFunc = (item: any) => {
               if (item.subOrderNo === currentSubOrderNo) {
                 item.transInfo.deliverInfos = getDeliverInfos(res);

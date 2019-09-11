@@ -59,7 +59,7 @@ const footerInfo = [
     arr: [
       {
         subTitle: "Check My Order",
-        href: "/"
+        href: "/check-order"
       }
     ]
   }
