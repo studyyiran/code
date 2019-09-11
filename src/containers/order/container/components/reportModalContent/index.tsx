@@ -13,7 +13,9 @@ export default function ReportModalContent(props: any) {
       <li className="comp-item" data-correct={isSame ? "true" : "false"}>
         <span className="title">{title}</span>
         <div className="content">
-          <span className="value" data-correct={isSame ? "true" : "false"}>{value}</span>
+          <span className="value" data-correct={isSame ? "true" : "false"}>
+            {value}
+          </span>
           <span className="circle" data-correct={isSame ? "true" : "false"}>
             <Svg icon={isSame ? "correct" : "wrong"} />
           </span>
@@ -26,7 +28,7 @@ export default function ReportModalContent(props: any) {
     return revised[revised] === brandName[revised];
   }
   function checkSameFromArr(targetId: string, attrKey: string) {
-    let isSame = false;
+    let isSame = true;
     if (
       submitted &&
       submitted[attrKey] &&
@@ -34,7 +36,7 @@ export default function ReportModalContent(props: any) {
         ({ id: submitAttrValueId }: any) => submitAttrValueId === targetId
       )
     ) {
-      isSame = true;
+      isSame = false;
     }
     return isSame;
   }
@@ -53,7 +55,6 @@ export default function ReportModalContent(props: any) {
           value={displayName}
           isSame={checkIsSame("productId")}
         />
-        <RenderItem title="Model" value={1} />
         {productPns.map(({ name, ppnName, id }: any) => (
           <RenderItem
             title={ppnName}
