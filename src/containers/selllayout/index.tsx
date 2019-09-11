@@ -28,6 +28,7 @@ export default class SellLayout extends React.Component<ISellLayoutProps, ISellL
     });
 
     // 对 session 寸的数据做处理
+    // safe
     const preOrder = sessionStorage.getItem('preOrder');
     if (preOrder) {
       this.props.user.preOrder = JSON.parse(preOrder);

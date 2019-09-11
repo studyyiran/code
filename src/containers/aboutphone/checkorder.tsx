@@ -73,7 +73,7 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
       userEmail: '',
     }
     this.props.yourphone.destory();
-    sessionStorage.removeItem('preOrder');
+    // sessionStorage.removeItem('preOrder');
   }
 
   public componentWillUnmount() {
