@@ -20,7 +20,7 @@ import ReturnRequestIcon from "@/images/order/returnRequest.png";
 import * as moment from "moment-timezone";
 // import { noteUserModal } from '@/containers/aboutphone/pageValidate';
 import EmailModal from "@/components/emailModal/index";
-import { getFromSession } from "@/utils/util";
+import {getFromSession, setSession} from "@/utils/util";
 // import config from '@/config';
 moment.locale("en");
 
@@ -467,8 +467,8 @@ class Store implements IOrderStore {
   };
   // 保存登陆信息
   @action public autoSaveLoginMes = () => {
-    window.sessionStorage.setItem("bmb-us-email", this.email);
-    window.sessionStorage.setItem("bmb-us-orderNo", this.orderNo);
+    setSession("bmb-us-email", this.email);
+    setSession("bmb-us-orderNo", this.orderNo);
   };
   // 自动登陆
   @action public autoLogin = async () => {

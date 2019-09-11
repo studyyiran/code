@@ -71,3 +71,17 @@ export function getFromSession(key: string) {
     console.error(e);
   }
 }
+
+export function setSession(key: string, obj: any) {
+  try {
+    if (window) {
+      window.sessionStorage.setItem(key, obj);
+      return true;
+    } else {
+      return false;
+    }
+  } catch (e) {
+    console.error(e);
+    return false;
+  }
+}

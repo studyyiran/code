@@ -25,7 +25,7 @@ import {
   tranServerQuestionToLocalRender
 } from "../condition/util";
 import { setOrderCache } from "@/containers/order/util";
-import {getFromSession} from "@/utils/util";
+import { getFromSession, setSession } from "@/utils/util";
 
 let haveLoad = false;
 const sessionKey = "modelContext";
@@ -491,15 +491,12 @@ function useGetAction(
               email: userEmail,
               orderId: groupOrderNo
             });
-            sessionStorage.setItem(
-              "orderInfo",
-              JSON.stringify({
-                needBox,
-                shipDeadLine,
-                groupOrderNo,
-                lableCode
-              })
-            );
+            setSession("orderInfo", {
+              needBox,
+              shipDeadLine,
+              groupOrderNo,
+              lableCode
+            });
           }
           dispatch({ type: "resetAllUserInputData" });
           return res;
@@ -684,7 +681,5 @@ function saveToCache(key: string, value: any, needKey: any[]) {
   needKey.forEach(item => {
     cache[item] = value[item];
   });
-  sessionStorage.setItem(key, JSON.stringify(cache));
+  setSession(key, cache);
 }
-
-

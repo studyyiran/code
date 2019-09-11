@@ -11,7 +11,7 @@ import InspectionCompleteIcon from "@/images/order/inspectionComplete.png";
 import ListSaleIcon from "@/images/order/listForSale.png";
 import OrderCompleteIcon from "@/images/order/orderComplete.png";
 import ReturnRequestIcon from "@/images/order/returnRequest.png";
-import {getFromSession} from "@/utils/util";
+import { getFromSession, setSession } from "@/utils/util";
 
 export function getReactNodeConfig(status: any, showReturnShipping?: string) {
   const ReactNodeConfig = {
@@ -406,10 +406,12 @@ export function setOrderCache({ email, orderId }: any) {
       email,
       orderId
     };
-    sessionStorage.setItem("orderCache", JSON.stringify(orderCache));
+    return setSession("orderCache", orderCache);
+  } else {
+    return false
   }
 }
 
 export function getOrderCache() {
-  return getFromSession("orderCache")
+  return getFromSession("orderCache");
 }
