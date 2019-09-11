@@ -1,37 +1,43 @@
-import * as React from 'react';
-import { inject, observer } from 'mobx-react';
-import { renderRoutes } from 'react-router-config';
-import { noteUserModal } from '@/containers/aboutphone/pageValidate';
-import config from '@/config';
-import './index.less';
-import LeftSide from './components/leftside';
-import GuaranteedPrice from './components/guaranteedprice';
-import GuaranteedPriceMobile from './components/guaranteedprice--mobile';
-import { ISellLayoutProps, ISellLayoutState } from './interface/index.interface';
+import * as React from "react";
+import { inject, observer } from "mobx-react";
+import { renderRoutes } from "react-router-config";
+import { noteUserModal } from "@/containers/aboutphone/pageValidate";
+import config from "@/config";
+import "./index.less";
+import LeftSide from "./components/leftside";
+import GuaranteedPrice from "./components/guaranteedprice";
+import GuaranteedPriceMobile from "./components/guaranteedprice--mobile";
+import {
+  ISellLayoutProps,
+  ISellLayoutState
+} from "./interface/index.interface";
+import { getFromSession } from "@/utils/util";
 
-@inject('yourphone', 'user', 'common')
+@inject("yourphone", "user", "common")
 @observer
-export default class SellLayout extends React.Component<ISellLayoutProps, ISellLayoutState> {
-
+export default class SellLayout extends React.Component<
+  ISellLayoutProps,
+  ISellLayoutState
+> {
   public readonly state: Readonly<ISellLayoutState> = {
     stepIndex: -1,
     isSetedPreOrder: false,
     isBeforeShipping: false
-  }
+  };
 
   public componentDidMount() {
     const navigator = config.NAVIGATOR;
     const navigatorKey = Object.keys(navigator);
     this.onMappingIndex(navigatorKey, navigator);
-    window['__history__'].listen(() => {
+    window["__history__"].listen(() => {
       this.onMappingIndex(navigatorKey, navigator);
     });
 
     // 对 session 寸的数据做处理
     // safe
-    const preOrder = sessionStorage.getItem('preOrder');
+    const preOrder: any = getFromSession("preOrder");
     if (preOrder) {
-      this.props.user.preOrder = JSON.parse(preOrder);
+      this.props.user.preOrder = preOrder;
 
       if (this.props.user.preOrder.addressInfo) {
         this.props.yourphone.addressInfo = this.props.user.preOrder.addressInfo;
@@ -56,7 +62,7 @@ export default class SellLayout extends React.Component<ISellLayoutProps, ISellL
         this.props.yourphone.paypal = this.props.user.preOrder.paypalInfo;
       }
 
-      // 有关机型的 
+      // 有关机型的
       if (this.props.user.preOrder.productInfo) {
         if (this.props.user.preOrder.productInfo.brandId) {
           this.props.yourphone.activeBrandsId = this.props.user.preOrder.productInfo.brandId;
@@ -105,64 +111,88 @@ export default class SellLayout extends React.Component<ISellLayoutProps, ISellL
 
   public onMappingIndex = (navigatorKey: string[], navigator: object) => {
     const isMobile = this.props.common.isMobile;
-    const arr = navigatorKey.filter(v => new RegExp(v).test(window['__history__'].location.pathname));
+    const arr = navigatorKey.filter(v =>
+      new RegExp(v).test(window["__history__"].location.pathname)
+    );
     if (!arr.length) {
       return;
     }
     this.setState({
-      stepIndex: navigator[arr[arr.length - 1]]['step'],
-      isBeforeShipping: isMobile ? navigator[arr[arr.length - 1]]['isBeforeShippingMobile'] : navigator[arr[arr.length - 1]]['isBeforeShipping']
+      stepIndex: navigator[arr[arr.length - 1]]["step"],
+      isBeforeShipping: isMobile
+        ? navigator[arr[arr.length - 1]]["isBeforeShippingMobile"]
+        : navigator[arr[arr.length - 1]]["isBeforeShipping"]
     });
-  }
+  };
 
   public componentWillUnmount() {
     if (this.props.user.preOrder.appendOrderDetail) {
       noteUserModal({
-        title: 'Failed to submit the order!',
-        content: (<>Your order process is interrupted, please try again. Sorry for the inconvenience. <br /> <br />This window will be closed after 15 seconds.</>),
-        type: 'info',
+        title: "Failed to submit the order!",
+        content: (
+          <>
+            Your order process is interrupted, please try again. Sorry for the
+            inconvenience. <br /> <br />
+            This window will be closed after 15 seconds.
+          </>
+        ),
+        type: "info",
         seconds: 10,
-        update: (seconds) => (<>Your order process is interrupted, please try again. Sorry for the inconvenience.  <br /> <br />This window will be closed after {seconds} seconds.</>),
+        update: seconds => (
+          <>
+            Your order process is interrupted, please try again. Sorry for the
+            inconvenience. <br /> <br />
+            This window will be closed after {seconds} seconds.
+          </>
+        )
       });
       this.props.user.preOrder = {
-        userEmail: '',
-      }
+        userEmail: ""
+      };
       this.props.yourphone.destory();
       this.props.yourphone.desoryUnmount();
-      sessionStorage.removeItem('preOrder');
+      sessionStorage.removeItem("preOrder");
     }
-
   }
 
   public render() {
     if (!this.state.isSetedPreOrder) {
       return null;
     }
-    const price = this.props.yourphone.inquiryDetail !== null ? this.props.yourphone.inquiryDetail.priceDollar : '';
+    const price =
+      this.props.yourphone.inquiryDetail !== null
+        ? this.props.yourphone.inquiryDetail.priceDollar
+        : "";
     const children = this.props.route.children;
     return (
       <div className="page-sell-layout-container">
         <div className="sell-layout-left">
-          {
-            !this.props.common.isMobile && <LeftSide
+          {!this.props.common.isMobile && (
+            <LeftSide
               stepIndex={this.state.stepIndex}
               isMobile={this.props.common.isMobile}
             />
-          }
-          {
-            this.props.common.isMobile
-              ? (<GuaranteedPriceMobile price={price} isTBD={this.props.yourphone.isTBD} user={this.props.user} isBeforeShipping={this.props.user.isShowLeftPriceMobile} />)
-              : (<GuaranteedPrice price={price} isTBD={this.props.yourphone.isTBD} user={this.props.user} isBeforeShipping={this.state.isBeforeShipping} />)
-          }
+          )}
+          {this.props.common.isMobile ? (
+            <GuaranteedPriceMobile
+              price={price}
+              isTBD={this.props.yourphone.isTBD}
+              user={this.props.user}
+              isBeforeShipping={this.props.user.isShowLeftPriceMobile}
+            />
+          ) : (
+            <GuaranteedPrice
+              price={price}
+              isTBD={this.props.yourphone.isTBD}
+              user={this.props.user}
+              isBeforeShipping={this.state.isBeforeShipping}
+            />
+          )}
         </div>
         <div className="sell-layout-right">
-          {
-            this.state.isSetedPreOrder
-              ? renderRoutes(children)
-              : null
-          }
+          {this.state.isSetedPreOrder ? renderRoutes(children) : null}
         </div>
       </div>
-    )
+    );
   }
 }

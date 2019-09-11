@@ -25,6 +25,7 @@ import {
   tranServerQuestionToLocalRender
 } from "../condition/util";
 import { setOrderCache } from "@/containers/order/util";
+import {getFromSession} from "@/utils/util";
 
 let haveLoad = false;
 const sessionKey = "modelContext";
@@ -644,7 +645,7 @@ export function ModelContextProvider(props: any) {
     // haveLoad = true;
     // JUST DEBUG
     haveLoad = haveLoad;
-    const cache = reloadFromCache(sessionKey);
+    const cache = getFromSession(sessionKey);
     if (cache) {
       initState = { ...initState, ...cache };
     }
@@ -686,11 +687,4 @@ function saveToCache(key: string, value: any, needKey: any[]) {
   sessionStorage.setItem(key, JSON.stringify(cache));
 }
 
-function reloadFromCache(key: string) {
-  const data = sessionStorage.getItem(key);
-  if (data) {
-    return JSON.parse(data);
-  } else {
-    return null;
-  }
-}
+

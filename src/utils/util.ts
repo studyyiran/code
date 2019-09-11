@@ -53,3 +53,21 @@ export function currencyTrans(value: any) {
 export const staticContentConfig = {
   priceUnit: "$"
 };
+
+// 检测
+export function getFromSession(key: string) {
+  try {
+    if (!window) {
+      return null;
+    } else {
+      const data = sessionStorage.getItem(key);
+      if (data) {
+        return JSON.parse(data);
+      } else {
+        return null;
+      }
+    }
+  } catch (e) {
+    console.error(e);
+  }
+}

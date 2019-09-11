@@ -1,6 +1,7 @@
 import * as Api from "./api/user.api";
 import { IUserStoreNew, IPreOrder } from "./interface/user.interface";
 import { action, observable, autorun } from "mobx";
+import { getFromSession } from "@/utils/util";
 let haveInit = false;
 class User implements IUserStoreNew {
   @observable public canUpdatePreOrder = false;
@@ -45,9 +46,9 @@ class User implements IUserStoreNew {
   constructor() {
     if (!haveInit) {
       haveInit = true;
-      const preOrder: any = sessionStorage.getItem("preOrder");
-      if (preOrder && preOrder.includes("userEmail")) {
-        this.preOrder = JSON.parse(preOrder);
+      const preOrder: any = getFromSession("preOrder");
+      if (preOrder && preOrder.userEmail) {
+        this.preOrder = preOrder;
       }
     }
     autorun(() => {

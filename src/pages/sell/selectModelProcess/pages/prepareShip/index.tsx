@@ -10,6 +10,7 @@ import * as moment from "moment-timezone";
 import { Tabs } from "@/components/tabs";
 const { TabPane } = Tabs as any;
 // subOrders[0].shippingInfo.sendInfo[0].lableCode
+import { getFromSession } from "@/utils/util";
 
 const videoConfig = [
   {
@@ -29,19 +30,13 @@ const videoConfig = [
 ];
 
 export default function(props: any) {
-  // const selectModelContext = useContext(SelectModelContext);
-  // const { getDownloadLabel } = selectModelContext as ISelectModelContext;
   const [orderInfo, setOrderInfo] = useState();
   const [currentTab, setCurrentTab] = useState(videoConfig[0].key);
   useEffect(() => {
-    const orderInfoCache: any = sessionStorage.getItem("orderInfo");
-    try {
-      const data = JSON.parse(orderInfoCache);
-      setOrderInfo(data);
-      // getDownloadLabel(data.lableCode).then((res: any) => {
-      // });
-    } catch (e) {
-      console.error(e);
+    // 从缓存中获取数据。为了持久显示
+    const orderInfoCache: any = getFromSession("orderInfo");
+    if (orderInfoCache) {
+      setOrderInfo(orderInfoCache);
     }
   }, []);
   const {} = props;

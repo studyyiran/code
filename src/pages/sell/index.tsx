@@ -21,6 +21,7 @@ import Breadcrumb from "./selectModelProcess/components/breadcrumb/index";
 import { staticRouter } from "@/pages/sell/selectModelProcess/config/staticRouter";
 import { inject, observer } from "mobx-react";
 import { removeAllSpace } from "@/pages/sell/util";
+import { getFromSession } from "@/utils/util";
 
 let haveinit = false;
 
@@ -305,9 +306,9 @@ class Layout extends React.Component<any, any> {
   public componentDidMount(): void {
     if (!haveinit) {
       haveinit = true;
-      const preOrder = sessionStorage.getItem("preOrder");
+      const preOrder = getFromSession("preOrder");
       if (preOrder) {
-        this.props.user.preOrder = JSON.parse(preOrder);
+        this.props.user.preOrder = preOrder;
 
         if (this.props.user.preOrder.addressInfo) {
           this.props.yourphone.addressInfo = this.props.user.preOrder.addressInfo;

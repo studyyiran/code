@@ -20,6 +20,7 @@ import ReturnRequestIcon from "@/images/order/returnRequest.png";
 import * as moment from "moment-timezone";
 // import { noteUserModal } from '@/containers/aboutphone/pageValidate';
 import EmailModal from "@/components/emailModal/index";
+import { getFromSession } from "@/utils/util";
 // import config from '@/config';
 moment.locale("en");
 
@@ -471,8 +472,8 @@ class Store implements IOrderStore {
   };
   // 自动登陆
   @action public autoLogin = async () => {
-    const email = window.sessionStorage.getItem("bmb-us-email");
-    const orderNo = window.sessionStorage.getItem("bmb-us-orderNo");
+    const email = getFromSession("bmb-us-email");
+    const orderNo = getFromSession("bmb-us-orderNo");
     if (email && orderNo) {
       const bOrder = await this.getOrderDetail(email, orderNo);
       this.setOrderDetail(bOrder);
