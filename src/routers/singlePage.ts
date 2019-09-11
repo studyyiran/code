@@ -35,6 +35,16 @@ export default [
   },
   {
     component: Loadable({
+      loader: () => import('../containers/sellOthersForm'),
+      loading: () => null,
+      modules: ['../containers/sellOthersForm'],
+      webpack: () => [require.resolveWeak('../containers/sellOthersForm') as number],
+    }),
+    exact: true,
+    path: '/sell-more-phone',
+  },
+  {
+    component: Loadable({
       loader: () => import('../containers/single/why'),
       loading: () => null,
       modules: ['../containers/single/why'],

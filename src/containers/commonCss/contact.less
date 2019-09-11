@@ -1,0 +1,15 @@
+@import (reference) "~@/styles/index.less";
+@bg-color-blue: #1ab4e7;
+.contact-common-css {
+  .page__blue {
+    height: 420px;
+    background: @bg-color-blue;
+  }
+
+  .bg-container {
+    .page-padding();
+    > *:first-child {
+      .page(1402px);
+    }
+  }
+}
