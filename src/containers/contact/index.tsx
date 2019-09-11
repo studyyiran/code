@@ -4,6 +4,7 @@ import ContactForm from "./component/form";
 import { IContactProps } from "./interface/contact.interface";
 import { IContact } from "./interface/contact.interface";
 import "./index.less";
+import "../commonCss/contact.less";
 
 interface IStaticContent {
   title: string;
@@ -72,9 +73,9 @@ function HelpList() {
 export default class Contact extends React.Component<IContactProps> {
   public render() {
     return (
-      <div className="page-contact-container">
+      <div className="page-contact-container contact-common-css">
         <div className="bg-container bg-1">
-          <section className="page-contact-container__title">
+          <section className="page-container__title">
             <h1>{staticContent.title}</h1>
             <p className="sub-desc">{staticContent.desc}</p>
           </section>

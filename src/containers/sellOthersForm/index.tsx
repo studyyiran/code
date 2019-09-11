@@ -8,9 +8,9 @@ export default function() {
     //
   }
   return (
-    <div className="page-sell-others-container contact-common-css">
+    <div className="page-container__title contact-common-css">
       <div className="bg-container bg-1">
-        <section className="page-contact-container__title">
+        <section className="page-container__title">
           <h1>Sell other phone</h1>
         </section>
       </div>
