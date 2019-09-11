@@ -10,6 +10,8 @@ export function BrandLogo(props: any) {
     if (id !== "others") {
       onClick(id);
       props.history.push(`/newsell/${id}`);
+    } else {
+      props.history.push(`/sell-more-phone`);
     }
   }
   return (
