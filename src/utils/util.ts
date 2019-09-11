@@ -79,7 +79,7 @@ export function getFromSession(key: string) {
 export function setSession(key: string, obj: any) {
   try {
     if (!isServer()) {
-      window.sessionStorage.setItem(key, obj);
+      window.sessionStorage.setItem(key, JSON.stringify(obj));
       return true;
     } else {
       return false;
