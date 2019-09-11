@@ -54,10 +54,14 @@ export const staticContentConfig = {
   priceUnit: "$"
 };
 
+function isServer() {
+  return typeof window === "undefined"
+}
+
 // 检测
 export function getFromSession(key: string) {
   try {
-    if (!window) {
+    if (isServer()) {
       return null;
     } else {
       const data = sessionStorage.getItem(key);
@@ -74,7 +78,7 @@ export function getFromSession(key: string) {
 
 export function setSession(key: string, obj: any) {
   try {
-    if (window) {
+    if (!isServer()) {
       window.sessionStorage.setItem(key, obj);
       return true;
     } else {
