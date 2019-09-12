@@ -1,55 +1,58 @@
-@import (reference) '~@/styles/index.less';
+@import (reference) "~@/styles/index.less";
 
-.comp-review-card {
-  margin: 0 20px;
-  padding: 40px 32px 32px;
-  background: white;
-  box-shadow: 0px 1px 10px 0px rgba(0,0,0,0.07);
-  width: 416px;
-  > header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 21px;
-    .ant-rate {
-      color: #F5BE18;
-    }
-    > span.date {
-      color: #808080;
-    }
-  }
-  > p {
-    @height: 180px;
-    .font(16px, 400, #040E3F);
-    .two-line-process(@height, 7);
-    height: @height;
-    margin-bottom: 10px;
-  }
-  > footer{
-    .font(16px, 400, #131339)
-  }
-}
-
-.ismobile #root {
+@world: {
   .comp-review-card {
-    margin: auto;
-    padding: 0.53rem 0.59rem 0.75rem;
+    margin: 0 20*@px;
+    padding: 40*@px 32*@px 32*@px;
     background: white;
-    box-shadow:0 0.05rem 0.13rem 0 rgba(0,0,0,0.05);
-    width: 7.47rem;
+    box-shadow: 0*@px 1*@px 10*@px 0*@px rgba(0, 0, 0, 0.07);
+    width: 416*@px;
     > header {
-      display: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 21*@px;
+      .ant-rate {
+        color: #f5be18;
+      }
+      > span.date {
+        color: #808080;
+      }
     }
     > p {
-      @height: 2.56rem;
-      .font(0.48rem, 600, #272729);
-      .two-line-process(@height, 4);
+      @height: 180*@px;
+      .font(16*@f, 400, #040e3f);
+      .two-line-process(@height, 7);
       height: @height;
-      margin-bottom: 0.43rem;
+      margin-bottom: 10*@px;
     }
-    > footer{
-      margin-top: 0.43rem;
-      .font(0.32rem, 400, #8D8D94)
+    > footer {
+      .font(16*@f, 400, #131339);
     }
   }
-}
+
+  .ismobile #root {
+    .comp-review-card {
+      margin: auto;
+      padding: 0.53rem 0.59rem 0.75rem;
+      background: white;
+      box-shadow: 0 0.05rem 0.13rem 0 rgba(0, 0, 0, 0.05);
+      width: 7.47rem;
+      > header {
+        display: none;
+      }
+      > p {
+        @height: 2.56rem;
+        .font(0.48rem, 600, #272729);
+        .two-line-process(@height, 4);
+        height: @height;
+        margin-bottom: 0.43rem;
+      }
+      > footer {
+        margin-top: 0.43rem;
+        .font(0.32rem, 400, #8d8d94);
+      }
+    }
+  }
+};
+.hello(@world);

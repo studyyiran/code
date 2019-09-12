@@ -1,49 +1,53 @@
 @import (reference) "~@/styles/index.less";
-.comp-section-layout {
-  .section-layout__item-container {
-    display: flex;
-    justify-content: space-around;
-    > li {
-      max-width: 328px;
-      text-align: center;
-      margin: 0 10px;
-      > .item-container__item {
-        > img {
-          width: 92px;
-        }
-        > h1 {
-          .font(18px, 500, #444B54);
-          margin: 14px auto 10px;
-        }
-        > p {
-          .font(16px, 400, #7E8396)
-        }
-      }
-    }
-  }
-}
 
-.ismobile #root {
+@world: {
   .comp-section-layout {
     .section-layout__item-container {
-      display: block;
+      display: flex;
+      justify-content: space-around;
       > li {
-        max-width: 100%;
+        max-width: 328*@px;
         text-align: center;
-        margin: 0 auto 2rem;
+        margin: 0 10*@px;
         > .item-container__item {
           > img {
-            width: 2.13rem;
+            width: 92*@px;
           }
           > h1 {
-            .font(0.67rem, 500, #444B54);
-            margin: 14px auto 10px;
+            .font(18*@f, 500, #444b54);
+            margin: 14*@px auto 10*@px;
           }
           > p {
-            .font(0.37rem, 400, #7E8396)
+            .font(16*@f, 400, #7e8396);
           }
         }
       }
     }
   }
-}
+
+  .ismobile #root {
+    .comp-section-layout {
+      .section-layout__item-container {
+        display: block;
+        > li {
+          max-width: 100%;
+          text-align: center;
+          margin: 0 auto 2rem;
+          > .item-container__item {
+            > img {
+              width: 2.13rem;
+            }
+            > h1 {
+              .font(0.67rem, 500, #444b54);
+              margin: 14*@px auto 10*@px;
+            }
+            > p {
+              .font(0.37rem, 400, #7e8396);
+            }
+          }
+        }
+      }
+    }
+  }
+};
+.hello(@world);

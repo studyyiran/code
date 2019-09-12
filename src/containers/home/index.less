@@ -1,305 +1,307 @@
 @import (reference) "~@/styles/index.less";
 @bg-white: #f5f7f9;
 
-
-.comp-search {
-  display: flex;
-  background: #575d65;
-  width: 350px;
-  padding: 10px;
-  border-radius: 5px;
-  overflow: hidden;
-  color: @white;
-  > label {
-    align-self: center;
-    margin-right: 10px;
-  }
-  > input {
-    background: transparent;
-    flex: 0 0 300px;
+@world: {
+  .comp-search {
+    display: flex;
+    background: #575d65;
+    width: 350*@px;
+    padding: 10*@px;
+    border-radius: 5*@px;
+    overflow: hidden;
     color: @white;
+    > label {
+      align-self: center;
+      margin-right: 10*@px;
+    }
+    > input {
+      background: transparent;
+      flex: 0 0 300*@px;
+      color: @white;
+    }
+    input::-webkit-input-placeholder {
+      color: @white;
+    }
   }
-  input::-webkit-input-placeholder {
-    color: @white;
-  }
-}
 
-.comp-link-button {
-  display: block;
-  border-radius: 5px;
-  overflow: hidden;
-  width: 400px;
-  margin: auto;
-  > * {
-    width: 100%;
-  }
-}
-
-.page-home {
-  background: @bg-white;
-  padding-bottom: 97px;
-  > .home__intro {
-    padding: 79px 0 169px;
-    .page-padding();
-    background: #444b54;
-    > .container {
-      // 图片宽度 + 左边内容宽度
-      .page(1500px);
-      .pc(
-        {display: flex; justify-content: space-between; align-items: center;}
-      );
-      > section.title {
-        flex: 1 0 0;
-        max-width: 850px;
-        margin-right: 20px;
-        > h1 {
-          .font(40px, 600, #f5f7f9);
-        }
-        .intro__icon-list {
-          display: flex;
-          margin: 56px 0;
-          > .wrap-container {
-            flex: 1;
-            display: flex;
-            justify-content: space-between;
-            > * {
-              //margin-right: 46px;
-            }
-          }
-        }
-        > a {
-          .common-button {
-            max-width: 400px;
-          }
-        }
-      }
-      > .img-container {
-        // 修改成相应的，避免写死的。因为有小屏pc的需求
-        flex: 1 0 0;
-        // 写死的
-        //flex: 0 0 0;
-        //min-width: 425px;
-        max-width: 425px;
-        > img {
-          width: 100%;
-        }
-      }
-    }
-  }
-  > * {
-    > h2 {
-      .font(32px, 500, #040e3f);
-      text-align: center;
-    }
-  }
-  > section.only-way-part {
-    padding: 27px 0 65px;
-    .page-padding();
-    > h2 {
-      margin-bottom: 56px;
-    }
-  }
-  > section.sell-for-more-part {
-    background: @white;
-    padding: 33px 0 97px;
-    text-align: center;
-    .page-padding();
-    > h2 {
-      margin-bottom: 9px;
-    }
-    > p {
-      .font(16px, 400, #898ea2);
-      text-align: center;
-    }
-    > img {
-      width: 1000px;
-      margin: 80px auto 85px;
-    }
-  }
-  .easy-sell-part {
-    padding: 48px 0 0;
-    > h2 {
-      margin-bottom: 48px;
-    }
-    > video {
-      .page-padding();
-      max-width: 1205px;
-      height: 480px;
+  .comp-link-button {
+    display: block;
+    border-radius: 5*@px;
+    overflow: hidden;
+    width: 400*@px;
+    margin: auto;
+    > * {
       width: 100%;
-      margin-bottom: 56px;
-    }
-    > .bg-white-container {
-      background: @white;
-      padding: 104px 0 96px;
-      .page-padding();
-      > a {
-        margin-top: 56px;
-      }
     }
   }
-  .home__review {
-    padding: 130px 0 98px;
-    > h2 {
-      margin-bottom: 70px;
-    }
-    .review__new-review {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: -40px auto 40px;
-      color: black;
-      > *:first-child {
-        font-size: 22px;
-        margin-right: 10px;
-      }
-    }
-    .review__reviews-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-  }
-}
 
-.ismobile #root {
   .page-home {
     background: @bg-white;
-    //padding-bottom: 3.65rem;
-    padding-bottom: 1.17rem;
+    padding-bottom: 97*@px;
     > .home__intro {
-      padding: 0.61rem 0;
+      padding: 79*@px 0 169*@px;
       .page-padding();
       background: #444b54;
       > .container {
+        // 图片宽度 + 左边内容宽度
+        .page(1500*@px);
+        .pc(
+          {display: flex; justify-content: space-between; align-items: center;}
+        );
         > section.title {
-          margin-right: 0;
+          flex: 1 0 0;
+          max-width: 850*@px;
+          margin-right: 20*@px;
           > h1 {
-            .font(0.75rem, 600, #f5f7f9);
-          }
-          > img.mb-ele {
-            width: 50%;
-            margin: auto;
-            margin-top: 0.72rem;
-            display: block;
+            .font(40*@f, 600, #f5f7f9);
           }
           .intro__icon-list {
             display: flex;
-            margin: 0.85rem 0;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            width: 100%;
+            margin: 56*@px 0;
             > .wrap-container {
-              justify-content: space-between;
-              margin-bottom: 0.5rem;
               flex: 1;
+              display: flex;
+              justify-content: space-between;
               > * {
-                margin-right: 0;
-              }
-              .name {
-                display: none;
+                //margin-right: 46*@px;
               }
             }
           }
           > a {
             .common-button {
-              max-width: 100%;
+              max-width: 400*@px;
             }
           }
         }
         > .img-container {
-          display: none;
+          // 修改成相应的，避免写死的。因为有小屏pc的需求
+          flex: 1 0 0;
+          // 写死的
+          //flex: 0 0 0;
+          //min-width: 425*@px;
+          max-width: 425*@px;
+          > img {
+            width: 100%;
+          }
         }
       }
     }
     > * {
       > h2 {
-        .font(0.64rem, 500, #040e3f);
+        .font(32*@f, 500, #040e3f);
         text-align: center;
       }
     }
     > section.only-way-part {
-      padding: 1.39rem 0 0;
+      padding: 27*@px 0 65*@px;
       .page-padding();
       > h2 {
-        margin-bottom: 56px;
+        margin-bottom: 56*@px;
       }
     }
     > section.sell-for-more-part {
       background: @white;
-      padding: 0.72rem 0 1.57rem;
+      padding: 33*@px 0 97*@px;
+      text-align: center;
       .page-padding();
       > h2 {
-        margin-bottom: 0.11rem;
+        margin-bottom: 9*@px;
       }
       > p {
-        .font(16px, 400, #898ea2);
+        .font(16*@f, 400, #898ea2);
         text-align: center;
       }
-      > a {
-        width: 100%;
-      }
       > img {
-        width: 100%;
-        margin: 1.33rem auto 1.52rem;
+        width: 1000*@px;
+        margin: 80*@px auto 85*@px;
       }
     }
     .easy-sell-part {
-      padding: 1.31rem 0 0;
+      padding: 48*@px 0 0;
       > h2 {
-        margin-bottom: 0.75rem;
+        margin-bottom: 48*@px;
       }
       > video {
         .page-padding();
-        max-width: 1205px;
+        max-width: 1205*@px;
+        height: 480*@px;
         width: 100%;
-        height: 5.87rem;
-        margin-bottom: 1.73rem;
+        margin-bottom: 56*@px;
       }
       > .bg-white-container {
         background: @white;
-        padding: 1.41rem 0 1.17rem;
+        padding: 104*@px 0 96*@px;
         .page-padding();
         > a {
-          width: 100%;
-          margin-top: -1rem;
+          margin-top: 56*@px;
         }
       }
     }
     .home__review {
-      padding: 2.21rem 0 2.77rem;
-      .page-padding();
-      // ant 轮播组件
-      .slick-dots,
-      .slick-dots-bottom {
-        bottom: -0.4rem;
-        > li {
-          margin: 0 4px;
-          .circle() {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
+      padding: 130*@px 0 98*@px;
+      > h2 {
+        margin-bottom: 70*@px;
+      }
+      .review__new-review {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: -40*@px auto 40*@px;
+        color: black;
+        > *:first-child {
+          font-size: 22*@f;
+          margin-right: 10*@px;
+        }
+      }
+      .review__reviews-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+
+  .ismobile #root {
+    .page-home {
+      background: @bg-white;
+      //padding-bottom: 3.65rem;
+      padding-bottom: 1.17rem;
+      > .home__intro {
+        padding: 0.61rem 0;
+        .page-padding();
+        background: #444b54;
+        > .container {
+          > section.title {
+            margin-right: 0;
+            > h1 {
+              .font(0.75rem, 600, #f5f7f9);
+            }
+            > img.mb-ele {
+              width: 50%;
+              margin: auto;
+              margin-top: 0.72rem;
+              display: block;
+            }
+            .intro__icon-list {
+              display: flex;
+              margin: 0.85rem 0;
+              justify-content: space-between;
+              flex-wrap: wrap;
+              width: 100%;
+              > .wrap-container {
+                justify-content: space-between;
+                margin-bottom: 0.5rem;
+                flex: 1;
+                > * {
+                  margin-right: 0;
+                }
+                .name {
+                  display: none;
+                }
+              }
+            }
+            > a {
+              .common-button {
+                max-width: 100%;
+              }
+            }
           }
-          .circle();
-          background: rgba(39, 39, 41, 0.24);
-          &.slick-active {
-            background: #272729;
-          }
-          > button {
-            .circle();
-            background: transparent;
+          > .img-container {
+            display: none;
           }
         }
       }
-      > h2 {
-        margin-bottom: 1.28rem;
+      > * {
+        > h2 {
+          .font(0.64rem, 500, #040e3f);
+          text-align: center;
+        }
       }
-      .review__reviews-container {
-        display: block;
+      > section.only-way-part {
+        padding: 1.39rem 0 0;
+        .page-padding();
+        > h2 {
+          margin-bottom: 56*@px;
+        }
       }
-    }
-    > a:last-child {
-      width: 100%;
-      .page-padding();
+      > section.sell-for-more-part {
+        background: @white;
+        padding: 0.72rem 0 1.57rem;
+        .page-padding();
+        > h2 {
+          margin-bottom: 0.11rem;
+        }
+        > p {
+          .font(16*@f, 400, #898ea2);
+          text-align: center;
+        }
+        > a {
+          width: 100%;
+        }
+        > img {
+          width: 100%;
+          margin: 1.33rem auto 1.52rem;
+        }
+      }
+      .easy-sell-part {
+        padding: 1.31rem 0 0;
+        > h2 {
+          margin-bottom: 0.75rem;
+        }
+        > video {
+          .page-padding();
+          max-width: 1205*@px;
+          width: 100%;
+          height: 5.87rem;
+          margin-bottom: 1.73rem;
+        }
+        > .bg-white-container {
+          background: @white;
+          padding: 1.41rem 0 1.17rem;
+          .page-padding();
+          > a {
+            width: 100%;
+            margin-top: -1rem;
+          }
+        }
+      }
+      .home__review {
+        padding: 2.21rem 0 2.77rem;
+        .page-padding();
+        // ant 轮播组件
+        .slick-dots,
+        .slick-dots-bottom {
+          bottom: -0.4rem;
+          > li {
+            margin: 0 4*@px;
+            .circle() {
+              width: 8*@px;
+              height: 8*@px;
+              border-radius: 50%;
+            }
+            .circle();
+            background: rgba(39, 39, 41, 0.24);
+            &.slick-active {
+              background: #272729;
+            }
+            > button {
+              .circle();
+              background: transparent;
+            }
+          }
+        }
+        > h2 {
+          margin-bottom: 1.28rem;
+        }
+        .review__reviews-container {
+          display: block;
+        }
+      }
+      > a:last-child {
+        width: 100%;
+        .page-padding();
+      }
     }
   }
-}
+};
+.hello(@world);
