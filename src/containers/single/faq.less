@@ -42,6 +42,49 @@
       margin-top: 100*@px;
     }
   }
+  
+  .ismobile {
+    .page-faq-container {
+      padding-bottom: 188*@px;
+      background: @white;
+      .page-padding();
+      > ul {
+        > li.page-faq-container__objects {
+          margin-bottom: 40*@px;
+          > h2 {
+            .font(18*@f, 600, #000000);
+            margin-bottom: 10 * @px;
+          }
+          > .ant-collapse {
+            background-color: transparent;
+            border: none;
+          }
+          .ant-collapse-item {
+            margin-bottom: 10*@px;
+            background: @color-gray-g1;
+            border: none;
+            .ant-collapse-header {
+              font-size: 16*@f;
+              line-height: 1.2;
+              padding: 8*@px 28*@px 8px 8px;
+              svg {
+                transform: rotate(-90deg);
+              }
+            }
+            .ant-collapse-content {
+              border: none;
+            }
+          }
+        }
+      }
+      > button.common-button {
+        max-width: 456*@px;
+        display: block;
+        margin: auto;
+        margin-top: 100*@px;
+      }
+    }
+  }
 }
 .hello(@world);
 
