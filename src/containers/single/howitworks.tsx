@@ -3,6 +3,7 @@ import { Collapse } from "antd";
 import { RouteComponentProps } from "react-router";
 import "./howitworks.less";
 import { HeaderTitle } from "@/components/headerTitle";
+import VideoComponent from "@/components/video";
 const { Panel } = Collapse;
 
 class HowItWorks extends React.Component<RouteComponentProps> {
@@ -12,7 +13,7 @@ class HowItWorks extends React.Component<RouteComponentProps> {
         <HeaderTitle title="How to sell my phone on UpTrade" />
         <section className="intro">
           <h2>Sell Your Phone For Cash in 3 Easy Steps</h2>
-          <video className="comp-video" src="https://www.w3school.com.cn/i/movie.ogg" controls={true} />
+          <VideoComponent/>
         </section>
         <ul className="list">
           <li>

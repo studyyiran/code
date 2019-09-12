@@ -103,7 +103,7 @@ export default class Footer extends React.Component<
                 <div className="footer__group">
                   {footerInfo.map(({ className, title, arr }) => {
                     return (
-                      <ul className={className} key={title}>
+                      <ul className="item" key={title}>
                         <Collapse expandIconPosition="right">
                           <Panel header={<h2>{title}</h2>} key={title}>
                             {arr.map(({ subTitle, href }) => {
@@ -126,7 +126,7 @@ export default class Footer extends React.Component<
                 <div className="footer__group">
                   {footerInfo.map(({ className, title, arr }) => {
                     return (
-                      <ul className={className} key={title}>
+                      <ul className="item" key={title}>
                         <h2>{title}</h2>
                         {arr.map(({ subTitle, href }) => {
                           return (
