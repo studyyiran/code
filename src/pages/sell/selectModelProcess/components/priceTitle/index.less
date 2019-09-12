@@ -1,33 +1,36 @@
 @import (reference) "~@/styles/index.less";
 
-.comp-price-title {
-  padding: 22px 0 20px;
-  text-align: center;
-  > h2 {
-    margin-bottom: 25px;
-    .font(24px, 500, #000000);
-    .price {
-      border-bottom: 2px solid #6dd230;
-    }
-  }
-  > p {
-    .font(18px, 500, #222222);
-  }
-}
-
-.ismobile #root {
+@world: {
   .comp-price-title {
-    padding: 0.36rem 0 0.48rem;
+    padding: 22*@px 0 20*@px;
     text-align: center;
     > h2 {
-      margin-bottom: 0.43rem;
-      .font(0.64rem, 500, #000000);
+      margin-bottom: 25*@px;
+      .font(24*@f, 500, #000000);
       .price {
-        border-bottom: 0.05rem solid #6dd230;
+        border-bottom: 2*@px solid #6dd230;
       }
     }
     > p {
-      .font(0.37rem, 500, #222222);
+      .font(24*@f, 500, #131339);
     }
   }
-}
+
+  .ismobile #root {
+    .comp-price-title {
+      padding: 0.36rem 0 0.48rem;
+      text-align: center;
+      > h2 {
+        margin-bottom: 0.43rem;
+        .font(0.64rem, 500, #000000);
+        .price {
+          border-bottom: 0.05rem solid #6dd230;
+        }
+      }
+      > p {
+        .font(0.37rem, 500, #222222);
+      }
+    }
+  }
+};
+.hello(@world);

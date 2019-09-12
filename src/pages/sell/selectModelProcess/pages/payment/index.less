@@ -1,144 +1,147 @@
 @import (reference) "~@/styles/index.less";
 @import "payment--mobile.less";
-.page-payment-container {
-  height: 100%;
-  .ant-form-item-required::before {
-    display: none;
-  }
-  &.notlayout {
-    & > .ant-row {
-      padding-top: 0 !important;
+@world: {
+  .page-payment-container {
+    height: 100%;
+    .ant-form-item-required::before {
+      display: none;
     }
-  }
-
-  .paypal-bg {
-    width: 91px;
-    height: 22px;
-    display: inline-block;
-    margin-right: 10px;
-    background: url("~@/images/paypal.png") no-repeat;
-    background-size: 100%;
-  }
-
-  .left-wrapper,
-  .right-wrapper {
-    margin-top: 15px;
-    .description {
-      .set-font-color(14px, #9b9b9b);
-      line-height: 18px;
-    }
-    .email,
-    .name {
-      margin-top: 17px;
-      .title {
-        .set-font-color(12px, #666);
-        line-height: 12px;
-      }
-      .address {
-        .set-font-color(12px, #000, bold);
-        line-height: 12px;
+    &.notlayout {
+      & > .ant-row {
+        padding-top: 0 !important;
       }
     }
 
-    .difference {
-      margin-top: 18px;
-      .set-font-color(12px, #00bae5);
-      line-height: 18px;
-      cursor: pointer;
-      &::before {
-        content: "";
-        display: inline-block;
-        margin-right: 4px;
-        width: 10px;
-        height: 10px;
-        background: url("~@/images/yourphone/circle-arrow.png") no-repeat;
-        background-size: 100%;
+    .paypal-bg {
+      width: 91 * @px;
+      height: 22 * @px;
+      display: inline-block;
+      margin-right: 10 * @px;
+      background: url("~@/images/paypal.png") no-repeat;
+      background-size: 100%;
+    }
+
+    .left-wrapper,
+    .right-wrapper {
+      margin-top: 15 * @px;
+
+      .email,
+      .name {
+        margin-top: 17 * @px;
+        .title {
+          .set-font-color(12 * @px, #666);
+          line-height: 12 * @px;
+        }
+        .address {
+          .set-font-color(12 * @px, #000, bold);
+          line-height: 12 * @px;
+        }
+      }
+
+      .difference {
+        margin-top: 18 * @px;
+        .set-font-color(12 * @px, #00bae5);
+        line-height: 18 * @px;
+        cursor: pointer;
+        &::before {
+          content: "";
+          display: inline-block;
+          margin-right: 4 * @px;
+          width: 10 * @px;
+          height: 10 * @px;
+          background: url("~@/images/yourphone/circle-arrow.png") no-repeat;
+          background-size: 100%;
+        }
+      }
+
+      .form-wrapper {
+        margin-top: 16 * @px;
+        .ant-form-item {
+          margin-bottom: 6 * @px;
+        }
       }
     }
 
-    .form-wrapper {
-      margin-top: 16px;
-      .ant-form-item {
-        margin-bottom: 6px;
-      }
+    // 覆盖antd的样式
+    .ant-collapse-header {
+      background-color: #fff;
+      padding-left: 20 * @px !important;
     }
-  }
 
-  // 覆盖antd的样式
-  .ant-collapse-header {
-    background-color: #fff;
-    padding-left: 20px !important;
-  }
+    .ant-collapse {
+      border-width: 2 * @px;
+      border-color: #f5f5f5;
+    }
+    .ant-collapse-item {
+      border-width: 2 * @px;
+      border-color: #f5f5f5;
+    }
+    .ant-collapse-content > .ant-collapse-content-box {
+      padding-left: 20 * @px;
+      padding-right: 20 * @px;
+    }
 
-  .ant-collapse {
-    border-width: 2px;
-    border-color: #f5f5f5;
-  }
-  .ant-collapse-item {
-    border-width: 2px;
-    border-color: #f5f5f5;
-  }
-  .ant-collapse-content > .ant-collapse-content-box {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-
-  .ant-collapse {
-    &.active {
-      box-shadow: 0px 2px 4px 0px rgba(0, 207, 255, 0.19);
-      border: 2px solid rgba(0, 207, 255, 1);
-      .ant-collapse-item {
-        border-bottom: none;
+    .ant-collapse {
+      &.active {
+        box-shadow: 0 * @px 2 * @px 4 * @px 0 * @px rgba(0, 207, 255, 0.19);
+        border: 2 * @px solid rgba(0, 207, 255, 1);
+        .ant-collapse-item {
+          border-bottom: none;
+        }
+        .ant-collapse-content {
+          border-top: none;
+        }
       }
       .ant-collapse-content {
         border-top: none;
       }
     }
-    .ant-collapse-content {
-      border-top: none;
-    }
-  }
-}
-
-.page-payment-container {
-  padding-bottom: 286px;
-  .page(750px);
-  .page-padding();
-  .buttons-container {
-    margin-top: 30px;
-  }
-  .paypal-container {
   }
 
-  .echeck-container {
-    > h3 {
-      display: inline-block;
-      margin-right: 10px;
-    }
-  }
-  .container-border {
-    border: 1px solid #e9e9e9;
-    border-radius: 8px;
-    padding: 22px 17px;
-    &[data-selected="true"] {
-      border: 1px solid @color-blue-liner-use;
-    }
-  }
-  .comp-top-tag {
-    &.recommended {
-      background: #6dd230;
-    }
-    position: absolute;
-    top: -12px;
-    right: -12px;
-    background: #ff0048;
-  }
-}
-
-.ismobile #root {
   .page-payment-container {
+    .description {
+      .font(14px, 400, #848484);
+    }
+    padding-bottom: 286 * @px;
+    .page(750 * @px);
+    .page-padding();
+    .buttons-container {
+      margin-top: 30 * @px;
+    }
+    .paypal-container {
+    }
+
+    .echeck-container {
+      > h3 {
+        display: inline-block;
+        margin-right: 10 * @px;
+      }
+    }
     .container-border {
-      margin-bottom: 0.5rem;
+      border: 1 * @px solid #e9e9e9;
+      border-radius: 8 * @px;
+      padding: 22 * @px 17 * @px;
+      &[data-selected="true"] {
+        border: 1 * @px solid @color-blue-liner-use;
+      }
+    }
+    .comp-top-tag {
+      &.recommended {
+        background: #6dd230;
+      }
+      position: absolute;
+      top: -12 * @px;
+      right: -12 * @px;
+      background: #ff0048;
     }
   }
-}
+
+  .ismobile #root {
+    .page-payment-container {
+      .container-border {
+        margin-bottom: 0.5rem;
+      }
+    }
+  }
+};
+.hello(@world);
