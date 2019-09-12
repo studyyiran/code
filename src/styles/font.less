@@ -24,23 +24,39 @@
 
 .hello(@rules) {
   @f: 1px;
-  @media (min-width: 0px) {
+  @media (max-width: 1600px) {
+    @px: 1px * 1920 / 1920;
+    @rules();
+  }
+  @media (max-width: 1260px) {
+    @px: 1px * 1260 / 1920;
+    @rules();
+  }
+  @media (max-width: 700px) {
+    @px: 1px * 700 / 1920;
+    @rules();
+  }
+  @media (max-width: 0px) {
     @px: 1 / 37.5rem;
     @f: 1 / 37.5rem;
     @rules();
   }
-  @media (min-width: 700px) {
-    @px: 1 / 1.5px;
-    @rules();
-  }
-  //@media (min-width: 1280px) {
-  //  @px: 1 / 1.5px;
+
+
+  //@media (min-width: 1344px) {
+  //  @px: 1px * 1344 / 1920;
   //  @rules();
   //}
-  @media (min-width: 1366px) {
-    @px: 1px;
-    @rules();
-  }
+  // just test
+
+  //@media (min-width: 1440px) {
+    //@px: 1px * 1440 / 1920;
+    //@rules();
+  //}
+  //@media (min-width: 1600px) {
+  //  @px: 1px * 1600 / 1920;
+  //  @rules();
+  //}
 }
 
 .font-size-reset(@px) {
