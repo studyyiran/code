@@ -1,6 +1,19 @@
 @import (reference) "~@/styles/index.less";
 @import "../payment/payment--mobile.less";
 .page-shipping-container {
+  .fedex-bg {
+    width: 120px;
+    height: 36px;
+    background: url("~@/images/yourphone/FedEx.png") no-repeat center / contain;
+    background-size: 100%;
+  }
+
+  .USPS-bg {
+    width: 215px;
+    height: 36px;
+    background: url("~@/images/yourphone/USPS.png") no-repeat center / contain;
+    background-size: 100%;
+  }
   .page-padding();
   .page(790px);
   padding-bottom: 28px;
@@ -10,7 +23,19 @@
   }
   .choose-container {
     .container-border {
-      height: 203px;
+      padding: 16px 4px 11px 13px;
+      height: 233px;
+      .description {
+        color: #7e8396;
+        margin: 16px 0 5px;
+      }
+      .address {
+        .font(14px, 500, #000000);
+        margin-bottom: 6px;
+      }
+      .difference {
+        color: #1ab4e7;
+      }
     }
   }
   .question {
@@ -90,26 +115,3 @@
     }
   }
 }
-
-//
-//.sun {
-//  border: 1px solid #E9E9E9;
-//  border-radius:5px;
-//  padding: 16px 4px 11px 13px;
-//  > img {
-//    width: 143px;
-//    margin-bottom: 11px;
-//
-//  }
-//}
-//
-//
-//color {
-//  color: #7E8396;
-//}
-//
-//.font(9px, 500, #000000);
-//
-//.hello {
-//  color: #1AB4E7;
-//}

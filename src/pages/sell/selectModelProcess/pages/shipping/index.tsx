@@ -17,8 +17,6 @@ import { safeEqual } from "@/utils/util";
 import "../../../common.less";
 
 const Panel = Collapse.Panel;
-const leftHeader = <div className="fedex-bg" />;
-const rightHeader = <div className="USPS-bg" />;
 
 function ShippingContainer(props: any) {
   const selectModelContext = useContext(SelectModelContext);
@@ -155,6 +153,7 @@ class Shipping extends React.Component<any, any> {
                 EShipmentType.FEDEX
               )}
             >
+              <div className="fedex-bg" />
               {leftContent}
             </div>
           </Col>
@@ -166,6 +165,7 @@ class Shipping extends React.Component<any, any> {
               }
               onClick={this.handleCollapseExtend.bind(this, EShipmentType.USPS)}
             >
+              <div className="USPS-bg" />
               {rightContent}
             </div>
           </Col>
