@@ -116,7 +116,7 @@ class AboutUs extends React.Component<RouteComponentProps> {
         <HeaderTitle title={"Our mission"} />
         <div className="statement">
           <div>
-            <img src={require("@/images/test/bg.jpg")} />
+            <img src={require("./res/whoWeAre/bg.png")} />
           </div>
           <div className="flex-center-container">
             <section className="statement__content">
@@ -137,7 +137,7 @@ class AboutUs extends React.Component<RouteComponentProps> {
             {articles.map(({ title, text, img }) => {
               return (
                 <li className="values-list__item" key={title}>
-                  <img src={img} />
+                  <img src={img} className="icon" />
                   <h3>{title}</h3>
                   <p>{text}</p>
                 </li>
