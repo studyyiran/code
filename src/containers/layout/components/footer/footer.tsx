@@ -10,7 +10,7 @@ import { RenderByCondition } from "./RenderByCondition/index";
 import { Collapse } from "antd";
 const { Panel } = Collapse;
 
-const footerInfo = [
+export const footerInfo = [
   {
     title: "Sell",
     className: "",
