@@ -3,12 +3,12 @@
 @world: {
   .title() {
     text-align: center;
-    .pc({font-size: 32*@f; font-weight: 500; color: #040e3f;});
+    .pc({font-size: 32 * @f; font-weight: 500; color: #040e3f;});
     .mb({.font(0.64rem, 500, #222222) ;});
   }
   .page-about-us {
     background: @white;
-    padding-bottom: 109*@px;
+    padding-bottom: 109 * @px;
     > div.statement {
       .pc(
         {background: #444B54; flex-direction: row-reverse; display: flex; align-items:
@@ -26,28 +26,28 @@
         justify-content: center;
         align-items: center;
         > section.statement__content {
-          max-width: 568*@px;
+          max-width: 568 * @px;
           > h2 {
-            margin-bottom: 40*@px;
-            .pc({.font(36*@f, 500, #ffffff) ;});
+            margin-bottom: 40 * @px;
+            .pc({.font(36 * @f, 500, #ffffff) ;});
           }
           > p {
-            .pc({color: #ffffff; font-size: 18*@f;});
+            .pc({color: #ffffff; font-size: 18 * @f;});
           }
         }
       }
     }
     > section.values {
-      padding: 81*@px 0 65*@px;
+      padding: 81 * @px 0 65 * @px;
       .page-padding();
       background: #f5f7f9;
       > h2 {
-        margin-bottom: 94*@px;
+        margin-bottom: 94 * @px;
         .title();
       }
       > ul.values-list {
-        @item-max-width: 370*@px;
-        @item-margin: 30*@px;
+        @item-max-width: 370 * @px;
+        @item-margin: 30 * @px;
 
         max-width: (@item-max-width + 2 * @item-margin) * 3;
         margin: 0 auto 0;
@@ -57,54 +57,53 @@
         > li.values-list__item {
           flex: 0 0 @item-max-width;
           text-align: center;
-          margin: 0 @item-margin 62*@px;
+          margin: 0 @item-margin 62 * @px;
           > .icon {
-            font-size: 30*@f;
+            font-size: 30 * @f;
           }
           > h3 {
-            margin: 30*@px auto 10*@px;
-            font-size: 18*@f;
+            margin: 30 * @px auto 10 * @px;
+            font-size: 18 * @f;
             font-weight: 500;
             color: #222222;
           }
           > p {
-            font-size: 16*@f;
+            font-size: 16 * @f;
             color: #898ea2;
           }
         }
       }
     }
     > section.team {
-      padding-top: 62*@px;
+      padding-top: 62 * @px;
+      @headimg-width: 280 * @px;
+      @headimg-margin: 119 * @px;
+      .page(@headimg-width * 3 + 2 * @headimg-margin);
       > h2 {
-        margin-bottom: 77*@px;
+        margin-bottom: 77 * @px;
         .title();
       }
       > ul.intro-card-list {
-        @headimg-width: 280*@px;
-        @headimg-margin: 60*@px;
-        max-width: (2 * @headimg-margin + @headimg-width) * 3;
         margin: 0 auto 0;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-column-gap: @headimg-margin;
         > li.intro-card-list__item {
-          margin: 0 @headimg-margin 100*@px;
+          margin-bottom: 100 * @px;
           text-align: center;
           > img {
-            max-width: 100%;
             width: @headimg-width;
             height: @headimg-width;
             border-radius: 50%;
-            margin-bottom: 12*@px;
+            margin-bottom: 12 * @px;
           }
           > h3 {
-            font-size: 26*@f;
+            font-size: 26 * @f;
             color: #000000;
             font-weight: 500;
           }
           > span {
-            font-size: 16*@f;
+            font-size: 16 * @f;
             font-weight: 500;
           }
         }
@@ -128,7 +127,7 @@
         > div {
           flex: 1 0 0;
           > img {
-            .mb({border-radius: 5*@px; margin-bottom: 1.33rem;});
+            .mb({border-radius: 5 * @px; margin-bottom: 1.33rem;});
             width: 100%;
           }
         }
