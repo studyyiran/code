@@ -1,70 +1,82 @@
 @import (reference) "~@/styles/index.less";
-.page-shipping-container {
-  padding-top: 30px;
-  padding-bottom: 214px;
-  .page-padding();
-  .container {
-    border-radius: 6px;
-    border: 1px solid rgba(233, 233, 233, 1);
-    padding: 18px;
-  }
-  > h2 {
-    padding-bottom: 35px;
-  }
-  height: 100%;
-  overflow: hidden;
-  .page(764px);
-  &.notlayout {
-    & > .ant-form {
-      padding-top: 0 !important;
-    }
-  }
-  .buttons-container {
-    margin-top: 24px;
-  }
-}
 
-.@{MOBILECLS} {
+@world: {
   .page-shipping-container {
-    .middle-wrapper {
-      padding: 0.31rem 0.31rem 0.5rem;
-
-      // antd
-      .ant-form-item {
-        .ant-form-item-control {
-          .ant-form-explain {
-            margin-top: 0.1rem;
-            padding-left: 0;
-            font-size: 0.11rem;
-          }
-        }
-      }
+    padding-top: 30*@px;
+    padding-bottom: 214*@px;
+    .ant-form-item .ant-form-item-label label {
+      color: #040E3F;
     }
-  }
-}
-
-.ismobile #root {
-  .page-shipping-container {
-    padding-top: 0.61rem;
-    padding-bottom: 2.16rem;
     .page-padding();
     .container {
-      border-radius:0.16rem;
-      border: 1px solid rgba(233, 233, 233, 1);
-      padding: 0.27rem 0.43rem;
+      border-radius: 6*@px;
+      border: 1*@px solid rgba(233, 233, 233, 1);
+      padding: 18*@px;
     }
     > h2 {
-      padding-bottom: 0.64rem;
+      .font(26*@f, 500, #131339);
+      padding-bottom: 35*@px;
     }
     height: 100%;
     overflow: hidden;
+    .page(764*@px);
     &.notlayout {
       & > .ant-form {
         padding-top: 0 !important;
       }
     }
     .buttons-container {
-      margin-top: 0.48rem;
+      margin-top: 24*@px;
+    }
+  }
+  .ant-form-explain {
+    font-size: 14*@px;
+  }
+  .@{MOBILECLS} {
+    .page-shipping-container {
+      .middle-wrapper {
+        padding: 0.31rem 0.31rem 0.5rem;
+
+        // antd
+        .ant-form-item {
+          .ant-form-item-control {
+            .ant-form-explain {
+              margin-top: 0.1rem;
+              padding-left: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .ismobile #root {
+    .page-shipping-container {
+      .ant-form-explain {
+        font-size: 10*@px;
+      }
+      padding-top: 0.61rem;
+      padding-bottom: 2.16rem;
+      .page-padding();
+      .container {
+        border-radius:0.16rem;
+        border: 1*@px solid rgba(233, 233, 233, 1);
+        padding: 0.27rem 0.43rem;
+      }
+      > h2 {
+        padding-bottom: 0.64rem;
+      }
+      height: 100%;
+      overflow: hidden;
+      &.notlayout {
+        & > .ant-form {
+          padding-top: 0 !important;
+        }
+      }
+      .buttons-container {
+        margin-top: 0.48rem;
+      }
     }
   }
 }
+.hello(@world);

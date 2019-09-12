@@ -7,9 +7,11 @@ export default function TipsIcon(props: any) {
   const { tips, children } = props;
   return (
     <Tooltip title={children}>
-      <span className="comp-tips-icon-container">
-        <Svg icon="wenhao" />
-      </span>
+      <div className="comp-tips-icon-container">
+        <span>
+          <Svg icon="wenhao" />
+        </span>
+      </div>
     </Tooltip>
   );
   return (

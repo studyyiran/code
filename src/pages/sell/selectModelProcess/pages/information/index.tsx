@@ -260,6 +260,8 @@ class Information extends React.Component<IShippingProps, IShippingState> {
               })(<Input onBlur={this.handleBlurPhone} maxLength={10} />)}
             </Form.Item>
           </Col>
+        </Row>
+        <Row gutter={24}>
           <Col {...this.colLayout()}>
             <Form.Item
               label="Country"

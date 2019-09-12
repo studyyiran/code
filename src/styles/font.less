@@ -23,38 +23,41 @@
 }
 
 .hello(@rules) {
-  @f: 1px;
   @media (min-width: 1600px) {
+    @f: 1px;
     @px: 1px * 1920 / 1920;
     @rules();
   }
   @media (max-width: 1600px) {
-    @px: 1px * 1920 / 1920;
+    @f: 1px;
+    @px: 1px * 1600 / 1920;
+    @rules();
+  }
+  @media (max-width: 1440px) {
+    @f: 1px;
+    @px: 1px * 1440 / 1920;
+    @rules();
+  }
+  @media (max-width: 1344px) {
+    @f: 1px;
+    @px: 1px * 1344 / 1920;
     @rules();
   }
   @media (max-width: 1285px) {
-    @px: 1px * 1920 / 1920;
+    @f: 1px;
+    @px: 1px * 1285 / 1920;
     @rules();
   }
   @media (max-width: 700px) {
+    @f: 1rem / 37.5;
     @px: 1rem / 37.5;
     @rules();
   }
-  
-  //@media (min-width: 1344px) {
-  //  @px: 1px * 1344 / 1920;
-  //  @rules();
-  //}
-  // just test
-
-  //@media (min-width: 1440px) {
-    //@px: 1px * 1440 / 1920;
+  @media (min-width: 10px) {
+    //@f: 1px;
+    //@px: 1px * 1920 / 1920;
     //@rules();
-  //}
-  //@media (min-width: 1600px) {
-  //  @px: 1px * 1600 / 1920;
-  //  @rules();
-  //}
+  }
 }
 
 .font-size-reset(@px) {
@@ -82,39 +85,70 @@ a:hover {
   .mb({padding-left: 0.53rem; padding-right: 0.53rem;});
 }
 
-.common-button {
-  // 不希望按钮过宽
-  .pc({max-width: 456px;});
-  border-radius: 6px;
-  width: 100%;
-  height: 56px;
-  line-height: 56px;
-  background: @color-blue-liner;
-  color: @white;
-  //transition: background 0.5s;
-  font-size: @font-size-large;
+@common-button-world: {
+  .common-button {
+    // 不希望按钮过宽
+    .pc({max-width: 456*@px;});
+    border-radius: 6*@px;
+    width: 100%;
+    height: 56*@px;
+    line-height: 56*@px;
+    background: @color-blue-liner;
+    color: @white;
+    //transition: background 0.5s;
+    font-size: 18*@f;
+
+    > a {
+      display: block;
+    }
+  }
+
+  .common-button.second {
+    background: #f5f7f9;
+    color: #1ab4e7;
+  }
+  .common-button:not(.second) {
+    &:hover:not([disabled]) {
+      background: #1ab4e7;
+    }
+    &[disabled] {
+      //&:hover {
+      //  background: linear-gradient(@color-gray-2, @color-gray-2);
+      //  background: linear-gradient(@color-gray-2, @color-gray-2);
+      //};
+      background: linear-gradient(@color-gray-2, @color-gray-2);
+      background: linear-gradient(@color-gray-2, @color-gray-2);
+    }
+  }
+  .buttons-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    > button {
+      max-width: 346*@px;
+    }
+  }
+
+  .ismobile #root {
+    .buttons-container {
+      flex-direction: column-reverse;
+      > .common-button:not(.second) {
+        margin-bottom: 16*@px;
+      }
+    }
+  }
   
-  > a {
-    display: block;
+  
+  // 重置
+  .ant-form-item .ant-form-item-label label {
+    font-size: inherit;
+  }
+  .ant-input {
+    font-size: 16*@f;
   }
 }
-.common-button.second {
-  background: #f5f7f9;
-  color: #1ab4e7;
-}
-.common-button:not(.second) {
-  &:hover:not([disabled]) {
-    background: #1ab4e7;
-  }
-  &[disabled] {
-    //&:hover {
-    //  background: linear-gradient(@color-gray-2, @color-gray-2);
-    //  background: linear-gradient(@color-gray-2, @color-gray-2);
-    //};
-    background: linear-gradient(@color-gray-2, @color-gray-2);
-    background: linear-gradient(@color-gray-2, @color-gray-2);
-  }
-}
+.hello(@common-button-world);
+
 .common-card {
   box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.1);
   background: @white;
@@ -182,23 +216,6 @@ a:hover {
   }
 }
 
-.buttons-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  > button {
-    max-width: 346px;
-  }
-}
-
-.ismobile #root {
-  .buttons-container {
-    flex-direction: column-reverse;
-    > .common-button:not(.second) {
-      margin-bottom: 16px;
-    }
-  }
-}
 
 .collapse-clear-border {
   .ant-collapse,.ant-collapse-content {
