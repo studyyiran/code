@@ -1,114 +1,17 @@
 @import (reference) "~@/styles/index.less";
 @import "../payment/payment--mobile.less";
 .page-shipping-container {
-  .question {
-    > p {
-      font-size: @font-size-large;
-    }
-  }
-  height: 100%;
-
-  &.notlayout {
-    & > .ant-row {
-      padding-top: 0 !important;
-    }
-  }
-
-  .fedex-bg {
-    width: 90px;
-    height: 24px;
-    background: url("~@/images/yourphone/FedEx.png") no-repeat center / contain;
-    background-size: 100%;
-  }
-
-  .USPS-bg {
-    width: 101px;
-    height: 24px;
-    background: url("~@/images/yourphone/USPS.png") no-repeat center / contain;
-    background-size: 100%;
-  }
-
-  .left-wrapper,
-  .right-wrapper {
-    .description {
-      .set-font-color(14px, #9b9b9b);
-      line-height: 18px;
-    }
-    .address {
-      margin-top: 6px;
-      .title {
-        .set-font-color(12px, #000, bold);
-        line-height: 16px;
-      }
-    }
-
-    .difference {
-      margin-top: 18px;
-      .set-font-color(12px, #00bae5);
-      line-height: 18px;
-      cursor: pointer;
-      &::before {
-        content: "";
-        display: inline-block;
-        margin-right: 4px;
-        width: 10px;
-        height: 10px;
-        background: url("~@/images/yourphone/circle-arrow.png") no-repeat;
-        background-size: 100%;
-      }
-    }
-
-    .form-wrapper {
-      margin-top: 16px;
-      .ant-form-item {
-        margin-bottom: 6px;
-      }
-    }
-  }
-
-  // 覆盖antd的样式
-  .ant-collapse-header {
-    background-color: #fff;
-    padding-left: 20px !important;
-  }
-
-  .ant-collapse {
-    border-width: 2px;
-    border-color: #f5f5f5;
-  }
-  .ant-collapse-item {
-    border-width: 2px;
-    border-color: #f5f5f5;
-  }
-  .ant-collapse-content > .ant-collapse-content-box {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-
-  .ant-collapse {
-    &.active {
-      box-shadow: 0px 2px 4px 0px rgba(0, 207, 255, 0.19);
-      border: 2px solid rgba(0, 207, 255, 1);
-      .ant-collapse-item {
-        border-bottom: none;
-      }
-      .ant-collapse-content {
-        border-top: none;
-      }
-    }
-    .ant-collapse-content {
-      border-top: none;
-    }
-  }
-}
-
-.page-shipping-container {
   .page-padding();
   .page(790px);
   padding-bottom: 28px;
   h3 {
     .font(24px, 600, #131339);
     margin-bottom: 32px;
+  }
+  .choose-container {
+    .container-border {
+      height: 203px;
+    }
   }
   .question {
     .comp-choice-question {
@@ -187,3 +90,26 @@
     }
   }
 }
+
+//
+//.sun {
+//  border: 1px solid #E9E9E9;
+//  border-radius:5px;
+//  padding: 16px 4px 11px 13px;
+//  > img {
+//    width: 143px;
+//    margin-bottom: 11px;
+//
+//  }
+//}
+//
+//
+//color {
+//  color: #7E8396;
+//}
+//
+//.font(9px, 500, #000000);
+//
+//.hello {
+//  color: #1AB4E7;
+//}

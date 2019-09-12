@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import classnames from "classnames";
 import { inject, observer } from "mobx-react";
 import { Row, Col, Collapse, Form, Checkbox } from "antd";
-import { IPaymentProps, EShipmentType } from "../../index.interface";
+import { IPaymentProps, EShipmentType, EPayType } from "../../index.interface";
 import { shipmentPageValidate } from "../pageValidate";
 import config from "config";
 import moment from "moment";
@@ -14,6 +14,7 @@ import ButtonGroup from "@/pages/sell/selectModelProcess/components/buttonGroup"
 import PriceTitle from "@/pages/sell/selectModelProcess/components/priceTitle";
 import TipsIcon from "@/pages/sell/selectModelProcess/components/tipsIcon";
 import { safeEqual } from "@/utils/util";
+import "../../../common.less";
 
 const Panel = Collapse.Panel;
 const leftHeader = <div className="fedex-bg" />;
@@ -142,48 +143,31 @@ class Shipping extends React.Component<any, any> {
           optionsList={this.state.expressFeeList}
         />
         <h3>Choose your carrier</h3>
-        <Row gutter={30}>
+        <Row gutter={30} className="choose-container">
           <Col {...this.colLayout(12)} className="paypal-col-wrapper">
-            <Collapse
-              onChange={this.handleCollapseExtend.bind(
+            <div
+              className="container-border"
+              data-selected={
+                this.props.yourphone.expressCarrier === EShipmentType.FEDEX
+              }
+              onClick={this.handleCollapseExtend.bind(
                 this,
                 EShipmentType.FEDEX
               )}
-              activeKey={this.props.yourphone.expressCarrier}
-              className={classnames({
-                active:
-                  this.props.yourphone.expressCarrier === EShipmentType.FEDEX
-              })}
             >
-              <Panel
-                header={leftHeader}
-                showArrow={false}
-                key={EShipmentType.FEDEX}
-              >
-                {leftContent}
-              </Panel>
-            </Collapse>
+              {leftContent}
+            </div>
           </Col>
           <Col {...this.colLayout(12)} className="echeck-col-wrapper">
-            <Collapse
-              onChange={this.handleCollapseExtend.bind(
-                this,
-                EShipmentType.USPS
-              )}
-              activeKey={this.props.yourphone.expressCarrier}
-              className={classnames({
-                active:
-                  this.props.yourphone.expressCarrier === EShipmentType.USPS
-              })}
+            <div
+              className="container-border"
+              data-selected={
+                this.props.yourphone.expressCarrier === EShipmentType.USPS
+              }
+              onClick={this.handleCollapseExtend.bind(this, EShipmentType.USPS)}
             >
-              <Panel
-                header={rightHeader}
-                showArrow={false}
-                key={EShipmentType.USPS}
-              >
-                {rightContent}
-              </Panel>
-            </Collapse>
+              {rightContent}
+            </div>
           </Col>
         </Row>
         {shippingInsurance ? (
@@ -199,7 +183,13 @@ class Shipping extends React.Component<any, any> {
             >
               <span className="insurance-tips">
                 Add shipping insurance for ${shippingInsurance}
-                <TipsIcon tips={"456456"} />
+                <TipsIcon>
+                  <p>
+                    This amount will be deducted from your payout. <br />
+                    We recommend to add shipping insurance for phone <br />
+                    that values more than $100.
+                  </p>
+                </TipsIcon>
               </span>
             </Checkbox>
           </div>
