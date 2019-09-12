@@ -1,21 +1,21 @@
 @import (reference) "~@/styles/index.less";
-@page-css-info: {
+@world: {
   .sell-layout > .header-container {
     //border-bottom: none;
   }
   .page-select-model {
-    background: #F5F7F9;
-    padding: 73*@e 0;
+    //background: #F5F7F9;
+    padding: 73*@px 0;
     ul.model-list {
-      .page((328 * 4 + 44 * 3)*@e);
+      .page((328 * 4 + 44 * 3)*@px);
       display: grid;
       grid-template-columns: repeat(4, 25%);
       //grid-template-rows: repeat(4, 25%);
       li.brand-icon-container {
-        margin: 0 5*@e 11*@e;
-        height: 405*@e;
-        //min-width: 332*@e;
-        //width: 332*@e;
+        margin: 0 5*@px 11*@px;
+        height: 405*@px;
+        //min-width: 332*@px;
+        //width: 332*@px;
       }
     }
   }
@@ -42,4 +42,4 @@
 //  }
 //}
 
-.hehehe(@page-css-info);
+.hello(@world);

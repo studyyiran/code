@@ -1,73 +1,30 @@
 @import (reference) "~@/styles/index.less";
 @import (reference) "~@/styles/color.less";
-
-.page-faq-container {
-  background: @white;
-  padding-bottom: 356px;
-  .page-padding();
-  .page(1052px);
-  > ul {
-    > li.page-faq-container__objects {
-      margin-bottom: 40px;
-      > h2 {
-        .font(26px, 600, #000000);
-      }
-      > .ant-collapse {
-        background-color: transparent;
-        border: none;
-      }
-      .ant-collapse-item {
-        margin-bottom: 10px;
-        background: @color-gray-g1;
-        border: none;
-        .ant-collapse-header {
-          font-size: 26px;
-          line-height: 1.2;
-          padding: 8px 24px;
-          svg {
-            transform: rotate(-90deg);
-          }
-        }
-        .ant-collapse-content {
-          border: none;
-        }
-      }
-    }
-  }
-  > button.common-button {
-    max-width: 456px;
-    display: block;
-    margin: auto;
-    margin-top: 100px;
-  }
-}
-
-.ismobile #root {
+@world: {
   .page-faq-container {
     background: @white;
-    padding-bottom: 1.81rem;
+    padding-bottom: 356*@px;
     .page-padding();
+    .page(1052*@px);
     > ul {
       > li.page-faq-container__objects {
-        margin-bottom: 1.01rem;
+        margin-bottom: 40*@px;
         > h2 {
-          margin-bottom: 0.24rem;
-          .font(0.48rem, 600, #000000);
+          .font(24*@f, 600, #000000);
+          margin-bottom: 16 * @px;
         }
         > .ant-collapse {
           background-color: transparent;
           border: none;
-          .font(0.37rem, 400, #000000);
         }
         .ant-collapse-item {
-          margin-bottom: 0.21rem;
+          margin-bottom: 10*@px;
           background: @color-gray-g1;
           border: none;
           .ant-collapse-header {
-            .font(0.43rem, 500, #000000);
-            font-size: 0.43rem;
+            font-size: 18*@f;
             line-height: 1.2;
-            padding: 0.21rem 0.83rem 0.21rem 0.21rem;
+            padding: 8*@px 24*@px;
             svg {
               transform: rotate(-90deg);
             }
@@ -79,9 +36,56 @@
       }
     }
     > button.common-button {
+      max-width: 456*@px;
       display: block;
       margin: auto;
-      margin-top: 1.55rem;
+      margin-top: 100*@px;
     }
   }
 }
+.hello(@world);
+
+//
+//.ismobile #root {
+//  .page-faq-container {
+//    background: @white;
+//    padding-bottom: 1.81rem;
+//    .page-padding();
+//    > ul {
+//      > li.page-faq-container__objects {
+//        margin-bottom: 1.01rem;
+//        > h2 {
+//          margin-bottom: 0.24rem;
+//          .font(0.48rem, 600, #000000);
+//        }
+//        > .ant-collapse {
+//          background-color: transparent;
+//          border: none;
+//          .font(0.37rem, 400, #000000);
+//        }
+//        .ant-collapse-item {
+//          margin-bottom: 0.21rem;
+//          background: @color-gray-g1;
+//          border: none;
+//          .ant-collapse-header {
+//            .font(0.43rem, 500, #000000);
+//            font-size: 0.43rem;
+//            line-height: 1.2;
+//            padding: 0.21rem 0.83rem 0.21rem 0.21rem;
+//            svg {
+//              transform: rotate(-90deg);
+//            }
+//          }
+//          .ant-collapse-content {
+//            border: none;
+//          }
+//        }
+//      }
+//    }
+//    > button.common-button {
+//      display: block;
+//      margin: auto;
+//      margin-top: 1.55rem;
+//    }
+//  }
+//}

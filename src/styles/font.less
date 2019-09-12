@@ -17,23 +17,34 @@
 //@px2rem: 100 / (37.5 * 37.5);
 @px2rem: 1/37.5;
 
-.hehehe(@rules) {
+//reset
+.ant-collapse {
+  font-size: inherit;
+}
+
+.hello(@rules) {
+  @f: 1px;
   @media (min-width: 0px) {
-    @e: 1 / 37.5rem;
-    @rules()
+    @px: 1 / 37.5rem;
+    @f: 1 / 37.5rem;
+    @rules();
   }
   @media (min-width: 700px) {
-    @e: 1 / 1.5px;
-    @rules()
+    @px: 1 / 1.5px;
+    @rules();
   }
   @media (min-width: 1280px) {
-    @e: 1 / 1.5px;
-    @rules()
+    @px: 1 / 1.5px;
+    @rules();
   }
   @media (min-width: 1366px) {
-    @e: 1px;
-    @rules()
+    @px: 1px;
+    @rules();
   }
+}
+
+.font-size-reset(@px) {
+  //font-size: 14 * @px;
 }
 
 a:hover {
@@ -53,7 +64,7 @@ a:hover {
 }
 
 .page-padding() {
-  .pc({padding-left: 15px; padding-right: 15px;});
+  //.pc({padding-left: 15px; padding-right: 15px;});
   .mb({padding-left: 0.53rem; padding-right: 0.53rem;});
 }
 
