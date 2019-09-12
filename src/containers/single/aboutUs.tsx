@@ -14,48 +14,48 @@ interface IArticle {
 const articles: IArticle[] = [
   {
     className: "width320",
-    img: require("@/images/single/about-icon-1.png"),
+    img: require("./res/whoWeAre/fast.svg"),
     title: "Customer’s First",
     text:
       "Treat customers great and great customers will treat you well. We are customer focused and continuously measure against our customer’s success."
   },
   {
     className: "width320",
-    img: require("@/images/single/about-icon-2.png"),
+    img: require("./res/whoWeAre/lock.svg"),
     title: "Think Sustainably",
     text:
       "Make environmentally sustainable decisions that last for generations through recycling, reusing, or trading."
   },
   {
     className: "",
-    img: require("@/images/single/about-icon-3.png"),
+    img: require("./res/whoWeAre/wrong.svg"),
     title: "Earn Trust Through Service",
     text:
       "Be honest and transparent through every interaction with customers, employees, and partners."
   },
   {
     className: "",
-    img: require("@/images/single/about-icon-4.png"),
+    img: require("./res/whoWeAre/fast.svg"),
     title: "Execution is Key",
     text: "Ideas are worthless without fast execution."
   },
   {
     className: "",
-    img: require("@/images/single/about-icon-5.png"),
+    img: require("./res/whoWeAre/lock.svg"),
     title: "Invent and Simplify",
     text:
       "Never settle for what has been done. Be creative and innovative using first principle thinking while reducing complexity."
   },
   {
     className: "width320",
-    img: require("@/images/single/about-icon-6.png"),
+    img: require("./res/whoWeAre/wrong.svg"),
     title: "Do Good and Be Responsible",
     text:
       "Be kind and take care of your neighbor. Do what is right, do what is good, and find balance."
   },
   {
     className: "width320",
-    img: require("@/images/single/about-icon-7.png"),
+    img: require("./res/whoWeAre/fast.svg"),
     title: "Collaborative Teamwork",
     text:
       "We believe in fostering an inclusive work environment where all ideas are heard by building a positive culture and family spirit."
@@ -70,27 +70,27 @@ interface IUserIntro {
 
 const userIntro: IUserIntro[] = [
   {
-    headimg: require("@/images/test/user-head-image.png"),
+    headimg: require("./res/whoWeAre/head_1.png"),
     name: "Marco Mai",
     desc: "Head of Operations"
   },
   {
-    headimg: require("@/images/test/user-head-image.png"),
+    headimg: require("./res/whoWeAre/head_2.png"),
     name: "Esteban Facundo",
     desc: "Head of Operations"
   },
   {
-    headimg: require("@/images/test/user-head-image.png"),
+    headimg: require("./res/whoWeAre/head_3.png"),
     name: "Howard Huang",
     desc: "Head of Operations"
   },
   {
-    headimg: require("@/images/test/user-head-image.png"),
+    headimg: require("./res/whoWeAre/head_4.png"),
     name: "Hamza Shaikh",
     desc: "Head of Operations"
   },
   {
-    headimg: require("@/images/test/user-head-image.png"),
+    headimg: require("./res/whoWeAre/head_5.png"),
     name: "Christine Huang",
     desc: "Head of Operations"
   }
@@ -124,23 +124,20 @@ class AboutUs extends React.Component<RouteComponentProps> {
               <p>
                 Our mission is to make today better so that the world will be
                 brighter tomorrow; to build a company where the life of used
-                electronics is extended through the hands of others or recycled to
-                help reduce carbon footprint. We are committed to providing a
+                electronics is extended through the hands of others or recycled
+                to help reduce carbon footprint. We are committed to providing a
                 fast, easy, safe, and trustworthy service for everyone.
               </p>
             </section>
           </div>
-          
         </div>
         <section className="values">
           <h2>Our Values</h2>
           <ul className="values-list">
-            {articles.map(({ title, text }) => {
+            {articles.map(({ title, text, img }) => {
               return (
                 <li className="values-list__item" key={title}>
-                  <svg className="svg-icon-set" aria-hidden="true">
-                    <use xlinkHref="#uptrade_Icon" />
-                  </svg>
+                  <img src={img} />
                   <h3>{title}</h3>
                   <p>{text}</p>
                 </li>
@@ -163,7 +160,9 @@ class AboutUs extends React.Component<RouteComponentProps> {
           </ul>
         </section>
         <div className="button-container">
-          <button className="common-button" onClick={this.onGoToSell}>Sell it now</button>
+          <button className="common-button" onClick={this.onGoToSell}>
+            Sell it now
+          </button>
         </div>
       </article>
     );
