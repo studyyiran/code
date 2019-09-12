@@ -284,7 +284,7 @@ class Information extends React.Component<IShippingProps, IShippingState> {
       </Form>
     );
     return (
-      <div className={"page-shipping-container"}>
+      <div className={"page-infomation-container"}>
         <h2>Information</h2>
         <div className="container">{infomationHTML}</div>
         <ButtonGroup

@@ -141,35 +141,39 @@ class Shipping extends React.Component<any, any> {
           optionsList={this.state.expressFeeList}
         />
         <h3>Choose your carrier</h3>
-        <Row gutter={30} className="choose-container">
-          <Col {...this.colLayout(12)} className="paypal-col-wrapper">
-            <div
-              className="container-border"
-              data-selected={
-                this.props.yourphone.expressCarrier === EShipmentType.FEDEX
-              }
-              onClick={this.handleCollapseExtend.bind(
-                this,
-                EShipmentType.FEDEX
-              )}
-            >
-              <div className="fedex-bg" />
-              {leftContent}
-            </div>
-          </Col>
-          <Col {...this.colLayout(12)} className="echeck-col-wrapper">
-            <div
-              className="container-border"
-              data-selected={
-                this.props.yourphone.expressCarrier === EShipmentType.USPS
-              }
-              onClick={this.handleCollapseExtend.bind(this, EShipmentType.USPS)}
-            >
-              <div className="USPS-bg" />
-              {rightContent}
-            </div>
-          </Col>
-        </Row>
+        <div className="choose-container">
+          <div
+            className="container-border"
+            data-selected={
+              this.props.yourphone.expressCarrier === EShipmentType.FEDEX
+            }
+            onClick={this.handleCollapseExtend.bind(
+              this,
+              EShipmentType.FEDEX
+            )}
+          >
+            <div className="fedex-bg" />
+            {leftContent}
+          </div>
+          <div
+            className="container-border"
+            data-selected={
+              this.props.yourphone.expressCarrier === EShipmentType.USPS
+            }
+            onClick={this.handleCollapseExtend.bind(this, EShipmentType.USPS)}
+          >
+            <div className="USPS-bg" />
+            {rightContent}
+          </div>
+        </div>
+        {/*<Row gutter={30} >*/}
+        {/*  <Col {...this.colLayout(12)} className="paypal-col-wrapper">*/}
+        {/*    */}
+        {/*  </Col>*/}
+        {/*  <Col {...this.colLayout(12)} className="echeck-col-wrapper">*/}
+        {/*    */}
+        {/*  </Col>*/}
+        {/*</Row>*/}
         {shippingInsurance ? (
           <div className="check-box-container">
             <Checkbox
