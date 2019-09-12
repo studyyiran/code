@@ -83,16 +83,18 @@ body {
       }
       background: @tab-bar-color;
       color: @white;
-      padding: 1.49rem 0 0.43rem;
-      .page-padding();
+      padding: 28*@px 14*@px 16*@px 7*@px;
+      //.page-padding();
       .width-container {
         > .footer__logo {
           font-size: 1rem;
-          margin-bottom: 0.59rem;
+          margin: 0 0 22*@px 0;
+          height: 20*@px;
         }
         > .container {
           display: flex;
           flex-direction: column-reverse;
+          align-items: stretch;
           > .footer__email-form {
             > h2 {
               .title-font();
