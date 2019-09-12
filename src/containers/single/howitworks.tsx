@@ -13,19 +13,20 @@ class HowItWorks extends React.Component<RouteComponentProps> {
         <HeaderTitle title="How to sell my phone on UpTrade" />
         <section className="intro">
           <h2>Sell Your Phone For Cash in 3 Easy Steps</h2>
-          <VideoComponent/>
+          <VideoComponent />
         </section>
         <ul className="list">
           <li>
             <div className="img-container">
-              <img src={require("@/images/test/bg.jpg")} />
+              <img src={require("./res/sellMyPhone/bg_1.png")} />
             </div>
             <section>
-              <svg className="svg-icon-set" aria-hidden="true">
-                <use xlinkHref="#uptrade_Icon" />
-              </svg>
+              <img src={require("./res/sellMyPhone/step_1.svg")} />
               <h3>Get your minimum guarantee price</h3>
-              <Collapse expandIconPosition="right" defaultActiveKey={['1', '2']}>
+              <Collapse
+                expandIconPosition="right"
+                defaultActiveKey={["1", "2"]}
+              >
                 <Panel header={"Find out how much your phone is worth"} key={1}>
                   <p>
                     Our price calculator will provide you with a minimum
@@ -40,14 +41,15 @@ class HowItWorks extends React.Component<RouteComponentProps> {
           <div className="bg-container">
             <li>
               <div className="img-container">
-                <img src={require("@/images/test/bg.jpg")} />
+                <img src={require("./res/sellMyPhone/bg_2.png")} />
               </div>
               <section>
-                <svg className="svg-icon-set" aria-hidden="true">
-                  <use xlinkHref="#uptrade_Icon" />
-                </svg>
+                <img src={require("./res/sellMyPhone/step_2.svg")} />
                 <h3>Prepare and ship in your phone for free</h3>
-                <Collapse expandIconPosition="right" defaultActiveKey={['1', '2']}>
+                <Collapse
+                  expandIconPosition="right"
+                  defaultActiveKey={["1", "2"]}
+                >
                   <Panel header={"Reset your phone"} key={1}>
                     <p>
                       Before you ship in your phone, it is important to follow
@@ -69,14 +71,15 @@ class HowItWorks extends React.Component<RouteComponentProps> {
           </div>
           <li>
             <div className="img-container">
-              <img src={require("@/images/test/bg.jpg")} />
+              <img src={require("./res/sellMyPhone/bg_3.png")} />
             </div>
             <section>
-              <svg className="svg-icon-set" aria-hidden="true">
-                <use xlinkHref="#uptrade_Icon" />
-              </svg>
+              <img src={require("./res/sellMyPhone/step_3.svg")} />
               <h3>Get paid in cash</h3>
-              <Collapse expandIconPosition="right" defaultActiveKey={['1', '2']}>
+              <Collapse
+                expandIconPosition="right"
+                defaultActiveKey={["1", "2"]}
+              >
                 <Panel header={"Fast payment within 1-2 business days"} key={1}>
                   <p>
                     Once we have received your phone, we inspect it to ensure
