@@ -1,93 +1,38 @@
-.page-checkOrder-container {
-  width: 1023px;
-  background-color: #fff;
+@import (reference) "~@/styles/index.less";
 
-  box-shadow: -2px 0px 8px 0px rgba(0, 0, 0, 0.05);
-  margin: 132px auto 127px;
-  border-radius: 8px;
-  padding: 30px 0 60px 0;
-
-  .title {
-    height: 52px;
-    font-size: 42px;
-    font-family: HelveticaNeue;
-    color: rgba(0, 207, 255, 1);
-    line-height: 52px;
-    text-align: center;
-    margin-bottom: 47px;
-  }
-
-  .form {
-    width: 400px;
-    margin: auto;
-
-    .check-label {
-      font-size: 12px;
-      font-family: HelveticaNeue;
-      color: rgba(102, 102, 102, 1);
-      line-height: 30px;
-    }
-
-    .form-error {
-      margin-bottom: 14px;
-      height: 30px;
-      background: rgba(255, 229, 234, 1);
-      border-radius: 4px;
-      border: 2px solid rgba(252, 34, 73, 1);
-      font-size: 12px;
-      font-family: HelveticaNeue;
-      color: rgba(252, 34, 73, 1);
-      line-height: 28px;
-      text-align: center;
-    }
-  }
-}
-
-.ismobile {
+@page: {
   .page-checkOrder-container {
-    width: 3.3rem;
-    margin: 0.4rem auto 0.8rem;
-    box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.1);
-    border-radius: 0.04rem;
-    padding: 0.2rem 0 0.4rem 0;
-
     .title {
-      font-size: 0.26rem;
+      height: 52*@px;
+      font-size: 42*@px;
       color: rgba(0, 207, 255, 1);
-      line-height: 0.4rem;
-      height: 0.4rem;
-      margin-bottom: 0.2rem;
-    }
-
-    .ant-divider {
-      margin: 0.2rem 0;
+      line-height: 52*@px;
+      text-align: center;
+      margin-bottom: 47*@px;
     }
 
     .form {
-      width: 3rem;
-      margin: 0 auto;
+      width: 400*@px;
+      margin: auto;
 
       .check-label {
-        font-size: 0.12rem;
-        height: 0.3rem;
-        line-height: 0.3rem;
+        font-size: 12*@f;
+        color: rgba(102, 102, 102, 1);
+        line-height: 30*@px;
       }
 
       .form-error {
-        width: 3rem;
-        height: 0.3rem;
-        margin-bottom: 0.1rem;
-      }
-
-      .ant-input-lg {
-        height: 0.44rem;
-      }
-
-      .ant-btn-lg {
-        width: 3rem !important;
-        height: 0.44rem;
-        line-height: 0.44rem;
+        margin-bottom: 14*@px;
+        height: 30*@px;
+        background: rgba(255, 229, 234, 1);
+        border-radius: 4*@px;
+        border: 2*@px solid rgba(252, 34, 73, 1);
+        font-size: 12*@f;
+        color: rgba(252, 34, 73, 1);
+        line-height: 28*@px;
+        text-align: center;
       }
     }
   }
-}
+};
+.hello(@page);

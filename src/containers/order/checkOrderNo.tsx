@@ -7,6 +7,7 @@ import {
   ITotalOrderInfoContext
 } from "./container/context";
 import { setOrderCache } from "@/containers/order/util";
+import { HeaderTitle } from "@/components/headerTitle";
 
 const nextUrl = "/neworder";
 
@@ -47,8 +48,7 @@ class CheckOrderNo extends React.Component<any, any> {
   public render() {
     return (
       <div className="page-checkOrder-container">
-        <p className="title">Check Your Order</p>
-        <Divider />
+        <HeaderTitle title="Check Your Order" />
         <div className="form">
           <Form>
             <div className="check-label">Email on your order</div>
@@ -79,15 +79,13 @@ class CheckOrderNo extends React.Component<any, any> {
           {this.state.formError !== "" && (
             <div className="form-error">{this.state.formError}</div>
           )}
-          <Button
-            size="large"
-            type="primary"
-            style={{ width: 400 }}
+          <button
+            className="common-button"
             onClick={this.onSubmit}
             disabled={this.state.email === "" || this.state.orderNo === ""}
           >
             CHECK ORDER
-          </Button>
+          </button>
         </div>
       </div>
     );
