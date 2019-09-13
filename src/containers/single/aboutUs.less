@@ -51,7 +51,7 @@
       > ul.values-list {
         @item-max-width: 370 * @px;
         @item-margin: 60 * @px;
-        .page((@item-max-width + 2 * @item-margin) * 3);
+        .setpage((@item-max-width + 2 * @item-margin) * 3);
         margin: 0 auto 0;
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -79,7 +79,7 @@
       padding-top: 62 * @px;
       @headimg-width: 280 * @px;
       @headimg-margin: 119 * @px;
-      .page(@headimg-width * 3 + 2 * @headimg-margin);
+      .setpage(@headimg-width * 3 + 2 * @headimg-margin);
       > h2 {
         margin-bottom: 77 * @px;
         .title();

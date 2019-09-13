@@ -63,13 +63,15 @@ function Breadcrumb(props: any) {
     },
     model: {
       viewContent: () => {
-        return nameObj.modelInfoName.modelName ? renderName() : "Model";
+        return "Model";
       },
       order: 1
     },
     condition: {
       viewContent: () => {
-        return "Phone Conditions";
+        return nameObj.modelInfoName.modelName
+          ? renderName()
+          : "Phone Conditions";
       },
       order: 2
     },
@@ -179,7 +181,7 @@ function Breadcrumb(props: any) {
           return (
             <li data-step={nextPageKey} key={pageKey}>
               <span data-step={nextPageKey}>{` ${viewContent()}`}</span>
-              {index !== configCache.length - 1 ? (
+              {"prepareShip" !== pageKey ? (
                 <Svg icon="arrow-right" />
               ) : null}
             </li>
