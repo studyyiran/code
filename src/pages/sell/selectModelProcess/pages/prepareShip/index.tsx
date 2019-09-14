@@ -53,7 +53,9 @@ export default function(props: any) {
             <button className="common-button">
               <a
                 target="_blank"
-                href={`/api/shippo/downloadlabel?shippolablecode=${encodeURIComponent(
+                href={`${
+                  true ? "http://112.124.128.55" : "http://112.124.128.55"
+                }/api/shippo/downloadlabel?shippolablecode=${encodeURIComponent(
                   lableCode
                 )}`}
               >

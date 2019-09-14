@@ -34,35 +34,34 @@ export function getTranshipping<T>(
 }
 
 // 发送意见邮件
-export function createforinspect<T>(postData: any): Promise<T> {
+export function createforinspect<T>(postData: any) {
   const opts: IOpts = {
     method: "POST",
     url: `/message_books/createforinspect`,
     params: postData,
     loading: false
   };
-
-  return Request<T>(opts);
+  return requestGetResponse(Request<T>(requestWrapper(opts)));
 }
 
 // 接受质检报价
-export function revisedPriceConfirm<T>(params: any): Promise<T> {
+export function revisedPriceConfirm<T>(params: any) {
   const opts: IOpts = {
     url: `/sub_order/confirm`,
     params,
     loading: false
   };
-  return Request<T>(opts, []);
+  return requestGetResponse(Request<T>(requestWrapper(opts)));
 }
 
 // 不接受质检报价
-export function revisedPriceReject<T>(params: any): Promise<T> {
+export function revisedPriceReject<T>(params: any) {
   const opts: IOpts = {
     url: `/sub_order/applyreturn`,
     params,
     loading: false
   };
-  return Request<T>(opts, []);
+  return requestGetResponse(Request<T>(requestWrapper(opts)));
 }
 
 /*________________________________________________________*/
