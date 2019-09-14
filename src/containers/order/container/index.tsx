@@ -62,6 +62,7 @@ function OrderList(props: { order: IOrderStore }) {
     totalOrderInfoContextDispatch,
     revisedPriceConfirm,
     revisedPriceReject,
+    reloadOrderFromCache,
     checkForOrder
   } = totalOrderInfoContext as ITotalOrderInfoContext;
   // 获取
@@ -84,11 +85,7 @@ function OrderList(props: { order: IOrderStore }) {
   useEffect(() => {
     // 1 查看session登录
     if (!totalOrderInfo || !totalOrderInfo.groupOrderNo) {
-      const orderCache = getOrderCache();
-      if (orderCache) {
-        const { email, orderId } = orderCache;
-        checkForOrder(email, orderId);
-      }
+      reloadOrderFromCache()
     }
   }, [totalOrderInfo]);
   // 方法

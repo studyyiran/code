@@ -13,7 +13,7 @@ import {
   revisedPriceReject
 } from "../../api/order.api";
 import { checkforordermock, getTranshippingmock } from "./mock";
-import { getDeliverInfos, getDeliverNoInfo } from "../../util";
+import {getDeliverInfos, getDeliverNoInfo, getOrderCache} from "../../util";
 
 export const TotalOrderInfoContext = createContext({});
 
@@ -68,6 +68,7 @@ function reducer(state: IContextState, action: IReducerAction) {
 // @actions
 interface IContextActions {
   checkForOrder: (email: string, orderId: string) => void;
+  reloadOrderFromCache: () => void;
   getTranshipping: () => void;
   postEmailForm: () => void;
   revisedPriceConfirm: () => void;
@@ -173,6 +174,7 @@ function useGetAction(
         ...data
       };
       const res = await revisedPriceConfirm(postData);
+      actions.reloadOrderFromCache()
     }),
     revisedPriceReject: promisify(async function(data: any) {
       const { userInfo } = state.totalOrderInfo;
@@ -182,7 +184,15 @@ function useGetAction(
         ...data
       };
       const res = await revisedPriceReject(postData);
-    })
+      actions.reloadOrderFromCache()
+    }),
+    reloadOrderFromCache: promisify(async function() {
+      const orderCache = getOrderCache();
+      if (orderCache) {
+        const { email, orderId } = orderCache;
+        actions.checkForOrder(email, orderId);
+      }
+    }),
   };
   // actions.checkForOrder = useCallback(actions.checkForOrder, []);
   actions.getTranshipping = useCallback(actions.getTranshipping, [
