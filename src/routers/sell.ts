@@ -61,26 +61,6 @@ export default [
         path: '/sell/yourphone/other'
       },
       {
-        // @ts-ignore
-        component: Loadable({
-          loader: () => import('../containers/aboutphone/page/shipping'),
-          loading: () => null,
-          modules: ['../containers/aboutphone/page/shipping'],
-          webpack: () => [require.resolveWeak('../containers/aboutphone/page/shipping') as number],
-        }),
-        path: '/sell/yourphone/shipping'
-      },
-      {
-        // @ts-ignore
-        component: Loadable({
-          loader: () => import('../containers/aboutphone/page/payment'),
-          loading: () => null,
-          modules: ['../containers/aboutphone/page/payment'],
-          webpack: () => [require.resolveWeak('../containers/aboutphone/page/payment') as number],
-        }),
-        path: '/sell/yourphone/payment'
-      },
-      {
         component: Loadable({
           loader: () => import('../containers/aboutphone/done'),
           loading: () => null,
@@ -97,16 +77,6 @@ export default [
           webpack: () => [require.resolveWeak('../containers/aboutphone/checkorder') as number],
         }),
         path: '/sell/yourphone/checkorder/:orderNo'
-      },
-      {
-        // @ts-ignore
-        component: Loadable({
-          loader: () => import('../containers/aboutphone/page/shipment'),
-          loading: () => null,
-          modules: ['../containers/aboutphone/page/shipment'],
-          webpack: () => [require.resolveWeak('../containers/aboutphone/page/shipment') as number],
-        }),
-        path: '/sell/yourphone/shipment'
       },
       {
         component: redirectComponent('/notfound'),

@@ -4,8 +4,6 @@ import { inject, observer } from 'mobx-react';
 import classnames from 'classnames';
 import { Modal, Button, Tooltip } from 'antd';
 import Layout from '@/containers/aboutphone/layout';
-import ShippingPage from './page/shipping';
-import PaymentPage from './page/payment';
 // import Conditions from './page/condition';
 import ChangeModal from '@/containers/aboutphone/components/changemodal';
 import { donePageValidate } from '@/containers/aboutphone/pageValidate';
@@ -60,11 +58,9 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
 
     switch (this.state.pageType) {
       case EChangeType.SHIPPING:
-        Page = <ShippingPage {...this.props} hideLayout={true} onRef={this.handleOnRef} />;
-        break;
+        Page = 'shipingpage'
       case EChangeType.PAYMENT:
-        Page = <PaymentPage {...this.props} hideLayout={true} onRef={this.handleOnRef} />;
-        break;
+        Page = 'payment page'
       case EChangeType.CONDITION:
         Page = <div>Conditions</div>
         // Page = <Conditions />;

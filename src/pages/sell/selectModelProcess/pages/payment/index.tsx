@@ -340,7 +340,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
     }
 
     const paymentHTML = (
-      <Row gutter={30} style={!isMobile ? { paddingTop: "42px" } : {}}>
+      <Row gutter={30}>
         <Col {...this.colLayout(12)} className="echeck-col-wrapper">
           <div
             className="echeck-container container-border"
