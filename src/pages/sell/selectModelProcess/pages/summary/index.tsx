@@ -123,7 +123,7 @@ class Summary extends React.Component<IDoneProps, IDoneStates> {
       case EPayType.PAYPAL:
         payment = (
           <>
-            <img className="paypal-logo" src={require("@/images/paypal.png")} />
+            <img className="logo paypal-logo" src={require("../payment/img/paypal.png")} />
             <ul>
               <li>
                 <h3>Name</h3>
@@ -141,6 +141,7 @@ class Summary extends React.Component<IDoneProps, IDoneStates> {
         console.log(yourphone);
         payment = (
           <>
+            <h3 className="logo">eCheck</h3>
             <ul>
               <li>
                 <h3>Name</h3>

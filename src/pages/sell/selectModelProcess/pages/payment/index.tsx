@@ -342,7 +342,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
           onClick={this.handlePaypalCollapseExtend}
         >
           <header>
-            <img src={require("./img/paypal.svg")} />
+            <img src={require("./img/paypal.png")} />
             <span>- 2.9% + $0.30 fee</span>
           </header>
           <p className="description">

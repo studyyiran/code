@@ -156,11 +156,19 @@ a:hover {
   .ant-input {
     font-size: 16*@f;
   }
+  .ant-modal-close {
+    padding: 15px;
+  }
   .ant-modal-close-x {
     @close-size: 36*@px;
     width: @close-size;
     height: @close-size;
     line-height: @close-size;
+  }
+  .ismobile {
+    .ant-modal-close {
+      padding: 0;
+    }
   }
 }
 .hello(@common-button-world);

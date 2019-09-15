@@ -14,7 +14,7 @@
     }
     > div.top-card-container {
       display: grid;
-      grid-template-columns: repeat(2, auto);
+      grid-template-columns: repeat(2, 1fr);
       grid-column-gap: 30*@px;
       margin-bottom: 32*@px;
     }
@@ -39,9 +39,12 @@
         margin-bottom: 30*@px;
       }
     }
-
-    .paypal-logo {
+    .logo {
       float: right;
+      margin-top: 20*@px;
+    }
+    .paypal-logo {
+      width: 106*@px;
     }
   }
 
