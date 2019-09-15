@@ -303,7 +303,7 @@ class Home extends React.Component<IHomeProps, IHomeState> {
         </section>
         <section className="easy-sell-part">
           <h2>3 Easy Steps To Sell</h2>
-          <VideoComponent />
+          {/*<VideoComponent />*/}
           <div className="bg-white-container">
             <SectionIcons {...descPart2} />
             <LinkButton url={"/newsell"}>Learn More</LinkButton>
