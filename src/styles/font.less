@@ -54,11 +54,16 @@
     @rules();
   }
   @media (min-width: 10px) {
-    @f: 1px;
-    @px: 1px * 1920 / 1920;
-    @rules();
+    //@f: 1px;
+    //@px: 1px * 1920 / 1920;
+    //@rules();
   }
 }
+
+/*
+56px
+56rem / 37.5 * 
+ */
 
 .font-size-reset(@px) {
   //font-size: 14 * @px;
@@ -85,6 +90,7 @@ a:hover {
   .mb({padding-left: 0.53rem; padding-right: 0.53rem;});
 }
 
+//my
 @common-button-world: {
   .ant-collapse > .ant-collapse-item > .ant-collapse-header {
     line-height: 1.2;
@@ -149,6 +155,12 @@ a:hover {
   }
   .ant-input {
     font-size: 16*@f;
+  }
+  .ant-modal-close-x {
+    @close-size: 36*@px;
+    width: @close-size;
+    height: @close-size;
+    line-height: @close-size;
   }
 }
 .hello(@common-button-world);
@@ -247,7 +259,7 @@ a:hover {
   text-align: center;
 }
 
-.ismobile #root {
+.ismobile {
   .comp-top-tag {
     @height: 0.64rem;
     min-width: 1.33rem;

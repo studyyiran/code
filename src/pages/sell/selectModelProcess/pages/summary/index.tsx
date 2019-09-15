@@ -219,7 +219,9 @@ class Summary extends React.Component<IDoneProps, IDoneStates> {
       className: "ant-modal-in-done-page",
       visible: this.state.showEditModal,
       footer: null,
-      onCancel: this.toggleChangeModal
+      centered: true,
+      onCancel: this.toggleChangeModal,
+      width: "90%",
     };
 
     return (

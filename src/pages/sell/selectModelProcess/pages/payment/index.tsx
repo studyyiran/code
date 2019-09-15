@@ -143,16 +143,10 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
     });
   };
 
-  public colLayout(span: number = 11) {
-    const isMobile = this.props.common.isMobile;
-    return !isMobile ? { span } : {};
-  }
 
   public render() {
     let leftContent: React.ReactNode;
     let rightContent: React.ReactNode;
-    const isMobile = this.props.common.isMobile;
-
     const { getFieldDecorator } = this.props.form;
 
     const { paypal, echeck } = this.props.yourphone;

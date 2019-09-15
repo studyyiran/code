@@ -17,23 +17,19 @@
         background: white;
         > .icon {
           color: @white;
-          width: 40 * @px;
           height: 40 * @px;
           border-radius: 50%;
           margin-right: 10 * @px;
-        }
-        > span {
-          font-weight: bold;
-          font-weight: 500;
-        }
-      }
-      .comp-choice-question__option {
-        > .icon {
+          background: red;
+          flex: 0 0 40* @px;
+          font-size: 30*@px;
+
           display: flex;
           justify-content: center;
           align-items: center;
-          font-size: 34 * @f;
-          color: @white;
+        }
+        > .content {
+          font-weight: 500;
         }
       }
       .comp-choice-question__option[data-select="true"] {
