@@ -94,10 +94,13 @@ export default class Footer extends React.Component<
     return (
       <footer className="comp-footer">
         <div className="width-container">
-          <header className="footer__logo">
-            <img src={require("@/images/logo.svg")} />
+          <header className="footer__logo flex-grid">
+            <div>
+              <img src={require("@/images/logo.svg")} />
+            </div>
+            <div />
           </header>
-          <div className="container">
+          <div className="container flex-grid">
             <RenderByCondition
               ComponentMb={
                 <div className="footer__group">
@@ -148,6 +151,16 @@ export default class Footer extends React.Component<
                 <button className="common-button">Subscribe</button>
               </form>
             </form>
+          </div>
+          <div className="flex-grid">
+            <div>
+              <div>
+                <span className="last">Terms & Conditions</span>
+                <span>Privacy Policy</span>
+              </div>
+              <span>© 2019 UP Trade Technologies, Inc.</span>
+            </div>
+            <div />
           </div>
         </div>
       </footer>

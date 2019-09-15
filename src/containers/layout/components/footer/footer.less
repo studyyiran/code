@@ -6,37 +6,48 @@ body {
 @world: {
   .comp-footer {
     .title-font() {
-      font-size: 18*@px;
-      margin-bottom: 17*@px;
+      font-size: 18 * @px;
+      margin-bottom: 17 * @px;
     }
     .content-font() {
-      font-size: 14*@px;
+      font-size: 14 * @px;
       color: #ffffff;
-      margin-bottom: 8*@px;
+      margin-bottom: 8 * @px;
     }
-    background: @tab-bar-color;
+    background: #375a7d;
     color: @white;
-    padding: 40*@px 0 77*@px;
+    padding: 40 * @px 0 12 * @px;
     .page-padding();
+    .flex-grid {
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-start;
+      > *:first-child {
+        flex: 0 0 600 * @px;
+      }
+      > *:last-child {
+        flex: 0 0 700 * @px;
+      }
+    }
     .width-container {
+      .last {
+        margin: 0 25*@px 10*@px 0;
+      }
       > header.footer__logo {
-        font-size: 20*@f;
-        margin-bottom: 30*@px;
-        margin-left: 171*@px;
-        > img {
-          width: 92*@px;
+        font-size: 20 * @f;
+        margin-bottom: 30 * @px;
+        img {
+          width: 92 * @px;
         }
       }
       > .container {
+        margin-bottom: 70*@px;
         //.layout-flex-twins(500*@px, 700*@px, {});
-        display: flex;
-        justify-content: space-around;
-        align-items: flex-start;
         > .footer__group {
-          display: flex;
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
           > ul {
             // 130不太够似乎。很奇怪
-            flex: 0 0 160*@px;
             > h2 {
               .title-font();
             }
@@ -53,15 +64,15 @@ body {
           > form {
             > input {
               background: @white;
-              height: 56*@px;
-              padding: 16*@px;
-              border-radius: 5*@px;
+              height: 56 * @px;
+              padding: 16 * @px;
+              border-radius: 5 * @px;
               display: inline-block;
-              width: 416*@px;
-              margin-right: 33*@px;
+              width: 416 * @px;
+              margin-right: 33 * @px;
             }
             > button {
-              width: 236*@px;
+              width: 236 * @px;
             }
           }
         }
@@ -71,6 +82,12 @@ body {
 
   .ismobile #root {
     .comp-footer {
+      .flex-grid {
+        justify-content: space-between;
+        > * {
+          flex: 0 1 auto;
+        }
+      }
       max-width: 100%;
       overflow: hidden;
       border-radius: 0.21rem 0.21rem 0 0;
@@ -80,17 +97,17 @@ body {
       }
       .content-font() {
         color: #ffffff;
-        margin-bottom: 8*@px;
+        margin-bottom: 8 * @px;
       }
       background: @tab-bar-color;
       color: @white;
-      padding: 28*@px 14*@px 16*@px 7*@px;
+      padding: 28 * @px 14 * @px 16 * @px 7 * @px;
       //.page-padding();
       .width-container {
         > .footer__logo {
           font-size: 1rem;
-          margin: 0 0 22*@px 0;
-          height: 20*@px;
+          margin: 0 0 22 * @px 0;
+          height: 20 * @px;
         }
         > .container {
           display: flex;
@@ -111,7 +128,7 @@ body {
                 border-radius: 0.11rem;
                 display: inline-block;
                 width: 4.95rem;
-                margin-right: 0*@px;
+                margin-right: 0 * @px;
               }
               > button {
                 width: 3.12rem;
