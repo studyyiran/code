@@ -24,7 +24,6 @@ export default class Why extends React.Component<IContactProps> {
             <p>Top reasons why we are not your ordinary trade in program.</p>
             <Button
               type="primary"
-              style={{ width: 166 }}
               size="large"
               onClick={this.onGoToSell}
             >
@@ -114,7 +113,6 @@ export default class Why extends React.Component<IContactProps> {
             <Button
               size="large"
               type="primary"
-              style={{ width: 232, height: 64 }}
               onClick={this.onGoToSell}
             >
               SELL NOW

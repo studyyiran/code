@@ -101,7 +101,6 @@ export function RenderByType(props: IRenderByType) {
         dom.push(
           <Select
             key={subQuestionId}
-            style={{ width: "100%" }}
             value={userSubAnswer.answer}
             onChange={answer => {
               onUserInputHandler({

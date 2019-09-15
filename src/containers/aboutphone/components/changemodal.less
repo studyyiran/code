@@ -1,1 +1,20 @@
-@import (reference) '~@/styles/index.less';
+@import (reference) "~@/styles/index.less";
+@page: {
+  .comp-aboutyourphone-changemodal-container {
+    h3 {
+      margin-bottom: 20*@px;
+    }
+    .page-payment-container {
+      padding: 0;
+    }
+    .page-infomation-container {
+      padding: 0;
+    }
+    .common-button {
+      display: block;
+      margin: 50*@px auto 0;
+    }
+  }
+}
+
+.hello(@page);

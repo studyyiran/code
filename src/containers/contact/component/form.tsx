@@ -70,17 +70,15 @@ class ContactForm extends React.Component<IContactFormProps> {
                 })(
                   <Input.TextArea
                     rows={24}
-                    style={{ height: 150, resize: "none" }}
                   />
                 )}
               </Form.Item>
             </Col>
           </Row>
         </Form>
-        <div style={{ textAlign: "center" }}>
+        <div >
           <Button
             className="common-button"
-            style={{ width: "100%" }}
             htmlType="submit"
             onClick={this.handleOk}
             type="primary"

@@ -161,11 +161,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
     switch (this.props.yourphone.isLeftOnEdit) {
       case false:
         leftContent = (
-          <div className="left-wrapper">
-            <p className="description">
-              Confirm your PayPal address so we can send you the payment for
-              your phone.
-            </p>
+          <div className="wrapper">
             <div className="form-wrapper">
               <Form layout="vertical">
                 <Form.Item label="PayPal email address">
@@ -187,11 +183,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
 
       case true:
         leftContent = (
-          <div className="left-wrapper">
-            <p className="description">
-              Confirm your PayPal address so we can send you the payment for
-              your phone.
-            </p>
+          <div className="wrapper">
             <div className="form-wrapper">
               <Form layout="vertical">
                 <Form.Item label="PayPal email address">
@@ -233,11 +225,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
     switch (this.props.yourphone.isRightOnEdit) {
       case false:
         rightContent = (
-          <div className="right-wrapper">
-            <p className="description">
-              eChecks works just like regular checks. We email it to you and you
-              print it. After you print, it works just like a regular check.
-            </p>
+          <div className="wrapper">
             <div className="form-wrapper">
               <Form layout="vertical">
                 <Form.Item label="First Name">
@@ -274,11 +262,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
         break;
       case true:
         rightContent = (
-          <div className="right-wrapper">
-            <p className="description">
-              eChecks works just like regular checks. We email it to you and you
-              print it. After you print, it works just like a regular check.
-            </p>
+          <div className="wrapper">
             <div className="form-wrapper">
               <Form layout="vertical">
                 <Form.Item label="First Name">
@@ -340,31 +324,40 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
     }
 
     const paymentHTML = (
-      <Row gutter={30}>
-        <Col {...this.colLayout(12)} className="echeck-col-wrapper">
-          <div
-            className="echeck-container container-border"
-            data-selected={this.props.yourphone.payment === EPayType.ECHECK}
-            onClick={this.handleEcheckCollapseExtend}
-          >
-            <div className="recommended comp-top-tag">Recommended</div>
+      <div className="payment-type-container">
+        <div
+          className="echeck-container container-border"
+          data-selected={this.props.yourphone.payment === EPayType.ECHECK}
+          onClick={this.handleEcheckCollapseExtend}
+        >
+          <div className="recommended comp-top-tag">Recommended</div>
+          <header>
             <h3>eCheck</h3>
+            {/*<img src={require("./img/echeck.svg")}/>*/}
             <span>- No Fees</span>
-            {rightContent}
-          </div>
-        </Col>
-        <Col {...this.colLayout(12)} className="paypal-col-wrapper">
-          <div
-            className="paypal-container container-border"
-            data-selected={this.props.yourphone.payment === EPayType.PAYPAL}
-            onClick={this.handlePaypalCollapseExtend}
-          >
-            <div className="paypal-bg" />
+          </header>
+          <p className="description">
+            eChecks works just like regular checks. We email it to you and you
+            print it. After you print, it works just like a regular check.
+          </p>
+          {rightContent}
+        </div>
+        <div
+          className="paypal-container container-border"
+          data-selected={this.props.yourphone.payment === EPayType.PAYPAL}
+          onClick={this.handlePaypalCollapseExtend}
+        >
+          <header>
+            <img src={require("./img/paypal.svg")} />
             <span>- 2.9% + $0.30 fee</span>
-            {leftContent}
-          </div>
-        </Col>
-      </Row>
+          </header>
+          <p className="description">
+            Confirm your PayPal address so we can send you the payment for your
+            phone.
+          </p>
+          {leftContent}
+        </div>
+      </div>
     );
     return (
       <div className={"page-payment-container"}>

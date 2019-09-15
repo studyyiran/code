@@ -40,8 +40,8 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
         case EBrandType.ALL:
           return (
             <>
-              <p><strong>iOS: Disable find my iPhone and remove your SIM Card</strong>&nbsp;&nbsp;&nbsp;&nbsp;<Link style={{ display: 'inline' }} to="/how-to-factory-reset-iphone" target="_blank" className="tips mobile-block">More detail</Link></p>
-              <p><strong>Android: Sign out of your Google account and remove your SIM Card</strong>&nbsp;&nbsp;&nbsp;&nbsp;<Link style={{ display: 'inline' }} to="/how-to-factory-reset-iphone" target="_blank" className="tips mobile-block">More detail</Link></p>
+              <p><strong>iOS: Disable find my iPhone and remove your SIM Card</strong>&nbsp;&nbsp;&nbsp;&nbsp;<Link to="/how-to-factory-reset-iphone" target="_blank" className="tips mobile-block">More detail</Link></p>
+              <p><strong>Android: Sign out of your Google account and remove your SIM Card</strong>&nbsp;&nbsp;&nbsp;&nbsp;<Link to="/how-to-factory-reset-iphone" target="_blank" className="tips mobile-block">More detail</Link></p>
               <span className="text">Pack your device in a box with protective packaging material for shipment</span>
             </>
           )

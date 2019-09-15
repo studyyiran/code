@@ -202,7 +202,7 @@ function RenderTagByStatus(props: any) {
     case "done":
       return (
         <span data-type={status}>
-          <Icon type="check-circle" style={{ color: "white" }} />
+          <Icon type="check-circle" />
         </span>
       );
     case "doing":

@@ -48,7 +48,6 @@ export default class NavigatorWithBar extends React.Component<IProps, IStates> {
         <div className="left-wrapper">
           <Button
             icon='arrow-left'
-            style={{ width: '130px', height: '50px' }}
             onClick={this.goBack}
           >BACK</Button>
         </div>
@@ -67,7 +66,6 @@ export default class NavigatorWithBar extends React.Component<IProps, IStates> {
           {
             (navigatorObj.progress === 3 || navigatorObj.step > 0 || navigatorObj.showNext) &&
             <Button
-              style={{ width: '130px', height: '50px' }}
               onClick={this.goNext}
               type="primary"
               disabled={this.props.disabled}

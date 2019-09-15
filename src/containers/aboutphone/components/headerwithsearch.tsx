@@ -102,7 +102,7 @@ export default class BrandHeader extends React.Component<{ userEmail?: string },
         {
           showAppendOrder && (
             <div className="append-order">
-              <img src={require('@/images/yourphone/success.png')} style={{ width: 14 }} />
+              <img src={require('@/images/yourphone/success.png')} />
               <span>Order placed successfully! Order number {yourphoneStore.orderDetail && yourphoneStore.orderDetail.orderNo}</span>
               <Tooltip placement="right" title={this.state.copyMessage} visible={this.state.copyVisible}>
                 <span id="copy-btn" data-clipboard-text={yourphoneStore.orderDetail && yourphoneStore.orderDetail.orderNo}>Copy</span>
