@@ -130,7 +130,12 @@ export default class Footer extends React.Component<
               <h2>Subscribe To Our Newsletter</h2>
               <form>
                 <input placeholder="Email" aria-placeholder="Email" />
-                <button className="common-button">Subscribe</button>
+                <button
+                  className="common-button"
+                  onClick={this.handleSubscribe}
+                >
+                  Subscribe
+                </button>
               </form>
             </form>
           </div>
@@ -148,6 +153,12 @@ export default class Footer extends React.Component<
       </footer>
     );
   }
+
+  private handleSubscribe = (e: any) => {
+    e.preventDefault();
+    console.log(e);
+    console.log("123123");
+  };
 
   private handleLink = (link: { [key: string]: string }) => {
     if (!link.href) {

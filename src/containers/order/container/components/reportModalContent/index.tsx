@@ -28,7 +28,7 @@ export default function ReportModalContent(props: any) {
     return revised[revised] === brandName[revised];
   }
   function checkSameFromArr(targetId: string, attrKey: string) {
-    let isSame = true;
+    let isSame = false;
     if (
       submitted &&
       submitted[attrKey] &&
@@ -36,7 +36,7 @@ export default function ReportModalContent(props: any) {
         ({ id: submitAttrValueId }: any) => submitAttrValueId === targetId
       )
     ) {
-      isSame = false;
+      isSame = true;
     }
     return isSame;
   }
@@ -59,7 +59,7 @@ export default function ReportModalContent(props: any) {
           <RenderItem
             title={ppnName}
             value={name}
-            isSame={checkSameFromArr(id, "pricePns")}
+            isSame={checkSameFromArr(id, "productPns")}
           />
         ))}
         {pricePns.map(({ id, type, name }: any, index: number) => {
