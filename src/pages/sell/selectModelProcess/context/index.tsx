@@ -284,9 +284,9 @@ function useGetAction(
     getSkuId: promisify(async function(emailInfo: any) {
       const param = {
         productId: state.modelInfo.modelId,
-        bpvIds: Object.keys(state.modelInfo.othersAttr).map((key: any) => ({
-          id: state.modelInfo.othersAttr[key]
-        }))
+        bpvIds: Object.keys(state.modelInfo.othersAttr).map(
+          (key: any) => state.modelInfo.othersAttr[key]
+        )
       };
       const res: any = await getSkuId({ ...param });
       return res;
