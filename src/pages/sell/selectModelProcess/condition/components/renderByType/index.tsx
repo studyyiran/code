@@ -100,6 +100,7 @@ export function RenderByType(props: IRenderByType) {
       if (questionDesc && questionDesc.length) {
         dom.push(
           <Select
+            className="my-select"
             key={subQuestionId}
             value={userSubAnswer.answer}
             onChange={answer => {
