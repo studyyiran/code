@@ -2,12 +2,17 @@ import * as React from "react";
 import classnames from "classnames";
 import { Link } from "react-router-dom";
 import "./footer.less";
-import { Row, Col, Input, Button, Form } from "antd";
+import { Row, Col, Input, Button, Form, message } from "antd";
 // import commonStore from '@/store/common'
 import config from "../../../../config";
 import Svg from "@/components/svg";
 import { RenderByCondition } from "./RenderByCondition/index";
 import { Collapse } from "antd";
+import { useContext } from "react";
+import {
+  SelectModelContext,
+  ISelectModelContext
+} from "@/pages/sell/selectModelProcess/context";
 const { Panel } = Collapse;
 
 export const footerInfo = [
@@ -128,7 +133,7 @@ export default class Footer extends React.Component<
             />
             <form className="footer__email-form">
               <h2>Subscribe To Our Newsletter</h2>
-              {this.renderEmailForm()}
+              <RenderEmailForm />
             </form>
           </div>
           <div className="flex-grid">
@@ -145,31 +150,6 @@ export default class Footer extends React.Component<
       </footer>
     );
   }
-
-  private renderEmailForm = () => {
-    const EmailForm: any = (innerProps: any) => (
-      <Form
-        onSubmit={(e: any) => {
-          e.preventDefault();
-          console.log(e);
-          innerProps.form.validateFields((error: any, values: any) => {
-            if (!error) {
-              console.log(values);
-            }
-          });
-        }}
-      >
-        <Form.Item>
-          {innerProps.form.getFieldDecorator("email")(
-            <input placeholder="Email" aria-placeholder="Email" />
-          )}
-        </Form.Item>
-        <button className="common-button">Subscribe</button>
-      </Form>
-    );
-    const A = Form.create({ name: "dontknow" })(EmailForm);
-    return <A />;
-  };
 
   private handleLink = (link: { [key: string]: string }) => {
     if (!link.href) {
@@ -214,4 +194,37 @@ export function MbFooter(props: any): any {
       </ul>
     );
   });
+}
+
+function RenderEmailForm() {
+  const selectModelContext = useContext(SelectModelContext);
+  const { emailSubscribed } = selectModelContext as ISelectModelContext;
+  const EmailForm: any = (innerProps: any) => (
+    <Form
+      className="post-email"
+      onSubmit={(e: any) => {
+        e.preventDefault();
+        innerProps.form.validateFields((error: any, values: any) => {
+          if (!error) {
+            emailSubscribed(values.email)
+              .then((res: any) => {
+                message.success('subscribe success!');
+              })
+              .catch((errorRes: any) => {
+                console.error(errorRes);
+              });
+          }
+        });
+      }}
+    >
+      <Form.Item>
+        {innerProps.form.getFieldDecorator("email")(
+          <input placeholder="Email" aria-placeholder="Email" />
+        )}
+      </Form.Item>
+      <button className="common-button">Subscribe</button>
+    </Form>
+  );
+  const A = Form.create({ name: "dontknow" })(EmailForm);
+  return <A />;
 }

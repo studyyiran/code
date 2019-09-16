@@ -61,20 +61,6 @@ body {
           > h2 {
             .title-font();
           }
-          > form {
-            > input {
-              background: @white;
-              height: 56 * @px;
-              padding: 16 * @px;
-              border-radius: 5 * @px;
-              display: inline-block;
-              width: 416 * @px;
-              margin-right: 33 * @px;
-            }
-            > button {
-              width: 236 * @px;
-            }
-          }
         }
       }
     }
@@ -114,25 +100,6 @@ body {
           > .footer__email-form {
             > h2 {
               .title-font();
-            }
-            > form {
-              margin-bottom: 0.67rem;
-              display: flex;
-              justify-content: space-between;
-              > input {
-                flex: 1;
-                background: @white;
-                height: 1.49rem;
-                padding: 0.43rem;
-                border-radius: 0.11rem;
-                display: inline-block;
-                width: 4.95rem;
-                margin-right: 0 * @px;
-              }
-              > button {
-                margin-left: 10*@px;
-                width: 3.12rem;
-              }
             }
           }
           > .footer__group {
@@ -191,3 +158,51 @@ body {
 };
 
 .hello(@world);
+
+
+@formPart: {
+  .post-email {
+    height: 56 * @px;
+    .ant-form-item {
+      display: inline-block;
+    }
+    .ant-form-item-control {
+      line-height: 56 * @px;
+    }
+    input {
+      height: 56 * @px;
+      background: @white;
+      padding: 16 * @px;
+      border-radius: 5 * @px;
+      width: 416 * @px;
+      margin-right: 33 * @px;
+    }
+    button {
+      width: 236 * @px;
+    }
+  }
+  .ismobile {
+    .post-email {
+      margin-bottom: 0.67rem;
+      display: flex;
+      justify-content: space-between;
+      .ant-form-item {
+        flex: 1;
+      }
+      input {
+        background: @white;
+        height: 1.49rem;
+        padding: 0.43rem;
+        border-radius: 0.11rem;
+        display: inline-block;
+        width: 100%;
+        margin-right: 0 * @px;
+      }
+      > button {
+        margin-left: 10*@px;
+        width: 3.12rem;
+      }
+    }
+  }
+}
+.hello(@formPart);
