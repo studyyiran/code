@@ -4,6 +4,7 @@ import "./index.less";
 import "../commonCss/contact.less";
 import { Form, Input, Checkbox } from "antd";
 const { Item } = Form;
+import "./index.less";
 
 export default function() {
   const [showForm, setShowForm] = useState(true);
@@ -14,7 +15,7 @@ export default function() {
   }
 
   return (
-    <div className="page-container__title contact-common-css">
+    <div className="page-container__title contact-common-css page-sell-others-container">
       <div className="bg-container bg-1">
         <section className="page-container__title">
           <h1>{showForm ? "Sell other phone" : "Thank you"}</h1>
@@ -98,7 +99,7 @@ function FormPart(props: any) {
               <Checkbox.Group>
                 {checkBoxContent.map(({ id, content }: any) => {
                   return (
-                    <Checkbox key={id} value={id}>
+                    <Checkbox key={id} value={id} className="check-box">
                       {content}
                     </Checkbox>
                   );
