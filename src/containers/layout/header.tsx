@@ -80,7 +80,9 @@ export default function Header() {
         }
         ComponentPc={
           <div className="container">
-            <img className="logo" src={require("@/images/logo.svg")} />
+            <RouterLink to="/">
+              <img className="logo" src={require("@/images/logo.svg")} />
+            </RouterLink>
             <div className="comp-dropdown-container">
               {footerInfo.map(({ title, arr }: any, index: any) => {
                 return (
