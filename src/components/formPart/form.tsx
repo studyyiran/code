@@ -23,32 +23,40 @@ function FormPart(props: any) {
         {props
           .renderformConfig(props)
           .map(({ title, index, type, render, id, rules, required }: any) => {
-            if (type === "checkboxGroup") {
-              return render();
-            } else {
-              return (
-                <Item label={title} key={id}>
-                  {getFieldDecorator(id, {
-                    rules: rules
-                      ? rules
-                      : [
-                          {
-                            required: required,
-                            message: "Please input"
-                          }
-                        ]
-                  })(<Input />)}
-                </Item>
-              );
-            }
+            return (
+              <Item label={title} key={id}>
+                {getFieldDecorator(id, {
+                  rules: rules
+                    ? rules
+                    : [
+                        {
+                          required: required,
+                          message: "Please input"
+                        }
+                      ]
+                })(render ? render() : <Input />)}
+              </Item>
+            );
           })}
-        <button className="common-button">Next</button>
+        <button className="common-button centered">
+          {props.buttonContent ? props.buttonContent : "Next"}
+        </button>
       </Form>
     </div>
   );
 }
 
-// 便于注入属性和方法
-const FormPartWrapper: any = Form.create({ name: "dontknow" })(FormPart);
+interface IFormPartWrapper {
+  onPostHandler: () => {};
+  renderformConfig: () => {};
+  buttonContent?: "";
+}
 
-export default FormPartWrapper;
+// 便于注入属性和方法
+export default function FormPartWrapper(props: IFormPartWrapper): any {
+  const A: any = Form.create({ name: "dontknow" })(FormPart);
+  return <A {...props} />;
+  // return Form.create({ name: "dontknow" })(otherProps => {
+  //   return <FormPart {...props} {...otherProps} />;
+  // });
+}

@@ -59,7 +59,7 @@ export default function() {
         <div className="common-card">
           <section>
             {showForm ? (
-              <FormPartWrapper onPostHandler={handlerFormPost as any} renderformConfig={renderConfig}/>
+              <FormPartWrapper onPostHandler={handlerFormPost as any} renderformConfig={renderformConfig}/>
             ) : (
               <RenderContent />
             )}
@@ -90,7 +90,7 @@ function RenderContent() {
   );
 }
 
-const renderConfig = (props: any) => {
+const renderformConfig = (props: any) => {
   const formContentArr = [
     {
       id: "brand",
@@ -111,6 +111,8 @@ const renderConfig = (props: any) => {
       title: "Carrier (e.g. AT&T or Not Sure)"
     },
     {
+      id: "condition",
+      title: "Select all that apply",
       type: "checkboxGroup",
       render: () => {
         const checkBoxContent = [
@@ -132,34 +134,26 @@ const renderConfig = (props: any) => {
           }
         ];
         return (
-          <Row gutter={24}>
-            <Item label="Select all that apply">
-              {props.form.getFieldDecorator("condition", {
-                rules: [{ required: false, message: "Please input" }]
-              })(
-                <Checkbox.Group>
-                  {checkBoxContent.map(({ id, content }: any) => {
-                    return (
-                      <Col key={id}>
-                        <Checkbox value={content} className="check-box">
-                          {content}
-                        </Checkbox>
-                      </Col>
-                    );
-                  })}
-                </Checkbox.Group>
-              )}
-            </Item>
-          </Row>
+          <Checkbox.Group>
+            {checkBoxContent.map(({ id, content }: any) => {
+              return (
+                <Col key={id}>
+                  <Checkbox value={content} className="check-box">
+                    {content}
+                  </Checkbox>
+                </Col>
+              );
+            })}
+          </Checkbox.Group>
         );
       }
     },
     {
       id: "email",
       title: "Contact Email",
-      required: true,
       rules: [
         {
+          required: true,
           type: "email",
           message: "The input is not valid E-mail!"
         }
@@ -184,4 +178,3 @@ const renderConfig = (props: any) => {
   ];
   return formContentArr
 }
-
