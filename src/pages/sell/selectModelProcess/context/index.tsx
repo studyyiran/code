@@ -15,7 +15,7 @@ import {
   getQuality,
   getLastestOrder,
   emailSubscribed,
-  createEmail,
+  createEmail
 } from "../server/index.api";
 import { getQualitymock, mockgetinquirybykeys } from "../../mock";
 import {
@@ -279,15 +279,21 @@ function useGetAction(
   dispatch: (action: IReducerAction) => void
 ): IContextActions {
   const actions: IContextActions = {
-    createEmail: promisify(async function(emailInfo: string) {
-      const res: any = await emailSubscribed(emailInfo);
-      return res
+    createEmail: promisify(async function(emailInfo: any) {
+      const defaultParam = {
+        toEmail: "",
+        nickName: "",
+        subject: "",
+        content: ""
+      };
+      const res: any = await createEmail({ ...defaultParam, ...emailInfo });
+      return res;
     }),
     emailSubscribed: promisify(async function(email: string) {
       const res: any = await emailSubscribed({
         userEmail: email
       });
-      return res
+      return res;
     }),
     getLastestOrder: promisify(async function(label: string) {
       const res: any = await getLastestOrder();

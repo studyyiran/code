@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import ContactForm from "@/containers/contact/component/form";
 import "./index.less";
 import "../commonCss/contact.less";
@@ -6,13 +6,47 @@ import { Form, Input, Checkbox, Row, Col } from "antd";
 const { Item } = Form;
 import "./index.less";
 import RouterLink from "@/components/routerLink";
+import {
+  ISelectModelContext,
+  SelectModelContext
+} from "@/pages/sell/selectModelProcess/context";
 
 export default function() {
   const [showForm, setShowForm] = useState(true);
+  const selectModelContext = useContext(SelectModelContext);
+  const { createEmail } = selectModelContext as ISelectModelContext;
   function handlerFormPost(values: any) {
     console.log(values);
-    setShowForm(false);
-    //
+    const { brand, model, storage = "", carrier = "", condition = [] } = values;
+    const configArr = [
+      {
+        title: "From",
+        content: values.email
+      },
+      {
+        title: "Model",
+        content: brand + model + storage + carrier
+      },
+      {
+        title: "Condition",
+        content: condition.join(",")
+      }
+    ];
+    createEmail({
+      toEmail: values.email,
+      nickName: "",
+      subject: "",
+      content:
+        "<p>" +
+        configArr
+          .map(
+            ({ title, content }: any) => `<label>${title}: ${content}</label>`
+          )
+          .join("") +
+        "</p>"
+    }).then(() => {
+      setShowForm(false);
+    });
   }
 
   return (
@@ -99,32 +133,38 @@ function FormPart(props: any) {
           }
         ];
         return (
-          <Item label="Select all that apply">
-            {getFieldDecorator("condition", {
-              rules: [{ required: false, message: "Please input" }]
-            })(
-              <Row gutter={24}>
+          <Row gutter={24}>
+            <Item label="Select all that apply">
+              {getFieldDecorator("condition", {
+                rules: [{ required: false, message: "Please input" }]
+              })(
                 <Checkbox.Group>
                   {checkBoxContent.map(({ id, content }: any) => {
                     return (
                       <Col key={id}>
-                        <Checkbox value={id} className="check-box">
+                        <Checkbox value={content} className="check-box">
                           {content}
                         </Checkbox>
                       </Col>
                     );
                   })}
                 </Checkbox.Group>
-              </Row>
-            )}
-          </Item>
+              )}
+            </Item>
+          </Row>
         );
       }
     },
     {
       id: "email",
       title: "Contact Email",
-      required: true
+      required: true,
+      rules: [
+        {
+          type: "email",
+          message: "The input is not valid E-mail!"
+        }
+      ]
     },
     {
       id: "confirmEmail",
