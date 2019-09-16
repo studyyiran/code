@@ -3,7 +3,11 @@ import * as React from "react";
 // import { Link } from 'react-router-dom';
 import "./header.less";
 import { Collapse, Dropdown, Menu } from "antd";
-import { footerInfo } from "@/containers/layout/components/footer/footer";
+const { Panel } = Collapse;
+import {
+  footerInfo,
+  MbFooter
+} from "@/containers/layout/components/footer/footer";
 import Svg from "@/components/svg";
 import RouterLink from "@/components/routerLink";
 import { Link } from "react-router-dom";
@@ -57,21 +61,38 @@ export default function Header() {
   );
   return (
     <header className="comp-header-container">
-      <img className="logo" src={require("@/images/logo.svg")} />
       <RenderByCondition
-        ComponentMb={<img src={require("./res/menu.svg")} />}
+        ComponentMb={
+          <Collapse>
+            <Panel
+              showArrow={false}
+              key={"1"}
+              header={
+                <div className="container">
+                  <img className="logo" src={require("@/images/logo.svg")} />
+                  <img src={require("./res/menu.svg")} />
+                </div>
+              }
+            >
+              <MbFooter />
+            </Panel>
+          </Collapse>
+        }
         ComponentPc={
-          <div className="comp-dropdown-container">
-            {footerInfo.map(({ title, arr }: any, index: any) => {
-              return (
-                <Dropdown overlay={renderArr(arr)} key={index}>
-                  <a className="ant-dropdown-link" href="#">
-                    {title}
-                    <Svg icon="arrow-right" />
-                  </a>
-                </Dropdown>
-              );
-            })}
+          <div className="container">
+            <img className="logo" src={require("@/images/logo.svg")} />
+            <div className="comp-dropdown-container">
+              {footerInfo.map(({ title, arr }: any, index: any) => {
+                return (
+                  <Dropdown overlay={renderArr(arr)} key={index}>
+                    <a className="ant-dropdown-link" href="#">
+                      {title}
+                      <Svg icon="arrow-right" />
+                    </a>
+                  </Dropdown>
+                );
+              })}
+            </div>
           </div>
         }
       />

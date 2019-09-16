@@ -104,25 +104,7 @@ export default class Footer extends React.Component<
             <RenderByCondition
               ComponentMb={
                 <div className="footer__group">
-                  {footerInfo.map(({ className, title, arr }) => {
-                    return (
-                      <ul className="item" key={title}>
-                        <Collapse expandIconPosition="right">
-                          <Panel header={<h2>{title}</h2>} key={title}>
-                            {arr.map(({ subTitle, href }) => {
-                              return (
-                                <li key={subTitle}>
-                                  <Link to={href}>
-                                    <span>{subTitle}</span>
-                                  </Link>
-                                </li>
-                              );
-                            })}
-                          </Panel>
-                        </Collapse>
-                      </ul>
-                    );
-                  })}
+                  <MbFooter />
                 </div>
               }
               ComponentPc={
@@ -189,41 +171,24 @@ export default class Footer extends React.Component<
   };
 }
 
-/*
-(
-      <div className="comp-footer-container">
-        <div className="wave-bg" />
-        <div className="section-box">
-          <div className="content-wrapper">
-            <div className="links-group-wrapper">
-              <Row gutter={80}>
-                <Col span={5}><img src={require('@/images/logo.png')} className="logo" /></Col>
-                {
-                  linksGroup
-                }
-                <Col span={6} offset={1} className="email-group">
-                  <p className="title">CONNECT WITH US!</p>
-                  <form
-                    action="https://uptradeit.us20.list-manage.com/subscribe/post?u=d5c899a65eeea99f76cc22169&id=5af7b8030d" method="post" target="_blank">
-                    <Input
-                      placeholder="Enter your email"
-                      name="EMAIL"
-                      style={{ margin: '10px 0 14px 0' }}
-                      onChange={this.handChangeInput}
-                    />
-                    <input type="hidden" name="b_d5c899a65eeea99f76cc22169_5af7b8030d" value="" />
-                    <Button className="foot-subscribe" htmlType="submit" type="primary">SUBSCRIBE</Button>
-                  </form>
-                </Col>
-              </Row>
-            </div>
-            <div className="copyright">
-              <span className="item item--copy">&#169; 2019 UpTrade Technologies, Inc.</span>
-              <Link to="/privacy-policy"><span className="item item--policy">Privacy Policy</span></Link>
-              <Link to="/terms"><span className="item item--terms">Terms of Use</span></Link>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
- */
+export function MbFooter(): any {
+  return footerInfo.map(({ className, title, arr }: any) => {
+    return (
+      <ul className="item" key={title}>
+        <Collapse expandIconPosition="right">
+          <Panel header={<h2>{title}</h2>} key={title}>
+            {arr.map(({ subTitle, href }: any) => {
+              return (
+                <li key={subTitle}>
+                  <Link to={href}>
+                    <span>{subTitle}</span>
+                  </Link>
+                </li>
+              );
+            })}
+          </Panel>
+        </Collapse>
+      </ul>
+    );
+  });
+}
