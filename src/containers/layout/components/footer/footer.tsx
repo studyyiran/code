@@ -171,7 +171,8 @@ export default class Footer extends React.Component<
   };
 }
 
-export function MbFooter(): any {
+export function MbFooter(props: any): any {
+  const { onClickHandler } = props;
   return footerInfo.map(({ className, title, arr }: any) => {
     return (
       <ul className="item" key={title}>
@@ -179,7 +180,7 @@ export function MbFooter(): any {
           <Panel header={<h2>{title}</h2>} key={title}>
             {arr.map(({ subTitle, href }: any) => {
               return (
-                <li key={subTitle}>
+                <li key={subTitle} onClick={onClickHandler}>
                   <Link to={href}>
                     <span>{subTitle}</span>
                   </Link>

@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 // import { Button } from 'antd';
 // import { Link } from 'react-router-dom';
 import "./header.less";
@@ -15,6 +15,7 @@ import { RenderByCondition } from "@/containers/layout/components/footer/RenderB
 import { RenderByType } from "@/pages/sell/selectModelProcess/condition/components/renderByType";
 
 export default function Header() {
+  const [openColl, setOpenColl] = useState(false);
   function renderArr(arr: any) {
     return (
       <Menu>
@@ -28,61 +29,42 @@ export default function Header() {
       </Menu>
     );
   }
-  const menu = (
-    <Menu>
-      <Menu.Item>
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="http://www.alipay.com/"
-        >
-          1st menu item
-        </a>
-      </Menu.Item>
-      <Menu.Item>
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="http://www.taobao.com/"
-        >
-          2nd menu item
-        </a>
-      </Menu.Item>
-      <Menu.Item>
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="http://www.tmall.com/"
-        >
-          3rd menu item
-        </a>
-      </Menu.Item>
-    </Menu>
+  const RenderBackHome = () => (
+    <RouterLink to="/">
+      <img className="logo" src={require("@/images/logo.svg")} />
+    </RouterLink>
   );
   return (
     <header className="comp-header-container">
       <RenderByCondition
         ComponentMb={
-          <Collapse>
+          <Collapse activeKey={openColl ? "1" : ""}>
             <Panel
               showArrow={false}
               key={"1"}
               header={
                 <div className="container">
-                  <img className="logo" src={require("@/images/logo.svg")} />
-                  <img src={require("./res/menu.svg")} />
+                  <RenderBackHome />
+                  <img
+                    src={require("./res/menu.svg")}
+                    onClick={() => {
+                      setOpenColl((value: any) => !value);
+                    }}
+                  />
                 </div>
               }
             >
-              <MbFooter />
+              <MbFooter
+                onClickHandler={() => {
+                  setOpenColl(false);
+                }}
+              />
             </Panel>
           </Collapse>
         }
         ComponentPc={
           <div className="container">
-            <RouterLink to="/">
-              <img className="logo" src={require("@/images/logo.svg")} />
-            </RouterLink>
+            <RenderBackHome />
             <div className="comp-dropdown-container">
               {footerInfo.map(({ title, arr }: any, index: any) => {
                 return (
