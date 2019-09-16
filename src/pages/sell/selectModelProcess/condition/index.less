@@ -5,6 +5,8 @@
     min-height: 63vh;
     display: flex;
     justify-content: center;
+    position: relative;
+    left: -273 / 2*@px;
     .setpage(800*@px);
     .img-container {
       flex: 0 0 273*@px;
@@ -35,6 +37,7 @@
 
   .ismobile #root {
     .page-condition {
+      left: 0;
       padding: 10rem * @px2rem 10rem * @px2rem 40rem * @px2rem 10rem * @px2rem;
       min-height: 63vh;
       display: flex;
