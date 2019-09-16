@@ -10,9 +10,7 @@ import {
 } from "@/containers/layout/components/footer/footer";
 import Svg from "@/components/svg";
 import RouterLink from "@/components/routerLink";
-import { Link } from "react-router-dom";
 import { RenderByCondition } from "@/containers/layout/components/footer/RenderByCondition";
-import { RenderByType } from "@/pages/sell/selectModelProcess/condition/components/renderByType";
 
 export default function Header() {
   const [openColl, setOpenColl] = useState(false);

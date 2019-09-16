@@ -2,7 +2,7 @@ import * as React from "react";
 import classnames from "classnames";
 import { Link } from "react-router-dom";
 import "./footer.less";
-import { Row, Col, Input, Button } from "antd";
+import { Row, Col, Input, Button, Form } from "antd";
 // import commonStore from '@/store/common'
 import config from "../../../../config";
 import Svg from "@/components/svg";
@@ -128,15 +128,7 @@ export default class Footer extends React.Component<
             />
             <form className="footer__email-form">
               <h2>Subscribe To Our Newsletter</h2>
-              <form>
-                <input placeholder="Email" aria-placeholder="Email" />
-                <button
-                  className="common-button"
-                  onClick={this.handleSubscribe}
-                >
-                  Subscribe
-                </button>
-              </form>
+              {this.renderEmailForm()}
             </form>
           </div>
           <div className="flex-grid">
@@ -154,10 +146,29 @@ export default class Footer extends React.Component<
     );
   }
 
-  private handleSubscribe = (e: any) => {
-    e.preventDefault();
-    console.log(e);
-    console.log("123123");
+  private renderEmailForm = () => {
+    const EmailForm: any = (innerProps: any) => (
+      <Form
+        onSubmit={(e: any) => {
+          e.preventDefault();
+          console.log(e);
+          innerProps.form.validateFields((error: any, values: any) => {
+            if (!error) {
+              console.log(values);
+            }
+          });
+        }}
+      >
+        <Form.Item>
+          {innerProps.form.getFieldDecorator("email")(
+            <input placeholder="Email" aria-placeholder="Email" />
+          )}
+        </Form.Item>
+        <button className="common-button">Subscribe</button>
+      </Form>
+    );
+    const A = Form.create({ name: "dontknow" })(EmailForm);
+    return <A />;
   };
 
   private handleLink = (link: { [key: string]: string }) => {
