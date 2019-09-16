@@ -12,7 +12,10 @@ import {
   getinquirybyids,
   getinquirybykeys,
   createOrderStart,
-  getQuality
+  getQuality,
+  getLastestOrder,
+  emailSubscribed,
+  createEmail,
 } from "../server/index.api";
 import { getQualitymock, mockgetinquirybykeys } from "../../mock";
 import {
@@ -30,6 +33,13 @@ function reducer(state: IContextState, action: IReducerAction) {
   const { type, value } = action;
   let newState = { ...state };
   switch (type) {
+    case "setLastestOrder": {
+      newState = {
+        ...newState,
+        lastestOrder: value
+      };
+      break;
+    }
     case "setExpressOption": {
       newState = {
         ...newState,
@@ -259,6 +269,9 @@ interface IContextActions {
   getInquiryKeyList: () => any;
   removeFromList: (key: any) => any;
   getDownloadLabel: (key: any) => any;
+  getLastestOrder: () => any;
+  emailSubscribed: (s: string) => any;
+  createEmail: (s: any) => any;
 }
 
 function useGetAction(
@@ -266,6 +279,20 @@ function useGetAction(
   dispatch: (action: IReducerAction) => void
 ): IContextActions {
   const actions: IContextActions = {
+    createEmail: promisify(async function(emailInfo: string) {
+      const res: any = await emailSubscribed(emailInfo);
+      return res
+    }),
+    emailSubscribed: promisify(async function(email: string) {
+      const res: any = await emailSubscribed({
+        userEmail: email
+      });
+      return res
+    }),
+    getLastestOrder: promisify(async function(label: string) {
+      const res: any = await getLastestOrder();
+      dispatch({ type: "setLastestOrder", value: res });
+    }),
     getDownloadLabel: promisify(async function(label: string) {
       if (label) {
         // const res: any = await getDownloadLabel(label);
@@ -463,6 +490,9 @@ function useGetAction(
   };
   actions.getBrandList = useCallback(actions.getBrandList, [state.categoryId]);
   actions.getDownloadLabel = useCallback(actions.getDownloadLabel, []);
+  actions.getLastestOrder = useCallback(actions.getLastestOrder, []);
+  actions.emailSubscribed = useCallback(actions.emailSubscribed, []);
+  actions.createEmail = useCallback(actions.createEmail, []);
   actions.getQuality = useCallback(actions.getQuality, [state.categoryId]);
   actions.getProductsList = useCallback(actions.getProductsList, [
     state.brand,
@@ -499,6 +529,7 @@ interface IContextState {
   productsList: []; // 热刷新
   expressOption: any; // 用户数据
   needInsurance: boolean; // 用户数据
+  lastestOrder: any[]; // 用户数据
 }
 
 export interface ISelectModelContext extends IContextActions {
@@ -522,7 +553,8 @@ export function ModelContextProvider(props: any) {
     inquiryKey: "",
     brand: "",
     expressOption: null,
-    needInsurance: false
+    needInsurance: false,
+    lastestOrder: []
   };
   if (!haveLoad) {
     // haveLoad = true;
@@ -548,6 +580,9 @@ export function ModelContextProvider(props: any) {
   useEffect(() => {
     action.getPriceInfo();
   }, [action.getPriceInfo]);
+  useEffect(() => {
+    action.getLastestOrder();
+  }, [getLastestOrder]);
   const propsValue: ISelectModelContext = {
     ...action,
     selectModelContextValue: state,

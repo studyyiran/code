@@ -29,19 +29,22 @@ export default function NewBuyNotice(props: any): any {
       };
     }, 1000);
   }, []);
-  return <Info />;
+  return <div className="notice-container">
+    <Info {...data} />
+  </div>;
 }
 
-function Info() {
+function Info(props: any) {
+  const { orderInfo, city, orderTime, productPic } = props;
   return (
     <div className="comp-new-buy-notice">
-      <img src={"123"} />
+      <img src={productPic} />
       <section>
-        <h1>123</h1>
-        <span className="location">123</span>
+        <h1>{orderInfo}</h1>
+        <span className="location">{city}</span>
         <div className="date-container">
           <Svg />
-          <span>123</span>
+          <span>{orderTime}</span>
         </div>
       </section>
     </div>

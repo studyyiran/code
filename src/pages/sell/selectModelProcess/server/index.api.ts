@@ -69,7 +69,6 @@ export const getExpressFee = <T>(inquiryKeys: any) => {
 export const getBrands = <T>(categoryId: string) => {
   const opts: IOpts = {
     url: `/product/getBrands?id=${categoryId}`,
-    isFullUrl: true
   };
 
   return requestGetResponse(Request<T>(requestWrapper(opts)));
@@ -79,9 +78,37 @@ export const getBrands = <T>(categoryId: string) => {
 export const getQuality = <T>(categoryId: string) => {
   const opts: IOpts = {
     url: `/product/getQuality?id=${categoryId}`,
-    isFullUrl: true
   };
 
+  return requestGetResponse(Request<T>(requestWrapper(opts)));
+};
+
+// 根据类目获取品牌列表
+export const getLastestOrder = <T>() => {
+  const opts: IOpts = {
+    url: `/sub_order/lastest`,
+    method: 'post'
+  };
+  return requestGetResponse(Request<T>(requestWrapper(opts)));
+};
+
+// 
+export const emailSubscribed = <T>(params: any) => {
+  const opts: IOpts = {
+    url: `/message_books/subscribed`,
+    params: params,
+    method: 'post'
+  };
+  return requestGetResponse(Request<T>(requestWrapper(opts)));
+};
+
+// 
+export const createEmail = <T>(params: any) => {
+  const opts: IOpts = {
+    url: `/message_books/createemail`,
+    params: params,
+    method: 'post'
+  };
   return requestGetResponse(Request<T>(requestWrapper(opts)));
 };
 
