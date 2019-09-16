@@ -1,3 +1,4 @@
+
 import * as React from "react";
 import "./index.less";
 import "../commonCss/contact.less";
@@ -11,6 +12,7 @@ import {
 } from "@/pages/sell/selectModelProcess/context";
 const { Item } = Form;
 const { TextArea } = Input;
+
 interface IStaticContent {
   title: string;
   desc: string;
@@ -18,10 +20,60 @@ interface IStaticContent {
 }
 
 const staticContent: IStaticContent = {
-  title: "Contact us?",
-  desc: "",
-  formTitle: "Send us a message"
+  title: "Need help with your order?",
+  desc:
+    "Let us know how we can assist you with your order. We will get back to you within 1 business day.",
+  formTitle: "Fill out the form below"
 };
+
+function HelpList() {
+  interface IStaticHelpContent {
+    title: string;
+    desc: string;
+    img: string;
+  }
+
+  const staticHelpContent: IStaticHelpContent[] = [
+    {
+      title: "Need more time?",
+      desc:
+        "Let us know how we can assist you with your order. We will get back to you within 1 business day.",
+      img: require("./bg.jpg")
+    },
+    {
+      title: "Need more time?",
+      desc:
+        "Let us know how we can assist you with your order. We will get back to you within 1 business day.",
+      img: require("./bg.jpg")
+    },
+    {
+      title: "Need more time?",
+      desc:
+        "Let us know how we can assist you with your order. We will get back to you within 1 business day.",
+      img: require("./bg.jpg")
+    }
+  ];
+  return (
+    <section className="comp-help-list">
+      <h2>Where here to help</h2>
+      <ul>
+        {staticHelpContent.map(
+          ({ title, desc, img }: IStaticHelpContent, index) => {
+            return (
+              <li key={index} className="help-info">
+                <div className="desc-content">
+                  <h3>{title}</h3>
+                  <p>{desc}</p>
+                </div>
+                <img src={img} />
+              </li>
+            );
+          }
+        )}
+      </ul>
+    </section>
+  );
+}
 
 export default function() {
   const selectModelContext = useContext(SelectModelContext);

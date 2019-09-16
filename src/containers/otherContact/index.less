@@ -1,0 +1,82 @@
+@import (reference) "~@/styles/index.less";
+@import (reference) "~@/styles/font.less";
+@import (reference) "~@/containers/commonCss/contact.less";
+
+.page-contact-container {
+  @img-width: 452px;
+  @help-info-margin: 40px;
+  > .bg-3 {
+    background: #f5f7f9;
+  }
+  > .bg-4 {
+    background: @white;
+    text-align: center;
+    .leave-message {
+      padding-top: 109px;
+      padding-bottom: 48px;
+      > h2 {
+        font-size: 36px;
+        margin-bottom: 24px;
+      }
+      > p {
+        color: #444b54;
+        font-size: 16px;
+        margin-bottom: 42px;
+      }
+      > button {
+        max-width: 456px;
+      }
+    }
+  }
+  .comp-help-list {
+    padding: 50px 0 3px;
+    max-width: 2 * @img-width + 30px;
+    > h2 {
+      font-size: 36px;
+      text-align: center;
+      margin-bottom: 96px;
+    }
+    li.help-info {
+      &:nth-child(2n + 1) {
+        flex-direction: row-reverse;
+      }
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      > .desc-content {
+        flex: 0 0 374px;
+        //max-width: 374px;
+        > h3 {
+          font-size: 36px;
+        }
+        > p {
+          font-size: 16px;
+        }
+      }
+      > img {
+        //flex: 0 0 0;
+        width: 49%;
+        margin-bottom: @help-info-margin;
+        //min-width: @img-width;
+        //max-width: @img-width;
+      }
+      > img {
+        border-radius: 8px;
+      }
+    }
+  }
+}
+
+.ismobile #root {
+  @help-info-margin: 24px auto 50px;
+  .page-contact-container {
+    li.help-info {
+      display: block;
+      //text-align: center;
+      > img {
+        width: 100%;
+        margin: @help-info-margin;
+      }
+    }
+  }
+}

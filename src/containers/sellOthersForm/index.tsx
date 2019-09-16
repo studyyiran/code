@@ -16,7 +16,6 @@ export default function() {
   const selectModelContext = useContext(SelectModelContext);
   const { createEmail } = selectModelContext as ISelectModelContext;
   function handlerFormPost(values: any) {
-    console.log(values);
     const { brand, model, storage = "", carrier = "", condition = [] } = values;
     const configArr = [
       {
