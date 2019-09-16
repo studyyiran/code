@@ -2,6 +2,12 @@
 @world: {
   .comp-header-container {
     .collapse-clear-border();
+    background: @tab-bar-color;
+    .ant-collapse-content > .ant-collapse-content-box {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+    ant-collapse-content
     .ant-collapse-header {
       padding: 0;
     }
@@ -12,9 +18,18 @@
       background: @white;
       width: 100%;
       //position: absolute;
+      padding-top: 10*@px;
+      padding-bottom: 10*@px;
+      .ant-collapse-content-box {
+        background: @white;
+        h2 {
+          font-size: 18*@f;
+        }
+        a {
+          font-size: 12*@f;
+        }
+      }
     }
-    background: @tab-bar-color;
-
     padding: 30 * @px 58 * @px 30 * @px;
     //padding: 30*@px 258*@px 30*@px;
     .container {
@@ -44,6 +59,7 @@
       > *:first-child {
         position: absolute;
         width: 100%;
+        z-index: 1;
       }
       .ant-collapse > .ant-collapse-item.ant-collapse-no-arrow > .ant-collapse-header {
         padding: 18 * @px 20 * @px 14 * @px 16 * @px;
