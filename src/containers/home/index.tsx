@@ -15,6 +15,7 @@ import {
   SelectModelContext
 } from "@/pages/sell/selectModelProcess/context";
 import VideoComponent from "@/components/video";
+import NewBuyNotice from "@/containers/home/components/newBuyNotice";
 
 const descPart1 = {
   descArr: [
@@ -219,6 +220,7 @@ class Home extends React.Component<IHomeProps, IHomeState> {
     const url = require("./res/bannerPhone.png");
     return (
       <article className="page-home">
+        <NewBuyNotice data={123} />
         <div className="home__intro">
           <div className="container">
             <section className="title">
