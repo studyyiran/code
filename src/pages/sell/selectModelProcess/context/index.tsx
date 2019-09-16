@@ -15,7 +15,8 @@ import {
   getQuality,
   getLastestOrder,
   emailSubscribed,
-  createEmail
+  createEmail,
+  getSkuId
 } from "../server/index.api";
 import { getQualitymock, mockgetinquirybykeys } from "../../mock";
 import {
@@ -272,6 +273,7 @@ interface IContextActions {
   getLastestOrder: () => any;
   emailSubscribed: (s: string) => any;
   createEmail: (s: any) => any;
+  getSkuId: () => any;
 }
 
 function useGetAction(
@@ -279,6 +281,16 @@ function useGetAction(
   dispatch: (action: IReducerAction) => void
 ): IContextActions {
   const actions: IContextActions = {
+    getSkuId: promisify(async function(emailInfo: any) {
+      const param = {
+        productId: state.modelInfo.modelId,
+        bpvIds: Object.keys(state.modelInfo.othersAttr).map((key: any) => ({
+          id: state.modelInfo.othersAttr[key]
+        }))
+      };
+      const res: any = await getSkuId({ ...param });
+      return res;
+    }),
     createEmail: promisify(async function(emailInfo: any) {
       const defaultParam = {
         toEmail: "",
@@ -495,6 +507,7 @@ function useGetAction(
     }
   };
   actions.getBrandList = useCallback(actions.getBrandList, [state.categoryId]);
+  actions.getSkuId = useCallback(actions.getSkuId, [state.modelInfo]);
   actions.getDownloadLabel = useCallback(actions.getDownloadLabel, []);
   actions.getLastestOrder = useCallback(actions.getLastestOrder, []);
   actions.emailSubscribed = useCallback(actions.emailSubscribed, []);
@@ -589,6 +602,9 @@ export function ModelContextProvider(props: any) {
   useEffect(() => {
     action.getLastestOrder();
   }, [getLastestOrder]);
+  useEffect(() => {
+    action.getSkuId();
+  }, [action.getSkuId]);
   const propsValue: ISelectModelContext = {
     ...action,
     selectModelContextValue: state,

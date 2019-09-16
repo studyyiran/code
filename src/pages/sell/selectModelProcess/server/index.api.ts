@@ -68,7 +68,7 @@ export const getExpressFee = <T>(inquiryKeys: any) => {
 // 根据类目获取品牌列表
 export const getBrands = <T>(categoryId: string) => {
   const opts: IOpts = {
-    url: `/product/getBrands?id=${categoryId}`,
+    url: `/product/getBrands?id=${categoryId}`
   };
 
   return requestGetResponse(Request<T>(requestWrapper(opts)));
@@ -77,7 +77,7 @@ export const getBrands = <T>(categoryId: string) => {
 // 根据类目获取品牌列表
 export const getQuality = <T>(categoryId: string) => {
   const opts: IOpts = {
-    url: `/product/getQuality?id=${categoryId}`,
+    url: `/product/getQuality?id=${categoryId}`
   };
 
   return requestGetResponse(Request<T>(requestWrapper(opts)));
@@ -87,27 +87,36 @@ export const getQuality = <T>(categoryId: string) => {
 export const getLastestOrder = <T>() => {
   const opts: IOpts = {
     url: `/sub_order/lastest`,
-    method: 'post'
+    method: "post"
   };
   return requestGetResponse(Request<T>(requestWrapper(opts)));
 };
 
-// 
+//
 export const emailSubscribed = <T>(params: any) => {
   const opts: IOpts = {
     url: `/message_books/subscribed`,
     params: params,
-    method: 'post'
+    method: "post"
   };
   return requestGetResponse(Request<T>(requestWrapper(opts)));
 };
 
-// 
+//
 export const createEmail = <T>(params: any) => {
   const opts: IOpts = {
     url: `/message_books/createemail`,
     params: params,
-    method: 'post'
+    method: "post"
+  };
+  return requestGetResponse(Request<T>(requestWrapper(opts)));
+};
+
+export const getSkuId = <T>(params: any) => {
+  const opts: IOpts = {
+    url: `/product/getSKUID`,
+    params: params,
+    method: "post"
   };
   return requestGetResponse(Request<T>(requestWrapper(opts)));
 };
@@ -130,7 +139,7 @@ ___________________________________________________________________________
 // 根据类目获取品牌列表
 export const getBrandsByCid = <T>(categoryId = 1) => {
   const opts: IOpts = {
-    url: `/brands/category/${categoryId}`,
+    url: `/brands/category/${categoryId}`
   };
 
   return Request<T>(opts);

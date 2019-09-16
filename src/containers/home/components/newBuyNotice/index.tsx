@@ -54,7 +54,7 @@ function Info(props: any) {
       <img src={productPic} />
       <section>
         <h1>{orderInfo}</h1>
-        <span className="location">{city}</span>
+        {/*<span className="location">{city}</span>*/}
         <div className="date-container">
           <Svg />
           <span>{orderTime}</span>

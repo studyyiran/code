@@ -3,6 +3,7 @@
 @world: {
   .notice-container {
     position: fixed;
+    z-index: 10;
     width: 100%;
     bottom: 10*@px;
     left: 0;
@@ -26,8 +27,9 @@
       }
       > section:nth-child(2) {
         > h1 {
-          .one-line-precess();
-          width: 80%;
+          //.one-line-precess();
+          width: 230 * @px;
+          height: 50 * @px;
           .font(16 * @px, 500, #222222);
         }
         > .location {
