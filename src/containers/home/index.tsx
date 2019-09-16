@@ -137,12 +137,20 @@ function RenderReviewList(props: any) {
 export default function HomeWrapper(props: any) {
   const selectModelContext = useContext(SelectModelContext);
   const {
-    selectModelContextDispatch
+    selectModelContextDispatch,
+    selectModelContextValue
   } = selectModelContext as ISelectModelContext;
+  const { lastestOrder } = selectModelContextValue;
   function clickBrandHandler(value: any) {
     selectModelContextDispatch({ type: "setBrand", value });
   }
-  return <Home clickBrandHandler={clickBrandHandler} {...props} />;
+  return (
+    <Home
+      clickBrandHandler={clickBrandHandler}
+      {...props}
+      lastestOrder={lastestOrder}
+    />
+  );
 }
 
 @inject("yourphone", "common")
@@ -218,9 +226,10 @@ class Home extends React.Component<IHomeProps, IHomeState> {
   public render() {
     const { isMobile } = this.props.common;
     const url = require("./res/bannerPhone.png");
+    console.log(this.props);
     return (
       <article className="page-home">
-        <NewBuyNotice data={123} />
+        <NewBuyNotice data={(this.props as any).lastestOrder} />
         <div className="home__intro">
           <div className="container">
             <section className="title">

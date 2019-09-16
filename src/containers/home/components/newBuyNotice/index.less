@@ -26,10 +26,12 @@
       }
       > section:nth-child(2) {
         > h1 {
-          .font(16 * @f, 500, #222222);
+          .one-line-precess();
+          width: 80%;
+          .font(16 * @px, 500, #222222);
         }
         > .location {
-          .font(16 * @f, 500, #444444);
+          .font(16 * @px, 500, #444444);
         }
         > .date-container {
           display: flex;
@@ -43,7 +45,7 @@
             margin-right: 10 * @px;
           }
           span {
-            .font(12 * @f, 500, rgba(126, 131, 150, 1));
+            .font(12 * @px, 500, rgba(126, 131, 150, 1));
           }
         }
       }

@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { notification } from "antd";
 import "./index.less";
 import Svg from "@/components/svg";
 
 export default function NewBuyNotice(props: any): any {
+  const [current, setCurrent] = useState(0);
   const { data } = props;
   const openNotification = () => {
     notification.open({
@@ -22,16 +23,28 @@ export default function NewBuyNotice(props: any): any {
     });
   };
   useEffect(() => {
-    const interval = window.setInterval(() => {
-      // openNotification();
-      return () => {
-        window.clearInterval(interval);
-      };
-    }, 1000);
-  }, []);
-  return <div className="notice-container">
-    <Info {...data} />
-  </div>;
+    if (data && data.length) {
+      setCurrent(0);
+      const interval = window.setInterval(() => {
+        // openNotification();
+        setCurrent((value: number) => {
+          if (value < data.length - 1) {
+            return ++value;
+          } else {
+            return 0;
+          }
+        });
+        return () => {
+          window.clearInterval(interval);
+        };
+      }, 5000);
+    }
+  }, [data]);
+  return data && data.length && data[current] ? (
+    <div className="notice-container">
+      <Info {...data[current]} />
+    </div>
+  ) : null;
 }
 
 function Info(props: any) {

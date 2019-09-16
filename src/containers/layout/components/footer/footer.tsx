@@ -23,11 +23,11 @@ export const footerInfo = [
       {
         subTitle: "How To Sell",
         href: "/sell-my-phone"
+      },
+      {
+        subTitle: 'Sell Now',
+        href: '/newsell'
       }
-      // {
-      //   subTitle: 'Sell Now',
-      //   href: ''
-      // }
     ]
   },
   {
@@ -208,7 +208,7 @@ function RenderEmailForm() {
           if (!error) {
             emailSubscribed(values.email)
               .then((res: any) => {
-                message.success('subscribe success!');
+                message.success('');
               })
               .catch((errorRes: any) => {
                 console.error(errorRes);
