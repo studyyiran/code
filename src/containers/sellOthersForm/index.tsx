@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import ContactForm from "@/containers/contact/component/form";
 import "./index.less";
 import "../commonCss/contact.less";
-import { Form, Input, Checkbox } from "antd";
+import { Form, Input, Checkbox, Row, Col } from "antd";
 const { Item } = Form;
 import "./index.less";
+import RouterLink from "@/components/routerLink";
 
 export default function() {
   const [showForm, setShowForm] = useState(true);
@@ -38,7 +39,7 @@ export default function() {
 
 function RenderContent() {
   return (
-    <div>
+    <div className="thank-page">
       <p>Thanks for telling us about your phone!</p>
       <p>
         Your phone may not be in high demand. We need 1 to 2 business days to
@@ -46,6 +47,12 @@ function RenderContent() {
         will reach out to you once complete.
       </p>
       <p>Please contact us if you have any question.</p>
+      <button className="common-button">
+        <RouterLink to={"/newsell"}>Place Another Phone</RouterLink>RouterLink>
+      </button>
+      <RouterLink className="common-a" to={"/"}>
+        Back to Home
+      </RouterLink>
     </div>
   );
 }
@@ -96,15 +103,19 @@ function FormPart(props: any) {
             {getFieldDecorator("condition", {
               rules: [{ required: false, message: "Please input" }]
             })(
-              <Checkbox.Group>
-                {checkBoxContent.map(({ id, content }: any) => {
-                  return (
-                    <Checkbox key={id} value={id} className="check-box">
-                      {content}
-                    </Checkbox>
-                  );
-                })}
-              </Checkbox.Group>
+              <Row gutter={24}>
+                <Checkbox.Group>
+                  {checkBoxContent.map(({ id, content }: any) => {
+                    return (
+                      <Col key={id}>
+                        <Checkbox value={id} className="check-box">
+                          {content}
+                        </Checkbox>
+                      </Col>
+                    );
+                  })}
+                </Checkbox.Group>
+              </Row>
             )}
           </Item>
         );

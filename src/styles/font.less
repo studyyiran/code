@@ -92,10 +92,23 @@ a:hover {
 
 //my
 @common-button-world: {
+  .common-a {
+    color: @color-blue-liner-use;
+    &:hover {
+      color: @color-blue-liner-use;
+    }
+  }
+  a {
+    .canclick();
+  }
+  .canclick {
+    cursor: pointer;
+  }
   .ant-collapse > .ant-collapse-item > .ant-collapse-header {
     line-height: 1.2;
   }
   .common-button {
+    .canclick();
     // 不希望按钮过宽
     .pc({max-width: 456*@px;});
     border-radius: 6*@px;
