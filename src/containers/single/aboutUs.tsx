@@ -3,6 +3,7 @@ import { Button } from "antd";
 import { RouteComponentProps } from "react-router";
 import "./aboutUs.less";
 import { HeaderTitle } from "@/components/headerTitle";
+import RouterLink from "@/components/routerLink";
 
 interface IArticle {
   className: string;
@@ -77,22 +78,22 @@ const userIntro: IUserIntro[] = [
   {
     headimg: require("./res/whoWeAre/head_2.png"),
     name: "Esteban Facundo",
-    desc: "Head of Operations"
+    desc: "Head of Customer Service"
   },
   {
     headimg: require("./res/whoWeAre/head_3.png"),
     name: "Howard Huang",
-    desc: "Head of Operations"
+    desc: "Head of Digital Marketing"
   },
   {
     headimg: require("./res/whoWeAre/head_4.png"),
     name: "Hamza Shaikh",
-    desc: "Head of Operations"
+    desc: "Lead UI/UX Designer"
   },
   {
     headimg: require("./res/whoWeAre/head_5.png"),
     name: "Christine Huang",
-    desc: "Head of Operations"
+    desc: "Customer Service"
   }
 ];
 
@@ -160,15 +161,12 @@ class AboutUs extends React.Component<RouteComponentProps> {
           </ul>
         </section>
         <div className="button-container">
-          <button className="common-button" onClick={this.onGoToSell}>
-            Sell it now
+          <button className="common-button">
+            <RouterLink to="/newsell">Sell it now</RouterLink>
           </button>
         </div>
       </article>
     );
   }
-  private onGoToSell = () => {
-    this.props.history.push("/sell/yourphone/brand");
-  };
 }
 export default AboutUs;

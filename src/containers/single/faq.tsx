@@ -4,6 +4,7 @@ const { Panel } = Collapse;
 import "./faq.less";
 import { staticSubjects } from "./faq/staticSubjects";
 import { HeaderTitle } from "@/components/headerTitle";
+import RouterLink from "@/components/routerLink";
 
 interface ISubject {
   subjectTitle: string;
@@ -47,7 +48,9 @@ export default function Faq() {
           );
         })}
       </ul>
-      <button className="common-button">View more</button>
+      <button className="common-button">
+        <RouterLink to="/newsell">Sell it now</RouterLink>
+      </button>
     </div>
   );
 }
