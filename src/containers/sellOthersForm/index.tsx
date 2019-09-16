@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react";
-import ContactForm from "@/containers/contact/component/form";
 import "./index.less";
 import "../commonCss/contact.less";
 import { Form, Input, Checkbox, Row, Col } from "antd";
@@ -10,6 +9,7 @@ import {
   ISelectModelContext,
   SelectModelContext
 } from "@/pages/sell/selectModelProcess/context";
+import FormPartWrapper from "@/components/formPart/form";
 
 export default function() {
   const [showForm, setShowForm] = useState(true);
@@ -48,7 +48,6 @@ export default function() {
       setShowForm(false);
     });
   }
-
   return (
     <div className="page-container__title contact-common-css page-sell-others-container">
       <div className="bg-container bg-1">
@@ -60,7 +59,7 @@ export default function() {
         <div className="common-card">
           <section>
             {showForm ? (
-              <FormPartWrapper onPostHandler={handlerFormPost as any} />
+              <FormPartWrapper onPostHandler={handlerFormPost as any} renderformConfig={renderConfig}/>
             ) : (
               <RenderContent />
             )}
@@ -91,7 +90,7 @@ function RenderContent() {
   );
 }
 
-function FormPart(props: any) {
+const renderConfig = (props: any) => {
   const formContentArr = [
     {
       id: "brand",
@@ -135,7 +134,7 @@ function FormPart(props: any) {
         return (
           <Row gutter={24}>
             <Item label="Select all that apply">
-              {getFieldDecorator("condition", {
+              {props.form.getFieldDecorator("condition", {
                 rules: [{ required: false, message: "Please input" }]
               })(
                 <Checkbox.Group>
@@ -183,52 +182,6 @@ function FormPart(props: any) {
       ]
     }
   ];
-  function handlerFormPost(e: any) {
-    // 阻止默认
-    e.preventDefault();
-    // 最终验证
-    props.form.validateFields((error: any, values: any) => {
-      console.log(error);
-      if (!error) {
-        console.log(values);
-        props.onPostHandler(values);
-      }
-    });
-    //
-  }
-  const { getFieldDecorator, setFieldsValue } = props.form;
-
-  // Form 最终代理一个submit
-  return (
-    <div className="form-part-container">
-      <Form onSubmit={handlerFormPost}>
-        {formContentArr.map(
-          ({ title, index, type, render, id, rules, required }: any) => {
-            if (type === "checkboxGroup") {
-              return render();
-            } else {
-              return (
-                <Item label={title} key={id}>
-                  {getFieldDecorator(id, {
-                    rules: rules
-                      ? rules
-                      : [
-                          {
-                            required: required,
-                            message: "Please input"
-                          }
-                        ]
-                  })(<Input />)}
-                </Item>
-              );
-            }
-          }
-        )}
-        <button className="common-button">Next</button>
-      </Form>
-    </div>
-  );
+  return formContentArr
 }
 
-// 便于注入属性和方法
-const FormPartWrapper: any = Form.create({ name: "dontknow" })(FormPart);

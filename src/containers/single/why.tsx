@@ -1,7 +1,7 @@
 import * as React from "react";
 import { inject, observer } from "mobx-react";
 import { Button } from "antd";
-import ContactForm from "@/containers/contact/component/form";
+import ContactForm from "@/components/formPart/form";
 import {
   IContactProps,
   IContact
@@ -126,7 +126,7 @@ export default class Why extends React.Component<IContactProps> {
             <br /> Our friendly staff is standing by.
           </h2>
           <div className="form-box">
-            <ContactForm onOk={this.handleOk} />
+            {/*<ContactForm onOk={this.handleOk} />*/}
           </div>
         </div>
       </div>
