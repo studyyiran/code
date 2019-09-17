@@ -157,7 +157,10 @@ function OrderList(props: { order: IOrderStore }) {
             )}
 
             {reactNodeConfig.listedForSale || reactNodeConfig.orderComplete ? (
-              <ListedForSale {...order} />
+              <ListedForSale
+                {...order}
+                phoneConditionQuestion={phoneConditionQuestion}
+              />
             ) : null}
           </div>
         )

@@ -4,7 +4,8 @@ import Tag from "@/components/tag";
 import CheckInspectDiff from "@/containers/order/container/components/checkInspectDiff";
 const priceUnit = "$";
 export default function InspectPart(props: any) {
-  const { isDifferent, price, differentReason } = props;
+  const {inquiryInfo, phoneConditionQuestion} = props
+  const { isDifferent, price, differentReason } = inquiryInfo;
   return (
     <div className="comp-inspect-part">
       <section className="line-with-title">
@@ -22,7 +23,10 @@ export default function InspectPart(props: any) {
         {isDifferent ? (
           <li className="price-view">
             <span>Difference</span>
-            <CheckInspectDiff />
+            <CheckInspectDiff
+              phoneConditionQuestion={phoneConditionQuestion}
+              inquiryInfo={inquiryInfo}
+            />
           </li>
         ) : null}
       </ul>

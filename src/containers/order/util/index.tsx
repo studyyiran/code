@@ -211,9 +211,9 @@ export function getInfo({
 }
 
 function findDate(status: IProgressType, orderStatusHistories: any) {
-  if (status === IProgressType.TO_BE_LISTED) {
-    debugger;
-  }
+  // if (status === IProgressType.TO_BE_LISTED) {
+    // debugger;
+  // }
   function findFirstEleFromTarget(b: any, f: any) {
     const vArray = b.filter(f);
     if (vArray.length > 0) {
@@ -239,7 +239,7 @@ export function getProgressType({
   subOrderStatus: any;
 }) {
   let currentIndex = 0;
-  debugger;
+  // debugger;
   let dataList: IProgressDot[] = [
     {
       name: "Order Placed",

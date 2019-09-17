@@ -6,6 +6,7 @@ import TipsIcon from "@/pages/sell/selectModelProcess/components/tipsIcon";
 import CheckInspectDiff from "../container/components/checkInspectDiff";
 import { Modal, Form, Input, Button } from "antd";
 import ReportModalContent from "@/containers/order/container/components/reportModalContent";
+import InspectPart from "@/containers/order/container/components/inspectPart";
 const { TextArea } = Input;
 
 const priceUnit = "$";
@@ -25,9 +26,16 @@ export default function InspectionWrapper(props: any) {
       ...data
     });
   }
+  const { submitted, revised, isDifferent, differentReason } = inquiryInfo;
   return (
     <Inspection
-      inquiryInfo={inquiryInfo}
+      inquiryInfo={{
+        isDifferent: isDifferent,
+        differentReason,
+        price: revised.amount,
+        revised,
+        submitted
+      }}
       phoneConditionQuestion={phoneConditionQuestion}
       postEmailFormHandler={postEmailFormHandler}
       revisedPriceConfirm={() => {
@@ -93,6 +101,12 @@ class Inspection extends React.Component<any, any> {
               </li>
             </ul>
           </section>
+        )}
+        {isDifferent && (
+          <InspectPart
+            inquiryInfo={inquiryInfo}
+            phoneConditionQuestion={phoneConditionQuestion}
+          />
         )}
         {isDifferent && (
           <div className="content-container">

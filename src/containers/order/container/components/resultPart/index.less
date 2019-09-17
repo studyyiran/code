@@ -1,20 +1,5 @@
 @import (reference) "~@/styles/index.less";
-
-.comp-result-part {
-  .information-list {
-    display: flex;
-    flex-direction: column;
-  }
-  .content-tag-container {
-    display: flex;
-    align-items: flex-start;
-  }
-  .comp-tag {
-    margin-left: 50px;
-  }
-}
-
-.ismobile {
+@world: {
   .comp-result-part {
     .information-list {
       display: flex;
@@ -25,7 +10,8 @@
       align-items: flex-start;
     }
     .comp-tag {
-      margin-left: 50rem * @px2rem;
+      margin-left: 50*@px;
     }
   }
 }
+.hello(@world);

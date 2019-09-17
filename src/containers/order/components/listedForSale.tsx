@@ -6,25 +6,27 @@ import InspectPart from "../container/components/inspectPart";
 import ResultPart from "../container/components/resultPart";
 import "./listedForSale.less";
 
-export default function(props: any) {
-  const { inquiryInfo, paymentInfo } = props;
+export default function ListedForSaleWrapper(props: any) {
+  const { inquiryInfo, paymentInfo, phoneConditionQuestion } = props;
   const { submitted, revised, isDifferent, differentReason } = inquiryInfo;
   const innerProps = {
-    order: {
-      inquiryInfo: {
-        isDifferent: isDifferent,
-        differentReason,
-        price: revised.amount
-      },
-      paymentInfo
-    }
+    inquiryInfo: {
+      isDifferent: isDifferent,
+      differentReason,
+      price: revised.amount,
+      revised,
+      submitted
+    },
+    paymentInfo,
+    phoneConditionQuestion: phoneConditionQuestion
   };
   return <ListedForSale {...innerProps} />;
 }
 
 class ListedForSale extends React.Component<any> {
   public render() {
-    const { inquiryInfo, paymentInfo } = this.props.order;
+    // debugger;
+    const { inquiryInfo, paymentInfo, phoneConditionQuestion } = this.props;
     const { isDifferent, differentReason, price } = inquiryInfo;
     const tag = {
       type: isDifferent,
@@ -34,7 +36,10 @@ class ListedForSale extends React.Component<any> {
     return (
       <div className="comp-order-sale">
         <ResultPart {...inquiryInfo} {...paymentInfo} />
-        <InspectPart {...inquiryInfo} />
+        <InspectPart
+          inquiryInfo={inquiryInfo}
+          phoneConditionQuestion={phoneConditionQuestion}
+        />
       </div>
     );
   }
