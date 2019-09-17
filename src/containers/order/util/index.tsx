@@ -315,18 +315,25 @@ export function getProgressType({
     subOrderStatus === IProgressType.TO_BE_RETURNED ||
     subOrderStatus === IProgressType.TRANSACTION_FAILED
   ) {
+    dataList[3] = {
+      name: "Difference Inspected",
+      img: PackageReceivedIcon,
+      date: packageDate(
+        findDate(IProgressType.DIFFERENCE_INSPECTED, orderStatusHistories)
+      )
+    };
     dataList[4] = {
       name: "Return Requested",
       img: ReturnRequestIcon,
       date: packageDate(
-        findDate(IProgressType.DIFFERENCE_INSPECTED, orderStatusHistories)
+        findDate(IProgressType.TO_BE_RETURNED, orderStatusHistories)
       )
     };
     dataList[5] = {
       name: "Product Dispatched",
       img: PackageReceivedIcon,
       date: packageDate(
-        findDate(IProgressType.TO_BE_RETURNED, orderStatusHistories)
+        findDate(IProgressType.TRANSACTION_FAILED, orderStatusHistories)
       )
     };
   }

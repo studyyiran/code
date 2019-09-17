@@ -36,7 +36,7 @@ class DeliverSatus extends React.Component<IOrderProps, IDeliverSatus> {
     const deliverInfos: IShippingAddress[] = [];
     const deliverInfosProps = this.props.order.deliverInfos;
     if (!deliverInfosProps) {
-      return null
+      return null;
     }
     if (deliverInfosProps.length > 2) {
       deliverInfos.push(deliverInfosProps[0]);
