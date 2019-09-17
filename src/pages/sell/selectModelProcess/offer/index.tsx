@@ -90,7 +90,7 @@ export default function Brand(props: any) {
           <ul className="">
             {resultList.length > 1 ? (
               <li
-                className="edit-panel-line"
+                className="edit-panel-line canclick"
                 onClick={() => {
                   removeFromList(productInquiryKey);
                 }}
@@ -171,6 +171,13 @@ export default function Brand(props: any) {
           </span>
         </section>
       </div>
+      <section className="risk">
+        <h3>Zero Risk & Free Retuns</h3>
+        <p>
+          If you change your mind after shipping your phone, we even ship it
+          back to you for free!
+        </p>
+      </section>
       <div className="buttons-container">
         <button className="common-button second" onClick={addNewHandler}>
           Add another device

@@ -102,8 +102,7 @@ class Shipping extends React.Component<any, any> {
           className="difference"
           href={config.DEFAULT.FedExUrl}
         >
-          Find {this.props.yourphone.FedExNearStores ? "all" : "the closest"}{" "}
-          FedEx location
+          Check nearby locations
         </a>
       </div>
     );
@@ -126,8 +125,7 @@ class Shipping extends React.Component<any, any> {
           </>
         )}
         <a target="_blank" className="difference" href={config.DEFAULT.USPSUrl}>
-          Find {this.props.yourphone.USPSNearStores ? "all" : "the closest"}{" "}
-          USPS location
+          Check nearby locations
         </a>
       </div>
     );
@@ -248,9 +246,6 @@ class Shipping extends React.Component<any, any> {
 function RenderQuestion(props: any) {
   const { currentSelect, onChange, optionsList } = props;
   // 直接拉接口
-  {
-    moment.tz(addDate(new Date(), 7), "America/Chicago").format("MMM DD");
-  }
   const options = [
     {
       time: 3,
@@ -262,7 +257,7 @@ function RenderQuestion(props: any) {
     },
     {
       time: 14,
-      content: "Request a box and ship by "
+      content: "Send me a box; I will ship by "
     }
   ];
   let afterCalcList: any[] = [];

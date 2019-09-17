@@ -13,6 +13,7 @@ import {
   SelectModelContext,
   ISelectModelContext
 } from "@/pages/sell/selectModelProcess/context";
+import RouterLink from "@/components/routerLink";
 const { Panel } = Collapse;
 
 export const footerInfo = [
@@ -25,8 +26,8 @@ export const footerInfo = [
         href: "/sell-my-phone"
       },
       {
-        subTitle: 'Sell Now',
-        href: '/newsell'
+        subTitle: "Sell Now",
+        href: "/newsell"
       }
     ]
   },
@@ -139,8 +140,12 @@ export default class Footer extends React.Component<
           <div className="flex-grid">
             <div>
               <div>
-                <span className="last">Terms & Conditions</span>
-                <span>Privacy Policy</span>
+                <RouterLink to="/terms">
+                  <span className="last">Terms & Conditions</span>
+                </RouterLink>
+                <RouterLink to="/privacy-policy">
+                  <span>Privacy Policy</span>
+                </RouterLink>
               </div>
               <span>© 2019 UP Trade Technologies, Inc.</span>
             </div>
@@ -208,7 +213,7 @@ function RenderEmailForm() {
           if (!error) {
             emailSubscribed(values.email)
               .then((res: any) => {
-                message.success('');
+                message.success("");
               })
               .catch((errorRes: any) => {
                 console.error(errorRes);

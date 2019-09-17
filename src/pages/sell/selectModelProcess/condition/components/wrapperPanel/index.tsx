@@ -174,8 +174,12 @@ function RenderQuestions(props: IRenderQuestions) {
         dom.push(
           <div className="wrapper-panel__question" key={subQuestionId}>
             <div className="content-container">
-              <h2>{content}</h2>
-              {tipsContent ? <TipsIcon>{tipsContent}</TipsIcon> : null}
+              <h2>
+                {content}
+                {tipsContent ? (
+                  <TipsIcon isInfo={true}>{tipsContent}</TipsIcon>
+                ) : null}
+              </h2>
             </div>
 
             <RenderByType

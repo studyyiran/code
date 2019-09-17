@@ -9,14 +9,14 @@ const ReviewItem = (props: IReview) => {
     <div className="comp-review-card">
       <header>
         <Rate disabled={true} defaultValue={Number(props.rating)} />
-        <span className="date">{props.reviewer.last_name}</span>
+        <span className="date">{props.timeago}</span>
       </header>
       <p>{props.comments}</p>
       <div className="mb-ele">
         <Rate disabled={true} defaultValue={Number(props.rating)} />
       </div>
       <footer className="review-card__footer">
-        <span>{props.reviewer.first_name}</span>
+        <span>{props.reviewer.first_name} {props.reviewer.last_name}</span>
       </footer>
     </div>
   );

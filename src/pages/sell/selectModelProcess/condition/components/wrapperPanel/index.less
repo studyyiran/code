@@ -68,9 +68,16 @@
       display: flex;
       align-items: center;
       margin-bottom: 8px;
+      //> * {
+      //  vertical-align: text-bottom;
+      //}
       > h2 {
         font-size: @font-size-bigger;
+        vertical-align: text-bottom;
         display: inline-block;
+        > * {
+          vertical-align: text-bottom;
+        }
       }
     }
   }

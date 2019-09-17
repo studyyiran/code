@@ -1,22 +1,27 @@
 @import (reference) "~@/styles/index.less";
-.sell-layout {
-  .header-title {
-    padding: 32px 0 63px;
+
+@world : {
+  .sell-layout {
+    > .header-container {
+      //padding: 8px 0 0px;
+    }
+    .header-title {
+      .setpage(1440px);
+      padding: 32px 0 63px;
+    }
   }
-  > .header-container {
-    .setpage(1440px);
-    padding: 8px 0 0px;
+
+  .ismobile #root {
+    .sell-layout {
+      .header-title {
+        padding: 0.08rem 0 0.93rem;
+      }
+      > .header-container {
+        padding-top: 0.11rem;
+        border-bottom: none;
+      }
+    }
   }
 }
 
-.ismobile #root {
-  .sell-layout {
-    .header-title {
-      padding: 0.08rem 0 0.93rem;
-    }
-    > .header-container {
-      padding-top: 0.11rem;
-      border-bottom: none;
-    }
-  }
-}
+.hello(@world);

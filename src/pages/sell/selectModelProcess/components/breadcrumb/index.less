@@ -1,35 +1,43 @@
-.breadcrumb {
-  background: white;
-  .breadcrumb-list {
-    display: flex;
-    > li {
-      > * {
-        vertical-align: middle;
-      }
-      font-size: 16px;
-      color: #444444;
-      &:last-child {
-        color: #000000;
-      }
-      svg {
-        margin: 0 6px;
-        font-size: 10px;
-      }
-    }
-  }
-}
+@import (reference) "~@/styles/index.less";
 
-.ismobile #root {
+@world: {
   .breadcrumb {
-    padding: 0.24rem 0 0.24rem 0.43rem;
+    background: white;
+    padding: 30 * @px 58 * @px 30 * @px;
     .breadcrumb-list {
+      display: flex;
       > li {
-        font-size: 0.32rem;
+        > * {
+          vertical-align: middle;
+        }
+        font-size: 16*@px;
+        color: #444444;
+        &:last-child {
+          color: #000000;
+        }
         svg {
-          margin: 0 0.1rem;
-          font-size: 0.1rem;
+          margin: 0 6*@px;
+          font-size: 10*@px;
         }
       }
     }
   }
-}
+
+  .ismobile #root {
+    .breadcrumb {
+      padding: 0.24rem 0 0.24rem 0.43rem;
+      .breadcrumb-list {
+        > li {
+          font-size: 0.32rem;
+          svg {
+            margin: 0 0.1rem;
+            font-size: 0.1rem;
+          }
+        }
+      }
+    }
+  }
+};
+
+.hello(@world);
+

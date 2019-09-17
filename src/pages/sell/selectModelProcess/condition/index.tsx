@@ -288,7 +288,10 @@ export function ConditionForm(props: IConditionForm) {
                   {...otherProps}
                   onSetShowKey={setShowKey}
                   isContinue={true}
-                  continueNextStep={nextStep}
+                  continueNextStep={() => {
+                    window.scroll(0, 0);
+                    nextStep();
+                  }}
                   onUserInputHandler={phoneInfoHandler}
                   status={getStatus(firstQuestionKey)}
                   onClickPanel={onClickPanelHandler}

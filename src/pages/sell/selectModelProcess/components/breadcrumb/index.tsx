@@ -63,21 +63,19 @@ function Breadcrumb(props: any) {
     },
     model: {
       viewContent: () => {
-        return "Model";
+        return nameObj.modelInfoName.modelName ? renderName() : "Model";
       },
       order: 1
     },
     condition: {
       viewContent: () => {
-        return nameObj.modelInfoName.modelName
-          ? renderName()
-          : "Phone Conditions";
+        return "Phone Conditions";
       },
       order: 2
     },
     offer: {
       viewContent: () => {
-        return "Offer Details";
+        return nameObj.modelInfoName.modelName ? renderName() : "Offer Details";
       },
       order: 3
     },

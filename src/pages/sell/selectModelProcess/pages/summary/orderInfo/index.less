@@ -66,7 +66,7 @@
       > *:first-child {
         flex: 1 0 0;
         text-align: right;
-        margin-right: 10 * @px;
+        margin-right: 15 * @px;
       }
       > *:last-child {
         flex: 0 0 80 * @px;
@@ -76,11 +76,14 @@
   }
 
   .last-order-info {
+    // 这个padding需要修改为正常的额外空间
+    padding-right: 14*@px;
     .test();
   }
 
   .new-payout {
-    padding-right: 16*@px;
+    //padding-right: 16*@px;
+    padding-right: 30*@px;
     .test();
   }
 };

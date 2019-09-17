@@ -6,6 +6,7 @@ import {
   ISelectModelContext,
   SelectModelContext
 } from "@/pages/sell/selectModelProcess/context";
+import * as moment from "moment-timezone";
 // subOrders[0].shippingInfo.sendInfo[0].lableCode
 export default function(props: any) {
   // const selectModelContext = useContext(SelectModelContext);
@@ -37,7 +38,9 @@ export default function(props: any) {
             <h3>Reset your device by following the video below</h3>
             <VideoComponent />
           </section>
-          <RouterLink to={"/how-to-factory-reset-iphone"}>{`< Get Help`}</RouterLink>
+          <RouterLink
+            to={"/how-to-factory-reset-iphone"}
+          >{`< Get Help`}</RouterLink>
         </section>
         <section className="card step2">
           <h2>Step 2 - Print your label</h2>
@@ -45,16 +48,19 @@ export default function(props: any) {
             <div className="line-card">
               <div>
                 {needBox
-                  ? "wait our send you a box and ship by"
+                  ? "Send me a box; I will ship by"
                   : "Use your own box and ship by"}
-                <br /> {shipDeadLine}
+                <br />{" "}
+                {moment
+                  .tz(shipDeadLine, "America/Chicago")
+                  .format("MMM DD, YYYY HHA")}
               </div>
             </div>
             <button className="common-button button-centered">
               <a
                 target="_blank"
                 href={`${
-                  true ? "http://112.124.128.55" : "http://112.124.128.55"
+                  process.env.REACT_APP_SERVER_ENV === 'UAT' ? "http://10.180.22.252:9001" : "http://10.180.22.252:9001"
                 }/api/shippo/downloadlabel?shippolablecode=${encodeURIComponent(
                   lableCode
                 )}`}
