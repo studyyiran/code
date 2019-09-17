@@ -1,6 +1,12 @@
 @import (reference) "~@/styles/index.less";
 // 模块公用css
 @world: {
+  .order-information-page {
+    .comp-tag {
+      font-size: 14 * @px;
+      padding: 5 * @px 0 * @px;
+    }
+  }
   .price-view {
     > [data-matched="true"] {
       color: #1ab4e7;
@@ -12,29 +18,39 @@
   .line-with-title {
     display: flex;
     align-items: center;
-    padding-top: 14*@px;
-    padding-bottom: 10*@px;
-    border-bottom: 1*@px solid @color-border;
+    padding-top: 14 * @px;
+    padding-bottom: 10 * @px;
+    border-bottom: 1 * @px solid @color-border;
     > h3 {
-      .font(18*@f, 600, #222222);
-      margin-right: 60*@px;
+      .font(18 * @px, 600, #222222);
+      margin-right: 55 * @px;
+    }
+  }
+  .ismobile {
+    .line-with-title {
+      display: flex;
+      justify-content: space-between;
+      > h3 {
+        .font(14 * @px, 600, #222222);
+        margin-right: 0;
+      }
     }
   }
   ul.information-list {
     display: flex;
-    padding: 18*@px 9*@px 0*@px;
+    padding: 18 * @px 9 * @px 0 * @px;
     > * {
       flex: 1 1 0;
     }
     li {
-      margin-bottom: 20*@px;
+      margin-bottom: 20 * @px;
       > span:first-child {
-        font-size: 14*@f;
+        font-size: 14 * @f;
         color: #848484;
-        margin-bottom: 8*@px;
+        margin-bottom: 8 * @px;
       }
       span {
-        font-size: 16*@f;
+        font-size: 16 * @f;
         display: block;
       }
     }
@@ -47,9 +63,9 @@
         flex: 1 1 0;
       }
       li {
-        margin-bottom: 16*@px;
+        margin-bottom: 16 * @px;
       }
     }
   }
-}
+};
 .hello(@world);

@@ -25,7 +25,7 @@ export default function ReportModalContent(props: any) {
   }
   const { brandName, pricePns, productPns, productName } = revised;
   function checkIsSame(attrKey: string) {
-    return revised[attrKey] === brandName[attrKey];
+    return revised[attrKey] === submitted[attrKey];
   }
   function checkSameFromArr(targetId: string, attrKey: string) {
     let isSame = false;

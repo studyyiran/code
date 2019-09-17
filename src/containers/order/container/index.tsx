@@ -123,11 +123,12 @@ function OrderList(props: { order: IOrderStore }) {
         productDisplayName,
         subOrderStatusDisplayName,
         subOrderStatus,
-        orderStatusHistories
+        orderStatusHistories,
+        inquiryInfo
       } = order;
       const reactNodeConfig = getReactNodeConfig(subOrderStatus);
       return {
-        header: `${productDisplayName}-${subOrderStatusDisplayName}`,
+        header: `${inquiryInfo.submitted.productName}-${subOrderStatusDisplayName}`,
         key: subOrderNo,
         children: (
           <div>
