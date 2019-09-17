@@ -2,7 +2,7 @@
 body {
   // 为了避免长度限制内容
   .pc({min-width: 900px});
-  .mb({min-width: 375px});
+  .mb({min-width: 320px});
 }
 @world: {
   .comp-footer {
@@ -23,6 +23,8 @@ body {
       display: flex;
       justify-content: space-around;
       align-items: flex-start;
+      position: relative;
+      z-index: 11;
       > *:first-child {
         flex: 0 0 600 * @px;
       }

@@ -246,7 +246,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
                     }
                   />
                 </Form.Item>
-                <Form.Item label="confirm eCheck email address">
+                <Form.Item label="Confirm eCheck email address">
                   <Input value={""} />
                 </Form.Item>
               </Form>
@@ -297,7 +297,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
                     initialValue: this.props.user.preOrder.userEmail
                   })(<Input />)}
                 </Form.Item>
-                <Form.Item label="confirm eCheck email address">
+                <Form.Item label="Confirm eCheck email address">
                   {getFieldDecorator("email_confirm", {
                     rules: [
                       {

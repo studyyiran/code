@@ -43,12 +43,18 @@ export default function Header() {
               header={
                 <div className="container">
                   <RenderBackHome />
-                  <img
-                    src={require("./res/menu.svg")}
+                  <div
+                    className="mobile-button-container"
                     onClick={() => {
                       setOpenColl((value: any) => !value);
                     }}
-                  />
+                  >
+                    {openColl ? (
+                      <Svg icon="wrong" />
+                    ) : (
+                      <img src={require("./res/menu.svg")} />
+                    )}
+                  </div>
                 </div>
               }
             >
@@ -78,6 +84,7 @@ export default function Header() {
           </div>
         }
       />
+      <div className="modal" style={openColl ? {display: 'block'} : {display: 'none'}}/>
     </header>
   );
 }

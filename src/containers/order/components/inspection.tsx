@@ -78,11 +78,10 @@ class Inspection extends React.Component<any, any> {
     } = this.props;
     const { submitted, revised, isDifferent, differentReason } = inquiryInfo;
     const price = revised ? revised.amount : submitted.amount;
-    debugger;
-    const that = this
+    const that = this;
     // 是否match
     function renderByType() {
-      const Header: any = (
+      const Header: any = () => (
         <section className="line-with-title">
           <h3>Inspection Result</h3>
           <Tag status={isDifferent ? "fail" : "success"}>

@@ -136,6 +136,7 @@ export default function Sell(props: any) {
         break;
       }
     }
+    window.scrollTo(0, 0)
   }
   // function wrapper(Component: any) {
   //   return (...other: any[]) => {
