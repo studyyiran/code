@@ -106,8 +106,9 @@ export default function Sell(props: any) {
               othersAttr: modelInfo.othersAttr
             });
             const { modelName, othersAttrName } = nameConfig.modelInfoName;
+            const displayModelName = modelName.split(' ').join('-')
             let next =
-              props.match.url + "/" + findTarget.displayName + `/${modelName}`;
+              props.match.url + "/" + findTarget.displayName + `/${displayModelName}`;
             Object.keys(othersAttrName).forEach((key: any) => {
               next += `-${othersAttrName[key]}`;
             });

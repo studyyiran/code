@@ -1,3 +1,3 @@
 export function removeAllSpace(str: string) {
-  return str.replace(/\s+/g, "");
+  return str.replace(/\s+/g, "").toLowerCase().split('&').join('-');
 }
