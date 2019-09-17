@@ -376,9 +376,12 @@ export function serverAnswerToRenderAnswer(question: any, staticAnswer: any) {
         return null;
       }
     }
-    const result = Object.assign(getIdFromAllQuestion(question, newItem.optionId), {
-      answer: [newItem]
-    });
+    const result = Object.assign(
+      getIdFromAllQuestion(question, newItem.optionId),
+      {
+        answer: [newItem]
+      }
+    );
     if (result.answerId) {
       // 试图从现有中寻找
       testFromCurrentAnswer(result.answerId);

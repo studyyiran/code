@@ -59,8 +59,8 @@ export default function ResultPart(props: any) {
         <h3>Action Result</h3>
       </section>
       <ul className="information-list">
-        {renderHammerInfo()}
         {renderReserveInfo()}
+        {renderHammerInfo()}
       </ul>
     </div>
   );
