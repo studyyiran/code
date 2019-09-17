@@ -121,6 +121,14 @@ export const getSkuId = <T>(params: any) => {
   return requestGetResponse(Request<T>(requestWrapper(opts)));
 };
 
+export const skuIdToPhoneInfo = <T>(skuId: string) => {
+  debugger
+  const opts: IOpts = {
+    url: `/product/getSKU/${skuId}`,
+  };
+  return requestGetResponse(Request<T>(requestWrapper(opts)));
+};
+
 // 获取print label
 // export const getDownloadLabel = <T>(shippolablecode: string) => {
 //   const opts: IOpts = {

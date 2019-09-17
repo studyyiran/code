@@ -28,14 +28,14 @@ function Model(props: any) {
     phoneInfoAnswer,
     goNextPage
   } = props;
-  const brandContext = useContext(SelectModelContext);
+  const selectModelContext = useContext(SelectModelContext);
 
   const {
     selectModelContextValue,
     selectModelContextDispatch
-  } = brandContext as ISelectModelContext;
+  } = selectModelContext as ISelectModelContext;
   // 实际上，context也是modelInfo的二级消费者。这块有可能违背了single true原则
-  const { modelInfo, brandList } = selectModelContextValue;
+  const { modelInfo, brandList, skuId } = selectModelContextValue;
   // 重定向为名称
   if (props.match && props.match.params && props.match.params.brandName) {
     const findTarget: any = brandList.find((item: any) => {
@@ -59,11 +59,13 @@ function Model(props: any) {
           <li className="brand-icon-container" key={id}>
             <ModalCard
               {...item}
+              modelInfo={modelInfo}
               goNextPage={goNextPage}
               isSelect={isSelect}
               phoneInfoQuestion={phoneInfoQuestion}
               phoneInfoHandler={phoneInfoHandler}
               phoneInfoAnswer={phoneInfoAnswer}
+              skuId={skuId}
             />
           </li>
         );

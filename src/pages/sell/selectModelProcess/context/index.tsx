@@ -16,7 +16,8 @@ import {
   getLastestOrder,
   emailSubscribed,
   createEmail,
-  getSkuId
+  getSkuId,
+  skuIdToPhoneInfo
 } from "../server/index.api";
 import { getQualitymock, mockgetinquirybykeys } from "../../mock";
 import {
@@ -32,8 +33,16 @@ export const SelectModelContext = createContext({});
 
 function reducer(state: IContextState, action: IReducerAction) {
   const { type, value } = action;
+  console.log("reducer" + type);
   let newState = { ...state };
   switch (type) {
+    case "setSkuId": {
+      newState = {
+        ...newState,
+        skuId: value
+      };
+      break;
+    }
     case "setLastestOrder": {
       newState = {
         ...newState,
@@ -100,12 +109,14 @@ function reducer(state: IContextState, action: IReducerAction) {
       };
       break;
     }
+    // reset
     case "setBrand": {
       // 如果变更了brand
       if (value !== newState.brand) {
         newState = {
           ...newState,
           brand: value,
+          skuId: "",
           phoneConditionStaticAnswer: [],
           modelInfo: {
             modelId: "",
@@ -115,8 +126,9 @@ function reducer(state: IContextState, action: IReducerAction) {
       }
       break;
     }
+    // reset
     case "setModelInfo": {
-      // 如果变更了品牌
+      // 如果变更了sku
       const next: any = {};
       if (value) {
         if (value.othersAttr && Object.keys(value.othersAttr).length) {
@@ -137,6 +149,7 @@ function reducer(state: IContextState, action: IReducerAction) {
 
       newState = {
         ...newState,
+        skuId: "",
         phoneConditionStaticAnswer: [],
         modelInfo: { ...newState.modelInfo, ...next }
       };
@@ -183,9 +196,11 @@ function reducer(state: IContextState, action: IReducerAction) {
       newState = { ...newState };
       break;
     }
+    // reset
     case "resetAllUserInputData": {
       (newState as any) = {
         brandList: [],
+        skuId: "",
         modelInfo: {
           modelId: "",
           othersAttr: {}
@@ -274,6 +289,7 @@ interface IContextActions {
   emailSubscribed: (s: string) => any;
   createEmail: (s: any) => any;
   getSkuId: () => any;
+  setSkuIdGetPhoneInfo: (s: string) => any;
 }
 
 function useGetAction(
@@ -281,15 +297,42 @@ function useGetAction(
   dispatch: (action: IReducerAction) => void
 ): IContextActions {
   const actions: IContextActions = {
+    setSkuIdGetPhoneInfo: promisify(async function(s: string) {
+      // 临时拦截
+      try {
+        const res: any = await skuIdToPhoneInfo(s);
+        if (res) {
+          // dispatch({type: 'setModelInfo', value: {
+          //   modelId: res.productId,
+          //     bpvIds.map
+          //   }})
+          dispatch({ type: "setSkuId", value: s });
+        }
+        return res;
+      } catch (e) {
+        console.error(e);
+      }
+    }),
     getSkuId: promisify(async function(emailInfo: any) {
+      // 临时拦截
       const param = {
         productId: state.modelInfo.modelId,
         bpvIds: Object.keys(state.modelInfo.othersAttr).map(
           (key: any) => state.modelInfo.othersAttr[key]
         )
       };
-      const res: any = await getSkuId({ ...param });
-      return res;
+      if (!param.productId || !param.bpvIds || param.bpvIds.length < 2) {
+        return;
+      }
+      try {
+        const res: any = await getSkuId({ ...param });
+        if (res) {
+          dispatch({ type: "setSkuId", value: res });
+        }
+        return res;
+      } catch (e) {
+        console.error(e);
+      }
     }),
     createEmail: promisify(async function(emailInfo: any) {
       const defaultParam = {
@@ -549,6 +592,7 @@ interface IContextState {
   expressOption: any; // 用户数据
   needInsurance: boolean; // 用户数据
   lastestOrder: any[]; // 用户数据
+  skuId: string; // 用户数据
 }
 
 export interface ISelectModelContext extends IContextActions {
@@ -573,7 +617,8 @@ export function ModelContextProvider(props: any) {
     brand: "",
     expressOption: null,
     needInsurance: false,
-    lastestOrder: []
+    lastestOrder: [],
+    skuId: ""
   };
   if (!haveLoad) {
     // haveLoad = true;

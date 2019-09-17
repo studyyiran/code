@@ -2,6 +2,7 @@ import React, { useReducer, useEffect } from "react";
 import "./index.less";
 import { findArrByKey } from "@/pages/sell/selectModelProcess/model/util";
 import { IReducerAction } from "@/interface/index.interface";
+import { safeEqual } from "@/utils/util";
 
 // const attrConfig = {
 //   PRODUCT_ID: "productId",
@@ -27,7 +28,9 @@ export default function ModelCard(props: any) {
     isSelect,
     list: phoneInfoQuestion,
     phoneInfoHandler,
-    phoneInfoAnswer
+    phoneInfoAnswer,
+    skuId,
+    modelInfo
   } = props;
 
   // 暂时放在这里。 其实可以考虑提升。
@@ -55,11 +58,13 @@ export default function ModelCard(props: any) {
   // canNext?
   // TODO 这块放在子上面不好
   // TODo 这种判断会引起bug
+  // 问题1.每个组件都判断，肯定不合理
   useEffect(() => {
-    console.warn(phoneInfoQuestion);
+    // console.warn(phoneInfoQuestion);
     // const a = findArrByKey(phoneInfoAnswer, "storage");
     // const b = findArrByKey(phoneInfoAnswer, "carrier");
     if (
+      skuId &&
       Object.keys(attrState).length &&
       Object.keys(attrState).length === phoneInfoQuestion.length &&
       !Object.keys(attrState).find((key: string) => {
@@ -75,9 +80,9 @@ export default function ModelCard(props: any) {
     ) {
       props.goNextPage();
     } else {
-      console.warn('?')
+      // console.warn("?");
     }
-  }, [phoneInfoAnswer, attrState]);
+  }, [phoneInfoAnswer, attrState, skuId]);
 
   function renderAttrSelectList(
     title: string,
@@ -142,8 +147,15 @@ export default function ModelCard(props: any) {
     <div
       className="model-card"
       onClick={() => {
-        // 修改当前选择的model
-        phoneInfoHandler({ answerId: "model", answer: [modelId] });
+        if (
+          !modelInfo ||
+          !modelInfo.modelId ||
+          !safeEqual(modelInfo.modelId, modelId)
+        ) {
+          // 修改当前选择的model
+          // 这个地方,因为拦截不当,经常会调用全局的context.这是很不好的.
+          phoneInfoHandler({ answerId: "model", answer: [modelId] });
+        }
       }}
     >
       <div className="model-content-container">{renderByIsSelect()}</div>
