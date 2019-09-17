@@ -153,6 +153,7 @@ function OrderList(props: { order: IOrderStore }) {
                 postEmailForm={postEmailForm}
                 revisedPriceConfirm={revisedPriceConfirm}
                 revisedPriceReject={revisedPriceReject}
+                subOrderStatus={subOrderStatus}
               />
             )}
 

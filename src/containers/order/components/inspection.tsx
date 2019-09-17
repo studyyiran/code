@@ -18,7 +18,8 @@ export default function InspectionWrapper(props: any) {
     subOrderNo,
     revisedPriceConfirm,
     revisedPriceReject,
-    phoneConditionQuestion
+    phoneConditionQuestion,
+    subOrderStatus
   } = props;
   function postEmailFormHandler(data: any) {
     postEmailForm({
@@ -27,8 +28,10 @@ export default function InspectionWrapper(props: any) {
     });
   }
   const { submitted, revised, isDifferent, differentReason } = inquiryInfo;
+  // subOrderStatus 用于确认接受差异的状态
   return (
     <Inspection
+      subOrderStatus={subOrderStatus}
       inquiryInfo={{
         isDifferent: isDifferent,
         differentReason,
@@ -70,89 +73,105 @@ class Inspection extends React.Component<any, any> {
       revisedPriceConfirm,
       revisedPriceReject,
       phoneConditionQuestion,
-      inquiryInfo
+      inquiryInfo,
+      subOrderStatus
     } = this.props;
     const { submitted, revised, isDifferent, differentReason } = inquiryInfo;
     const price = revised ? revised.amount : submitted.amount;
+    debugger;
+    const that = this
     // 是否match
-    return (
-      <div className="page-difference">
+    function renderByType() {
+      const Header: any = (
         <section className="line-with-title">
           <h3>Inspection Result</h3>
           <Tag status={isDifferent ? "fail" : "success"}>
             {differentReason || "Matched"}
           </Tag>
         </section>
-        {!isDifferent && (
-          <section>
-            <ul className="information-list">
-              <li className="price-view">
-                <span>Price Guarantee</span>
-                <span data-matched={isDifferent ? "false" : "true"}>
-                  {priceUnit}
-                  {price}
-                </span>
-              </li>
-              <li>
-                <span>Congratulations!</span>
-                <span>
-                  The condition you selected matches our inspection result.
-                </span>
-              </li>
-            </ul>
-          </section>
-        )}
-        {isDifferent && (
-          <InspectPart
-            inquiryInfo={inquiryInfo}
-            phoneConditionQuestion={phoneConditionQuestion}
-          />
-        )}
-        {isDifferent && (
-          <div className="content-container">
-            <section className="revised-part">
-              <div className="revised-line">
-                <h3>Your revised offer is</h3>
-                <div>
-                  <span>
+      );
+      if (!isDifferent) {
+        return (
+          <>
+            <Header />
+            <section>
+              <ul className="information-list">
+                <li className="price-view">
+                  <span>Price Guarantee</span>
+                  <span data-matched={isDifferent ? "false" : "true"}>
                     {priceUnit}
                     {price}
                   </span>
-                </div>
-              </div>
-              {this.renderAcceptLine({
-                postEmailFormHandler,
-                revisedPriceConfirm,
-                revisedPriceReject
-              })}
+                </li>
+                <li>
+                  <span>Congratulations!</span>
+                  <span>
+                    The condition you selected matches our inspection result.
+                  </span>
+                </li>
+              </ul>
             </section>
-            <CheckInspectDiff
-              phoneConditionQuestion={phoneConditionQuestion}
+          </>
+        );
+      } else {
+        if (subOrderStatus === "TO_BE_LISTED") {
+          return (
+            <InspectPart
               inquiryInfo={inquiryInfo}
+              phoneConditionQuestion={phoneConditionQuestion}
             />
-            {/*视频不要删除*/}
-            {/*<section className="video-part">*/}
-            {/*  <p>*/}
-            {/*    We had to revise your offer based on the following results*/}
-            {/*    during our inspection process*/}
-            {/*  </p>*/}
-            {/*  <video className="comp-video" />*/}
-            {/*  <CheckInspectDiff*/}
-            {/*    phoneConditionQuestion={phoneConditionQuestion}*/}
-            {/*    inquiryInfo={inquiryInfo}*/}
-            {/*  />*/}
-            {/*  <div className="mb-ele">*/}
-            {/*    {this.renderAcceptLine({*/}
-            {/*      postEmailFormHandler,*/}
-            {/*      revisedPriceConfirm,*/}
-            {/*      revisedPriceReject*/}
-            {/*    })}*/}
-            {/*  </div>*/}
-            {/*</section>*/}
-          </div>
-        )}
-      </div>
-    );
+          );
+        } else {
+          return (
+            <>
+              <Header />
+              <div className="content-container">
+                <section className="revised-part">
+                  <div className="revised-line">
+                    <h3>Your revised offer is</h3>
+                    <div>
+                      <span>
+                        {priceUnit}
+                        {price}
+                      </span>
+                    </div>
+                  </div>
+                  {that.renderAcceptLine({
+                    postEmailFormHandler,
+                    revisedPriceConfirm,
+                    revisedPriceReject
+                  })}
+                </section>
+                <CheckInspectDiff
+                  phoneConditionQuestion={phoneConditionQuestion}
+                  inquiryInfo={inquiryInfo}
+                />
+                {/*视频不要删除*/}
+                {/*<section className="video-part">*/}
+                {/*  <p>*/}
+                {/*    We had to revise your offer based on the following results*/}
+                {/*    during our inspection process*/}
+                {/*  </p>*/}
+                {/*  <video className="comp-video" />*/}
+                {/*  <CheckInspectDiff*/}
+                {/*    phoneConditionQuestion={phoneConditionQuestion}*/}
+                {/*    inquiryInfo={inquiryInfo}*/}
+                {/*  />*/}
+                {/*  <div className="mb-ele">*/}
+                {/*    {this.renderAcceptLine({*/}
+                {/*      postEmailFormHandler,*/}
+                {/*      revisedPriceConfirm,*/}
+                {/*      revisedPriceReject*/}
+                {/*    })}*/}
+                {/*  </div>*/}
+                {/*</section>*/}
+              </div>
+            </>
+          );
+        }
+      }
+    }
+    return <div className="page-difference">{renderByType()}</div>;
   }
   private setModalHandler = (showModal: boolean) => {
     this.setState({
