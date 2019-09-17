@@ -263,7 +263,7 @@ export function getProgressType({
       img: ListSaleIcon
     },
     {
-      name: "Order Completed",
+      name: "Device Sold",
       img: OrderCompleteIcon
     }
   ];
@@ -303,7 +303,7 @@ export function getProgressType({
         )
       },
       {
-        name: "Order Completed",
+        name: "Device Sold",
         img: OrderCompleteIcon
         // date: packageDate(
         //   findDate(IProgressType.LISTED_FOR_SALE, orderStatusHistories)

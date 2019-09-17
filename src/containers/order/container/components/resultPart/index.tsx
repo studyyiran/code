@@ -1,6 +1,7 @@
 import * as React from "react";
 import "./index.less";
 import Tag from "@/components/tag";
+import { staticContentConfig } from "@/utils/util";
 
 const priceUnit = "$";
 export default function ResultPart(props: any) {
@@ -29,10 +30,16 @@ export default function ResultPart(props: any) {
       const { amount, paymentStatus } = hammerInfo;
       if (hammerInfo && paymentStatus) {
         return (
-          <li>
-            <span>Bonus</span>
-            <span>{amount}</span>
-          </li>
+          <div className="content-tag-container">
+            <li>
+              <span>Bonus</span>
+              <span>
+                {staticContentConfig.priceUnit}
+                {amount}
+              </span>
+            </li>
+            <Tag status={"success"}>{paymentStatus}</Tag>
+          </div>
         );
       } else {
         return <div>no</div>;
