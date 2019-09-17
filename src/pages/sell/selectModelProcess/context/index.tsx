@@ -302,10 +302,29 @@ function useGetAction(
       try {
         const res: any = await skuIdToPhoneInfo(s);
         if (res) {
-          // dispatch({type: 'setModelInfo', value: {
-          //   modelId: res.productId,
-          //     bpvIds.map
-          //   }})
+          const { productId, brandId, bpvIds } = res;
+          // brand
+          dispatch({ type: "setBrand", value: brandId });
+          // model
+          dispatch({
+            type: "setModelInfo",
+            value: {
+              modelId: productId
+            }
+          });
+          // attr
+          bpvIds.forEach(({ bpId, bpvId }: any) => {
+            dispatch({
+              type: "setModelInfo",
+              value: {
+                othersAttr: {
+                  attrType: bpId,
+                  attrValue: bpvId
+                }
+              }
+            });
+          });
+          // sku
           dispatch({ type: "setSkuId", value: s });
         }
         return res;
