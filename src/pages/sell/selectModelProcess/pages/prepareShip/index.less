@@ -5,7 +5,7 @@
     .setpage(724 * @px);
     .page-padding();
     > section {
-      padding: 21 * @px 18 * @px 0;
+      padding: 21 * @px 18 * @px 33 * @px;
       border: 1 * @px solid rgba(233, 233, 233, 1);
       border-radius: 6 * @px;
       > h2 {
@@ -17,16 +17,16 @@
       margin-bottom: 16 * @px;
       > p {
         .font(16 * @f, 500, #000000);
-        margin-bottom: 20 * @px;
+        margin-bottom: 24 * @px;
       }
       a {
         display: block;
         margin-bottom: 30 * @px;
         text-align: center;
-        .font(16 * @f, 500, #1ab4e7);
+        .font(16 * @f, 500, @white);
       }
     }
-    @videoWidth: 448 * @px;
+    @videoWidth: 456 * @px;
     > section.step2 {
       .container {
         .setpage(@videoWidth);
@@ -65,13 +65,35 @@
       }
     }
     section.video {
+      > img {
+        max-width: @videoWidth;
+        width: 100%;
+        display: block;
+        margin: 0 auto;
+      }
       margin-bottom: 45 * @px;
       > h3 {
-        .font(16 * @f, 400, #00000);
-        margin-bottom: 20 * @px;
+        .font(16 * @f, 400, #000000);
+        margin-bottom: 24 * @px;
         text-align: center;
       }
-      video {
+      .type-tabs {
+        //display: none;
+        width: 300px;
+        margin: auto;
+        margin-bottom: 24*@px;
+        .yr-tabs-tab {
+          margin: 0 50*@px;
+          font-size: 18*@f;
+          border-bottom: 1px solid transparent;
+          padding-bottom: 10*@px;
+          &[aria-selected="true"] {
+            border-bottom: 1px solid #040E3F;
+            color: inherit;
+          }
+        }
+      }
+      .video {
         width: @videoWidth;
         display: block;
         margin: 0 auto;
@@ -106,7 +128,7 @@
           display: block;
           margin-bottom: 54rem * @px2rem;
           text-align: center;
-          .font(16rem * @px2rem, 500, #1ab4e7);
+          .font(16rem * @px2rem, 500, @white);
         }
       }
       > section.step2 {
@@ -148,7 +170,7 @@
       section.video {
         margin-bottom: 45rem * @px2rem;
         > h3 {
-          .font(14rem * @px2rem, 400, #00000);
+          .font(14rem * @px2rem, 400, #000000);
           margin-bottom: 13rem * @px2rem;
           text-align: center;
         }

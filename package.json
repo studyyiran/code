@@ -202,7 +202,7 @@
       }
     },
     "/up-trade-it/api": {
-      "target": "http://112.124.128.55",
+      "target": "http://prod-gateway-outside-1337850983.us-east-2.elb.amazonaws.com",
       "ws": true,
       "changeOrigin": true,
       "pathRewrite": {
@@ -210,7 +210,7 @@
       }
     },
     "/api": {
-      "target": "http://112.124.128.55",
+      "target": "http://prod-gateway-outside-1337850983.us-east-2.elb.amazonaws.com",
       "ws": true,
       "changeOrigin": true,
       "pathRewrite": {

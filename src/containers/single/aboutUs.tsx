@@ -37,26 +37,20 @@ const articles: IArticle[] = [
   {
     className: "",
     img: require("./res/whoWeAre/fast.svg"),
-    title: "Execution is Key",
-    text: "Ideas are worthless without fast execution."
-  },
-  {
-    className: "",
-    img: require("./res/whoWeAre/lock.svg"),
     title: "Invent and Simplify",
     text:
       "Never settle for what has been done. Be creative and innovative using first principle thinking while reducing complexity."
   },
   {
     className: "width320",
-    img: require("./res/whoWeAre/wrong.svg"),
+    img: require("./res/whoWeAre/lock.svg"),
     title: "Do Good and Be Responsible",
     text:
       "Be kind and take care of your neighbor. Do what is right, do what is good, and find balance."
   },
   {
     className: "width320",
-    img: require("./res/whoWeAre/fast.svg"),
+    img: require("./res/whoWeAre/wrong.svg"),
     title: "Collaborative Teamwork",
     text:
       "We believe in fostering an inclusive work environment where all ideas are heard by building a positive culture and family spirit."

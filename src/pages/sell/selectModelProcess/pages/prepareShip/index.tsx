@@ -7,11 +7,32 @@ import {
   SelectModelContext
 } from "@/pages/sell/selectModelProcess/context";
 import * as moment from "moment-timezone";
+import { Tabs } from "@/components/tabs";
+const { TabPane } = Tabs as any;
 // subOrders[0].shippingInfo.sendInfo[0].lableCode
+
+const videoConfig = [
+  {
+    key: "0",
+    id: "Apple",
+    url: "/how-to-factory-reset-iphone",
+    resUrl:
+      "https://ahs-uptrade.oss-cn-hangzhou.aliyuncs.com/test/iPhone%20Reset.gif"
+  },
+  {
+    key: "1",
+    id: "Android",
+    url: "/how-to-factory-reset-android-phone",
+    resUrl:
+      "https://ahs-uptrade.oss-cn-hangzhou.aliyuncs.com/test/Android%20Reset.gif"
+  }
+];
+
 export default function(props: any) {
   // const selectModelContext = useContext(SelectModelContext);
   // const { getDownloadLabel } = selectModelContext as ISelectModelContext;
   const [orderInfo, setOrderInfo] = useState();
+  const [currentTab, setCurrentTab] = useState(videoConfig[1].key);
   useEffect(() => {
     const orderInfoCache: any = sessionStorage.getItem("orderInfo");
     try {
@@ -36,11 +57,28 @@ export default function(props: any) {
           </p>
           <section className="video">
             <h3>Reset your device by following the video below</h3>
-            <VideoComponent />
+            <Tabs
+              className="type-tabs"
+              activeKey={currentTab}
+              onChange={(key: any) => {
+                console.log(key);
+                setCurrentTab(key);
+              }}
+            >
+              {videoConfig.map(({ id, key }) => {
+                return <TabPane key={key} tab={id} />;
+              })}
+            </Tabs>
+            <img
+              className="video-container"
+              src={videoConfig[currentTab].resUrl}
+            />
           </section>
-          <RouterLink
-            to={"/how-to-factory-reset-iphone"}
-          >{`< Get Help`}</RouterLink>
+          <button className="common-button button-centered">
+            <RouterLink
+              to={videoConfig[currentTab].url}
+            >{`Get Help`}</RouterLink>
+          </button>
         </section>
         <section className="card step2">
           <h2>Step 2 - Print your label</h2>
@@ -65,7 +103,7 @@ export default function(props: any) {
                 href={`${
                   process.env.REACT_APP_SERVER_ENV === "UAT"
                     ? "http://10.180.22.252:9001"
-                    : "http://10.180.22.252:9001"
+                    : "http://prod-gateway-outside-1337850983.us-east-2.elb.amazonaws.com"
                 }/api/shippo/downloadlabel?shippolablecode=${encodeURIComponent(
                   lableCode
                 )}`}
@@ -75,7 +113,8 @@ export default function(props: any) {
             </button>
             <section className="video">
               <h3>How to Ship</h3>
-              <VideoComponent />
+              <img src="https://ahs-uptrade.oss-cn-hangzhou.aliyuncs.com/test/How%20to%20Ship.gif"/>
+              {/*<VideoComponent />*/}
             </section>
           </div>
           <div className="check-order">

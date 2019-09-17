@@ -10,7 +10,7 @@ interface ITabs {
   onChange?: (s: string) => void;
 }
 
-export function Tabs(props: ITabs) {
+export function Tabs(props: ITabs): any {
   const { activeKey, onChange, ...otherProps } = props;
   const defaultActiveKey =
     props.defaultActiveKey || [].slice.call(props.children)[0].key;
@@ -25,7 +25,7 @@ export function Tabs(props: ITabs) {
             : (key: string) => {
                 setStateActiveKey(key);
                 // @ts-ignore
-              onChange(key);
+                onChange(key);
               }
         }
         {...otherProps}
