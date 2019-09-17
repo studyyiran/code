@@ -53,14 +53,19 @@ export default function(props: any) {
                 <br />{" "}
                 {moment
                   .tz(shipDeadLine, "America/Chicago")
-                  .format("MMM DD, YYYY HHA")}
+                  .format("llll")
+                  .split(",")
+                  .slice(0, 2)
+                  .join(",")}
               </div>
             </div>
             <button className="common-button button-centered">
               <a
                 target="_blank"
                 href={`${
-                  process.env.REACT_APP_SERVER_ENV === 'UAT' ? "http://10.180.22.252:9001" : "http://10.180.22.252:9001"
+                  process.env.REACT_APP_SERVER_ENV === "UAT"
+                    ? "http://10.180.22.252:9001"
+                    : "http://10.180.22.252:9001"
                 }/api/shippo/downloadlabel?shippolablecode=${encodeURIComponent(
                   lableCode
                 )}`}
