@@ -112,24 +112,29 @@ class Inspection extends React.Component<any, any> {
                 revisedPriceReject
               })}
             </section>
-            <section className="video-part">
-              <p>
-                We had to revise your offer based on the following results
-                during our inspection process
-              </p>
-              <video className="comp-video" />
-              <CheckInspectDiff
-                phoneConditionQuestion={phoneConditionQuestion}
-                inquiryInfo={inquiryInfo}
-              />
-              <div className="mb-ele">
-                {this.renderAcceptLine({
-                  postEmailFormHandler,
-                  revisedPriceConfirm,
-                  revisedPriceReject
-                })}
-              </div>
-            </section>
+            <CheckInspectDiff
+              phoneConditionQuestion={phoneConditionQuestion}
+              inquiryInfo={inquiryInfo}
+            />
+            {/*视频不要删除*/}
+            {/*<section className="video-part">*/}
+            {/*  <p>*/}
+            {/*    We had to revise your offer based on the following results*/}
+            {/*    during our inspection process*/}
+            {/*  </p>*/}
+            {/*  <video className="comp-video" />*/}
+            {/*  <CheckInspectDiff*/}
+            {/*    phoneConditionQuestion={phoneConditionQuestion}*/}
+            {/*    inquiryInfo={inquiryInfo}*/}
+            {/*  />*/}
+            {/*  <div className="mb-ele">*/}
+            {/*    {this.renderAcceptLine({*/}
+            {/*      postEmailFormHandler,*/}
+            {/*      revisedPriceConfirm,*/}
+            {/*      revisedPriceReject*/}
+            {/*    })}*/}
+            {/*  </div>*/}
+            {/*</section>*/}
           </div>
         )}
       </div>
@@ -196,9 +201,13 @@ class Inspection extends React.Component<any, any> {
         </button>
         <div className="tips">
           <span
+            className="canclick"
             onClick={this.setModalHandler.bind(this, true)}
           >{`< Return Device`}</span>
-          <TipsIcon />
+          <TipsIcon>
+            When an offer is rejected, we will ship the phone back to you on our
+            dime.
+          </TipsIcon>
         </div>
         <Modal
           title="Have questions? Send us a message."
@@ -208,7 +217,7 @@ class Inspection extends React.Component<any, any> {
         >
           <WrappedForm />
           <button
-            className="common-button"
+            className="common-button canclick"
             onClick={() => {
               this.setModalHandler(false);
               revisedPriceReject();

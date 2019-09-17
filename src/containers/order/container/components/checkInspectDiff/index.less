@@ -1,17 +1,24 @@
 @import (reference) "~@/styles/index.less";
-
-.comp-check-inspect {
-  .font(16px, 500, #1ab4e7);
-  display: block;
-  text-align: center;
-  margin-bottom: 30px;
-}
-
-.ismobile {
+@world: {
+  .comp-check-inspect__modal {
+    .ant-modal-body {
+      padding: 0;
+    }
+    .ant-modal-confirm-body
+      > .anticon
+      + .ant-modal-confirm-title
+      + .ant-modal-confirm-content {
+      margin: 0;
+    }
+    .ant-modal-confirm-btns {
+      display: none;
+    }
+  }
   .comp-check-inspect {
-    .font(16rem * @px2rem, 500, #1ab4e7);
+    .font(16 * @px, 500, #1ab4e7);
     display: block;
     text-align: center;
-    margin-bottom: 30rem * @px2rem;
+    margin-bottom: 30 * @px;
   }
-}
+};
+.hello(@world);

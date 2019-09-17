@@ -9,6 +9,10 @@ export default function CheckInspectDiff(props: any) {
     <span
       onClick={() => {
         Modal.confirm({
+          icon: "",
+          className: "comp-check-inspect__modal",
+          centered: true,
+          maskClosable: true,
           content: (
             <ReportModalContent
               phoneConditionQuestion={phoneConditionQuestion}
@@ -17,7 +21,7 @@ export default function CheckInspectDiff(props: any) {
           )
         });
       }}
-      className="comp-check-inspect"
+      className="comp-check-inspect canclick"
     >{`View Inspection Result >`}</span>
   );
 }

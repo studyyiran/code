@@ -1,75 +1,27 @@
 @import (reference) "~@/styles/index.less";
-
-.report-modal-content {
-  @warning: #FF0048;
-  padding: 40px 18px 75px;
-  > h2 {
-    .font(20px, 500, #333333);
-    margin-bottom: 10px;
-  }
-  > .list {
-    margin-top: 32px;
-  }
-  .comp-item {
-    border-bottom: 1px solid @color-border;
-    padding: 10px 5px;
-    margin: 5px auto;
-    &[data-correct="false"] {
-      border: 1px solid @warning;
-    }
-    .title {
-      color: #848484;
-      margin-bottom: 15px;
-    }
-    .content {
-      .value {
-        &[data-correct="false"] {
-          color: @warning;
-        }
-      }
-      .font(18px, 400, #222222);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      > .circle {
-        &[data-correct="false"] {
-          color: @warning;
-        }
-        @size: 16px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #6DD230;
-        width: @size;
-        height: @size;
-        border-radius: 50%;
-        border: 1px solid;
-      }
-    }
-  }
-}
-
-.ismobole {
+@world: {
   .report-modal-content {
-    @warning: #FF0048;
-    padding: 40rem * @px2rem 18rem * @px2rem 75rem * @px2rem;
+    @warning: #ff0048;
+    padding: 40*@px 18*@px 75*@px;
+    height: 80vh;
+    overflow-y: scroll;
     > h2 {
-      .font(20rem * @px2rem, 500, #333333);
-      margin-bottom: 10rem * @px2rem;
+      .font(20*@f, 500, #333333);
+      margin-bottom: 10*@px;
     }
     > .list {
-      margin-top: 32rem * @px2rem;
+      margin-top: 32*@px;
     }
     .comp-item {
-      border-bottom: 1rem * @px2rem solid @color-border;
-      padding: 10rem * @px2rem 5rem * @px2rem;
-      margin: 5rem * @px2rem auto;
+      border-bottom: 1*@px solid @color-border;
+      padding: 10*@px 5*@px;
+      margin: 5*@px auto;
       &[data-correct="false"] {
-        border: 1rem * @px2rem solid @warning;
+        border: 1*@px solid @warning;
       }
       .title {
         color: #848484;
-        margin-bottom: 15rem * @px2rem;
+        margin-bottom: 15*@px;
       }
       .content {
         .value {
@@ -77,7 +29,7 @@
             color: @warning;
           }
         }
-        .font(18rem * @px2rem, 400, #222222);
+        .font(18*@f, 400, #222222);
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -85,19 +37,69 @@
           &[data-correct="false"] {
             color: @warning;
           }
-          @size: 16rem * @px2rem;
+          @size: 16*@px;
           display: flex;
           justify-content: center;
           align-items: center;
-          color: #6DD230;
+          color: #6dd230;
           width: @size;
           height: @size;
           border-radius: 50%;
-          border: 1rem * @px2rem solid;
+          border: 1*@px solid;
         }
       }
     }
   }
-}
 
-
+  .ismobole {
+    .report-modal-content {
+      @warning: #ff0048;
+      padding: 40rem * @px2rem 18rem * @px2rem 75rem * @px2rem;
+      > h2 {
+        .font(20rem * @px2rem, 500, #333333);
+        margin-bottom: 10rem * @px2rem;
+      }
+      > .list {
+        margin-top: 32rem * @px2rem;
+      }
+      .comp-item {
+        border-bottom: 1rem * @px2rem solid @color-border;
+        padding: 10rem * @px2rem 5rem * @px2rem;
+        margin: 5rem * @px2rem auto;
+        &[data-correct="false"] {
+          border: 1rem * @px2rem solid @warning;
+        }
+        .title {
+          color: #848484;
+          margin-bottom: 15rem * @px2rem;
+        }
+        .content {
+          .value {
+            &[data-correct="false"] {
+              color: @warning;
+            }
+          }
+          .font(18rem * @px2rem, 400, #222222);
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          > .circle {
+            &[data-correct="false"] {
+              color: @warning;
+            }
+            @size: 16rem * @px2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #6dd230;
+            width: @size;
+            height: @size;
+            border-radius: 50%;
+            border: 1rem * @px2rem solid;
+          }
+        }
+      }
+    }
+  }
+};
+.hello(@world);

@@ -7,22 +7,22 @@ export default function TipsIcon(props: any) {
   const { tips, children } = props;
   return (
     <Tooltip title={children}>
-      <div className="comp-tips-icon-container">
+      <div className="comp-tips-icon-container canclick">
         <span>
           <Svg icon="wenhao" />
         </span>
       </div>
     </Tooltip>
   );
-  return (
-    <Popconfirm
-      overlayClassName="comp-tips-antd-container"
-      title={children}
-      icon={false}
-    >
-      <span className="comp-tips-icon-container">
-        <Svg icon="wenhao" />
-      </span>
-    </Popconfirm>
-  );
+  // return (
+  //   <Popconfirm
+  //     overlayClassName="comp-tips-antd-container"
+  //     title={children}
+  //     icon={false}
+  //   >
+  //     <span className="comp-tips-icon-container">
+  //       <Svg icon="wenhao" />
+  //     </span>
+  //   </Popconfirm>
+  // );
 }
