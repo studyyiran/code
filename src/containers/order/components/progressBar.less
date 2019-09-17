@@ -151,19 +151,19 @@
       .dot {
         flex: 0 0 0;
         display: inline-block;
-        min-width: 90rem * @px2rem;
-
+        @extravalue: 15;
+        min-width: (90 + @extravalue) * @px;
         .dot-icon {
           top: 32rem * @px2rem;
         }
 
         &::after {
-          width: 39rem * @px2rem;
+          width: (39 + @extravalue) * @px;
           top: 38rem * @px2rem;
         }
 
         &::before {
-          width: 39rem * @px2rem;
+          width: (39 + @extravalue) * @px;
           top: 38rem * @px2rem;
         }
 

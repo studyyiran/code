@@ -239,7 +239,6 @@ export function getProgressType({
   subOrderStatus: any;
 }) {
   let currentIndex = 0;
-  // debugger;
   let dataList: IProgressDot[] = [
     {
       name: "Order Placed",
@@ -304,10 +303,10 @@ export function getProgressType({
       },
       {
         name: "Device Sold",
-        img: OrderCompleteIcon
-        // date: packageDate(
-        //   findDate(IProgressType.LISTED_FOR_SALE, orderStatusHistories)
-        // )
+        img: OrderCompleteIcon,
+        date: packageDate(
+          findDate(IProgressType.TRANSACTION_SUCCEED, orderStatusHistories)
+        )
       }
     ];
   }

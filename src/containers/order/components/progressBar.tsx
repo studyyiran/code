@@ -1,7 +1,7 @@
 import * as React from "react";
 import { IProgressData } from "@/containers/order/interface/order.inerface";
 import "./progressBar.less";
-import {inject, observer} from "mobx-react";
+import { inject, observer } from "mobx-react";
 
 interface IDot {
   isActive: boolean;
@@ -29,7 +29,10 @@ class Dot extends React.Component<IDot> {
 
 @inject("common")
 @observer
-class ProgressBar extends React.Component<{ data: IProgressData, common?: any }> {
+class ProgressBar extends React.Component<{
+  data: IProgressData;
+  common?: any;
+}> {
   public render() {
     const { isMobile } = this.props.common;
     const props = this.props.data;
@@ -41,7 +44,7 @@ class ProgressBar extends React.Component<{ data: IProgressData, common?: any }>
       let start;
       if (props.currentIndex === 0) {
         start = 0;
-      } else if (props.currentIndex === props.dataList.length) {
+      } else if (props.currentIndex === props.dataList.length - 1) {
         start = props.dataList.length - 3;
       } else {
         start = props.currentIndex - 1;
@@ -53,11 +56,7 @@ class ProgressBar extends React.Component<{ data: IProgressData, common?: any }>
         {showList.map((t, i) => {
           const isCurrent = t.name === props.dataList[props.currentIndex].name;
           return (
-            <Dot
-              isActive={true}
-              key={i}
-              isCurrent={isCurrent}
-            >
+            <Dot isActive={true} key={i} isCurrent={isCurrent}>
               {isCurrent && t.img && (
                 <div className="icon">
                   <img src={t.img} alt="" />
