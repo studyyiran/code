@@ -294,8 +294,7 @@ class YourPhone implements IYourPhoneStore {
   @action public getAmericaState = async (zipCode: string) => {
     this.americaStates = null;
     try {
-      const americaStates: any = await Api.getStateByCode<IAmericaState>(zipCode);
-      this.americaStates = americaStates.data;
+      this.americaStates = await Api.getStateByCode<IAmericaState>(zipCode);
       console.log(this.americaStates);
     } catch (error) {
       console.warn(error, "in brand store");
