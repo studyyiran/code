@@ -1,6 +1,7 @@
 import * as React from "react";
 import "./machineInfo.less";
 import { IMachineInfo } from "@/containers/order/interface/order.inerface";
+import {staticContentConfig} from "@/utils/util";
 
 class MachineInfo extends React.Component<
   IMachineInfo & { productName: string }
@@ -22,7 +23,7 @@ class MachineInfo extends React.Component<
         </ul>
         <p className="total">
           <span>Subtotal</span>
-          <span>{this.props.guaranteedPrice}</span>
+          <span>{staticContentConfig.priceUnit}{this.props.guaranteedPrice}</span>
         </p>
         {/*{*/}
         {/*    this.props.condition !== "" && (*/}

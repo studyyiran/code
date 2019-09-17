@@ -236,7 +236,8 @@ export function getProgressType({
   let dataList: IProgressDot[] = [
     {
       name: "Order Placed",
-      img: OrderPlacedIcon
+      img: OrderPlacedIcon,
+      // date: packageDate(orderCreateDate)
     },
     {
       name: "Package Sent",

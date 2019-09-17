@@ -19,3 +19,7 @@ export function requestGetResponse(promise: any) {
 export function safeEqual(a: any, b: any) {
   return String(a) === String(b);
 }
+
+export const staticContentConfig = {
+  priceUnit: "$"
+};

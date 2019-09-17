@@ -122,7 +122,6 @@ export const getSkuId = <T>(params: any) => {
 };
 
 export const skuIdToPhoneInfo = <T>(skuId: string) => {
-  debugger
   const opts: IOpts = {
     url: `/product/getSKU/${skuId}`,
   };

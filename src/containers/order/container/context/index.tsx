@@ -12,7 +12,6 @@ import {
   revisedPriceConfirm,
   revisedPriceReject
 } from "../../api/order.api";
-import { checkforordermock, getTranshippingmock } from "./mock";
 import {getDeliverInfos, getDeliverNoInfo, getOrderCache} from "../../util";
 
 export const TotalOrderInfoContext = createContext({});

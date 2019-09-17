@@ -16,7 +16,12 @@ export default function Brand(props: any) {
     removeFromList,
     getNameInfo
   } = selectModelContext as ISelectModelContext;
-  const { priceInfo, userProductList, inquiryKey } = selectModelContextValue;
+  const {
+    priceInfo,
+    userProductList,
+    inquiryKey,
+    productsList
+  } = selectModelContextValue;
   const { resultList, guaranteedPayout } = priceInfo;
   function selectHandler(id: any) {
     // 当前有选择
@@ -48,10 +53,17 @@ export default function Brand(props: any) {
         deviceEstimate,
         platformFee,
         thirdPartyFee,
-        brand: brandId,
-        modelInfo,
+        brandId,
+        productId,
         subTotal
       } = item;
+      const modelInfo = {
+        modelId: productId,
+        othersAttr: {}
+      };
+      // bpvIds.forEach(({ id, ppId }: any) => {
+      //   modelInfo.othersAttr[ppId] = id;
+      // });
       const nameObj = getNameInfo({
         brandId,
         ...modelInfo
