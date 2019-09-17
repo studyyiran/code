@@ -37,7 +37,7 @@ export default function(props: any) {
             <h3>Reset your device by following the video below</h3>
             <VideoComponent />
           </section>
-          <a>{`< Get Help`}</a>
+          <RouterLink to={"/faq?index=1"}>{`< Get Help`}</RouterLink>
         </section>
         <section className="card step2">
           <h2>Step 2 - Print your label</h2>
@@ -50,7 +50,7 @@ export default function(props: any) {
                 <br /> {shipDeadLine}
               </div>
             </div>
-            <button className="common-button">
+            <button className="common-button button-centered">
               <a
                 target="_blank"
                 href={`${

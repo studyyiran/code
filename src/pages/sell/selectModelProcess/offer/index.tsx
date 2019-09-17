@@ -55,25 +55,27 @@ export default function Brand(props: any) {
         thirdPartyFee,
         brandId,
         productId,
-        subTotal
+        subTotal,
+        productPhoto
       } = item;
-      const modelInfo = {
-        modelId: productId,
-        othersAttr: {}
-      };
+      // 不需要自己组织数据的教训.因为数据出不来
+      // const modelInfo = {
+      //   modelId: productId,
+      //   othersAttr: {}
+      // };
       // bpvIds.forEach(({ id, ppId }: any) => {
       //   modelInfo.othersAttr[ppId] = id;
       // });
-      const nameObj = getNameInfo({
-        brandId,
-        ...modelInfo
-      });
+      // const nameObj = getNameInfo({
+      //   brandId,
+      //   ...modelInfo
+      // });
       return (
         <Panel
           key={productInquiryKey}
           header={
             <div className="panel-header">
-              <img className="phone-image" src={nameObj.imgUrl} />
+              <img className="phone-image" src={productPhoto} />
               <div className="phone-model">
                 <span>{productName}</span>
                 <span>

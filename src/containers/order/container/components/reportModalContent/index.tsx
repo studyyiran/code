@@ -23,7 +23,7 @@ export default function ReportModalContent(props: any) {
       </li>
     );
   }
-  const { brandName, displayName, pricePns, productPns } = revised;
+  const { brandName, pricePns, productPns, productName } = revised;
   function checkIsSame(attrKey: string) {
     return revised[attrKey] === brandName[attrKey];
   }
@@ -52,7 +52,7 @@ export default function ReportModalContent(props: any) {
         />
         <RenderItem
           title="Model"
-          value={displayName}
+          value={productName}
           isSame={checkIsSame("productId")}
         />
         {productPns.map(({ name, ppnName, id }: any) => (

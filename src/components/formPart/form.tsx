@@ -38,7 +38,7 @@ function FormPart(props: any) {
               </Item>
             );
           })}
-        <button className="common-button centered">
+        <button className="common-button button-centered">
           {props.buttonContent ? props.buttonContent : "Next"}
         </button>
       </Form>

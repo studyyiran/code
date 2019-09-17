@@ -89,15 +89,17 @@ export default function OrderInfo() {
             </ul>
           </Panel>
         </Collapse>
-        <div className="new-payout">
-          <h3>Net Payout</h3>
-          <span>
-            $
-            {guaranteedPayout -
-              ((expressOption && expressOption.fee) || 0) -
-              (shippingInsurance || 0)}
-          </span>
-        </div>
+        <ul className="new-payout">
+          <li>
+            <h3>Net Payout</h3>
+            <span>
+              $
+              {guaranteedPayout -
+                ((expressOption && expressOption.fee) || 0) -
+                (shippingInsurance || 0)}
+            </span>
+          </li>
+        </ul>
         <div
           data-open={open ? "true" : "false"}
           className="open"

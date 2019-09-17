@@ -321,7 +321,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
       <div className="payment-type-container">
         <div
           className="echeck-container container-border"
-          data-selected={this.props.yourphone.payment === EPayType.ECHECK}
+          data-selected={this.props.yourphone.payment ? this.props.yourphone.payment === EPayType.ECHECK : true}
           onClick={this.handleEcheckCollapseExtend}
         >
           <div className="recommended comp-top-tag">Recommended</div>

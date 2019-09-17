@@ -65,7 +65,7 @@ export default function SummaryWrapper(props: any) {
 class Summary extends React.Component<IDoneProps, IDoneStates> {
   public pageRef: React.Component;
   public readonly state: Readonly<IDoneStates> = {
-    isChecked: false, // 勾选协议
+    isChecked: true, // 勾选协议（多余字段）
     showEditModal: false, // 展示弹窗
     pageType: "", // 弹窗内置的页面组件
     loadingComplete: false,
@@ -123,7 +123,10 @@ class Summary extends React.Component<IDoneProps, IDoneStates> {
       case EPayType.PAYPAL:
         payment = (
           <>
-            <img className="logo paypal-logo" src={require("../payment/img/paypal.png")} />
+            <img
+              className="logo paypal-logo"
+              src={require("../payment/img/paypal.png")}
+            />
             <ul>
               <li>
                 <h3>Name</h3>
@@ -222,7 +225,7 @@ class Summary extends React.Component<IDoneProps, IDoneStates> {
       footer: null,
       centered: true,
       onCancel: this.toggleChangeModal,
-      width: "90%",
+      width: "90%"
     };
 
     return (
@@ -282,12 +285,12 @@ class Summary extends React.Component<IDoneProps, IDoneStates> {
   public renderTerms() {
     return (
       <div className="terms-of-service">
-        <Checkbox
-          checked={this.state.isChecked}
-          onChange={this.handleServiceCheck}
-        >
-          By checking this box, you agree to our{" "}
-        </Checkbox>
+        {/*<Checkbox*/}
+        {/*  onChange={this.handleServiceCheck}*/}
+        {/*>*/}
+        {/*  */}
+        {/*</Checkbox>*/}
+        <span>By clicking confirm, you agree to our </span>
         <Link to="/terms" className="highlight" target="_blank">
           Terms of Service{" "}
         </Link>
@@ -296,7 +299,7 @@ class Summary extends React.Component<IDoneProps, IDoneStates> {
   }
 
   private handleServiceCheck = () => {
-    this.setState({ isChecked: !this.state.isChecked });
+    // this.setState({ isChecked: !this.state.isChecked });
   };
 
   private handlePageChoose = (type: IDoneStates["pageType"]) => {

@@ -66,6 +66,10 @@ class Shipping extends React.Component<any, any> {
       this.props.onRef!(this); // 让done page里获取到这个组件实例，调用其validateData方法
     }
     this.props.yourphone.getNearExpressStores();
+    // TODO 呵呵呵
+    if (!this.props.yourphone.expressCarrier) {
+      this.props.yourphone.expressCarrier = EShipmentType.USPS;
+    }
   }
 
   public colLayout(span: number = 11) {
@@ -145,25 +149,22 @@ class Shipping extends React.Component<any, any> {
           <div
             className="container-border"
             data-selected={
-              this.props.yourphone.expressCarrier === EShipmentType.FEDEX
-            }
-            onClick={this.handleCollapseExtend.bind(
-              this,
-              EShipmentType.FEDEX
-            )}
-          >
-            <div className="fedex-bg" />
-            {leftContent}
-          </div>
-          <div
-            className="container-border"
-            data-selected={
               this.props.yourphone.expressCarrier === EShipmentType.USPS
             }
             onClick={this.handleCollapseExtend.bind(this, EShipmentType.USPS)}
           >
             <div className="USPS-bg" />
             {rightContent}
+          </div>
+          <div
+            className="container-border"
+            data-selected={
+              this.props.yourphone.expressCarrier === EShipmentType.FEDEX
+            }
+            onClick={this.handleCollapseExtend.bind(this, EShipmentType.FEDEX)}
+          >
+            <div className="fedex-bg" />
+            {leftContent}
           </div>
         </div>
         {/*<Row gutter={30} >*/}

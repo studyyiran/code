@@ -1,10 +1,11 @@
-import * as React from "react";
+import React, { useEffect } from "react";
 import { Collapse } from "antd";
 const { Panel } = Collapse;
 import "./faq.less";
 import { staticSubjects } from "./faq/staticSubjects";
 import { HeaderTitle } from "@/components/headerTitle";
 import RouterLink from "@/components/routerLink";
+import { getQueryString } from "utils";
 
 interface ISubject {
   subjectTitle: string;
@@ -32,7 +33,14 @@ interface IQA {
 
 export default function Faq() {
   const subjects: ISubject[] = staticSubjects;
-
+  useEffect(() => {
+    if (getQueryString("index")) {
+      setTimeout(() => {
+        console.log(getQueryString("index"));
+        // this.switchScrollAndOpen(parseInt(getQueryString("index") || "", 10));
+      }, 500);
+    }
+  }, []);
   return (
     <div className="page-faq-container">
       <HeaderTitle title={"Frequently Asked Questions"} />
