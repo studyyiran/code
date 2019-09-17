@@ -85,7 +85,7 @@ function OrderList(props: { order: IOrderStore }) {
   useEffect(() => {
     // 1 查看session登录
     if (!totalOrderInfo || !totalOrderInfo.groupOrderNo) {
-      reloadOrderFromCache()
+      reloadOrderFromCache();
     }
   }, [totalOrderInfo]);
   // 方法
@@ -140,7 +140,7 @@ function OrderList(props: { order: IOrderStore }) {
             />
             <ProgressBar
               data={getProgressType({
-                orderStatusHistories,
+                orderStatusHistories: orderStatusHistories,
                 orderCreateDate: totalOrderInfo.orderCreateDate,
                 subOrderStatus
               })}

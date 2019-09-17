@@ -31,7 +31,10 @@ export function getReactNodeConfig(status: any) {
     ReactNodeConfig.orderSummary = false;
   }
   // 是否展示质检模块
-  if (status === IProgressType.DIFFERENCE_INSPECTED) {
+  if (
+    status === IProgressType.DIFFERENCE_INSPECTED ||
+    status === IProgressType.TO_BE_LISTED
+  ) {
     ReactNodeConfig.inspected = true;
     ReactNodeConfig.orderSummary = false;
   }
@@ -208,6 +211,9 @@ export function getInfo({
 }
 
 function findDate(status: IProgressType, orderStatusHistories: any) {
+  if (status === IProgressType.TO_BE_LISTED) {
+    debugger;
+  }
   function findFirstEleFromTarget(b: any, f: any) {
     const vArray = b.filter(f);
     if (vArray.length > 0) {
@@ -233,10 +239,11 @@ export function getProgressType({
   subOrderStatus: any;
 }) {
   let currentIndex = 0;
+  debugger;
   let dataList: IProgressDot[] = [
     {
       name: "Order Placed",
-      img: OrderPlacedIcon,
+      img: OrderPlacedIcon
       // date: packageDate(orderCreateDate)
     },
     {
@@ -248,7 +255,7 @@ export function getProgressType({
       img: PackageReceivedIcon
     },
     {
-      name: "Inspection Completed",
+      name: "Payment Sent",
       img: InspectionCompleteIcon
     },
     {
@@ -271,21 +278,21 @@ export function getProgressType({
         name: "Package Sent",
         img: PackageSentIcon,
         date: packageDate(
-          findDate(IProgressType.TO_BE_SHIPPED, orderStatusHistories)
+          findDate(IProgressType.TO_BE_RECEIVED, orderStatusHistories)
         )
       },
       {
         name: "Package Received",
         img: PackageReceivedIcon,
         date: packageDate(
-          findDate(IProgressType.TO_BE_RECEIVED, orderStatusHistories)
+          findDate(IProgressType.TO_BE_INSPECTED, orderStatusHistories)
         )
       },
       {
-        name: "Inspection Completed",
+        name: "Payment Sent",
         img: InspectionCompleteIcon,
         date: packageDate(
-          findDate(IProgressType.TO_BE_INSPECTED, orderStatusHistories)
+          findDate(IProgressType.TO_BE_LISTED, orderStatusHistories)
         )
       },
       {
@@ -297,10 +304,10 @@ export function getProgressType({
       },
       {
         name: "Order Completed",
-        img: OrderCompleteIcon,
-        date: packageDate(
-          findDate(IProgressType.LISTED_FOR_SALE, orderStatusHistories)
-        )
+        img: OrderCompleteIcon
+        // date: packageDate(
+        //   findDate(IProgressType.LISTED_FOR_SALE, orderStatusHistories)
+        // )
       }
     ];
   }
@@ -346,6 +353,17 @@ export function getProgressType({
       currentIndex = 2;
       break;
     case IProgressType.DIFFERENCE_INSPECTED:
+      // DIFFERENCE_INSPECTED的情况下替换一下.
+      dataList[3] = {
+        name: "Difference Inspected",
+        img: PackageReceivedIcon,
+        date: packageDate(
+          findDate(IProgressType.DIFFERENCE_INSPECTED, orderStatusHistories)
+        )
+      };
+      currentIndex = 3;
+      break;
+    case IProgressType.TO_BE_LISTED:
       currentIndex = 3;
       break;
     case IProgressType.LISTED_FOR_SALE:
