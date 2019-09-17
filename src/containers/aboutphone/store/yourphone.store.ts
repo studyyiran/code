@@ -1,69 +1,84 @@
-
-import config from '../../../config/index';
-import { IQueryParams, IInquiryDetail, IAddressInfo, IAppendOrderParams, INearStore } from './../interface/index.interface';
-import * as Api from '../api/index.api';
-import { action, observable, autorun, computed } from 'mobx';
-import { IYourPhoneStore, ICarrier, IBrands, IAmericaState, IProductModel, IProductPPVN, ITbdInfo, ISubSkuPricePropertyValues } from '../interface/index.interface';
-import { IPreOrder } from '@/store/interface/user.interface';
-import UserStore from '@/store/user';
-import { IOrderDetail } from '@/containers/order/interface/order.inerface'
-import EmailModal from '@/components/emailModal/index';
+import config from "../../../config/index";
+import {
+  IQueryParams,
+  IInquiryDetail,
+  IAddressInfo,
+  IAppendOrderParams,
+  INearStore
+} from "./../interface/index.interface";
+import * as Api from "../api/index.api";
+import { action, observable, autorun, computed } from "mobx";
+import {
+  IYourPhoneStore,
+  ICarrier,
+  IBrands,
+  IAmericaState,
+  IProductModel,
+  IProductPPVN,
+  ITbdInfo,
+  ISubSkuPricePropertyValues
+} from "../interface/index.interface";
+import { IPreOrder } from "@/store/interface/user.interface";
+import UserStore from "@/store/user";
+import { IOrderDetail } from "@/containers/order/interface/order.inerface";
+import EmailModal from "@/components/emailModal/index";
 class YourPhone implements IYourPhoneStore {
   @observable public carriers: ICarrier[] = [];
   @observable public brands: IBrands[] = [];
   @observable public products: IProductModel[] = [];
   @observable public products4Search: IProductModel[] = [];
   @observable public productPPVNS: IProductPPVN[] = [];
-  @observable public inquiryKey = '';
+  @observable public inquiryKey = "";
   @observable public inquiryDetail = null;
   @observable public orderDetail: IOrderDetail | null = null; // 订单详情
   @observable public allOrdersDetail: IOrderDetail[] = []; // 追加订单的所有订单详情
-  @observable public addressInfo: IAddressInfo = { // 用户填写的信息
-    addressLine: '',
-    addressLineOptional: '',
-    city: '',
-    country: 'United States',
-    firstName: '',
-    lastName: '',
-    mobile: '',
-    state: '',
-    zipCode: ''
+  @observable public addressInfo: IAddressInfo = {
+    // 用户填写的信息
+    addressLine: "",
+    addressLineOptional: "",
+    city: "",
+    country: "United States",
+    firstName: "",
+    lastName: "",
+    mobile: "",
+    state: "",
+    zipCode: ""
   };
 
-  @observable public expressCarrier: string = '';
+  @observable public expressCarrier: string = "";
 
   // paypal和echeck的信息有可能和contact information不同
-  @observable public payment: string = ''; // 选择的支付方式, 必须为PAYPAL 或 CHECK，否则无法下一步
-  @observable public paypal: IYourPhoneStore['paypal'] = {
-    email: ''
-  }
-  @observable public echeck: IYourPhoneStore['echeck'] = {
-    firstName: '',
-    lastName: '',
-    email: ''
-  }
+  @observable public payment: string = ""; // 选择的支付方式, 必须为PAYPAL 或 CHECK，否则无法下一步
+  @observable public paypal: IYourPhoneStore["paypal"] = {
+    email: ""
+  };
+  @observable public echeck: IYourPhoneStore["echeck"] = {
+    firstName: "",
+    lastName: "",
+    email: ""
+  };
   @observable public isLeftOnEdit: boolean = false;
   @observable public isRightOnEdit: boolean = false;
 
   @observable public activeBrandsId = -1; // 选择的品牌Id
   @observable public oldActiveBrandsId = 0; // 上一个选择的品牌id
-  @observable public activeBrandsName = ''; // 选择的品牌的名称
-  @observable public activeCarrierName = ''; // 选择的运营商
-  @observable public activeCarrierDescription = ''; // 运营商的description
+  @observable public activeBrandsName = ""; // 选择的品牌的名称
+  @observable public activeCarrierName = ""; // 选择的运营商
+  @observable public activeCarrierDescription = ""; // 运营商的description
   @observable public activeProductId = -1; // 选择的机型的id
-  @observable public activeProductName = '' // 选择的机型的名称
+  @observable public activeProductName = ""; // 选择的机型的名称
   @observable public activeModelId = -1; // 选择的机型的内存id
-  @observable public activeModelName = ''; // 选择的内存名称
+  @observable public activeModelName = ""; // 选择的内存名称
   @observable public activeConditions = {}; // 选择的ppvn
   @observable public isAddressValuesAndDisabled: boolean = true;
   @observable public isPaymentFormFilled: boolean = false;
   @observable public americaStates: IAmericaState | null;
   @observable public tbdInfo: ITbdInfo = {
-    storage: '',
+    storage: "",
     properties: [],
-    modelName: '',
+    modelName: "",
     donate: false
-  }
+  };
   @observable public USPSNearStores: INearStore | null = null;
   @observable public FedExNearStores: INearStore | null = null;
 
@@ -75,16 +90,19 @@ class YourPhone implements IYourPhoneStore {
     });
   }
 
-  @computed get isAllConditionSelected() { // 是否全选了ppvn
+  @computed get isAllConditionSelected() {
+    // 是否全选了ppvn
     let result = true;
     // 似乎没什么用
-    if (JSON.stringify(this.activeConditions) === '{}') {
+    if (JSON.stringify(this.activeConditions) === "{}") {
       return false;
     }
 
     for (const item of this.productPPVNS) {
       const value = this.activeConditions[item.id];
-      const active = item.pricePropertyValues.find((v: ISubSkuPricePropertyValues) => v.id === value);
+      const active = item.pricePropertyValues.find(
+        (v: ISubSkuPricePropertyValues) => v.id === value
+      );
       if (!active) {
         result = false;
         break;
@@ -110,11 +128,11 @@ class YourPhone implements IYourPhoneStore {
     if (!this.payment) {
       return false;
     }
-    if (this.payment === 'PAYPAL' && !this.isLeftOnEdit) {
+    if (this.payment === "PAYPAL" && !this.isLeftOnEdit) {
       return true;
     }
 
-    if (this.payment === 'CHECK' && !this.isRightOnEdit) {
+    if (this.payment === "CHECK" && !this.isRightOnEdit) {
       return true;
     }
 
@@ -132,7 +150,6 @@ class YourPhone implements IYourPhoneStore {
   }
 
   @computed get checkOrderStepType() {
-
     if (this.allOrdersDetail.length > 1) {
       let arr: number[] = [];
       for (const item of this.allOrdersDetail) {
@@ -151,34 +168,33 @@ class YourPhone implements IYourPhoneStore {
     return this.getOrderBrandType(this.orderDetail);
   }
 
-
   @action public getBrandsByCid = async () => {
     let res: IBrands[] = [];
     try {
       res = await Api.getBrandsByCid<IBrands[]>();
     } catch (error) {
-      console.warn(error, 'in brand store');
+      console.warn(error, "in brand store");
       return false;
     }
 
     this.brands = res;
     return true;
-  }
+  };
 
   @action public getCarrier = async () => {
     let res: ICarrier[] = [];
     try {
       res = await Api.getCarrier<ICarrier[]>();
     } catch (error) {
-      console.warn(error, 'in brand store');
+      console.warn(error, "in brand store");
       return false;
     }
 
     this.carriers = res;
     return true;
-  }
+  };
 
-  @action public getProductsList = async (keyword: string = '') => {
+  @action public getProductsList = async (keyword: string = "") => {
     // 直接return
     if (this.activeBrandsId <= 0) {
       return true;
@@ -187,7 +203,7 @@ class YourPhone implements IYourPhoneStore {
     try {
       res = await Api.getProductsList<IProductModel[]>(this.activeBrandsId);
     } catch (error) {
-      console.warn(error, 'in brand store getProductsList');
+      console.warn(error, "in brand store getProductsList");
       return false;
     }
 
@@ -197,7 +213,7 @@ class YourPhone implements IYourPhoneStore {
       this.products = res;
     }
     return true;
-  }
+  };
 
   // 用于搜索机型时，只展示指定id的机型
   @action public getProductDetail = async (id: number) => {
@@ -205,20 +221,20 @@ class YourPhone implements IYourPhoneStore {
     try {
       res = await Api.getProductDetail<IProductModel>(id);
     } catch (error) {
-      console.warn(error, 'in brand store getProductDetail');
+      console.warn(error, "in brand store getProductDetail");
       return false;
     }
 
     this.products = [res];
     return true;
-  }
+  };
 
   @action public getProductPPVN = async () => {
     let res: IProductPPVN[] = [];
     try {
       res = await Api.getProductPPVN<IProductPPVN[]>(this.activeProductId);
     } catch (error) {
-      console.warn(error, 'in yourphone store getProductPPVN');
+      console.warn(error, "in yourphone store getProductPPVN");
       return false;
     }
 
@@ -231,7 +247,7 @@ class YourPhone implements IYourPhoneStore {
       this.activeConditions = {};
     }
     return true;
-  }
+  };
 
   // 创建询价
   @action public createInquiry = async () => {
@@ -244,14 +260,14 @@ class YourPhone implements IYourPhoneStore {
       agentCode: config.ENVCONFIG.agentCode,
       priceUnits: priceUnits,
       productId: this.activeProductId
-    }
+    };
     // TODO: 接口问题，先写死
     // const inquiry: IQueryParams = { "agentCode": 'ahs_android', "productId": 25827, "priceUnits": [6437, 2023, 2014, 2453, 2072] }
     let res: string;
     try {
       res = await Api.createInquiry<string>(inquiry);
     } catch (error) {
-      console.warn(error, 'in yourphone store createInquiry');
+      console.warn(error, "in yourphone store createInquiry");
       // 前端拦截所有报错并提示用户去写邮件寻求帮助
       EmailModal();
       return false;
@@ -260,34 +276,41 @@ class YourPhone implements IYourPhoneStore {
     this.inquiryKey = res;
     await this.getInquiryDetail();
     return true;
-  }
+  };
 
   // 获取询价详情
   @action public getInquiryDetail = async () => {
     try {
-      this.inquiryDetail = await Api.getInquiryDetail<IInquiryDetail & null>(this.inquiryKey);
+      this.inquiryDetail = await Api.getInquiryDetail<IInquiryDetail & null>(
+        this.inquiryKey
+      );
     } catch (error) {
-      console.warn(error, 'in yourphone store getInquiryDetail');
+      console.warn(error, "in yourphone store getInquiryDetail");
       return false;
     }
     return true;
-  }
+  };
 
   @action public getAmericaState = async (zipCode: string) => {
     this.americaStates = null;
     try {
-      this.americaStates = await Api.getStateByCode<IAmericaState>(zipCode);
+      const americaStates: any = await Api.getStateByCode<IAmericaState>(zipCode);
+      this.americaStates = americaStates.data;
+      console.log(this.americaStates);
     } catch (error) {
-      console.warn(error, 'in brand store');
+      console.warn(error, "in brand store");
       return false;
     }
 
     return true;
-  }
+  };
 
   // 创建订单YIRAN
   @action public createOrder = async () => {
-    const orderParams: Pick<IPreOrder, Exclude<keyof IPreOrder, 'key' | 'productInfo'>> & { brandId?: number } = {
+    const orderParams: Pick<
+      IPreOrder,
+      Exclude<keyof IPreOrder, "key" | "productInfo">
+    > & { brandId?: number } = {
       addressInfo: this.addressInfo,
       agentCode: config.ENVCONFIG.agentCode,
       carrier: this.activeCarrierName,
@@ -296,9 +319,11 @@ class YourPhone implements IYourPhoneStore {
       payment: this.payment,
       paypalInfo: this.paypal,
       userEmail: UserStore.preOrder.userEmail!,
-      brandId: UserStore.preOrder.productInfo ? UserStore.preOrder.productInfo.brandId : undefined,
+      brandId: UserStore.preOrder.productInfo
+        ? UserStore.preOrder.productInfo.brandId
+        : undefined,
       expressCarrier: this.expressCarrier
-    }
+    };
 
     if (this.isTBD) {
       orderParams.tbdInfo = this.tbdInfo;
@@ -307,7 +332,7 @@ class YourPhone implements IYourPhoneStore {
     try {
       this.orderDetail = await Api.createOrder<any>(orderParams);
     } catch (error) {
-      console.warn(error, 'in yourphone store createOrder');
+      console.warn(error, "in yourphone store createOrder");
       EmailModal();
       // noteUserModal({
       //   content: 'Please contact support@uptradeit.com for help.',
@@ -334,9 +359,12 @@ class YourPhone implements IYourPhoneStore {
     }
 
     return true;
-  }
+  };
 
-  @action public appendOrder = async (preOrder: Partial<IPreOrder>, errCallback: () => void) => {
+  @action public appendOrder = async (
+    preOrder: Partial<IPreOrder>,
+    errCallback: () => void
+  ) => {
     if (!preOrder.productInfo) {
       return false;
     }
@@ -346,17 +374,20 @@ class YourPhone implements IYourPhoneStore {
     const orderParams: IAppendOrderParams = {
       brandId: preOrder.productInfo.brandId,
       carrier: preOrder.productInfo.carrier,
-      inquiryKey: preOrder.inquiryKey || '',
-    }
+      inquiryKey: preOrder.inquiryKey || ""
+    };
 
     if (this.isTBD) {
-      orderParams['tbdInfo'] = this.tbdInfo;
+      orderParams["tbdInfo"] = this.tbdInfo;
     }
 
     try {
-      this.orderDetail = await Api.appendOrder<any>(orderParams, preOrder.appendOrderDetail ? preOrder.appendOrderDetail.orderNo : '');
+      this.orderDetail = await Api.appendOrder<any>(
+        orderParams,
+        preOrder.appendOrderDetail ? preOrder.appendOrderDetail.orderNo : ""
+      );
     } catch (error) {
-      console.warn(error, 'in yourphone store createOrder');
+      console.warn(error, "in yourphone store createOrder");
       if (error.code === 110001008) {
         if (errCallback) {
           errCallback();
@@ -369,23 +400,26 @@ class YourPhone implements IYourPhoneStore {
     }
 
     return true;
-  }
+  };
 
-  @action public getOrderDetail = async (orderNo: string, userEmail: string) => {
+  @action public getOrderDetail = async (
+    orderNo: string,
+    userEmail: string
+  ) => {
     if (!orderNo || !userEmail) {
       return false;
     }
     try {
       this.orderDetail = await Api.getOrderDetail<any>(orderNo, userEmail);
     } catch (error) {
-      console.warn(error, 'in yourphone store createOrder');
+      console.warn(error, "in yourphone store createOrder");
       return false;
     }
     if (this.orderDetail) {
-      this.allOrdersDetail = [this.orderDetail]
+      this.allOrdersDetail = [this.orderDetail];
     }
     return true;
-  }
+  };
 
   @action public getAllOrders = async (orderNo: string, userEmail: string) => {
     if (!orderNo || !userEmail) {
@@ -395,7 +429,7 @@ class YourPhone implements IYourPhoneStore {
     try {
       detail = await Api.getAllOrders<any>(orderNo, userEmail);
     } catch (error) {
-      console.warn(error, 'in yourphone store createOrder');
+      console.warn(error, "in yourphone store createOrder");
       return false;
     }
 
@@ -403,7 +437,7 @@ class YourPhone implements IYourPhoneStore {
     this.allOrdersDetail = detail;
 
     return true;
-  }
+  };
 
   @action public sendBox = async (orderNo: string, email: string) => {
     try {
@@ -411,24 +445,35 @@ class YourPhone implements IYourPhoneStore {
     } catch (e) {
       return false;
     }
-  }
+  };
 
   @action public getNearExpressStores = async () => {
     const shippingAddress = [];
     const addressInfo = this.addressInfo;
     shippingAddress.push(addressInfo.addressLine.trim());
-    if (addressInfo.addressLineOptional && addressInfo.addressLineOptional !== "") {
+    if (
+      addressInfo.addressLineOptional &&
+      addressInfo.addressLineOptional !== ""
+    ) {
       shippingAddress.push(addressInfo.addressLineOptional.trim());
     }
     shippingAddress.push(addressInfo.city + ", " + addressInfo.state);
     shippingAddress.push(addressInfo.zipCode);
 
-    const isMock = process.env.REACT_APP_SERVER_ENV === 'PUB' ? false : true;
+    const isMock = process.env.REACT_APP_SERVER_ENV === "PUB" ? false : true;
     let USPSStores: INearStore[] = [];
     let FedExStores: INearStore[] = [];
     try {
-      USPSStores = await Api.getNearExpressStores<INearStore[]>(shippingAddress.join(', '), 'USPS', isMock);
-      FedExStores = await Api.getNearExpressStores<INearStore[]>(shippingAddress.join(', '), 'FEDEX', isMock);
+      USPSStores = await Api.getNearExpressStores<INearStore[]>(
+        shippingAddress.join(", "),
+        "USPS",
+        isMock
+      );
+      FedExStores = await Api.getNearExpressStores<INearStore[]>(
+        shippingAddress.join(", "),
+        "FEDEX",
+        isMock
+      );
     } catch (e) {
       return false;
     }
@@ -436,72 +481,72 @@ class YourPhone implements IYourPhoneStore {
     this.USPSNearStores = USPSStores[0] || null;
     this.FedExNearStores = FedExStores[0] || null;
     return true;
-  }
+  };
 
   @action public desoryUnmount = () => {
-    this.payment = '';
+    this.payment = "";
     this.activeBrandsId = -1;
-  }
+  };
   @action public destory = () => {
     this.addressInfo = {
-      addressLine: '',
-      addressLineOptional: '',
-      city: '',
-      country: 'United States',
-      firstName: '',
-      lastName: '',
-      mobile: '',
-      state: '',
-      zipCode: ''
+      addressLine: "",
+      addressLineOptional: "",
+      city: "",
+      country: "United States",
+      firstName: "",
+      lastName: "",
+      mobile: "",
+      state: "",
+      zipCode: ""
     };
     this.paypal = {
-      email: ''
+      email: ""
     };
     this.echeck = {
-      firstName: '',
-      lastName: '',
-      email: ''
-    }
+      firstName: "",
+      lastName: "",
+      email: ""
+    };
     this.tbdInfo = {
-      storage: '',
+      storage: "",
       properties: [],
-      modelName: '',
+      modelName: "",
       donate: false
-    }
+    };
     this.activeBrandsId = -1;
     this.isLeftOnEdit = false;
     this.isRightOnEdit = false;
     this.oldActiveBrandsId = 0;
-    this.activeBrandsName = '';
-    this.activeCarrierName = '';
-    this.activeCarrierDescription = '';
+    this.activeBrandsName = "";
+    this.activeCarrierName = "";
+    this.activeCarrierDescription = "";
     this.activeProductId = -1;
-    this.activeProductName = '';
+    this.activeProductName = "";
     this.activeModelId = -1;
-    this.activeModelName = '';
+    this.activeModelName = "";
     this.activeConditions = {};
     this.isAddressValuesAndDisabled = false;
     this.isPaymentFormFilled = false;
     this.americaStates = null;
-    this.expressCarrier = '';
-  }
+    this.expressCarrier = "";
+  };
 
   @action public destoryByAppendOrder() {
     this.tbdInfo = {
-      storage: '',
+      storage: "",
       properties: [],
-      modelName: '',
+      modelName: "",
       donate: false
-    }
+    };
     this.activeBrandsId = -1;
     this.oldActiveBrandsId = 0;
-    this.activeBrandsName = '';
-    this.activeCarrierName = '';
-    this.activeCarrierDescription = '';
+    this.activeBrandsName = "";
+    this.activeCarrierName = "";
+    this.activeCarrierDescription = "";
     this.activeProductId = -1;
-    this.activeProductName = '';
+    this.activeProductName = "";
     this.activeModelId = -1;
-    this.activeModelName = '';
+    this.activeModelName = "";
     this.activeConditions = {};
   }
 

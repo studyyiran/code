@@ -2,7 +2,12 @@ export function requestWrapper(obj: any, all?: boolean) {
   return {
     ...obj,
     // url: all ? obj.url : "http://10.180.22.252:9001/api" + obj.url,
-    url: all ? obj.url : "http://prod-gateway-outside-1337850983.us-east-2.elb.amazonaws.com/api" + obj.url,
+    url: all
+      ? obj.url
+      : (process.env.REACT_APP_SERVER_ENV === "PUB"
+          ? "http://prod-gateway-outside-1337850983.us-east-2.elb.amazonaws.com/api"
+          : "http://demo-gateway-1613913116.us-east-2.elb.amazonaws.com/api") +
+        obj.url,
     isFullUrl: true
   };
 }
