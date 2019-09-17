@@ -171,13 +171,15 @@ export default function Brand(props: any) {
           </span>
         </section>
       </div>
-      <section className="risk">
-        <h3>Zero Risk & Free Retuns</h3>
-        <p>
-          If you change your mind after shipping your phone, we even ship it
-          back to you for free!
-        </p>
-      </section>
+      <div className="risk-container">
+        <section className="risk">
+          <h3>Zero Risk & Free Retuns</h3>
+          <p>
+            If you change your mind after shipping your phone, we even ship it
+            back to you for free!
+          </p>
+        </section>
+      </div>
       <div className="buttons-container">
         <button className="common-button second" onClick={addNewHandler}>
           Add another device

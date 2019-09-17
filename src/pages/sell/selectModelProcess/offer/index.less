@@ -121,20 +121,24 @@
         .func-space-between();
       }
     }
-    .risk {
-      margin-top: 72*@px;
-      text-align: center;
-      border-radius: 8 * @px;
-      border: 1 * @px solid rgba(233, 233, 233, 1);
-      padding: 20*@px 20*@px 38*@px;
-      > h3 {
-        .font(16 * @f, 500, #1ab4e7);
-        margin-bottom: 13 * @px;
-      }
-      > p {
-        .font(14 * @f, 400, #222222);
+    .risk-container {
+      padding: 0 @padding-value;
+      .risk {
+        margin-top: 72 * @px;
+        text-align: center;
+        border-radius: 8 * @px;
+        border: 1 * @px solid rgba(233, 233, 233, 1);
+        padding: 20 * @px 20 * @px 38 * @px;
+        > h3 {
+          .font(16 * @f, 500, #1ab4e7);
+          margin-bottom: 13 * @px;
+        }
+        > p {
+          .font(14 * @f, 400, #222222);
+        }
       }
     }
+
     > .buttons-container {
       margin-top: 64 * @px;
     }

@@ -71,7 +71,7 @@ export default function OrderInfo() {
               {expressOption ? (
                 <li>
                   <h3>Slow Shipping</h3>
-                  <span>
+                  <span className="unit-space">
                     -{priceUnit}
                     {expressOption.fee}
                   </span>
@@ -80,7 +80,7 @@ export default function OrderInfo() {
               {needInsurance ? (
                 <li>
                   <h3>Shipping Insurance</h3>
-                  <span>
+                  <span className="unit-space">
                     -{priceUnit}
                     {shippingInsurance}
                   </span>
