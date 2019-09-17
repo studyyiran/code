@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { inject, observer } from "mobx-react";
-import { Modal, Checkbox } from "antd";
+import { Modal, Checkbox, Button } from "antd";
 import Information from "../information";
 import PaymentPage from "../payment";
 import ChangeModal from "@/containers/aboutphone/components/changemodal";
@@ -68,7 +68,7 @@ class Summary extends React.Component<IDoneProps, IDoneStates> {
     isChecked: true, // 勾选协议（多余字段）
     showEditModal: false, // 展示弹窗
     pageType: "", // 弹窗内置的页面组件
-    loadingComplete: false,
+    startLoading: false,
     loadingAppend: false
   };
 
@@ -271,7 +271,9 @@ class Summary extends React.Component<IDoneProps, IDoneStates> {
           disabled={!this.state.isChecked}
           handleNext={this.handleShip}
         >
-          Confirm
+          <Button type="primary" loading={this.state.startLoading}>
+            Confirm
+          </Button>
         </ButtonGroup>
         <Modal {...customizeModalProps}>
           <ChangeModal type={this.state.pageType} onSave={this.onSave}>
@@ -391,14 +393,9 @@ class Summary extends React.Component<IDoneProps, IDoneStates> {
   };
 
   private handleShip = async () => {
-    if (!this.state.isChecked) {
+    if (!this.state.isChecked || this.state.startLoading) {
       return;
     }
-
-    this.setState({
-      loadingComplete: true
-    });
-
     // 开始创建订单
     let isOrderCreated = false;
     if (this.props.user.preOrder.appendOrderDetail) {
@@ -492,17 +489,22 @@ class Summary extends React.Component<IDoneProps, IDoneStates> {
         expressInfo,
         subOrders
       };
+      this.setState({
+        startLoading: true
+      });
       // next
       try {
         isOrderCreated = await createOrderStart(postData);
+        // isOrderCreated = await createOrderStart(123);
         (this.props as any).goNextPage();
       } catch (e) {
+        this.setState({
+          startLoading: false
+        });
         console.error(e);
       }
     }
-    this.setState({
-      loadingComplete: false
-    });
+
     if (isOrderCreated) {
       try {
         this.props.user.preOrder = {

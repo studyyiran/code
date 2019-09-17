@@ -37,7 +37,7 @@ export default function(props: any) {
             <h3>Reset your device by following the video below</h3>
             <VideoComponent />
           </section>
-          <RouterLink to={"/faq?index=1"}>{`< Get Help`}</RouterLink>
+          <RouterLink to={"/how-to-factory-reset-iphone"}>{`< Get Help`}</RouterLink>
         </section>
         <section className="card step2">
           <h2>Step 2 - Print your label</h2>

@@ -135,6 +135,19 @@ a:hover {
     > a {
       display: block;
     }
+    .ant-btn::before {
+      background: transparent;
+    }
+    > .ant-btn {
+      font-size: inherit;
+      background: transparent;
+      border: none;
+      width: 100%;
+      height: 100%;
+      &:hover {
+        background: transparent !important;
+      }
+    }
   }
 
   .common-button.second {

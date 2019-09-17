@@ -121,7 +121,7 @@ export interface IDoneStates {
   isChecked: boolean;
   showEditModal: boolean;
   pageType: 'shipping' | 'payment' | 'condition' | '';
-  loadingComplete: boolean,
+  startLoading: boolean,
   loadingAppend: boolean
 }
 
