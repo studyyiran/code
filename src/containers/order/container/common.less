@@ -10,11 +10,13 @@
     .content-tag-container {
       display: flex;
       align-items: flex-start;
+      
       > *:first-child {
         flex: 0 0 170*@px;
       }
       > *:last-child {
-        flex: 0 0 10*@px;
+        flex: 0 0 0*@px;
+        white-space: nowrap;
       }
     }
     .line-with-title {
@@ -22,6 +24,7 @@
       padding-left: @padding-left;
       padding-bottom: 10 * @px;
       border-bottom: 1 * @px solid @color-border;
+      align-items: center;
       > h3 {
         .font(18 * @px, 600, #222222);
         .mb({

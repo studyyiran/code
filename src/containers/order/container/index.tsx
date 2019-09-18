@@ -127,16 +127,16 @@ function OrderList(props: { order: IOrderStore }) {
         inquiryInfo
       } = order;
       const reactNodeConfig = getReactNodeConfig(subOrderStatus);
+      const needShowName = inquiryInfo.submitted.productName;
       return {
-        header: `${inquiryInfo.submitted.productName}-${subOrderStatusDisplayName}`,
+        header: `${needShowName}-${subOrderStatusDisplayName}`,
         key: subOrderNo,
         children: (
           <div>
             <MachineInfo
               key={subOrderNo}
-              productName={order.productDisplayName}
               guaranteedPrice={order.subTotal}
-              carrier={order.inquiryInfo.submitted.productPns[1].name}
+              submitted={inquiryInfo.submitted}
               {...order}
             />
             <ProgressBar
