@@ -1,6 +1,13 @@
 @import (reference) "~@/styles/index.less";
 @world: {
   .comp-header-container {
+    //.ant-collapse-arrow {
+    //  transform: rotate(180deg) !important;
+    //  background: red;
+    //}
+    //.ant-collapse > .ant-collapse-item:last-child, .ant-collapse > .ant-collapse-item:last-child > .ant-collapse-header {
+    //  border-radius: 0;
+    //}
     .modal {
       width: 100%;
       height: 100vh;
@@ -8,7 +15,7 @@
       z-index: 1000;
       top: 0;
       left: 0;
-      background: rgba(0,0,0,0.45);
+      background: rgba(0, 0, 0, 0.45);
     }
     .collapse-clear-border();
     background: @tab-bar-color;
@@ -19,8 +26,7 @@
       padding-top: 0;
       padding-bottom: 0;
     }
-    ant-collapse-content
-    .ant-collapse-header {
+    ant-collapse-content .ant-collapse-header {
       padding: 0;
     }
     .ant-collapse > .ant-collapse-item {
@@ -30,16 +36,16 @@
       background: @white;
       width: 100%;
       position: relative;
-      padding-top: 10*@px;
-      padding-bottom: 10*@px;
+      padding-top: 10 * @px;
+      padding-bottom: 10 * @px;
       //top: -3*@px;
       .ant-collapse-content-box {
         background: @white;
         h2 {
-          font-size: 18*@f;
+          font-size: 18 * @f;
         }
         a {
-          font-size: 12*@f;
+          font-size: 12 * @f;
         }
       }
     }
@@ -53,15 +59,15 @@
         width: 130 * @px;
       }
       .mobile-button-container {
-        width: 50*@px;
-        height: 50*@px;
+        width: 50 * @px;
+        height: 50 * @px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 30*@px;
+        font-size: 30 * @px;
         color: @white;
         > img {
-          margin-top: 10*@px;
+          margin-top: 10 * @px;
         }
       }
       .comp-dropdown-container {
@@ -87,7 +93,9 @@
         width: 100%;
         z-index: 1001;
       }
-      .ant-collapse > .ant-collapse-item.ant-collapse-no-arrow > .ant-collapse-header {
+      .ant-collapse
+        > .ant-collapse-item.ant-collapse-no-arrow
+        > .ant-collapse-header {
         padding: 18 * @px 20 * @px 14 * @px 16 * @px;
       }
       position: relative;

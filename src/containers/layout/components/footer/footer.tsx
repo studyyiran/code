@@ -122,7 +122,9 @@ export default class Footer extends React.Component<
                         {arr.map(({ subTitle, href }) => {
                           return (
                             <li key={subTitle}>
-                              <Link to={href}>{subTitle}</Link>
+                              <RouterLink onClick={clickUrlHandler} to={href}>
+                                {subTitle}
+                              </RouterLink>
                             </li>
                           );
                         })}
@@ -178,6 +180,10 @@ export default class Footer extends React.Component<
   };
 }
 
+function clickUrlHandler() {
+  window.scroll(0, 0);
+}
+
 export function MbFooter(props: any): any {
   const { onClickHandler } = props;
   return footerInfo.map(({ className, title, arr }: any) => {
@@ -187,10 +193,10 @@ export function MbFooter(props: any): any {
           <Panel header={<h2>{title}</h2>} key={title}>
             {arr.map(({ subTitle, href }: any) => {
               return (
-                <li key={subTitle} onClick={onClickHandler}>
-                  <Link to={href}>
+                <li key={subTitle} onClick={clickUrlHandler}>
+                  <RouterLink to={href}>
                     <span>{subTitle}</span>
-                  </Link>
+                  </RouterLink>
                 </li>
               );
             })}
