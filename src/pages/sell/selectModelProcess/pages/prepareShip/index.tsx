@@ -32,7 +32,7 @@ export default function(props: any) {
   // const selectModelContext = useContext(SelectModelContext);
   // const { getDownloadLabel } = selectModelContext as ISelectModelContext;
   const [orderInfo, setOrderInfo] = useState();
-  const [currentTab, setCurrentTab] = useState(videoConfig[1].key);
+  const [currentTab, setCurrentTab] = useState(videoConfig[0].key);
   useEffect(() => {
     const orderInfoCache: any = sessionStorage.getItem("orderInfo");
     try {

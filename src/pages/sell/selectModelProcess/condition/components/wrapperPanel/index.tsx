@@ -16,7 +16,7 @@ function SaveButton(props: any) {
 
   return (
     <button
-      className="common-button"
+      className="common-button button-centered"
       disabled={!canPost}
       onClick={props.onClick}
     >

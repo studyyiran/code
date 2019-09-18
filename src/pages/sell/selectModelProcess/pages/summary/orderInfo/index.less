@@ -1,6 +1,44 @@
 @import (reference) "~@/styles/index.less";
 @world: {
   .com-order-info {
+    .test {
+      > li {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        > *:first-child {
+          flex: 1 0 0;
+          text-align: right;
+          margin-right: 15 * @px;
+        }
+        > *:last-child {
+          flex: 0 0 60 * @px;
+          min-width: 60* @px;
+          text-align: left;
+        }
+      }
+    }
+
+    .last-order-info {
+      // 这个padding需要修改为正常的额外空间
+      //padding-right: 14*@px;
+      .test();
+    }
+
+    .new-payout {
+      //padding-right: 16*@px;
+      //padding-right: 30*@px;
+      .test();
+    }
+    // 设置间距
+    .ant-collapse > .ant-collapse-item.ant-collapse-no-arrow > .ant-collapse-header {
+      padding-left: 0;
+      padding-right: 0;
+    }
+    // 设置间距
+    .ant-collapse-content > .ant-collapse-content-box {
+      padding: 0;
+    }
     > ul {
       display: flex;
       justify-content: space-between;
@@ -37,45 +75,6 @@
         transition: transform 0.24s, -webkit-transform 0.24s;
       }
     }
-  }
-
-  .test {
-    > li {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      > *:first-child {
-        flex: 1 0 0;
-        text-align: right;
-        margin-right: 15 * @px;
-      }
-      > *:last-child {
-        flex: 0 0 60 * @px;
-        min-width: 60* @px;
-        text-align: left;
-      }
-    }
-  }
-
-  .last-order-info {
-    // 这个padding需要修改为正常的额外空间
-    //padding-right: 14*@px;
-    .test();
-  }
-
-  .new-payout {
-    //padding-right: 16*@px;
-    //padding-right: 30*@px;
-    .test();
-  }
-  // 设置间距
-  .ant-collapse > .ant-collapse-item.ant-collapse-no-arrow > .ant-collapse-header {
-    padding-left: 0;
-    padding-right: 0;
-  }
-  // 设置间距
-  .ant-collapse-content > .ant-collapse-content-box {
-    padding: 0;
   }
 
   .ismobile {
