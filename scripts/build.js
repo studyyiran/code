@@ -9,7 +9,7 @@ process.env.NODE_ENV = 'production';
 if (process.env.REACT_APP_SERVER_ENV === 'PUB') {
   process.env.PUBLIC_URL = 'http://prod-uptrade-frontend-1925609116.us-east-2.elb.amazonaws.com/';
 } else if (process.env.REACT_APP_SERVER_ENV === 'UAT') {
-  process.env.PUBLIC_URL = 'http://demo-frontend-2087007985.us-east-2.elb.amazonaws.com';
+  // process.env.PUBLIC_URL = 'http://demo-frontend-2087007985.us-east-2.elb.amazonaws.com';
 }
 process.env.GENERATE_SOURCEMAP = 'false';
 
