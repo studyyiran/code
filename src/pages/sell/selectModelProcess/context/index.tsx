@@ -539,7 +539,8 @@ function useGetAction(
       const { brandId, modelId, othersAttr } = config;
       const nameConfig = {
         brandName: "",
-        imgUrl: "https://sr.aihuishou.com/image/5ba3685de38bb01c30000054.png",
+        imgUrl: "",
+        // imgUrl: "https://sr.aihuishou.com/image/5ba3685de38bb01c30000054.png",
         modelInfoName: {
           modelName: "",
           othersAttrName: {}

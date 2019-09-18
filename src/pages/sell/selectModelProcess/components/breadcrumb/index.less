@@ -7,6 +7,9 @@
     .breadcrumb-list {
       display: flex;
       > li {
+        &:not([data-step="false"]) {
+          .canclick();
+        }
         > * {
           vertical-align: middle;
         }

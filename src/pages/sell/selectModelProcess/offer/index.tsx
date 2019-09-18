@@ -184,7 +184,16 @@ export default function Brand(props: any) {
         <button className="common-button second" onClick={addNewHandler}>
           Add another device
         </button>
-        <button className="common-button" onClick={props.goNextPage}>
+        <button
+          className="common-button"
+          onClick={() => {
+            selectModelContextDispatch({
+              type: "changeModelCache",
+              value: "reset"
+            });
+            props.goNextPage();
+          }}
+        >
           Next
         </button>
       </div>

@@ -45,7 +45,7 @@ function Breadcrumb(props: any) {
   function clickHandler(e: any) {
     const selectTag = e.target.getAttribute("data-step");
     // 如果当前处于选中状态
-    if (selectTag) {
+    if (selectTag && selectTag !== "false") {
       props.goNextPage(selectTag);
     }
   }
@@ -159,7 +159,7 @@ function Breadcrumb(props: any) {
         {configCache.map((routeConfig, index) => {
           const { pageKey, viewContent } = routeConfig;
           const renderPageOrder = getCurrentPageOrder(pageKey);
-          let nextPageKey = "";
+          let nextPageKey = "false";
           if (
             renderPageOrder >= stageOrder &&
             userProductList &&
