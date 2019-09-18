@@ -124,7 +124,7 @@ function OrderList(props: { order: IOrderStore }) {
         subOrderStatusDisplayName,
         subOrderStatus,
         orderStatusHistories,
-        inquiryInfo
+        inquiryInfo,
       } = order;
       const reactNodeConfig = getReactNodeConfig(subOrderStatus);
       const needShowName = inquiryInfo.submitted.productName;
@@ -143,19 +143,11 @@ function OrderList(props: { order: IOrderStore }) {
               data={getProgressType({
                 orderStatusHistories: orderStatusHistories,
                 orderCreateDate: totalOrderInfo.orderCreateDate,
-                subOrderStatus
+                subOrderStatus,
+                subOrderStatusDisplayName
               })}
             />
-            <DeliverSatus {...order} />
             {reactNodeConfig.deliver && <DeliverSatus {...order} />}
-            <Inspection
-              {...order}
-              phoneConditionQuestion={phoneConditionQuestion}
-              postEmailForm={postEmailForm}
-              revisedPriceConfirm={revisedPriceConfirm}
-              revisedPriceReject={revisedPriceReject}
-              subOrderStatus={subOrderStatus}
-            />
             {reactNodeConfig.inspected && (
               <Inspection
                 {...order}

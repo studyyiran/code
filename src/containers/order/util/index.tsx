@@ -212,7 +212,7 @@ export function getInfo({
 
 function findDate(status: IProgressType, orderStatusHistories: any) {
   // if (status === IProgressType.TO_BE_LISTED) {
-    // debugger;
+  // debugger;
   // }
   function findFirstEleFromTarget(b: any, f: any) {
     const vArray = b.filter(f);
@@ -232,11 +232,13 @@ function findDate(status: IProgressType, orderStatusHistories: any) {
 export function getProgressType({
   orderStatusHistories,
   orderCreateDate,
-  subOrderStatus
+  subOrderStatus,
+  subOrderStatusDisplayName
 }: {
   orderStatusHistories: any;
   orderCreateDate: any;
   subOrderStatus: any;
+  subOrderStatusDisplayName: any;
 }) {
   let currentIndex = 0;
   let dataList: IProgressDot[] = [
@@ -330,7 +332,7 @@ export function getProgressType({
       )
     };
     dataList[5] = {
-      name: "Transaction Failed",
+      name: IProgressType.TRANSACTION_FAILED === subOrderStatus ? subOrderStatusDisplayName : "Transaction Failed",
       img: PackageReceivedIcon,
       date: packageDate(
         findDate(IProgressType.TRANSACTION_FAILED, orderStatusHistories)
