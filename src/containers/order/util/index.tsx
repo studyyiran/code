@@ -330,7 +330,7 @@ export function getProgressType({
       )
     };
     dataList[5] = {
-      name: "Product Dispatched",
+      name: "Device Returned",
       img: PackageReceivedIcon,
       date: packageDate(
         findDate(IProgressType.TRANSACTION_FAILED, orderStatusHistories)
