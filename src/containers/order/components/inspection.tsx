@@ -7,6 +7,7 @@ import CheckInspectDiff from "../container/components/checkInspectDiff";
 import { Modal, Form, Input, Button } from "antd";
 import ReportModalContent from "@/containers/order/container/components/reportModalContent";
 import InspectPart from "@/containers/order/container/components/inspectPart";
+import ResultPart from "@/containers/order/container/components/resultPart";
 const { TextArea } = Input;
 
 const priceUnit = "$";
@@ -19,7 +20,8 @@ export default function InspectionWrapper(props: any) {
     revisedPriceConfirm,
     revisedPriceReject,
     phoneConditionQuestion,
-    subOrderStatus
+    subOrderStatus,
+    paymentInfo
   } = props;
   function postEmailFormHandler(data: any) {
     postEmailForm({
@@ -31,6 +33,7 @@ export default function InspectionWrapper(props: any) {
   // subOrderStatus 用于确认接受差异的状态
   return (
     <Inspection
+      paymentInfo={paymentInfo}
       subOrderStatus={subOrderStatus}
       inquiryInfo={{
         isDifferent: isDifferent,
@@ -74,7 +77,8 @@ class Inspection extends React.Component<any, any> {
       revisedPriceReject,
       phoneConditionQuestion,
       inquiryInfo,
-      subOrderStatus
+      subOrderStatus,
+      paymentInfo
     } = this.props;
     const { submitted, revised, isDifferent, differentReason } = inquiryInfo;
     const price = revised ? revised.amount : submitted.amount;
@@ -92,11 +96,12 @@ class Inspection extends React.Component<any, any> {
       if (!isDifferent) {
         return (
           <>
+            <ResultPart {...inquiryInfo} {...paymentInfo} />
             <Header />
             <section>
               <ul className="information-list">
                 <li className="price-view">
-                  <span>Price Guarantee</span>
+                  <span>Subtotal</span>
                   <span data-matched={isDifferent ? "false" : "true"}>
                     {priceUnit}
                     {price}
@@ -141,6 +146,10 @@ class Inspection extends React.Component<any, any> {
                     revisedPriceReject
                   })}
                 </section>
+                <p>
+                  We had to revise your offer based on the following results
+                  during our inspection process
+                </p>
                 <CheckInspectDiff
                   phoneConditionQuestion={phoneConditionQuestion}
                   inquiryInfo={inquiryInfo}

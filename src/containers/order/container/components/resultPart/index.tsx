@@ -47,7 +47,7 @@ export default function ResultPart(props: any) {
     } else {
       return (
         <li>
-          <span>Final Sale Price</span>
+          <span>Bonus</span>
           <span>Pending</span>
         </li>
       );
@@ -56,7 +56,7 @@ export default function ResultPart(props: any) {
   return (
     <div className="comp-result-part">
       <section className="line-with-title">
-        <h3>Action Result</h3>
+        <h3>Auction Result</h3>
       </section>
       <ul className="information-list">
         {renderReserveInfo()}

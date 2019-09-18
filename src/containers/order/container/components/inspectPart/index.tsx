@@ -14,7 +14,7 @@ export default function InspectPart(props: any) {
       </section>
       <ul className="information-list">
         <li className="price-view">
-          <span>Price Guarantee</span>
+          <span>Subtotal</span>
           <span data-matched={isDifferent ? "false" : "true"}>
             {priceUnit}
             {price}
