@@ -213,7 +213,7 @@ function RenderEmailForm() {
           if (!error) {
             emailSubscribed(values.email)
               .then((res: any) => {
-                message.success("");
+                message.success("Succeed to subscribe");
               })
               .catch((errorRes: any) => {
                 console.error(errorRes);
@@ -223,9 +223,15 @@ function RenderEmailForm() {
       }}
     >
       <Form.Item>
-        {innerProps.form.getFieldDecorator("email")(
-          <input placeholder="Email" aria-placeholder="Email" />
-        )}
+        {innerProps.form.getFieldDecorator("email", {
+          rules: [
+            {
+              required: true,
+              type: "email",
+              message: "Please enter a valid email."
+            }
+          ]
+        })(<input placeholder="Email" aria-placeholder="Email" />)}
       </Form.Item>
       <button className="common-button">Subscribe</button>
     </Form>

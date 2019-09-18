@@ -4,7 +4,7 @@ import "./inspection.less";
 import Tag from "@/components/tag";
 import TipsIcon from "@/pages/sell/selectModelProcess/components/tipsIcon";
 import CheckInspectDiff from "../container/components/checkInspectDiff";
-import { Modal, Form, Input, Button } from "antd";
+import {Modal, Form, Input, Button, message} from "antd";
 import ReportModalContent from "@/containers/order/container/components/reportModalContent";
 import InspectPart from "@/containers/order/container/components/inspectPart";
 import ResultPart from "@/containers/order/container/components/resultPart";
@@ -201,6 +201,8 @@ class Inspection extends React.Component<any, any> {
         formProps.form.validateFields((err: any, values: any) => {
           if (!err && values) {
             postEmailFormHandler(values);
+            // 这里缺少一个状态的判断
+            message.success("Succeed to send");
             that.setModalHandler(false);
           }
         });
