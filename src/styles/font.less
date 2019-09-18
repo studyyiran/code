@@ -100,18 +100,21 @@ a:hover {
     align-items: flex-start;
     position: relative;
     z-index: 11;
-    .mb({
-      justify-content: space-between;
-      > * {
-        flex: 0 1 auto;
-      }
-    });
     > *:first-child {
       flex: 0 0 600 * @px;
     }
     > *:last-child {
       flex: 0 0 700 * @px;
     }
+    .mb({
+      justify-content: space-between;
+      > *:first-child {
+        flex: 0 1 auto;
+      }
+      > *:last-child {
+        flex: 0 1 auto;
+      }
+    });
   }
   .unit-space {
     position: relative;

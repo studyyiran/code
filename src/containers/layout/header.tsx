@@ -67,7 +67,7 @@ export default function Header() {
           </Collapse>
         }
         ComponentPc={
-          <div className="container">
+          <div className="container flex-grid">
             <RenderBackHome />
             <div className="comp-dropdown-container">
               {footerInfo.map(({ title, arr }: any, index: any) => {
