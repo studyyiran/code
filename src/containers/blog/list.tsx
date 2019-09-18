@@ -73,10 +73,15 @@ export default class BlogList extends React.Component<
                     alt={features[0].thumbnailFullUrl + " | UpTradeit.com"}
                   />
                   <div className="intro-info">
-                    <span className="tag">tag</span>
+                    <span className="tag">
+                      {(features[0].tags || []).map(({ name }: any) => {
+                        return name;
+                      }).join(',')}
+                    </span>
                     <h3 className="title">{features[0].title}</h3>
                     <p className="summary">{features[0].summary}</p>
-                    <span className="date">date</span>
+                    {/*<span className="date">{features[0].createdDt}</span>*/}
+                    <span className="date">{features[0].releaseDt}</span>
                   </div>
                 </Link>
               </section>
