@@ -108,7 +108,7 @@ class AboutUs extends React.Component<RouteComponentProps> {
   public render() {
     return (
       <article className="page-about-us">
-        <HeaderTitle title={"Our mission"} />
+        <HeaderTitle title={"Our Mission"} />
         <div className="statement">
           <div>
             <img src={require("./res/whoWeAre/bg.png")} />
@@ -156,7 +156,7 @@ class AboutUs extends React.Component<RouteComponentProps> {
         </section>
         <div className="button-container">
           <button className="common-button">
-            <RouterLink to="/newsell">Sell it now</RouterLink>
+            <RouterLink to="/newsell">Sell Now</RouterLink>
           </button>
         </div>
       </article>

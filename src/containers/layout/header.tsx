@@ -73,7 +73,7 @@ export default function Header() {
               {footerInfo.map(({ title, arr }: any, index: any) => {
                 return (
                   <Dropdown overlay={renderArr(arr)} key={index}>
-                    <a className="ant-dropdown-link" href="#">
+                    <a className="ant-dropdown-link">
                       {title}
                       <Svg icon="arrow-right" />
                     </a>

@@ -14,7 +14,7 @@ class HowItWorks extends React.Component<RouteComponentProps> {
         <HeaderTitle title="How to sell my phone on UpTrade" />
         <section className="intro">
           <h2>Sell Your Phone For Cash in 3 Easy Steps</h2>
-          <VideoComponent />
+          {/*<VideoComponent />*/}
         </section>
         <ul className="list">
           <li>

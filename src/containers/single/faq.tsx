@@ -57,7 +57,7 @@ export default function Faq() {
         })}
       </ul>
       <button className="common-button">
-        <RouterLink to="/newsell">Sell it now</RouterLink>
+        <RouterLink to="/newsell">Sell Now</RouterLink>
       </button>
     </div>
   );

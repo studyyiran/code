@@ -97,7 +97,7 @@ export default function ModelCard(props: any) {
           {arr.map(({ displayName: name, id: propertyId }: any) => {
             return (
               <li
-                className="one-attr-option"
+                className="one-attr-option canclick"
                 key={propertyId}
                 data-selected={
                   String(currentId) === String(propertyId) ? "true" : "false"
@@ -145,7 +145,7 @@ export default function ModelCard(props: any) {
   }
   return (
     <div
-      className="model-card"
+      className="model-card canclick"
       onClick={() => {
         if (
           !modelInfo ||

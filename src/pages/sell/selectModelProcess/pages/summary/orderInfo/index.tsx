@@ -96,7 +96,7 @@ export default function OrderInfo() {
               $
               {guaranteedPayout -
                 ((expressOption && expressOption.fee) || 0) -
-                (shippingInsurance || 0)}
+                ((needInsurance && shippingInsurance) || 0)}
             </span>
           </li>
         </ul>
