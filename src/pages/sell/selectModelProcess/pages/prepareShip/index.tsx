@@ -76,6 +76,7 @@ export default function(props: any) {
           </section>
           <button className="common-button button-centered">
             <RouterLink
+              target="_blank"
               to={videoConfig[currentTab].url}
             >{`Get Help`}</RouterLink>
           </button>
