@@ -94,6 +94,25 @@ a:hover {
 }
 //my
 @common-button-world: {
+  .flex-grid {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    position: relative;
+    z-index: 11;
+    .mb({
+      justify-content: space-between;
+      > * {
+        flex: 0 1 auto;
+      }
+    });
+    > *:first-child {
+      flex: 0 0 600 * @px;
+    }
+    > *:last-child {
+      flex: 0 0 700 * @px;
+    }
+  }
   .unit-space {
     position: relative;
     left: -6*@px;

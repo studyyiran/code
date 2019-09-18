@@ -179,14 +179,17 @@ function Breadcrumb(props: any) {
           return (
             <li data-step={nextPageKey} key={pageKey}>
               <span data-step={nextPageKey}>{` ${viewContent()}`}</span>
-              {"prepareShip" !== pageKey ? (
-                <Svg icon="arrow-right" />
-              ) : null}
+              {"prepareShip" !== pageKey ? <Svg icon="arrow-right" /> : null}
             </li>
           );
         })}
       </ul>
     );
   }
-  return <div className="breadcrumb">{renderByType()}</div>;
+  return (
+    <div className="flex-grid">
+      <div className="breadcrumb">{renderByType()}</div>
+      <div />
+    </div>
+  );
 }
