@@ -65,7 +65,9 @@
     //padding: 30*@px 258*@px 30*@px;
     .container {
       .mb(
-        {display: flex; justify-content: space-between; align-items: center;}
+        {display: flex; justify-content: space-between; align-items: center;.page-padding(
+
+          ) ;}
       );
       > img.logo {
         width: 130 * @px;
@@ -97,17 +99,18 @@
 
   .ismobile {
     .comp-header-container {
-      height: 83px;
+      @height: 83px;
+      height: @height;
       padding: 0;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      .container {
+        height: @height;
+      }
       > *:first-child {
         position: absolute;
         width: 100%;
         z-index: 1001;
-        .page-padding();
+        top: 0;
+        left: 0;
         &.ant-collapse {
           padding-right: 0px;
         }

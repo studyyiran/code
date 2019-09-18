@@ -193,7 +193,17 @@ export function MbFooter(props: any): any {
           <Panel header={<h2>{title}</h2>} key={title}>
             {arr.map(({ subTitle, href }: any) => {
               return (
-                <li key={subTitle} onClick={clickUrlHandler}>
+                <li
+                  key={subTitle}
+                  onClick={() => {
+                    if (onClickHandler) {
+                      onClickHandler();
+                    }
+                    if (clickUrlHandler) {
+                      clickUrlHandler();
+                    }
+                  }}
+                >
                   <RouterLink to={href}>
                     <span>{subTitle}</span>
                   </RouterLink>
