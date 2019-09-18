@@ -146,10 +146,12 @@ class Inspection extends React.Component<any, any> {
                     revisedPriceReject
                   })}
                 </section>
-                <p>
-                  We had to revise your offer based on the following results
-                  during our inspection process
-                </p>
+                <section className="video-part">
+                  <p>
+                    We had to revise your offer based on the following results
+                    during our inspection process
+                  </p>
+                </section>
                 <CheckInspectDiff
                   phoneConditionQuestion={phoneConditionQuestion}
                   inquiryInfo={inquiryInfo}
@@ -205,30 +207,17 @@ class Inspection extends React.Component<any, any> {
       }
       return (
         <Form onSubmit={handleSubmit}>
-          <Form.Item>
+          <Form.Item label="Subject">
             {formProps.form.getFieldDecorator("subject", {
               rules: [{ required: true, message: "Please input your question" }]
             })(<Input placeholder="Please input your question" />)}
           </Form.Item>
-          <Form.Item>
+          <Form.Item label="Message">
             {formProps.form.getFieldDecorator("content", {
               rules: [{ required: true, message: "Please input your question" }]
             })(<TextArea placeholder="Please input your question" />)}
           </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
-
-          {/*<label>123123</label>*/}
-          {/*<TextArea />*/}
-          {/*<label>123123</label>*/}
-          {/*<Form.Item>*/}
-          {/*  <Button className="common-button" type="primary" htmlType="submit">*/}
-          {/*    Log in*/}
-          {/*  </Button>*/}
-          {/*</Form.Item>*/}
+          <button className="common-button button-centered">Submit</button>
         </Form>
       );
     }
@@ -251,21 +240,22 @@ class Inspection extends React.Component<any, any> {
           </TipsIcon>
         </div>
         <Modal
+          className="page-difference-modal"
           title="Have questions? Send us a message."
           visible={this.state.showModal}
           onCancel={this.setModalHandler.bind(this, false)}
           footer={null}
         >
           <WrappedForm />
-          <button
-            className="common-button canclick"
+          <span
+            className="canclick button-centered"
             onClick={() => {
               this.setModalHandler(false);
               revisedPriceReject();
             }}
           >
             Initiate Device Return
-          </button>
+          </span>
         </Modal>
       </div>
     );

@@ -146,7 +146,16 @@ function OrderList(props: { order: IOrderStore }) {
                 subOrderStatus
               })}
             />
+            <DeliverSatus {...order} />
             {reactNodeConfig.deliver && <DeliverSatus {...order} />}
+            <Inspection
+              {...order}
+              phoneConditionQuestion={phoneConditionQuestion}
+              postEmailForm={postEmailForm}
+              revisedPriceConfirm={revisedPriceConfirm}
+              revisedPriceReject={revisedPriceReject}
+              subOrderStatus={subOrderStatus}
+            />
             {reactNodeConfig.inspected && (
               <Inspection
                 {...order}

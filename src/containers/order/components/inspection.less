@@ -1,40 +1,52 @@
 @import (reference) "~@/styles/index.less";
+
 @world: {
+  .page-difference-modal {
+    .ant-modal-header {
+      border-bottom: none;
+    }
+    .common-button {
+      max-width: 100%;
+      margin-top: 32*@px;
+    }
+    .ant-modal-body {
+      padding-top: 0;
+    }
+    .ant-form-item {
+      margin-bottom: 0;
+    }
+    .canclick {
+      color: #1AB4E7;
+      margin-top: 32 *@px;
+    }
+  }
+
   .page-difference {
     > div.content-container {
-      padding-top: 24*@px;
+      padding-top: 24 * @px;
       > section.revised-part {
         flex: 1;
         .revised-line {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          padding-bottom: 21*@px;
-          border-bottom: 1*@px solid @color-border;
-          margin-bottom: 30*@px;
+          padding-bottom: 21 * @px;
+          border-bottom: 1 * @px solid @color-border;
+          margin-bottom: 30 * @px;
           > h3 {
-            .font(26*@f, 500, #000000);
+            .font(26 * @f, 500, #000000);
           }
           > div {
-            .font(26*@f, 500, #222222);
+            .font(26 * @f, 500, #222222);
           }
         }
       }
-      > section.video-part {
-        max-width: 448*@px;
-        > p {
-          font-size: 16*@f;
-          margin-bottom: 21*@px;
-        }
-        > video {
-          width: 100%;
-          margin-bottom: 21*@px;
-        }
-      }
+      @max-width: 1000 * @px;
       .accept-line {
+        .setpage(@max-width);
         display: flex;
         justify-content: space-between;
-        margin-bottom: 15*@px;
+        margin-bottom: 15 * @px;
         align-items: center;
         > button.common-button {
           //max-width: 200*@px;
@@ -45,8 +57,22 @@
           justify-content: center;
           align-items: center;
           > span:first-child {
-            .font(16*@f, 500, #1ab4e7);
+            .font(16 * @f, 500, #1ab4e7);
           }
+        }
+      }
+      > section.video-part {
+        //.setpage(@max-width);
+        text-align: center;
+        text-align: center;
+        margin: 40 * @px auto;
+        > p {
+          font-size: 16 * @f;
+          margin-bottom: 21 * @px;
+        }
+        > video {
+          width: 100%;
+          margin-bottom: 21 * @px;
         }
       }
     }
