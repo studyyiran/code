@@ -187,7 +187,7 @@ function Breadcrumb(props: any) {
     );
   }
   return (
-    <div className="flex-grid">
+    <div className="breadcrumb-container flex-grid">
       <div className="breadcrumb">{renderByType()}</div>
       <div />
     </div>

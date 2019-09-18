@@ -1,40 +1,47 @@
 @import (reference) "~@/styles/index.less";
 
 @world: {
-  .breadcrumb {
-    background: white;
-    padding: 30 * @px 0 * @px 30 * @px;
-    .breadcrumb-list {
-      display: flex;
-      > li {
-        &:not([data-step="false"]) {
-          .canclick();
-        }
-        > * {
-          vertical-align: middle;
-        }
-        font-size: 16*@px;
-        color: #444444;
-        &:last-child {
-          color: #000000;
-        }
-        svg {
-          margin: 0 6*@px;
-          font-size: 10*@px;
+  .breadcrumb-container {
+    white-space: nowrap;
+    .breadcrumb {
+      background: white;
+      padding: 30 * @px 0 * @px 30 * @px;
+      .breadcrumb-list {
+        display: flex;
+        > li {
+          display: flex;
+          align-items: center;
+          vertical-align: 5px;
+          &:not([data-step="false"]) {
+            .canclick();
+          }
+          > * {
+            vertical-align: middle;
+          }
+          font-size: 16 * @px;
+          color: #444444;
+          &:last-child {
+            color: #000000;
+          }
+          svg {
+            margin: 0 6 * @px;
+            font-size: 14 * @px;
+          }
         }
       }
     }
   }
-
   .ismobile #root {
-    .breadcrumb {
-      padding: 0.24rem 0 0.24rem 0.43rem;
-      .breadcrumb-list {
-        > li {
-          font-size: 0.32rem;
-          svg {
-            margin: 0 0.1rem;
-            font-size: 0.1rem;
+    .breadcrumb-container {
+      .breadcrumb {
+        padding: 0.24rem 0 0.24rem 0.43rem;
+        .breadcrumb-list {
+          > li {
+            font-size: 0.32rem;
+            svg {
+              margin: 0 0.1rem;
+              font-size: 0.1rem;
+            }
           }
         }
       }
@@ -43,4 +50,3 @@
 };
 
 .hello(@world);
-
