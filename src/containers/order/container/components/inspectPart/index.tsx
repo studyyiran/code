@@ -1,14 +1,16 @@
 import * as React from "react";
 import "./index.less";
+import "../../common.less";
 import Tag from "@/components/tag";
 import CheckInspectDiff from "@/containers/order/container/components/checkInspectDiff";
 const priceUnit = "$";
+
 export default function InspectPart(props: any) {
   const {inquiryInfo, phoneConditionQuestion} = props
   const { isDifferent, price, differentReason } = inquiryInfo;
   return (
     <div className="comp-inspect-part">
-      <section className="line-with-title">
+      <section className="line-with-title content-tag-container">
         <h3>Inspection Result</h3>
         <Tag status={isDifferent ? "fail" : "success"}>{differentReason || 'Matched'}</Tag>
       </section>

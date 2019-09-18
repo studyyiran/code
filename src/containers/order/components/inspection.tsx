@@ -86,7 +86,7 @@ class Inspection extends React.Component<any, any> {
     // 是否match
     function renderByType() {
       const Header: any = () => (
-        <section className="line-with-title">
+        <section className="line-with-title content-tag-container">
           <h3>Inspection Result</h3>
           <Tag status={isDifferent ? "fail" : "success"}>
             {differentReason || "Matched"}
