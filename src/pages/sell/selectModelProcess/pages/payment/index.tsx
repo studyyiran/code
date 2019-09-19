@@ -33,19 +33,20 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
   public validateData = (): Promise<boolean> => {
     return new Promise(resolve => {
       // 必须要选中一种支付方式
-      const { payment } = this.props.yourphone;
+      const payment = this.state.activeSide;
+
       if (payment === "") {
         message.info("how would you like to pay?");
         resolve(false);
         return;
       }
-
+      this.props.yourphone.payment = this.state.activeSide;
       // 用户并没有修改有关的支付信息，不需要执行下面的校验
       if (
         !this.props.yourphone.isLeftOnEdit &&
         !this.props.yourphone.isRightOnEdit
       ) {
-        switch (this.props.yourphone.payment) {
+        switch (this.state.activeSide) {
           case EPayType.PAYPAL:
             this.props.yourphone.paypal = {
               email: this.props.user.preOrder.userEmail || ""
@@ -65,7 +66,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
           this.props.user.preOrder = {
             ...this.props.user.preOrder,
             checkInfo: { ...this.props.yourphone.echeck },
-            payment: this.props.yourphone.payment,
+            payment: this.state.activeSide,
             paypalInfo: { ...this.props.yourphone.paypal }
           };
         } catch (error) {
@@ -75,7 +76,6 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
         resolve(true);
         return;
       }
-
       this.props.form.validateFields((err, values) => {
         if (err) {
           resolve(false);
@@ -114,7 +114,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
           return;
         }
 
-        switch (this.props.yourphone.payment) {
+        switch (this.state.activeSide) {
           case EPayType.PAYPAL:
             this.props.yourphone.paypal = { email: paypal_email };
             break;
@@ -131,7 +131,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
           this.props.user.preOrder = {
             ...this.props.user.preOrder,
             checkInfo: { ...this.props.yourphone.echeck },
-            payment: this.props.yourphone.payment,
+            payment: this.state.activeSide,
             paypalInfo: { ...this.props.yourphone.paypal }
           };
         } catch (error) {
@@ -143,14 +143,12 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
     });
   };
 
-
   public render() {
     let leftContent: React.ReactNode;
     let rightContent: React.ReactNode;
     const { getFieldDecorator } = this.props.form;
 
     const { paypal, echeck } = this.props.yourphone;
-
     // paypal的结构
     switch (this.props.yourphone.isLeftOnEdit) {
       case false:
@@ -321,7 +319,11 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
       <div className="payment-type-container">
         <div
           className="echeck-container container-border"
-          data-selected={this.props.yourphone.payment ? this.props.yourphone.payment === EPayType.ECHECK : true}
+          data-selected={
+            this.state.activeSide
+              ? this.state.activeSide === EPayType.ECHECK
+              : true
+          }
           onClick={this.handleEcheckCollapseExtend}
         >
           <div className="recommended comp-top-tag">Recommended</div>
@@ -338,7 +340,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
         </div>
         <div
           className="paypal-container container-border"
-          data-selected={this.props.yourphone.payment === EPayType.PAYPAL}
+          data-selected={this.state.activeSide === EPayType.PAYPAL}
           onClick={this.handlePaypalCollapseExtend}
         >
           <header>
@@ -360,22 +362,41 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
         <ButtonGroup
           {...this.props}
           handleNext={this.handleNext}
-          disabled={!this.props.yourphone.isDonePayment}
+          disabled={!this.checkFormValueSame()}
         />
       </div>
     );
   }
 
+  private checkFormValueSame() {
+    const formValues = this.props.form.getFieldsValue();
+    const checkArr: string[] = [];
+    Object.keys(formValues).forEach((key: string) => {
+      if (key.indexOf("email") !== -1) {
+        checkArr.push(formValues[key]);
+      }
+    });
+    if (checkArr.length === 2 && checkArr[0] === checkArr[1]) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   private handlePaypalCollapseExtend = () => {
     this.props.yourphone.isLeftOnEdit = true;
     this.props.yourphone.isRightOnEdit = false;
-    this.props.yourphone.payment = "PAYPAL";
+    this.setState({
+      activeSide: "PAYPAL"
+    });
   };
 
   private handleEcheckCollapseExtend = () => {
     this.props.yourphone.isLeftOnEdit = false;
     this.props.yourphone.isRightOnEdit = true;
-    this.props.yourphone.payment = "CHECK";
+    this.setState({
+      activeSide: "CHECK"
+    });
   };
 
   private handleNext = async () => {
