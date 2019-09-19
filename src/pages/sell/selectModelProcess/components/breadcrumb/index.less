@@ -2,6 +2,14 @@
 
 @world: {
   .breadcrumb-container {
+    &.flex-grid {
+      > *:first-child {
+        flex: 0 0 1000*@px;
+      }
+      > *:last-child {
+        flex: 0 0 300*@px;
+      }
+    }
     white-space: nowrap;
     .breadcrumb {
       background: white;
