@@ -4,7 +4,7 @@ import { IOrderProps } from "@/containers/order/interface/order.inerface";
 import Tag from "@/components/tag";
 import InspectPart from "../container/components/inspectPart";
 import ResultPart from "../container/components/resultPart";
-import "./listedForSale.less";
+import "../container/common.less";
 
 export default function ListedForSaleWrapper(props: any) {
   const { inquiryInfo, paymentInfo, phoneConditionQuestion } = props;

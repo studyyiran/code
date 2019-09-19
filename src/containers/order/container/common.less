@@ -3,6 +3,10 @@
 @world: {
   .ismobile {
     .order-information-page {
+      .comp-order-sale {
+        display: flex;
+        flex-direction: column;
+      }
       ul.information-list {
         flex-direction: column;
         > * {
@@ -15,6 +19,14 @@
     }
   }
   .order-information-page {
+    .comp-order-sale {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-column-gap: 32px;
+      .information-list {
+        border-bottom: none;
+      }
+    }
     .comp-tag.padding {
       background: @white;
       color: #6dd230;
