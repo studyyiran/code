@@ -170,33 +170,34 @@ function reducer(state: IContextState, action: IReducerAction) {
       }
       break;
     }
-    case "updateUserProductListSetInquiryKey": {
-      const newProduct = {
-        brand: newState.brand,
-        modelInfo: newState.modelInfo,
-        inquiryKey: value,
-        phoneConditionStaticAnswer: newState.phoneConditionStaticAnswer
-      };
-      const productTargetIndex = newState.userProductList.findIndex(
-        userProduct => {
-          // 首先判定，当前的状态
-          return userProduct.inquiryKey === newState.inquiryKey;
+    case "updateUserProductListSetInquiryKey":
+      {
+        const newProduct = {
+          brand: newState.brand,
+          modelInfo: newState.modelInfo,
+          inquiryKey: value,
+          phoneConditionStaticAnswer: newState.phoneConditionStaticAnswer
+        };
+        const productTargetIndex = newState.userProductList.findIndex(
+          userProduct => {
+            // 首先判定，当前的状态
+            return userProduct.inquiryKey === newState.inquiryKey;
+          }
+        );
+        // 强行变更数组。深比较
+        newState.userProductList = newState.userProductList.concat([]);
+        if (productTargetIndex !== -1) {
+          // 更新
+          newState.userProductList[productTargetIndex] = newProduct;
+        } else {
+          newState.userProductList.push(newProduct);
         }
-      );
-      // 强行变更数组。深比较
-      newState.userProductList = newState.userProductList.concat([]);
-      if (productTargetIndex !== -1) {
-        // 更新
-        newState.userProductList[productTargetIndex] = newProduct;
-      } else {
-        newState.userProductList.push(newProduct);
+        // 更新当前选中的key
+        newState.inquiryKey = value;
+        newState = { ...newState };
+        break;
       }
-      // 更新当前选中的key
-      newState.inquiryKey = value;
-      newState = { ...newState };
-      break;
-    }
-    // reset
+      // reset
     case "resetAllUserInputData": {
       (newState as any) = {
         brandList: [],
@@ -239,7 +240,7 @@ function reducer(state: IContextState, action: IReducerAction) {
       newState = { ...newState };
   }
   // justtest 避免覆盖
-  if (state.brand || type === "changeModelCache") {
+  if (state.brand || type === "changeModelCache" || type === "resetAllUserInputData") {
     saveToCache(sessionKey, newState, [
       "modelInfo",
       "brand",
@@ -539,7 +540,7 @@ function useGetAction(
       const { brandId, modelId, othersAttr } = config;
       const nameConfig = {
         brandName: "",
-        imgUrl: require('../../img/common-phone.png'),
+        imgUrl: require("../../img/common-phone.png"),
         // imgUrl: "https://sr.aihuishou.com/image/5ba3685de38bb01c30000054.png",
         modelInfoName: {
           modelName: "",
