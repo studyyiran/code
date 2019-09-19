@@ -25,6 +25,7 @@
     "object-literal-shorthand": false,
     "no-debugger": false,
     "no-reference": false,
+    "no-unused-expression": false,
     "whitespace": [
       true,
       "check-branch",
