@@ -74,10 +74,6 @@ export default class BlogDetail extends React.Component<IBlogDetailProps> {
               <h3>Latest Posts</h3>
               {renderNavList(this.props.blog.lastest)}
             </section>
-            <section>
-              <h3>Latest Posts</h3>
-              {renderNavList(this.props.blog.lastest)}
-            </section>
           </div>
         </div>
         <div className="button-container">
