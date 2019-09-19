@@ -38,19 +38,19 @@ function HelpList() {
       title: "Need more time?",
       desc:
         "Let us know how we can assist you with your order. We will get back to you within 1 business day.",
-      img: require("./bg.jpg")
+      img: require("./img/test.png")
     },
     {
       title: "Need more time?",
       desc:
         "Let us know how we can assist you with your order. We will get back to you within 1 business day.",
-      img: require("./bg.jpg")
+      img: require("./img/test.png")
     },
     {
       title: "Need more time?",
       desc:
         "Let us know how we can assist you with your order. We will get back to you within 1 business day.",
-      img: require("./bg.jpg")
+      img: require("./img/test.png")
     }
   ];
   return (
