@@ -1,4 +1,3 @@
-
 import * as React from "react";
 import "./index.less";
 import "../commonCss/contact.less";
@@ -41,15 +40,21 @@ function HelpList() {
       img: require("./img/test.png")
     },
     {
-      title: "Need more time?",
+      title: "No box? No problem!",
       desc:
-        "Let us know how we can assist you with your order. We will get back to you within 1 business day.",
+        "If you don't have a box, don't worry. Let us know and we will send one to you.",
       img: require("./img/test.png")
     },
     {
-      title: "Need more time?",
+      title: "FedEx Is Too Far",
       desc:
-        "Let us know how we can assist you with your order. We will get back to you within 1 business day.",
+        "We offer a USPS option which allows you to ship your phone from the comfort of your home.",
+      img: require("./img/test.png")
+    },
+    {
+      title: "Need help to reset Phone?",
+      desc:
+        "If you need help resetting your phone. We can walk you through step by step to ensure your data is safe.",
       img: require("./img/test.png")
     }
   ];
@@ -128,6 +133,7 @@ export default function() {
           </section>
         </div>
       </div>
+      <HelpList />
     </div>
   );
 }
