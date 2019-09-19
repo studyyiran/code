@@ -4,9 +4,8 @@ import { SelectModelContext, ISelectModelContext } from "../context";
 import Svg from "@/components/svg";
 import TipsIcon from "@/pages/sell/selectModelProcess/components/tipsIcon";
 import { Collapse } from "antd";
+import { currencyTrans } from "@/utils/util";
 const { Panel } = Collapse;
-
-const priceUnit = "$";
 
 export default function Brand(props: any) {
   const selectModelContext = useContext(SelectModelContext);
@@ -100,31 +99,19 @@ export default function Brand(props: any) {
             ) : null}
             <li className="estimate-line">
               <span>Device Estimate</span>
-              <span>
-                {priceUnit}
-                {deviceEstimate}
-              </span>
+              <span>{currencyTrans(deviceEstimate)}</span>
             </li>
             <li className="service-fee-line">
               <span>10% Service Fee</span>
-              <span>
-                -{priceUnit}
-                {platformFee}
-              </span>
+              <span>-{currencyTrans(platformFee)}</span>
             </li>
             <li className="seller-fee-line">
               <span>3rd Party Seller Fees</span>
-              <span>
-                -{priceUnit}
-                {thirdPartyFee}
-              </span>
+              <span>-{currencyTrans(thirdPartyFee)}</span>
             </li>
             <li className="subtotal">
               <span>Subtotal</span>
-              <span>
-                {priceUnit}
-                {subTotal}
-              </span>
+              <span>{currencyTrans(subTotal)}</span>
             </li>
           </ul>
         </Panel>
@@ -165,10 +152,7 @@ export default function Brand(props: any) {
               receive and inspect the device(s) in your order.{" "}
             </TipsIcon>
           </div>
-          <span className="big-font">
-            {priceUnit}
-            {guaranteedPayout}
-          </span>
+          <span className="big-font">{currencyTrans(guaranteedPayout)}</span>
         </section>
       </div>
       <div className="risk-container">

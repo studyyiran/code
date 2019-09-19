@@ -36,13 +36,16 @@ export function requestGetResponse(promise: any) {
 export function safeEqual(a: any, b: any) {
   return String(a) === String(b);
 }
-
 export function currencyTrans(value: any) {
   let fixValue = staticContentConfig.priceUnit;
   if (String(value).includes(".")) {
     fixValue += value.toFixed(2);
   } else {
-    fixValue += value;
+    if (value || String(value) === "0") {
+      fixValue += value;
+    } else {
+      fixValue = "";
+    }
   }
   return fixValue;
 }
