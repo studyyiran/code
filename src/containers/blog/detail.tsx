@@ -60,15 +60,17 @@ export default class BlogDetail extends React.Component<IBlogDetailProps> {
         <div className="blog-detail__content">
           <section className="content-part">
             <h2>{detail.title}</h2>
-            <span className="date">
-              {moment
-                .tz(detail.releaseDt, "America/Chicago")
-                .format("MMM DD, YYYY")}
-            </span>
-            <div className="share-icons">
-              <Svg icon="tweet"/>
-              <Svg icon="facebook"/>
-              <Svg icon="mailicon"/>
+            <div className="date-container">
+              <span className="date">
+                {moment
+                  .tz(detail.releaseDt, "America/Chicago")
+                  .format("MMM DD, YYYY")}
+              </span>
+              <div className="share-icons">
+                <Svg icon="tweet" />
+                <Svg icon="facebook" />
+                <Svg icon="mailicon" />
+              </div>
             </div>
             <div
               className="html-content"
@@ -85,7 +87,6 @@ export default class BlogDetail extends React.Component<IBlogDetailProps> {
         <div className="button-container">
           <button className="common-button">View more</button>
         </div>
-        
       </div>
     );
   }
