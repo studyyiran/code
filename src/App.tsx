@@ -8,9 +8,13 @@ import store from "./store";
 import { ModelContextProvider } from "./pages/sell/selectModelProcess/context";
 import { TotalOrderInfoProvider } from "./containers/order/container/context";
 const setIsMobile = (fn?: () => void) => {
-  const clientWidth = document.documentElement.clientWidth;
+  const clientWidth = document.documentElement.offsetWidth;
+  // console.log('test')
+  console.log(document.documentElement.offsetWidth)
+  console.log(document.documentElement.clientWidth)
   // const dpr = window.devicePixelRatio || 1;
-  if (clientWidth <= 700) {
+  const confuseWidth = 17
+  if (clientWidth <= 700 - confuseWidth) {
     store["common"].isMobile = true;
     document.body.classList.add("ismobile");
   } else {
