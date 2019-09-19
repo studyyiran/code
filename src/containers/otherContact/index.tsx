@@ -71,7 +71,9 @@ function HelpList() {
                   <h3>{title}</h3>
                   <p>{desc}</p>
                 </div>
-                <img src={img} />
+                <div className="img-container">
+                  <img src={img} />
+                </div>
               </li>
             );
           }

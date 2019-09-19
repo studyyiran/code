@@ -59,11 +59,13 @@
             font-size: 16 * @px;
           }
         }
-        > img {
-          //min-width: 452 * @px;
-          //max-width: 452 * @px;
-          border-radius: 8 * @px;
-          flex: 0 0 452*@px;
+        .img-container {
+          flex: 0 0 452 * @px;
+          min-width: 0;
+          > img {
+            width: 100%;
+            border-radius: 8 * @px;
+          }
         }
       }
     }
@@ -84,16 +86,15 @@
 
   #ismobile {
     .page-contact-container {
-      
       @help-info-margin: 24 * @px auto 50 * @px;
-      h2,h3 {
+      h2,
+      h3 {
         .font(24 * @px, 600, #222222);
       }
       li.help-info {
         display: block;
         //text-align: center;
-        > img {
-          width: 100%;
+        .img-container {
           margin: @help-info-margin;
         }
       }
@@ -101,9 +102,9 @@
         .page-padding();
       }
       .comp-help-list {
-        padding-top: 10*@px;
+        padding-top: 10 * @px;
         > h2 {
-          margin-bottom: 43*@px;
+          margin-bottom: 43 * @px;
         }
         .page-padding();
       }
