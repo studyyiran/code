@@ -22,12 +22,6 @@
   font-size: inherit;
 }
 
-.ismobile {
-  body {
-    overflow-x: hidden;
-  }
-}
-
 .hello(@rules) {
   @media (min-width: 1600px) {
     @f: 1px;
@@ -100,6 +94,17 @@ a:hover {
 }
 //my
 @common-button-world: {
+  #ismobile {
+    .flex-grid {
+      justify-content: space-between;
+      > *:first-child {
+        flex: 0 1 auto;
+      }
+      > *:last-child {
+        flex: 0 1 auto;
+      }
+    }
+  }
   .flex-grid {
     display: flex;
     justify-content: space-around;
@@ -112,15 +117,6 @@ a:hover {
     > *:last-child {
       flex: 0 0 700 * @px;
     }
-    .mb({
-      justify-content: space-between;
-      > *:first-child {
-        flex: 0 1 auto;
-      }
-      > *:last-child {
-        flex: 0 1 auto;
-      }
-    });
   }
   .unit-space {
     position: relative;
