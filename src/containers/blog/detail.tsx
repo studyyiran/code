@@ -6,6 +6,7 @@ import * as moment from "moment-timezone";
 import { shareComponent } from "@/utils/function";
 import { Link } from "react-router-dom";
 import { HeaderTitle } from "@/components/headerTitle";
+import Svg from "@/components/svg";
 @inject("blog")
 @observer
 export default class BlogDetail extends React.Component<IBlogDetailProps> {
@@ -64,6 +65,11 @@ export default class BlogDetail extends React.Component<IBlogDetailProps> {
                 .tz(detail.releaseDt, "America/Chicago")
                 .format("MMM DD, YYYY")}
             </span>
+            <div className="share-icons">
+              <Svg icon="tweet"/>
+              <Svg icon="facebook"/>
+              <Svg icon="mailicon"/>
+            </div>
             <div
               className="html-content"
               dangerouslySetInnerHTML={{ __html: detail.content }}
