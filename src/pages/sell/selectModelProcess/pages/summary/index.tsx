@@ -227,7 +227,7 @@ class Summary extends React.Component<IDoneProps, IDoneStates> {
       centered: true,
       title: '',
       onCancel: this.toggleChangeModal,
-      width: "90%"
+      width: "90%",
     };
     return (
       <div className="page-summary">

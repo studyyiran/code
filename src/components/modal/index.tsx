@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.less";
+import Svg from "@/components/svg";
 let bodyRoot = document.getElementById("modal-root");
 if (!bodyRoot) {
   bodyRoot = document.createElement("div");
@@ -206,12 +207,16 @@ export default class Modal extends React.Component<any, any> {
     const {
       maskStyle,
       className,
-      style,
+      style = {},
       bodyStyle,
       closable,
       centered,
+      width,
       title
     } = this.props;
+    if (width) {
+      style.width = width;
+    }
     /* icon-close可能没有。 */
     return (
       <div
@@ -236,12 +241,11 @@ export default class Modal extends React.Component<any, any> {
               </div>
             ) : null}
             {closable && (
-              <div className={`${prefixCls}-close`}>
-                <button
-                  className={`${prefixCls}-close-x icon-close`}
-                  onClick={this.onClose}
-                />
-              </div>
+              <button className={`${prefixCls}-close`} onClick={this.onClose}>
+                <span className={`${prefixCls}-close-x`}>
+                  <Svg icon="wrong" />
+                </span>
+              </button>
             )}
             <div style={bodyStyle} className={`${prefixCls}-body`}>
               {this.props.children}

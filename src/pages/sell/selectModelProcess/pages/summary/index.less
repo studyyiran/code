@@ -106,6 +106,13 @@
   }
 
   .yr-modal-mask {
+    .yr-modal-body {
+      > * {
+        max-height: 80vh;
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+    }
     .comp-price-title,
     .buttons-container {
       display: none;
@@ -113,6 +120,7 @@
     .page-infomation-container h2 {
       display: none;
     }
+    
   }
 };
 .hello(@world);
