@@ -84,9 +84,9 @@ export default class BlogDetail extends React.Component<IBlogDetailProps> {
             </section>
           </div>
         </div>
-        <div className="button-container">
-          <button className="common-button">View more</button>
-        </div>
+        {/*<div className="button-container">*/}
+        {/*  <button className="common-button">View more</button>*/}
+        {/*</div>*/}
       </div>
     );
   }

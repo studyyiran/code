@@ -29,7 +29,7 @@
           }
         }
         > .html-content {
-          margin-top: 87*@px;
+          margin-top: 27*@px;
         }
       }
       > div.nav-part {
@@ -56,7 +56,7 @@
           > nav.url-container {
             > a {
               @height: 110 * @px;
-              margin-bottom: 24px;
+              margin-bottom: 24*@px;
               height: @height;
               line-height: @height;
               > * {
@@ -95,16 +95,15 @@
         background: transparent;
       }
       background: #f5f7f9;
-      padding-bottom: 4.32rem;
+      padding-bottom: 44*@px;
       > .blog-detail__content {
         > section.content-part {
-          padding-top: 0.11rem;
+          max-width: 100%;
+          .page-padding();
           > h2 {
-            font-size: 0.48rem;
-            margin-bottom: 0.5rem;
+            font-size: 16*@px;
           }
           > .content {
-            margin-top: 1.47rem;
           }
         }
         > div.nav-part {
@@ -114,8 +113,6 @@
       > .button-container {
         padding: 0 15*@px;
         > button {
-          margin: 1.17rem auto 0px;
-          display: block;
         }
       }
     }
@@ -124,9 +121,9 @@
   // 保留以往的
   .blog-detail .html-content {
     h1 {
-      font-size: 30px;
+      font-size: 30*@px;
       color: #111;
-      line-height: 36px;
+      line-height: 36*@px;
       &.blue {
         color: @primary-color;
       }
@@ -134,27 +131,27 @@
 
     img {
       width: 100%;
-      // margin-top:34px;
+      // margin-top:34@px;
     }
 
     .banner {
       width: 100%;
-      margin-top: 34px;
+      margin-top: 34*@px;
     }
     .banner-m {
       display: none;
     }
     p {
-      margin: 18px 0;
-      font-size: 16px;
+      margin: 18*@px 0;
+      font-size: 16*@px;
       color: #808080;
-      line-height: 18px;
+      line-height: 18*@px;
     }
     h2 {
-      font-size: 24px;
-      line-height: 29px;
+      font-size: 24*@px;
+      line-height: 29*@px;
       color: #111;
-      margin-top: 60px;
+      margin-top: 60*@px;
     }
 
     h1,
@@ -164,20 +161,20 @@
     h5,
     h6 {
       margin: initial;
-      padding-top: 14px;
+      padding-top: 14*@px;
     }
 
     ol {
       margin-top: 0;
-      font-size: 16px;
+      font-size: 16*@px;
       color: #808080;
-      line-height: 18px;
-      padding-inline-start: 20px;
+      line-height: 18*@px;
+      padding-inline-start: 20*@px;
       padding-left: 2em;
       li {
         list-style-type: decimal;
         list-style-position: outside;
-        margin-bottom: 8px;
+        margin-bottom: 8*@px;
       }
 
       ul {
@@ -188,15 +185,15 @@
 
     ul {
       margin-top: 0;
-      font-size: 16px;
+      font-size: 16*@px;
       color: #808080;
-      line-height: 18px;
-      padding-inline-start: 20px;
+      line-height: 18*@px;
+      padding-inline-start: 20*@px;
       padding-left: 2em;
       li {
         list-style-type: disc;
         list-style-position: outside;
-        margin-bottom: 8px;
+        margin-bottom: 8*@px;
       }
     }
 
@@ -208,10 +205,10 @@
     .img-box {
       overflow: hidden;
       .list {
-        width: 200px;
-        margin-right: 113px;
+        width: 200*@px;
+        margin-right: 113*@px;
         float: left;
-        margin-top: 65px;
+        margin-top: 65*@px;
 
         &:nth-of-type(3n) {
           margin-right: 0;
@@ -221,20 +218,20 @@
           display: flex;
           align-items: top;
           .number {
-            width: 20px;
-            height: 20px;
+            width: 20*@px;
+            height: 20*@px;
             background: #00bae5;
             border-radius: 50%;
             text-align: center;
-            line-height: 20px;
-            font-size: 16px;
-            line-height: 20px;
+            line-height: 20*@px;
+            font-size: 16*@px;
+            line-height: 20*@px;
             color: #fff;
-            margin-right: 6px;
+            margin-right: 6*@px;
           }
           .title {
             flex: 1;
-            font-size: 16px;
+            font-size: 16*@px;
             p {
               color: #808080;
               margin: 0;
@@ -242,7 +239,7 @@
             span {
               color: #333;
               font-weight: bold;
-              margin-top: 14px;
+              margin-top: 14*@px;
               display: block;
               font-style: italic;
 
@@ -256,46 +253,45 @@
 
         img {
           width: 100%;
-          margin-top: 25px;
+          margin-top: 25*@px;
         }
       }
     }
 
     .list-box {
       .list {
-        margin-top: 61px;
+        margin-top: 61*@px;
         .header {
           .number {
-            width: 20px;
-            height: 20px;
+            width: 20*@px;
+            height: 20*@px;
             background: #00bae5;
             border-radius: 50%;
             text-align: center;
-            line-height: 20px;
-            font-size: 16px;
-            line-height: 20px;
+            line-height: 20*@px;
+            font-size: 16*@px;
             color: #fff;
-            margin-right: 6px;
+            margin-right: 6*@px;
             display: inline-block;
           }
           span.text {
-            font-size: 16px;
+            font-size: 16*@px;
             color: #333;
-            line-height: 19px;
+            line-height: 19*@px;
             font-weight: bold;
           }
         }
 
         img {
-          margin-top: 20px;
-          width: 486px;
+          margin-top: 20*@px;
+          width: 486*@px;
           &.img-270 {
-            width: 270px;
+            width: 270*@px;
           }
         }
 
         p {
-          margin: 24px 0;
+          margin: 24*@px 0;
           a {
             color: #333;
             text-decoration: underline;
@@ -303,11 +299,11 @@
         }
 
         dl {
-          font-size: 16px;
+          font-size: 16*@px;
           dt {
             color: #333333;
-            margin-bottom: 12px;
-            margin-top: 20px;
+            margin-bottom: 12*@px;
+            margin-top: 20*@px;
           }
           dd {
             color: #808080;
@@ -318,76 +314,76 @@
   }
 
   // 响应式内容
-  .ismobile {
-    .blog-detail .html-content {
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6,
-      strong {
-        font-weight: normal;
-        line-height: 0.29rem;
-      }
-
-      h1 {
-        font-size: 0.3rem;
-        padding-top: 0.9rem;
-      }
-
-      h2 {
-        font-size: 0.2rem;
-        margin-top: 0.32rem;
-      }
-
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6 {
-        margin: initial;
-        padding-top: 0.12rem;
-      }
-
-      ul,
-      li,
-      ol,
-      p {
-        font-size: 0.14rem;
-        line-height: 0.18rem;
-      }
-
-      ol {
-        margin-top: 0;
-      }
-
-      li {
-        margin-bottom: 0.08rem;
-      }
-
-      p {
-        margin: 0.16rem 0;
-        line-height: 0.18rem;
-      }
-
-      .small span {
-        margin-right: 0.2rem;
-      }
-
-      .banner {
-        display: none;
-      }
-      .banner-m {
-        display: block;
-        width: 100%;
-        padding-top: 0.2rem;
-        margin-top: 0.2rem;
-        border-top: 1px solid rgba(242, 242, 242, 1);
-      }
-    }
-  }
+  //.ismobile {
+  //  .blog-detail .html-content {
+  //    h1,
+  //    h2,
+  //    h3,
+  //    h4,
+  //    h5,
+  //    h6,
+  //    strong {
+  //      font-weight: normal;
+  //      line-height: 0.29rem;
+  //    }
+  //
+  //    h1 {
+  //      font-size: 0.3rem;
+  //      padding-top: 0.9rem;
+  //    }
+  //
+  //    h2 {
+  //      font-size: 0.2rem;
+  //      margin-top: 0.32rem;
+  //    }
+  //
+  //    h1,
+  //    h2,
+  //    h3,
+  //    h4,
+  //    h5,
+  //    h6 {
+  //      margin: initial;
+  //      padding-top: 0.12rem;
+  //    }
+  //
+  //    ul,
+  //    li,
+  //    ol,
+  //    p {
+  //      font-size: 0.14rem;
+  //      line-height: 0.18rem;
+  //    }
+  //
+  //    ol {
+  //      margin-top: 0;
+  //    }
+  //
+  //    li {
+  //      margin-bottom: 0.08rem;
+  //    }
+  //
+  //    p {
+  //      margin: 0.16rem 0;
+  //      line-height: 0.18rem;
+  //    }
+  //
+  //    .small span {
+  //      margin-right: 0.2rem;
+  //    }
+  //
+  //    .banner {
+  //      display: none;
+  //    }
+  //    .banner-m {
+  //      display: block;
+  //      width: 100%;
+  //      padding-top: 0.2rem;
+  //      margin-top: 0.2rem;
+  //      border-top: 1px solid rgba(242, 242, 242, 1);
+  //    }
+  //  }
+  //}
 };
 
 .hello(@world);
