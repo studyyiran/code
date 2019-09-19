@@ -78,7 +78,7 @@ function RenderContent() {
         research our global sales channels to provide you an accurate quote. We
         will reach out to you once complete.
       </p>
-      <p>Please contact us if you have any question.</p>
+      <p>Please <RouterLink className="common-a" to="/contact">contact us</RouterLink> if you have any question.</p>
       <button className="common-button">
         <RouterLink to={"/newsell"}>Place Another Phone</RouterLink>RouterLink>
       </button>
