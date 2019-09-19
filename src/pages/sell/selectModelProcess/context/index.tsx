@@ -539,7 +539,7 @@ function useGetAction(
       const { brandId, modelId, othersAttr } = config;
       const nameConfig = {
         brandName: "",
-        imgUrl: "",
+        imgUrl: require('../../img/common-phone.png'),
         // imgUrl: "https://sr.aihuishou.com/image/5ba3685de38bb01c30000054.png",
         modelInfoName: {
           modelName: "",
