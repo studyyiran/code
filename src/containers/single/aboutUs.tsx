@@ -15,42 +15,42 @@ interface IArticle {
 const articles: IArticle[] = [
   {
     className: "width320",
-    img: require("./res/whoWeAre/fast.svg"),
-    title: "Customer’s First",
+    img: require("./res/whoWeAre/checkcircle.svg"),
+    title: "Customer's First",
     text:
       "Treat customers great and great customers will treat you well. We are customer focused and continuously measure against our customer’s success."
   },
   {
     className: "width320",
-    img: require("./res/whoWeAre/lock.svg"),
+    img: require("./res/whoWeAre/recycle.svg"),
     title: "Think Sustainably",
     text:
       "Make environmentally sustainable decisions that last for generations through recycling, reusing, or trading."
   },
   {
     className: "",
-    img: require("./res/whoWeAre/wrong.svg"),
+    img: require("./res/whoWeAre/shield.svg"),
     title: "Earn Trust Through Service",
     text:
       "Be honest and transparent through every interaction with customers, employees, and partners."
   },
   {
     className: "",
-    img: require("./res/whoWeAre/fast.svg"),
+    img: require("./res/whoWeAre/cubeopen.svg"),
     title: "Invent and Simplify",
     text:
       "Never settle for what has been done. Be creative and innovative using first principle thinking while reducing complexity."
   },
   {
     className: "width320",
-    img: require("./res/whoWeAre/lock.svg"),
+    img: require("./res/whoWeAre/star.svg"),
     title: "Do Good and Be Responsible",
     text:
       "Be kind and take care of your neighbor. Do what is right, do what is good, and find balance."
   },
   {
     className: "width320",
-    img: require("./res/whoWeAre/wrong.svg"),
+    img: require("./res/whoWeAre/group.svg"),
     title: "Collaborative Teamwork",
     text:
       "We believe in fostering an inclusive work environment where all ideas are heard by building a positive culture and family spirit."
