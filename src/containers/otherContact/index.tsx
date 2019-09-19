@@ -9,6 +9,7 @@ import {
   ISelectModelContext,
   SelectModelContext
 } from "@/pages/sell/selectModelProcess/context";
+import RouterLink from "@/components/routerLink";
 const { Item } = Form;
 const { TextArea } = Input;
 
@@ -84,19 +85,19 @@ export default function() {
   const selectModelContext = useContext(SelectModelContext);
   const { createEmail } = selectModelContext as ISelectModelContext;
   function handlerFormPost(values: any) {
-    const { fullName, message, email } = values;
+    const { email, condition, other } = values;
     const configArr = [
       {
         title: "From",
         content: email
       },
       {
-        title: "Full Name",
-        content: fullName
+        title: "Need help",
+        content: condition.join(",")
       },
       {
-        title: "Message",
-        content: message
+        title: "Other",
+        content: other
       }
     ];
     createEmail({
@@ -134,17 +135,19 @@ export default function() {
         </div>
       </div>
       <HelpList />
+      <section className="last-part">
+        <h2>The simplest way to sell your phone.</h2>
+        <p>Let use know how we can help</p>
+        <button className="common-button button-centered">
+          <RouterLink to="/contact">Leave a message</RouterLink>
+        </button>
+      </section>
     </div>
   );
 }
 
 const renderformConfig = (props: any) => {
   const formContentArr = [
-    {
-      id: "fullName",
-      title: "Full Name",
-      required: true
-    },
     {
       id: "email",
       title: "Contact Email",
@@ -158,8 +161,46 @@ const renderformConfig = (props: any) => {
       ]
     },
     {
-      id: "message",
-      title: "Message",
+      id: "condition",
+      title: "I need help with:",
+      type: "checkboxGroup",
+      render: () => {
+        const checkBoxContent = [
+          {
+            id: "condition1",
+            content: "Request more time"
+          },
+          {
+            id: "condition2",
+            content: "I don't have a box"
+          },
+          {
+            id: "condition3",
+            content: "Use USPS instead"
+          },
+          {
+            id: "condition4",
+            content: "Reseting my phone"
+          }
+        ];
+        return (
+          <Checkbox.Group>
+            {checkBoxContent.map(({ id, content }: any) => {
+              return (
+                <Col key={id}>
+                  <Checkbox value={content} className="check-box">
+                    {content}
+                  </Checkbox>
+                </Col>
+              );
+            })}
+          </Checkbox.Group>
+        );
+      }
+    },
+    {
+      id: "other",
+      title: "Other",
       rules: [{ required: true, message: "The input is not valid E-mail!" }],
       render: () => {
         return <TextArea maxLength={500} />;
