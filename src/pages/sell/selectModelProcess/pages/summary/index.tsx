@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { inject, observer } from "mobx-react";
-import { Modal, Checkbox, Button } from "antd";
+import { Checkbox, Button } from "antd";
 import Information from "../information";
 import PaymentPage from "../payment";
 import ChangeModal from "@/containers/aboutphone/components/changemodal";
@@ -21,6 +21,7 @@ import {
   SelectModelContext,
   ISelectModelContext
 } from "@/pages/sell/selectModelProcess/context";
+import Modal from "@/components/modal";
 
 export default function SummaryWrapper(props: any) {
   const selectModelContext = useContext(SelectModelContext);
@@ -224,10 +225,10 @@ class Summary extends React.Component<IDoneProps, IDoneStates> {
       visible: this.state.showEditModal,
       footer: null,
       centered: true,
+      title: '',
       onCancel: this.toggleChangeModal,
       width: "90%"
     };
-
     return (
       <div className="page-summary">
         <h2>Review your order</h2>

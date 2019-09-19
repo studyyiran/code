@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.scss";
+import "./index.less";
 let bodyRoot = document.getElementById("modal-root");
 if (!bodyRoot) {
   bodyRoot = document.createElement("div");
@@ -22,7 +22,7 @@ vNode: outDiv is container.inner div1 is cancel. inner div2 is onClick.如果只
 
 maskStyle
  */
-class Modal extends React.Component<any, any> {
+export default class Modal extends React.Component<any, any> {
   public static defaultProps = {
     children: "",
     maskClosable: true,
@@ -303,5 +303,3 @@ Modal.confirm = function(props: any) {
     }
   };
 };
-
-export default Modal;

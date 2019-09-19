@@ -92,7 +92,7 @@ export default function(props: any) {
                 <br />{" "}
                 {moment
                   .tz(shipDeadLine, "America/Chicago")
-                  .format("llll")
+                  .format("LLLL")
                   .split(",")
                   .slice(0, 2)
                   .join(",")}
