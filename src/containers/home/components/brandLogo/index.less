@@ -9,7 +9,7 @@
     > div.border {
       &:hover {
         background: @color-blue-liner;
-        border: @color-blue-liner-use;
+        border-color: @color-blue-liner-use;
       }
       @width: 101*@px;
       @height: 80*@px;
@@ -17,7 +17,9 @@
       text-align: center;
       height: @height;
       line-height: @height;
-      border: 1*@px solid @white;
+      border-style: solid;
+      border-width: 1px;
+      color: @white;
       border-radius: 5*@px;
       overflow: hidden;
       margin-bottom: 10*@px;
@@ -41,7 +43,7 @@
       > div.border {
         &:hover {
           background: transparent;
-          border: inherit;
+          border-color: initial;
         }
         @width: 2.19rem;
         @height: 1.49rem;
@@ -49,8 +51,6 @@
         text-align: center;
         height: @height;
         line-height: @height;
-        border: 1*@px solid @white;
-        border-radius: 0.16rem;
         overflow: hidden;
         margin-bottom: 0;
         font-size: 0.49rem;
