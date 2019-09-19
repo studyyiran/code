@@ -2,16 +2,16 @@
 
 @world: {
   .notice-container {
+    @width: 347 * @px;
     position: fixed;
     z-index: 20;
-    width: 100%;
-    bottom: 10*@px;
-    left: 0;
+    bottom: 10 * @px;
+    left: calc(50vw - @width / 2);
     display: flex;
     align-items: center;
     justify-content: center;
     .comp-new-buy-notice {
-      width: 347 * @px;
+      width: @width;
       background: rgba(255, 255, 255, 1);
       border-radius: 50 * @px;
       display: flex;
