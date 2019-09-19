@@ -232,8 +232,8 @@ class Home extends React.Component<IHomeProps, IHomeState> {
         const { id } = brand;
         const brandList = (this.props as any).selectModelContextValue.brandList;
         if (brandList && brandList.length) {
-          const target = brandList.find(({ categoryId }: any) => {
-            return categoryId === id;
+          const target = brandList.find(({ id: brandId }: any) => {
+            return brandId === id;
           });
 
           if (target) {
