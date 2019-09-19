@@ -18,7 +18,7 @@ export function BrandLogo(props: any) {
     <div className="comp-brand-logo canclick" onClick={clickHandler}>
       <div className="border">
         {iconUrl ? (
-          <img src={require(`./res/${iconUrl}`)} />
+          <img src={iconUrl} />
         ) : (
           <span>Other</span>
         )}
