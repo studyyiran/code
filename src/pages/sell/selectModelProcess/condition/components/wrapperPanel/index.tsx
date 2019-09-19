@@ -67,7 +67,7 @@ export function WrapperPanel(props: IWrapperPanel) {
         );
       case "done":
         return (
-          <span className="tag" data-type={"done"}>
+          <span className="tag canclick" data-type={"done"}>
             Edit
           </span>
         );
