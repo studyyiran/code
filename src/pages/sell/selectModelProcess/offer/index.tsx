@@ -103,11 +103,15 @@ export default function Brand(props: any) {
             </li>
             <li className="service-fee-line">
               <span>10% Service Fee</span>
-              <span>-{currencyTrans(platformFee)}</span>
+              <div className="slash-container">
+                <span>-{currencyTrans(platformFee)}</span>
+              </div>
             </li>
             <li className="seller-fee-line">
               <span>3rd Party Seller Fees</span>
-              <span>-{currencyTrans(thirdPartyFee)}</span>
+              <div className="slash-container">
+                <span>-{currencyTrans(thirdPartyFee)}</span>
+              </div>
             </li>
             <li className="subtotal">
               <span>Subtotal</span>
