@@ -1,0 +1,58 @@
+@import (reference) "~@/styles/index.less";
+@import (reference) "../../common.less";
+
+@world: {
+  a.blog-card-comp {
+    margin-bottom: 58 * @px;
+    .clearfix();
+    > img {
+      .pc({float: left;});
+      width: 442 * @px;
+      height: 273 * @px;
+      border-radius: 8 * @px;
+      margin-right: 33 * @px;
+    }
+    > section.blog-intro {
+      > header.title {
+        margin-bottom: 33 * @px;
+        > h3 {
+          font-size: 24 * @px;
+        }
+        > span {
+          color: #888888;
+          font-size: 16 * @px;
+        }
+      }
+      > p {
+        font-size: 16 * @px;
+      }
+    }
+  }
+
+  #ismobile {
+    a.blog-card-comp {
+      margin-bottom: 1.39rem;
+      .mb-card();
+      > img {
+        width: 100%;
+      }
+      > section.blog-intro {
+        padding: 0.21rem 0.53rem 0.43rem;
+        > header.title {
+          margin-bottom: 0;
+          > h3 {
+            font-size: 0.43rem;
+          }
+          > span {
+            color: #888888;
+            font-size: 0.32rem;
+          }
+        }
+        > p {
+          display: none;
+        }
+      }
+    }
+  }
+};
+.hello(@world);
