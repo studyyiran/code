@@ -186,15 +186,15 @@ class Shipping extends React.Component<any, any> {
             >
               <span className="insurance-tips">
                 Add shipping insurance for ${shippingInsurance}
-                <TipsIcon>
-                  <p>
-                    This amount will be deducted from your payout. <br />
-                    We recommend to add shipping insurance for phone <br />
-                    that values more than $100.
-                  </p>
-                </TipsIcon>
               </span>
             </Checkbox>
+            <TipsIcon>
+              <p>
+                This amount will be deducted from your payout. <br />
+                We recommend to add shipping insurance for phone <br />
+                that values more than $100.
+              </p>
+            </TipsIcon>
           </div>
         ) : null}
         <ButtonGroup

@@ -1,19 +1,19 @@
 import * as React from "react";
 import "./index.less";
-import { Modal } from "antd";
 import ReportModalContent from "../reportModalContent";
+import Modal from "@/components/modal";
 
 export default function CheckInspectDiff(props: any) {
   const { phoneConditionQuestion, inquiryInfo } = props;
   return (
     <span
       onClick={() => {
-        Modal.confirm({
+        (Modal as any).confirm({
           icon: "",
           className: "comp-check-inspect__modal",
           centered: true,
           maskClosable: true,
-          content: (
+          children: (
             <ReportModalContent
               phoneConditionQuestion={phoneConditionQuestion}
               inquiryInfo={inquiryInfo}

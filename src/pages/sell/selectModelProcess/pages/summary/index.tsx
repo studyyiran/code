@@ -258,7 +258,7 @@ class Summary extends React.Component<IDoneProps, IDoneStates> {
                 <p>{shippingAddress.join(", ")}</p>
               </li>
               <li>
-                <h3>Phone No. </h3>
+                <h3>Phone Number</h3>
                 <p>+1 {yourphone.addressInfo.mobile}</p>
               </li>
             </ul>
