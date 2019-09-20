@@ -61,31 +61,38 @@ export default function ReportModalContent(props: any) {
             isSame={checkSameFromArr(id, "productPns")}
           />
         ))}
-        {pricePns.map(({ id, type, name }: any, index: number) => {
-          const { answerId } = getIdFromAllQuestion(phoneConditionQuestion, id);
-          let currentQuestion: any;
-          phoneConditionQuestion.find((parent: any) => {
-            const { subQuestionArr } = parent;
-            return subQuestionArr.find((subQuestion: any) => {
-              const { id: subQuestionId, content } = subQuestion;
-              if (subQuestionId === answerId) {
-                currentQuestion = subQuestion;
-                return true;
-              } else {
-                return false;
-              }
-              return;
+        {pricePns
+          .sort((a: any, b: any) => {
+            return a.sort - b.sort;
+          })
+          .map(({ id, type, name }: any, index: number) => {
+            const { answerId } = getIdFromAllQuestion(
+              phoneConditionQuestion,
+              id
+            );
+            let currentQuestion: any;
+            phoneConditionQuestion.find((parent: any) => {
+              const { subQuestionArr } = parent;
+              return subQuestionArr.find((subQuestion: any) => {
+                const { id: subQuestionId, content } = subQuestion;
+                if (subQuestionId === answerId) {
+                  currentQuestion = subQuestion;
+                  return true;
+                } else {
+                  return false;
+                }
+                return;
+              });
             });
-          });
-          return (
-            <RenderItem
-              isSame={checkSameFromArr(id, "pricePns")}
-              key={index}
-              title={currentQuestion && currentQuestion.content}
-              value={name}
-            />
-          );
-        })}
+            return (
+              <RenderItem
+                isSame={checkSameFromArr(id, "pricePns")}
+                key={index}
+                title={currentQuestion && currentQuestion.content}
+                value={name}
+              />
+            );
+          })}
       </ul>
     </div>
   );
