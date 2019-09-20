@@ -45,15 +45,15 @@ export default function() {
     createEmail({
       toEmail: values.email,
       nickName: "",
-      subject: "",
+      subject: "Customer Message",
       content:
-        "<p>" +
+        "<html><body><p>" +
         configArr
           .map(
             ({ title, content }: any) => `<label>${title}: ${content}</label>`
           )
           .join("") +
-        "</p>"
+        "</p></body></html>"
     });
   }
   return (

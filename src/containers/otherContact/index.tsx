@@ -105,15 +105,15 @@ export default function() {
     createEmail({
       toEmail: values.email,
       nickName: "",
-      subject: "",
+      subject: "Need help with order",
       content:
-        "<p>" +
+        "<html><body><p>" +
         configArr
           .map(
             ({ title, content }: any) => `<label>${title}: ${content}</label>`
           )
           .join("") +
-        "</p>"
+        "</p></body></html>"
     });
   }
   return (
