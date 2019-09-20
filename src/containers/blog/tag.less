@@ -1,4 +1,11 @@
+@import (reference) "~@/styles/index.less";
 
-.tag-page {
-  
+@world: {
+  .tag-page {
+    header {
+      .font(18*@f, 500, #222222);
+      margin-bottom: 30*@px;
+    }
+  }
 }
+.hello(@world);
