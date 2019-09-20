@@ -99,13 +99,13 @@ function Breadcrumb(props: any) {
     },
     summary: {
       viewContent: () => {
-        return "Order summary";
+        return "Order Summary";
       },
       order: 7
     },
     prepareShip: {
       viewContent: () => {
-        return "Order complete";
+        return "Order Complete";
       },
       order: 8
     }
