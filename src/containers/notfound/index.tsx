@@ -19,7 +19,7 @@ class NotFound extends React.Component {
         <div className="right">
           <h1>Apologies… something isn’t right here</h1>
           <p>This can’t be what you were looking for. <br />There may be a technical issue that brought you here, or you may be trying to access a page that doesn’t exist.</p>
-          <div className="button-box">
+          <div className="common-button">
             <Button type="primary" size="large"><Link to="/">GO BACK TO HOME</Link></Button>
           </div>
           <p>If your issue persists, please email support@uptradeit.com</p>
