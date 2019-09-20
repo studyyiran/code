@@ -7,13 +7,14 @@
         align-items: center;
         justify-content: flex-end;
         > *:first-child {
-          flex: 1 0 0;
+          flex: 5 0 0px;
           text-align: right;
           margin-right: 15 * @px;
         }
         > *:last-child {
-          flex: 0 0 60 * @px;
-          min-width: 60* @px;
+          @value: 0 * @px;
+          flex: 1 0 @value;
+          //min-width: @value;
           text-align: left;
         }
       }
