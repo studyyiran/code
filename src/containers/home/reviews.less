@@ -1,307 +1,313 @@
-.page-home-reviews-container {
-  padding-top: 100px;
-  padding-bottom: 120px;
-  letter-spacing:0;
-  width:996px;
-  margin:0 auto;
+@import (reference) "~@/styles/index.less";
 
-  .global-wrapper {
-    background: #fff;
-    padding:34px 59px 40px;
-    .top {
-      display: flex;
-      align-items: center;
-      h1 {
-        font-size:30px;
-        line-height: 40px;
-        font-weight: 400;
-      }
-      .rating-list {
-        width:200px;
-        margin-left:20px;
-        
-      }
-    }
-    .bottom {
-      margin-top:28px;
-      display: flex;
-      .text {
-        font-size:16px;
-        color:#6D7278;
-      }
-      .right {
-        flex:1;
-        text-align: right;
+@world: {
+  .page-home-reviews-container {
+    padding-top: 100*@px;
+    padding-bottom: 120*@px;
+    letter-spacing:0;
+    .setpage(996*@px);
+    margin:0 auto;
 
-        height:12px;
-        color:#bcbcbc;
-        line-height:12px;
-
-        img {
-          width:100px;
-          margin-left:10px;
-        }
-      }
-    }
-  }
-
-  .list-wrapper {
-    overflow: hidden;
-    background: #fff;
-    margin-top:32px;
-    .filter-box {
-      height:66px;
-      border-bottom:1px solid #f4f4f4;
-      padding:17px 59px 0;
-      .form {
-        display: flex;
-
-        .form-item {
-          width:180px;
-          display: flex;
-          align-items: center;
-          margin:0;
-          .ant-form-item-label {
-            height:32px;
-            line-height: 32px;
-          }
-          .ant-form-item-control-wrapper {
-            height:32px;
-            line-height: 32px;
-          }
-          .ant-form-item-control {
-            line-height: 32px;
-          }
-          .ant-select {
-            width:129px;
-            height:32px;
-            line-height: 32px;
-            font-size:12px;
-          }
-          .ant-select-selection--single {
-            height:32px;
-            line-height: 32px;
-          }
-          .ant-select-selection__rendered {
-            line-height: 32px;
-          }
-
-          &:nth-of-type(2) {
-            margin-left:40px;
-            .ant-select {
-              width:88px;
-            }
-          }
-        }
-      }     
-    }
-
-    .content-wrapper {
-      padding: 0 59px 80px;
-      .list {
-        padding:40px 0;
-        border-bottom: solid #f4f4f4 1px;
-        .header {
-          display: flex;
-          align-items: center;
-          h2 {
-            font-size:16px;
-            line-height:16px;
-          }
-          .rating {
-            width:95px;
-            margin-left:25px;
-            height:15px;
-          }
-        }
-        .content {
-          font-size:14px;
-          line-height:24px;
-          color:#666;
-          margin-top:20px;
-        }
-        .time {
-          margin-top:20px;
-          font-size:12px;
-          line-height:12px;
-          color:#888;
-        }
-      }
-      .page-box {
-        margin-top:40px;
-        text-align: center;
-      }
-
-      .no-reviews {
-        text-align: center;
-        margin-top:150px;
-        margin-bottom:240px;
-        img {
-          width:80px;
-        }
-        h3 {
-          margin-top:36px;
-          font-size:16px;
-          color:#000;
-          line-height:19px;
-          font-weight: bold;
-        }
-      }
-    }
-  }
-}
-
-
-.ismobile {
-  .page-home-reviews-container  {
-    padding-top: 0;
-    width: 100%;
-    padding-bottom:0;
     .global-wrapper {
       background: #fff;
-      padding:.27rem .3rem;
+      padding:34*@px 59*@px 40*@px;
       .top {
-        display: block;
+        display: flex;
         align-items: center;
         h1 {
-          font-size:.23rem;
-          line-height: .23rem;
+          font-size:30*@px;
+          line-height: 40*@px;
           font-weight: 400;
         }
         .rating-list {
-          width:200px;
-          margin-left:0;
-          margin-top:.2rem;
+          width:200*@px;
+          margin-left:20*@px;
+
         }
       }
-
       .bottom {
-        margin-top:.1rem;
-        display: block;
+        margin-top:28*@px;
+        display: flex;
         .text {
-          font-size:14px;
+          font-size:16*@f;
           color:#6D7278;
         }
         .right {
           flex:1;
-          text-align: left;
-          margin-top:.25rem;
-          height:10px;
+          text-align: right;
+
+          height:12*@px;
           color:#bcbcbc;
-          line-height:.12rem;
-          font-size:.12rem;
-  
+          line-height:normal;
+
           img {
-            width:auto;
-            height:.12rem;
-            margin-left:10px;
+            width:100*@px;
+            margin-left:10*@px;
           }
         }
       }
     }
+
     .list-wrapper {
-      margin-top:.1rem;
+      overflow: hidden;
+      background: #fff;
+      margin-top:32*@px;
       .filter-box {
-        padding:.17rem .3rem 0;
-        height:.66rem;
+        height:66*@px;
+        border-bottom:1px solid #f4f4f4;
+        padding:17*@px 59*@px 0;
         .form {
           display: flex;
-  
+
           .form-item {
-            width:1.8rem;
+            width:180*@px;
             display: flex;
             align-items: center;
             margin:0;
             .ant-form-item-label {
-              width:.7rem;
-              height:.32rem;
-              line-height: .32rem;
+              height:32*@px;
+              line-height: 32*@px;
             }
             .ant-form-item-control-wrapper {
-              height:.32rem;
-              line-height: .32rem;
+              height:32*@px;
+              line-height: 32*@px;
             }
             .ant-form-item-control {
-              line-height: .32rem;
+              line-height: 32*@px;
             }
             .ant-select {
-              width:1.1rem;
-              height:.32rem;
-              line-height: .32rem;
-              font-size:.12rem;
+              width:129*@px;
+              height:32*@px;
+              line-height: 32*@px;
+              font-size:12*@f;
             }
             .ant-select-selection--single {
-              height:.32rem;
-              line-height: .32rem;
+              height:32*@px;
+              line-height: 32*@px;
             }
             .ant-select-selection__rendered {
-              line-height: .32rem;
+              line-height: 32*@px;
             }
-  
+
             &:nth-of-type(2) {
-              width:1.6rem;
-              margin-left:.0;
+              margin-left:40*@px;
               .ant-select {
-                width:.78rem;
+                width:88*@px;
               }
             }
           }
-        }     
+        }
       }
 
-
       .content-wrapper {
-        padding: 0 .3rem .8rem;
+        padding: 0 59*@px 80*@px;
         .list {
-          padding:.2rem 0;
+          padding:40*@px 0;
           border-bottom: solid #f4f4f4 1px;
           .header {
             display: flex;
             align-items: center;
             h2 {
-              font-size:.14rem;
-              line-height:.14rem;
+              font-size:16*@f;
+              line-height:normal;
             }
             .rating {
-              width:95px;
-              margin-left:.25rem;
-              height:15px;
+              width:95*@px;
+              margin-left:25*@px;
+              height:15*@px;
             }
           }
           .content {
-            font-size:.14rem;
-            line-height:.24rem;
+            font-size:14*@f;
+            line-height:normal;
             color:#666;
-            margin-top:.2rem;
+            margin-top:20*@px;
           }
           .time {
-            margin-top:.2rem;
-            font-size:.12rem;
-            line-height:.12rem;
+            margin-top:20*@px;
+            font-size:12*@f;
+            line-height:normal;
             color:#888;
           }
         }
         .page-box {
-          margin-top:.4rem;
+          margin-top:40*@px;
           text-align: center;
         }
-      }
-      .no-reviews {
-        padding:0 .63rem .3rem .42rem;
-        text-align: center;
-        margin-top:.34rem;
-        margin-bottom:.8rem;
-        img {
-          width:.8rem;
-        }
-        h3 {
-          margin-top:.36rem;
-          font-size:.16rem;
-          color:#000;
-          line-height:.19rem;
-          font-weight: bold;
+
+        .no-reviews {
+          text-align: center;
+          margin-top:150*@px;
+          margin-bottom:240*@px;
+          img {
+            width:80*@px;
+          }
+          h3 {
+            margin-top:36*@px;
+            font-size:16*@f;
+            color:#000;
+            line-height:normal;
+            font-weight: bold;
+          }
         }
       }
     }
   }
 }
+
+.hello(@world);
+
+
+//.ismobile {
+//  .page-home-reviews-container  {
+//    padding-top: 0;
+//    width: 100%;
+//    padding-bottom:0;
+//    .global-wrapper {
+//      background: #fff;
+//      padding:.27rem .3rem;
+//      .top {
+//        display: block;
+//        align-items: center;
+//        h1 {
+//          font-size:.23rem;
+//          line-height: .23rem;
+//          font-weight: 400;
+//        }
+//        .rating-list {
+//          width:200px;
+//          margin-left:0;
+//          margin-top:.2rem;
+//        }
+//      }
+//
+//      .bottom {
+//        margin-top:.1rem;
+//        display: block;
+//        .text {
+//          font-size:14px;
+//          color:#6D7278;
+//        }
+//        .right {
+//          flex:1;
+//          text-align: left;
+//          margin-top:.25rem;
+//          height:10px;
+//          color:#bcbcbc;
+//          line-height:.12rem;
+//          font-size:.12rem;
+//  
+//          img {
+//            width:auto;
+//            height:.12rem;
+//            margin-left:10px;
+//          }
+//        }
+//      }
+//    }
+//    .list-wrapper {
+//      margin-top:.1rem;
+//      .filter-box {
+//        padding:.17rem .3rem 0;
+//        height:.66rem;
+//        .form {
+//          display: flex;
+//  
+//          .form-item {
+//            width:1.8rem;
+//            display: flex;
+//            align-items: center;
+//            margin:0;
+//            .ant-form-item-label {
+//              width:.7rem;
+//              height:.32rem;
+//              line-height: .32rem;
+//            }
+//            .ant-form-item-control-wrapper {
+//              height:.32rem;
+//              line-height: .32rem;
+//            }
+//            .ant-form-item-control {
+//              line-height: .32rem;
+//            }
+//            .ant-select {
+//              width:1.1rem;
+//              height:.32rem;
+//              line-height: .32rem;
+//              font-size:.12rem;
+//            }
+//            .ant-select-selection--single {
+//              height:.32rem;
+//              line-height: .32rem;
+//            }
+//            .ant-select-selection__rendered {
+//              line-height: .32rem;
+//            }
+//  
+//            &:nth-of-type(2) {
+//              width:1.6rem;
+//              margin-left:.0;
+//              .ant-select {
+//                width:.78rem;
+//              }
+//            }
+//          }
+//        }     
+//      }
+//
+//
+//      .content-wrapper {
+//        padding: 0 .3rem .8rem;
+//        .list {
+//          padding:.2rem 0;
+//          border-bottom: solid #f4f4f4 1px;
+//          .header {
+//            display: flex;
+//            align-items: center;
+//            h2 {
+//              font-size:.14rem;
+//              line-height:.14rem;
+//            }
+//            .rating {
+//              width:95px;
+//              margin-left:.25rem;
+//              height:15px;
+//            }
+//          }
+//          .content {
+//            font-size:.14rem;
+//            line-height:.24rem;
+//            color:#666;
+//            margin-top:.2rem;
+//          }
+//          .time {
+//            margin-top:.2rem;
+//            font-size:.12rem;
+//            line-height:.12rem;
+//            color:#888;
+//          }
+//        }
+//        .page-box {
+//          margin-top:.4rem;
+//          text-align: center;
+//        }
+//      }
+//      .no-reviews {
+//        padding:0 .63rem .3rem .42rem;
+//        text-align: center;
+//        margin-top:.34rem;
+//        margin-bottom:.8rem;
+//        img {
+//          width:.8rem;
+//        }
+//        h3 {
+//          margin-top:.36rem;
+//          font-size:.16rem;
+//          color:#000;
+//          line-height:.19rem;
+//          font-weight: bold;
+//        }
+//      }
+//    }
+//  }
+//}
