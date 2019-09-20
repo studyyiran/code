@@ -85,7 +85,7 @@ const userIntro: IUserIntro[] = [
     desc: "Head of Design"
   },
   {
-    headimg: require("./res/whoWeAre/head_5.png"),
+    headimg: require("./res/whoWeAre/head_3.png"),
     name: "Christine Huang",
     desc: "Customer Service"
   }
