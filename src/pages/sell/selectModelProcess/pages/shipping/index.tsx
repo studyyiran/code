@@ -185,7 +185,7 @@ class Shipping extends React.Component<any, any> {
               }}
             >
               <span className="insurance-tips">
-                Add shipping insurance for ${currencyTrans(shippingInsurance)}
+                Add shipping insurance for {currencyTrans(shippingInsurance)}
               </span>
             </Checkbox>
             <TipsIcon>

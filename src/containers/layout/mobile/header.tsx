@@ -23,7 +23,7 @@ export default class Header extends React.Component<{ router: any }> {
         <div className="toggle-box">
           <div className="list" onClick={this.handleGoTo.bind(this, '/who-we-are')}>About Us</div>
           <div className="list" onClick={this.handleGoTo.bind(this, '/sell-my-phone')}>How it Works</div>
-          <div className="list" onClick={this.handleGoTo.bind(this, '/check-order')}>Check Your Order</div>
+          <div className="list" onClick={this.handleGoTo.bind(this, '/check-order')}>Check My Order</div>
           <div className="button-group">
             <Button type="primary" onClick={this.handleGoTo.bind(this, '/sell/yourphone/brand')}>SELL NOW</Button>
           </div>

@@ -82,10 +82,10 @@ const userIntro: IUserIntro[] = [
   {
     headimg: require("./res/whoWeAre/head_4.png"),
     name: "Hamza Shaikh",
-    desc: "Head of Design"
+    desc: "Lead UI/UX Designer"
   },
   {
-    headimg: require("./res/whoWeAre/head_3.png"),
+    headimg: require("./res/whoWeAre/head_5.png"),
     name: "Christine Huang",
     desc: "Customer Service"
   }

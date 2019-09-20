@@ -50,14 +50,14 @@ class CheckOrderNo extends React.Component<any, any> {
       <div className="page-container__title contact-common-css page-checkOrder-container">
         <div className="bg-container bg-1">
           <section className="page-container__title">
-            <h1>Check Your Order</h1>
+            <h1>Check My Order</h1>
           </section>
         </div>
         <div className="bg-container bg-2">
           <div className="common-card">
             <div className="form ">
               <Form>
-                <div className="check-label">Email on your order</div>
+                <div className="check-label">Contact Email on My Order</div>
                 <Form.Item
                   validateStatus={this.state.validateEmail}
                   help={this.state.emailInputHelp}
@@ -70,7 +70,7 @@ class CheckOrderNo extends React.Component<any, any> {
                     onBlur={this.checkFormat}
                   />
                 </Form.Item>
-                <div className="check-label">Order number</div>
+                <div className="check-label">My Order Number</div>
                 <Form.Item
                   validateStatus={this.state.validateOrderNo}
                   help={this.state.orderInputHelp}
@@ -90,7 +90,7 @@ class CheckOrderNo extends React.Component<any, any> {
                 onClick={this.onSubmit}
                 disabled={this.state.email === "" || this.state.orderNo === ""}
               >
-                CHECK ORDER
+                Check Order
               </button>
             </div>
           </div>
