@@ -6,7 +6,7 @@ import RouterLink from "@/components/routerLink";
 export default function Blog(props: any) {
   const { slug, thumbnailFullUrl, title, releaseDt, summary } = props;
   return (
-    <RouterLink className="blog-card-comp common-link" to={"/" + slug}>
+    <RouterLink className="blog-card-comp" to={"/" + slug}>
       <img src={thumbnailFullUrl} alt={thumbnailFullUrl + " | UpTradeit.com"} />
       <section className="blog-intro">
         <header className="title">

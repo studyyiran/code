@@ -1,7 +1,7 @@
 import * as React from "react";
 import { observer, inject } from "mobx-react";
 import { IBlogListProps, IBlog } from "./interface/blog.interface";
-import "./list.less";
+import "./tag.less";
 import "./common.less";
 import { shareComponent } from "@/utils/function";
 import Blog from "@/containers/blog/components/blogCard";
@@ -39,28 +39,30 @@ export default class BlogList extends React.Component<IBlogListProps> {
   public render() {
     const blog = this.props.blog;
     return (
-      <div className="blog-list-part-container">
-        <section className="blog-list-part">
-          <header>{blog.currentTag}</header>
-          <nav>
-            {blog.tagPageList.map(props => {
-              return <Blog {...props} key={props.title} />;
-            })}
-          </nav>
-        </section>
-        {/*{this.props.blog.viewTagMore && (*/}
-        {/*  <div className="button-group">*/}
-        {/*    <Button*/}
-        {/*      type="primary"*/}
-        {/*      ghost={true}*/}
-        {/*      size="large"*/}
-        {/*      className="view-more"*/}
-        {/*      onClick={this.handleMore}*/}
-        {/*    >*/}
-        {/*      VIEW MORE*/}
-        {/*    </Button>*/}
-        {/*  </div>*/}
-        {/*)}*/}
+      <div className="tag-page">
+        <div className="blog-list-part-container">
+          <section className="blog-list-part">
+            <header>{blog.currentTag}</header>
+            <nav>
+              {blog.tagPageList.map(props => {
+                return <Blog {...props} key={props.title} />;
+              })}
+            </nav>
+          </section>
+          {/*{this.props.blog.viewTagMore && (*/}
+          {/*  <div className="button-group">*/}
+          {/*    <Button*/}
+          {/*      type="primary"*/}
+          {/*      ghost={true}*/}
+          {/*      size="large"*/}
+          {/*      className="view-more"*/}
+          {/*      onClick={this.handleMore}*/}
+          {/*    >*/}
+          {/*      VIEW MORE*/}
+          {/*    </Button>*/}
+          {/*  </div>*/}
+          {/*)}*/}
+        </div>
       </div>
     );
   }
