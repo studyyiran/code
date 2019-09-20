@@ -74,14 +74,20 @@ export default class BlogList extends React.Component<
                   />
                   <div className="intro-info">
                     <span className="tag">
-                      {(features[0].tags || []).map(({ name }: any) => {
-                        return name;
-                      }).join(',')}
+                      {(features[0].tags || [])
+                        .map(({ name }: any) => {
+                          return name;
+                        })
+                        .join(",")}
                     </span>
                     <h3 className="title">{features[0].title}</h3>
                     <p className="summary">{features[0].summary}</p>
                     {/*<span className="date">{features[0].createdDt}</span>*/}
-                    <span className="date">{features[0].releaseDt}</span>
+                    <span className="date">
+                      {moment
+                        .tz(features[0].releaseDt, "America/Chicago")
+                        .format("MMM DD, YYYY")}
+                    </span>
                   </div>
                 </Link>
               </section>
