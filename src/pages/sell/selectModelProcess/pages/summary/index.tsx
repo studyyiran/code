@@ -22,7 +22,14 @@ import {
   ISelectModelContext
 } from "@/pages/sell/selectModelProcess/context";
 import Modal from "@/components/modal";
-
+const titleCollect = {
+  [EChangeType.SHIPPING]: {
+    main: 'Change Your Information',
+  },
+  [EChangeType.PAYMENT]: {
+    main: 'How would you like to get paid?',
+  },
+};
 export default function SummaryWrapper(props: any) {
   const selectModelContext = useContext(SelectModelContext);
   const {
@@ -225,7 +232,7 @@ class Summary extends React.Component<IDoneProps, IDoneStates> {
       visible: this.state.showEditModal,
       footer: null,
       centered: true,
-      title: "",
+      title: titleCollect[this.state.pageType] ? titleCollect[this.state.pageType]['main'] : '',
       onCancel: this.toggleChangeModal,
       width: "90%",
       needDefaultScroll: true

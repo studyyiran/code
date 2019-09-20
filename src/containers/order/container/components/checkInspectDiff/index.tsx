@@ -9,10 +9,13 @@ export default function CheckInspectDiff(props: any) {
     <span
       onClick={() => {
         (Modal as any).confirm({
-          icon: "",
+          width: "90%",
           className: "comp-check-inspect__modal",
+          title: 'Inspection Report',
           centered: true,
           maskClosable: true,
+          footer: null,
+          needDefaultScroll: true,
           children: (
             <ReportModalContent
               phoneConditionQuestion={phoneConditionQuestion}

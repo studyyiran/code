@@ -42,7 +42,6 @@ export default function ReportModalContent(props: any) {
   }
   return (
     <div className="report-modal-content">
-      <h2>Inspection Report</h2>
       <Tag status={"fail"}>{differentReason}</Tag>
       <ul className="list">
         <RenderItem
