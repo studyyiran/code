@@ -103,7 +103,7 @@ export default function(props: any) {
                 target="_blank"
                 href={`${
                   process.env.REACT_APP_SERVER_ENV === "PUB"
-                    ? "http://prod-gateway-outside-1337850983.us-east-2.elb.amazonaws.com"
+                    ? "https://api-gateway.uptradeit.com"
                     : "http://demo-gateway-1613913116.us-east-2.elb.amazonaws.com"
                 }/api/shippo/downloadlabel?shippolablecode=${encodeURIComponent(
                   lableCode

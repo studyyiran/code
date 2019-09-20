@@ -336,7 +336,7 @@ export function getServerAnswerFormat(
   return staticAnswer.map((item: any) => {
     return {
       id: item.optionId,
-      name: item.optionContent,
+      remark: item.optionContent,
       sort: item.sort
     };
   });

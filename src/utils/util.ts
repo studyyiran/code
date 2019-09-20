@@ -3,7 +3,7 @@ export function requestWrapper(obj: any, all?: boolean) {
   switch (process.env.REACT_APP_SERVER_ENV) {
     case "DEV":
       // fixUrl = "http://10.180.22.252:9001/api";
-      // fixUrl = "http://prod-gateway-outside-1337850983.us-east-2.elb.amazonaws.com/api";
+      // fixUrl = "https://api-gateway.uptradeit.com/api";
       fixUrl = "http://demo-gateway-1613913116.us-east-2.elb.amazonaws.com/api";
       break;
     case "UAT":
@@ -11,7 +11,7 @@ export function requestWrapper(obj: any, all?: boolean) {
       break;
     case "PUB":
       fixUrl =
-        "http://prod-gateway-outside-1337850983.us-east-2.elb.amazonaws.com/api";
+        "https://api-gateway.uptradeit.com/api";
       break;
   }
   return {

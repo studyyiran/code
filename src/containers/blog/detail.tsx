@@ -15,7 +15,6 @@ export default class BlogDetail extends React.Component<IBlogDetailProps> {
     if (this.props.match.params.slug === prevProps.match.params.slug) {
       return;
     }
-    debugger
     const res = await this.props.blog.getPageDetail(
       this.props.match.params.slug
     );
