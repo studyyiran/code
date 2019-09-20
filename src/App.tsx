@@ -1,5 +1,5 @@
 import * as React from "react";
-import { HashRouter, Switch } from "react-router-dom";
+import { BrowserRouter, Switch } from "react-router-dom";
 import { renderRoutes } from "react-router-config";
 import { Provider } from "mobx-react";
 import Layout from "./containers/layout/index";
@@ -42,11 +42,11 @@ export default () => {
     <Provider {...store}>
       <TotalOrderInfoProvider>
         <ModelContextProvider>
-          <HashRouter>
+          <BrowserRouter>
             <Layout>
               <Switch>{renderRoutes(routes)}</Switch>
             </Layout>
-          </HashRouter>
+          </BrowserRouter>
         </ModelContextProvider>
       </TotalOrderInfoProvider>
     </Provider>

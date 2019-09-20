@@ -12,6 +12,7 @@
 
 #debugger
 /.vscode
+*.zip
 
 # misc
 .DS_Store
