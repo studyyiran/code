@@ -7,9 +7,30 @@ import { shareComponent } from "@/utils/function";
 import { Link } from "react-router-dom";
 import { HeaderTitle } from "@/components/headerTitle";
 import Svg from "@/components/svg";
+
 @inject("blog")
 @observer
 export default class BlogDetail extends React.Component<IBlogDetailProps> {
+  public async componentDidUpdate(prevProps: any) {
+    if (this.props.match.params.slug === prevProps.match.params.slug) {
+      return;
+    }
+    debugger
+    const res = await this.props.blog.getPageDetail(
+      this.props.match.params.slug
+    );
+    if (!res) {
+      this.props.history.replace("/notfound");
+    }
+    if (this.props.blog.detail) {
+      document.title = this.props.blog.detail.title;
+    }
+    try {
+      window.scrollTo(0, 0);
+    } catch (e) {
+      console.warn(e);
+    }
+  }
   public async componentDidMount() {
     if (
       window["__SERVER_RENDER__INITIALSTATE__"] &&
@@ -57,6 +78,9 @@ export default class BlogDetail extends React.Component<IBlogDetailProps> {
     return (
       <div className="blog-detail">
         <HeaderTitle title={"Tech Talk"} />
+        <Link to={"/how-to-transfer-contacts-from-iphone-to-android"}>
+          /how-to-transfer-contacts-from-iphone-to-android
+        </Link>
         <div className="blog-detail__content">
           <section className="content-part">
             <h2>{detail.title}</h2>
@@ -77,12 +101,12 @@ export default class BlogDetail extends React.Component<IBlogDetailProps> {
               dangerouslySetInnerHTML={{ __html: detail.content }}
             />
           </section>
-          <div className="nav-part">
-            <section>
-              <h3>Latest Posts</h3>
-              {renderNavList(this.props.blog.lastest)}
-            </section>
-          </div>
+          {/*<div className="nav-part">*/}
+          {/*<section>*/}
+          {/*<h3>Latest Posts</h3>*/}
+          {/*{renderNavList(this.props.blog.lastest)}*/}
+          {/*</section>*/}
+          {/*</div>*/}
         </div>
         {/*<div className="button-container">*/}
         {/*  <button className="common-button">View more</button>*/}
