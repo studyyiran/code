@@ -10,8 +10,7 @@ export function requestWrapper(obj: any, all?: boolean) {
       fixUrl = "http://demo-gateway-1613913116.us-east-2.elb.amazonaws.com/api";
       break;
     case "PUB":
-      fixUrl =
-        "https://api-gateway.uptradeit.com/api";
+      fixUrl = "https://api-gateway.uptradeit.com/api";
       break;
   }
   return {
@@ -27,6 +26,8 @@ export function requestGetResponse(promise: any) {
     promise.then((res: any) => {
       if (res && res.data) {
         resolve(res.data);
+      } else {
+        reject(res);
       }
     });
   });

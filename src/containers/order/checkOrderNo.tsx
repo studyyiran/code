@@ -197,9 +197,9 @@ class CheckOrderNo extends React.Component<any, any> {
           });
         }
       } catch (e) {
-        console.error(e);
+        console.error(e.resultMessage);
         this.setState({
-          formError: e
+          formError: e.resultMessage
         });
       }
     }

@@ -43,15 +43,17 @@
       .page-padding();
       background: #444b54;
       > .container {
+        align-items: center;
         // 图片宽度 + 左边内容宽度
-        .setpage(1500*@px);
-        .pc(
-          {display: flex; justify-content: space-between; align-items: center;}
-        );
+        //.setpage(1500*@px);
+        //.pc(
+        //  {display: flex; justify-content: space-between; align-items: center;}
+        //);
         > section.title {
-          flex: 1 0 0;
-          max-width: 850*@px;
-          margin-right: 20*@px;
+          flex: 0 0 875*@px;
+          //flex: 1 0 0;
+          //max-width: 850*@px;
+          //margin-right: 20*@px;
           > h1 {
             .font(40*@f, 600, #f5f7f9);
           }
@@ -75,11 +77,12 @@
         }
         > .img-container {
           // 修改成相应的，避免写死的。因为有小屏pc的需求
-          flex: 1 0 0;
+          //flex: 1 0 0;
           // 写死的
           //flex: 0 0 0;
           //min-width: 425*@px;
-          max-width: 425*@px;
+          //max-width: 425*@px;
+          flex: 0 0 425 *@px;
           > img {
             width: 100%;
           }

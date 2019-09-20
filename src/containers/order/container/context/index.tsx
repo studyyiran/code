@@ -12,7 +12,7 @@ import {
   revisedPriceConfirm,
   revisedPriceReject
 } from "../../api/order.api";
-import {getDeliverInfos, getDeliverNoInfo, getOrderCache} from "../../util";
+import { getDeliverInfos, getDeliverNoInfo, getOrderCache } from "../../util";
 
 export const TotalOrderInfoContext = createContext({});
 
@@ -109,13 +109,16 @@ function useGetAction(
             return obj;
           });
         }
-        dispatch({
-          type: totalOrderInfoReducerActionTypes.setTotalOrderInfo,
-          value: res
-        });
+        if (res.data) {
+          dispatch({
+            type: totalOrderInfoReducerActionTypes.setTotalOrderInfo,
+            value: res
+          });
+        }
+
         return res;
       } catch (e) {
-        return e;
+        return Promise.reject(e);
       }
     }),
     // 请求获取当前的物流信息
@@ -173,7 +176,7 @@ function useGetAction(
         ...data
       };
       const res = await revisedPriceConfirm(postData);
-      actions.reloadOrderFromCache()
+      actions.reloadOrderFromCache();
     }),
     revisedPriceReject: promisify(async function(data: any) {
       const { userInfo } = state.totalOrderInfo;
@@ -183,7 +186,7 @@ function useGetAction(
         ...data
       };
       const res = await revisedPriceReject(postData);
-      actions.reloadOrderFromCache()
+      actions.reloadOrderFromCache();
     }),
     reloadOrderFromCache: promisify(async function() {
       const orderCache = getOrderCache();
@@ -191,7 +194,7 @@ function useGetAction(
         const { email, orderId } = orderCache;
         actions.checkForOrder(email, orderId);
       }
-    }),
+    })
   };
   // actions.checkForOrder = useCallback(actions.checkForOrder, []);
   actions.getTranshipping = useCallback(actions.getTranshipping, [

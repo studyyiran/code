@@ -249,7 +249,7 @@ class Home extends React.Component<IHomeProps, IHomeState> {
           data={(this.props as any).selectModelContextValue.lastestOrder}
         />
         <div className="home__intro">
-          <div className="container">
+          <div className="container flex-grid">
             <section className="title">
               <h1>
                 Sell Your Used Phone. <br />
