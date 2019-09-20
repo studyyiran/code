@@ -108,7 +108,7 @@ export default function Brand(props: any) {
             <li className="service-fee-line">
               <span>10% Service Fee</span>
               <div className="tag-container">
-                <Tag status="fail">Limited-tim Free</Tag>
+                <Tag status="fail">Limited-time Free</Tag>
                 <div className="slash-container">
                   <span>-{currencyTrans(platformFee)}</span>
                 </div>

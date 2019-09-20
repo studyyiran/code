@@ -220,14 +220,15 @@ class Summary extends React.Component<IDoneProps, IDoneStates> {
     shippingAddress.push(addressInfo.zipCode);
 
     // 弹窗添加属性
-    const customizeModalProps: ModalProps = {
+    const customizeModalProps: any = {
       className: "ant-modal-in-done-page",
       visible: this.state.showEditModal,
       footer: null,
       centered: true,
-      title: '',
+      title: "",
       onCancel: this.toggleChangeModal,
       width: "90%",
+      needDefaultScroll: true
     };
     return (
       <div className="page-summary">
