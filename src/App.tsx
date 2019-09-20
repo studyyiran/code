@@ -8,8 +8,8 @@ import store from "./store";
 import { ModelContextProvider } from "./pages/sell/selectModelProcess/context";
 import { TotalOrderInfoProvider } from "./containers/order/container/context";
 const setIsMobile = (fn?: () => void) => {
-  const clientWidth = document.documentElement.offsetWidth;
-  const confuseWidth = 17;
+  const clientWidth = document.body.clientWidth;
+  const confuseWidth = 0;
   if (clientWidth <= 700 - confuseWidth) {
     store["common"].isMobile = true;
     document.body.classList.add("ismobile");
