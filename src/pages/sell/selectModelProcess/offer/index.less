@@ -72,9 +72,18 @@
           }
         }
 
-        ul {
+        ul.li-container {
           color: #000000;
           > li {
+            > * {
+              &:first-child {
+                flex: 0 0 300 * @px;
+              }
+              &:last-child {
+                flex: 1;
+                text-align: right;
+              }
+            }
             &.edit-panel-line {
               padding-bottom: 16 * @px;
               color: #00aeef;
@@ -86,11 +95,14 @@
               > span:first-child {
                 .font(18 * @f, 500, #000000);
               }
-              > span:last-child {
-                background: #6dd230;
-                .font(18 * @f, 500, #ffffff);
-                border-radius: 4 * @px;
-                padding: 5 * @px 12 * @px;
+              > div:last-child {
+                text-align: right;
+                span {
+                  background: #6dd230;
+                  .font(18 * @f, 500, #ffffff);
+                  border-radius: 4 * @px;
+                  padding: 5 * @px 12 * @px;
+                }
               }
             }
             .slash(@height) {
@@ -109,8 +121,20 @@
             //.slash-test {
             //  .slash();
             //}
+            .tag-container {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              > *:first-child {
+                margin-right: 10 * @px;
+                .content {
+                  border-radius: 300 * @px;
+                  padding: 0 10 * @px;
+                }
+              }
+            }
             .slash-container {
-              @value: 1*@px;
+              @value: 1 * @px;
               position: relative;
               height: @value;
               line-height: @value;

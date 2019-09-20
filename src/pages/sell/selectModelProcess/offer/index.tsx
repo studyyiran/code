@@ -5,6 +5,8 @@ import Svg from "@/components/svg";
 import TipsIcon from "@/pages/sell/selectModelProcess/components/tipsIcon";
 import { Collapse } from "antd";
 import { currencyTrans } from "@/utils/util";
+import { Tabs } from "@/components/tabs";
+import Tag from "@/components/tag";
 const { Panel } = Collapse;
 
 export default function Brand(props: any) {
@@ -86,7 +88,7 @@ export default function Brand(props: any) {
             </div>
           }
         >
-          <ul className="">
+          <ul className="li-container">
             {resultList.length > 1 ? (
               <li
                 className="edit-panel-line canclick"
@@ -99,18 +101,26 @@ export default function Brand(props: any) {
             ) : null}
             <li className="estimate-line">
               <span>Device Estimate</span>
-              <span>{currencyTrans(deviceEstimate)}</span>
+              <div>
+                <span>{currencyTrans(deviceEstimate)}</span>
+              </div>
             </li>
             <li className="service-fee-line">
               <span>10% Service Fee</span>
-              <div className="slash-container">
-                <span>-{currencyTrans(platformFee)}</span>
+              <div className="tag-container">
+                <Tag status="fail">Limited-tim Free</Tag>
+                <div className="slash-container">
+                  <span>-{currencyTrans(platformFee)}</span>
+                </div>
               </div>
             </li>
             <li className="seller-fee-line">
               <span>3rd Party Seller Fees</span>
-              <div className="slash-container">
-                <span>-{currencyTrans(thirdPartyFee)}</span>
+              <div className="tag-container">
+                <Tag status="fail">Limited-tim Free</Tag>
+                <div className="slash-container">
+                  <span>-{currencyTrans(thirdPartyFee)}</span>
+                </div>
               </div>
             </li>
             <li className="subtotal">
