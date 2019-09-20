@@ -16,6 +16,7 @@ import * as moment from "moment-timezone";
 import { shareComponent } from "@/utils/function";
 import { HeaderTitle } from "@/components/headerTitle";
 import Blog from "@/containers/blog/components/blogCard";
+import RouterLink from "@/components/routerLink";
 
 @inject("blog")
 @observer
@@ -116,8 +117,18 @@ export default class BlogList extends React.Component<
                 <Blog {...props} key={props.title} />
               ))}
             </nav>
-            <button className="common-button" onClick={this.handleMore}>
-              View more
+            <button className="common-button">
+              <RouterLink
+                to={`/tag/${
+                  this.props.blog.activeTag
+                    ? this.props.blog.activeTag.slug
+                    : ""
+                }`}
+                className="common-button"
+                onClick={this.handleMore}
+              >
+                View more
+              </RouterLink>
             </button>
           </section>
         </div>
@@ -148,5 +159,3 @@ export default class BlogList extends React.Component<
     this.props.blog.getLastestList();
   };
 }
-
-
