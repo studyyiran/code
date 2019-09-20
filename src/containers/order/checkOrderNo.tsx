@@ -8,6 +8,7 @@ import {
 } from "./container/context";
 import { setOrderCache } from "@/containers/order/util";
 import "../../containers/commonCss/contact.less";
+import { getQueryString } from "utils";
 
 const nextUrl = "/neworder";
 
@@ -30,20 +31,15 @@ class CheckOrderNo extends React.Component<any, any> {
     formError: ""
   };
   public async componentDidMount() {
-    // 这个接口暂时没有提供
-    // const token = getQueryString("token");
-    // // 存在token
-    // if (token) {
-    //   // 如果可以获取到订单信息则跳转，否则停留当前页面
-    //   const order = this.props.order;
-    //   const getOrderDetail = await order.getOrderDetailByToken(token);
-    //   if (getOrderDetail) {
-    //     // saveloginmes
-    //     order.autoSaveLoginMes();
-    //     // 自动定向到订单详情去
-    //     this.props.history.push(nextUrl);
-    //   }
-    // }
+    const email = getQueryString("email");
+    const orderId = getQueryString("orderId");
+    if (email && orderId) {
+      try {
+        this.postEmail(decodeURIComponent(email), decodeURIComponent(orderId));
+      } catch (e) {
+        console.error(e);
+      }
+    }
   }
   public render() {
     return (
@@ -136,6 +132,29 @@ class CheckOrderNo extends React.Component<any, any> {
     }
   };
 
+  private postEmail = async (email: any, orderId: any) => {
+    try {
+      const b = await this.props.checkForOrder(email, orderId);
+      if (b.groupOrderNo) {
+        // 应该不能单独取消一个子订单？这个应该放在内部去判断。
+        // 根据操作记录判断CRM取消订单
+        setOrderCache({
+          email,
+          orderId
+        });
+        this.props.history.push(nextUrl);
+      } else {
+        this.setState({
+          formError: "The email address does not match the order number"
+        });
+      }
+    } catch (e) {
+      this.setState({
+        formError: e.resultMessage
+      });
+    }
+  };
+
   private onSubmit = async () => {
     let canSubmit = true;
     // 校验email
@@ -160,48 +179,7 @@ class CheckOrderNo extends React.Component<any, any> {
     //   });
     // }
     if (canSubmit) {
-      try {
-        const b = await this.props.checkForOrder(
-          this.state.email,
-          this.state.orderNo
-        );
-        if (b.groupOrderNo) {
-          // 应该不能单独取消一个子订单？这个应该放在内部去判断。
-          // 根据操作记录判断CRM取消订单
-          // if (
-          //   b.orderRecords.find(
-          //     (v: any) =>
-          //       (v.beforeStatus === "TO_BE_SHIPPED" ||
-          //         v.beforeStatus === "TO_BE_RECEIVED") &&
-          //       v.afterStatus === "TRANSACTION_FAILED"
-          //   )
-          // ) {
-          //   this.setState({
-          //     formError: "This order has been cancelled"
-          //   });
-          //   return;
-          // }
-          // 保存订单数据
-          // this.props.order.setOrderDetail(b);
-          // email, orderNo 存入缓存
-          // this.props.order.autoSaveLoginMes();
-          // 跳转订单详情
-          setOrderCache({
-            email: this.state.email,
-            orderId: this.state.orderNo
-          });
-          this.props.history.push(nextUrl);
-        } else {
-          this.setState({
-            formError: "The email address does not match the order number"
-          });
-        }
-      } catch (e) {
-        console.error(e.resultMessage);
-        this.setState({
-          formError: e.resultMessage
-        });
-      }
+      this.postEmail(this.state.email, this.state.orderNo);
     }
   };
 }

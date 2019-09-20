@@ -109,13 +109,12 @@ function useGetAction(
             return obj;
           });
         }
-        if (res.data) {
+        if (res.groupOrderNo) {
           dispatch({
             type: totalOrderInfoReducerActionTypes.setTotalOrderInfo,
             value: res
           });
         }
-
         return res;
       } catch (e) {
         return Promise.reject(e);
