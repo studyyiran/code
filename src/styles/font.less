@@ -60,6 +60,11 @@
   }
 }
 
+/*
+56px
+56rem / 37.5 * 
+ */
+
 .font-size-reset(@px) {
   //font-size: 14 * @px;
 }
@@ -68,7 +73,7 @@ a:hover {
   color: inherit;
 }
 
-.page(@maxWidth) {
+.setpage(@maxWidth) {
   max-width: @maxWidth;
   margin-left: auto;
   margin-right: auto;
@@ -84,71 +89,163 @@ a:hover {
   //.pc({padding-left: 15px; padding-right: 15px;});
   .mb({padding-left: 0.53rem; padding-right: 0.53rem;});
 }
-
+.canclick {
+  cursor: pointer;
+}
+//my
 @common-button-world: {
-  .ant-collapse > .ant-collapse-item > .ant-collapse-header {
-    line-height: 1.2;
-  }
-  .common-button {
-    // 不希望按钮过宽
-    .pc({max-width: 456*@px;});
-    border-radius: 6*@px;
-    width: 100%;
-    height: 56*@px;
-    line-height: 56*@px;
-    background: @color-blue-liner;
-    color: @white;
-    //transition: background 0.5s;
-    font-size: 18*@f;
-
-    > a {
-      display: block;
-    }
-  }
-
-  .common-button.second {
-    background: #f5f7f9;
-    color: #1ab4e7;
-  }
-  .common-button:not(.second) {
-    &:hover:not([disabled]) {
-      background: #1ab4e7;
-    }
-    &[disabled] {
-      //&:hover {
-      //  background: linear-gradient(@color-gray-2, @color-gray-2);
-      //  background: linear-gradient(@color-gray-2, @color-gray-2);
-      //};
-      background: linear-gradient(@color-gray-2, @color-gray-2);
-      background: linear-gradient(@color-gray-2, @color-gray-2);
-    }
-  }
-  .buttons-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    > button {
-      max-width: 346*@px;
-    }
-  }
-
-  .ismobile #root {
-    .buttons-container {
-      flex-direction: column-reverse;
-      > .common-button:not(.second) {
-        margin-bottom: 16*@px;
+  body {
+    .yr-modal{
+      .yr-modal-content {
+        padding: 30*@px;
+        .mb({
+          padding: 10*@px;
+        })
       }
     }
-  }
-  
-  
-  // 重置
-  .ant-form-item .ant-form-item-label label {
-    color: #040E3F;
-    font-size: inherit;
-  }
-  .ant-input {
-    font-size: 16*@f;
+
+    &#ismobile {
+      .buttons-container {
+        flex-direction: column-reverse;
+        > .common-button:not(.second) {
+          margin-bottom: 16*@px;
+        }
+      }
+      .flex-grid {
+        justify-content: space-between;
+        > *:first-child {
+          flex: 0 1 auto;
+        }
+        > *:last-child {
+          flex: 0 1 auto;
+        }
+      }
+      .ant-modal-close {
+        padding: 0;
+      }
+    }
+
+    .flex-grid {
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-start;
+      position: relative;
+      z-index: 11;
+      > *:first-child {
+        flex: 0 0 600 * @px;
+      }
+      > *:last-child {
+        flex: 0 0 700 * @px;
+      }
+    }
+    .unit-space {
+      position: relative;
+      left: -6*@px;
+      //margin-left: -12*@px;
+    }
+    .button-centered {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+    .ant-collapse-content > .ant-collapse-content-box {
+      padding: 16*@px;
+    }
+    .ant-collapse-icon-position-right > .ant-collapse-item > .ant-collapse-header {
+      padding: 12*@px 16*@px;
+      padding-right: 40*@px;
+    }
+    .common-a {
+      color: @color-blue-liner-use;
+      &:hover {
+        color: @color-blue-liner-use;
+      }
+    }
+    a {
+      .canclick();
+    }
+    .ant-collapse > .ant-collapse-item > .ant-collapse-header {
+      line-height: 1.2;
+    }
+    .common-button {
+      .canclick();
+      // 不希望按钮过宽
+      .pc({max-width: 456*@px;});
+      border-radius: 6*@px;
+      width: 100%;
+      height: 56*@px;
+      line-height: 56*@px;
+      background: @color-blue-liner;
+      color: @white;
+      //transition: background 0.5s;
+      font-size: 18*@f;
+
+      > a {
+        display: block;
+      }
+      .ant-btn::before {
+        background: transparent;
+      }
+      > .ant-btn {
+        font-size: inherit;
+        background: transparent;
+        border: none;
+        width: 100%;
+        height: 100%;
+        &:hover {
+          background: transparent !important;
+        }
+      }
+    }
+
+    .common-button.second {
+      background: #f5f7f9;
+      color: #1ab4e7;
+    }
+    .common-button:not(.second) {
+      &:hover:not([disabled]) {
+        background: #1ab4e7;
+      }
+      &[disabled] {
+        //&:hover {
+        //  background: linear-gradient(@color-gray-2, @color-gray-2);
+        //  background: linear-gradient(@color-gray-2, @color-gray-2);
+        //};
+        background: linear-gradient(@color-gray-2, @color-gray-2);
+        background: linear-gradient(@color-gray-2, @color-gray-2);
+      }
+    }
+    .buttons-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      > button {
+        max-width: 346*@px;
+      }
+    }
+
+    // 重置
+    .ant-form-item .ant-form-item-label label {
+      color: #040E3F;
+      font-size: inherit;
+    }
+    .ant-input {
+      // 16 高度有误 还原
+      font-size: 14*@f;
+    }
+    .ant-modal-close {
+      padding: 15px;
+    }
+    .ant-modal-close-x {
+      @close-size: 36*@px;
+      width: @close-size;
+      height: @close-size;
+      line-height: @close-size;
+    }
+    .yr-modal-title {
+      .font(16*@px, 500, #222222);
+    }
   }
 }
 .hello(@common-button-world);
@@ -247,7 +344,7 @@ a:hover {
   text-align: center;
 }
 
-.ismobile #root {
+.ismobile {
   .comp-top-tag {
     @height: 0.64rem;
     min-width: 1.33rem;

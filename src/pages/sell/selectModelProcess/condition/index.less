@@ -5,7 +5,9 @@
     min-height: 63vh;
     display: flex;
     justify-content: center;
-    .page(800*@px);
+    position: relative;
+    left: -273 / 2*@px;
+    .setpage(800*@px);
     .img-container {
       flex: 0 0 273*@px;
       > img.product-bg {
@@ -35,13 +37,14 @@
 
   .ismobile #root {
     .page-condition {
+      left: 0;
       padding: 10rem * @px2rem 10rem * @px2rem 40rem * @px2rem 10rem * @px2rem;
       min-height: 63vh;
       display: flex;
       justify-content: center;
       flex-direction: column;
       align-items: stretch;
-      .page(800rem * @px2rem);
+      .setpage(800rem * @px2rem);
       .img-container {
         display: flex;
         align-items: center;

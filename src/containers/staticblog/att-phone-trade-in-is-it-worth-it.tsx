@@ -1,5 +1,5 @@
-import * as React from 'react';
-import './bolg.less';
+import * as React from "react";
+import "./bolg.less";
 
 export default class HowToTellUnlocked extends React.Component {
   public render() {
@@ -13,10 +13,33 @@ export default class HowToTellUnlocked extends React.Component {
             <em />
           </div>
         </div>
-        <img src={require('@/images/staticblog/img-6.jpg')} alt="ATT Phone Trade In: Is It Worth It? | UpTradeit.com" />
-        <p>AT&T’s trade-in may seem convenient but when you take a closer look, it’s nowhere near what it seems to be.</p>
-        <p>With the days of subsidized phones considered long gone, selling your unwanted cell phone when it comes time to upgrade has become a great alternative. With the absence of contracts, more and more people are either put on payment plans for their phones (significantly raising the monthly bill) or they must pony up a large lump sum up front to get a new device. With Uptradeit.com you can sell your device for max value, giving you the freedom to put a larger down payment on your new device, keeping the phone bill manageable.</p>
-        <p>AT&T offers a similar alternative, with a caveat. Their payout method involves store credit. This means that if you are not a AT&T customer, maybe you can purchase a few hundred dollars in AT&T branded merchandise? UpTrade offers more value and it’s in cold hard cash with convenient payment methods such as PayPal and e-Checks. (You can receive an instant check via email instead of waiting for snail-mail to arrive) Take a look at the difference in value below:</p>
+        <img
+          src={require("@/images/staticblog/img-6.jpg")}
+          alt="ATT Phone Trade In: Is It Worth It? | UpTradeit.com"
+        />
+        <p>
+          AT&T’s trade-in may seem convenient but when you take a closer look,
+          it’s nowhere near what it seems to be.
+        </p>
+        <p>
+          With the days of subsidized phones considered long gone, selling your
+          unwanted cell phone when it comes time to upgrade has become a great
+          alternative. With the absence of contracts, more and more people are
+          either put on payment plans for their phones (significantly raising
+          the monthly bill) or they must pony up a large lump sum up front to
+          get a new device. With Uptradeit.com you can sell your device for max
+          value, giving you the freedom to put a larger down payment on your new
+          device, keeping the phone bill manageable.
+        </p>
+        <p>
+          AT&T offers a similar alternative, with a caveat. Their payout method
+          involves store credit. This means that if you are not a AT&T customer,
+          maybe you can purchase a few hundred dollars in AT&T branded
+          merchandise? UpTrade offers more value and it’s in cold hard cash with
+          convenient payment methods such as PayPal and e-Checks. (You can
+          receive an instant check via email instead of waiting for snail-mail
+          to arrive) Take a look at the difference in value below:
+        </p>
         <table>
           <thead>
             <tr>
@@ -78,8 +101,17 @@ export default class HowToTellUnlocked extends React.Component {
             </tr>
           </tbody>
         </table>
-        <p>Keep in mind, the estimated value that is displayed for a “Good” condition device is generally considered to be a flawless device. If there is wear and tear present on your phone, the price will potentially be reduced from the original offer after a thorough examination. Although the condition of a device will impact the value, Uptradeit.com walks you step by step to accurately describe your device for the most accurately quoted price. Get a quote for your phone today.</p>
+        <p>
+          Keep in mind, the estimated value that is displayed for a “Good”
+          condition device is generally considered to be a flawless device. If
+          there is wear and tear present on your phone, the price will
+          potentially be reduced from the original offer after a thorough
+          examination. Although the condition of a device will impact the value,
+          Uptradeit.com walks you step by step to accurately describe your
+          device for the most accurately quoted price. Get a quote for your
+          phone today.
+        </p>
       </div>
-    )
+    );
   }
 }

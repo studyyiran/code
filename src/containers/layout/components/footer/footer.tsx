@@ -2,15 +2,21 @@ import * as React from "react";
 import classnames from "classnames";
 import { Link } from "react-router-dom";
 import "./footer.less";
-import { Row, Col, Input, Button } from "antd";
+import { Row, Col, Input, Button, Form, message } from "antd";
 // import commonStore from '@/store/common'
 import config from "../../../../config";
 import Svg from "@/components/svg";
 import { RenderByCondition } from "./RenderByCondition/index";
 import { Collapse } from "antd";
+import { useContext } from "react";
+import {
+  SelectModelContext,
+  ISelectModelContext
+} from "@/pages/sell/selectModelProcess/context";
+import RouterLink from "@/components/routerLink";
 const { Panel } = Collapse;
 
-const footerInfo = [
+export const footerInfo = [
   {
     title: "Sell",
     className: "",
@@ -18,11 +24,11 @@ const footerInfo = [
       {
         subTitle: "How To Sell",
         href: "/sell-my-phone"
+      },
+      {
+        subTitle: "Sell Now",
+        href: "/newsell"
       }
-      // {
-      //   subTitle: 'Sell Now',
-      //   href: ''
-      // }
     ]
   },
   {
@@ -94,32 +100,17 @@ export default class Footer extends React.Component<
     return (
       <footer className="comp-footer">
         <div className="width-container">
-          <header className="footer__logo">
-            <img src={require("@/images/logo.svg")} />
+          <header className="footer__logo flex-grid">
+            <div>
+              <img src={require("@/images/logo.svg")} />
+            </div>
+            <div />
           </header>
-          <div className="container">
+          <div className="container flex-grid">
             <RenderByCondition
               ComponentMb={
                 <div className="footer__group">
-                  {footerInfo.map(({ className, title, arr }) => {
-                    return (
-                      <ul className="item" key={title}>
-                        <Collapse expandIconPosition="right">
-                          <Panel header={<h2>{title}</h2>} key={title}>
-                            {arr.map(({ subTitle, href }) => {
-                              return (
-                                <li key={subTitle}>
-                                  <Link to={href}>
-                                    <span>{subTitle}</span>
-                                  </Link>
-                                </li>
-                              );
-                            })}
-                          </Panel>
-                        </Collapse>
-                      </ul>
-                    );
-                  })}
+                  <MbFooter />
                 </div>
               }
               ComponentPc={
@@ -131,7 +122,9 @@ export default class Footer extends React.Component<
                         {arr.map(({ subTitle, href }) => {
                           return (
                             <li key={subTitle}>
-                              <Link to={href}>{subTitle}</Link>
+                              <RouterLink onClick={clickUrlHandler} to={href}>
+                                {subTitle}
+                              </RouterLink>
                             </li>
                           );
                         })}
@@ -143,11 +136,22 @@ export default class Footer extends React.Component<
             />
             <form className="footer__email-form">
               <h2>Subscribe To Our Newsletter</h2>
-              <form>
-                <input placeholder="Email" aria-placeholder="Email" />
-                <button className="common-button">Subscribe</button>
-              </form>
+              <RenderEmailForm />
             </form>
+          </div>
+          <div className="flex-grid">
+            <div>
+              <div>
+                <RouterLink to="/terms">
+                  <span className="last">Terms & Conditions</span>
+                </RouterLink>
+                <RouterLink to="/privacy-policy">
+                  <span>Privacy Policy</span>
+                </RouterLink>
+              </div>
+              <span>© 2019 UP Trade Technologies, Inc.</span>
+            </div>
+            <div />
           </div>
         </div>
       </footer>
@@ -176,41 +180,78 @@ export default class Footer extends React.Component<
   };
 }
 
-/*
-(
-      <div className="comp-footer-container">
-        <div className="wave-bg" />
-        <div className="section-box">
-          <div className="content-wrapper">
-            <div className="links-group-wrapper">
-              <Row gutter={80}>
-                <Col span={5}><img src={require('@/images/logo.png')} className="logo" /></Col>
-                {
-                  linksGroup
-                }
-                <Col span={6} offset={1} className="email-group">
-                  <p className="title">CONNECT WITH US!</p>
-                  <form
-                    action="https://uptradeit.us20.list-manage.com/subscribe/post?u=d5c899a65eeea99f76cc22169&id=5af7b8030d" method="post" target="_blank">
-                    <Input
-                      placeholder="Enter your email"
-                      name="EMAIL"
-                      style={{ margin: '10px 0 14px 0' }}
-                      onChange={this.handChangeInput}
-                    />
-                    <input type="hidden" name="b_d5c899a65eeea99f76cc22169_5af7b8030d" value="" />
-                    <Button className="foot-subscribe" htmlType="submit" type="primary">SUBSCRIBE</Button>
-                  </form>
-                </Col>
-              </Row>
-            </div>
-            <div className="copyright">
-              <span className="item item--copy">&#169; 2019 UpTrade Technologies, Inc.</span>
-              <Link to="/privacy-policy"><span className="item item--policy">Privacy Policy</span></Link>
-              <Link to="/terms"><span className="item item--terms">Terms of Use</span></Link>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
- */
+function clickUrlHandler() {
+  window.scroll(0, 0);
+}
+
+export function MbFooter(props: any): any {
+  const { onClickHandler } = props;
+  return footerInfo.map(({ className, title, arr }: any) => {
+    return (
+      <ul className="item" key={title}>
+        <Collapse expandIconPosition="right">
+          <Panel header={<h2>{title}</h2>} key={title}>
+            {arr.map(({ subTitle, href }: any) => {
+              return (
+                <li
+                  key={subTitle}
+                  onClick={() => {
+                    if (onClickHandler) {
+                      onClickHandler();
+                    }
+                    if (clickUrlHandler) {
+                      clickUrlHandler();
+                    }
+                  }}
+                >
+                  <RouterLink to={href}>
+                    <span>{subTitle}</span>
+                  </RouterLink>
+                </li>
+              );
+            })}
+          </Panel>
+        </Collapse>
+      </ul>
+    );
+  });
+}
+
+function RenderEmailForm() {
+  const selectModelContext = useContext(SelectModelContext);
+  const { emailSubscribed } = selectModelContext as ISelectModelContext;
+  const EmailForm: any = (innerProps: any) => (
+    <Form
+      className="post-email"
+      onSubmit={(e: any) => {
+        e.preventDefault();
+        innerProps.form.validateFields((error: any, values: any) => {
+          if (!error) {
+            emailSubscribed(values.email)
+              .then((res: any) => {
+                message.success("Succeed to subscribe");
+              })
+              .catch((errorRes: any) => {
+                console.error(errorRes);
+              });
+          }
+        });
+      }}
+    >
+      <Form.Item>
+        {innerProps.form.getFieldDecorator("email", {
+          rules: [
+            {
+              required: true,
+              type: "email",
+              message: "Please enter a valid email."
+            }
+          ]
+        })(<input placeholder="Email" aria-placeholder="Email" />)}
+      </Form.Item>
+      <button className="common-button">Subscribe</button>
+    </Form>
+  );
+  const A = Form.create({ name: "dontknow" })(EmailForm);
+  return <A />;
+}

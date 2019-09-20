@@ -68,8 +68,7 @@ export const getExpressFee = <T>(inquiryKeys: any) => {
 // 根据类目获取品牌列表
 export const getBrands = <T>(categoryId: string) => {
   const opts: IOpts = {
-    url: `/product/getBrands?id=${categoryId}`,
-    isFullUrl: true
+    url: `/product/getBrands?id=${categoryId}`
   };
 
   return requestGetResponse(Request<T>(requestWrapper(opts)));
@@ -78,10 +77,54 @@ export const getBrands = <T>(categoryId: string) => {
 // 根据类目获取品牌列表
 export const getQuality = <T>(categoryId: string) => {
   const opts: IOpts = {
-    url: `/product/getQuality?id=${categoryId}`,
-    isFullUrl: true
+    url: `/product/getQuality?id=${categoryId}`
   };
 
+  return requestGetResponse(Request<T>(requestWrapper(opts)));
+};
+
+// 根据类目获取品牌列表
+export const getLastestOrder = <T>() => {
+  const opts: IOpts = {
+    url: `/sub_order/lastest`,
+    method: "post"
+  };
+  return requestGetResponse(Request<T>(requestWrapper(opts)));
+};
+
+//
+export const emailSubscribed = <T>(params: any) => {
+  const opts: IOpts = {
+    url: `/message_books/subscribed`,
+    params: params,
+    method: "post"
+  };
+  return requestGetResponse(Request<T>(requestWrapper(opts)));
+};
+
+//
+export const createEmail = <T>(params: any) => {
+  const opts: IOpts = {
+    url: `/message_books/createemail`,
+    params: params,
+    method: "post"
+  };
+  return requestGetResponse(Request<T>(requestWrapper(opts)));
+};
+
+export const getSkuId = <T>(params: any) => {
+  const opts: IOpts = {
+    url: `/product/getSKUID`,
+    params: params,
+    method: "post"
+  };
+  return requestGetResponse(Request<T>(requestWrapper(opts)));
+};
+
+export const skuIdToPhoneInfo = <T>(skuId: string) => {
+  const opts: IOpts = {
+    url: `/product/getSKU/${skuId}`,
+  };
   return requestGetResponse(Request<T>(requestWrapper(opts)));
 };
 
@@ -103,7 +146,7 @@ ___________________________________________________________________________
 // 根据类目获取品牌列表
 export const getBrandsByCid = <T>(categoryId = 1) => {
   const opts: IOpts = {
-    url: `/brands/category/${categoryId}`,
+    url: `/brands/category/${categoryId}`
   };
 
   return Request<T>(opts);
@@ -176,7 +219,6 @@ export const getInquiryDetail = <T>(
   return Request<T>(opts);
 };
 
-// 根据zipCode获取美国对应的州
 export const getStateByCode = <T>(zipCode: string) => {
   const opts: IOpts = {
     url: `/USPS/state/${zipCode}`,

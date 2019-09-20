@@ -3,8 +3,10 @@ import "./index.less";
 
 export default function Tag(props: any) {
   return (
-    <span className={"comp-tag " + props.status + " " + props.className}>
-      {props.children}
-    </span>
+    <div className="comp-tag">
+      <div className="flex-container">
+        <span className={"content " + props.status + " " + props.className}>{props.children}</span>
+      </div>
+    </div>
   );
 }

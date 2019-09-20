@@ -15,6 +15,7 @@ import {
   SelectModelContext
 } from "@/pages/sell/selectModelProcess/context";
 import VideoComponent from "@/components/video";
+import NewBuyNotice from "@/containers/home/components/newBuyNotice";
 
 const descPart1 = {
   descArr: [
@@ -63,27 +64,27 @@ const descPart2 = {
 const brands = [
   {
     iconName: "Apple",
-    iconUrl: "Apple.svg",
+    iconUrl: require(`./components/brandLogo/res/Apple.svg`),
     id: 1
   },
   {
     iconName: "Samsung",
-    iconUrl: "Samsung.svg",
+    iconUrl: require(`./components/brandLogo/res/Samsung.svg`),
     id: 2
   },
   {
     iconName: "Google",
-    iconUrl: "Google.svg",
+    iconUrl: require(`./components/brandLogo/res/Google.svg`),
     id: 3
   },
   {
     iconName: "LG",
-    iconUrl: "LG.svg",
+    iconUrl: require(`./components/brandLogo/res/LG.svg`),
     id: 4
   },
   {
     iconName: "OnePlus",
-    iconUrl: "OnePlus.svg",
+    iconUrl: require(`./components/brandLogo/res/OnePlus.svg`),
     id: 5
   },
   {
@@ -136,12 +137,19 @@ function RenderReviewList(props: any) {
 export default function HomeWrapper(props: any) {
   const selectModelContext = useContext(SelectModelContext);
   const {
-    selectModelContextDispatch
+    selectModelContextDispatch,
+    selectModelContextValue
   } = selectModelContext as ISelectModelContext;
   function clickBrandHandler(value: any) {
     selectModelContextDispatch({ type: "setBrand", value });
   }
-  return <Home clickBrandHandler={clickBrandHandler} {...props} />;
+  return (
+    <Home
+      clickBrandHandler={clickBrandHandler}
+      {...props}
+      selectModelContextValue={selectModelContextValue}
+    />
+  );
 }
 
 @inject("yourphone", "common")
@@ -217,8 +225,28 @@ class Home extends React.Component<IHomeProps, IHomeState> {
   public render() {
     const { isMobile } = this.props.common;
     const url = require("./res/bannerPhone.png");
+    console.log(this.props);
+    const fixBrands = brands
+      .filter((brand, index) => index < 6)
+      .map((brand, index) => {
+        const { id } = brand;
+        const brandList = (this.props as any).selectModelContextValue.brandList;
+        if (brandList && brandList.length) {
+          const target = brandList.find(({ id: brandId }: any) => {
+            return brandId === id;
+          });
+
+          if (target) {
+            return { ...brand, iconUrl: target.homeLogo };
+          }
+        }
+        return brand;
+      });
     return (
       <article className="page-home">
+        <NewBuyNotice
+          data={(this.props as any).selectModelContextValue.lastestOrder}
+        />
         <div className="home__intro">
           <div className="container">
             <section className="title">
@@ -231,22 +259,25 @@ class Home extends React.Component<IHomeProps, IHomeState> {
                 <RenderByCondition
                   ComponentPc={
                     <div className="wrap-container">
-                      {brands
+                      {fixBrands
                         .filter((brand, index) => index < 6)
-                        .map((brand, index) => (
-                          <BrandLogo
-                            key={index}
-                            brand={brand}
-                            {...this.props}
-                            onClick={(this.props as any).clickBrandHandler}
-                          />
-                        ))}
+                        .map((brand, index) => {
+                          const { id } = brand;
+                          return (
+                            <BrandLogo
+                              key={id}
+                              brand={brand}
+                              {...this.props}
+                              onClick={(this.props as any).clickBrandHandler}
+                            />
+                          );
+                        })}
                     </div>
                   }
                   ComponentMb={
                     <>
                       <div className="wrap-container">
-                        {brands
+                        {fixBrands
                           .filter((brand, index) => index < 3)
                           .map((brand, index) => (
                             <BrandLogo
@@ -258,7 +289,7 @@ class Home extends React.Component<IHomeProps, IHomeState> {
                           ))}
                       </div>
                       <div className="wrap-container">
-                        {brands
+                        {fixBrands
                           .filter((brand, index) => index > 2 && index < 6)
                           .map((brand, index) => (
                             <BrandLogo
@@ -303,10 +334,10 @@ class Home extends React.Component<IHomeProps, IHomeState> {
         </section>
         <section className="easy-sell-part">
           <h2>3 Easy Steps To Sell</h2>
-          <VideoComponent />
+          {/*<VideoComponent />*/}
           <div className="bg-white-container">
             <SectionIcons {...descPart2} />
-            <LinkButton url={"/newsell"}>Learn More</LinkButton>
+            <LinkButton url={"/faq"}>Learn More</LinkButton>
           </div>
         </section>
         <section className="home__review">

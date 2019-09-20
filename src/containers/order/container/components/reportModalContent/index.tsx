@@ -23,12 +23,12 @@ export default function ReportModalContent(props: any) {
       </li>
     );
   }
-  const { brandName, displayName, pricePns, productPns } = revised;
+  const { brandName, pricePns, productPns, productName } = revised;
   function checkIsSame(attrKey: string) {
-    return revised[revised] === brandName[revised];
+    return revised[attrKey] === submitted[attrKey];
   }
   function checkSameFromArr(targetId: string, attrKey: string) {
-    let isSame = true;
+    let isSame = false;
     if (
       submitted &&
       submitted[attrKey] &&
@@ -36,13 +36,12 @@ export default function ReportModalContent(props: any) {
         ({ id: submitAttrValueId }: any) => submitAttrValueId === targetId
       )
     ) {
-      isSame = false;
+      isSame = true;
     }
     return isSame;
   }
   return (
     <div className="report-modal-content">
-      <h2>Inspection Report</h2>
       <Tag status={"fail"}>{differentReason}</Tag>
       <ul className="list">
         <RenderItem
@@ -52,41 +51,48 @@ export default function ReportModalContent(props: any) {
         />
         <RenderItem
           title="Model"
-          value={displayName}
+          value={productName}
           isSame={checkIsSame("productId")}
         />
         {productPns.map(({ name, ppnName, id }: any) => (
           <RenderItem
             title={ppnName}
             value={name}
-            isSame={checkSameFromArr(id, "pricePns")}
+            isSame={checkSameFromArr(id, "productPns")}
           />
         ))}
-        {pricePns.map(({ id, type, name }: any, index: number) => {
-          const { answerId } = getIdFromAllQuestion(phoneConditionQuestion, id);
-          let currentQuestion: any;
-          phoneConditionQuestion.find((parent: any) => {
-            const { subQuestionArr } = parent;
-            return subQuestionArr.find((subQuestion: any) => {
-              const { id: subQuestionId, content } = subQuestion;
-              if (subQuestionId === answerId) {
-                currentQuestion = subQuestion;
-                return true;
-              } else {
-                return false;
-              }
-              return;
+        {pricePns
+          .sort((a: any, b: any) => {
+            return a.sort - b.sort;
+          })
+          .map(({ id, type, name }: any, index: number) => {
+            const { answerId } = getIdFromAllQuestion(
+              phoneConditionQuestion,
+              id
+            );
+            let currentQuestion: any;
+            phoneConditionQuestion.find((parent: any) => {
+              const { subQuestionArr } = parent;
+              return subQuestionArr.find((subQuestion: any) => {
+                const { id: subQuestionId, content } = subQuestion;
+                if (subQuestionId === answerId) {
+                  currentQuestion = subQuestion;
+                  return true;
+                } else {
+                  return false;
+                }
+                return;
+              });
             });
-          });
-          return (
-            <RenderItem
-              isSame={checkSameFromArr(id, "pricePns")}
-              key={index}
-              title={currentQuestion && currentQuestion.content}
-              value={name}
-            />
-          );
-        })}
+            return (
+              <RenderItem
+                isSame={checkSameFromArr(id, "pricePns")}
+                key={index}
+                title={currentQuestion && currentQuestion.content}
+                value={name}
+              />
+            );
+          })}
       </ul>
     </div>
   );

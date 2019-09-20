@@ -16,7 +16,7 @@ function SingleButton(props: ISingleButton) {
   const isSelect = currentSelect === index;
   return (
     <button
-      className="sub-question-button"
+      className="sub-question-button canclick"
       data-select={isSelect ? "true" : "false"}
       onClick={handler}
     >

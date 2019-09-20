@@ -71,7 +71,7 @@ export default function OrderInfo() {
               {expressOption ? (
                 <li>
                   <h3>Slow Shipping</h3>
-                  <span>
+                  <span className="unit-space">
                     -{priceUnit}
                     {expressOption.fee}
                   </span>
@@ -80,7 +80,7 @@ export default function OrderInfo() {
               {needInsurance ? (
                 <li>
                   <h3>Shipping Insurance</h3>
-                  <span>
+                  <span className="unit-space">
                     -{priceUnit}
                     {shippingInsurance}
                   </span>
@@ -89,15 +89,17 @@ export default function OrderInfo() {
             </ul>
           </Panel>
         </Collapse>
-        <div className="new-payout">
-          <h3>Net Payout</h3>
-          <span>
-            $
-            {guaranteedPayout -
-              ((expressOption && expressOption.fee) || 0) -
-              (shippingInsurance || 0)}
-          </span>
-        </div>
+        <ul className="new-payout">
+          <li>
+            <h3>Net Payout</h3>
+            <span>
+              $
+              {guaranteedPayout -
+                ((expressOption && expressOption.fee) || 0) -
+                ((needInsurance && shippingInsurance) || 0)}
+            </span>
+          </li>
+        </ul>
         <div
           data-open={open ? "true" : "false"}
           className="open"

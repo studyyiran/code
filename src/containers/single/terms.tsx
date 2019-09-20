@@ -79,7 +79,7 @@ export default class Broken extends React.Component<ICommonProps> {
           Email Address: <br />
           support@uptradeit.com
         </p>
-        <hr style={{ width: 200, marginLeft: 0 }} />
+        <hr />
         <p>Last Updated: June 4, 2019</p>
       </div>
     )

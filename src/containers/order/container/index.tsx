@@ -62,6 +62,7 @@ function OrderList(props: { order: IOrderStore }) {
     totalOrderInfoContextDispatch,
     revisedPriceConfirm,
     revisedPriceReject,
+    reloadOrderFromCache,
     checkForOrder
   } = totalOrderInfoContext as ITotalOrderInfoContext;
   // 获取
@@ -84,11 +85,7 @@ function OrderList(props: { order: IOrderStore }) {
   useEffect(() => {
     // 1 查看session登录
     if (!totalOrderInfo || !totalOrderInfo.groupOrderNo) {
-      const orderCache = getOrderCache();
-      if (orderCache) {
-        const { email, orderId } = orderCache;
-        checkForOrder(email, orderId);
-      }
+      reloadOrderFromCache();
     }
   }, [totalOrderInfo]);
   // 方法
@@ -126,26 +123,28 @@ function OrderList(props: { order: IOrderStore }) {
         productDisplayName,
         subOrderStatusDisplayName,
         subOrderStatus,
-        orderStatusHistories
+        orderStatusHistories,
+        inquiryInfo,
       } = order;
       const reactNodeConfig = getReactNodeConfig(subOrderStatus);
+      const needShowName = inquiryInfo.submitted.productName;
       return {
-        header: `${productDisplayName}-${subOrderStatusDisplayName}`,
+        header: `${needShowName}-${subOrderStatusDisplayName}`,
         key: subOrderNo,
         children: (
           <div>
             <MachineInfo
               key={subOrderNo}
-              productName={order.productDisplayName}
               guaranteedPrice={order.subTotal}
-              carrier={order.inquiryInfo.submitted.productPns[1].name}
+              submitted={inquiryInfo.submitted}
               {...order}
             />
             <ProgressBar
               data={getProgressType({
-                orderStatusHistories,
+                orderStatusHistories: orderStatusHistories,
                 orderCreateDate: totalOrderInfo.orderCreateDate,
-                subOrderStatus
+                subOrderStatus,
+                subOrderStatusDisplayName
               })}
             />
             {reactNodeConfig.deliver && <DeliverSatus {...order} />}
@@ -156,11 +155,15 @@ function OrderList(props: { order: IOrderStore }) {
                 postEmailForm={postEmailForm}
                 revisedPriceConfirm={revisedPriceConfirm}
                 revisedPriceReject={revisedPriceReject}
+                subOrderStatus={subOrderStatus}
               />
             )}
 
             {reactNodeConfig.listedForSale || reactNodeConfig.orderComplete ? (
-              <ListedForSale {...order} />
+              <ListedForSale
+                {...order}
+                phoneConditionQuestion={phoneConditionQuestion}
+              />
             ) : null}
           </div>
         )

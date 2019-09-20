@@ -7,13 +7,19 @@
     align-items: center;
     flex-direction: column;
     > div.border {
+      &:hover {
+        background: @color-blue-liner;
+        border-color: @color-blue-liner-use;
+      }
       @width: 101*@px;
       @height: 80*@px;
       width: @width;
       text-align: center;
       height: @height;
       line-height: @height;
-      border: 1*@px solid @white;
+      border-style: solid;
+      border-width: 1px;
+      color: @white;
       border-radius: 5*@px;
       overflow: hidden;
       margin-bottom: 10*@px;
@@ -35,14 +41,16 @@
   .ismobile #root {
     .comp-brand-logo {
       > div.border {
+        &:hover {
+          background: transparent;
+          border-color: initial;
+        }
         @width: 2.19rem;
         @height: 1.49rem;
         width: @width;
         text-align: center;
         height: @height;
         line-height: @height;
-        border: 1*@px solid @white;
-        border-radius: 0.16rem;
         overflow: hidden;
         margin-bottom: 0;
         font-size: 0.49rem;

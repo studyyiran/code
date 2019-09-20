@@ -1,72 +1,35 @@
 @import (reference) "~@/styles/index.less";
 
-.page-select-brand {
-  background: #F5F7F9;
-  @img-size: 165px;
-  @space: 195px;
-  padding: 151px 0 109px;
-  ul.brand-list {
-    margin: auto;
-    @cunt: 3;
-    display: grid;
-    grid-template-columns: repeat(@cunt, 33.33%);
-    grid-template-rows: repeat(3, 300px);
-    max-width: @img-size * @cunt + (@cunt - 1) * @space;
-    li.brand-icon-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      > div {
-        .line-height-middle(@img-size);
-        width: @img-size;
-        height: @img-size;
-        border-radius: 50%;
-        overflow: hidden;
-        box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1),
-        0px 2px 2px 0px rgba(0, 0, 0, 0.06), 0px 0px 2px 0px rgba(0, 0, 0, 0.08);
-        &:hover {
-          box-shadow: 0px 8px 10px 0px rgba(0, 0, 0, 0.1),
-          0px 6px 30px 5px rgba(0, 0, 0, 0.06),
-          0px 16px 24px 2px rgba(0, 0, 0, 0.08);
-        }
-        > img {
-          width: 70%;
-        }
-      }
-    }
-  }
-}
-
-.ismobile #root {
+@world: {
   .page-select-brand {
-    background: #F5F7F9;
-    @img-size: 2.67rem;
-    @space: 2.4rem;
-    padding: 1.52rem 0;
+    background: #f5f7f9;
+    @img-size: 165*@px;
+    @space: 195*@px;
+    padding: 0;
     ul.brand-list {
-      @count: 2;
-      @height: 3.27rem;
       margin: auto;
+      @cunt: 3;
       display: grid;
-      grid-template-columns: repeat(@count, (100% / @count));
-      grid-template-rows: repeat(3, @height);
-      max-width: @img-size * @count + (@count - 1) * @space;
+      grid-template-columns: repeat(@cunt, 33.33%);
+      max-width: @img-size * @cunt + (@cunt - 1) * @space;
       li.brand-icon-container {
         display: flex;
         align-items: center;
         justify-content: center;
+        margin: 50px auto;
         > div {
           .line-height-middle(@img-size);
-          width:  @img-size;
+          width: @img-size;
           height: @img-size;
           border-radius: 50%;
           overflow: hidden;
-          box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1),
-          0px 2px 2px 0px rgba(0, 0, 0, 0.06), 0px 0px 2px 0px rgba(0, 0, 0, 0.08);
+          box-shadow: 0*@px 1*@px 3*@px 0*@px rgba(0, 0, 0, 0.1),
+            0*@px 2*@px 2*@px 0*@px rgba(0, 0, 0, 0.06),
+            0*@px 0*@px 2*@px 0*@px rgba(0, 0, 0, 0.08);
           &:hover {
-            box-shadow: 0px 8px 10px 0px rgba(0, 0, 0, 0.1),
-            0px 6px 30px 5px rgba(0, 0, 0, 0.06),
-            0px 16px 24px 2px rgba(0, 0, 0, 0.08);
+            box-shadow: 0*@px 8*@px 10*@px 0*@px rgba(0, 0, 0, 0.1),
+              0*@px 6*@px 30*@px 5*@px rgba(0, 0, 0, 0.06),
+              0*@px 16*@px 24*@px 2*@px rgba(0, 0, 0, 0.08);
           }
           > img {
             width: 70%;
@@ -75,4 +38,46 @@
       }
     }
   }
-}
+
+  .ismobile #root {
+    .page-select-brand {
+      background: #f5f7f9;
+      @img-size: 2.67rem;
+      @space: 2.4rem;
+      padding: 1.52rem 0;
+      ul.brand-list {
+        @count: 2;
+        @height: 3.27rem;
+        margin: auto;
+        display: grid;
+        grid-template-columns: repeat(@count, (100% / @count));
+        grid-template-rows: repeat(3, @height);
+        max-width: @img-size * @count + (@count - 1) * @space;
+        li.brand-icon-container {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          > div {
+            .line-height-middle(@img-size);
+            width: @img-size;
+            height: @img-size;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0*@px 1*@px 3*@px 0*@px rgba(0, 0, 0, 0.1),
+              0*@px 2*@px 2*@px 0*@px rgba(0, 0, 0, 0.06),
+              0*@px 0*@px 2*@px 0*@px rgba(0, 0, 0, 0.08);
+            &:hover {
+              box-shadow: 0*@px 8*@px 10*@px 0*@px rgba(0, 0, 0, 0.1),
+                0*@px 6*@px 30*@px 5*@px rgba(0, 0, 0, 0.06),
+                0*@px 16*@px 24*@px 2*@px rgba(0, 0, 0, 0.08);
+            }
+            > img {
+              width: 70%;
+            }
+          }
+        }
+      }
+    }
+  }
+};
+.hello(@world);

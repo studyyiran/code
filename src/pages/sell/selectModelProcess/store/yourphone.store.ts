@@ -201,10 +201,7 @@ class YourPhone implements IYourPhoneStore {
     }
     let res: IProductModel[] = [];
     try {
-      res = await Api.getProductsList<IProductModel[]>(
-        this.activeBrandsId,
-        1
-      );
+      res = await Api.getProductsList<IProductModel[]>(this.activeBrandsId, 1);
     } catch (error) {
       console.warn(error, "in brand store getProductsList");
       return false;

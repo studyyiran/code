@@ -189,7 +189,8 @@ export function tranServerQuestionToLocalRender(staticQuestion: any) {
       displayName,
       type,
       question,
-      qualityPropertyValueDtos
+      qualityPropertyValueDtos,
+      sort
     } = parentQuestion;
     const newQuestion: any = {
       id: `parent${id}`,
@@ -199,6 +200,7 @@ export function tranServerQuestionToLocalRender(staticQuestion: any) {
     justPush(newQuestion.subQuestionArr, {
       subQuestionContent: displayName,
       tips: question,
+      sort,
       type,
       subQuestionId: id,
       qualityPropertyValueDtos
@@ -225,11 +227,13 @@ export function tranServerQuestionToLocalRender(staticQuestion: any) {
     type,
     subQuestionId,
     qualityPropertyValueDtos,
+    sort,
     tips
   }: any) {
     let subQuesiton: any = {};
     subQuesiton = Object.assign(subQuesiton, {
       tipsContent: tips,
+      sort,
       id: subQuestionId,
       content: subQuestionContent,
       type: staticMap[type],
@@ -250,6 +254,7 @@ export function tranServerQuestionToLocalRender(staticQuestion: any) {
           ) {
             subQuesiton.isMoreCondition = [optionId];
             justPush(root, {
+              sort: qualityPropertyDtos[0].sort,
               subQuestionContent: qualityPropertyDtos[0].displayName,
               tips: qualityPropertyDtos[0].question,
               type: qualityPropertyDtos[0].type,
@@ -312,6 +317,7 @@ export function getServerAnswerFormat(
           staticAnswer = staticAnswer.concat(
             answer.map((answerValue: any) => {
               return {
+                sort: subQuestion.sort,
                 optionId:
                   answerValue && answerValue.optionId
                     ? answerValue.optionId
@@ -330,7 +336,8 @@ export function getServerAnswerFormat(
   return staticAnswer.map((item: any) => {
     return {
       id: item.optionId,
-      name: item.optionContent
+      name: item.optionContent,
+      sort: item.sort
     };
   });
   // test3(phoneConditionQuestion, staticAnswer);
@@ -376,9 +383,12 @@ export function serverAnswerToRenderAnswer(question: any, staticAnswer: any) {
         return null;
       }
     }
-    const result = Object.assign(getIdFromAllQuestion(question, newItem.optionId), {
-      answer: [newItem]
-    });
+    const result = Object.assign(
+      getIdFromAllQuestion(question, newItem.optionId),
+      {
+        answer: [newItem]
+      }
+    );
     if (result.answerId) {
       // 试图从现有中寻找
       testFromCurrentAnswer(result.answerId);

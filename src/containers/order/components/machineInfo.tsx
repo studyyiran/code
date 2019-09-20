@@ -1,40 +1,31 @@
 import * as React from "react";
 import "./machineInfo.less";
-import { IMachineInfo } from "@/containers/order/interface/order.inerface";
+import { staticContentConfig } from "@/utils/util";
 
-class MachineInfo extends React.Component<
-  IMachineInfo & { productName: string }
-> {
-  public render() {
-    return (
-      <div className="comp-order-machineInfo">
-        <ul className="information-list">
-          <li>
-            <span>Model</span>
-            <span>{this.props.productName}</span>
-          </li>
-          {this.props.carrier !== "" && (
-            <li>
-              <span>Carrier</span>
-              <span>{this.props.carrier}</span>
+export default function MachineInfo(props: any) {
+  return (
+    <div className="comp-order-machineInfo">
+      <ul className="information-list">
+        <li>
+          <span>Model</span>
+          <span>{props.submitted.productName}</span>
+        </li>
+        {props.submitted.productPns.map(({ ppnName, name }: any) => {
+          return (
+            <li key={ppnName}>
+              <span>{ppnName}</span>
+              <span>{name}</span>
             </li>
-          )}
-        </ul>
-        <p className="total">
-          <span>SubTotal</span>
-          <span>{this.props.guaranteedPrice}</span>
-        </p>
-        {/*{*/}
-        {/*    this.props.condition !== "" && (*/}
-        {/*        <div>*/}
-        {/*            <div>Condition</div>*/}
-        {/*            <div>{this.props.condition}</div>*/}
-        {/*        </div>*/}
-        {/*    )*/}
-        {/*}*/}
-      </div>
-    );
-  }
+          );
+        })}
+      </ul>
+      <p className="total">
+        <span>Subtotal</span>
+        <span>
+          {staticContentConfig.priceUnit}
+          {props.guaranteedPrice}
+        </span>
+      </p>
+    </div>
+  );
 }
-
-export default MachineInfo;

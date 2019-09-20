@@ -100,8 +100,8 @@ export function RenderByType(props: IRenderByType) {
       if (questionDesc && questionDesc.length) {
         dom.push(
           <Select
+            className="my-select"
             key={subQuestionId}
-            style={{ width: "100%" }}
             value={userSubAnswer.answer}
             onChange={answer => {
               onUserInputHandler({

@@ -16,7 +16,7 @@ function SaveButton(props: any) {
 
   return (
     <button
-      className="common-button"
+      className="common-button button-centered"
       disabled={!canPost}
       onClick={props.onClick}
     >
@@ -67,7 +67,7 @@ export function WrapperPanel(props: IWrapperPanel) {
         );
       case "done":
         return (
-          <span className="tag" data-type={"done"}>
+          <span className="tag canclick" data-type={"done"}>
             Edit
           </span>
         );
@@ -174,8 +174,12 @@ function RenderQuestions(props: IRenderQuestions) {
         dom.push(
           <div className="wrapper-panel__question" key={subQuestionId}>
             <div className="content-container">
-              <h2>{content}</h2>
-              {tipsContent ? <TipsIcon>{tipsContent}</TipsIcon> : null}
+              <h2>
+                {content}
+                {tipsContent ? (
+                  <TipsIcon isInfo={true}>{tipsContent}</TipsIcon>
+                ) : null}
+              </h2>
             </div>
 
             <RenderByType
@@ -202,7 +206,7 @@ function RenderTagByStatus(props: any) {
     case "done":
       return (
         <span data-type={status}>
-          <Icon type="check-circle" style={{ color: "white" }} />
+          <Icon type="check-circle" />
         </span>
       );
     case "doing":

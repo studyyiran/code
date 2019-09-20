@@ -1,5 +1,4 @@
 @import (reference) "~@/styles/index.less";
-@import "../payment/payment--mobile.less";
 
 @world: {
   .page-shipping-container {
@@ -18,7 +17,7 @@
       background-size: 100%;
     }
     .page-padding();
-    .page((346 * 2 + 32) * @px);
+    .setpage((346 * 2 + 52) * @px);
     padding-bottom: 28 * @px;
     h3 {
       .font(24 * @f, 600, #131339);
@@ -59,6 +58,9 @@
     .check-box-container {
       text-align: center;
       padding-top: 17 * @px;
+      > * {
+        vertical-align: middle;
+      }
       .insurance-tips {
         color: #272729;
         font-weight: 600;

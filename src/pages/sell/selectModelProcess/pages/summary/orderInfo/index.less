@@ -1,48 +1,49 @@
 @import (reference) "~@/styles/index.less";
-
-.com-order-info {
-  > ul {
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid rgba(233, 233, 233, 1);
-    > li {
-      flex: 1 1 0;
-    }
-  }
-  .collapse-clear-border();
-  .ant-collapse-header {
-    background: @white;
-  }
-  //> li {
-  //  flex: 1 1 auto;
-  //  margin: 22px 0;
-  //}
-  .ant-collapse > .ant-collapse-item > .ant-collapse-header {
-    cursor: initial;
-  }
-  .open {
-    width: 100%;
-    bottom: -15px;
-    position: relative;
-    text-align: center;
-    color: #1ab4e7;
-    &[data-open="true"] {
-      svg {
-        transform: rotate(180deg);
+@world: {
+  .com-order-info {
+    .test {
+      > li {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        > *:first-child {
+          flex: 5 0 0px;
+          text-align: right;
+          margin-right: 15 * @px;
+        }
+        > *:last-child {
+          @value: 0 * @px;
+          flex: 1 0 @value;
+          //min-width: @value;
+          text-align: left;
+        }
       }
     }
-    > svg {
-      cursor: pointer;
-      font-size: 24px;
-      transition: transform 0.24s, -webkit-transform 0.24s;
-    }
-  }
-}
 
-.ismobile #root {
-  .com-order-info {
+    .last-order-info {
+      // 这个padding需要修改为正常的额外空间
+      //padding-right: 14*@px;
+      .test();
+    }
+
+    .new-payout {
+      //padding-right: 16*@px;
+      //padding-right: 30*@px;
+      .test();
+    }
+    // 设置间距
+    .ant-collapse > .ant-collapse-item.ant-collapse-no-arrow > .ant-collapse-header {
+      padding-left: 0;
+      padding-right: 0;
+    }
+    // 设置间距
+    .ant-collapse-content > .ant-collapse-content-box {
+      padding: 0;
+    }
     > ul {
-      display: block;
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1 * @px solid rgba(233, 233, 233, 1);
       > li {
         flex: 1 1 0;
       }
@@ -53,32 +54,43 @@
     }
     //> li {
     //  flex: 1 1 auto;
-    //  margin: 22px 0;
+    //  margin: 22*@px 0;
     //}
+    .ant-collapse > .ant-collapse-item > .ant-collapse-header {
+      cursor: initial;
+    }
+    .open {
+      width: 100%;
+      bottom: -15 * @px;
+      position: relative;
+      text-align: center;
+      color: #1ab4e7;
+      &[data-open="true"] {
+        svg {
+          transform: rotate(180deg);
+        }
+      }
+      > svg {
+        cursor: pointer;
+        font-size: 24 * @px;
+        transition: transform 0.24s, -webkit-transform 0.24s;
+      }
+    }
   }
-}
 
-.one-order {
-  //display: flex;
-  //justify-content: space-between;
-}
-
-.last-order-info {
-  h3 {
-    display: inline;
-    margin-right: 10px;
+  .ismobile {
+    .com-order-info {
+      > ul {
+        display: block;
+        > li {
+          flex: 1 1 0;
+        }
+      }
+      .collapse-clear-border();
+      .ant-collapse-header {
+        background: @white;
+      }
+    }
   }
-  text-align: right;
-}
-
-.new-payout {
-  padding-right: 20px;
-  > h3 {
-    margin-right: 10px;
-    font-size: 14px;
-    font-weight: 400;
-    color: #848484;
-    display: inline;
-  }
-  text-align: right;
-}
+};
+.hello(@world);

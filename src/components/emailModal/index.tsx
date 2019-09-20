@@ -14,11 +14,10 @@ class FormItem extends React.Component<{ common: ICommonStore, onCancel: () => v
     const { getFieldDecorator } = this.props.form;
     return (
       <Modal
-        title={<span style={{ verticalAlign: 'middle' }}><Icon type="close-circle" theme="filled" style={{ fontSize: 20, color: '#FC2249', marginRight: 10, position: 'relative', top: 2 }} />We're sorry about our technical difficulties!</span>}
+        title={<span><Icon type="close-circle" theme="filled" style={{ fontSize: 20, color: '#FC2249', marginRight: 10, position: 'relative', top: 2 }} />We're sorry about our technical difficulties!</span>}
         visible={this.props.common.showEmailModal}
         onOk={this.handleOk}
         onCancel={this.handleCancel}
-        style={{ height: 'auto' }}
         footer={
           <>
             <Button key="close" onClick={this.handleCancel} style={{ border: '2px solid #00CFFF', color: '#00CFFF' }}>Close</Button>

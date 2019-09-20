@@ -66,6 +66,10 @@ class Shipping extends React.Component<any, any> {
       this.props.onRef!(this); // 让done page里获取到这个组件实例，调用其validateData方法
     }
     this.props.yourphone.getNearExpressStores();
+    // TODO 呵呵呵
+    if (!this.props.yourphone.expressCarrier) {
+      this.props.yourphone.expressCarrier = EShipmentType.USPS;
+    }
   }
 
   public colLayout(span: number = 11) {
@@ -98,8 +102,7 @@ class Shipping extends React.Component<any, any> {
           className="difference"
           href={config.DEFAULT.FedExUrl}
         >
-          Find {this.props.yourphone.FedExNearStores ? "all" : "the closest"}{" "}
-          FedEx location
+          Check nearby locations
         </a>
       </div>
     );
@@ -122,8 +125,7 @@ class Shipping extends React.Component<any, any> {
           </>
         )}
         <a target="_blank" className="difference" href={config.DEFAULT.USPSUrl}>
-          Find {this.props.yourphone.USPSNearStores ? "all" : "the closest"}{" "}
-          USPS location
+          Check nearby locations
         </a>
       </div>
     );
@@ -145,25 +147,22 @@ class Shipping extends React.Component<any, any> {
           <div
             className="container-border"
             data-selected={
-              this.props.yourphone.expressCarrier === EShipmentType.FEDEX
-            }
-            onClick={this.handleCollapseExtend.bind(
-              this,
-              EShipmentType.FEDEX
-            )}
-          >
-            <div className="fedex-bg" />
-            {leftContent}
-          </div>
-          <div
-            className="container-border"
-            data-selected={
               this.props.yourphone.expressCarrier === EShipmentType.USPS
             }
             onClick={this.handleCollapseExtend.bind(this, EShipmentType.USPS)}
           >
             <div className="USPS-bg" />
             {rightContent}
+          </div>
+          <div
+            className="container-border"
+            data-selected={
+              this.props.yourphone.expressCarrier === EShipmentType.FEDEX
+            }
+            onClick={this.handleCollapseExtend.bind(this, EShipmentType.FEDEX)}
+          >
+            <div className="fedex-bg" />
+            {leftContent}
           </div>
         </div>
         {/*<Row gutter={30} >*/}
@@ -187,15 +186,15 @@ class Shipping extends React.Component<any, any> {
             >
               <span className="insurance-tips">
                 Add shipping insurance for ${shippingInsurance}
-                <TipsIcon>
-                  <p>
-                    This amount will be deducted from your payout. <br />
-                    We recommend to add shipping insurance for phone <br />
-                    that values more than $100.
-                  </p>
-                </TipsIcon>
               </span>
             </Checkbox>
+            <TipsIcon>
+              <p>
+                This amount will be deducted from your payout. <br />
+                We recommend to add shipping insurance for phone <br />
+                that values more than $100.
+              </p>
+            </TipsIcon>
           </div>
         ) : null}
         <ButtonGroup
@@ -247,9 +246,6 @@ class Shipping extends React.Component<any, any> {
 function RenderQuestion(props: any) {
   const { currentSelect, onChange, optionsList } = props;
   // 直接拉接口
-  {
-    moment.tz(addDate(new Date(), 7), "America/Chicago").format("MMM DD");
-  }
   const options = [
     {
       time: 3,
@@ -261,7 +257,7 @@ function RenderQuestion(props: any) {
     },
     {
       time: 14,
-      content: "Request a box and ship by "
+      content: "Send me a box; I will ship by "
     }
   ];
   let afterCalcList: any[] = [];

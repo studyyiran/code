@@ -4,9 +4,10 @@ import { SelectModelContext, ISelectModelContext } from "../context";
 import Svg from "@/components/svg";
 import TipsIcon from "@/pages/sell/selectModelProcess/components/tipsIcon";
 import { Collapse } from "antd";
+import { currencyTrans } from "@/utils/util";
+import { Tabs } from "@/components/tabs";
+import Tag from "@/components/tag";
 const { Panel } = Collapse;
-
-const priceUnit = "$";
 
 export default function Brand(props: any) {
   const selectModelContext = useContext(SelectModelContext);
@@ -16,7 +17,12 @@ export default function Brand(props: any) {
     removeFromList,
     getNameInfo
   } = selectModelContext as ISelectModelContext;
-  const { priceInfo, userProductList, inquiryKey } = selectModelContextValue;
+  const {
+    priceInfo,
+    userProductList,
+    inquiryKey,
+    productsList
+  } = selectModelContextValue;
   const { resultList, guaranteedPayout } = priceInfo;
   function selectHandler(id: any) {
     // 当前有选择
@@ -48,20 +54,29 @@ export default function Brand(props: any) {
         deviceEstimate,
         platformFee,
         thirdPartyFee,
-        brand: brandId,
-        modelInfo,
-        subTotal
-      } = item;
-      const nameObj = getNameInfo({
         brandId,
-        ...modelInfo
-      });
+        productId,
+        subTotal,
+        productPhoto
+      } = item;
+      // 不需要自己组织数据的教训.因为数据出不来
+      // const modelInfo = {
+      //   modelId: productId,
+      //   othersAttr: {}
+      // };
+      // bpvIds.forEach(({ id, ppId }: any) => {
+      //   modelInfo.othersAttr[ppId] = id;
+      // });
+      // const nameObj = getNameInfo({
+      //   brandId,
+      //   ...modelInfo
+      // });
       return (
         <Panel
           key={productInquiryKey}
           header={
             <div className="panel-header">
-              <img className="phone-image" src={nameObj.imgUrl} />
+              <img className="phone-image" src={productPhoto} />
               <div className="phone-model">
                 <span>{productName}</span>
                 <span>
@@ -73,10 +88,10 @@ export default function Brand(props: any) {
             </div>
           }
         >
-          <ul className="">
+          <ul className="li-container">
             {resultList.length > 1 ? (
               <li
-                className="edit-panel-line"
+                className="edit-panel-line canclick"
                 onClick={() => {
                   removeFromList(productInquiryKey);
                 }}
@@ -86,31 +101,31 @@ export default function Brand(props: any) {
             ) : null}
             <li className="estimate-line">
               <span>Device Estimate</span>
-              <span>
-                {priceUnit}
-                {deviceEstimate}
-              </span>
+              <div>
+                <span>{currencyTrans(deviceEstimate)}</span>
+              </div>
             </li>
             <li className="service-fee-line">
               <span>10% Service Fee</span>
-              <span>
-                -{priceUnit}
-                {platformFee}
-              </span>
+              <div className="tag-container">
+                <Tag status="fail">Limited-time Free</Tag>
+                <div className="slash-container">
+                  <span>-{currencyTrans(platformFee)}</span>
+                </div>
+              </div>
             </li>
             <li className="seller-fee-line">
               <span>3rd Party Seller Fees</span>
-              <span>
-                -{priceUnit}
-                {thirdPartyFee}
-              </span>
+              <div className="tag-container">
+                <Tag status="fail">Limited-tim Free</Tag>
+                <div className="slash-container">
+                  <span>-{currencyTrans(thirdPartyFee)}</span>
+                </div>
+              </div>
             </li>
             <li className="subtotal">
               <span>Subtotal</span>
-              <span>
-                {priceUnit}
-                {subTotal}
-              </span>
+              <span>{currencyTrans(subTotal)}</span>
             </li>
           </ul>
         </Panel>
@@ -151,17 +166,32 @@ export default function Brand(props: any) {
               receive and inspect the device(s) in your order.{" "}
             </TipsIcon>
           </div>
-          <span className="big-font">
-            {priceUnit}
-            {guaranteedPayout}
-          </span>
+          <span className="big-font">{currencyTrans(guaranteedPayout)}</span>
+        </section>
+      </div>
+      <div className="risk-container">
+        <section className="risk">
+          <h3>Zero Risk & Free Retuns</h3>
+          <p>
+            If you change your mind after shipping your phone, we even ship it
+            back to you for free!
+          </p>
         </section>
       </div>
       <div className="buttons-container">
         <button className="common-button second" onClick={addNewHandler}>
           Add another device
         </button>
-        <button className="common-button" onClick={props.goNextPage}>
+        <button
+          className="common-button"
+          onClick={() => {
+            selectModelContextDispatch({
+              type: "changeModelCache",
+              value: "reset"
+            });
+            props.goNextPage();
+          }}
+        >
           Next
         </button>
       </div>

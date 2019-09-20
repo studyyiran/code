@@ -39,12 +39,14 @@ export default function Sell(props: any) {
   const {
     selectModelContextValue,
     selectModelContextDispatch,
+    setSkuIdGetPhoneInfo,
     getNameInfo
   } = selectModelContext as ISelectModelContext;
   const {
     brand,
     brandList,
     modelInfo,
+    skuId,
     userProductList
   } = selectModelContextValue;
   function canGoNext(): boolean {
@@ -106,11 +108,18 @@ export default function Sell(props: any) {
               othersAttr: modelInfo.othersAttr
             });
             const { modelName, othersAttrName } = nameConfig.modelInfoName;
+            const displayModelName = modelName.split(" ").join("-");
             let next =
-              props.match.url + "/" + findTarget.displayName + `/${modelName}`;
+              props.match.url +
+              "/" +
+              findTarget.displayName +
+              `/${displayModelName}`;
             Object.keys(othersAttrName).forEach((key: any) => {
               next += `-${othersAttrName[key]}`;
             });
+            if (skuId) {
+              next = next + "/skuid-" + skuId;
+            }
             props.history.push(removeAllSpace(next));
           }
         }
@@ -127,6 +136,7 @@ export default function Sell(props: any) {
         break;
       }
     }
+    window.scrollTo(0, 0)
   }
   // function wrapper(Component: any) {
   //   return (...other: any[]) => {
@@ -162,7 +172,7 @@ export default function Sell(props: any) {
       Component: Model
     },
     condition: {
-      path: () => props.match.url + "/:brandName/:modelInfo",
+      path: () => props.match.url + "/:brandName/:modelInfo/:skuId",
       Component: Questionary
     },
     offer: {
@@ -202,7 +212,7 @@ export default function Sell(props: any) {
       });
       if (nameConfig && nameConfig.modelInfoName) {
         const { modelName, othersAttrName } = nameConfig.modelInfoName;
-        const next = modelName ? `Sell My ${modelName}` : 'Sell My Phone';
+        const next = modelName ? `Sell My ${modelName}` : "Sell My Phone";
         // Object.keys(othersAttrName).forEach((key: any) => {
         //   next += ` ${othersAttrName[key]}`;
         // });
@@ -217,12 +227,27 @@ export default function Sell(props: any) {
   // 如果当前
   if (!userProductList || !userProductList.length) {
     if (!brand) {
-      if (props.location.pathname && props.location.pathname !== "/newsell" && !props.location.pathname.includes("prepare-ship")) {
+      if (
+        props.location.pathname &&
+        props.location.pathname !== "/newsell" &&
+        !props.location.pathname.includes("prepare-ship") &&
+        !props.location.pathname.includes("skuid")
+      ) {
         // 首页
         goNextPage();
       }
     }
   }
+  // 解析skuId
+  useEffect(() => {
+    if (props.location.pathname.includes("skuid")) {
+      const arr = props.location.pathname.split('skuid-')
+      if (arr && arr[1]) {
+        // 使用action 而非dispatch
+        setSkuIdGetPhoneInfo(arr[1])
+      }
+    }
+  }, []);
   return (
     <Switch>
       {/*<Route path="/" render={() => (*/}

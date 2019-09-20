@@ -39,7 +39,6 @@ export default class InvationCode extends React.Component<RouteComponentProps> {
           <Button
             size="large"
             type="primary"
-            style={{ width: '90%', maxWidth: 400 }}
             disabled={this.state.btnHasDisabled}
             onClick={this.onSubmit}
           >SUBMIT</Button>

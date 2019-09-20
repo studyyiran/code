@@ -30,7 +30,7 @@ function Option(props: IOption) {
         <span data-select={isSelect ? "true" : "false"} className="icon">
           <Svg />
         </span>
-        <span>{children}</span>
+        <span className="content">{children}</span>
       </div>
     </div>
   );

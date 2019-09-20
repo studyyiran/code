@@ -46,7 +46,7 @@ export default function Brand(props: any) {
         const { displayName: name, id, goodLogo: iconUrl } = item;
         return (
           <li
-            className="brand-icon-container"
+            className="brand-icon-container canclick"
             key={id}
             onClick={() => {
               selectBrandHandler(id);

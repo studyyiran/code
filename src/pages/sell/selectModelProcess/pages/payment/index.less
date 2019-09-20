@@ -1,5 +1,4 @@
 @import (reference) "~@/styles/index.less";
-@import "payment--mobile.less";
 @world: {
   .page-payment-container {
     height: 100%;
@@ -11,20 +10,7 @@
         padding-top: 0 !important;
       }
     }
-
-    .paypal-bg {
-      width: 91 * @px;
-      height: 22 * @px;
-      display: inline-block;
-      margin-right: 10 * @px;
-      background: url("~@/images/paypal.png") no-repeat;
-      background-size: 100%;
-    }
-
-    .left-wrapper,
-    .right-wrapper {
-      margin-top: 15 * @px;
-
+    .wrapper {
       .email,
       .name {
         margin-top: 17 * @px;
@@ -54,75 +40,61 @@
         }
       }
 
-      .form-wrapper {
-        margin-top: 16 * @px;
-        .ant-form-item {
-          margin-bottom: 6 * @px;
-        }
-      }
-    }
-
-    // 覆盖antd的样式
-    .ant-collapse-header {
-      background-color: #fff;
-      padding-left: 20 * @px !important;
-    }
-
-    .ant-collapse {
-      border-width: 2 * @px;
-      border-color: #f5f5f5;
-    }
-    .ant-collapse-item {
-      border-width: 2 * @px;
-      border-color: #f5f5f5;
-    }
-    .ant-collapse-content > .ant-collapse-content-box {
-      padding-left: 20 * @px;
-      padding-right: 20 * @px;
-    }
-
-    .ant-collapse {
-      &.active {
-        box-shadow: 0 * @px 2 * @px 4 * @px 0 * @px rgba(0, 207, 255, 0.19);
-        border: 2 * @px solid rgba(0, 207, 255, 1);
-        .ant-collapse-item {
-          border-bottom: none;
-        }
-        .ant-collapse-content {
-          border-top: none;
-        }
-      }
-      .ant-collapse-content {
-        border-top: none;
+      .ant-form-item {
+        margin-bottom: 6 * @px;
       }
     }
   }
 
+  // my
   .page-payment-container {
     .description {
       .font(14px, 400, #848484);
     }
     padding-bottom: 286 * @px;
-    .page(750 * @px);
+    .setpage(750 * @px);
     .page-padding();
     .buttons-container {
       margin-top: 30 * @px;
     }
-    .paypal-container {
-    }
-
-    .echeck-container {
-      > h3 {
-        display: inline-block;
-        margin-right: 10 * @px;
+    .payment-type-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-column-gap: 30 * @px;
+      .container-border {
+        border: 1 * @px solid #e9e9e9;
+        border-radius: 8 * @px;
+        padding: 20 * @px 16 * @px;
+        position: relative;
+        &[data-selected="true"] {
+          border: 1 * @px solid @color-blue-liner-use;
+        }
+        display: flex;
+        flex-direction: column;
+        header {
+          flex: 0 0 40 * @f;
+          > span {
+            margin-left: 22 * @px;
+          }
+          > * {
+            vertical-align: middle;
+          }
+        }
+        .description {
+          flex: 0 0 90 * @f;
+        }
       }
-    }
-    .container-border {
-      border: 1 * @px solid #e9e9e9;
-      border-radius: 8 * @px;
-      padding: 22 * @px 17 * @px;
-      &[data-selected="true"] {
-        border: 1 * @px solid @color-blue-liner-use;
+      .echeck-container {
+        h3 {
+          display: inline-block;
+          font-size: 24 * @px;
+        }
+      }
+      .paypal-container {
+        img {
+          width: 106 * @px;
+          height: 28 * @px;
+        }
       }
     }
     .comp-top-tag {
@@ -136,10 +108,12 @@
     }
   }
 
-  .ismobile #root {
+  #ismobile {
     .page-payment-container {
-      .container-border {
-        margin-bottom: 0.5rem;
+      padding-bottom: 100 * @px;
+      .payment-type-container {
+        grid-template-columns: 1fr;
+        grid-row-gap: 20 * @px;
       }
     }
   }

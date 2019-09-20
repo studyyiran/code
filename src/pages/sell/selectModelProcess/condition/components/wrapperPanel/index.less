@@ -27,6 +27,9 @@
         height: 24px;
       }
       > span[data-type="done"] {
+        svg {
+          color: @white;
+        }
         background: #6dd230;
         > * {
           font-size: 28px;
@@ -54,7 +57,6 @@
     }
     > .tag {
       font-weight: 600;
-      font-family: Helvetica;
     }
     > .tag[data-type="done"] {
       color: #1ab4e7;
@@ -64,11 +66,18 @@
     margin-bottom: 24px;
     .content-container {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      margin-bottom: 8px;
+      //> * {
+      //  vertical-align: text-bottom;
+      //}
       > h2 {
         font-size: @font-size-bigger;
-        margin-bottom: 8px;
+        vertical-align: text-bottom;
+        display: inline-block;
+        > * {
+          vertical-align: text-bottom;
+        }
       }
     }
   }

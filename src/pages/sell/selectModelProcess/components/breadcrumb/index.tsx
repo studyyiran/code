@@ -45,7 +45,7 @@ function Breadcrumb(props: any) {
   function clickHandler(e: any) {
     const selectTag = e.target.getAttribute("data-step");
     // 如果当前处于选中状态
-    if (selectTag) {
+    if (selectTag && selectTag !== "false") {
       props.goNextPage(selectTag);
     }
   }
@@ -75,7 +75,7 @@ function Breadcrumb(props: any) {
     },
     offer: {
       viewContent: () => {
-        return "Offer Details";
+        return nameObj.modelInfoName.modelName ? renderName() : "Offer Details";
       },
       order: 3
     },
@@ -159,7 +159,7 @@ function Breadcrumb(props: any) {
         {configCache.map((routeConfig, index) => {
           const { pageKey, viewContent } = routeConfig;
           const renderPageOrder = getCurrentPageOrder(pageKey);
-          let nextPageKey = "";
+          let nextPageKey = "false";
           if (
             renderPageOrder >= stageOrder &&
             userProductList &&
@@ -179,14 +179,17 @@ function Breadcrumb(props: any) {
           return (
             <li data-step={nextPageKey} key={pageKey}>
               <span data-step={nextPageKey}>{` ${viewContent()}`}</span>
-              {index !== configCache.length - 1 ? (
-                <Svg icon="arrow-right" />
-              ) : null}
+              {"prepareShip" !== pageKey ? <Svg icon="arrow-right" /> : null}
             </li>
           );
         })}
       </ul>
     );
   }
-  return <div className="breadcrumb">{renderByType()}</div>;
+  return (
+    <div className="breadcrumb-container flex-grid">
+      <div className="breadcrumb">{renderByType()}</div>
+      <div />
+    </div>
+  );
 }

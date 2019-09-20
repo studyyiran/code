@@ -51,7 +51,7 @@
       > ul.values-list {
         @item-max-width: 370 * @px;
         @item-margin: 60 * @px;
-        .page((@item-max-width + 2 * @item-margin) * 3);
+        .setpage((@item-max-width + 2 * @item-margin) * 3);
         margin: 0 auto 0;
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -60,7 +60,8 @@
           text-align: center;
           margin-bottom: 62 * @px;
           > .icon {
-            width: 30 * @f;
+            width: 38 * @f;
+            height: 38 * @f;
           }
           > h3 {
             margin: 30 * @px auto 10 * @px;
@@ -79,7 +80,7 @@
       padding-top: 62 * @px;
       @headimg-width: 280 * @px;
       @headimg-margin: 119 * @px;
-      .page(@headimg-width * 3 + 2 * @headimg-margin);
+      .setpage(@headimg-width * 3 + 2 * @headimg-margin);
       > h2 {
         margin-bottom: 77 * @px;
         .title();
@@ -99,12 +100,12 @@
             margin-bottom: 12 * @px;
           }
           > h3 {
-            font-size: 26 * @f;
+            font-size: 26 * @px;
             color: #000000;
             font-weight: 500;
           }
           > span {
-            font-size: 16 * @f;
+            font-size: 16 * @px;
             font-weight: 500;
           }
         }

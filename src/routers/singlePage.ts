@@ -35,6 +35,16 @@ export default [
   },
   {
     component: Loadable({
+      loader: () => import('../containers/otherContact'),
+      loading: () => null,
+      modules: ['../containers/otherContact'],
+      webpack: () => [require.resolveWeak('../containers/otherContact') as number],
+    }),
+    exact: true,
+    path: '/need-help-contact',
+  },
+  {
+    component: Loadable({
       loader: () => import('../containers/sellOthersForm'),
       loading: () => null,
       modules: ['../containers/sellOthersForm'],

@@ -33,19 +33,20 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
   public validateData = (): Promise<boolean> => {
     return new Promise(resolve => {
       // 必须要选中一种支付方式
-      const { payment } = this.props.yourphone;
+      const payment = this.state.activeSide;
+
       if (payment === "") {
         message.info("how would you like to pay?");
         resolve(false);
         return;
       }
-
+      this.props.yourphone.payment = this.state.activeSide;
       // 用户并没有修改有关的支付信息，不需要执行下面的校验
       if (
         !this.props.yourphone.isLeftOnEdit &&
         !this.props.yourphone.isRightOnEdit
       ) {
-        switch (this.props.yourphone.payment) {
+        switch (this.state.activeSide) {
           case EPayType.PAYPAL:
             this.props.yourphone.paypal = {
               email: this.props.user.preOrder.userEmail || ""
@@ -65,7 +66,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
           this.props.user.preOrder = {
             ...this.props.user.preOrder,
             checkInfo: { ...this.props.yourphone.echeck },
-            payment: this.props.yourphone.payment,
+            payment: this.state.activeSide,
             paypalInfo: { ...this.props.yourphone.paypal }
           };
         } catch (error) {
@@ -75,7 +76,6 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
         resolve(true);
         return;
       }
-
       this.props.form.validateFields((err, values) => {
         if (err) {
           resolve(false);
@@ -114,7 +114,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
           return;
         }
 
-        switch (this.props.yourphone.payment) {
+        switch (this.state.activeSide) {
           case EPayType.PAYPAL:
             this.props.yourphone.paypal = { email: paypal_email };
             break;
@@ -131,7 +131,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
           this.props.user.preOrder = {
             ...this.props.user.preOrder,
             checkInfo: { ...this.props.yourphone.echeck },
-            payment: this.props.yourphone.payment,
+            payment: this.state.activeSide,
             paypalInfo: { ...this.props.yourphone.paypal }
           };
         } catch (error) {
@@ -143,29 +143,17 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
     });
   };
 
-  public colLayout(span: number = 11) {
-    const isMobile = this.props.common.isMobile;
-    return !isMobile ? { span } : {};
-  }
-
   public render() {
     let leftContent: React.ReactNode;
     let rightContent: React.ReactNode;
-    const isMobile = this.props.common.isMobile;
-
     const { getFieldDecorator } = this.props.form;
 
     const { paypal, echeck } = this.props.yourphone;
-
     // paypal的结构
     switch (this.props.yourphone.isLeftOnEdit) {
       case false:
         leftContent = (
-          <div className="left-wrapper">
-            <p className="description">
-              Confirm your PayPal address so we can send you the payment for
-              your phone.
-            </p>
+          <div className="wrapper">
             <div className="form-wrapper">
               <Form layout="vertical">
                 <Form.Item label="PayPal email address">
@@ -187,11 +175,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
 
       case true:
         leftContent = (
-          <div className="left-wrapper">
-            <p className="description">
-              Confirm your PayPal address so we can send you the payment for
-              your phone.
-            </p>
+          <div className="wrapper">
             <div className="form-wrapper">
               <Form layout="vertical">
                 <Form.Item label="PayPal email address">
@@ -233,11 +217,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
     switch (this.props.yourphone.isRightOnEdit) {
       case false:
         rightContent = (
-          <div className="right-wrapper">
-            <p className="description">
-              eChecks works just like regular checks. We email it to you and you
-              print it. After you print, it works just like a regular check.
-            </p>
+          <div className="wrapper">
             <div className="form-wrapper">
               <Form layout="vertical">
                 <Form.Item label="First Name">
@@ -264,7 +244,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
                     }
                   />
                 </Form.Item>
-                <Form.Item label="confirm eCheck email address">
+                <Form.Item label="Confirm eCheck email address">
                   <Input value={""} />
                 </Form.Item>
               </Form>
@@ -274,11 +254,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
         break;
       case true:
         rightContent = (
-          <div className="right-wrapper">
-            <p className="description">
-              eChecks works just like regular checks. We email it to you and you
-              print it. After you print, it works just like a regular check.
-            </p>
+          <div className="wrapper">
             <div className="form-wrapper">
               <Form layout="vertical">
                 <Form.Item label="First Name">
@@ -319,7 +295,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
                     initialValue: this.props.user.preOrder.userEmail
                   })(<Input />)}
                 </Form.Item>
-                <Form.Item label="confirm eCheck email address">
+                <Form.Item label="Confirm eCheck email address">
                   {getFieldDecorator("email_confirm", {
                     rules: [
                       {
@@ -340,31 +316,44 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
     }
 
     const paymentHTML = (
-      <Row gutter={30} style={!isMobile ? { paddingTop: "42px" } : {}}>
-        <Col {...this.colLayout(12)} className="echeck-col-wrapper">
-          <div
-            className="echeck-container container-border"
-            data-selected={this.props.yourphone.payment === EPayType.ECHECK}
-            onClick={this.handleEcheckCollapseExtend}
-          >
-            <div className="recommended comp-top-tag">Recommended</div>
+      <div className="payment-type-container">
+        <div
+          className="echeck-container container-border"
+          data-selected={
+            this.state.activeSide
+              ? this.state.activeSide === EPayType.ECHECK
+              : true
+          }
+          onClick={this.handleEcheckCollapseExtend}
+        >
+          <div className="recommended comp-top-tag">Recommended</div>
+          <header>
             <h3>eCheck</h3>
+            {/*<img src={require("./img/echeck.svg")}/>*/}
             <span>- No Fees</span>
-            {rightContent}
-          </div>
-        </Col>
-        <Col {...this.colLayout(12)} className="paypal-col-wrapper">
-          <div
-            className="paypal-container container-border"
-            data-selected={this.props.yourphone.payment === EPayType.PAYPAL}
-            onClick={this.handlePaypalCollapseExtend}
-          >
-            <div className="paypal-bg" />
+          </header>
+          <p className="description">
+            eChecks works just like regular checks. We email it to you and you
+            print it. After you print, it works just like a regular check.
+          </p>
+          {rightContent}
+        </div>
+        <div
+          className="paypal-container container-border"
+          data-selected={this.state.activeSide === EPayType.PAYPAL}
+          onClick={this.handlePaypalCollapseExtend}
+        >
+          <header>
+            <img src={require("./img/paypal.png")} />
             <span>- 2.9% + $0.30 fee</span>
-            {leftContent}
-          </div>
-        </Col>
-      </Row>
+          </header>
+          <p className="description">
+            Confirm your PayPal address so we can send you the payment for your
+            phone.
+          </p>
+          {leftContent}
+        </div>
+      </div>
     );
     return (
       <div className={"page-payment-container"}>
@@ -373,22 +362,41 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
         <ButtonGroup
           {...this.props}
           handleNext={this.handleNext}
-          disabled={!this.props.yourphone.isDonePayment}
+          disabled={!this.checkFormValueSame()}
         />
       </div>
     );
   }
 
+  private checkFormValueSame() {
+    const formValues = this.props.form.getFieldsValue();
+    const checkArr: string[] = [];
+    Object.keys(formValues).forEach((key: string) => {
+      if (key.indexOf("email") !== -1) {
+        checkArr.push(formValues[key]);
+      }
+    });
+    if (checkArr.length === 2 && checkArr[0] === checkArr[1]) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   private handlePaypalCollapseExtend = () => {
     this.props.yourphone.isLeftOnEdit = true;
     this.props.yourphone.isRightOnEdit = false;
-    this.props.yourphone.payment = "PAYPAL";
+    this.setState({
+      activeSide: "PAYPAL"
+    });
   };
 
   private handleEcheckCollapseExtend = () => {
     this.props.yourphone.isLeftOnEdit = false;
     this.props.yourphone.isRightOnEdit = true;
-    this.props.yourphone.payment = "CHECK";
+    this.setState({
+      activeSide: "CHECK"
+    });
   };
 
   private handleNext = async () => {

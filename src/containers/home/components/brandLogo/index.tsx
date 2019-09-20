@@ -15,10 +15,10 @@ export function BrandLogo(props: any) {
     }
   }
   return (
-    <div className="comp-brand-logo" onClick={clickHandler}>
+    <div className="comp-brand-logo canclick" onClick={clickHandler}>
       <div className="border">
         {iconUrl ? (
-          <img src={require(`./res/${iconUrl}`)} />
+          <img src={iconUrl} />
         ) : (
           <span>Other</span>
         )}

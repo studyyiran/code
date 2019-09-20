@@ -69,11 +69,11 @@ class OrderComplete extends React.Component<IOrderProps> {
           {tag.type === "fail" && (
             <div>
               <div>Revised Price Guarantee</div>
-              <div style={{ color: "#FF5858" }}>
+              <div>
                 ${inspectionInfo.revisedPrice}{" "}
               </div>
               <div>Difference</div>
-              <div style={{ height: "auto" }}>
+              <div>
                 {inspectionInfo.productName !== "" && (
                   <>
                     {inspectionInfo.productName}

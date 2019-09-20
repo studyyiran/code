@@ -1,6 +1,7 @@
 import * as React from "react";
 import "./index.less";
 import Tag from "@/components/tag";
+import { staticContentConfig } from "@/utils/util";
 
 const priceUnit = "$";
 export default function ResultPart(props: any) {
@@ -29,10 +30,16 @@ export default function ResultPart(props: any) {
       const { amount, paymentStatus } = hammerInfo;
       if (hammerInfo && paymentStatus) {
         return (
-          <li>
-            <span>Bonus</span>
-            <span>{amount}</span>
-          </li>
+          <div className="content-tag-container">
+            <li>
+              <span>Bonus</span>
+              <span>
+                {staticContentConfig.priceUnit}
+                {amount}
+              </span>
+            </li>
+            <Tag status={"success"}>{paymentStatus}</Tag>
+          </div>
         );
       } else {
         return <div>no</div>;
@@ -40,7 +47,7 @@ export default function ResultPart(props: any) {
     } else {
       return (
         <li>
-          <span>Final Sale Price</span>
+          <span>Bonus</span>
           <span>Pending</span>
         </li>
       );
@@ -49,11 +56,11 @@ export default function ResultPart(props: any) {
   return (
     <div className="comp-result-part">
       <section className="line-with-title">
-        <h3>Action Result</h3>
+        <h3>Auction Result</h3>
       </section>
       <ul className="information-list">
-        {renderHammerInfo()}
         {renderReserveInfo()}
+        {renderHammerInfo()}
       </ul>
     </div>
   );

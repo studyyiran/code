@@ -96,7 +96,7 @@ class Order extends React.Component<IOrderProps & RouteComponentProps> {
                 href={`http://www.reviews.io/store/landing_new_review?store=uptradeit-com&user=${this.props.order.orderDetail.userName}&order_id=${this.props.order.orderDetail.orderNo}&email=${this.props.order.orderDetail.userEmail}&products=&type=company`}
                 target="_blank"
               >
-                <Button type="primary" size="small" style={{ width: 170 }}>
+                <Button type="primary" size="small">
                   Write Your Review
                 </Button>
               </a>

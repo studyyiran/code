@@ -32,7 +32,6 @@ export default class Footer extends React.Component {
               placeholder="Enter your email"
               onSearch={this.handleSubscribe}
               enterButton="SUBSCRIBE"
-              style={{ width: '100%' }}
               className="subscribe-input"
             />
           </div>

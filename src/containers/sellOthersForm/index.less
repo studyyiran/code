@@ -1,11 +1,26 @@
 @import (reference) "~@/styles/index.less";
 @import (reference) "~@/styles/font.less";
 @import (reference) "~@/containers/commonCss/contact.less";
-
-.page-sell-others-container {
-
+@world: {
+  .page-sell-others-container {
+    .thank-page {
+      position: relative;
+      top: -30*@px;
+      > p {
+        margin: 40*@px;
+      }
+      > a:last-child {
+        display: block;
+        margin: auto;
+        text-align: center;
+        margin-top: 30*@px;
+      }
+    }
+    .common-button {
+      display: block;
+      margin: auto;
+    }
+  }
 }
 
-.ismobile #root {
- 
-}
+.hello(@world);

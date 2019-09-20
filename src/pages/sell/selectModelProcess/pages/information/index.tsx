@@ -50,7 +50,7 @@ class Information extends React.Component<IShippingProps, IShippingState> {
     window.setTimeout(() => {
       const allValus = getFieldsValue();
       onValuesChange(this.props, false, allValus);
-    }, 200)
+    }, 200);
 
     if (typeof this.props.onRef === "function") {
       this.props.onRef!(this);
@@ -240,27 +240,6 @@ class Information extends React.Component<IShippingProps, IShippingState> {
             </Form.Item>
           </Col>
         </Row>
-        <Row gutter={32}>
-          <Col {...this.colLayout()}>
-            <Form.Item
-              label="Phone"
-              help={this.state.help}
-              validateStatus={this.state.validateStatus}
-            >
-              {getFieldDecorator("mobile", {
-                rules: [
-                  {
-                    required: true,
-                    pattern: /\d{10}/
-                    // message: "Please enter a valid mobile."
-                  }
-                ],
-                initialValue: addressInfo.mobile,
-                validateTrigger: "onBlur"
-              })(<Input onBlur={this.handleBlurPhone} maxLength={10} />)}
-            </Form.Item>
-          </Col>
-        </Row>
         <Row gutter={24}>
           <Col {...this.colLayout()}>
             <Form.Item
@@ -278,6 +257,27 @@ class Information extends React.Component<IShippingProps, IShippingState> {
                 initialValue: addressInfo.country,
                 validateTrigger: "onBlur"
               })(<Input disabled={true} />)}
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={32}>
+          <Col {...this.colLayout()}>
+            <Form.Item
+              label="Phone Number"
+              help={this.state.help}
+              validateStatus={this.state.validateStatus}
+            >
+              {getFieldDecorator("mobile", {
+                rules: [
+                  {
+                    required: true,
+                    pattern: /\d{10}/
+                    // message: "Please enter a valid mobile."
+                  }
+                ],
+                initialValue: addressInfo.mobile,
+                validateTrigger: "onBlur"
+              })(<Input onBlur={this.handleBlurPhone} maxLength={10} />)}
             </Form.Item>
           </Col>
         </Row>

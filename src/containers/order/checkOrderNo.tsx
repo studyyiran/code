@@ -7,6 +7,7 @@ import {
   ITotalOrderInfoContext
 } from "./container/context";
 import { setOrderCache } from "@/containers/order/util";
+import "../../containers/commonCss/contact.less";
 
 const nextUrl = "/neworder";
 
@@ -46,48 +47,53 @@ class CheckOrderNo extends React.Component<any, any> {
   }
   public render() {
     return (
-      <div className="page-checkOrder-container">
-        <p className="title">Check Your Order</p>
-        <Divider />
-        <div className="form">
-          <Form>
-            <div className="check-label">Email on your order</div>
-            <Form.Item
-              validateStatus={this.state.validateEmail}
-              help={this.state.emailInputHelp}
-            >
-              <Input
-                value={this.state.email}
-                type="email"
-                onChange={this.handleChangeEmail}
-                size="large"
-                onBlur={this.checkFormat}
-              />
-            </Form.Item>
-            <div className="check-label">Order number</div>
-            <Form.Item
-              validateStatus={this.state.validateOrderNo}
-              help={this.state.orderInputHelp}
-            >
-              <Input
-                value={this.state.orderNo}
-                onChange={this.handleChangeOrderNo}
-                size="large"
-              />
-            </Form.Item>
-          </Form>
-          {this.state.formError !== "" && (
-            <div className="form-error">{this.state.formError}</div>
-          )}
-          <Button
-            size="large"
-            type="primary"
-            style={{ width: 400 }}
-            onClick={this.onSubmit}
-            disabled={this.state.email === "" || this.state.orderNo === ""}
-          >
-            CHECK ORDER
-          </Button>
+      <div className="page-container__title contact-common-css page-checkOrder-container">
+        <div className="bg-container bg-1">
+          <section className="page-container__title">
+            <h1>Check Your Order</h1>
+          </section>
+        </div>
+        <div className="bg-container bg-2">
+          <div className="common-card">
+            <div className="form ">
+              <Form>
+                <div className="check-label">Email on your order</div>
+                <Form.Item
+                  validateStatus={this.state.validateEmail}
+                  help={this.state.emailInputHelp}
+                >
+                  <Input
+                    value={this.state.email}
+                    type="email"
+                    onChange={this.handleChangeEmail}
+                    size="large"
+                    onBlur={this.checkFormat}
+                  />
+                </Form.Item>
+                <div className="check-label">Order number</div>
+                <Form.Item
+                  validateStatus={this.state.validateOrderNo}
+                  help={this.state.orderInputHelp}
+                >
+                  <Input
+                    value={this.state.orderNo}
+                    onChange={this.handleChangeOrderNo}
+                    size="large"
+                  />
+                </Form.Item>
+              </Form>
+              {this.state.formError !== "" && (
+                <div className="form-error">{this.state.formError}</div>
+              )}
+              <button
+                className="common-button"
+                onClick={this.onSubmit}
+                disabled={this.state.email === "" || this.state.orderNo === ""}
+              >
+                CHECK ORDER
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     );

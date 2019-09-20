@@ -6,6 +6,7 @@ import * as moment from "moment-timezone";
 import { shareComponent } from "@/utils/function";
 import { Link } from "react-router-dom";
 import { HeaderTitle } from "@/components/headerTitle";
+import Svg from "@/components/svg";
 @inject("blog")
 @observer
 export default class BlogDetail extends React.Component<IBlogDetailProps> {
@@ -59,11 +60,18 @@ export default class BlogDetail extends React.Component<IBlogDetailProps> {
         <div className="blog-detail__content">
           <section className="content-part">
             <h2>{detail.title}</h2>
-            <span className="date">
-              {moment
-                .tz(detail.releaseDt, "America/Chicago")
-                .format("MMM DD, YYYY")}
-            </span>
+            <div className="date-container">
+              <span className="date">
+                {moment
+                  .tz(detail.releaseDt, "America/Chicago")
+                  .format("MMM DD, YYYY")}
+              </span>
+              <div className="share-icons">
+                <Svg icon="tweet" />
+                <Svg icon="facebook" />
+                <Svg icon="mailicon" />
+              </div>
+            </div>
             <div
               className="html-content"
               dangerouslySetInnerHTML={{ __html: detail.content }}
@@ -74,16 +82,11 @@ export default class BlogDetail extends React.Component<IBlogDetailProps> {
               <h3>Latest Posts</h3>
               {renderNavList(this.props.blog.lastest)}
             </section>
-            <section>
-              <h3>Latest Posts</h3>
-              {renderNavList(this.props.blog.lastest)}
-            </section>
           </div>
         </div>
-        <div className="button-container">
-          <button className="common-button">View more</button>
-        </div>
-        
+        {/*<div className="button-container">*/}
+        {/*  <button className="common-button">View more</button>*/}
+        {/*</div>*/}
       </div>
     );
   }

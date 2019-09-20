@@ -12,7 +12,12 @@ import {
   getinquirybyids,
   getinquirybykeys,
   createOrderStart,
-  getQuality
+  getQuality,
+  getLastestOrder,
+  emailSubscribed,
+  createEmail,
+  getSkuId,
+  skuIdToPhoneInfo
 } from "../server/index.api";
 import { getQualitymock, mockgetinquirybykeys } from "../../mock";
 import {
@@ -28,8 +33,23 @@ export const SelectModelContext = createContext({});
 
 function reducer(state: IContextState, action: IReducerAction) {
   const { type, value } = action;
+  console.log("reducer" + type);
   let newState = { ...state };
   switch (type) {
+    case "setSkuId": {
+      newState = {
+        ...newState,
+        skuId: value
+      };
+      break;
+    }
+    case "setLastestOrder": {
+      newState = {
+        ...newState,
+        lastestOrder: value
+      };
+      break;
+    }
     case "setExpressOption": {
       newState = {
         ...newState,
@@ -89,12 +109,14 @@ function reducer(state: IContextState, action: IReducerAction) {
       };
       break;
     }
+    // reset
     case "setBrand": {
       // 如果变更了brand
       if (value !== newState.brand) {
         newState = {
           ...newState,
           brand: value,
+          skuId: "",
           phoneConditionStaticAnswer: [],
           modelInfo: {
             modelId: "",
@@ -104,8 +126,9 @@ function reducer(state: IContextState, action: IReducerAction) {
       }
       break;
     }
+    // reset
     case "setModelInfo": {
-      // 如果变更了品牌
+      // 如果变更了sku
       const next: any = {};
       if (value) {
         if (value.othersAttr && Object.keys(value.othersAttr).length) {
@@ -126,6 +149,7 @@ function reducer(state: IContextState, action: IReducerAction) {
 
       newState = {
         ...newState,
+        skuId: "",
         phoneConditionStaticAnswer: [],
         modelInfo: { ...newState.modelInfo, ...next }
       };
@@ -146,35 +170,38 @@ function reducer(state: IContextState, action: IReducerAction) {
       }
       break;
     }
-    case "updateUserProductListSetInquiryKey": {
-      const newProduct = {
-        brand: newState.brand,
-        modelInfo: newState.modelInfo,
-        inquiryKey: value,
-        phoneConditionStaticAnswer: newState.phoneConditionStaticAnswer
-      };
-      const productTargetIndex = newState.userProductList.findIndex(
-        userProduct => {
-          // 首先判定，当前的状态
-          return userProduct.inquiryKey === newState.inquiryKey;
+    case "updateUserProductListSetInquiryKey":
+      {
+        const newProduct = {
+          brand: newState.brand,
+          modelInfo: newState.modelInfo,
+          inquiryKey: value,
+          phoneConditionStaticAnswer: newState.phoneConditionStaticAnswer
+        };
+        const productTargetIndex = newState.userProductList.findIndex(
+          userProduct => {
+            // 首先判定，当前的状态
+            return userProduct.inquiryKey === newState.inquiryKey;
+          }
+        );
+        // 强行变更数组。深比较
+        newState.userProductList = newState.userProductList.concat([]);
+        if (productTargetIndex !== -1) {
+          // 更新
+          newState.userProductList[productTargetIndex] = newProduct;
+        } else {
+          newState.userProductList.push(newProduct);
         }
-      );
-      // 强行变更数组。深比较
-      newState.userProductList = newState.userProductList.concat([]);
-      if (productTargetIndex !== -1) {
-        // 更新
-        newState.userProductList[productTargetIndex] = newProduct;
-      } else {
-        newState.userProductList.push(newProduct);
+        // 更新当前选中的key
+        newState.inquiryKey = value;
+        newState = { ...newState };
+        break;
       }
-      // 更新当前选中的key
-      newState.inquiryKey = value;
-      newState = { ...newState };
-      break;
-    }
+      // reset
     case "resetAllUserInputData": {
       (newState as any) = {
         brandList: [],
+        skuId: "",
         modelInfo: {
           modelId: "",
           othersAttr: {}
@@ -213,7 +240,7 @@ function reducer(state: IContextState, action: IReducerAction) {
       newState = { ...newState };
   }
   // justtest 避免覆盖
-  if (state.brand || type === "changeModelCache") {
+  if (state.brand || type === "changeModelCache" || type === "resetAllUserInputData") {
     saveToCache(sessionKey, newState, [
       "modelInfo",
       "brand",
@@ -259,6 +286,11 @@ interface IContextActions {
   getInquiryKeyList: () => any;
   removeFromList: (key: any) => any;
   getDownloadLabel: (key: any) => any;
+  getLastestOrder: () => any;
+  emailSubscribed: (s: string) => any;
+  createEmail: (s: any) => any;
+  getSkuId: () => any;
+  setSkuIdGetPhoneInfo: (s: string) => any;
 }
 
 function useGetAction(
@@ -266,6 +298,82 @@ function useGetAction(
   dispatch: (action: IReducerAction) => void
 ): IContextActions {
   const actions: IContextActions = {
+    setSkuIdGetPhoneInfo: promisify(async function(s: string) {
+      // 临时拦截
+      try {
+        const res: any = await skuIdToPhoneInfo(s);
+        if (res) {
+          const { productId, brandId, bpvIds } = res;
+          // brand
+          dispatch({ type: "setBrand", value: brandId });
+          // model
+          dispatch({
+            type: "setModelInfo",
+            value: {
+              modelId: productId
+            }
+          });
+          // attr
+          bpvIds.forEach(({ bpId, bpvId }: any) => {
+            dispatch({
+              type: "setModelInfo",
+              value: {
+                othersAttr: {
+                  attrType: bpId,
+                  attrValue: bpvId
+                }
+              }
+            });
+          });
+          // sku
+          dispatch({ type: "setSkuId", value: s });
+        }
+        return res;
+      } catch (e) {
+        console.error(e);
+      }
+    }),
+    getSkuId: promisify(async function(emailInfo: any) {
+      // 临时拦截
+      const param = {
+        productId: state.modelInfo.modelId,
+        bpvIds: Object.keys(state.modelInfo.othersAttr).map(
+          (key: any) => state.modelInfo.othersAttr[key]
+        )
+      };
+      if (!param.productId || !param.bpvIds || param.bpvIds.length < 2) {
+        return;
+      }
+      try {
+        const res: any = await getSkuId({ ...param });
+        if (res) {
+          dispatch({ type: "setSkuId", value: res });
+        }
+        return res;
+      } catch (e) {
+        console.error(e);
+      }
+    }),
+    createEmail: promisify(async function(emailInfo: any) {
+      const defaultParam = {
+        toEmail: "",
+        nickName: "",
+        subject: "",
+        content: ""
+      };
+      const res: any = await createEmail({ ...defaultParam, ...emailInfo });
+      return res;
+    }),
+    emailSubscribed: promisify(async function(email: string) {
+      const res: any = await emailSubscribed({
+        userEmail: email
+      });
+      return res;
+    }),
+    getLastestOrder: promisify(async function(label: string) {
+      const res: any = await getLastestOrder();
+      dispatch({ type: "setLastestOrder", value: res });
+    }),
     getDownloadLabel: promisify(async function(label: string) {
       if (label) {
         // const res: any = await getDownloadLabel(label);
@@ -432,7 +540,8 @@ function useGetAction(
       const { brandId, modelId, othersAttr } = config;
       const nameConfig = {
         brandName: "",
-        imgUrl: "https://sr.aihuishou.com/image/5ba3685de38bb01c30000054.png",
+        imgUrl: require("../../img/common-phone.png"),
+        // imgUrl: "https://sr.aihuishou.com/image/5ba3685de38bb01c30000054.png",
         modelInfoName: {
           modelName: "",
           othersAttrName: {}
@@ -462,7 +571,11 @@ function useGetAction(
     }
   };
   actions.getBrandList = useCallback(actions.getBrandList, [state.categoryId]);
+  actions.getSkuId = useCallback(actions.getSkuId, [state.modelInfo]);
   actions.getDownloadLabel = useCallback(actions.getDownloadLabel, []);
+  actions.getLastestOrder = useCallback(actions.getLastestOrder, []);
+  actions.emailSubscribed = useCallback(actions.emailSubscribed, []);
+  actions.createEmail = useCallback(actions.createEmail, []);
   actions.getQuality = useCallback(actions.getQuality, [state.categoryId]);
   actions.getProductsList = useCallback(actions.getProductsList, [
     state.brand,
@@ -499,6 +612,8 @@ interface IContextState {
   productsList: []; // 热刷新
   expressOption: any; // 用户数据
   needInsurance: boolean; // 用户数据
+  lastestOrder: any[]; // 用户数据
+  skuId: string; // 用户数据
 }
 
 export interface ISelectModelContext extends IContextActions {
@@ -522,7 +637,9 @@ export function ModelContextProvider(props: any) {
     inquiryKey: "",
     brand: "",
     expressOption: null,
-    needInsurance: false
+    needInsurance: false,
+    lastestOrder: [],
+    skuId: ""
   };
   if (!haveLoad) {
     // haveLoad = true;
@@ -548,6 +665,12 @@ export function ModelContextProvider(props: any) {
   useEffect(() => {
     action.getPriceInfo();
   }, [action.getPriceInfo]);
+  useEffect(() => {
+    action.getLastestOrder();
+  }, [getLastestOrder]);
+  useEffect(() => {
+    action.getSkuId();
+  }, [action.getSkuId]);
   const propsValue: ISelectModelContext = {
     ...action,
     selectModelContextValue: state,

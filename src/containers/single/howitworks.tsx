@@ -4,6 +4,7 @@ import { RouteComponentProps } from "react-router";
 import "./howitworks.less";
 import { HeaderTitle } from "@/components/headerTitle";
 import VideoComponent from "@/components/video";
+import RouterLink from "@/components/routerLink";
 const { Panel } = Collapse;
 
 class HowItWorks extends React.Component<RouteComponentProps> {
@@ -13,7 +14,7 @@ class HowItWorks extends React.Component<RouteComponentProps> {
         <HeaderTitle title="How to sell my phone on UpTrade" />
         <section className="intro">
           <h2>Sell Your Phone For Cash in 3 Easy Steps</h2>
-          <VideoComponent />
+          {/*<VideoComponent />*/}
         </section>
         <ul className="list">
           <li>
@@ -100,15 +101,12 @@ class HowItWorks extends React.Component<RouteComponentProps> {
           </li>
         </ul>
         <div className="button-container">
-          <button className="common-button" onClick={this.onGoToSell}>
-            Get Started
+          <button className="common-button">
+            <RouterLink to="/newsell">Get Started</RouterLink>
           </button>
         </div>
       </article>
     );
   }
-  private onGoToSell = () => {
-    this.props.history.push("/sell/yourphone/brand");
-  };
 }
 export default HowItWorks;

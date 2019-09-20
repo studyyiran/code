@@ -1,162 +1,191 @@
 @import (reference) "~@/styles/index.less";
-
-.page-prepare {
-  padding: 60px 0 80px;
-  .page(724px);
-  .page-padding();
-  > section {
-    padding: 21px 18px 0;
-    border: 1px solid rgba(233, 233, 233, 1);
-    border-radius: 6px;
-    > h2 {
-      .font(26px, 500, #000000);
-      margin-bottom: 27px;
-    }
-  }
-  > section.step1 {
-    margin-bottom: 16px;
-    > p {
-      .font(16px, 500, #000000);
-      margin-bottom: 20px;
-    }
-    a {
-      display: block;
-      margin-bottom: 30px;
-      text-align: center;
-      .font(16px, 500, #1ab4e7);
-    }
-  }
-  @videoWidth: 448px;
-  > section.step2 {
-    .container {
-      .page(@videoWidth);
-      .line-card {
-        padding: 0 8px;
-        background: #6dd230;
-        box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.05);
-        border-radius: 2px;
-        margin-bottom: 30px;
-        text-align: center;
-        > div {
-          background: @white;
-          padding: 12px 0 20px;
-          .font(16px, 500, #000000);
-        }
-      }
-      > button {
-        margin-bottom: 26px;
-      }
-    }
-    > .check-order {
-      border-top: 1px solid @color-border;
-      padding: 18px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      > span:first-child {
-        .font(18px, 600, #222222);
-      }
-      > a {
-        .font(16px, 500, #1ab4e7);
-      }
-    }
-  }
-  section.video {
-    margin-bottom: 45px;
-    > h3 {
-      .font(16px, 400, #00000);
-      margin-bottom: 20px;
-      text-align: center;
-    }
-    video {
-      width: @videoWidth;
-      display: block;
-      margin: 0 auto;
-    }
-  }
-  > button {
-    margin: 88px auto 0 ;
-    display: block;
-  }
-}
-
-.ismobile {
+@world: {
   .page-prepare {
-    padding: 14rem * @px2rem 0 54rem * @px2rem;
+    padding: 60 * @px 0 80 * @px;
+    .setpage(724 * @px);
     .page-padding();
     > section {
-      padding: 0;
-      border: none;
-      border-radius: 0px;
+      padding: 21 * @px 18 * @px 33 * @px;
+      border: 1 * @px solid rgba(233, 233, 233, 1);
+      border-radius: 6 * @px;
       > h2 {
-        .font(18rem * @px2rem, 500, #131339);
-        margin-bottom: 6rem * @px2rem;
+        .font(26 * @f, 500, #000000);
+        margin-bottom: 27 * @px;
       }
     }
     > section.step1 {
-      margin-bottom: 16rem * @px2rem;
+      margin-bottom: 16 * @px;
       > p {
-        .font(14rem * @px2rem, 400, #888888);
-        margin-bottom: 17rem * @px2rem;
+        .font(16 * @f, 500, #000000);
+        margin-bottom: 24 * @px;
       }
       a {
         display: block;
-        margin-bottom: 54rem * @px2rem;
+        margin-bottom: 30 * @px;
         text-align: center;
-        .font(16rem * @px2rem, 500, #1ab4e7);
+        .font(16 * @f, 500, @white);
       }
     }
+    @videoWidth: 456 * @px;
     > section.step2 {
       .container {
+        .setpage(@videoWidth);
         .line-card {
-          margin-top: 20rem * @px2rem;
-          padding: 0 8rem * @px2rem;
+          padding: 0 8 * @px;
           background: #6dd230;
-          box-shadow: 0px 2rem * @px2rem 5rem * @px2rem 0px rgba(0, 0, 0, 0.05);
-          border-radius: 2rem * @px2rem;
-          margin-bottom: 30rem * @px2rem;
+          box-shadow: 0 * @px 2 * @px 5 * @px 0 * @px rgba(0, 0, 0, 0.05);
+          border-radius: 2 * @px;
+          margin-bottom: 30 * @px;
           text-align: center;
           > div {
             background: @white;
-            padding: 14rem * @px2rem 0 23rem * @px2rem;
-            .font(16rem * @px2rem, 500, #000000);
+            padding: 12 * @px 0 20 * @px;
+            .font(16 * @f, 500, #000000);
           }
         }
         > button {
-          margin-bottom: 32rem * @px2rem;
+          margin-bottom: 26 * @px;
         }
       }
       > .check-order {
-        border-bottom: 1rem * @px2rem solid @color-border;
-        border-top: none;
-        padding: 0 0 18rem * @px2rem 0;
+        border-top: 1 * @px solid @color-border;
+        padding: 18 * @px;
         display: flex;
         justify-content: space-between;
         align-items: center;
         > span:first-child {
-          .font(14rem * @px2rem, 600, #222222);
+          flex: 0 0 0;
+          .font(18 * @f, 600, #222222);
         }
         > a {
-          .font(16rem * @px2rem, 500, #1ab4e7);
+          .font(16 * @f, 500, #1ab4e7);
+          flex: 1 0 0;
+          text-align: right;
         }
       }
     }
     section.video {
-      margin-bottom: 45rem * @px2rem;
+      > img {
+        max-width: @videoWidth;
+        width: 100%;
+        display: block;
+        margin: 0 auto;
+      }
+      margin-bottom: 45 * @px;
       > h3 {
-        .font(14rem * @px2rem, 400, #00000);
-        margin-bottom: 13rem * @px2rem;
+        .font(16 * @f, 400, #000000);
+        margin-bottom: 24 * @px;
         text-align: center;
       }
-      video {
-        width: 100%;
+      .type-tabs {
+        //display: none;
+        width: 300px;
+        margin: auto;
+        margin-bottom: 24*@px;
+        .yr-tabs-tab {
+          .canclick();
+          //margin: 0 50*@px;
+          font-size: 18*@f;
+          border-bottom: 1px solid transparent;
+          padding-bottom: 10*@px;
+          &[aria-selected="true"] {
+            border-bottom: 1px solid #040E3F;
+            color: inherit;
+          }
+        }
+      }
+      .video {
+        width: @videoWidth;
         display: block;
         margin: 0 auto;
       }
     }
     > button {
-      margin: 24rem * @px2rem auto 0 ;
+      margin: 88 * @px auto 0;
       display: block;
     }
   }
-}
+
+  .ismobile {
+    .page-prepare {
+      padding: 14rem * @px2rem 0 54rem * @px2rem;
+      .page-padding();
+      > section {
+        padding: 0;
+        border: none;
+        border-radius: 0px;
+        > h2 {
+          .font(18rem * @px2rem, 500, #131339);
+          margin-bottom: 6rem * @px2rem;
+        }
+      }
+      > section.step1 {
+        margin-bottom: 16rem * @px2rem;
+        > p {
+          .font(14rem * @px2rem, 400, #888888);
+          margin-bottom: 17rem * @px2rem;
+        }
+        a {
+          display: block;
+          margin-bottom: 54rem * @px2rem;
+          text-align: center;
+          .font(16rem * @px2rem, 500, @white);
+        }
+      }
+      > section.step2 {
+        .container {
+          .line-card {
+            margin-top: 20rem * @px2rem;
+            padding: 0 8rem * @px2rem;
+            background: #6dd230;
+            box-shadow: 0px 2rem * @px2rem 5rem * @px2rem 0px
+              rgba(0, 0, 0, 0.05);
+            border-radius: 2rem * @px2rem;
+            margin-bottom: 30rem * @px2rem;
+            text-align: center;
+            > div {
+              background: @white;
+              padding: 14rem * @px2rem 0 23rem * @px2rem;
+              .font(16rem * @px2rem, 500, #000000);
+            }
+          }
+          > button {
+            margin-bottom: 32rem * @px2rem;
+          }
+        }
+        > .check-order {
+          border-bottom: 1rem * @px2rem solid @color-border;
+          border-top: none;
+          padding: 0 0 18rem * @px2rem 0;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          > span:first-child {
+            .font(12 * @px, 600, #222222);
+          }
+          > a {
+            .font(12 * @px, 500, #1ab4e7);
+          }
+        }
+      }
+      section.video {
+        margin-bottom: 45rem * @px2rem;
+        > h3 {
+          .font(14rem * @px2rem, 400, #000000);
+          margin-bottom: 13rem * @px2rem;
+          text-align: center;
+        }
+        video {
+          width: 100%;
+          display: block;
+          margin: 0 auto;
+        }
+      }
+      > button {
+        margin: 24rem * @px2rem auto 0;
+        display: block;
+      }
+    }
+  }
+};
+.hello(@world);

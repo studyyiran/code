@@ -1,38 +1,44 @@
 @import (reference) "~@/styles/index.less";
-
+body {
+  // 为了避免长度限制内容
+  .pc({min-width: 900px});
+  .mb({min-width: 320px});
+}
 @world: {
   .comp-footer {
     .title-font() {
-      font-size: 18*@px;
-      margin-bottom: 17*@px;
+      font-size: 18 * @px;
+      margin-bottom: 17 * @px;
     }
     .content-font() {
-      font-size: 14*@px;
+      font-size: 14 * @px;
       color: #ffffff;
-      margin-bottom: 8*@px;
+      margin-bottom: 8 * @px;
     }
     background: @tab-bar-color;
     color: @white;
-    padding: 40*@px 0 77*@px;
+    padding: 40 * @px 0 12 * @px;
     .page-padding();
+    
     .width-container {
+      .last {
+        margin: 0 25*@px 10*@px 0;
+      }
       > header.footer__logo {
-        font-size: 20*@f;
-        margin-bottom: 30*@px;
-        margin-left: 171*@px;
-        > img {
-          width: 92*@px;
+        font-size: 20 * @f;
+        margin-bottom: 30 * @px;
+        img {
+          width: 92 * @px;
         }
       }
       > .container {
+        margin-bottom: 70*@px;
         //.layout-flex-twins(500*@px, 700*@px, {});
-        display: flex;
-        justify-content: space-around;
-        align-items: flex-start;
         > .footer__group {
-          display: flex;
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
           > ul {
-            flex: 0 0 130*@px;
+            // 130不太够似乎。很奇怪
             > h2 {
               .title-font();
             }
@@ -46,20 +52,6 @@
           > h2 {
             .title-font();
           }
-          > form {
-            > input {
-              background: @white;
-              height: 56*@px;
-              padding: 16*@px;
-              border-radius: 5*@px;
-              display: inline-block;
-              width: 416*@px;
-              margin-right: 33*@px;
-            }
-            > button {
-              width: 236*@px;
-            }
-          }
         }
       }
     }
@@ -69,47 +61,30 @@
     .comp-footer {
       max-width: 100%;
       overflow: hidden;
-      border-radius: 0.21rem 0.21rem 0 0;
       .title-font() {
         font-size: 0.37rem;
         margin-bottom: 0.59rem;
       }
       .content-font() {
         color: #ffffff;
-        margin-bottom: 8*@px;
+        margin-bottom: 8 * @px;
       }
-      background: @tab-bar-color;
       color: @white;
-      padding: 1.49rem 0 0.43rem;
+      padding: 28 * @px 0 16 * @px;
       .page-padding();
       .width-container {
         > .footer__logo {
           font-size: 1rem;
-          margin-bottom: 0.59rem;
+          margin: 0 0 22 * @px 0;
+          height: 20 * @px;
         }
         > .container {
           display: flex;
           flex-direction: column-reverse;
+          align-items: stretch;
           > .footer__email-form {
             > h2 {
               .title-font();
-            }
-            > form {
-              margin-bottom: 0.67rem;
-              display: flex;
-              justify-content: space-between;
-              > input {
-                background: @white;
-                height: 1.49rem;
-                padding: 0.43rem;
-                border-radius: 0.11rem;
-                display: inline-block;
-                width: 4.95rem;
-                margin-right: 0*@px;
-              }
-              > button {
-                width: 3.12rem;
-              }
             }
           }
           > .footer__group {
@@ -168,3 +143,51 @@
 };
 
 .hello(@world);
+
+
+@formPart: {
+  .post-email {
+    height: 56 * @px;
+    .ant-form-item {
+      display: inline-block;
+    }
+    .ant-form-item-control {
+      line-height: 56 * @px;
+    }
+    input {
+      height: 56 * @px;
+      background: @white;
+      padding: 16 * @px;
+      border-radius: 5 * @px;
+      width: 416 * @px;
+      margin-right: 33 * @px;
+    }
+    button {
+      width: 236 * @px;
+    }
+  }
+  .ismobile {
+    .post-email {
+      margin-bottom: 0.67rem;
+      display: flex;
+      justify-content: space-between;
+      .ant-form-item {
+        flex: 1;
+      }
+      input {
+        background: @white;
+        height: 1.49rem;
+        padding: 0.43rem;
+        border-radius: 0.11rem;
+        display: inline-block;
+        width: 100%;
+        margin-right: 0 * @px;
+      }
+      > button {
+        margin-left: 10*@px;
+        width: 3.12rem;
+      }
+    }
+  }
+}
+.hello(@formPart);

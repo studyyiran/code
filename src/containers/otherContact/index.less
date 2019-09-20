@@ -1,0 +1,114 @@
+@import (reference) "~@/styles/index.less";
+@import (reference) "~@/styles/font.less";
+@import (reference) "~@/containers/commonCss/contact.less";
+@world: {
+  .page-contact-container {
+    background: #f5f7f9;
+    @img-width: 452 * @px;
+    @help-info-margin: 82 * @px;
+    .titlefont {
+      .font(36 * @px, 600, #222222);
+    }
+    > .bg-3 {
+      background: #f5f7f9;
+    }
+    > .bg-4 {
+      background: @white;
+      text-align: center;
+      .leave-message {
+        padding-top: 109 * @px;
+        padding-bottom: 48 * @px;
+        > h2 {
+          .titlefont();
+          margin-bottom: 24 * @px;
+        }
+        > p {
+          color: #444b54;
+          font-size: 16 * @px;
+          margin-bottom: 42 * @px;
+        }
+        > button {
+          max-width: 456 * @px;
+        }
+      }
+    }
+    .comp-help-list {
+      padding: 50 * @px 0 3 * @px;
+      .setpage(2 * @img-width + 30 * @px);
+      > h2 {
+        .titlefont();
+        text-align: center;
+        margin-bottom: 96 * @px;
+      }
+      li.help-info {
+        margin-bottom: @help-info-margin;
+        &:nth-child(2n + 1) {
+          flex-direction: row-reverse;
+        }
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        > .desc-content {
+          flex: 0 0 400 * @px;
+          //max-width: 374*@px;
+          > h3 {
+            .titlefont();
+            margin-bottom: 20 * @px;
+          }
+          > p {
+            font-size: 16 * @px;
+          }
+        }
+        .img-container {
+          flex: 0 0 452 * @px;
+          min-width: 0;
+          > img {
+            width: 100%;
+            border-radius: 8 * @px;
+          }
+        }
+      }
+    }
+    .last-part {
+      background: @white;
+      text-align: center;
+      padding: 109 * @px 0 48 * @px;
+      > h2 {
+        .titlefont();
+        margin-bottom: 24 * @px;
+      }
+      > p {
+        .font(16 * @px, 400, #444b54);
+        margin-bottom: 42 * @px;
+      }
+    }
+  }
+
+  #ismobile {
+    .page-contact-container {
+      @help-info-margin: 24 * @px auto 50 * @px;
+      h2,
+      h3 {
+        .font(24 * @px, 600, #222222);
+      }
+      li.help-info {
+        display: block;
+        //text-align: center;
+        .img-container {
+          margin: @help-info-margin;
+        }
+      }
+      .last-part {
+        .page-padding();
+      }
+      .comp-help-list {
+        padding-top: 10 * @px;
+        > h2 {
+          margin-bottom: 43 * @px;
+        }
+        .page-padding();
+      }
+    }
+  }
+};
+.hello(@world);

@@ -1,44 +1,50 @@
 @import (reference) "~@/styles/index.less";
 
 @world: {
+  .ant-modal-in-done-page {
+    max-width: 1000 * @px;
+  }
   .page-summary {
-    padding-top: 37*@px;
-    padding-bottom: 121*@px;
+    padding-top: 37 * @px;
+    padding-bottom: 121 * @px;
     .page-padding();
     > h2 {
-      .font(26*@f, 500, #000000);
-      margin-bottom: 21*@px;
+      .font(26 * @f, 500, #000000);
+      margin-bottom: 21 * @px;
     }
     > div.top-card-container {
       display: grid;
-      grid-template-columns: repeat(2, auto);
-      grid-column-gap: 30*@px;
-      margin-bottom: 32*@px;
+      grid-template-columns: repeat(2, 1fr);
+      grid-column-gap: 30 * @px;
+      margin-bottom: 32 * @px;
     }
     > div.buttons-container {
-      margin-top: 54*@px;
+      margin-top: 54 * @px;
     }
-    .page(1000*@px);
+    .setpage(1200 * @px);
 
     ul {
-      margin-top: 10*@px;
+      margin-top: 10 * @px;
       &.information {
         display: grid;
         grid-template-columns: repeat(2, auto);
       }
       li {
         > h3 {
-          .font(14*@f, 400, #848484);
+          .font(14 * @f, 400, #848484);
         }
         > p {
-          .font(16*@f, 400, #000000);
+          .font(16 * @f, 400, #000000);
         }
-        margin-bottom: 30*@px;
+        margin-bottom: 30 * @px;
       }
     }
-
-    .paypal-logo {
+    .logo {
       float: right;
+      margin-top: 20 * @px;
+    }
+    .paypal-logo {
+      width: 106 * @px;
     }
   }
 
@@ -48,33 +54,33 @@
       padding-bottom: 2.69rem;
       .page-padding();
       > h2 {
-        .font(26*@f, 500, #000000);
-        margin-bottom: 21*@px;
+        .font(26 * @f, 500, #000000);
+        margin-bottom: 21 * @px;
       }
       > div.top-card-container {
         display: flex;
         flex-direction: column;
         > *:first-child {
-          margin-bottom: 20*@px;
+          margin-bottom: 20 * @px;
         }
-        margin-bottom: 32*@px;
+        margin-bottom: 32 * @px;
       }
       > div.buttons-container {
-        margin-top: 54*@px;
+        margin-top: 54 * @px;
       }
-      .page(1000*@px);
+      .setpage(1000 * @px);
 
       ul {
-        margin-top: 10*@px;
+        margin-top: 10 * @px;
         &.information {
           display: block;
         }
         li {
           > h3 {
-            .font(14*@f, 400, #848484);
+            .font(14 * @f, 400, #848484);
           }
           > p {
-            .font(16*@f, 400, #000000);
+            .font(16 * @f, 400, #000000);
           }
           margin-bottom: 0.6rem;
         }
@@ -83,19 +89,13 @@
       .paypal-logo {
         float: right;
       }
-
-      .terms-of-service {
-        a {
-          display: block;
-        }
-      }
     }
   }
 
   .terms-of-service {
-    padding: 25*@px 0 12*@px;
+    padding: 25 * @px 0 12 * @px;
     text-align: right;
-    .font(12*@f, 500, #888888);
+    .font(12 * @f, 500, #888888);
     .ant-checkbox + span {
       //padding-right: 8*@px;
       //padding-left: 8*@px;
@@ -105,9 +105,25 @@
     }
   }
 
-  .ant-modal-body {
+  .yr-modal-mask {
+    .yr-modal-body {
+      > * {
+        max-height: 80vh;
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+    }
+    .recommended.comp-top-tag {
+      display: none;
+    }
+    .payment-type-container {
+      padding-top: 20 * @px;
+    }
     .comp-price-title,
     .buttons-container {
+      display: none;
+    }
+    .page-infomation-container h2 {
       display: none;
     }
   }

@@ -1,15 +1,22 @@
 import * as React from "react";
 import "./index.less";
-import { Modal } from "antd";
 import ReportModalContent from "../reportModalContent";
+import Modal from "@/components/modal";
 
 export default function CheckInspectDiff(props: any) {
   const { phoneConditionQuestion, inquiryInfo } = props;
   return (
     <span
       onClick={() => {
-        Modal.confirm({
-          content: (
+        (Modal as any).confirm({
+          width: "90%",
+          className: "comp-check-inspect__modal",
+          title: 'Inspection Report',
+          centered: true,
+          maskClosable: true,
+          footer: null,
+          needDefaultScroll: true,
+          children: (
             <ReportModalContent
               phoneConditionQuestion={phoneConditionQuestion}
               inquiryInfo={inquiryInfo}
@@ -17,7 +24,7 @@ export default function CheckInspectDiff(props: any) {
           )
         });
       }}
-      className="comp-check-inspect"
+      className="comp-check-inspect canclick"
     >{`View Inspection Result >`}</span>
   );
 }
