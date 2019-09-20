@@ -38,25 +38,25 @@ function HelpList() {
       title: "Need more time?",
       desc:
         "Let us know how we can assist you with your order. We will get back to you within 1 business day.",
-      img: require("./img/test.png")
+      img: require("./img/bg_1.png")
     },
     {
       title: "No box? No problem!",
       desc:
         "If you don't have a box, don't worry. Let us know and we will send one to you.",
-      img: require("./img/test.png")
+      img: require("./img/bg_2.png")
     },
     {
       title: "FedEx Is Too Far",
       desc:
         "We offer a USPS option which allows you to ship your phone from the comfort of your home.",
-      img: require("./img/test.png")
+      img: require("./img/bg_3.png")
     },
     {
       title: "Need help to reset Phone?",
       desc:
         "If you need help resetting your phone. We can walk you through step by step to ensure your data is safe.",
-      img: require("./img/test.png")
+      img: require("./img/bg_4.png")
     }
   ];
   return (

@@ -16,6 +16,7 @@ import {
 } from "@/pages/sell/selectModelProcess/context";
 import VideoComponent from "@/components/video";
 import NewBuyNotice from "@/containers/home/components/newBuyNotice";
+import RouterLink from "@/components/routerLink";
 
 const descPart1 = {
   descArr: [
@@ -326,8 +327,8 @@ class Home extends React.Component<IHomeProps, IHomeState> {
           <img
             src={
               isMobile
-                ? require("./res/chart-mb.svg")
-                : require("./res/chart-pc.svg")
+                ? require("./res/chart-mb.png")
+                : require("./res/chart-pc.png")
             }
           />
           <LinkButton url={"/newsell"}>Sell Now</LinkButton>
@@ -342,6 +343,9 @@ class Home extends React.Component<IHomeProps, IHomeState> {
         </section>
         <section className="home__review">
           <h2>See Why Customers Love UpTrade</h2>
+          <RouterLink className="button-centered" to="/reviews">
+            view more > 
+          </RouterLink>
           <div className="review__reviews-container">
             <RenderReviewList
               reviews={this.props.common.reviews}

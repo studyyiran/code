@@ -13,7 +13,7 @@ import { addDate } from "utils";
 import ButtonGroup from "@/pages/sell/selectModelProcess/components/buttonGroup";
 import PriceTitle from "@/pages/sell/selectModelProcess/components/priceTitle";
 import TipsIcon from "@/pages/sell/selectModelProcess/components/tipsIcon";
-import { safeEqual } from "@/utils/util";
+import { currencyTrans, safeEqual } from "@/utils/util";
 import "../../../common.less";
 
 const Panel = Collapse.Panel;
@@ -185,7 +185,7 @@ class Shipping extends React.Component<any, any> {
               }}
             >
               <span className="insurance-tips">
-                Add shipping insurance for ${shippingInsurance}
+                Add shipping insurance for ${currencyTrans(shippingInsurance)}
               </span>
             </Checkbox>
             <TipsIcon>
