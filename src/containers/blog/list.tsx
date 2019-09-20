@@ -1,7 +1,6 @@
 import * as React from "react";
 import { observer, inject } from "mobx-react";
 import { Link } from "react-router-dom";
-import { Button } from "antd";
 import { Tabs } from "@/components/tabs";
 // @ts-ignore
 const TabPane = Tabs.TabPane;
@@ -12,6 +11,7 @@ import {
   IBlog
 } from "./interface/blog.interface";
 import "./list.less";
+import "./common.less";
 import * as moment from "moment-timezone";
 import { shareComponent } from "@/utils/function";
 import { HeaderTitle } from "@/components/headerTitle";

@@ -1,21 +1,13 @@
 @import (reference) "~@/styles/index.less";
+@import (reference) "./common.less";
 .common-link {
   display: block;
 }
-.bg-container(@rules) {
-  @rules();
-  .page-padding();
-}
-.mb-card() {
-  border-radius: 0.21rem;
-  overflow: hidden;
-  box-shadow: 0rem 0.05rem 0.16rem -0.11rem rgba(141, 141, 148, 0.48),
-    0rem 0rem 0.05rem 0rem rgba(141, 141, 148, 0.16);
-}
+
+
 
 @world: {
   .page-blog-list-container {
-    @tabs-height: 64*@px;
     //@border-radius-8:
     .featured-part-container {
       .bg-container({background: #f5f7f9;});
@@ -57,78 +49,10 @@
         }
       }
     }
-    .blog-list-part-container {
-      .bg-container({background: @white;});
-      > section.blog-list-part {
-        .setpage(1150*@px);
-        padding: 64*@px 0 59*@px 0;
-        > .tabs-container {
-          background: white;
-          margin-bottom: 52*@px;
-          .yr-tabs-bar {
-            justify-content: flex-start;
-          }
-          .yr-tabs-tab {
-            max-width: 268*@px;
-            @border-radius: 3*@px;
-            &:first-child {
-              border-radius: @border-radius 0 0 @border-radius;
-            }
-            &:last-child {
-              border-radius: 0 @border-radius @border-radius 0;
-            }
-            height: @tabs-height;
-            line-height: @tabs-height;
-            border: 1px solid #d5d5d5;
-            //border:1px solid red;
-            color: #808080;
-            margin-left: -1px;
-            &[aria-selected="true"] {
-              border-color: transparent;
-              background: @color-blue-liner;
-              color: @white;
-            }
-          }
-        }
-        > nav {
-          > a {
-            margin-bottom: 58*@px;
-            .clearfix();
-            > img {
-              .pc({float: left;});
-              width: 442*@px;
-              height: 273*@px;
-              border-radius: 8*@px;
-              margin-right: 33*@px;
-            }
-            > section.blog-intro {
-              > header.title {
-                margin-bottom: 33*@px;
-                > h3 {
-                  font-size: 24* @px;
-                }
-                > span {
-                  color: #888888;
-                  font-size: 16* @px;
-                }
-              }
-              > p {
-                font-size: 16* @px;
-              }
-            }
-          }
-        }
-        > button:last-child {
-          margin: auto;
-          display: block;
-        }
-      }
-    }
   }
 
   .ismobile #root {
     .page-blog-list-container {
-      @tabs-height: 64*@px;
       > header {
         padding: 1rem 0 0.88rem 0;
         > h1 {
@@ -162,64 +86,6 @@
                 }
               }
             }
-          }
-        }
-      }
-      .blog-list-part-container {
-        .bg-container({background: @white;});
-        > section.blog-list-part {
-          padding: 0 0 1.65rem 0;
-          > .tabs-container {
-            background: white;
-            .yr-tabs-tab {
-              @border-radius: 3*@px;
-              &:first-child {
-                border-radius: @border-radius 0 0 @border-radius;
-              }
-              &:last-child {
-                border-radius: 0 @border-radius @border-radius 0;
-              }
-              height: @tabs-height;
-              line-height: @tabs-height;
-              border: 1px solid #d5d5d5;
-              //border:1px solid red;
-              color: #808080;
-              margin-left: -1px;
-              &[aria-selected="true"] {
-                border-color: transparent;
-                background: @color-blue-liner;
-                color: @white;
-              }
-            }
-          }
-          > nav {
-            > a {
-              margin-bottom: 1.39rem;
-              .mb-card();
-              > img {
-                width: 100%;
-              }
-              > section.blog-intro {
-                padding: 0.21rem 0.53rem 0.43rem;
-                > header.title {
-                  margin-bottom: 0;
-                  > h3 {
-                    font-size: 0.43rem;
-                  }
-                  > span {
-                    color: #888888;
-                    font-size: 0.32rem;
-                  }
-                }
-                > p {
-                  display: none;
-                }
-              }
-            }
-          }
-          > button:last-child {
-            margin: auto;
-            display: block;
           }
         }
       }
