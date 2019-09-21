@@ -10,7 +10,7 @@ import { setOrderCache } from "@/containers/order/util";
 import "../../containers/commonCss/contact.less";
 import { getQueryString } from "utils";
 
-const nextUrl = "/neworder";
+const nextUrl = "/order";
 
 export default function CheckOrderNoContainer(props: any) {
   const totalOrderInfoContext = useContext(TotalOrderInfoContext);

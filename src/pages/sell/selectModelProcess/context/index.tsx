@@ -467,7 +467,6 @@ function useGetAction(
         return productsList;
       } catch (e) {
         console.error(e);
-        alert("wrong!");
         return e;
       }
     }),
@@ -505,7 +504,6 @@ function useGetAction(
         }
       } catch (e) {
         console.error(e);
-        alert("wrong!");
         return e;
       }
     }),

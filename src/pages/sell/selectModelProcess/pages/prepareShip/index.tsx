@@ -120,7 +120,7 @@ export default function(props: any) {
           </div>
           <div className="check-order">
             <span>Your order #{groupOrderNo}</span>
-            <RouterLink to="/neworder">{`Check Order >`}</RouterLink>
+            <RouterLink to="/order">{`Check Order >`}</RouterLink>
           </div>
         </section>
         <button className="common-button second">

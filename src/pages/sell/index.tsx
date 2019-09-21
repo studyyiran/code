@@ -152,7 +152,6 @@ export default function Sell(props: any) {
         break;
       }
     }
-    alert(documentTitle);
     if (documentTitle) {
       document.title = documentTitle;
     }
