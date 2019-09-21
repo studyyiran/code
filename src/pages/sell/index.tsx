@@ -53,6 +53,15 @@ export default function Sell(props: any) {
     return true;
   }
   function goNextPage(currentPage?: any): void {
+    let documentTitle = "Sell My Phone | UpTradeit.com";
+    const findDocumentTitle = staticRouter.find((item: any) => {
+      return item.pageKey === currentPage;
+    }) as any;
+    if (findDocumentTitle) {
+      documentTitle = findDocumentTitle.documentTitle;
+    }
+
+    // document.title = String(Date.now());
     // 这块对路由状态的借用不好。现在是自己在维护
     switch (currentPage) {
       case "offer": {
@@ -86,13 +95,12 @@ export default function Sell(props: any) {
       case "brand": {
         const next = props.match.url + "/" + brand;
         props.history.push(removeAllSpace(next));
-        // const findTarget: any = brandList.find((item: any) => {
-        //   return item.id === brand;
-        // });
-        // if (findTarget) {
-        //   const next = props.match.url + "/" + findTarget.displayName;
-        //
-        // }
+        const findTarget: any = brandList.find((item: any) => {
+          return item.id === brand;
+        });
+        if (findTarget) {
+          documentTitle = `Sell My ${findTarget.displayName} | UpTradeit.com`;
+        }
         break;
       }
       case "model": {
@@ -117,9 +125,17 @@ export default function Sell(props: any) {
             Object.keys(othersAttrName).forEach((key: any) => {
               next += `-${othersAttrName[key]}`;
             });
+            documentTitle = `Sell ${displayModelName}-${Object.keys(
+              othersAttrName
+            )
+              .map((key: any) => {
+                return othersAttrName[key];
+              })
+              .join("-")} | UpTradeit.com`;
             if (skuId) {
               next = next + "/skuid-" + skuId;
             }
+
             props.history.push(removeAllSpace(next));
           }
         }
@@ -136,7 +152,11 @@ export default function Sell(props: any) {
         break;
       }
     }
-    window.scrollTo(0, 0)
+    alert(documentTitle);
+    if (documentTitle) {
+      document.title = documentTitle;
+    }
+    window.scrollTo(0, 0);
   }
   // function wrapper(Component: any) {
   //   return (...other: any[]) => {
@@ -241,10 +261,10 @@ export default function Sell(props: any) {
   // 解析skuId
   useEffect(() => {
     if (props.location.pathname.includes("skuid")) {
-      const arr = props.location.pathname.split('skuid-')
+      const arr = props.location.pathname.split("skuid-");
       if (arr && arr[1]) {
         // 使用action 而非dispatch
-        setSkuIdGetPhoneInfo(arr[1])
+        setSkuIdGetPhoneInfo(arr[1]);
       }
     }
   }, []);
@@ -253,7 +273,7 @@ export default function Sell(props: any) {
       {/*<Route path="/" render={() => (*/}
       {/*  <Redirect to="/test"/>*/}
       {/*)}/>*/}
-      {configArr.map(({ path, title, Component, pageKey }) => {
+      {configArr.map(({ path, title, Component, pageKey, documentTitle }) => {
         return (
           <Route
             key={pageKey}

@@ -83,7 +83,8 @@ class LayoutIndex extends React.Component {
     );
     // 设置title
     const currentConfig = titles[arr[arr.length - 1]];
-    document.title = currentConfig ? currentConfig.title : "";
+    // TODO这个地方需要关注一下
+    // document.title = currentConfig ? currentConfig.title : "";
     document
       .querySelector('meta[name="keywords"]')!
       .setAttribute("content", currentConfig ? currentConfig.keywords : "");
