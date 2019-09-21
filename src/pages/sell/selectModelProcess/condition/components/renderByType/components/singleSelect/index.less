@@ -1,27 +1,30 @@
-@import (reference) "~@/styles/color.less";
-@import (reference) "~@/styles/font.less";
-.comp-select {
-  width: 100%;
-  display: flex;
-  > button {
-    flex: 1;
-    color: @color-gray-deeper;
-  }
-  > button:first-child {
-    border-radius: 4px 0 0 4px;
-  }
-  > button:last-child {
-    border-radius: 0 4px 4px 0;
-  }
-  .sub-question-button {
-    width: 172px;
-    height: 64px;
-    border: 1px solid @color-gray;
-    font-size: @font-size-large;
-  }
-  .sub-question-button[data-select="true"] {
-    background: @color-blue-liner;
-    color: @white;
-    border-color: #1ab4e7;
+@import (reference) "~@/styles/index.less";
+@world: {
+  .comp-select {
+    width: 100%;
+    display: flex;
+    > button {
+      flex: 1;
+      color: @color-gray-deeper;
+    }
+    > button:first-child {
+      border-radius: 4px 0 0 4px;
+    }
+    > button:last-child {
+      border-radius: 0 4px 4px 0;
+    }
+    .sub-question-button {
+      width: 172*@px;
+      height: 64*@px;
+      border: 1px solid @color-gray;
+      font-size: 18*@px;
+    }
+    .sub-question-button[data-select="true"] {
+      background: @color-blue-liner;
+      color: @white;
+      border-color: #1ab4e7;
+    }
   }
 }
+.hello(@world);
+
