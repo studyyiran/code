@@ -102,7 +102,7 @@ class HowItWorks extends React.Component<RouteComponentProps> {
         </ul>
         <div className="button-container">
           <button className="common-button">
-            <RouterLink to="/newsell">Get Started</RouterLink>
+            <RouterLink to="/sell">Get Started</RouterLink>
           </button>
         </div>
       </article>

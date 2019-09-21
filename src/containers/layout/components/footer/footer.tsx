@@ -27,7 +27,7 @@ export const footerInfo = [
       },
       {
         subTitle: "Sell Now",
-        href: "/newsell"
+        href: "/sell"
       }
     ]
   },

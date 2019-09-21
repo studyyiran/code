@@ -9,7 +9,7 @@ export default [
       modules: ['../pages/sell'],
       webpack: () => [require.resolveWeak('../pages/sell') as number],
     }),
-    path: '/newsell',
+    path: '/sell',
   },
   {
     component: Loadable({
@@ -18,11 +18,11 @@ export default [
       modules: ['../containers/selllayout'],
       webpack: () => [require.resolveWeak('../containers/selllayout') as number],
     }),
-    path: '/sell',
+    path: '/oldsell',
     children: [
       {
         component: redirectComponent('/sell/yourphone/brand'),
-        path: '/sell/account',
+        path: '/oldsell/account',
       },
       {
         component: Loadable({
@@ -31,7 +31,7 @@ export default [
           modules: ['../containers/aboutphone/brands'],
           webpack: () => [require.resolveWeak('../containers/aboutphone/brands') as number],
         }),
-        path: '/sell/yourphone/brand'
+        path: '/oldsell/yourphone/brand'
       },
       {
         component: Loadable({
@@ -40,7 +40,7 @@ export default [
           modules: ['../containers/aboutphone/carriers'],
           webpack: () => [require.resolveWeak('../containers/aboutphone/carriers') as number],
         }),
-        path: '/sell/yourphone/carrier'
+        path: '/oldsell/yourphone/carrier'
       },
       {
         component: Loadable({
@@ -49,7 +49,7 @@ export default [
           modules: ['../containers/aboutphone/models'],
           webpack: () => [require.resolveWeak('../containers/aboutphone/models') as number],
         }),
-        path: '/sell/yourphone/model'
+        path: '/oldsell/yourphone/model'
       },
       {
         component: Loadable({
@@ -58,7 +58,7 @@ export default [
           modules: ['../containers/aboutphone/other'],
           webpack: () => [require.resolveWeak('../containers/aboutphone/other') as number],
         }),
-        path: '/sell/yourphone/other'
+        path: '/oldsell/yourphone/other'
       },
       {
         component: Loadable({
@@ -67,7 +67,7 @@ export default [
           modules: ['../containers/aboutphone/done'],
           webpack: () => [require.resolveWeak('../containers/aboutphone/done') as number],
         }),
-        path: '/sell/yourphone/done'
+        path: '/oldsell/yourphone/done'
       },
       {
         component: Loadable({
@@ -76,11 +76,11 @@ export default [
           modules: ['../containers/aboutphone/checkorder'],
           webpack: () => [require.resolveWeak('../containers/aboutphone/checkorder') as number],
         }),
-        path: '/sell/yourphone/checkorder/:orderNo'
+        path: '/oldsell/yourphone/checkorder/:orderNo'
       },
       {
         component: redirectComponent('/notfound'),
-        path: '/sell/:any',
+        path: '/oldsell/:any',
       }
     ]
   }]

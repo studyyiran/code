@@ -305,7 +305,7 @@ class Home extends React.Component<IHomeProps, IHomeState> {
                   }
                 />
               </div>
-              <Link to={"/newsell"}>
+              <Link to={"/sell"}>
                 <button className="common-button">Sell Now</button>
               </Link>
             </section>
@@ -331,7 +331,7 @@ class Home extends React.Component<IHomeProps, IHomeState> {
                 : require("./res/chart-pc.png")
             }
           />
-          <LinkButton url={"/newsell"}>Sell Now</LinkButton>
+          <LinkButton url={"/sell"}>Sell Now</LinkButton>
         </section>
         <section className="easy-sell-part">
           <h2>3 Easy Steps To Sell</h2>
@@ -353,14 +353,14 @@ class Home extends React.Component<IHomeProps, IHomeState> {
             />
           </div>
         </section>
-        <LinkButton url={"/newsell"}>Sell Now</LinkButton>
+        <LinkButton url={"/sell"}>Sell Now</LinkButton>
       </article>
     );
   }
 }
 
 {
-  /*<LinkButton url={"/newsell"}>*/
+  /*<LinkButton url={"/sell"}>*/
 }
 {
   /*  */

@@ -58,7 +58,7 @@ export default [
       modules: ['../containers/order'],
       webpack: () => [require.resolveWeak('../containers/order') as number],
     }),
-    path: '/order'
+    path: '/oldorder'
   },
   {
     component: Loadable({
@@ -67,7 +67,7 @@ export default [
       modules: ['../containers/order/container'],
       webpack: () => [require.resolveWeak('../containers/order/container') as number],
     }),
-    path: '/neworder'
+    path: '/order'
   },
   {
     component: Loadable({

@@ -80,7 +80,7 @@ function RenderContent() {
       </p>
       <p>Please <RouterLink className="common-a" to="/contact">contact us</RouterLink> if you have any question.</p>
       <button className="common-button">
-        <RouterLink to={"/newsell"}>Place Another Phone</RouterLink>RouterLink>
+        <RouterLink to={"/sell"}>Place Another Phone</RouterLink>RouterLink>
       </button>
       <RouterLink className="common-a" to={"/"}>
         Back to Home

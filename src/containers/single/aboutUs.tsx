@@ -156,7 +156,7 @@ class AboutUs extends React.Component<RouteComponentProps> {
         </section>
         <div className="button-container">
           <button className="common-button">
-            <RouterLink to="/newsell">Sell Now</RouterLink>
+            <RouterLink to="/sell">Sell Now</RouterLink>
           </button>
         </div>
       </article>

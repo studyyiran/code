@@ -9,7 +9,7 @@ export function BrandLogo(props: any) {
   function clickHandler() {
     if (id !== "others") {
       onClick(id);
-      props.history.push(`/newsell/${id}`);
+      props.history.push(`/sell/${id}`);
     } else {
       props.history.push(`/sell-more-phone`);
     }

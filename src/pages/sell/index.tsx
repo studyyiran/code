@@ -229,7 +229,7 @@ export default function Sell(props: any) {
     if (!brand) {
       if (
         props.location.pathname &&
-        props.location.pathname !== "/newsell" &&
+        props.location.pathname !== "/sell" &&
         !props.location.pathname.includes("prepare-ship") &&
         !props.location.pathname.includes("skuid")
       ) {
