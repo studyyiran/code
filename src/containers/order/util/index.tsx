@@ -42,6 +42,7 @@ export function getReactNodeConfig(status: any) {
   if (status === IProgressType.TO_BE_RETURNED) {
     ReactNodeConfig.isToBeReturn = true;
     ReactNodeConfig.orderSummary = false;
+    ReactNodeConfig.deliver = true;
   }
   // 是否退货发货
   if (status === IProgressType.TRANSACTION_FAILED) {
