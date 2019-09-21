@@ -44,6 +44,7 @@ function Model(props: any) {
     if (findTarget) {
       const next = props.route.path + "/" + findTarget.displayName;
       // const next = props.match.url + "/condition";
+      document.title = `Sell My ${findTarget.displayName} | UpTradeit.com`;
       props.history.replace(removeAllSpace(next));
     }
   }

@@ -17,6 +17,9 @@ export default function Brand(props: any) {
   function selectBrandHandler(id: string) {
     setCurrentSelectBrand(id);
   }
+  useEffect(() => {
+    document.title = "Sell My Phone | UpTradeit.com"
+  }, [])
   // canPost?
   useEffect(() => {
     if (currentSelectBrand) {

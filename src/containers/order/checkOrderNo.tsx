@@ -31,6 +31,7 @@ class CheckOrderNo extends React.Component<any, any> {
     formError: ""
   };
   public async componentDidMount() {
+    document.title = "Check My Order | UpTradeit.com";
     const email = getQueryString("email");
     const orderId = getQueryString("orderId");
     if (email && orderId) {
