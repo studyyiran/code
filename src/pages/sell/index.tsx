@@ -65,27 +65,27 @@ export default function Sell(props: any) {
     // 这块对路由状态的借用不好。现在是自己在维护
     switch (currentPage) {
       case "offer": {
-        const next = props.match.url + "/information";
+        const next = props.match.url + "/phone/information";
         props.history.push(removeAllSpace(next));
         break;
       }
       case "information": {
-        const next = props.match.url + "/payment";
+        const next = props.match.url + "/phone/payment";
         props.history.push(removeAllSpace(next));
         break;
       }
       case "payment": {
-        const next = props.match.url + "/shipping";
+        const next = props.match.url + "/phone/shipping";
         props.history.push(removeAllSpace(next));
         break;
       }
       case "shipping": {
-        const next = props.match.url + "/summary";
+        const next = props.match.url + "/phone/summary";
         props.history.push(removeAllSpace(next));
         break;
       }
       case "summary": {
-        const next = props.match.url + "/prepare-ship";
+        const next = props.match.url + "/phone/prepare-ship";
         props.history.push(removeAllSpace(next));
         break;
       }
@@ -142,7 +142,7 @@ export default function Sell(props: any) {
         break;
       }
       case "condition": {
-        const next = props.match.url + "/offer";
+        const next = props.match.url + "/phone/offer";
         props.history.push(removeAllSpace(next));
         break;
       }
@@ -195,27 +195,27 @@ export default function Sell(props: any) {
       Component: Questionary
     },
     offer: {
-      path: () => props.match.url + "/offer",
+      path: () => props.match.url + "/phone/offer",
       Component: Offer
     },
     information: {
-      path: () => props.match.url + "/information",
+      path: () => props.match.url + "/phone/information",
       Component: Information
     },
     payment: {
-      path: () => props.match.url + "/payment",
+      path: () => props.match.url + "/phone/payment",
       Component: Payment
     },
     shipping: {
-      path: () => props.match.url + "/shipping",
+      path: () => props.match.url + "/phone/shipping",
       Component: Shipping
     },
     summary: {
-      path: () => props.match.url + "/summary",
+      path: () => props.match.url + "/phone/summary",
       Component: Summary
     },
     prepareShip: {
-      path: () => props.match.url + "/prepare-ship",
+      path: () => props.match.url + "/phone/prepare-ship",
       Component: PrepareShip
     }
   };

@@ -1,4 +1,3 @@
-
 // 这个配置太糟糕了
 export const staticRouter = [
   {
