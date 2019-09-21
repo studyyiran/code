@@ -20,7 +20,7 @@
           font-weight: 400;
         }
         .rating-list {
-          width:200*@px;
+          //width:200*@px;
           margin-left:20*@px;
 
         }
@@ -36,10 +36,11 @@
           flex:1;
           text-align: right;
 
-          height:12*@px;
           color:#bcbcbc;
           line-height:normal;
-
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
           img {
             width:100*@px;
             margin-left:10*@px;
@@ -60,7 +61,6 @@
           display: flex;
 
           .form-item {
-            width:180*@px;
             display: flex;
             align-items: center;
             margin:0;
@@ -76,7 +76,6 @@
               line-height: 32*@px;
             }
             .ant-select {
-              width:129*@px;
               height:32*@px;
               line-height: 32*@px;
               font-size:12*@f;
@@ -92,7 +91,6 @@
             &:nth-of-type(2) {
               margin-left:40*@px;
               .ant-select {
-                width:88*@px;
               }
             }
           }
@@ -111,7 +109,6 @@
               font-size:16*@f;
               line-height:normal;}
             .rating {
-              width:95*@px;
               margin-left:25*@px;
               height:15*@px;
             }

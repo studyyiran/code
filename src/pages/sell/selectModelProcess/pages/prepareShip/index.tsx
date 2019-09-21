@@ -114,7 +114,7 @@ export default function(props: any) {
             </button>
             <section className="video">
               <h3>How to Ship</h3>
-              <img src="https://ahs-uptrade.oss-cn-hangzhou.aliyuncs.com/test/How%20to%20Ship.gif"/>
+              <img src="https://d3c745jesl5pj3.cloudfront.net/statics/email/howtoship.gif"/>
               {/*<VideoComponent />*/}
             </section>
           </div>

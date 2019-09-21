@@ -77,9 +77,6 @@ export default class BlogDetail extends React.Component<IBlogDetailProps> {
     return (
       <div className="blog-detail">
         <HeaderTitle title={"Tech Talk"} />
-        <Link to={"/how-to-transfer-contacts-from-iphone-to-android"}>
-          /how-to-transfer-contacts-from-iphone-to-android
-        </Link>
         <div className="blog-detail__content">
           <section className="content-part">
             <h2>{detail.title}</h2>

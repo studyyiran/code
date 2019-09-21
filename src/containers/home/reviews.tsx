@@ -58,7 +58,7 @@ export default class Reviews extends React.Component<ICommonProps> {
             <Form className="form">
               {
                 !this.props.common.reviewsPagation.rating && (
-                  <Form.Item label="Sort by" className="form-item item1">
+                  <Form.Item label="Sort by" className="form-item">
                     <Select defaultValue="desc" onChange={this.handleChangeOrder}>
                       <Select.Option value="desc">Most Recent</Select.Option>
                       <Select.Option value="rating">Highest Rated</Select.Option>
