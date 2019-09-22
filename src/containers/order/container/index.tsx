@@ -124,7 +124,7 @@ function OrderList(props: { order: IOrderStore }) {
         subOrderStatusDisplayName,
         subOrderStatus,
         orderStatusHistories,
-        inquiryInfo,
+        inquiryInfo
       } = order;
       const reactNodeConfig = getReactNodeConfig(subOrderStatus);
       const needShowName = inquiryInfo.submitted.productName;
