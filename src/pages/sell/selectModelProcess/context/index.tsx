@@ -201,7 +201,7 @@ function reducer(state: IContextState, action: IReducerAction) {
     case "resetAllUserInputData": {
       (newState as any) = {
         ...newState,
-        brandList: [],
+        // brandList: [],
         skuId: "",
         modelInfo: {
           modelId: "",
