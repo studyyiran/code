@@ -54,10 +54,10 @@ export default function ReportModalContent(props: any) {
           value={productName}
           isSame={checkIsSame("productId")}
         />
-        {productPns.map(({ name, ppnName, id }: any) => (
+        {productPns.map(({ name, ppnName, id, remark }: any) => (
           <RenderItem
             title={ppnName}
-            value={name}
+            value={remark || name}
             isSame={checkSameFromArr(id, "productPns")}
           />
         ))}
@@ -65,7 +65,7 @@ export default function ReportModalContent(props: any) {
           .sort((a: any, b: any) => {
             return a.sort - b.sort;
           })
-          .map(({ id, type, name }: any, index: number) => {
+          .map(({ id, type, name, remark }: any, index: number) => {
             const { answerId } = getIdFromAllQuestion(
               phoneConditionQuestion,
               id
@@ -89,7 +89,7 @@ export default function ReportModalContent(props: any) {
                 isSame={checkSameFromArr(id, "pricePns")}
                 key={index}
                 title={currentQuestion && currentQuestion.content}
-                value={name}
+                value={remark ? `${name} (${remark})` : name}
               />
             );
           })}

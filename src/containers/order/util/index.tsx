@@ -333,8 +333,9 @@ export function getProgressType({
         findDate(IProgressType.TO_BE_RETURNED, orderStatusHistories)
       )
     };
+    // TODO 这个判断不一定稳妥。
     dataList[5] = {
-      name: IProgressType.TRANSACTION_FAILED === subOrderStatus ? subOrderStatusDisplayName : "Transaction Failed",
+      name: "Device Returned",
       img: PackageReceivedIcon,
       date: packageDate(
         findDate(IProgressType.TRANSACTION_FAILED, orderStatusHistories)
