@@ -108,7 +108,7 @@ function CheckBoxWithInput(props: any) {
         {!isSelect ? <span>{content}</span> : null}
       </Checkbox>
       {isSelect ? (
-        <Input
+        <input
           className="check-box-input"
           placeholder="Enter Text"
           disabled={!isSelect}
