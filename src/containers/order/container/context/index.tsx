@@ -13,6 +13,7 @@ import {
   revisedPriceReject
 } from "../../api/order.api";
 import { getDeliverInfos, getDeliverNoInfo, getOrderCache } from "../../util";
+import {getTranshippingmock} from "@/containers/order/container/context/mock";
 
 export const TotalOrderInfoContext = createContext({});
 
@@ -130,7 +131,10 @@ function useGetAction(
           if (!deliverInfos) {
             const { carrier, trackingNumber } = deliverNoInfo;
             const res = await getTranshipping(carrier, trackingNumber);
+            // const res = getTranshippingmock
             const mapFunc = (item: any) => {
+              // item.transInfo.deliverInfos = getDeliverInfos(res);
+              // return { ...item };
               if (item.subOrderNo === currentSubOrderNo) {
                 item.transInfo.deliverInfos = getDeliverInfos(res);
                 return { ...item };

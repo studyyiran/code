@@ -12,7 +12,7 @@ import ListSaleIcon from "@/images/order/listForSale.png";
 import OrderCompleteIcon from "@/images/order/orderComplete.png";
 import ReturnRequestIcon from "@/images/order/returnRequest.png";
 
-export function getReactNodeConfig(status: any) {
+export function getReactNodeConfig(status: any, showReturnShipping?: string) {
   const ReactNodeConfig = {
     deliver: false,
     inspected: false,
@@ -44,7 +44,7 @@ export function getReactNodeConfig(status: any) {
     ReactNodeConfig.orderSummary = false;
   }
   // 是否退货发货
-  if (status === IProgressType.TRANSACTION_FAILED) {
+  if (showReturnShipping) {
     ReactNodeConfig.deliver = true;
     ReactNodeConfig.productDispatch = true;
     ReactNodeConfig.orderSummary = false;
