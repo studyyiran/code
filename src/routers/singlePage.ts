@@ -41,7 +41,7 @@ export default [
       webpack: () => [require.resolveWeak('../containers/otherContact') as number],
     }),
     exact: true,
-    path: '/need-help-contact',
+    path: '/i-need-help',
   },
   {
     component: Loadable({
