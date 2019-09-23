@@ -42,7 +42,7 @@ export default class Reviews extends React.Component<ICommonProps> {
           {reviews ? (
             <Rate
               disabled={true}
-              defaultValue={Number(reviews.stats.average_rating)}
+              defaultValue={Math.ceil(Number(reviews.stats.average_rating))}
             />
           ) : null}
           <div className="rate-container">
@@ -52,7 +52,6 @@ export default class Reviews extends React.Component<ICommonProps> {
               <div>
                 <img src={require("@/images/home/reviews_logo.png")} alt="" />
               </div>
-              
             </div>
           </div>
         </div>
