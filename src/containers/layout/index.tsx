@@ -12,6 +12,7 @@ import {
   ISelectModelContext,
   SelectModelContext
 } from "@/pages/sell/selectModelProcess/context";
+import {isServer} from "@/utils/util";
 
 export default function LayoutIndexWrapper(props: any) {
   const selectModelContext = useContext(SelectModelContext);
@@ -84,7 +85,9 @@ class LayoutIndex extends React.Component {
     // 设置title
     const currentConfig = titles[arr[arr.length - 1]];
     // TODO这个地方需要关注一下
-    // document.title = currentConfig ? currentConfig.title : "";
+    if (!isServer()) {
+      document.title = currentConfig ? currentConfig.title : "";
+    }
     document
       .querySelector('meta[name="keywords"]')!
       .setAttribute("content", currentConfig ? currentConfig.keywords : "");
