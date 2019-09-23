@@ -17,6 +17,7 @@ import {
 import VideoComponent from "@/components/video";
 import NewBuyNotice from "@/containers/home/components/newBuyNotice";
 import RouterLink from "@/components/routerLink";
+import DocumentTitle from "@/components/DocumentTitle";
 
 const descPart1 = {
   descArr: [
@@ -244,117 +245,119 @@ class Home extends React.Component<IHomeProps, IHomeState> {
         return brand;
       });
     return (
-      <article className="page-home">
-        <NewBuyNotice
-          data={(this.props as any).selectModelContextValue.lastestOrder}
-        />
-        <div className="home__intro">
-          <div className="container flex-grid">
-            <section className="title">
-              <h1>
-                Sell Your Used Phone. <br />
-                Fast, Easy, & High Prices
-              </h1>
-              <img className="mb-ele" src={url} />
-              <div className="intro__icon-list">
-                <RenderByCondition
-                  ComponentPc={
-                    <div className="wrap-container">
-                      {fixBrands
-                        .filter((brand, index) => index < 6)
-                        .map((brand, index) => {
-                          const { id } = brand;
-                          return (
-                            <BrandLogo
-                              key={id}
-                              brand={brand}
-                              {...this.props}
-                              onClick={(this.props as any).clickBrandHandler}
-                            />
-                          );
-                        })}
-                    </div>
-                  }
-                  ComponentMb={
-                    <>
+      <DocumentTitle>
+        <article className="page-home">
+          <NewBuyNotice
+            data={(this.props as any).selectModelContextValue.lastestOrder}
+          />
+          <div className="home__intro">
+            <div className="container flex-grid">
+              <section className="title">
+                <h1>
+                  Sell Your Used Phone. <br />
+                  Fast, Easy, & High Prices
+                </h1>
+                <img className="mb-ele" src={url} />
+                <div className="intro__icon-list">
+                  <RenderByCondition
+                    ComponentPc={
                       <div className="wrap-container">
                         {fixBrands
-                          .filter((brand, index) => index < 3)
-                          .map((brand, index) => (
-                            <BrandLogo
-                              key={index}
-                              brand={brand}
-                              {...this.props}
-                              onClick={(this.props as any).clickBrandHandler}
-                            />
-                          ))}
+                          .filter((brand, index) => index < 6)
+                          .map((brand, index) => {
+                            const { id } = brand;
+                            return (
+                              <BrandLogo
+                                key={id}
+                                brand={brand}
+                                {...this.props}
+                                onClick={(this.props as any).clickBrandHandler}
+                              />
+                            );
+                          })}
                       </div>
-                      <div className="wrap-container">
-                        {fixBrands
-                          .filter((brand, index) => index > 2 && index < 6)
-                          .map((brand, index) => (
-                            <BrandLogo
-                              key={index}
-                              brand={brand}
-                              {...this.props}
-                              onClick={(this.props as any).clickBrandHandler}
-                            />
-                          ))}
-                      </div>
-                    </>
-                  }
-                />
+                    }
+                    ComponentMb={
+                      <>
+                        <div className="wrap-container">
+                          {fixBrands
+                            .filter((brand, index) => index < 3)
+                            .map((brand, index) => (
+                              <BrandLogo
+                                key={index}
+                                brand={brand}
+                                {...this.props}
+                                onClick={(this.props as any).clickBrandHandler}
+                              />
+                            ))}
+                        </div>
+                        <div className="wrap-container">
+                          {fixBrands
+                            .filter((brand, index) => index > 2 && index < 6)
+                            .map((brand, index) => (
+                              <BrandLogo
+                                key={index}
+                                brand={brand}
+                                {...this.props}
+                                onClick={(this.props as any).clickBrandHandler}
+                              />
+                            ))}
+                        </div>
+                      </>
+                    }
+                  />
+                </div>
+                <Link to={"/sell"}>
+                  <button className="common-button">Sell Now</button>
+                </Link>
+              </section>
+              <div className="img-container">
+                <img src={url} />
               </div>
-              <Link to={"/sell"}>
-                <button className="common-button">Sell Now</button>
-              </Link>
-            </section>
-            <div className="img-container">
-              <img src={url} />
             </div>
           </div>
-        </div>
-        <section className="only-way-part">
-          <h2>The Only Way To Sell</h2>
-          <SectionIcons {...descPart1} />
-        </section>
-        <section className="sell-for-more-part">
-          <h2>We Sell It For More</h2>
-          <p>
-            Your electronics will be listed on multiple markets at the same
-            time, so you get the best possible payout.
-          </p>
-          <img
-            src={
-              isMobile
-                ? require("./res/chart-mb.png")
-                : require("./res/chart-pc.png")
-            }
-          />
-          <LinkButton url={"/sell"}>Sell Now</LinkButton>
-        </section>
-        <section className="easy-sell-part">
-          <h2>3 Easy Steps To Sell</h2>
-          {/*<VideoComponent />*/}
-          <div className="bg-white-container">
-            <SectionIcons {...descPart2} />
-            <LinkButton url={"/sell-my-phone"}>Learn More</LinkButton>
-          </div>
-        </section>
-        <section className="home__review">
-          <h2>See Why Customers Love UpTrade</h2>
-          <RouterLink className="button-centered" to="/reviews">
-            view more > 
-          </RouterLink>
-          <div className="review__reviews-container">
-            <RenderReviewList
-              reviews={this.props.common.reviews}
-              isMobile={isMobile}
+          <section className="only-way-part">
+            <h2>The Only Way To Sell</h2>
+            <SectionIcons {...descPart1} />
+          </section>
+          <section className="sell-for-more-part">
+            <h2>We Sell It For More</h2>
+            <p>
+              Your electronics will be listed on multiple markets at the same
+              time, so you get the best possible payout.
+            </p>
+            <img
+              src={
+                isMobile
+                  ? require("./res/chart-mb.png")
+                  : require("./res/chart-pc.png")
+              }
             />
-          </div>
-        </section>
-        <LinkButton url={"/sell"}>Sell Now</LinkButton>
-      </article>
+            <LinkButton url={"/sell"}>Sell Now</LinkButton>
+          </section>
+          <section className="easy-sell-part">
+            <h2>3 Easy Steps To Sell</h2>
+            {/*<VideoComponent />*/}
+            <div className="bg-white-container">
+              <SectionIcons {...descPart2} />
+              <LinkButton url={"/sell-my-phone"}>Learn More</LinkButton>
+            </div>
+          </section>
+          <section className="home__review">
+            <h2>See Why Customers Love UpTrade</h2>
+            <RouterLink className="button-centered" to="/reviews">
+              view more >
+            </RouterLink>
+            <div className="review__reviews-container">
+              <RenderReviewList
+                reviews={this.props.common.reviews}
+                isMobile={isMobile}
+              />
+            </div>
+          </section>
+          <LinkButton url={"/sell"}>Sell Now</LinkButton>
+        </article>
+      </DocumentTitle>
     );
   }
 }
