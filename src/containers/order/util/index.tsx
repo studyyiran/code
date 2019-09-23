@@ -258,7 +258,7 @@ export function getProgressType({
       img: PackageReceivedIcon
     },
     {
-      name: "Payment Sent",
+      name: "Inspection Completed",
       img: InspectionCompleteIcon
     },
     {
@@ -292,7 +292,7 @@ export function getProgressType({
         )
       },
       {
-        name: "Payment Sent",
+        name: "Inspection Completed",
         img: InspectionCompleteIcon,
         date: packageDate(
           findDate(IProgressType.TO_BE_LISTED, orderStatusHistories)
@@ -350,7 +350,7 @@ export function getProgressType({
     TRANSACTION_FAILED(6,"Transaction Failed"),
     LISTED_FOR_SALE(7,"Listed for Sale"),
     TRANSACTION_SUCCEED(8,"Device Sold"),
-    TO_BE_LISTED(9,"Payment Sent"),
+    TO_BE_LISTED(9,"Inspection Completed"),
    */
   switch (subOrderStatus) {
     case IProgressType.TO_BE_SHIPPED:

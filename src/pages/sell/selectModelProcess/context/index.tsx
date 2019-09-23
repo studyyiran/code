@@ -208,7 +208,7 @@ function reducer(state: IContextState, action: IReducerAction) {
           modelId: "",
           othersAttr: {}
         },
-        qualityList: [],
+        // qualityList: [],
         phoneConditionStaticAnswer: [],
         productsList: [],
         userProductList: [],
