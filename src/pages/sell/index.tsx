@@ -66,7 +66,7 @@ export default function Sell(props: any) {
     // 这块对路由状态的借用不好。现在是自己在维护
     switch (currentPage) {
       case "offer": {
-        const next = props.match.url + "/phone/information";
+        const next = props.match.url + "/phone/info";
         props.history.push(removeAllSpace(next));
         break;
       }
@@ -200,7 +200,7 @@ export default function Sell(props: any) {
       Component: Offer
     },
     information: {
-      path: () => props.match.url + "/phone/information",
+      path: () => props.match.url + "/phone/info",
       Component: Information
     },
     payment: {

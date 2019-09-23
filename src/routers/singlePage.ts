@@ -51,7 +51,7 @@ export default [
       webpack: () => [require.resolveWeak('../containers/sellOthersForm') as number],
     }),
     exact: true,
-    path: '/sell-more-phone',
+    path: '/sell-other-phone',
   },
   {
     component: Loadable({
@@ -124,7 +124,7 @@ export default [
       modules: ['../containers/single/howitworks'],
       webpack: () => [require.resolveWeak('../containers/single/howitworks') as number],
     }),
-    path: '/sell-my-phone',
+    path: '/how-to-sell-my-home',
   },
   {
     component: Loadable({

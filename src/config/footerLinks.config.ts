@@ -6,7 +6,7 @@ export default [
     },
     {
       text: 'How it Works',
-      href: '/sell-my-phone'
+      href: '/how-to-sell-my-home'
     },
     {
       text: 'Prepare to Ship',

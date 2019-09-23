@@ -340,7 +340,7 @@ class Home extends React.Component<IHomeProps, IHomeState> {
             {/*<VideoComponent />*/}
             <div className="bg-white-container">
               <SectionIcons {...descPart2} />
-              <LinkButton url={"/sell-my-phone"}>Learn More</LinkButton>
+              <LinkButton url={"/how-to-sell-my-home"}>Learn More</LinkButton>
             </div>
           </section>
           <section className="home__review">

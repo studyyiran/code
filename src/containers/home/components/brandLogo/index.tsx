@@ -11,7 +11,7 @@ export function BrandLogo(props: any) {
       onClick(id);
       props.history.push(`/sell/${id}`);
     } else {
-      props.history.push(`/sell-more-phone`);
+      props.history.push(`/sell-other-phone`);
     }
   }
   return (

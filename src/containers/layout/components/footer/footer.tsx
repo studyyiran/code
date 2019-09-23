@@ -23,7 +23,7 @@ export const footerInfo = [
     arr: [
       {
         subTitle: "How To Sell",
-        href: "/sell-my-phone"
+        href: "/how-to-sell-my-home"
       },
       {
         subTitle: "Sell Now",

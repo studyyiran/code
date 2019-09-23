@@ -54,7 +54,7 @@ export default {
     keywords: 'Sell my phone',
     description: ''
   },
-  '/sell-my-phone': {
+  '/how-to-sell-my-home': {
     title: 'Sell My Phone - How Does It Work? | UpTradeIt.com',
     keywords: 'Sell my phone',
     description: 'Selling your used or unused smartphone has never been easier with UpTrade. Simply ship us your device for free, we sell it for you, and then you will get paid. It’s as simple as that.'
