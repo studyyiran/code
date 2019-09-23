@@ -389,6 +389,10 @@ export function getProgressType({
       currentIndex = 5;
       break;
   }
+  // 重新set
+  if (dataList && dataList[currentIndex]) {
+    dataList[currentIndex].name = subOrderStatusDisplayName
+  }
   return {
     currentIndex,
     dataList
