@@ -132,7 +132,7 @@ export default function Sell(props: any) {
               .map((key: any) => {
                 return othersAttrName[key];
               })
-              .join("-")} | UpTradeit.com`;
+              .join("-")} | UpTradeit.com`.split("-").join(' ');
             if (skuId) {
               next = next + "/skuid-" + skuId;
             }
