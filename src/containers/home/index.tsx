@@ -346,7 +346,7 @@ class Home extends React.Component<IHomeProps, IHomeState> {
           <section className="home__review">
             <h2>See Why Customers Love UpTrade</h2>
             <RouterLink className="button-centered" to="/reviews">
-              view more >
+              View more >
             </RouterLink>
             <div className="review__reviews-container">
               <RenderReviewList
