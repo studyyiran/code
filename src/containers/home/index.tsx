@@ -245,7 +245,7 @@ class Home extends React.Component<IHomeProps, IHomeState> {
         return brand;
       });
     return (
-      <DocumentTitle>
+      <DocumentTitle title={"Sell My Phone for More Cash | UpTradeit.com"}>
         <article className="page-home">
           <NewBuyNotice
             data={(this.props as any).selectModelContextValue.lastestOrder}

@@ -54,7 +54,7 @@ export const staticContentConfig = {
   priceUnit: "$"
 };
 
-function isServer() {
+export function isServer() {
   return typeof window === "undefined"
 }
 
