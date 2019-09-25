@@ -38,13 +38,13 @@ export default class HeaderHoc extends React.Component<{ router: any }> {
   }
 
   private setMobileFooter = () => {
-    let showMobileFooter = true;
+    // let showMobileFooter = true;
     // 处理 m 版是否要显示 footer，/sell 路由下不用显示
     // if (/\/sell\//.test(window.location.href)) {
     //   showMobileFooter = false
     // }
-    this.setState({
-      showMobileFooter
-    })
+    // this.setState({
+    //   showMobileFooter
+    // })
   }
 }
