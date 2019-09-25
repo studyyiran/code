@@ -48,7 +48,7 @@ export default class Reviews extends React.Component<ICommonProps> {
           <div className="rate-container">
             <div>{reviews ? reviews.stats.average_rating : ""} Rating</div>
             <div className="date-container">
-              <span>DataFrom</span>
+              <span>Data From</span>
               <div>
                 <img src={require("@/images/home/reviews_logo.png")} alt="" />
               </div>
