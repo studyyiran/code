@@ -92,7 +92,11 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
         } = values;
 
         // 判断两次输入echeck的email是否一致
-        if (email !== email_confirm) {
+        if (
+          !email ||
+          !email_confirm ||
+          email.toLowerCase() !== email_confirm.toLowerCase()
+        ) {
           this.props.form.setFields({
             email_confirm: {
               value: email_confirm,
