@@ -365,7 +365,7 @@ class Summary extends React.Component<IDoneProps, IDoneStates> {
               this.props.yourphone.destory();
               sessionStorage.removeItem("preOrder");
               this.props.yourphone.desoryUnmount();
-              this.props.history.push("/sell/yourphone/brand");
+              // this.props.history.push("/sell/yourphone/brand");
             }
           });
         }
@@ -397,7 +397,7 @@ class Summary extends React.Component<IDoneProps, IDoneStates> {
 
       this.props.yourphone.destoryByAppendOrder();
 
-      this.props.history.push("/sell/yourphone/brand");
+      // this.props.history.push("/sell/yourphone/brand");
     }
   };
 
@@ -437,7 +437,7 @@ class Summary extends React.Component<IDoneProps, IDoneStates> {
               this.props.yourphone.destory();
               sessionStorage.removeItem("preOrder");
               this.props.yourphone.desoryUnmount();
-              this.props.history.push("/sell/yourphone/brand");
+              // this.props.history.push("/sell/yourphone/brand");
             }
           });
         }
@@ -533,7 +533,7 @@ class Summary extends React.Component<IDoneProps, IDoneStates> {
           orderNo = this.props.user.preOrder.appendOrderDetail.orderNo;
         }
         this.props.yourphone.orderDetail = null;
-        this.props.history.push("/sell/yourphone/checkorder/" + orderNo);
+        // this.props.history.push("/sell/yourphone/checkorder/" + orderNo);
       }
     }
   };

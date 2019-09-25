@@ -6,6 +6,7 @@ import { staticSubjects } from "./faq/staticSubjects";
 import { HeaderTitle } from "@/components/headerTitle";
 import RouterLink from "@/components/routerLink";
 import { getQueryString } from "utils";
+import getSellPath from "@/utils/util";
 
 interface ISubject {
   subjectTitle: string;
@@ -57,7 +58,7 @@ export default function Faq() {
         })}
       </ul>
       <button className="common-button">
-        <RouterLink to="/sell">Sell Now</RouterLink>
+        <RouterLink to={getSellPath()}>Sell Now</RouterLink>
       </button>
     </div>
   );

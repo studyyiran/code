@@ -10,6 +10,7 @@ import {
   SelectModelContext
 } from "@/pages/sell/selectModelProcess/context";
 import FormPartWrapper from "@/components/formPart/form";
+import getSellPath from "@/utils/util";
 
 export default function() {
   const [showForm, setShowForm] = useState(true);
@@ -80,7 +81,7 @@ function RenderContent() {
       </p>
       <p>Please <RouterLink className="common-a" to="/contact">contact us</RouterLink> if you have any question.</p>
       <button className="common-button">
-        <RouterLink to={"/sell"}>Place Another Phone</RouterLink>RouterLink>
+        <RouterLink to={getSellPath()}>Place Another Phone</RouterLink>RouterLink>
       </button>
       <RouterLink className="common-a" to={"/"}>
         Back to Home

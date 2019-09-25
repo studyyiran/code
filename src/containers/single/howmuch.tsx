@@ -21,7 +21,7 @@ export default class HowMuch extends React.Component {
         <p> If you want or need to get a new phone, this guide should help you determine how much your iPhone, Samsung or other type of phone is worth. Taking care of the phone while you’re using it and taking time to prepare it for sale should also help you get maximum resale value. Also, remember, even if you aren’t able to sell your phone, there are many ways to recycle old phones.</p>
 
         <h2>How Much is My Phone Worth?</h2>
-        <p>At UpTradeIt.com, our <Link to="/sell/yourphone/brand">price calculator</Link> can tell you how much your Phone is worth automatically. We provide a <em>price guarantee</em> which tells you how much we would pay you if you decide to let us sell your phone for you. </p>
+        {/*<p>At UpTradeIt.com, our <Link to="/sell/yourphone/brand">price calculator</Link> can tell you how much your Phone is worth automatically. We provide a <em>price guarantee</em> which tells you how much we would pay you if you decide to let us sell your phone for you. </p>*/}
         <p>Here are the main factors that affect the value of your phone:</p>
         <ul>
           <li>Phone Manufacturer: Certain brands of phones command premium prices. These are your Apple iPhones and Samsungs. These companies (and others) are known for creating advanced and durable technology. </li>

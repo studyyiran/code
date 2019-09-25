@@ -1,5 +1,6 @@
 import * as React from "react";
 import "./index.less";
+import getSellPath from "@/utils/util";
 
 // 先简单处理吧
 export function BrandLogo(props: any) {
@@ -9,7 +10,7 @@ export function BrandLogo(props: any) {
   function clickHandler() {
     if (id !== "others") {
       onClick(id);
-      props.history.push(`/sell/${id}`);
+      props.history.push(`${getSellPath()}/${id}`);
     } else {
       props.history.push(`/sell-other-phone`);
     }

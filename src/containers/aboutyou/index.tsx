@@ -80,7 +80,7 @@ class AboutYou extends React.Component<IAboutYouProps, IAboutYouState> {
       state.validateStatus = 'error';
     } else {
       // this.props.user.getPreOrderKey(this.state.value);
-      this.props.history.push('/sell/yourphone/brand');
+      // this.props.history.push('/sell/yourphone/brand');
     }
 
     this.setState(state);

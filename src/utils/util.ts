@@ -89,3 +89,7 @@ export function setSession(key: string, obj: any) {
     return false;
   }
 }
+
+export default function getSellPath() {
+  return '/sell-phone'
+}

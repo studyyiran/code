@@ -21,7 +21,7 @@ import Breadcrumb from "./selectModelProcess/components/breadcrumb/index";
 import { staticRouter } from "@/pages/sell/selectModelProcess/config/staticRouter";
 import { inject, observer } from "mobx-react";
 import { removeAllSpace } from "@/pages/sell/util";
-import { getFromSession } from "@/utils/util";
+import getSellPath, { getFromSession } from "@/utils/util";
 
 let haveinit = false;
 
@@ -249,7 +249,7 @@ export default function Sell(props: any) {
     if (!brand) {
       if (
         props.location.pathname &&
-        props.location.pathname !== "/sell" &&
+        props.location.pathname !== getSellPath() &&
         !props.location.pathname.includes("prepare-ship") &&
         !props.location.pathname.includes("skuid")
       ) {

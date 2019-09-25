@@ -14,6 +14,7 @@ import {
   ISelectModelContext
 } from "@/pages/sell/selectModelProcess/context";
 import RouterLink from "@/components/routerLink";
+import getSellPath from "@/utils/util";
 const { Panel } = Collapse;
 
 export const footerInfo = [
@@ -27,7 +28,7 @@ export const footerInfo = [
       },
       {
         subTitle: "Sell Now",
-        href: "/sell"
+        href: getSellPath()
       }
     ]
   },

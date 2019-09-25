@@ -85,6 +85,6 @@ export default class Brands extends React.Component<IBrandsProps> {
     if (brand.id === config.DEFAULT.otherBrandsId) {
       this.props.yourphone.inquiryKey = "";
     }
-    this.props.history.push("/sell/yourphone/carrier");
+    // this.props.history.push("/sell/yourphone/carrier");
   };
 }

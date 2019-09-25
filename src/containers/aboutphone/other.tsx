@@ -85,11 +85,11 @@ export default class Other extends React.Component<IOtherProps> {
       };
     } catch (error) { console.warn(error, 'in conditions page preOrder') }
 
-    let path = '/sell/yourphone/condition'
-    if (this.props.user.preOrder.appendOrderDetail) {
-      path = '/sell/yourphone/done'
-    }
+    // const path = '/sell/yourphone/condition'
+    // if (this.props.user.preOrder.appendOrderDetail) {
+    //   path = '/sell/yourphone/done'
+    // }
 
-    this.props.history.push(path);
+    // this.props.history.push(path);
   }
 }

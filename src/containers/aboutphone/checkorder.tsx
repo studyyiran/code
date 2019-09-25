@@ -58,7 +58,7 @@ export default class FinalStep extends React.Component<ICheckOutProps, ICheckOut
     // 隐藏左侧价格模块
     this.props.user.isShowLeftPrice = false;
     if (!checkOrderPageValidate()) {
-      this.props.history.push('/sell/yourphone/brand');
+      // this.props.history.push('/sell/yourphone/brand');
       return;
     }
 

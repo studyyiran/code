@@ -4,6 +4,7 @@ import { RouteComponentProps } from "react-router";
 import "./aboutUs.less";
 import { HeaderTitle } from "@/components/headerTitle";
 import RouterLink from "@/components/routerLink";
+import getSellPath from "@/utils/util";
 
 interface IArticle {
   className: string;
@@ -156,7 +157,7 @@ class AboutUs extends React.Component<RouteComponentProps> {
         </section>
         <div className="button-container">
           <button className="common-button">
-            <RouterLink to="/sell">Sell Now</RouterLink>
+            <RouterLink to={getSellPath()}>Sell Now</RouterLink>
           </button>
         </div>
       </article>

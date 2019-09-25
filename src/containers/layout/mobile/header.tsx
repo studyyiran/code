@@ -25,7 +25,7 @@ export default class Header extends React.Component<{ router: any }> {
           <div className="list" onClick={this.handleGoTo.bind(this, '/how-to-sell-my-home')}>How it Works</div>
           <div className="list" onClick={this.handleGoTo.bind(this, '/check-order')}>Check My Order</div>
           <div className="button-group">
-            <Button type="primary" onClick={this.handleGoTo.bind(this, '/sell/yourphone/brand')}>SELL NOW</Button>
+            {/*<Button type="primary" onClick={this.handleGoTo.bind(this, '/sell/yourphone/brand')}>SELL NOW</Button>*/}
           </div>
         </div>
       </div>

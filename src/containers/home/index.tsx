@@ -18,6 +18,7 @@ import VideoComponent from "@/components/video";
 import NewBuyNotice from "@/containers/home/components/newBuyNotice";
 import RouterLink from "@/components/routerLink";
 import DocumentTitle from "@/components/DocumentTitle";
+import getSellPath from "@/utils/util";
 
 const descPart1 = {
   descArr: [
@@ -307,7 +308,7 @@ class Home extends React.Component<IHomeProps, IHomeState> {
                     }
                   />
                 </div>
-                <Link to={"/sell"}>
+                <Link to={getSellPath()}>
                   <button className="common-button">Sell Now</button>
                 </Link>
               </section>
@@ -333,7 +334,7 @@ class Home extends React.Component<IHomeProps, IHomeState> {
                   : require("./res/chart-pc.png")
               }
             />
-            <LinkButton url={"/sell"}>Sell Now</LinkButton>
+            <LinkButton url={getSellPath()}>Sell Now</LinkButton>
           </section>
           <section className="easy-sell-part">
             <h2>3 Easy Steps To Sell</h2>
@@ -355,7 +356,7 @@ class Home extends React.Component<IHomeProps, IHomeState> {
               />
             </div>
           </section>
-          <LinkButton url={"/sell"}>Sell Now</LinkButton>
+          <LinkButton url={getSellPath()}>Sell Now</LinkButton>
         </article>
       </DocumentTitle>
     );

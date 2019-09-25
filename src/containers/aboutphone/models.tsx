@@ -19,8 +19,8 @@ export default class Models extends React.Component<IModelsProps> {
     // 显示左侧价格模块
     this.props.user.isShowLeftPrice = true;
     if (!modalPageValidate()) {
-      this.props.history.push('/sell/yourphone/brand');
-      return;
+      // this.props.history.push('/sell/yourphone/brand');
+      // return;
     }
 
     if (this.props.yourphone.activeBrandsId === config.DEFAULT.otherBrandsId && this.props.yourphone.oldActiveBrandsId) {
@@ -77,7 +77,7 @@ export default class Models extends React.Component<IModelsProps> {
                     : this.state.didMount && <div className="no-product">
                       <img src={require('@/images/yourphone/no-product.png')} alt="" />
                       <h3>Sorry, the model of your phone has not been found.</h3>
-                      <Link to="/sell/yourphone/other"><img src={require('@/images/yourphone/circle-arrow.png')} alt="" />Please input your phone model</Link>
+                      {/*<Link to="/sell/yourphone/other"><img src={require('@/images/yourphone/circle-arrow.png')} alt="" />Please input your phone model</Link>*/}
                     </div>
                 }
               </div>
@@ -97,7 +97,7 @@ export default class Models extends React.Component<IModelsProps> {
     this.props.yourphone.oldActiveBrandsId = this.props.yourphone.activeBrandsId;
     this.props.yourphone.activeBrandsId = config.DEFAULT.otherBrandsId;
     this.props.yourphone.activeBrandsName = config.DEFAULT.otherBrandsName;
-    this.props.history.push('/sell/yourphone/other')
+    // this.props.history.push('/sell/yourphone/other')
   }
 
   private onModelItemClick = (productId: number, productName: string, skuId: number, skuName: string, imgUrl: string) => {
@@ -121,6 +121,6 @@ export default class Models extends React.Component<IModelsProps> {
     this.props.yourphone.activeProductName = productName;
     this.props.yourphone.activeModelId = skuId;
     this.props.yourphone.activeModelName = skuName;
-    this.props.history.push('/sell/yourphone/condition');
+    // this.props.history.push('/sell/yourphone/condition');
   }
 }

@@ -5,6 +5,7 @@ import "./howitworks.less";
 import { HeaderTitle } from "@/components/headerTitle";
 import VideoComponent from "@/components/video";
 import RouterLink from "@/components/routerLink";
+import getSellPath from "@/utils/util";
 const { Panel } = Collapse;
 
 class HowItWorks extends React.Component<RouteComponentProps> {
@@ -102,7 +103,7 @@ class HowItWorks extends React.Component<RouteComponentProps> {
         </ul>
         <div className="button-container">
           <button className="common-button">
-            <RouterLink to="/sell">Get Started</RouterLink>
+            <RouterLink to={getSellPath()}>Get Started</RouterLink>
           </button>
         </div>
       </article>

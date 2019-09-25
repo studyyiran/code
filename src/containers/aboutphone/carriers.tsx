@@ -61,9 +61,9 @@ export default class Brands extends React.Component<IBrandsProps> {
     this.props.yourphone.activeCarrierDescription = carrier.description;
 
     if (this.props.yourphone.activeBrandsId === config.DEFAULT.otherBrandsId) {
-      this.props.history.push('/sell/yourphone/other');
+      // this.props.history.push('/sell/yourphone/other');
       return;
     }
-    this.props.history.push('/sell/yourphone/model');
+    // this.props.history.push('/sell/yourphone/model');
   }
 }

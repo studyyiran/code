@@ -1,5 +1,6 @@
 import Loadable from 'react-loadable';
 import redirectComponent from '@/components/redirectComponent';
+import getSellPath from "@/utils/util";
 
 export default [
   {
@@ -9,7 +10,7 @@ export default [
       modules: ['../pages/sell'],
       webpack: () => [require.resolveWeak('../pages/sell') as number],
     }),
-    path: '/sell',
+    path: getSellPath(),
   },
   {
     component: Loadable({
