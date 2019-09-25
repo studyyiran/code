@@ -305,7 +305,20 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
                       {
                         required: true,
                         type: "email",
-                        message: "Please enter a valid email."
+                        message: "please confirm the Email",
+                        validator: (rule: any, value: any, callback: any) => {
+                          if (
+                            !this.props.form.getFieldValue("email") ||
+                            !value ||
+                            this.props.form
+                              .getFieldValue("email")
+                              .toLowerCase() !== value.toLowerCase()
+                          ) {
+                            console.log("no");
+                            callback("notsame");
+                          }
+                          callback();
+                        }
                       }
                     ],
                     validateTrigger: "onBlur",
@@ -380,7 +393,12 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
         checkArr.push(formValues[key]);
       }
     });
-    if (checkArr.length === 2 && checkArr[0] === checkArr[1]) {
+    if (
+      checkArr.length === 2 &&
+      checkArr[0] &&
+      checkArr[1] &&
+      checkArr[0].toLowerCase() === checkArr[1].toLowerCase()
+    ) {
       return true;
     } else {
       return false;
