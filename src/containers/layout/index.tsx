@@ -12,14 +12,19 @@ import {
   ISelectModelContext,
   SelectModelContext
 } from "@/pages/sell/selectModelProcess/context";
-import {isServer} from "@/utils/util";
+import { isServer } from "@/utils/util";
 
 export default function LayoutIndexWrapper(props: any) {
   const selectModelContext = useContext(SelectModelContext);
   const {
     selectModelContextDispatch
   } = selectModelContext as ISelectModelContext;
-
+  useEffect(() => {
+    // TODO
+    if (window.location.href.indexOf('#') !== -1) {
+      window.location.replace('/notfound')
+    }
+  }, []);
   useEffect(() => {
     const CategoryId = "1";
     selectModelContextDispatch({ type: "setCategoryId", value: CategoryId });
