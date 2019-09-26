@@ -203,7 +203,10 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
                       {
                         required: true,
                         type: "email",
-                        message: "Please enter a valid email."
+                        message: "Please confirm the Email",
+                        validator: (rule: any, value: any, callback: any) => {
+                          testInputValid("paypal_email", value, callback);
+                        }
                       }
                     ],
                     validateTrigger: "onBlur",
@@ -215,6 +218,19 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
           </div>
         );
         break;
+    }
+
+    const that = this;
+    function testInputValid(typeName: string, value: string, callback: any) {
+      if (
+        !that.props.form.getFieldValue(typeName) ||
+        !value ||
+        that.props.form.getFieldValue(typeName).toLowerCase() !==
+          value.toLowerCase()
+      ) {
+        callback("notsame");
+      }
+      callback();
     }
 
     // eCheck的结构
@@ -307,17 +323,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
                         type: "email",
                         message: "please confirm the Email",
                         validator: (rule: any, value: any, callback: any) => {
-                          if (
-                            !this.props.form.getFieldValue("email") ||
-                            !value ||
-                            this.props.form
-                              .getFieldValue("email")
-                              .toLowerCase() !== value.toLowerCase()
-                          ) {
-                            console.log("no");
-                            callback("notsame");
-                          }
-                          callback();
+                          testInputValid("email", value, callback);
                         }
                       }
                     ],
