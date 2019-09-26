@@ -429,11 +429,13 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
 
   private handleNext = async () => {
     const isOk = await this.validateData();
-    if (isOk) {
-      // @ts-ignore
-      this.props.goNextPage();
-      // this.props.history.push("/sell/yourphone/shipment");
-    }
+    // @ts-ignore
+    this.props.goNextPage();
+    // if (isOk) {
+    // @ts-ignore
+    // this.props.goNextPage();
+    // this.props.history.push("/sell/yourphone/shipment");
+    // }
   };
 }
 
