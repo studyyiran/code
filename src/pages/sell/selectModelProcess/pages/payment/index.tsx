@@ -203,7 +203,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
                       {
                         required: true,
                         type: "email",
-                        message: "Please confirm the Email",
+                        message: "The email address is not identical.",
                         validator: (rule: any, value: any, callback: any) => {
                           testInputValid("paypal_email", value, callback);
                         }
@@ -321,7 +321,7 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
                       {
                         required: true,
                         type: "email",
-                        message: "please confirm the Email",
+                        message: "The email address is not identical.",
                         validator: (rule: any, value: any, callback: any) => {
                           testInputValid("email", value, callback);
                         }
