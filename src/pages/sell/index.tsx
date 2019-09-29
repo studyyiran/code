@@ -148,6 +148,9 @@ export default function Sell(props: any) {
         break;
       }
     }
+    if (documentTitle) {
+      document.title = documentTitle;
+    }
     return next as any;
   }
   function goNextPage(currentPage?: any): void {
