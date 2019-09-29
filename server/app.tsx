@@ -153,8 +153,18 @@ Router.get("*", async (ctx: any, next: any) => {
     encoding: "utf-8"
   });
 
+  let isIgnore = false;
   // 如果在排除列表中，直接返回 html
-  if (CONFIG.routerIgnore.includes(ctx.path)) {
+  for (let i = 0; i < CONFIG.routerIgnore.length; i++) {
+    console.log(ctx.path);
+    if (ctx.path.includes(CONFIG.routerIgnore[i])) {
+      isIgnore = true;
+      break;
+    } else {
+      console.log(CONFIG.routerIgnore[i]);
+    }
+  }
+  if (isIgnore) {
     ctx.body = template;
     next();
     return;
