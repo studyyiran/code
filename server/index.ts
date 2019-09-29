@@ -29,7 +29,8 @@ app.on('error', (err, ctx) => {
   });
 });
 
-const port: any = process.env.PORT || '3006';
+// const port: any = process.env.PORT || '3006';
+const port: any = '8080';
 Loadable.preloadAll().then(() => {
   app.listen(port, () => {
     console.log('listen on:' + port);

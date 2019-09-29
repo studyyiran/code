@@ -24,7 +24,7 @@ export default function LayoutIndexWrapper(props: any) {
     if (window.location.href.indexOf('#') !== -1) {
       window.location.replace('/notfound')
     }
-  }, []);
+  });
   useEffect(() => {
     const CategoryId = "1";
     selectModelContextDispatch({ type: "setCategoryId", value: CategoryId });
