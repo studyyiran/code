@@ -21,7 +21,11 @@ import Breadcrumb from "./selectModelProcess/components/breadcrumb/index";
 import { staticRouter } from "@/pages/sell/selectModelProcess/config/staticRouter";
 import { inject, observer } from "mobx-react";
 import { removeAllSpace } from "@/pages/sell/util";
-import getSellPath, { getFromSession } from "@/utils/util";
+import getSellPath, {
+  getFromSession,
+  isServer,
+  setSession
+} from "@/utils/util";
 
 let haveinit = false;
 
@@ -144,9 +148,6 @@ export default function Sell(props: any) {
         break;
       }
     }
-    if (documentTitle) {
-      document.title = documentTitle;
-    }
     return next as any;
   }
   function goNextPage(currentPage?: any): void {
@@ -266,6 +267,30 @@ export default function Sell(props: any) {
       }
     }
   }, []);
+  useEffect(() => {
+    if (!isServer()) {
+      try {
+        const data = getFromSession("sell-title");
+        if (data) {
+          const { href, title } = data;
+          if (href === props.location.pathname) {
+            document.title = title;
+          }
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+}, []);
+  useEffect(() => {
+    if (!isServer()) {
+      const titleCache = {
+        href: props.location.pathname,
+        title: window.document.title
+      };
+      setSession("sell-title", titleCache);
+    }
+  }, [props.location.pathname]);
   return (
     <Switch>
       {/*<Route path="/" render={() => (*/}
