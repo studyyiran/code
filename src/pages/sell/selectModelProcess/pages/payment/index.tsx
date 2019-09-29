@@ -91,32 +91,33 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
           paypal_email_confirm
         } = values;
 
+        // TODO 已代理给表单.不需要单独进行判断
         // 判断两次输入echeck的email是否一致
-        if (
-          !email ||
-          !email_confirm ||
-          email.toLowerCase() !== email_confirm.toLowerCase()
-        ) {
-          this.props.form.setFields({
-            email_confirm: {
-              value: email_confirm,
-              errors: [new Error("The emails don't match.")]
-            }
-          });
-          resolve(false);
-          return;
-        }
-        // 判断两次输入paypal的email是否一致
-        if (paypal_email !== paypal_email_confirm) {
-          this.props.form.setFields({
-            paypal_email_confirm: {
-              value: paypal_email_confirm,
-              errors: [new Error("The emails don't match.")]
-            }
-          });
-          resolve(false);
-          return;
-        }
+        // if (
+        //   !email ||
+        //   !email_confirm ||
+        //   email.toLowerCase() !== email_confirm.toLowerCase()
+        // ) {
+        //   this.props.form.setFields({
+        //     email_confirm: {
+        //       value: email_confirm,
+        //       errors: [new Error("The emails don't match.")]
+        //     }
+        //   });
+        //   resolve(false);
+        //   return;
+        // }
+        // // 判断两次输入paypal的email是否一致
+        // if (paypal_email !== paypal_email_confirm) {
+        //   this.props.form.setFields({
+        //     paypal_email_confirm: {
+        //       value: paypal_email_confirm,
+        //       errors: [new Error("The emails don't match.")]
+        //     }
+        //   });
+        //   resolve(false);
+        //   return;
+        // }
 
         switch (this.state.activeSide) {
           case EPayType.PAYPAL:
@@ -429,13 +430,10 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
 
   private handleNext = async () => {
     const isOk = await this.validateData();
-    // @ts-ignore
-    this.props.goNextPage();
-    // if (isOk) {
-    // @ts-ignore
-    // this.props.goNextPage();
-    // this.props.history.push("/sell/yourphone/shipment");
-    // }
+    if (isOk) {
+      // @ts-ignore
+      this.props.goNextPage();
+    }
   };
 }
 
