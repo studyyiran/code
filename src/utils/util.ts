@@ -55,7 +55,7 @@ export const staticContentConfig = {
 };
 
 export function isServer() {
-  return typeof window === "undefined"
+  return typeof window === "undefined";
 }
 
 // 检测
@@ -91,5 +91,5 @@ export function setSession(key: string, obj: any) {
 }
 
 export default function getSellPath() {
-  return '/sell-phone'
+  return "/sell-phone";
 }

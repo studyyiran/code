@@ -11,10 +11,12 @@ const setIsMobile = (fn?: () => void) => {
   const clientWidth = document.body.clientWidth;
   const confuseWidth = 0;
   if (clientWidth <= 700 - confuseWidth) {
+    console.log(1);
     store["common"].isMobile = true;
     document.body.classList.add("ismobile");
     (document.querySelector("body") as any).setAttribute("id", "ismobile");
   } else {
+    console.log(2);
     store["common"].isMobile = false;
     document.body.classList.remove("ismobile");
     (document.querySelector("body") as any).setAttribute("id", "");
@@ -31,8 +33,20 @@ window.addEventListener(
   },
   false
 );
+// @ts-ignore
+window.tryCount = 10;
+let intervalId = 0;
+intervalId = window.setTimeout(() => {
+  // @ts-ignore
+  if (window.tryCount > 0) {
+    setIsMobile();
+    // @ts-ignore
+    window.tryCount--;
+  } else {
+    window.clearInterval(intervalId);
+  }
+}, 200);
 
-setIsMobile();
 store["common"].getStaticOffice();
 
 document.body.classList.add("isrender");

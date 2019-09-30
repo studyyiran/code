@@ -139,10 +139,14 @@ function RenderReviewList(props: any) {
 
 export default function HomeWrapper(props: any) {
   const selectModelContext = useContext(SelectModelContext);
+  console.log('11111');
+  console.log(selectModelContext);
   const {
     selectModelContextDispatch,
-    selectModelContextValue
+    selectModelContextValue = {}
   } = selectModelContext as ISelectModelContext;
+  console.log('2222');
+  console.log(selectModelContextValue);
   function clickBrandHandler(value: any) {
     selectModelContextDispatch({ type: "setBrand", value });
   }
