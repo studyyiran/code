@@ -26,7 +26,7 @@ const staticContent: IStaticContent = {
 export default function() {
   const selectModelContext = useContext(SelectModelContext);
   const { createEmail } = selectModelContext as ISelectModelContext;
-  function handlerFormPost(values: any) {
+  function handlerFormPost(values: any, callbackFunc?: any) {
     const { fullName, message: userMessage, email } = values;
     const configArr = [
       {
@@ -57,6 +57,13 @@ export default function() {
         "</p></body></html>"
     }).then(() => {
       message.success("Succeed to send");
+      if (callbackFunc) {
+        callbackFunc({
+          fullName: "",
+          email: "",
+          message: "",
+        });
+      }
     });
   }
   return (
