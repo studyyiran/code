@@ -31,6 +31,12 @@ export default class BlogDetail extends React.Component<IBlogDetailProps> {
     }
   }
   public async componentDidMount() {
+    if (window["__SERVER_RENDER__INITIALSTATE__"]) {
+      window.sessionStorage.setItem(
+        "ssrSession",
+        JSON.stringify(window["__SERVER_RENDER__INITIALSTATE__"])
+      );
+    }
     if (
       window["__SERVER_RENDER__INITIALSTATE__"] &&
       window["__SERVER_RENDER__INITIALSTATE__"].blog.detail
@@ -62,7 +68,6 @@ export default class BlogDetail extends React.Component<IBlogDetailProps> {
         console.warn(e);
       }
     }
-
     shareComponent.show();
   }
   public componentWillUnmount() {
