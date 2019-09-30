@@ -134,6 +134,16 @@ class CheckOrderNo extends React.Component<any, any> {
   };
 
   private postEmail = async (email: any, orderId: any) => {
+    // 检测orderId的新老
+    if (orderId.indexOf("HS") === -1) {
+      let linkUrl =
+        process.env.REACT_APP_SERVER_ENV === "PUB"
+          ? `https://uptradeit.com/`
+          : `http://uptrade-www-staging.aihuishou.com/`;
+      linkUrl += `check-order?email=${email}&orderId=${orderId}`;
+      window.location.href = linkUrl;
+      return;
+    }
     try {
       const b = await this.props.checkForOrder(email, orderId);
       if (b.groupOrderNo) {
