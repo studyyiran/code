@@ -156,7 +156,6 @@ Router.get("*", async (ctx: any, next: any) => {
   let isIgnore = false;
   // 如果在排除列表中，直接返回 html
   for (let i = 0; i < CONFIG.routerIgnore.length; i++) {
-    console.log(ctx.path);
     if (ctx.path.includes(CONFIG.routerIgnore[i])) {
       isIgnore = true;
       break;
