@@ -92,9 +92,10 @@ export function setSession(key: string, obj: any) {
 
 export default function getSellPath() {
   // sell.uptrade 修改路径
-  if (process.env.REACT_APP_SERVER_ENV === "PUB") {
-    return "https://uptradeit.com/sell-phone";
-  } else {
-    return "/sell-phone";
-  }
+  return "/sell-phone";
+  // if (process.env.REACT_APP_SERVER_ENV === "PUB") {
+  //   return "https://uptradeit.com/sell-phone";
+  // } else {
+  //   return "/sell-phone";
+  // }
 }
