@@ -91,5 +91,10 @@ export function setSession(key: string, obj: any) {
 }
 
 export default function getSellPath() {
-  return "/sell-phone";
+  // sell.uptrade 修改路径
+  if (process.env.REACT_APP_SERVER_ENV === "PUB") {
+    return "https://uptradeit.com/sell-phone";
+  } else {
+    return "/sell-phone";
+  }
 }
