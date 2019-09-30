@@ -12,7 +12,8 @@ export default class Reviews extends React.Component<ICommonProps> {
   public async componentDidMount() {
     if (window["__SERVER_RENDER__INITIALSTATE__"]) {
       alert("?");
-      alert(JSON.stringify(window["__SERVER_RENDER__INITIALSTATE__"]));
+      alert(JSON.stringify(window["__SERVER_RENDER__INITIALSTATE__"]["common"]["reviewsPagation"]));
+      alert(JSON.stringify(window["__SERVER_RENDER__INITIALSTATE__"]["common"]["reviews"]));
       const initialState = window["__SERVER_RENDER__INITIALSTATE__"];
       this.props.common.reviewsPagation =
         initialState["common"].reviewsPagation;
