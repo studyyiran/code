@@ -40,7 +40,7 @@ export default function() {
         "<html><body><p>" +
         configArr
           .map(
-            ({ title, content }: any) => `<label>${title}: ${content}</label>`
+            ({ title, content }: any) => `<div><label>${title}: </label>${content}</div>`
           )
           .join("") +
         "</p></body></html>"

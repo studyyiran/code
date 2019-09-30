@@ -2,7 +2,7 @@ import * as React from "react";
 import "./index.less";
 import "../commonCss/contact.less";
 import FormPartWrapper from "@/components/formPart/form";
-import {Checkbox, Col, Row, Form, Input, message} from "antd";
+import { Checkbox, Col, Row, Form, Input, message } from "antd";
 import { useState } from "react";
 import { useContext } from "react";
 import {
@@ -50,7 +50,8 @@ export default function() {
         "<html><body><p>" +
         configArr
           .map(
-            ({ title, content }: any) => `<label>${title}: ${content}</label>`
+            ({ title, content }: any) =>
+              `<div><label>${title}: </label>${content}</div>`
           )
           .join("") +
         "</p></body></html>"

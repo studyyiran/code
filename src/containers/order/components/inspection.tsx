@@ -211,10 +211,10 @@ class Inspection extends React.Component<any, any> {
               subject: "Have questions before return",
               content:
                 "<html><body><p>" +
-                `<label>From: __USEREmail__</label>` +
-                `<label>PO#: ${that.props.subOrderNo} ${that.props.productDisplayName}</label>` +
-                `<label>Subject: ${values.subject}</label>` +
-                `<label>Body: ${values.content}</label>` +
+                `<div><label>From: </label>__USEREmail__</div>` +
+                `<div><label>PO#: </label>${that.props.subOrderNo} ${that.props.productDisplayName}</div>` +
+                `<div><label>Subject: </label>${values.subject}</div>` +
+                `<div><label>Body: </label>${values.content}</div>` +
                 "</p></body></html>"
             });
             // 这里缺少一个状态的判断
