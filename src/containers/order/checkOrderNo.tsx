@@ -135,10 +135,12 @@ class CheckOrderNo extends React.Component<any, any> {
 
   private postEmail = async (email: any, orderId: any) => {
     // 检测orderId的新老
+    // HS是新订单
     if (orderId.indexOf("HS") === -1) {
+      // 那么就是老订单
       let linkUrl =
         process.env.REACT_APP_SERVER_ENV === "PUB"
-          ? `https://uptradeit.com/`
+          ? `https://classic.uptradeit.com/`
           : `http://uptrade-www-staging.aihuishou.com/`;
       linkUrl += `check-order?email=${email}&orderId=${orderId}`;
       window.location.href = linkUrl;
