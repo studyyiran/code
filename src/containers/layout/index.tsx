@@ -91,7 +91,9 @@ class LayoutIndex extends React.Component {
     const currentConfig = titles[arr[arr.length - 1]];
     // TODO这个地方需要关注一下
     if (!isServer()) {
-      document.title = currentConfig ? currentConfig.title : "";
+      if (window.location.href.indexOf('sell-phone') === -1) {
+        document.title = currentConfig ? currentConfig.title : "";
+      }
     }
     document
       .querySelector('meta[name="keywords"]')!

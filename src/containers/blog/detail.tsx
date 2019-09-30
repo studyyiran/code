@@ -62,7 +62,6 @@ export default class BlogDetail extends React.Component<IBlogDetailProps> {
         console.warn(e);
       }
     }
-
     shareComponent.show();
   }
   public componentWillUnmount() {

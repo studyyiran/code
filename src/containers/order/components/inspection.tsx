@@ -17,6 +17,7 @@ export default function InspectionWrapper(props: any) {
     inquiryInfo,
     postEmailForm,
     subOrderNo,
+    productDisplayName,
     revisedPriceConfirm,
     revisedPriceReject,
     phoneConditionQuestion,
@@ -33,6 +34,8 @@ export default function InspectionWrapper(props: any) {
   // subOrderStatus 用于确认接受差异的状态
   return (
     <Inspection
+      subOrderNo={subOrderNo}
+      productDisplayName={productDisplayName}
       paymentInfo={paymentInfo}
       subOrderStatus={subOrderStatus}
       inquiryInfo={{
@@ -204,7 +207,16 @@ class Inspection extends React.Component<any, any> {
         e.preventDefault();
         formProps.form.validateFields((err: any, values: any) => {
           if (!err && values) {
-            postEmailFormHandler(values);
+            postEmailFormHandler({
+              subject: "Have questions before return",
+              content:
+                "<html><body><p>" +
+                `<div><label>From: </label>__USEREmail__</div>` +
+                `<div><label>PO#: </label>${that.props.subOrderNo} ${that.props.productDisplayName}</div>` +
+                `<div><label>Subject: </label>${values.subject}</div>` +
+                `<div><label>Body: </label>${values.content}</div>` +
+                "</p></body></html>"
+            });
             // 这里缺少一个状态的判断
             message.success("Succeed to send");
             that.setModalHandler(false);

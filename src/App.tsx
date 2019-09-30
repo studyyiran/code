@@ -31,8 +31,17 @@ window.addEventListener(
   },
   false
 );
+let tryCount = 10;
+let intervalId = 0;
+intervalId = window.setTimeout(() => {
+  if (tryCount > 0) {
+    setIsMobile();
+    tryCount--;
+  } else {
+    clearInterval(intervalId);
+  }
+}, 200);
 
-setIsMobile();
 store["common"].getStaticOffice();
 
 document.body.classList.add("isrender");

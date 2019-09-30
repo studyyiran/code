@@ -141,7 +141,7 @@ export default function HomeWrapper(props: any) {
   const selectModelContext = useContext(SelectModelContext);
   const {
     selectModelContextDispatch,
-    selectModelContextValue
+    selectModelContextValue = {}
   } = selectModelContext as ISelectModelContext;
   function clickBrandHandler(value: any) {
     selectModelContextDispatch({ type: "setBrand", value });

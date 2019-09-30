@@ -21,7 +21,11 @@ import Breadcrumb from "./selectModelProcess/components/breadcrumb/index";
 import { staticRouter } from "@/pages/sell/selectModelProcess/config/staticRouter";
 import { inject, observer } from "mobx-react";
 import { removeAllSpace } from "@/pages/sell/util";
-import getSellPath, { getFromSession } from "@/utils/util";
+import getSellPath, {
+  getFromSession,
+  isServer,
+  setSession
+} from "@/utils/util";
 
 let haveinit = false;
 
@@ -53,7 +57,7 @@ export default function Sell(props: any) {
   function canGoNext(): boolean {
     return true;
   }
-  function goNextPage(currentPage?: any): void {
+  function getNextUrl(currentPage?: any): void {
     let documentTitle = "Sell My Phone | UpTradeit.com";
     const findDocumentTitle = staticRouter.find((item: any) => {
       return item.pageKey === currentPage;
@@ -61,41 +65,34 @@ export default function Sell(props: any) {
     if (findDocumentTitle) {
       documentTitle = findDocumentTitle.documentTitle;
     }
-
-    // document.title = String(Date.now());
+    let next = "";
     // 这块对路由状态的借用不好。现在是自己在维护
     switch (currentPage) {
       case "offer": {
-        const next = props.match.url + "/phone/info";
-        props.history.push(removeAllSpace(next));
+        next = props.match.url + "/phone/info";
         break;
       }
       case "information": {
-        const next = props.match.url + "/phone/payment";
-        props.history.push(removeAllSpace(next));
+        next = props.match.url + "/phone/payment";
         break;
       }
       case "payment": {
-        const next = props.match.url + "/phone/shipping";
-        props.history.push(removeAllSpace(next));
+        next = props.match.url + "/phone/shipping";
         break;
       }
       case "shipping": {
-        const next = props.match.url + "/phone/summary";
-        props.history.push(removeAllSpace(next));
+        next = props.match.url + "/phone/summary";
         break;
       }
       case "summary": {
-        const next = props.match.url + "/phone/prepare-ship";
-        props.history.push(removeAllSpace(next));
+        next = props.match.url + "/phone/prepare-ship";
         break;
       }
       case "prepareShip": {
         break;
       }
       case "brand": {
-        const next = props.match.url + "/" + brand;
-        props.history.push(removeAllSpace(next));
+        next = props.match.url + "/" + brand;
         const findTarget: any = brandList.find((item: any) => {
           return item.id === brand;
         });
@@ -118,7 +115,7 @@ export default function Sell(props: any) {
             });
             const { modelName, othersAttrName } = nameConfig.modelInfoName;
             const displayModelName = modelName.split(" ").join("-");
-            let next =
+            next =
               props.match.url +
               "/" +
               findTarget.displayName +
@@ -132,31 +129,36 @@ export default function Sell(props: any) {
               .map((key: any) => {
                 return othersAttrName[key];
               })
-              .join("-")} | UpTradeit.com`.split("-").join(' ');
+              .join("-")} | UpTradeit.com`
+              .split("-")
+              .join(" ");
             if (skuId) {
               next = next + "/skuid-" + skuId;
             }
-
-            props.history.push(removeAllSpace(next));
           }
         }
         break;
       }
       case "condition": {
-        const next = props.match.url + "/phone/offer";
-        props.history.push(removeAllSpace(next));
+        next = props.match.url + "/phone/offer";
         break;
       }
       default: {
-        const next = props.match.url;
-        props.history.push(removeAllSpace(next));
+        next = props.match.url;
         break;
       }
     }
     if (documentTitle) {
       document.title = documentTitle;
     }
-    window.scrollTo(0, 0);
+    return next as any;
+  }
+  function goNextPage(currentPage?: any): void {
+    const next = getNextUrl(currentPage);
+    if (next) {
+      props.history.push(removeAllSpace(next));
+      window.scrollTo(0, 0);
+    }
   }
   // function wrapper(Component: any) {
   //   return (...other: any[]) => {
@@ -268,6 +270,30 @@ export default function Sell(props: any) {
       }
     }
   }, []);
+  useEffect(() => {
+    if (!isServer()) {
+      try {
+        const data = getFromSession("sell-title");
+        if (data) {
+          const { href, title } = data;
+          if (href === props.location.pathname) {
+            document.title = title;
+          }
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+}, []);
+  useEffect(() => {
+    if (!isServer()) {
+      const titleCache = {
+        href: props.location.pathname,
+        title: window.document.title
+      };
+      setSession("sell-title", titleCache);
+    }
+  }, [props.location.pathname]);
   return (
     <Switch>
       {/*<Route path="/" render={() => (*/}

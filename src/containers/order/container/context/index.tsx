@@ -13,7 +13,7 @@ import {
   revisedPriceReject
 } from "../../api/order.api";
 import { getDeliverInfos, getDeliverNoInfo, getOrderCache } from "../../util";
-import {getTranshippingmock} from "@/containers/order/container/context/mock";
+import { getTranshippingmock } from "@/containers/order/container/context/mock";
 
 export const TotalOrderInfoContext = createContext({});
 
@@ -164,6 +164,9 @@ function useGetAction(
     postEmailForm: promisify(async function(data: any) {
       const { userInfo } = state.totalOrderInfo;
       const { userEmail, firstName, lastName } = userInfo;
+      if (data && data.content) {
+        data.content = data.content.replace("__USEREmail__", userEmail);
+      }
       const postData = {
         userEmail,
         userName: firstName + " " + lastName,

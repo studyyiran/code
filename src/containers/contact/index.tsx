@@ -2,7 +2,7 @@ import * as React from "react";
 import "./index.less";
 import "../commonCss/contact.less";
 import FormPartWrapper from "@/components/formPart/form";
-import { Checkbox, Col, Row, Form, Input } from "antd";
+import { Checkbox, Col, Row, Form, Input, message } from "antd";
 import { useState } from "react";
 import { useContext } from "react";
 import {
@@ -26,8 +26,8 @@ const staticContent: IStaticContent = {
 export default function() {
   const selectModelContext = useContext(SelectModelContext);
   const { createEmail } = selectModelContext as ISelectModelContext;
-  function handlerFormPost(values: any) {
-    const { fullName, message, email } = values;
+  function handlerFormPost(values: any, callbackFunc?: any) {
+    const { fullName, message: userMessage, email } = values;
     const configArr = [
       {
         title: "From",
@@ -39,7 +39,7 @@ export default function() {
       },
       {
         title: "Message",
-        content: message
+        content: userMessage
       }
     ];
     createEmail({
@@ -50,10 +50,20 @@ export default function() {
         "<html><body><p>" +
         configArr
           .map(
-            ({ title, content }: any) => `<label>${title}: ${content}</label>`
+            ({ title, content }: any) =>
+              `<div><label>${title}: </label>${content}</div>`
           )
           .join("") +
         "</p></body></html>"
+    }).then(() => {
+      message.success("Succeed to send");
+      if (callbackFunc) {
+        callbackFunc({
+          fullName: "",
+          email: "",
+          message: "",
+        });
+      }
     });
   }
   return (

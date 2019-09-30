@@ -3,18 +3,18 @@ import { Form, Input } from "antd";
 const { Item } = Form;
 
 function FormPart(props: any) {
+  const { getFieldDecorator, setFieldsValue } = props.form;
   function handlerFormPost(e: any) {
     // 阻止默认
     e.preventDefault();
     // 最终验证
     props.form.validateFields((error: any, values: any) => {
       if (!error) {
-        props.onPostHandler(values);
+        props.onPostHandler(values, setFieldsValue);
       }
     });
     //
   }
-  const { getFieldDecorator, setFieldsValue } = props.form;
 
   // Form 最终代理一个submit
   return (

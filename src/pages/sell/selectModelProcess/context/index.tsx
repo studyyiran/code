@@ -242,7 +242,7 @@ function reducer(state: IContextState, action: IReducerAction) {
       newState = { ...newState };
   }
   // justtest 避免覆盖
-  if (state.brand || type === "changeModelCache" || type === "resetAllUserInputData") {
+  if (state.brand || type === "changeModelCache" || type === "resetAllUserInputData" || (newState.userProductList && newState.userProductList.length)) {
     saveToCache(sessionKey, newState, [
       "modelInfo",
       "brand",
