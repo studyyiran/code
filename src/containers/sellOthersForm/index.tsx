@@ -94,7 +94,7 @@ const renderformConfig = (props: any) => {
   const formContentArr = [
     {
       id: "brand",
-      title: "Manufacturel (e.g. Apple)",
+      title: "Manufacturer (e.g. Apple)",
       required: true
     },
     {

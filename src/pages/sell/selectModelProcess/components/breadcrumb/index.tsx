@@ -54,9 +54,9 @@ function Breadcrumb(props: any) {
     brand: {
       viewContent: () => {
         if (currentPage === "brand") {
-          return "Manufacture";
+          return "Manufacturer";
         } else {
-          return nameObj.brandName || "Manufacture";
+          return nameObj.brandName || "Manufacturer";
         }
       },
       order: 0

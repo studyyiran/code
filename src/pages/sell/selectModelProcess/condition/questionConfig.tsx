@@ -161,7 +161,7 @@ export const staticPhoneInfoQuestion: IQuestion[] = [
     subQuestionArr: [
       {
         id: "manufacture",
-        content: "Phone Manufacture",
+        content: "Phone Manufacturer",
         questionDesc: [],
         type: "select"
       },

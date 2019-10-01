@@ -266,7 +266,7 @@ export const serverPhoneInfoQuestion: IQuestion[] = [
     subQuestionArr: [
       {
         id: "manufacture",
-        content: "Phone Manufacture",
+        content: "Phone Manufacturer",
         questionDesc: ["Brand1", "Brand2"],
         type: "select"
       },

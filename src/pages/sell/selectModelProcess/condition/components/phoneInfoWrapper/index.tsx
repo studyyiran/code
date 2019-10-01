@@ -45,7 +45,7 @@ export function PhoneInfoWrapper(props: any) {
   answer1.subQuestionArr = staticPhoneInfoQuestion[0].subQuestionArr = [
     {
       id: "manufacture",
-      content: "Phone Manufacture",
+      content: "Phone Manufacturer",
       type: "select",
       questionDesc: brandList
     },

@@ -15,7 +15,7 @@ export default class Broken extends React.Component {
           </div>
         </div>
         <img src={require('@/images/single/android_banner.png')} alt="" className="banner" />
-        <p>To prepare your Android phone for shipment to UpTrade you will need to factory reset your phone. Steps to wipe data may vary depending on manufacture. Follow your phone manufacturer’s recommended steps to ensure that you properly backup your data to keep your personal information safe. Steps to factory reset Samsung are provided below. </p>
+        <p>To prepare your Android phone for shipment to UpTrade you will need to factory reset your phone. Steps to wipe data may vary depending on manufacturer. Follow your phone manufacturer’s recommended steps to ensure that you properly backup your data to keep your personal information safe. Steps to factory reset Samsung are provided below. </p>
         <h2>Follow These Steps to Reset Your Android Phone (Samsung screenshots as example)</h2>
         <div className="img-box">
           <div className="list">
