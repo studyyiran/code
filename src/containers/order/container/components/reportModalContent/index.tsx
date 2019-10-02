@@ -45,7 +45,7 @@ export default function ReportModalContent(props: any) {
       <Tag status={"fail"}>{differentReason}</Tag>
       <ul className="list">
         <RenderItem
-          title="Phone Manfacture"
+          title="Phone manufacturer"
           value={brandName}
           isSame={checkIsSame("brandId")}
         />
