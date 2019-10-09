@@ -36,18 +36,36 @@ function Model(props: any) {
   } = selectModelContext as ISelectModelContext;
   // 实际上，context也是modelInfo的二级消费者。这块有可能违背了single true原则
   const { modelInfo, brandList, skuId } = selectModelContextValue;
-  // 重定向为名称
-  if (props.match && props.match.params && props.match.params.brandName) {
-    const findTarget: any = brandList.find((item: any) => {
-      return String(item.id) === String(props.match.params.brandName);
-    });
-    if (findTarget) {
-      const next = props.route.path + "/" + findTarget.displayName;
-      // const next = props.match.url + "/condition";
-      document.title = `Sell My ${findTarget.displayName} | UpTradeit.com`;
-      props.history.replace(removeAllSpace(next));
+
+  useEffect(() => {
+    // 重定向为名称
+    if (props.match && props.match.params && props.match.params.brandName) {
+      const findTarget: any = brandList.find((item: any) => {
+        return String(item.id) === String(props.match.params.brandName);
+      });
+
+      if (findTarget) {
+        const next = props.route.path + "/" + findTarget.displayName;
+        // const next = props.match.url + "/condition";
+        document.title = `Sell My ${findTarget.displayName} | UpTradeit.com`;
+        props.history.replace(removeAllSpace(next));
+      } else {
+        // TODo 新增需求 反向查找
+        const findTarget2: any = brandList.find((item: any) => {
+          return (
+            String(item.displayName).toUpperCase() ===
+            String(props.match.params.brandName).toUpperCase()
+          );
+        });
+        if (findTarget2) {
+          selectModelContextDispatch({
+            type: "setBrand",
+            value: findTarget2.id
+          });
+        }
+      }
     }
-  }
+  }, [props.match, brandList]);
 
   function renderList() {
     const modelArr = findArrByKey(phoneInfoQuestion, "model");
