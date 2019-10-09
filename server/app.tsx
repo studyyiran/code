@@ -19,7 +19,10 @@ import { getBundles } from "react-loadable/webpack";
 import stats from "../build/react-loadable.json";
 import SiteMap from "./lib/sitemap";
 
-const Router = new router();
+const Router = new router({
+  // 配置前缀
+  prefix: '/sell'
+});
 
 // 对请求过来的数据做一个转发，转发到localhost
 Axios.interceptors.request.use(config => {
@@ -113,22 +116,22 @@ const generateBundleScripts = intries => {
 // })
 
 // 转发静态资源的请求
-// Router.get("/static/*", async (ctx: any, next: any) => {
-//   await send(ctx, ctx.path, { root: `${__dirname}` });
-// });
-// Router.get("/email/*", async (ctx: any, next: any) => {
-//   await send(ctx, ctx.path, { root: `${__dirname}` });
-// });
-// Router.get("/favicon.ico", async (ctx: any, next: any) => {
-//   await send(ctx, ctx.path, { root: `${__dirname}` });
-// });
-//
-// Router.get("/manifest.json", async (ctx: any, next: any) => {
-//   await send(ctx, ctx.path, { root: `${__dirname}` });
-// });
-// Router.get("/notfound.html", async (ctx: any, next: any) => {
-//   await send(ctx, ctx.path, { root: `${__dirname}` });
-// });
+Router.get("/static/*", async (ctx: any, next: any) => {
+  await send(ctx, ctx.path, { root: `${__dirname}` });
+});
+Router.get("/email/*", async (ctx: any, next: any) => {
+  await send(ctx, ctx.path, { root: `${__dirname}` });
+});
+Router.get("/favicon.ico", async (ctx: any, next: any) => {
+  await send(ctx, ctx.path, { root: `${__dirname}` });
+});
+
+Router.get("/manifest.json", async (ctx: any, next: any) => {
+  await send(ctx, ctx.path, { root: `${__dirname}` });
+});
+Router.get("/notfound.html", async (ctx: any, next: any) => {
+  await send(ctx, ctx.path, { root: `${__dirname}` });
+});
 
 // 反向代理请求
 Router.all(
@@ -141,7 +144,7 @@ Router.all(
   })
 );
 
-Router.get("/sell/*", async (ctx: any, next: any) => {
+Router.get("*", async (ctx: any, next: any) => {
   if (ctx.originalUrl === "/sitemap.xml") {
     const xml = await SiteMap();
     ctx.append("Content-Type", "application/xml");
