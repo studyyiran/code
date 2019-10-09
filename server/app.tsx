@@ -113,22 +113,22 @@ const generateBundleScripts = intries => {
 // })
 
 // 转发静态资源的请求
-Router.get("/sell/static/*", async (ctx: any, next: any) => {
-  await send(ctx, ctx.path, { root: `${__dirname}` });
-});
-Router.get("/sell/email/*", async (ctx: any, next: any) => {
-  await send(ctx, ctx.path, { root: `${__dirname}` });
-});
-Router.get("/sell/favicon.ico", async (ctx: any, next: any) => {
-  await send(ctx, ctx.path, { root: `${__dirname}` });
-});
-
-Router.get("/sell/manifest.json", async (ctx: any, next: any) => {
-  await send(ctx, ctx.path, { root: `${__dirname}` });
-});
-Router.get("/sell/notfound.html", async (ctx: any, next: any) => {
-  await send(ctx, ctx.path, { root: `${__dirname}` });
-});
+// Router.get("/static/*", async (ctx: any, next: any) => {
+//   await send(ctx, ctx.path, { root: `${__dirname}` });
+// });
+// Router.get("/email/*", async (ctx: any, next: any) => {
+//   await send(ctx, ctx.path, { root: `${__dirname}` });
+// });
+// Router.get("/favicon.ico", async (ctx: any, next: any) => {
+//   await send(ctx, ctx.path, { root: `${__dirname}` });
+// });
+//
+// Router.get("/manifest.json", async (ctx: any, next: any) => {
+//   await send(ctx, ctx.path, { root: `${__dirname}` });
+// });
+// Router.get("/notfound.html", async (ctx: any, next: any) => {
+//   await send(ctx, ctx.path, { root: `${__dirname}` });
+// });
 
 // 反向代理请求
 Router.all(
