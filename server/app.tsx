@@ -19,10 +19,7 @@ import { getBundles } from "react-loadable/webpack";
 import stats from "../build/react-loadable.json";
 import SiteMap from "./lib/sitemap";
 
-const Router = new router({
-  // 配置前缀
-  prefix: '/sell'
-});
+const Router = new router();
 
 // 对请求过来的数据做一个转发，转发到localhost
 Axios.interceptors.request.use(config => {

@@ -9,7 +9,7 @@ export default [
       webpack: () => [require.resolveWeak('../containers/staticblog/how-to-sell-your-old-phone-for-cash') as number],
     }),
     exact: true,
-    path: '/sell/how-to-sell-your-old-phone-for-cash'
+    path: '/how-to-sell-your-old-phone-for-cash'
   },
   {
     component: Loadable({
@@ -19,7 +19,7 @@ export default [
       webpack: () => [require.resolveWeak('../containers/staticblog/att-phone-trade-in-is-it-worth-it') as number],
     }),
     exact: true,
-    path: '/sell/att-phone-trade-in-is-it-worth-it'
+    path: '/att-phone-trade-in-is-it-worth-it'
   },
   {
     component: Loadable({
@@ -29,7 +29,7 @@ export default [
       webpack: () => [require.resolveWeak('../containers/staticblog/what-is-a-blacklisted-phone') as number],
     }),
     exact: true,
-    path: '/sell/what-is-a-blacklisted-phone'
+    path: '/what-is-a-blacklisted-phone'
   },
   {
     component: Loadable({
@@ -39,7 +39,7 @@ export default [
       webpack: () => [require.resolveWeak('../containers/staticblog/how-to-fix-water-damaged-iphone') as number],
     }),
     exact: true,
-    path: '/sell/how-to-fix-water-damaged-iphone'
+    path: '/how-to-fix-water-damaged-iphone'
   },
   {
     component: Loadable({
@@ -49,7 +49,7 @@ export default [
       webpack: () => [require.resolveWeak('../containers/staticblog/how-to-transfer-contacts-from-android-to-android') as number],
     }),
     exact: true,
-    path: '/sell/how-to-transfer-contacts-from-android-to-android'
+    path: '/how-to-transfer-contacts-from-android-to-android'
   },
   {
     component: Loadable({
@@ -59,7 +59,7 @@ export default [
       webpack: () => [require.resolveWeak('../containers/staticblog/how-long-do-smartphones-last') as number],
     }),
     exact: true,
-    path: '/sell/how-long-do-smartphones-last'
+    path: '/how-long-do-smartphones-last'
   },
   {
     component: Loadable({
@@ -69,7 +69,7 @@ export default [
       webpack: () => [require.resolveWeak('../containers/staticblog/how-to-tell-if-a-phone-is-unlocked') as number],
     }),
     exact: true,
-    path: '/sell/how-to-tell-if-a-phone-is-unlocked',
+    path: '/how-to-tell-if-a-phone-is-unlocked',
   },
   {
     component: Loadable({
@@ -79,6 +79,6 @@ export default [
       webpack: () => [require.resolveWeak('../containers/staticblog/list') as number],
     }),
     exact: true,
-    path: '/sell/blog',
+    path: '/blog',
   },
 ];
