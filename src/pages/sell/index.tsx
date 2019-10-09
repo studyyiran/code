@@ -246,20 +246,6 @@ export default function Sell(props: any) {
     }
     return { ...result };
   });
-  // 如果当前
-  if (!userProductList || !userProductList.length) {
-    if (!brand) {
-      if (
-        props.location.pathname &&
-        props.location.pathname !== getSellPath() &&
-        !props.location.pathname.includes("prepare-ship") &&
-        !props.location.pathname.includes("skuid")
-      ) {
-        // 首页
-        goNextPage();
-      }
-    }
-  }
   // 解析skuId
   useEffect(() => {
     if (props.location.pathname.includes("skuid")) {
@@ -284,7 +270,7 @@ export default function Sell(props: any) {
         console.error(e);
       }
     }
-}, []);
+  }, []);
   useEffect(() => {
     if (!isServer()) {
       const titleCache = {
@@ -294,33 +280,54 @@ export default function Sell(props: any) {
       setSession("sell-title", titleCache);
     }
   }, [props.location.pathname]);
+
+  function redirectTo() {
+    // 如果当前
+    if (!userProductList || !userProductList.length) {
+      if (!brand) {
+        if (
+          props.location.pathname &&
+          props.location.pathname !== getSellPath() &&
+          !props.location.pathname.includes("prepare-ship") &&
+          !props.location.pathname.includes("skuid")
+        ) {
+          // 首页
+          goNextPage();
+        }
+      }
+    }
+  }
   return (
     <Switch>
       {/*<Route path="/" render={() => (*/}
       {/*  <Redirect to="/test"/>*/}
       {/*)}/>*/}
-      {configArr.map(({ path, title, Component, pageKey, documentTitle }) => {
-        return (
-          <Route
-            key={pageKey}
-            path={path()}
-            render={other => (
-              <Layout
-                goNextPage={goNextPage}
-                currentPage={pageKey}
-                title={title}
-              >
-                <Component
-                  canGoNext={canGoNext}
-                  goNextPage={() => goNextPage(pageKey)}
-                  {...props}
+      {configArr.map(
+        ({ path, title, Component, pageKey, documentTitle, dontRedirect }) => {
+          return (
+            <Route
+              key={pageKey}
+              path={path()}
+              render={other => (
+                <Layout
+                  goNextPage={goNextPage}
+                  currentPage={pageKey}
+                  title={title}
+                  redirectTo={!dontRedirect ? redirectTo : null}
                   {...other}
-                />
-              </Layout>
-            )}
-          />
-        );
-      })}
+                >
+                  <Component
+                    canGoNext={canGoNext}
+                    goNextPage={() => goNextPage(pageKey)}
+                    {...props}
+                    {...other}
+                  />
+                </Layout>
+              )}
+            />
+          );
+        }
+      )}
       <Route render={() => <div>not match</div>} />
     </Switch>
   );
@@ -364,6 +371,10 @@ class Layout extends React.Component<any, any> {
   }
 
   public render() {
+    if (this.props.redirectTo) {
+      this.props.redirectTo();
+    }
+
     const { children, goNextPage, currentPage, title } = this.props;
     return (
       <div className="sell-layout">

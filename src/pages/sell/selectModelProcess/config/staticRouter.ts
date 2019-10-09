@@ -38,7 +38,8 @@ export const staticRouter = [
   {
     pageKey: "model",
     title: "Select a model",
-    documentTitle: ""
+    documentTitle: "",
+    dontRedirect: true,
   },
   {
     pageKey: "brand",
