@@ -141,7 +141,7 @@ Router.all(
   })
 );
 
-Router.get("*", async (ctx: any, next: any) => {
+Router.get("/sell/*", async (ctx: any, next: any) => {
   if (ctx.originalUrl === "/sitemap.xml") {
     const xml = await SiteMap();
     ctx.append("Content-Type", "application/xml");
