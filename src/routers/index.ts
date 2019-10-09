@@ -15,7 +15,7 @@ export default [
       modules: ['../containers/blog/tag'],
       webpack: () => [require.resolveWeak('../containers/blog/tag') as number],
     }),
-    path: '/tag/:tag',
+    path: '/sell/tag/:tag',
     exact: true,
     bootstrap: async (param: { [key: string]: string }) => {
       store['blog'].tagPageListPagination = {
@@ -33,7 +33,7 @@ export default [
       modules: ['../containers/blog/list'],
       webpack: () => [require.resolveWeak('../containers/blog/list') as number],
     }),
-    path: '/blog',
+    path: '/sell/blog',
     exact: true,
     actions: [
       store['blog'].getFeatureList,
@@ -48,7 +48,7 @@ export default [
       modules: ['../containers/order/checkOrderNo'],
       webpack: () => [require.resolveWeak('../containers/order/checkOrderNo') as number],
     }),
-    path: '/check-order',
+    path: '/sell/check-order',
     exact: true,
   },
   {
@@ -58,7 +58,7 @@ export default [
       modules: ['../containers/order'],
       webpack: () => [require.resolveWeak('../containers/order') as number],
     }),
-    path: '/oldorder'
+    path: '/sell/oldorder'
   },
   {
     component: Loadable({
@@ -67,7 +67,7 @@ export default [
       modules: ['../containers/order/container'],
       webpack: () => [require.resolveWeak('../containers/order/container') as number],
     }),
-    path: '/order'
+    path: '/sell/order'
   },
   {
     component: Loadable({
@@ -77,7 +77,7 @@ export default [
       webpack: () => [require.resolveWeak('../containers/home/reviews') as number],
     }),
     exact: true,
-    path: '/reviews',
+    path: '/sell/reviews',
     actions: [
       () => store['common'].getReviews({
         page: 0,
@@ -94,7 +94,7 @@ export default [
       modules: ['../containers/notfound'],
       webpack: () => [require.resolveWeak('../containers/notfound') as number],
     }),
-    path: '/notfound',
+    path: '/sell/notfound',
   },
   {
     // 单页
@@ -105,7 +105,7 @@ export default [
       webpack: () => [require.resolveWeak('../containers/blog/detail') as number],
     }),
     exact: true,
-    path: '/:slug',
+    path: '/sell/:slug',
     bootstrap: async (param: { [key: string]: string }) => {
       await store['blog'].getPageDetail(param.slug);
     },
@@ -130,7 +130,7 @@ export default [
       webpack: () => [require.resolveWeak('../containers/home') as number],
     }),
     exact: true,
-    path: '/',
+    path: '/sell/',
     // actions: [
     //   () => store['common'].getReviews({
     //     page: 0,

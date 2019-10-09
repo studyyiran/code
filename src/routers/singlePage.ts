@@ -10,7 +10,7 @@ export default [
       webpack: () => [require.resolveWeak('../containers/single/invitation_code') as number],
     }),
     exact: true,
-    path: '/invitationcode',
+    path: '/sell/invitationcode',
   },
   {
     // faq
@@ -21,7 +21,7 @@ export default [
       webpack: () => [require.resolveWeak('../containers/single/faq') as number],
     }),
     exact: true,
-    path: '/faq',
+    path: '/sell/faq',
   },
   {
     component: Loadable({
@@ -31,7 +31,7 @@ export default [
       webpack: () => [require.resolveWeak('../containers/contact') as number],
     }),
     exact: true,
-    path: '/contact',
+    path: '/sell/contact',
   },
   {
     component: Loadable({
@@ -41,7 +41,7 @@ export default [
       webpack: () => [require.resolveWeak('../containers/otherContact') as number],
     }),
     exact: true,
-    path: '/i-need-help',
+    path: '/sell/i-need-help',
   },
   {
     component: Loadable({
@@ -51,7 +51,7 @@ export default [
       webpack: () => [require.resolveWeak('../containers/sellOthersForm') as number],
     }),
     exact: true,
-    path: '/sell-other-phone',
+    path: '/sell/sell-other-phone',
   },
   {
     component: Loadable({
@@ -61,7 +61,7 @@ export default [
       webpack: () => [require.resolveWeak('../containers/single/why') as number],
     }),
     exact: true,
-    path: '/why-uptrade',
+    path: '/sell/why-uptrade',
   },
   {
     component: Loadable({
@@ -70,7 +70,7 @@ export default [
       modules: ['../containers/single/broken'],
       webpack: () => [require.resolveWeak('../containers/single/broken') as number],
     }),
-    path: '/sell-broken-iphone',
+    path: '/sell/sell-broken-iphone',
   },
   {
     component: Loadable({
@@ -79,7 +79,7 @@ export default [
       modules: ['../containers/single/howmuch'],
       webpack: () => [require.resolveWeak('../containers/single/howmuch') as number],
     }),
-    path: '/how-much-is-my-phone-worth',
+    path: '/sell/how-much-is-my-phone-worth',
   },
   {
     component: Loadable({
@@ -88,7 +88,7 @@ export default [
       modules: ['../containers/single/android'],
       webpack: () => [require.resolveWeak('../containers/single/android') as number],
     }),
-    path: '/how-to-factory-reset-android-phone',
+    path: '/sell/how-to-factory-reset-android-phone',
   },
   {
     component: Loadable({
@@ -97,7 +97,7 @@ export default [
       modules: ['../containers/single/iphone'],
       webpack: () => [require.resolveWeak('../containers/single/iphone') as number],
     }),
-    path: '/how-to-factory-reset-iphone',
+    path: '/sell/how-to-factory-reset-iphone',
   },
   {
     component: Loadable({
@@ -106,7 +106,7 @@ export default [
       modules: ['../containers/single/privacypolicy'],
       webpack: () => [require.resolveWeak('../containers/single/privacypolicy') as number],
     }),
-    path: '/privacy-policy',
+    path: '/sell/privacy-policy',
   },
   {
     component: Loadable({
@@ -115,7 +115,7 @@ export default [
       modules: ['../containers/single/terms'],
       webpack: () => [require.resolveWeak('../containers/single/terms') as number],
     }),
-    path: '/terms',
+    path: '/sell/terms',
   },
   {
     component: Loadable({
@@ -124,7 +124,7 @@ export default [
       modules: ['../containers/single/howitworks'],
       webpack: () => [require.resolveWeak('../containers/single/howitworks') as number],
     }),
-    path: '/how-to-sell-my-home',
+    path: '/sell/how-to-sell-my-home',
   },
   {
     component: Loadable({
@@ -133,6 +133,6 @@ export default [
       modules: ['../containers/single/aboutUs'],
       webpack: () => [require.resolveWeak('../containers/single/aboutUs') as number],
     }),
-    path: '/who-we-are',
+    path: '/sell/who-we-are',
   },
 ]
