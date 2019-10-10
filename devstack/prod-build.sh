@@ -1,6 +1,6 @@
 #!/bin/bash
 
-S3_PATH=s3://prod-uptradeit-website/sell-website/build-v0.0.8
+S3_PATH=s3://prod-uptradeit-website/sell-website/build-v0.0.9
 APP_WORKSPACE="$(pwd)"
 
 echo "S3_PATH: ${S3_PATH}"

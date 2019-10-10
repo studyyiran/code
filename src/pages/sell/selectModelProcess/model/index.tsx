@@ -51,7 +51,8 @@ function Model(props: any) {
       // TODo 新增需求 反向查找
       const findTarget2: any = brandList.find((item: any) => {
         return (
-          String(item.displayName) === String(props.match.params.brandName)
+          String(item.displayName).toUpperCase() ===
+          String(props.match.params.brandName).toUpperCase()
         );
       });
       if (findTarget2) {
