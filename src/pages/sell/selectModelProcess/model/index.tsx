@@ -62,7 +62,7 @@ function Model(props: any) {
       }
     }
   }
-  useEffect(() => {}, [props.match, brandList]);
+  // useEffect(() => {}, [props.match, brandList]);
 
   function renderList() {
     const modelArr = findArrByKey(phoneInfoQuestion, "model");
