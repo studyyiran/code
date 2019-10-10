@@ -41,13 +41,28 @@ function Model(props: any) {
     const findTarget: any = brandList.find((item: any) => {
       return String(item.id) === String(props.match.params.brandName);
     });
+
     if (findTarget) {
       const next = props.route.path + "/" + findTarget.displayName;
       // const next = props.match.url + "/condition";
       document.title = `Sell My ${findTarget.displayName} | UpTradeit.com`;
       props.history.replace(removeAllSpace(next));
+    } else {
+      // TODo 新增需求 反向查找
+      const findTarget2: any = brandList.find((item: any) => {
+        return (
+          String(item.displayName) === String(props.match.params.brandName)
+        );
+      });
+      if (findTarget2) {
+        selectModelContextDispatch({
+          type: "setBrand",
+          value: findTarget2.id
+        });
+      }
     }
   }
+  useEffect(() => {}, [props.match, brandList]);
 
   function renderList() {
     const modelArr = findArrByKey(phoneInfoQuestion, "model");
