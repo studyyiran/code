@@ -71,7 +71,7 @@ function Model(props: any) {
         }
       }
     }
-  }, [props.match, brandList]);
+  }, [brandList]);
 
   function renderList() {
     const modelArr = findArrByKey(phoneInfoQuestion, "model");
