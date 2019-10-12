@@ -23,7 +23,7 @@ const staticContent: IStaticContent = {
   formTitle: "Send us a message"
 };
 
-export default function() {
+export default function(props: any) {
   const selectModelContext = useContext(SelectModelContext);
   const { createEmail } = selectModelContext as ISelectModelContext;
   function handlerFormPost(values: any, callbackFunc?: any) {
@@ -56,13 +56,8 @@ export default function() {
           .join("") +
         "</p></body></html>"
     }).then(() => {
-      message.success("Succeed to send");
       if (callbackFunc) {
-        callbackFunc({
-          fullName: "",
-          email: "",
-          message: "",
-        });
+        callbackFunc();
       }
     });
   }
@@ -79,6 +74,7 @@ export default function() {
           <section>
             <h2>{staticContent.formTitle}</h2>
             <FormPartWrapper
+              history={props.history}
               buttonContent="Submit"
               renderformConfig={renderformConfig}
               onPostHandler={handlerFormPost}

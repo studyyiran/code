@@ -83,10 +83,10 @@ function HelpList() {
   );
 }
 
-export default function() {
+export default function(props: any) {
   const selectModelContext = useContext(SelectModelContext);
   const { createEmail } = selectModelContext as ISelectModelContext;
-  function handlerFormPost(values: any) {
+  function handlerFormPost(values: any, callBack: any) {
     const { email, condition, other } = values;
     const configArr = [
       {
@@ -110,10 +110,13 @@ export default function() {
         "<html><body><p>" +
         configArr
           .map(
-            ({ title, content }: any) => `<div><label>${title}: </label>${content}</div>`
+            ({ title, content }: any) =>
+              `<div><label>${title}: </label>${content}</div>`
           )
           .join("") +
         "</p></body></html>"
+    }).then(() => {
+      callBack();
     });
   }
   return (
@@ -132,6 +135,7 @@ export default function() {
               buttonContent="Submit"
               renderformConfig={renderformConfig}
               onPostHandler={handlerFormPost}
+              history={props.history}
             />
           </section>
         </div>

@@ -1,16 +1,22 @@
 import React from "react";
-import { Form, Input } from "antd";
+import { Form, Input, message } from "antd";
 const { Item } = Form;
 
 function FormPart(props: any) {
-  const { getFieldDecorator, setFieldsValue } = props.form;
+  const { getFieldDecorator, resetFields } = props.form;
   function handlerFormPost(e: any) {
     // 阻止默认
     e.preventDefault();
     // 最终验证
     props.form.validateFields((error: any, values: any) => {
       if (!error) {
-        props.onPostHandler(values, setFieldsValue);
+        props.onPostHandler(values, () => {
+          resetFields();
+          message.success("Message Sent");
+          window.setTimeout(() => {
+            props.history.push("/");
+          }, 1000);
+        });
       }
     });
     //
