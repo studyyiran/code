@@ -99,6 +99,8 @@ export default function(props: any) {
                 href={`${
                   process.env.REACT_APP_SERVER_ENV === "PUB"
                     ? "https://api-gateway.uptradeit.com"
+                    : process.env.REACT_APP_SERVER_ENV === "QA" ?
+                    "http://qa-gateway-801477214.us-east-2.elb.amazonaws.com"
                     : "http://demo-gateway-1613913116.us-east-2.elb.amazonaws.com"
                 }/api/shippo/downloadlabel?shippolablecode=${encodeURIComponent(
                   lableCode

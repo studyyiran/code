@@ -12,6 +12,9 @@ export function requestWrapper(obj: any, all?: boolean) {
     case "PUB":
       fixUrl = "https://api-gateway.uptradeit.com/api";
       break;
+    case "QA":
+      fixUrl = "http://qa-gateway-801477214.us-east-2.elb.amazonaws.com/api";
+      break;
   }
   return {
     ...obj,
