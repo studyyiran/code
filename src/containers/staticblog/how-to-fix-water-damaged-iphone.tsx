@@ -15,7 +15,7 @@ export default class HowToTransferAndroid extends React.Component {
             <em />
           </div>
         </div>
-        <img src={require('@/images/staticblog/img-4.png')} alt=" Water Damaged iPhone | UpTradeit.com" />
+        <img src={require('images/staticblog/img-4.png')} alt=" Water Damaged iPhone | UpTradeit.com" />
         <p>You dropped your iPhone in water and now it won’t turn on. There’s no need to panic yet, but you do need to act quickly. </p>
         <p>Follow these steps in order to fix your water-damaged iPhone and hopefully get it working again. </p>
         <p>In the future, take extra precaution to protect your iPhone from water. If you follow all of the steps in this article and still can’t get your phone to turn on, it can still be of value.</p>

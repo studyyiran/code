@@ -8,7 +8,7 @@ import {
   ISubQuestion
 } from "../../index.interface";
 import { canShowMoreQuestion, findAnswerById, isCanMove } from "../../util";
-import TipsIcon from "@/pages/sell/selectModelProcess/components/tipsIcon";
+import TipsIcon from "pages/sell/selectModelProcess/components/tipsIcon";
 const { Panel } = Collapse;
 function SaveButton(props: any) {
   const { children, canPost } = props;

@@ -31,9 +31,9 @@ setStore(containersContext, /([^\/]+)\.store\.ts$/);
 
 // import common from './common';
 // import user from './user';
-// import yourphone from '@/containers/aboutphone/store/yourphone.store';
-// import contact from '@/containers/contact/store/contact.store'
-// import order from '@/containers/order/store/order.store';
+// import yourphone from 'containers/aboutphone/store/yourphone.store';
+// import contact from 'containers/contact/store/contact.store'
+// import order from 'containers/order/store/order.store';
 
 // const store = {
 //   common,

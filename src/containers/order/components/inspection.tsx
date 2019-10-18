@@ -1,13 +1,13 @@
 import React from "react";
-import { IOrderProps } from "@/containers/order/interface/order.inerface";
+import { IOrderProps } from "containers/order/interface/order.inerface";
 import "./inspection.less";
-import Tag from "@/components/tag";
-import TipsIcon from "@/pages/sell/selectModelProcess/components/tipsIcon";
+import Tag from "components/tag";
+import TipsIcon from "pages/sell/selectModelProcess/components/tipsIcon";
 import CheckInspectDiff from "../container/components/checkInspectDiff";
 import { Modal, Form, Input, Button, message } from "antd";
-import ReportModalContent from "@/containers/order/container/components/reportModalContent";
-import InspectPart from "@/containers/order/container/components/inspectPart";
-import ResultPart from "@/containers/order/container/components/resultPart";
+import ReportModalContent from "containers/order/container/components/reportModalContent";
+import InspectPart from "containers/order/container/components/inspectPart";
+import ResultPart from "containers/order/container/components/resultPart";
 const { TextArea } = Input;
 
 const priceUnit = "$";

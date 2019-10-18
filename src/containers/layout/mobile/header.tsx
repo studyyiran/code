@@ -13,10 +13,10 @@ export default class Header extends React.Component<{ router: any }> {
       <div className={active}>
         <div className="header-box">
           <div className="logo">
-            <Link to="/"><img src={require('@/images/logo.png')} alt="" /></Link>
+            <Link to="/"><img src={require('images/logo.png')} alt="" /></Link>
           </div>
           <div className="right" onClick={this.handleClick}>
-            {!this.state.active ? <img src={require('@/images/nav.png')} alt="" /> : <img src={require('@/images/close.png')} alt="" />}
+            {!this.state.active ? <img src={require('images/nav.png')} alt="" /> : <img src={require('images/close.png')} alt="" />}
           </div>
         </div>
         <div className="toggle-mask" />

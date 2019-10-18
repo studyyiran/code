@@ -1,9 +1,9 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Icon, Form, Input, Modal, Button } from 'antd'
-import commonStore from '@/store/common';
+import commonStore from 'store/common';
 import { FormComponentProps } from 'antd/lib/form';
-import { ICommonStore } from '@/store/interface/common.interface'
+import { ICommonStore } from 'store/interface/common.interface'
 
 
 class FormItem extends React.Component<{ common: ICommonStore, onCancel: () => void } & FormComponentProps> {

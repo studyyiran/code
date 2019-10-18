@@ -3,18 +3,19 @@ import { Link } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 import classnames from 'classnames';
 import { Modal, Button, Tooltip } from 'antd';
-import Layout from '@/containers/aboutphone/layout';
+import Layout from 'containers/aboutphone/layout';
 // import Conditions from './page/condition';
-import ChangeModal from '@/containers/aboutphone/components/changemodal';
-import { donePageValidate } from '@/containers/aboutphone/pageValidate';
+import ChangeModal from 'containers/aboutphone/components/changemodal';
+import { donePageValidate } from 'containers/aboutphone/pageValidate';
 import './done.less';
 import { IDoneProps, IDoneStates, EChangeType, EPayType } from './interface/index.interface';
 import { ModalProps } from 'antd/lib/modal';
-import { noteUserModal } from '@/containers/aboutphone/pageValidate';
+import { noteUserModal } from 'containers/aboutphone/pageValidate';
 
 @inject('yourphone', 'user', 'common')
 @observer
 export default class YoureDone extends React.Component<IDoneProps, IDoneStates> {
+  // @ts-ignore
   public pageRef: React.Component;
   public readonly state: Readonly<IDoneStates> = {
     isChecked: false, // 勾选协议
@@ -72,7 +73,7 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
       case EPayType.PAYPAL:
         payment = (
           <>
-            <img className="paypal-logo" src={require('@/images/paypal.png')} />
+            <img className="paypal-logo" src={require('images/paypal.png')} />
             <p className="email-info">
               <span className="label">E-mail</span>
               <span className="address">{yourphone.paypal.email}</span>
@@ -193,7 +194,7 @@ export default class YoureDone extends React.Component<IDoneProps, IDoneStates> 
               <div className="phone-info-wrapper">
                 {
                   !this.props.common.isMobile &&
-                  <img className="img" src={yourphone.inquiryDetail && !yourphone.isTBD ? yourphone.inquiryDetail.product.imageUrl : require('@/images/noprice.png')} />
+                  <img className="img" src={yourphone.inquiryDetail && !yourphone.isTBD ? yourphone.inquiryDetail.product.imageUrl : require('images/noprice.png')} />
                 }
                 <div className="info-wrapper">
                   {phoneNode}

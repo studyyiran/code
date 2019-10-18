@@ -1,6 +1,6 @@
 import { IOrderDetail } from './../../containers/order/interface/order.inerface';
 
-import { IYourPhoneStore, ITbdInfo } from "@/containers/aboutphone/interface/index.interface";
+import { IYourPhoneStore, ITbdInfo } from "containers/aboutphone/interface/index.interface";
 
 export interface IUserInfo {
   identityChecked: boolean, // 是否实名

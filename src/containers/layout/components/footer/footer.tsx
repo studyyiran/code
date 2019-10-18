@@ -3,18 +3,18 @@ import classnames from "classnames";
 import { Link } from "react-router-dom";
 import "./footer.less";
 import { Row, Col, Input, Button, Form, message } from "antd";
-// import commonStore from '@/store/common'
+// import commonStore from 'store/common'
 import config from "../../../../config";
-import Svg from "@/components/svg";
+import Svg from "components/svg";
 import { RenderByCondition } from "./RenderByCondition/index";
 import { Collapse } from "antd";
 import { useContext } from "react";
 import {
   SelectModelContext,
   ISelectModelContext
-} from "@/pages/sell/selectModelProcess/context";
-import RouterLink from "@/components/routerLink";
-import getSellPath from "@/utils/util";
+} from "pages/sell/selectModelProcess/context";
+import RouterLink from "components/routerLink";
+import getSellPath from "utils/util";
 const { Panel } = Collapse;
 
 export const footerInfo = [
@@ -103,7 +103,7 @@ export default class Footer extends React.Component<
         <div className="width-container">
           <header className="footer__logo flex-grid">
             <div>
-              <img src={require("@/images/logo.svg")} />
+              <img src={require("images/logo.svg")} />
             </div>
             <div />
           </header>

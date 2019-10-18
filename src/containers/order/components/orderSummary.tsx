@@ -1,12 +1,14 @@
 import * as React from "react";
-import UserInfo from "@/containers/order/components/userInfo";
-import MachineInfo from "@/containers/order/components/machineInfo";
+import UserInfo from "containers/order/components/userInfo";
+import MachineInfo from "containers/order/components/machineInfo";
 import {
   IOrderProps,
   IOrderSummaryState
-} from "@/containers/order/interface/order.inerface";
-import ArrowToBottom from "@/images/order/arrowToBottom.png";
-import ArrowToTop from "@/images/order/arrowToTop.png";
+} from "containers/order/interface/order.inerface";
+// @ts-ignore
+import ArrowToBottom from "images/order/arrowToBottom.png";
+// @ts-ignore
+import ArrowToTop from "images/order/arrowToTop.png";
 import "./orderSummary.less";
 
 class OrderSummary extends React.Component<

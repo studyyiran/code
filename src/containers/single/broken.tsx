@@ -17,8 +17,8 @@ export default class Broken extends React.Component {
         </div>
         {
           <>
-            <img src={require('@/images/single/broken_banner.png')} alt="" className="banner" />
-            <img src={require('@/images/single/broken_banner_m.png')} alt="" className="banner-m" />
+            <img src={require('images/single/broken_banner.png')} alt="" className="banner" />
+            <img src={require('images/single/broken_banner_m.png')} alt="" className="banner-m" />
           </>
         }
 

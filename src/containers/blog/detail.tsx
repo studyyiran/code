@@ -3,10 +3,10 @@ import { inject, observer } from "mobx-react";
 import { IBlog, IBlogDetailProps } from "./interface/blog.interface";
 import "./detail.less";
 import * as moment from "moment-timezone";
-import { shareComponent } from "@/utils/function";
+import { shareComponent } from "utils/function";
 import { Link } from "react-router-dom";
-import { HeaderTitle } from "@/components/headerTitle";
-import Svg from "@/components/svg";
+import { HeaderTitle } from "components/headerTitle";
+import Svg from "components/svg";
 
 @inject("blog")
 @observer

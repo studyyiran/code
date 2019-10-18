@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./index.less";
-import VideoComponent from "@/components/video";
-import RouterLink from "@/components/routerLink";
+import VideoComponent from "components/video";
+import RouterLink from "components/routerLink";
 import {
   ISelectModelContext,
   SelectModelContext
-} from "@/pages/sell/selectModelProcess/context";
+} from "pages/sell/selectModelProcess/context";
 import * as moment from "moment-timezone";
-import { Tabs } from "@/components/tabs";
+import { Tabs } from "components/tabs";
 const { TabPane } = Tabs as any;
 // subOrders[0].shippingInfo.sendInfo[0].lableCode
-import { getFromSession } from "@/utils/util";
+import { getFromSession } from "utils/util";
 
 const videoConfig = [
   {

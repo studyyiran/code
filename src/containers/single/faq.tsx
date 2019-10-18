@@ -3,10 +3,10 @@ import { Collapse } from "antd";
 const { Panel } = Collapse;
 import "./faq.less";
 import { staticSubjects } from "./faq/staticSubjects";
-import { HeaderTitle } from "@/components/headerTitle";
-import RouterLink from "@/components/routerLink";
+import { HeaderTitle } from "components/headerTitle";
+import RouterLink from "components/routerLink";
 import { getQueryString } from "utils";
-import getSellPath from "@/utils/util";
+import getSellPath from "utils/util";
 
 interface ISubject {
   subjectTitle: string;

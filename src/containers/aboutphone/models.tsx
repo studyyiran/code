@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom'
 import { inject, observer } from 'mobx-react';
-import LayOut from '@/containers/aboutphone/layout';
-import ModelItem from '@/containers/aboutphone/components/modelitem';
+import LayOut from 'containers/aboutphone/layout';
+import ModelItem from 'containers/aboutphone/components/modelitem';
 import './models.less';
 import { IModelsProps } from './interface/index.interface';
-import { modalPageValidate } from '@/containers/aboutphone/pageValidate';
-import Breadcrumb from '@/containers/aboutphone/components/breadcrumb';
-import ProgressBar from '@/containers/aboutphone/components/progressbar--mobile';
-import config from '@/config'
+import { modalPageValidate } from 'containers/aboutphone/pageValidate';
+import Breadcrumb from 'containers/aboutphone/components/breadcrumb';
+import ProgressBar from 'containers/aboutphone/components/progressbar--mobile';
+import config from 'config'
 @inject('yourphone', 'user', 'common')
 @observer
 export default class Models extends React.Component<IModelsProps> {
@@ -34,7 +34,7 @@ export default class Models extends React.Component<IModelsProps> {
       brandId: config.DEFAULT.otherBrandsId,
       categoryId: 0,
       id: 0,
-      imageUrl: require('@/images/noprice.png'),
+      imageUrl: require('images/noprice.png'),
       name: 'Other',
       skuPricePropertyNames: [],
       activeModelId: 0,
@@ -75,9 +75,9 @@ export default class Models extends React.Component<IModelsProps> {
                       />
                     ))
                     : this.state.didMount && <div className="no-product">
-                      <img src={require('@/images/yourphone/no-product.png')} alt="" />
+                      <img src={require('images/yourphone/no-product.png')} alt="" />
                       <h3>Sorry, the model of your phone has not been found.</h3>
-                      {/*<Link to="/sell/yourphone/other"><img src={require('@/images/yourphone/circle-arrow.png')} alt="" />Please input your phone model</Link>*/}
+                      {/*<Link to="/sell/yourphone/other"><img src={require('images/yourphone/circle-arrow.png')} alt="" />Please input your phone model</Link>*/}
                     </div>
                 }
               </div>

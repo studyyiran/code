@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Input, Form, Col } from 'antd';
-import LayOut from '@/containers/aboutphone/layout';
+import LayOut from 'containers/aboutphone/layout';
 import classnames from 'classnames';
 import { inject, observer } from 'mobx-react';
 import { IOtherProps } from './interface/index.interface';
-import Breadcrumb from '@/containers/aboutphone/components/breadcrumb';
+import Breadcrumb from 'containers/aboutphone/components/breadcrumb';
 import './other.less';
 
 const storage = ['16GB', '32GB', '64GB', '128GB', 'br', '256GB', '512GB', 'Other']

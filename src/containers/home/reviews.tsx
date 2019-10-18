@@ -1,8 +1,8 @@
 import * as React from "react";
 import { observer, inject } from "mobx-react";
 import { Form, Select, Pagination, Skeleton } from "antd";
-import Star from "@/components/star";
-import { ICommonProps, IReview } from "@/store/interface/common.interface";
+import Star from "components/star";
+import { ICommonProps, IReview } from "store/interface/common.interface";
 import "./reviews.less";
 import { Rate } from "antd";
 
@@ -50,7 +50,7 @@ export default class Reviews extends React.Component<ICommonProps> {
             <div className="date-container">
               <span>Data From</span>
               <div>
-                <img src={require("@/images/home/reviews_logo.png")} alt="" />
+                <img src={require("images/home/reviews_logo.png")} alt="" />
               </div>
             </div>
           </div>
@@ -127,7 +127,7 @@ export default class Reviews extends React.Component<ICommonProps> {
               ) : (
                 <div className="no-reviews">
                   <img
-                    src={require("@/images/yourphone/no-product.png")}
+                    src={require("images/yourphone/no-product.png")}
                     alt=""
                   />
                   <h3>No results match this filter query</h3>

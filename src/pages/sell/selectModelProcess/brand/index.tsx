@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
 import "./index.less";
 import { SelectModelContext, ISelectModelContext } from "../context";
-import { HeaderTitle } from "@/components/headerTitle";
+import { HeaderTitle } from "components/headerTitle";
 
 // interface IBrand {}
 

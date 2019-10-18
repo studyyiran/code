@@ -15,7 +15,7 @@ export default class HowToTransferAndroid extends React.Component {
             <em />
           </div>
         </div>
-        <img src={require('@/images/staticblog/img-5.png')} alt="How To Tell If A Phone Is Blacklisted | UpTradeit.com" />
+        <img src={require('images/staticblog/img-5.png')} alt="How To Tell If A Phone Is Blacklisted | UpTradeit.com" />
         <p>When a phone is lost or stolen, it becomes a blacklisted phone. These phones are on the GSM network, so either AT&T or T-Mobile. If it is an iPhone that is reported lost or stolen, then it could have what is known as a bad ESN, or electronic serial number.</p>
         <p>There are other ways that an iPhone could have a bad ESN. There could be an unpaid balance on the account, and the carrier wants their money, so they have locked the phone until the balance is paid.</p>
         <p>Another reason for a bad ESN is where someone tries to reactivate a phone on an account when the phone is still active on another account.</p>

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import classnames from 'classnames';
-import { PC, MOBILE } from '@/config/progress.config';
+import { PC, MOBILE } from 'config/progress.config';
 import './leftside.less';
 import { ILeftSideState } from '../interface/index.interface';
 export default class LeftSide extends React.Component<{ stepIndex: number, isMobile: boolean; }, ILeftSideState> {

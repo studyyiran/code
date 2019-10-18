@@ -5,14 +5,14 @@ import "./index.less";
 import HeaderHoc from "./headerHoc";
 import FooterHoc from "./footerHoc";
 // import { getQueryString } from 'utils';
-import commonStore from "@/store/common";
+import commonStore from "store/common";
 import Raven from "raven-js";
 import { useContext, useEffect } from "react";
 import {
   ISelectModelContext,
   SelectModelContext
-} from "@/pages/sell/selectModelProcess/context";
-import { isServer } from "@/utils/util";
+} from "pages/sell/selectModelProcess/context";
+import { isServer } from "utils/util";
 
 export default function LayoutIndexWrapper(props: any) {
   const selectModelContext = useContext(SelectModelContext);

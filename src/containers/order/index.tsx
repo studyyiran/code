@@ -5,14 +5,14 @@ import { RouteComponentProps } from "react-router";
 import {
   IOrderProps,
   IProgressType
-} from "@/containers/order/interface/order.inerface";
-import ProgressBar from "@/containers/order/components/progressBar";
-import DeliverSatus from "@/containers/order/components/deliverSatus";
-import OrderSummary from "@/containers/order/components/orderSummary";
-import Inspection from "@/containers/order/components/inspection";
-import ToBeReturn from "@/containers/order/components/toBeReturn";
-import ListedForSale from "@/containers/order/components/listedForSale";
-import OrderComplete from "@/containers/order/components/orderComplete";
+} from "containers/order/interface/order.inerface";
+import ProgressBar from "containers/order/components/progressBar";
+import DeliverSatus from "containers/order/components/deliverSatus";
+import OrderSummary from "containers/order/components/orderSummary";
+import Inspection from "containers/order/components/inspection";
+import ToBeReturn from "containers/order/components/toBeReturn";
+import ListedForSale from "containers/order/components/listedForSale";
+import OrderComplete from "containers/order/components/orderComplete";
 import "./index.less";
 
 @inject("order")

@@ -7,21 +7,28 @@ import {
   ITrackingModel,
   IProgressDot,
   IOrderRecord
-} from "@/containers/order/interface/order.inerface";
+} from "containers/order/interface/order.inerface";
 import { computed, action, observable } from "mobx";
 import * as OrderApi from "../api/order.api";
-import OrderPlacedIcon from "@/images/order/orderPlaced.png";
-import PackageSentIcon from "@/images/order/packageSent.png";
-import PackageReceivedIcon from "@/images/order/packageReceived.png";
-import InspectionCompleteIcon from "@/images/order/inspectionComplete.png";
-import ListSaleIcon from "@/images/order/listForSale.png";
-import OrderCompleteIcon from "@/images/order/orderComplete.png";
-import ReturnRequestIcon from "@/images/order/returnRequest.png";
+// @ts-ignore
+import OrderPlacedIcon from "images/order/orderPlaced.png";
+// @ts-ignore
+import PackageSentIcon from "images/order/packageSent.png";
+// @ts-ignore
+import PackageReceivedIcon from "images/order/packageReceived.png";
+// @ts-ignore
+import InspectionCompleteIcon from "images/order/inspectionComplete.png";
+// @ts-ignore
+import ListSaleIcon from "images/order/listForSale.png";
+// @ts-ignore
+import OrderCompleteIcon from "images/order/orderComplete.png";
+// @ts-ignore
+import ReturnRequestIcon from "images/order/returnRequest.png";
 import * as moment from "moment-timezone";
-// import { noteUserModal } from '@/containers/aboutphone/pageValidate';
-import EmailModal from "@/components/emailModal/index";
-import {getFromSession, setSession} from "@/utils/util";
-// import config from '@/config';
+// import { noteUserModal } from 'containers/aboutphone/pageValidate';
+import EmailModal from "components/emailModal/index";
+import {getFromSession, setSession} from "utils/util";
+// import config from 'config';
 moment.locale("en");
 
 class Store implements IOrderStore {

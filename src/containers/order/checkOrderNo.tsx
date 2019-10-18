@@ -6,7 +6,7 @@ import {
   TotalOrderInfoContext,
   ITotalOrderInfoContext
 } from "./container/context";
-import { setOrderCache } from "@/containers/order/util";
+import { setOrderCache } from "containers/order/util";
 import "../../containers/commonCss/contact.less";
 import { getQueryString } from "utils";
 

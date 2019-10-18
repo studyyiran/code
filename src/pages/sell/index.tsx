@@ -16,16 +16,16 @@ import {
   ISelectModelContext
 } from "./selectModelProcess/context";
 import { Switch, Route, Redirect } from "react-router";
-import { HeaderTitle } from "@/components/headerTitle";
+import { HeaderTitle } from "components/headerTitle";
 import Breadcrumb from "./selectModelProcess/components/breadcrumb/index";
-import { staticRouter } from "@/pages/sell/selectModelProcess/config/staticRouter";
+import { staticRouter } from "pages/sell/selectModelProcess/config/staticRouter";
 import { inject, observer } from "mobx-react";
-import { removeAllSpace } from "@/pages/sell/util";
+import { removeAllSpace } from "pages/sell/util";
 import getSellPath, {
   getFromSession,
   isServer,
   setSession
-} from "@/utils/util";
+} from "utils/util";
 
 let haveinit = false;
 

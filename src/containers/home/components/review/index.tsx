@@ -1,6 +1,6 @@
 import * as React from "react";
 import { observer } from "mobx-react";
-import Star from "@/components/star";
+import Star from "components/star";
 import { IReview } from "./index.interface";
 import "./index.less";
 import { Rate } from "antd";

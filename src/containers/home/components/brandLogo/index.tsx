@@ -1,6 +1,6 @@
 import * as React from "react";
 import "./index.less";
-import getSellPath from "@/utils/util";
+import getSellPath from "utils/util";
 
 // 先简单处理吧
 export function BrandLogo(props: any) {

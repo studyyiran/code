@@ -1,8 +1,8 @@
-import Tag from "@/components/tag";
-import { getIdFromAllQuestion } from "@/pages/sell/selectModelProcess/condition/util";
+import Tag from "components/tag";
+import { getIdFromAllQuestion } from "pages/sell/selectModelProcess/condition/util";
 import React from "react";
 import "./index.less";
-import Svg from "@/components/svg";
+import Svg from "components/svg";
 
 export default function ReportModalContent(props: any) {
   const { inquiryInfo, phoneConditionQuestion } = props;

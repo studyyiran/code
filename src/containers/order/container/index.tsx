@@ -11,11 +11,11 @@ import {
 } from "../../../pages/sell/selectModelProcess/context";
 import { IOrderStore } from "../interface/order.inerface";
 import { inject, observer } from "mobx-react";
-import UserInfo from "@/containers/order/components/userInfo";
+import UserInfo from "containers/order/components/userInfo";
 import * as moment from "moment-timezone";
-import MachineInfo from "@/containers/order/components/machineInfo";
-import DeliverSatus from "@/containers/order/components/deliverSatus";
-import { HeaderTitle } from "@/components/headerTitle";
+import MachineInfo from "containers/order/components/machineInfo";
+import DeliverSatus from "containers/order/components/deliverSatus";
+import { HeaderTitle } from "components/headerTitle";
 import "./index.less";
 import "./common.less";
 import CollapsePanelList from "./components/collapsePanelList";
@@ -26,10 +26,10 @@ import {
   setOrderCache,
   getOrderCache
 } from "../util/index";
-import ListedForSale from "@/containers/order/components/listedForSale";
-import Inspection from "@/containers/order/components/inspection";
+import ListedForSale from "containers/order/components/listedForSale";
+import Inspection from "containers/order/components/inspection";
 
-import ProgressBar from "@/containers/order/components/progressBar";
+import ProgressBar from "containers/order/components/progressBar";
 
 @inject("order")
 @observer

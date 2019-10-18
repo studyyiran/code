@@ -1,7 +1,7 @@
 import * as React from "react";
-import { IOrderProps } from "@/containers/order/interface/order.inerface";
+import { IOrderProps } from "containers/order/interface/order.inerface";
 // import './toBeReturn.less';
-import Tag from "@/components/tag";
+import Tag from "components/tag";
 
 class ToBeReturn extends React.Component<IOrderProps> {
   public render() {

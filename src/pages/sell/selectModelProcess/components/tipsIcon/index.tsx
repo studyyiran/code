@@ -1,4 +1,4 @@
-import Svg from "@/components/svg";
+import Svg from "components/svg";
 import "./index.less";
 import React from "react";
 import { Modal, Popconfirm, Tooltip } from "antd";

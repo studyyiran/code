@@ -1,5 +1,5 @@
 import { IPreOrder } from "./../interface/user.interface";
-import { IOpts } from "@/utils/request.interface";
+import { IOpts } from "utils/request.interface";
 import { Request } from "utils";
 
 // 第一次生成PreOrder

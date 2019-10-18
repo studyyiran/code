@@ -1,6 +1,6 @@
 import * as React from "react";
 import "./userInfo.less";
-import { IUserInformation } from "@/containers/order/interface/order.inerface";
+import { IUserInformation } from "containers/order/interface/order.inerface";
 
 class UserInfo extends React.Component<IUserInformation> {
   public render() {

@@ -4,13 +4,13 @@ import "../commonCss/contact.less";
 import { Form, Input, Checkbox, Row, Col } from "antd";
 const { Item } = Form;
 import "./index.less";
-import RouterLink from "@/components/routerLink";
+import RouterLink from "components/routerLink";
 import {
   ISelectModelContext,
   SelectModelContext
-} from "@/pages/sell/selectModelProcess/context";
-import FormPartWrapper from "@/components/formPart/form";
-import getSellPath from "@/utils/util";
+} from "pages/sell/selectModelProcess/context";
+import FormPartWrapper from "components/formPart/form";
+import getSellPath from "utils/util";
 
 export default function() {
   const [showForm, setShowForm] = useState(true);

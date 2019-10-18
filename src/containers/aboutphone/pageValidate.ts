@@ -2,9 +2,9 @@
  * 用于校验在yourphone流程中，各个页面所必须的关键数据
  * 如果不满足，则跳会about you 页面
  */
-import config from '@/config';
-import userStore from '@/store/user';
-import yourPhoneStore from '@/containers/aboutphone/store/yourphone.store';
+import config from 'config';
+import userStore from 'store/user';
+import yourPhoneStore from 'containers/aboutphone/store/yourphone.store';
 import { EPayType, INoteUserModalProps } from './interface/index.interface';
 import { Modal } from 'antd';
 

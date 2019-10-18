@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IProgressData } from "@/containers/order/interface/order.inerface";
+import { IProgressData } from "containers/order/interface/order.inerface";
 import "./progressBar.less";
 import { inject, observer } from "mobx-react";
 

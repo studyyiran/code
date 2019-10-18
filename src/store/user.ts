@@ -1,7 +1,7 @@
 import * as Api from "./api/user.api";
 import { IUserStoreNew, IPreOrder } from "./interface/user.interface";
 import { action, observable, autorun } from "mobx";
-import { getFromSession, setSession } from "@/utils/util";
+import { getFromSession, setSession } from "utils/util";
 let haveInit = false;
 class User implements IUserStoreNew {
   @observable public canUpdatePreOrder = false;

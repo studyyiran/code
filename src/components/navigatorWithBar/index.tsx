@@ -1,8 +1,8 @@
 import * as React from 'react';
-import config from '@/config';
+import config from 'config';
 import './index.less';
 import { Button, Icon } from 'antd';
-import { INavigatorObj } from '@/containers/aboutphone/interface/index.interface';
+import { INavigatorObj } from 'containers/aboutphone/interface/index.interface';
 interface IProps {
   nextPath?: string;
   progress?: number;
@@ -29,7 +29,9 @@ export default class NavigatorWithBar extends React.Component<IProps, IStates> {
 
 
   public onMappingStep = (navigatorKey: string[], navigator: object) => {
+    // @ts-ignore
     const arr = navigatorKey.filter(v => new RegExp(v).test(window['__history__'].location.pathname));
+    // @ts-ignore
     const navigatorObj: INavigatorObj = navigator[arr[arr.length - 1]];
 
     this.setState({
@@ -80,6 +82,7 @@ export default class NavigatorWithBar extends React.Component<IProps, IStates> {
   }
 
   private goBack() {
+    // @ts-ignore
     window['__history__'].goBack();
   }
 
@@ -97,6 +100,7 @@ export default class NavigatorWithBar extends React.Component<IProps, IStates> {
     }
 
     if (this.props.nextPath) {
+      // @ts-ignore
       window['__history__'].push(this.props.nextPath!);
     }
   }

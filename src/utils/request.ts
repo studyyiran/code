@@ -3,7 +3,7 @@ import { message } from "antd";
 import { Base64 } from "js-base64";
 import { MessageType } from "antd/lib/message";
 import createBrowserHistory from "history/createBrowserHistory";
-import { IRequestRes, IOpts } from "@/utils/request.interface";
+import { IRequestRes, IOpts } from "utils/request.interface";
 
 // 基础路径
 const basePath: string = "/up-trade-it/api";

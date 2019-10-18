@@ -1,5 +1,5 @@
-import { IYourPhoneStore } from '@/containers/aboutphone/interface/index.interface';
-import { ICommonStore} from '@/store/interface/common.interface';
+import { IYourPhoneStore } from 'containers/aboutphone/interface/index.interface';
+import { ICommonStore} from 'store/interface/common.interface';
 
 export interface IHomeState {
   howitworksGroup: IStepItem[][]

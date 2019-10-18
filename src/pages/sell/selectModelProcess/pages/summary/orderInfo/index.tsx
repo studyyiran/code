@@ -6,7 +6,7 @@ import React, { useContext, useState } from "react";
 import { Collapse } from "antd";
 const { Panel } = Collapse;
 import "./index.less";
-import Svg from "@/components/svg";
+import Svg from "components/svg";
 
 const priceUnit = "$";
 

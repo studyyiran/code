@@ -14,7 +14,7 @@ export default class HowToTellUnlocked extends React.Component {
           </div>
         </div>
         <img
-          src={require("@/images/staticblog/img-6.jpg")}
+          src={require("images/staticblog/img-6.jpg")}
           alt="ATT Phone Trade In: Is It Worth It? | UpTradeit.com"
         />
         <p>

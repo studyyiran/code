@@ -3,7 +3,7 @@ const lastQuestionKey = "allFinish";
 import React, { useReducer, useState, useEffect, useContext } from "react";
 import "./index.less";
 import { Collapse } from "antd";
-import { IReducerAction } from "@/interface/index.interface";
+import { IReducerAction } from "interface/index.interface";
 import { IQuestion, IUserAnswer, IUserQuestionAnswer } from "./index.interface";
 import { WrapperPanel } from "./components/wrapperPanel";
 import { PhoneInfoWrapper } from "./components/phoneInfoWrapper";

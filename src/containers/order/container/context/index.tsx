@@ -4,7 +4,7 @@ import React, {
   useCallback,
   useEffect
 } from "react";
-import { IReducerAction } from "@/interface/index.interface";
+import { IReducerAction } from "interface/index.interface";
 import {
   checkForOrder,
   getTranshipping,
@@ -13,7 +13,7 @@ import {
   revisedPriceReject
 } from "../../api/order.api";
 import { getDeliverInfos, getDeliverNoInfo, getOrderCache } from "../../util";
-import { getTranshippingmock } from "@/containers/order/container/context/mock";
+import { getTranshippingmock } from "containers/order/container/context/mock";
 
 export const TotalOrderInfoContext = createContext({});
 

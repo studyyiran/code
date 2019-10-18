@@ -18,10 +18,10 @@ import {
   ITbdInfo,
   ISubSkuPricePropertyValues
 } from "../interface/index.interface";
-import { IPreOrder } from "@/store/interface/user.interface";
-import UserStore from "@/store/user";
-import { IOrderDetail } from "@/containers/order/interface/order.inerface";
-import EmailModal from "@/components/emailModal/index";
+import { IPreOrder } from "store/interface/user.interface";
+import UserStore from "store/user";
+import { IOrderDetail } from "containers/order/interface/order.inerface";
+import EmailModal from "components/emailModal/index";
 class YourPhone implements IYourPhoneStore {
   @observable public carriers: ICarrier[] = [];
   @observable public brands: IBrands[] = [];
@@ -59,7 +59,7 @@ class YourPhone implements IYourPhoneStore {
   };
   @observable public isLeftOnEdit: boolean = false;
   @observable public isRightOnEdit: boolean = false;
-
+  
   @observable public activeBrandsId = -1; // 选择的品牌Id
   @observable public oldActiveBrandsId = 0; // 上一个选择的品牌id
   @observable public activeBrandsName = ""; // 选择的品牌的名称
@@ -72,6 +72,7 @@ class YourPhone implements IYourPhoneStore {
   @observable public activeConditions = {}; // 选择的ppvn
   @observable public isAddressValuesAndDisabled: boolean = true;
   @observable public isPaymentFormFilled: boolean = false;
+  // @ts-ignore
   @observable public americaStates: IAmericaState | null;
   @observable public tbdInfo: ITbdInfo = {
     storage: "",

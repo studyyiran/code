@@ -2,9 +2,9 @@ import * as React from "react";
 import { Button } from "antd";
 import { RouteComponentProps } from "react-router";
 import "./aboutUs.less";
-import { HeaderTitle } from "@/components/headerTitle";
-import RouterLink from "@/components/routerLink";
-import getSellPath from "@/utils/util";
+import { HeaderTitle } from "components/headerTitle";
+import RouterLink from "components/routerLink";
+import getSellPath from "utils/util";
 
 interface IArticle {
   className: string;

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Icon } from "antd";
-import { IOrderProps } from "@/containers/order/interface/order.inerface";
-import Tag from "@/components/tag";
+import { IOrderProps } from "containers/order/interface/order.inerface";
+import Tag from "components/tag";
 import InspectPart from "../container/components/inspectPart";
 import ResultPart from "../container/components/resultPart";
 import "../container/common.less";

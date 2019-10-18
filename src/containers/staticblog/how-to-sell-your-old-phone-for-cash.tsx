@@ -13,7 +13,7 @@ export default class HowToTellUnlocked extends React.Component {
             <em />
           </div>
         </div>
-        <img src={require('@/images/staticblog/img-7.jpg')} alt="How To Sell Your Old Phone For Cash? | UpTradeit.com" />
+        <img src={require('images/staticblog/img-7.jpg')} alt="How To Sell Your Old Phone For Cash? | UpTradeit.com" />
         <p>Phones aren’t cheap, and with the prices of these devices continuing to rise, many people are obviously looking to sell their old devices to finance the purchase of a new one. If this sounds like you, then we’ve got a few tips that can help you to get the maximum resale value for your phone. Here are a few things to consider. </p>
         <h2>Special editions and rare colors are worth more</h2>
         <p>If you haven't bought a new phone yet, then you may consider opting for one that comes in a rarer color. People are often willing to pay a premium for these devices, and your resale value could benefit from it.</p>

@@ -12,8 +12,8 @@ export default class BlogList extends React.Component {
             <div className="list">
               <Link to={'/how-to-sell-your-old-phone-for-cash'}>
                 <div className="img-box">
-                  <div className="img" style={{ backgroundImage: `url(${require('@/images/staticblog/img-7.jpg')})` }} />
-                  <img src={require('@/images/staticblog/img-7.jpg')} alt="How To Sell Your Old Phone For Cash? | UpTradeit.com" />
+                  <div className="img" style={{ backgroundImage: `url(${require('images/staticblog/img-7.jpg')})` }} />
+                  <img src={require('images/staticblog/img-7.jpg')} alt="How To Sell Your Old Phone For Cash? | UpTradeit.com" />
                 </div>
                 <div className="right">
                   <h3>How To Sell Your Old Phone For Cash</h3>
@@ -26,8 +26,8 @@ export default class BlogList extends React.Component {
             <div className="list">
               <Link to={'/att-phone-trade-in-is-it-worth-it'}>
                 <div className="img-box">
-                  <div className="img" style={{ backgroundImage: `url(${require('@/images/staticblog/img-6.jpg')})` }} />
-                  <img src={require('@/images/staticblog/img-6.jpg')} alt="ATT Phone Trade In: Is It Worth It? | UpTradeit.com" />
+                  <div className="img" style={{ backgroundImage: `url(${require('images/staticblog/img-6.jpg')})` }} />
+                  <img src={require('images/staticblog/img-6.jpg')} alt="ATT Phone Trade In: Is It Worth It? | UpTradeit.com" />
                 </div>
                 <div className="right">
                   <h3>ATT Phone Trade In: Is It Worth It?</h3>
@@ -43,8 +43,8 @@ export default class BlogList extends React.Component {
             <div className="list">
               <Link to={'/what-is-a-blacklisted-phone'}>
                 <div className="img-box">
-                  <div className="img" style={{ backgroundImage: `url(${require('@/images/staticblog/img-5.png')})` }} />
-                  <img src={require('@/images/staticblog/img-5.png')} alt="How To Tell If A Phone Is Blacklisted | UpTradeit.com" />
+                  <div className="img" style={{ backgroundImage: `url(${require('images/staticblog/img-5.png')})` }} />
+                  <img src={require('images/staticblog/img-5.png')} alt="How To Tell If A Phone Is Blacklisted | UpTradeit.com" />
                 </div>
                 <div className="right">
                   <h3>What is a blacklisted phone?</h3>
@@ -56,8 +56,8 @@ export default class BlogList extends React.Component {
             <div className="list">
               <Link to={'/how-to-fix-water-damaged-iphone'}>
                 <div className="img-box">
-                  <div className="img" style={{ backgroundImage: `url(${require('@/images/staticblog/img-4.png')})` }} />
-                  <img src={require('@/images/staticblog/img-4.png')} alt="Water Damaged iPhone | UpTradeit.com" />
+                  <div className="img" style={{ backgroundImage: `url(${require('images/staticblog/img-4.png')})` }} />
+                  <img src={require('images/staticblog/img-4.png')} alt="Water Damaged iPhone | UpTradeit.com" />
                 </div>
                 <div className="right">
                   <h3>How to Fix Water Damaged iPhone</h3>
@@ -70,8 +70,8 @@ export default class BlogList extends React.Component {
             <div className="list">
               <Link to={'/how-to-transfer-contacts-from-android-to-android'}>
                 <div className="img-box">
-                  <div className="img" style={{ backgroundImage: `url(${require('@/images/staticblog/img-3.png')})` }} />
-                  <img src={require('@/images/staticblog/img-3.png')} alt="Android to Android Contact Transfer | UpTradeit.com" />
+                  <div className="img" style={{ backgroundImage: `url(${require('images/staticblog/img-3.png')})` }} />
+                  <img src={require('images/staticblog/img-3.png')} alt="Android to Android Contact Transfer | UpTradeit.com" />
                 </div>
                 <div className="right">
                   <h3>How to Transfer Contacts From Android to Android</h3>
@@ -84,8 +84,8 @@ export default class BlogList extends React.Component {
             <div className="list">
               <Link to={'/how-long-do-smartphones-last'}>
                 <div className="img-box">
-                  <div className="img" style={{ backgroundImage: `url(${require('@/images/staticblog/img-2.png')})` }} />
-                  <img src={require('@/images/staticblog/img-2.png')} alt="Smartphone lifespan | UpTradeit.com" />
+                  <div className="img" style={{ backgroundImage: `url(${require('images/staticblog/img-2.png')})` }} />
+                  <img src={require('images/staticblog/img-2.png')} alt="Smartphone lifespan | UpTradeit.com" />
                 </div>
                 <div className="right">
                   <h3>How long do smartphones last? </h3>
@@ -98,8 +98,8 @@ export default class BlogList extends React.Component {
             <div className="list">
               <Link to={'/how-to-tell-if-a-phone-is-unlocked'}>
                 <div className="img-box">
-                  <div className="img" style={{ backgroundImage: `url(${require('@/images/staticblog/img-1.png')})` }} />
-                  <img src={require('@/images/staticblog/img-1.png')} alt="How To Tell If A Phone Is Unlocked | UpTradeit.com" />
+                  <div className="img" style={{ backgroundImage: `url(${require('images/staticblog/img-1.png')})` }} />
+                  <img src={require('images/staticblog/img-1.png')} alt="How To Tell If A Phone Is Unlocked | UpTradeit.com" />
                 </div>
                 <div className="right">
                   <h3>How To Tell If A Phone Is Unlocked</h3>

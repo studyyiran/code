@@ -1,8 +1,8 @@
 import { Request } from "utils";
-import { IOpts } from "@/utils/request.interface";
+import { IOpts } from "utils/request.interface";
 import { IQueryParams, IAppendOrderParams } from "../interface/index.interface";
 import config from "../../../config/index";
-import { IPreOrder } from "@/store/interface/user.interface";
+import { IPreOrder } from "store/interface/user.interface";
 
 // 根据类目获取品牌列表
 export const getBrandsByCid = <T>(categoryId = 1) => {

@@ -1,10 +1,10 @@
 import React, { useEffect, useContext, useReducer } from "react";
 import "./index.less";
 import { SelectModelContext, ISelectModelContext } from "../context";
-import ModalCard from "@/pages/sell/selectModelProcess/model/components/modalCard";
-import { PhoneInfoWrapper } from "@/pages/sell/selectModelProcess/condition/components/phoneInfoWrapper";
+import ModalCard from "pages/sell/selectModelProcess/model/components/modalCard";
+import { PhoneInfoWrapper } from "pages/sell/selectModelProcess/condition/components/phoneInfoWrapper";
 import { findArrByKey } from "./util";
-import { removeAllSpace } from "@/pages/sell/util";
+import { removeAllSpace } from "pages/sell/util";
 
 export default function ModelContainer(props: any) {
   return (

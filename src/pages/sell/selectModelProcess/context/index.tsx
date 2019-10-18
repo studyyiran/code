@@ -4,7 +4,7 @@ import React, {
   useCallback,
   useEffect
 } from "react";
-import { IReducerAction } from "@/interface/index.interface";
+import { IReducerAction } from "interface/index.interface";
 import {
   getBrands,
   getExpressFee,
@@ -24,8 +24,8 @@ import {
   getServerAnswerFormat,
   tranServerQuestionToLocalRender
 } from "../condition/util";
-import { setOrderCache } from "@/containers/order/util";
-import { getFromSession, setSession } from "@/utils/util";
+import { setOrderCache } from "containers/order/util";
+import { getFromSession, setSession } from "utils/util";
 
 let haveLoad = false;
 const sessionKey = "modelContext";

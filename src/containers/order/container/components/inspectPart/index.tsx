@@ -1,8 +1,8 @@
 import * as React from "react";
 import "./index.less";
 import "../../common.less";
-import Tag from "@/components/tag";
-import CheckInspectDiff from "@/containers/order/container/components/checkInspectDiff";
+import Tag from "components/tag";
+import CheckInspectDiff from "containers/order/container/components/checkInspectDiff";
 const priceUnit = "$";
 
 export default function InspectPart(props: any) {

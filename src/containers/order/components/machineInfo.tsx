@@ -1,6 +1,6 @@
 import * as React from "react";
 import "./machineInfo.less";
-import { staticContentConfig } from "@/utils/util";
+import { staticContentConfig } from "utils/util";
 
 export default function MachineInfo(props: any) {
   return (

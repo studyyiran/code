@@ -2,10 +2,10 @@ import * as React from "react";
 import { Collapse } from "antd";
 import { RouteComponentProps } from "react-router";
 import "./howitworks.less";
-import { HeaderTitle } from "@/components/headerTitle";
-import VideoComponent from "@/components/video";
-import RouterLink from "@/components/routerLink";
-import getSellPath from "@/utils/util";
+import { HeaderTitle } from "components/headerTitle";
+import VideoComponent from "components/video";
+import RouterLink from "components/routerLink";
+import getSellPath from "utils/util";
 const { Panel } = Collapse;
 
 class HowItWorks extends React.Component<RouteComponentProps> {

@@ -15,7 +15,7 @@ export default class HowToTransferAndroid extends React.Component {
             <em />
           </div>
         </div>
-        <img src={require('@/images/staticblog/img-3.png')} alt="Android to Android Contact Transfer | UpTradeit.com" />
+        <img src={require('images/staticblog/img-3.png')} alt="Android to Android Contact Transfer | UpTradeit.com" />
         <p>Getting a new phone is great, but it can be so time-consuming to set up a new device exactly how you want it. Downloading all of your apps, logging in to all of your accounts, playing with the settings, and getting everything just the way you want it can take quite a while. </p>
         <p>Luckily, it’s really easy to transfer contacts from Android to Android. There are a couple transfer methods to choose from that will quickly and automatically move your contacts over from your old phone to your new one, giving you one less thing to worry about.</p>
         <h2>Sync Your Contact Data With Your Gmail Account</h2>

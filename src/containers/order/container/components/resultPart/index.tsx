@@ -1,7 +1,7 @@
 import * as React from "react";
 import "./index.less";
-import Tag from "@/components/tag";
-import { staticContentConfig } from "@/utils/util";
+import Tag from "components/tag";
+import { staticContentConfig } from "utils/util";
 
 const priceUnit = "$";
 export default function ResultPart(props: any) {

@@ -16,7 +16,7 @@ export default class Broken extends React.Component {
           </div>
         </div>
         <Link to={'/'} />
-        <img src={require('@/images/single/iphone_banner.png')} alt="" className="banner" />
+        <img src={require('images/single/iphone_banner.png')} alt="" className="banner" />
         <p>To prepare your iPhone for shipment to UpTrade you will need to complete the following steps to ensure you keep your personal data safe and the iPhone is fully prepped for us to sell with no issues. You will want to follow Apple’s recommended steps to do so. Links to Apple’s Support page provided below for your convenience. </p>
 
         <div className="list-box">
@@ -25,7 +25,7 @@ export default class Broken extends React.Component {
               <span className="number">1</span>
               <span className="text">Unpair Apple Watch</span>
             </div>
-            <img src={require('@/images/single/iphone_1.png')} alt="" />
+            <img src={require('images/single/iphone_1.png')} alt="" />
 
             <p>
               <a href="https://support.apple.com/en-us/HT204568">Unpair Apple Watch</a>
@@ -56,7 +56,7 @@ export default class Broken extends React.Component {
               <dt>Erase All Content and Settings</dt>
               <dd>Go to Settings > General > Reset > Erase All Content and Settings. If you turned on Find My iPhone, you might need to enter your Apple ID and password. For more in depth instructions follow Apple’s <a href="https://support.apple.com/en-us/HT201351">factory reset iPhone</a> instructions.</dd>
             </dl>
-            <img className="img-270" src={require('@/images/single/iphone_2.png')} alt="" />
+            <img className="img-270" src={require('images/single/iphone_2.png')} alt="" />
           </div>
 
           <div className="list">

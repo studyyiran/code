@@ -15,7 +15,7 @@ export default class HowToTellUnlocked extends React.Component {
             <em />
           </div>
         </div>
-        <img src={require('@/images/staticblog/img-2.png')} alt="Smartphone lifespan | UpTradeit.com" />
+        <img src={require('images/staticblog/img-2.png')} alt="Smartphone lifespan | UpTradeit.com" />
         <p>As with any electronic device, there's a shelf life and your smartphone is no different. Granted, most smartphones today can last quite a while, and usually, most users are swapping out their old phones to boost performance, not cause the device is ‘dead'.</p>
         <p>In fact, the average smartphone user today keeps their phone for 2 to 3 years before considering to upgrade to a new one. </p>
         <p>Why 2 to 3 years? Well there's a set of factors that play into this lifespan beyond just a dead device, and we'll explore them below:</p>

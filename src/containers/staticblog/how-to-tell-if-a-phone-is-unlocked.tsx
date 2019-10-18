@@ -15,7 +15,7 @@ export default class HowToTellUnlocked extends React.Component {
             <em />
           </div>
         </div>
-        <img src={require('@/images/staticblog/img-1.png')} alt="How To Tell If A Phone Is Unlocked | UpTradeit.com" />
+        <img src={require('images/staticblog/img-1.png')} alt="How To Tell If A Phone Is Unlocked | UpTradeit.com" />
         <p>If you’ve recently discovered the world of unlocked smartphone devices, you’re probably asking yourself some questions.</p>
         <p>What does it actually mean when a phone is "Unlocked?"  If you use a ATT, Verizon, Sprint or other carrier phone, can you get that phone unlocked?</p>
         <p>Is there any benefit in using an unlocked phone? What is the aftermarket resale value of an unlocked phone?</p>

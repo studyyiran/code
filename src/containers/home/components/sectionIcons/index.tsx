@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ISectionIcons } from "./index.interface";
 import "./index.less";
-import Svg from "@/components/svg";
+import Svg from "components/svg";
 
 export function SectionIcons(props: ISectionIcons) {
   const { descArr = [] } = props;

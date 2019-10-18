@@ -2,16 +2,23 @@ import {
   IProgressType,
   IShippingAddress,
   IProgressDot
-} from "@/containers/order/interface/order.inerface";
+} from "containers/order/interface/order.inerface";
 import * as moment from "moment-timezone";
-import OrderPlacedIcon from "@/images/order/orderPlaced.png";
-import PackageSentIcon from "@/images/order/packageSent.png";
-import PackageReceivedIcon from "@/images/order/packageReceived.png";
-import InspectionCompleteIcon from "@/images/order/inspectionComplete.png";
-import ListSaleIcon from "@/images/order/listForSale.png";
-import OrderCompleteIcon from "@/images/order/orderComplete.png";
-import ReturnRequestIcon from "@/images/order/returnRequest.png";
-import { getFromSession, setSession } from "@/utils/util";
+// @ts-ignore
+import OrderPlacedIcon from "images/order/orderPlaced.png";
+// @ts-ignore
+import PackageSentIcon from "images/order/packageSent.png";
+// @ts-ignore
+import PackageReceivedIcon from "images/order/packageReceived.png";
+// @ts-ignore
+import InspectionCompleteIcon from "images/order/inspectionComplete.png";
+// @ts-ignore
+import ListSaleIcon from "images/order/listForSale.png";
+// @ts-ignore
+import OrderCompleteIcon from "images/order/orderComplete.png";
+// @ts-ignore
+import ReturnRequestIcon from "images/order/returnRequest.png";
+import { getFromSession, setSession } from "utils/util";
 
 export function getReactNodeConfig(status: any, showReturnShipping?: string) {
   const ReactNodeConfig = {

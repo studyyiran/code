@@ -1,4 +1,4 @@
-import config from "@/config/index";
+import config from "config/index";
 import {
   IQueryParams,
   IInquiryDetail,
@@ -18,10 +18,10 @@ import {
   ITbdInfo,
   ISubSkuPricePropertyValues
 } from "../index.interface";
-import { IPreOrder } from "@/store/interface/user.interface";
-import UserStore from "@/store/user";
-import { IOrderDetail } from "@/containers/order/interface/order.inerface";
-import EmailModal from "@/components/emailModal/index";
+import { IPreOrder } from "store/interface/user.interface";
+import UserStore from "store/user";
+import { IOrderDetail } from "containers/order/interface/order.inerface";
+import EmailModal from "components/emailModal/index";
 class YourPhone implements IYourPhoneStore {
   @observable public carriers: ICarrier[] = [];
   @observable public brands: IBrands[] = [];
@@ -72,6 +72,7 @@ class YourPhone implements IYourPhoneStore {
   @observable public activeConditions = {}; // 选择的ppvn
   @observable public isAddressValuesAndDisabled: boolean = true;
   @observable public isPaymentFormFilled: boolean = false;
+  // @ts-ignore
   @observable public americaStates: IAmericaState | null;
   @observable public tbdInfo: ITbdInfo = {
     storage: "",

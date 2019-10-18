@@ -1,7 +1,7 @@
 import { observable, action, autorun, computed } from 'mobx';
 import * as Api from '../api/blog.api';
 import { IBlog, IBlogStore, ITag, IPagination } from '../interface/blog.interface'
-import { IRequestResWithPage } from '@/utils/request.interface';
+import { IRequestResWithPage } from 'utils/request.interface';
 
 
 // enum ERobots {

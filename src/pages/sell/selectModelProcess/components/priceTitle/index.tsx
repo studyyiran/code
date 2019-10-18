@@ -3,7 +3,7 @@ import "./index.less";
 import {
   ISelectModelContext,
   SelectModelContext
-} from "@/pages/sell/selectModelProcess/context";
+} from "pages/sell/selectModelProcess/context";
 
 export default function PriceTitle(props: any) {
   const selectModelContext = useContext(SelectModelContext);

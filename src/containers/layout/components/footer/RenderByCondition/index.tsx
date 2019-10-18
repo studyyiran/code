@@ -3,7 +3,7 @@ import React from "react";
 import {
   IHomeProps,
   IHomeState
-} from "@/containers/home/interface/index.interface";
+} from "containers/home/interface/index.interface";
 
 interface IRenderByCondition {
   isMobile?: boolean;

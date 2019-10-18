@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import { IBrandsProps, ICarrier } from './interface/index.interface';
-import LayOut from '@/containers/aboutphone/layout';
-import CarrierItem from '@/containers/aboutphone/components/carrieritem';
+import LayOut from 'containers/aboutphone/layout';
+import CarrierItem from 'containers/aboutphone/components/carrieritem';
 import './carriers.less';
 import Breadcrumb from './components/breadcrumb';
-import ProgressBar from '@/containers/aboutphone/components/progressbar--mobile';
-import config from '@/config';
+import ProgressBar from 'containers/aboutphone/components/progressbar--mobile';
+import config from 'config';
 
 @inject('yourphone', 'user', 'common')
 @observer

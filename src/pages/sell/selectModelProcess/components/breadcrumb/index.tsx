@@ -3,7 +3,7 @@ import "./index.less";
 import { SelectModelContext, ISelectModelContext } from "../../context";
 import { inject, observer } from "mobx-react";
 import { staticRouter } from "../../config/staticRouter";
-import Svg from "@/components/svg";
+import Svg from "components/svg";
 
 @inject("yourphone", "user", "common")
 @observer

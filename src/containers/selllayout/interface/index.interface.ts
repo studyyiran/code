@@ -1,6 +1,6 @@
-import { IUserStoreNew } from '@/store/interface/user.interface';
-import { IYourPhoneStore } from '@/containers/aboutphone/interface/index.interface';
-import { ICommonStore } from '@/store/interface/common.interface';
+import { IUserStoreNew } from 'store/interface/user.interface';
+import { IYourPhoneStore } from 'containers/aboutphone/interface/index.interface';
+import { ICommonStore } from 'store/interface/common.interface';
 export interface ILeftSideState {
   steps: ISteps[]
 }

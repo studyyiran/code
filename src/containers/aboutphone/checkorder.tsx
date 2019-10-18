@@ -2,14 +2,14 @@ import * as React from 'react';
 import classnames from 'classnames';
 import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
-import config from '@/config';
-import Layout from '@/containers/aboutphone/layout';
+import config from 'config';
+import Layout from 'containers/aboutphone/layout';
 import './checkorder.less';
 import { Button } from 'antd';
 import { ICheckOutProps, ICheckOutStates, EBrandType, EShipmentType } from './interface/index.interface';
-import { checkOrderPageValidate } from '@/containers/aboutphone/pageValidate';
+import { checkOrderPageValidate } from 'containers/aboutphone/pageValidate';
 import { IOrderDetail } from '../order/interface/order.inerface';
-import { noteUserModal } from '@/containers/aboutphone/pageValidate';
+import { noteUserModal } from 'containers/aboutphone/pageValidate';
 
 @inject('yourphone', 'user', 'common')
 @observer

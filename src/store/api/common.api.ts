@@ -1,6 +1,6 @@
 import { Request } from "utils";
-import { IOpts } from "@/utils/request.interface";
-// import { user } from '@/utils/requestPath';
+import { IOpts } from "utils/request.interface";
+// import { user } from 'utils/requestPath';
 // import { ECaptchaErrCode } from '../interface/user.interface';
 export const getPostion = () => {
   const dwindow = window as any;

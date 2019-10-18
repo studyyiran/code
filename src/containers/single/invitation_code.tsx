@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Input, Button, Form, Icon } from 'antd';
-import config from '@/config';
+import config from 'config';
 import './invitation_code.less';
 export default class InvationCode extends React.Component<RouteComponentProps> {
   public state = {

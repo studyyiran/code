@@ -1,7 +1,7 @@
 import * as React from "react";
 import { observer, inject } from "mobx-react";
 import { Link } from "react-router-dom";
-import { Tabs } from "@/components/tabs";
+import { Tabs } from "components/tabs";
 // @ts-ignore
 const TabPane = Tabs.TabPane;
 import {
@@ -13,10 +13,10 @@ import {
 import "./list.less";
 import "./common.less";
 import * as moment from "moment-timezone";
-import { shareComponent } from "@/utils/function";
-import { HeaderTitle } from "@/components/headerTitle";
-import Blog from "@/containers/blog/components/blogCard";
-import RouterLink from "@/components/routerLink";
+import { shareComponent } from "utils/function";
+import { HeaderTitle } from "components/headerTitle";
+import Blog from "containers/blog/components/blogCard";
+import RouterLink from "components/routerLink";
 
 @inject("blog")
 @observer

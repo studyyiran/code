@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./index.less";
 import * as moment from "moment-timezone";
 import { addDate } from "utils";
-import Svg from "@/components/svg";
+import Svg from "components/svg";
 
 interface IOption {
   children: any;

@@ -3,8 +3,8 @@ import { observer, inject } from "mobx-react";
 import { IBlogListProps, IBlog } from "./interface/blog.interface";
 import "./tag.less";
 import "./common.less";
-import { shareComponent } from "@/utils/function";
-import Blog from "@/containers/blog/components/blogCard";
+import { shareComponent } from "utils/function";
+import Blog from "containers/blog/components/blogCard";
 @inject("blog")
 @observer
 export default class BlogList extends React.Component<IBlogListProps> {

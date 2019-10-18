@@ -1,6 +1,6 @@
 import * as React from 'react';
-import HeaderWithSearch from '@/containers/aboutphone/components/headerwithsearch';
-import NavigatorWithBar from '@/components/navigatorWithBar';
+import HeaderWithSearch from 'containers/aboutphone/components/headerwithsearch';
+import NavigatorWithBar from 'components/navigatorWithBar';
 import './layout.less';
 import { ILayOutProps } from './interface/index.interface';
 

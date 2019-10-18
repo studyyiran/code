@@ -8,17 +8,17 @@ import { IReview } from "./components/review/index.interface";
 import { BrandLogo } from "./components/brandLogo";
 import { SectionIcons } from "./components/sectionIcons";
 import { Carousel } from "antd";
-import { RenderByCondition } from "@/containers/layout/components/footer/RenderByCondition";
+import { RenderByCondition } from "containers/layout/components/footer/RenderByCondition";
 import { useContext } from "react";
 import {
   ISelectModelContext,
   SelectModelContext
-} from "@/pages/sell/selectModelProcess/context";
-import VideoComponent from "@/components/video";
-import NewBuyNotice from "@/containers/home/components/newBuyNotice";
-import RouterLink from "@/components/routerLink";
-import DocumentTitle from "@/components/DocumentTitle";
-import getSellPath from "@/utils/util";
+} from "pages/sell/selectModelProcess/context";
+import VideoComponent from "components/video";
+import NewBuyNotice from "containers/home/components/newBuyNotice";
+import RouterLink from "components/routerLink";
+import DocumentTitle from "components/DocumentTitle";
+import getSellPath from "utils/util";
 
 const descPart1 = {
   descArr: [
@@ -163,14 +163,14 @@ class Home extends React.Component<IHomeProps, IHomeState> {
       [
         {
           index: 1,
-          img: require("@/images/home/icon_1.png"),
+          img: require("images/home/icon_1.png"),
           title: "Price Guarantee",
           content:
             "Go through our price calculator and we’ll provide you a minimum guaranteed price based on the condition and market value of your electronics. If we sell the device for more, you’ll get paid more."
         },
         {
           index: 2,
-          img: require("@/images/home/icon_2.png"),
+          img: require("images/home/icon_2.png"),
           title: "Clean & Package",
           content:
             "Worry free instructions will be provided to help you wipe and prepare your electronics for shipment. We don’t accept electronics that have been reported lost or stolen."
@@ -179,7 +179,7 @@ class Home extends React.Component<IHomeProps, IHomeState> {
       [
         {
           index: 3,
-          img: require("@/images/home/icon_3.png"),
+          img: require("images/home/icon_3.png"),
           title: "Ship for Free",
           content:
             "Shipping is on us. A prepaid shipping label will be sent to you for mailing your electronics to us."
@@ -188,13 +188,13 @@ class Home extends React.Component<IHomeProps, IHomeState> {
       [
         {
           index: 4,
-          img: require("@/images/home/icon_4.png"),
+          img: require("images/home/icon_4.png"),
           title: "You Get Paid Fast",
           content: "Multiple payment options to get cash how you want."
         },
         {
           index: 5,
-          img: require("@/images/home/icon_5.png"),
+          img: require("images/home/icon_5.png"),
           title: "You Get Paid More",
           content:
             "Unlike other trade in services, we cut out the middleman and pass on those savings directly to you. That means more cash in your pocket."

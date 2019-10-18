@@ -4,7 +4,7 @@ import { inject, observer } from "mobx-react";
 import { Checkbox, Button } from "antd";
 import Information from "../information";
 import PaymentPage from "../payment";
-import ChangeModal from "@/containers/aboutphone/components/changemodal";
+import ChangeModal from "containers/aboutphone/components/changemodal";
 import "./index.less";
 import {
   IDoneProps,
@@ -14,14 +14,14 @@ import {
 } from "../../index.interface";
 import { ModalProps } from "antd/lib/modal";
 import OrderInfo from "./orderInfo";
-import { noteUserModal } from "@/containers/aboutphone/pageValidate";
-import ButtonGroup from "@/pages/sell/selectModelProcess/components/buttonGroup";
+import { noteUserModal } from "containers/aboutphone/pageValidate";
+import ButtonGroup from "pages/sell/selectModelProcess/components/buttonGroup";
 import RenderCard from "./renderCard";
 import {
   SelectModelContext,
   ISelectModelContext
-} from "@/pages/sell/selectModelProcess/context";
-import Modal from "@/components/modal";
+} from "pages/sell/selectModelProcess/context";
+import Modal from "components/modal";
 const titleCollect = {
   [EChangeType.SHIPPING]: {
     main: 'Change Your Information',
@@ -71,6 +71,7 @@ export default function SummaryWrapper(props: any) {
 @inject("yourphone", "user", "common")
 @observer
 class Summary extends React.Component<IDoneProps, IDoneStates> {
+  // @ts-ignore
   public pageRef: React.Component;
   public readonly state: Readonly<IDoneStates> = {
     isChecked: true, // 勾选协议（多余字段）

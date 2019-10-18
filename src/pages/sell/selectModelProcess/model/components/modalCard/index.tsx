@@ -1,8 +1,8 @@
 import React, { useReducer, useEffect } from "react";
 import "./index.less";
-import { findArrByKey } from "@/pages/sell/selectModelProcess/model/util";
-import { IReducerAction } from "@/interface/index.interface";
-import { safeEqual } from "@/utils/util";
+import { findArrByKey } from "pages/sell/selectModelProcess/model/util";
+import { IReducerAction } from "interface/index.interface";
+import { safeEqual } from "utils/util";
 
 // const attrConfig = {
 //   PRODUCT_ID: "productId",

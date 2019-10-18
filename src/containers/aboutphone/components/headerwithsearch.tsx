@@ -2,12 +2,12 @@ import * as React from 'react';
 import { observer } from 'mobx-react';
 import classnames from 'classnames';
 import './headerwithsearch.less';
-import config from '@/config';
+import config from 'config';
 import { Input, Tooltip } from 'antd';
-import { INavigatorObj, IProductModel } from '@/containers/aboutphone/interface/index.interface';
-import yourphoneStore from '@/containers/aboutphone/store/yourphone.store';
-import userStore from '@/store/user';
-import EventHandler from '@/utils/event';
+import { INavigatorObj, IProductModel } from 'containers/aboutphone/interface/index.interface';
+import yourphoneStore from 'containers/aboutphone/store/yourphone.store';
+import userStore from 'store/user';
+import EventHandler from 'utils/event';
 import Clipboard from 'clipboard';
 interface IStates {
   navigatorObj: INavigatorObj | null;
@@ -102,7 +102,7 @@ export default class BrandHeader extends React.Component<{ userEmail?: string },
         {
           showAppendOrder && (
             <div className="append-order">
-              <img src={require('@/images/yourphone/success.png')} />
+              <img src={require('images/yourphone/success.png')} />
               <span>Order placed successfully! Order number {yourphoneStore.orderDetail && yourphoneStore.orderDetail.orderNo}</span>
               <Tooltip placement="right" title={this.state.copyMessage} visible={this.state.copyVisible}>
                 <span id="copy-btn" data-clipboard-text={yourphoneStore.orderDetail && yourphoneStore.orderDetail.orderNo}>Copy</span>
@@ -164,7 +164,7 @@ export default class BrandHeader extends React.Component<{ userEmail?: string },
       brandId: config.DEFAULT.otherBrandsId,
       categoryId: 0,
       id: 0,
-      imageUrl: require('@/images/noprice.png'),
+      imageUrl: require('images/noprice.png'),
       name: 'Other',
       skuPricePropertyNames: [],
       activeModelId: 0,

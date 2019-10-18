@@ -1,7 +1,7 @@
 import * as React from "react";
 import "./index.less";
 import ReportModalContent from "../reportModalContent";
-import Modal from "@/components/modal";
+import Modal from "components/modal";
 
 export default function CheckInspectDiff(props: any) {
   const { phoneConditionQuestion, inquiryInfo } = props;

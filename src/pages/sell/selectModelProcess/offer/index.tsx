@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
 import "./index.less";
 import { SelectModelContext, ISelectModelContext } from "../context";
-import Svg from "@/components/svg";
-import TipsIcon from "@/pages/sell/selectModelProcess/components/tipsIcon";
+import Svg from "components/svg";
+import TipsIcon from "pages/sell/selectModelProcess/components/tipsIcon";
 import { Collapse } from "antd";
-import { currencyTrans } from "@/utils/util";
-import { Tabs } from "@/components/tabs";
-import Tag from "@/components/tag";
+import { currencyTrans } from "utils/util";
+import { Tabs } from "components/tabs";
+import Tag from "components/tag";
 const { Panel } = Collapse;
 
 export default function Brand(props: any) {

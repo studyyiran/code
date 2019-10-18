@@ -2,7 +2,7 @@ import * as React from 'react';
 import "./blog.less"
 import "./terms.less"
 import { inject, observer } from 'mobx-react';
-import { ICommonProps } from '@/store/interface/common.interface';
+import { ICommonProps } from 'store/interface/common.interface';
 
 
 @inject('common')

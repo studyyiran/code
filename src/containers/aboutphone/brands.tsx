@@ -1,16 +1,17 @@
 import * as React from "react";
 import { inject, observer } from "mobx-react";
 import { IBrandsProps, IBrands } from "./interface/index.interface";
-import LayOut from "@/containers/aboutphone/layout";
-import BrandItem from "@/containers/aboutphone/components/branditem";
+import LayOut from "containers/aboutphone/layout";
+import BrandItem from "containers/aboutphone/components/branditem";
 import "./brands.less";
-import config from "@/config";
-import Breadcrumb from "@/containers/aboutphone/components/breadcrumb";
-import ProgressBar from "@/containers/aboutphone/components/progressbar--mobile";
+import config from "config";
+import Breadcrumb from "containers/aboutphone/components/breadcrumb";
+import ProgressBar from "containers/aboutphone/components/progressbar--mobile";
 // import Clipboard from 'clipboard';
 
 @inject("yourphone", "user", "common")
 @observer
+// @ts-ignore
 export default class Brands extends React.Component<IBrandsProps> {
   public componentDidMount() {
     // 显示左侧价格模块

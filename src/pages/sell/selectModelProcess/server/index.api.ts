@@ -1,10 +1,10 @@
 import { Request } from "utils";
-import { IOpts } from "@/utils/request.interface";
+import { IOpts } from "utils/request.interface";
 import { IQueryParams, IAppendOrderParams } from "../index.interface";
-import config from "@/config/index";
-import { IPreOrder } from "@/store/interface/user.interface";
+import config from "config/index";
+import { IPreOrder } from "store/interface/user.interface";
 import { mockgetexpressfee } from "../../mock";
-import { requestGetResponse, requestWrapper } from "@/utils/util";
+import { requestGetResponse, requestWrapper } from "utils/util";
 
 // 获取机型列表, 以及根据关键字搜索机型
 export const getProducts = <T>(brandId: string, categoryId: string) => {

@@ -2,10 +2,10 @@ import * as React from "react";
 import { inject, observer } from "mobx-react";
 import { Row, Col, Form, Input, message } from "antd";
 import { IPaymentProps, IPaymentStates, EPayType } from "../../index.interface";
-import yourPhoneStore from "@/containers/aboutphone/store/yourphone.store";
+import yourPhoneStore from "containers/aboutphone/store/yourphone.store";
 import "./index.less";
-import ButtonGroup from "@/pages/sell/selectModelProcess/components/buttonGroup";
-import PriceTitle from "@/pages/sell/selectModelProcess/components/priceTitle";
+import ButtonGroup from "pages/sell/selectModelProcess/components/buttonGroup";
+import PriceTitle from "pages/sell/selectModelProcess/components/priceTitle";
 /**
  * 根据yourphone的payment来判断用户选择哪种收款方式： PAYPAL | ECHECK
  */

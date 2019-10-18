@@ -1,6 +1,6 @@
 import { Request } from "utils";
-import { IOpts } from "@/utils/request.interface";
-import { requestGetResponse, requestWrapper } from "@/utils/util";
+import { IOpts } from "utils/request.interface";
+import { requestGetResponse, requestWrapper } from "utils/util";
 
 // 新的获取订单详情
 export function checkForOrder<T>(userEmail: string, groupOrderNo: string) {

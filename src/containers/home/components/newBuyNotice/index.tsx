@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { notification } from "antd";
 import "./index.less";
-import Svg from "@/components/svg";
+import Svg from "components/svg";
 
 export default function NewBuyNotice(props: any): any {
   const [current, setCurrent] = useState(0);

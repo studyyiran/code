@@ -1,5 +1,5 @@
 import { Collapse } from "antd";
-import Svg from "@/components/svg";
+import Svg from "components/svg";
 import React from "react";
 const { Panel } = Collapse;
 import "./index.less";
@@ -23,6 +23,7 @@ export default function CollapsePanelList(props: {
           );
         }}
         accordion={true}
+//      @ts-ignore
         onChange={onChange}
         defaultActiveKey={defaultActiveKey}
         activeKey={activeKey}

@@ -1,5 +1,5 @@
 import { Request } from "utils";
-import { IOpts } from "@/utils/request.interface";
+import { IOpts } from "utils/request.interface";
 import { IPagination } from '../interface/blog.interface';
 
 export const getPageList = <T>(params: IPagination, getAll?: boolean) => {

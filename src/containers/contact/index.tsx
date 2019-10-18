@@ -1,14 +1,14 @@
 import * as React from "react";
 import "./index.less";
 import "../commonCss/contact.less";
-import FormPartWrapper from "@/components/formPart/form";
+import FormPartWrapper from "components/formPart/form";
 import { Checkbox, Col, Row, Form, Input, message } from "antd";
 import { useState } from "react";
 import { useContext } from "react";
 import {
   ISelectModelContext,
   SelectModelContext
-} from "@/pages/sell/selectModelProcess/context";
+} from "pages/sell/selectModelProcess/context";
 const { Item } = Form;
 const { TextArea } = Input;
 interface IStaticContent {

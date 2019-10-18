@@ -1,7 +1,7 @@
 import * as moment from "moment-timezone";
 import * as React from "react";
 import "./index.less";
-import RouterLink from "@/components/routerLink";
+import RouterLink from "components/routerLink";
 
 export default function Blog(props: any) {
   const { slug, thumbnailFullUrl, title, releaseDt, summary } = props;

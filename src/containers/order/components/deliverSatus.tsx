@@ -3,8 +3,9 @@ import {
   IOrderProps,
   IDeliverSatus,
   IShippingAddress
-} from "@/containers/order/interface/order.inerface";
-import UPSICON from "@/images/order/upsIcon.png";
+} from "containers/order/interface/order.inerface";
+// @ts-ignore
+import UPSICON from "images/order/upsIcon.png";
 import "./deliverSatus.less";
 import { Modal } from "antd";
 

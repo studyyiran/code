@@ -1,8 +1,8 @@
 import * as React from "react";
 import { inject, observer } from "mobx-react";
 import { renderRoutes } from "react-router-config";
-import { noteUserModal } from "@/containers/aboutphone/pageValidate";
-import config from "@/config";
+import { noteUserModal } from "containers/aboutphone/pageValidate";
+import config from "config";
 import "./index.less";
 import LeftSide from "./components/leftside";
 import GuaranteedPrice from "./components/guaranteedprice";
@@ -11,7 +11,7 @@ import {
   ISellLayoutProps,
   ISellLayoutState
 } from "./interface/index.interface";
-import { getFromSession } from "@/utils/util";
+import { getFromSession } from "utils/util";
 
 @inject("yourphone", "user", "common")
 @observer

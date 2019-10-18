@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.less";
-import Svg from "@/components/svg";
+import Svg from "components/svg";
 let bodyRoot = document.getElementById("modal-root");
 if (!bodyRoot) {
   bodyRoot = document.createElement("div");

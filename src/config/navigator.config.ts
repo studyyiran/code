@@ -1,5 +1,5 @@
 import * as moment from 'moment-timezone';
-import { addDate } from '@/utils'
+import { addDate } from 'utils'
 export default {
   '/sell/yourphone/brand': {
     step: 0,

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Input, notification } from 'antd';
 import { Link } from 'react-router-dom';
 import config from '../../../config';
-import commonStore from '@/store/common';
+import commonStore from 'store/common';
 import './footer.less';
 
 export default class Footer extends React.Component {
@@ -37,7 +37,7 @@ export default class Footer extends React.Component {
           </div>
         </div>
         <div className="logo-box">
-          <img src={require('@/images/logo.png')} alt="" />
+          <img src={require('images/logo.png')} alt="" />
           <div className="copy">&copy; 2019 UpTrade Technologies, Inc.</div>
         </div>
         <div className="link-list">

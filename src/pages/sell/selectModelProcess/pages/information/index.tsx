@@ -1,11 +1,11 @@
 import * as React from "react";
 import { inject, observer } from "mobx-react";
 import { Form, Col, Row, Input } from "antd";
-import Layout from "@/containers/aboutphone/layout";
+import Layout from "containers/aboutphone/layout";
 import "./index.less";
 import { IShippingProps, IShippingState } from "../../index.interface";
-import { IProductInfo } from "@/store/interface/user.interface";
-import yourPhoneStore from "@/containers/aboutphone/store/yourphone.store";
+import { IProductInfo } from "store/interface/user.interface";
+import yourPhoneStore from "containers/aboutphone/store/yourphone.store";
 import ButtonGroup from "../../components/buttonGroup";
 import classnames from "classnames";
 

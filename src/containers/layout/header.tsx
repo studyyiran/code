@@ -7,10 +7,10 @@ const { Panel } = Collapse;
 import {
   footerInfo,
   MbFooter
-} from "@/containers/layout/components/footer/footer";
-import Svg from "@/components/svg";
-import RouterLink from "@/components/routerLink";
-import { RenderByCondition } from "@/containers/layout/components/footer/RenderByCondition";
+} from "containers/layout/components/footer/footer";
+import Svg from "components/svg";
+import RouterLink from "components/routerLink";
+import { RenderByCondition } from "containers/layout/components/footer/RenderByCondition";
 
 export default function Header() {
   const [openColl, setOpenColl] = useState(false);
@@ -29,7 +29,7 @@ export default function Header() {
   }
   const RenderBackHome = () => (
     <RouterLink to="/">
-      <img className="logo" src={require("@/images/logo.svg")} />
+      <img className="logo" src={require("images/logo.svg")} />
     </RouterLink>
   );
   return (

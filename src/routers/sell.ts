@@ -1,6 +1,6 @@
 import Loadable from 'react-loadable';
-import redirectComponent from '@/components/redirectComponent';
-import getSellPath from "@/utils/util";
+import redirectComponent from 'components/redirectComponent';
+import getSellPath from "utils/util";
 
 export default [
   {
