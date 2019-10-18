@@ -4,7 +4,7 @@ import { inject, observer } from "mobx-react";
 import { Row, Col, Collapse, Form, Checkbox } from "antd";
 import { IPaymentProps, EShipmentType, EPayType } from "../../index.interface";
 import { shipmentPageValidate } from "../pageValidate";
-import config from "config";
+import config from "config/index";
 import moment from "moment";
 import { ChoiceQuestion } from "../../condition/components/renderByType/components/choiceQuestion/index";
 import "./index.less";

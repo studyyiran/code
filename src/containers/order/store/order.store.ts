@@ -28,7 +28,7 @@ import * as moment from "moment-timezone";
 // import { noteUserModal } from 'containers/aboutphone/pageValidate';
 import EmailModal from "components/emailModal/index";
 import {getFromSession, setSession} from "utils/util";
-// import config from 'config';
+// import config from 'config/index';
 moment.locale("en");
 
 class Store implements IOrderStore {

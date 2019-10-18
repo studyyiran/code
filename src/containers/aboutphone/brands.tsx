@@ -4,7 +4,7 @@ import { IBrandsProps, IBrands } from "./interface/index.interface";
 import LayOut from "containers/aboutphone/layout";
 import BrandItem from "containers/aboutphone/components/branditem";
 import "./brands.less";
-import config from "config";
+import config from "config/index";
 import Breadcrumb from "containers/aboutphone/components/breadcrumb";
 import ProgressBar from "containers/aboutphone/components/progressbar--mobile";
 // import Clipboard from 'clipboard';

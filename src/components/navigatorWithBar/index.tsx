@@ -1,5 +1,5 @@
 import * as React from 'react';
-import config from 'config';
+import config from 'config/index';
 import './index.less';
 import { Button, Icon } from 'antd';
 import { INavigatorObj } from 'containers/aboutphone/interface/index.interface';

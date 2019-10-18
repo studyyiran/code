@@ -6,7 +6,7 @@ import CarrierItem from 'containers/aboutphone/components/carrieritem';
 import './carriers.less';
 import Breadcrumb from './components/breadcrumb';
 import ProgressBar from 'containers/aboutphone/components/progressbar--mobile';
-import config from 'config';
+import config from 'config/index';
 
 @inject('yourphone', 'user', 'common')
 @observer

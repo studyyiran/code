@@ -2,7 +2,7 @@ import * as React from 'react';
 import classnames from 'classnames';
 import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
-import config from 'config';
+import config from 'config/index';
 import Layout from 'containers/aboutphone/layout';
 import './checkorder.less';
 import { Button } from 'antd';

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { observer } from 'mobx-react';
 import classnames from 'classnames';
 import './headerwithsearch.less';
-import config from 'config';
+import config from 'config/index';
 import { Input, Tooltip } from 'antd';
 import { INavigatorObj, IProductModel } from 'containers/aboutphone/interface/index.interface';
 import yourphoneStore from 'containers/aboutphone/store/yourphone.store';

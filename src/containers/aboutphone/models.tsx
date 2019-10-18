@@ -8,7 +8,7 @@ import { IModelsProps } from './interface/index.interface';
 import { modalPageValidate } from 'containers/aboutphone/pageValidate';
 import Breadcrumb from 'containers/aboutphone/components/breadcrumb';
 import ProgressBar from 'containers/aboutphone/components/progressbar--mobile';
-import config from 'config'
+import config from 'config/index'
 @inject('yourphone', 'user', 'common')
 @observer
 export default class Models extends React.Component<IModelsProps> {
