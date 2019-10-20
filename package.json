@@ -94,11 +94,13 @@
   "scripts": {
     "start": "cross-env REACT_APP_SERVER_ENV=DEV node scripts/start.js",
     "uat": "cross-env REACT_APP_SERVER_ENV=UAT node scripts/build.js",
+    "uatbuy": "cross-env REACT_APP_SERVER_ENV=UAT node scripts/buildbuy.js",
     "pre": "cross-env REACT_APP_SERVER_ENV=PRE node scripts/build.js",
     "pub": "cross-env REACT_APP_SERVER_ENV=PUB node scripts/build.js",
     "server:uat": "cross-env REACT_APP_SERVER_ENV=UAT node scripts/server.js",
     "server:pub": "cross-env REACT_APP_SERVER_ENV=PUB node scripts/server.js",
     "pm2:uat": "yarn run uat && yarn run server:uat && cp -R ecosystem.config.js build/",
+    "merge:uat": "yarn run uat && yarn run server:uat && yarn run uatbuy && cp -R ecosystem.config.js build/",
     "pm2:pub": "yarn run pub && yarn run server:pub && cp -R ecosystem.config.js build/",
     "pm2:qa": "cross-env REACT_APP_SERVER_ENV=QA node scripts/build.js && node scripts/server.js && cp -R ecosystem.config.js build/",
     "running": "node build/compiled.js",
