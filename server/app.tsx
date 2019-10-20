@@ -6,7 +6,7 @@ import Axios from "axios";
 import * as React from "react";
 import ReactDOMServer from "react-dom/server";
 import { matchRoutes, renderRoutes } from "react-router-config";
-import { StaticRouter, Switch } from "react-router-dom";
+import { StaticRouter, Switch, matchPath } from "react-router-dom";
 import { Provider } from "mobx-react";
 import Loadable from "react-loadable";
 
@@ -18,6 +18,8 @@ import TITLE from "../src/config/title.config";
 import { getBundles } from "react-loadable/webpack";
 import stats from "../build/react-loadable.json";
 import SiteMap from "./lib/sitemap";
+import { routerConfig } from "../src/buy/share/routerConfig";
+import { RenderWithOriginData } from "../src/buy/share/renderWithOriginData";
 
 const Router = new router();
 
@@ -111,11 +113,18 @@ const generateBundleScripts = intries => {
 //     next();
 //   });
 // })
-
+const isForSell = false
 // 转发静态资源的请求
-Router.get("/static/*", async (ctx: any, next: any) => {
-  await send(ctx, ctx.path, { root: `${__dirname}` });
-});
+if (isForSell) {
+  Router.get("/static/*", async (ctx: any, next: any) => {
+    await send(ctx, ctx.path, { root: `${__dirname}buy` });
+  });
+} else {
+  Router.get("/static/*", async (ctx: any, next: any) => {
+    await send(ctx, ctx.path, { root: `${__dirname}` });
+  });
+}
+
 Router.get("/email/*", async (ctx: any, next: any) => {
   await send(ctx, ctx.path, { root: `${__dirname}` });
 });
@@ -142,77 +151,108 @@ Router.all(
 );
 
 Router.get("*", async (ctx: any, next: any) => {
-  if (ctx.originalUrl === "/sitemap.xml") {
-    const xml = await SiteMap();
-    ctx.append("Content-Type", "application/xml");
-    ctx.body = xml;
-    return;
-  }
-  // 模板文件
-  let template = fs.readFileSync(__dirname + "/index.html", {
-    encoding: "utf-8"
-  });
-
-  let isIgnore = false;
-  // 如果在排除列表中，直接返回 html
-  for (let i = 0; i < CONFIG.routerIgnore.length; i++) {
-    if (ctx.path.includes(CONFIG.routerIgnore[i])) {
-      isIgnore = true;
-      break;
-    } else {
-      console.log(CONFIG.routerIgnore[i]);
+  if (isForSell) {
+    // 老的危险判断
+    if (ctx.originalUrl === "/sitemap.xml") {
+      const xml = await SiteMap();
+      ctx.append("Content-Type", "application/xml");
+      ctx.body = xml;
+      return;
     }
-  }
-  if (isIgnore) {
+    
+    // 老的危险判断
+    // 模板文件
+    let template = fs.readFileSync(__dirname + "/index.html", {
+      encoding: "utf-8"
+    });
+
+    let isIgnore = false;
+    // 如果在排除列表中，直接返回 html
+    for (let i = 0; i < CONFIG.routerIgnore.length; i++) {
+      if (ctx.path.includes(CONFIG.routerIgnore[i])) {
+        isIgnore = true;
+        break;
+      } else {
+        console.log(CONFIG.routerIgnore[i]);
+      }
+    }
+    if (isIgnore) {
+      ctx.body = template;
+      next();
+      return;
+    }
+    const matches = matchRoutes(clientRouter, ctx.path);
+    if (matches && matches[0] && matches[0].route["actions"]) {
+      const promises = matches[0].route["actions"].map(v => v());
+      await Promise.all(promises);
+    }
+
+    if (
+      matches &&
+      matches[0] &&
+      matches[0].match.params &&
+      matches[0].route["bootstrap"]
+    ) {
+      await matches[0].route["bootstrap"](matches[0].match.params);
+    }
+
+    template = mappingTitle(template, ctx.path, matches);
+    const modules = [];
+    const html = ReactDOMServer.renderToString(
+      <Loadable.Capture report={moduleName => modules.push(moduleName)}>
+        <Provider {...store}>
+          <StaticRouter location={ctx.path} context={{}}>
+            <Layout>
+              <Switch>{renderRoutes(clientRouter)}</Switch>
+            </Layout>
+          </StaticRouter>
+        </Provider>
+      </Loadable.Capture>
+    );
+    const bundles = getBundles(stats, modules);
+    const scripts = generateBundleScripts(bundles);
+    if (matches && matches[0]) {
+      if (matches[0].route["actions"] || matches[0].route["bootstrap"]) {
+        template = template.replace(
+          /(<\/head>)/,
+          "<script>var __SERVER_RENDER__INITIALSTATE__=" +
+            JSON.stringify(store) +
+            ";</script>$1"
+        );
+      }
+    }
+    template = template.replace(/(<\/body>)/, scripts.join() + "$1");
+    template = template.replace(/(<div id=\"root\">)/, "$1" + html);
     ctx.body = template;
-    next();
-    return;
-  }
+  } else {
+    const current = routerConfig.find((route: any) => {
+      return !!matchPath(ctx.path, route);
+    });
+    console.log(current);
+    if (current && current.Component) {
+      const { title, Component, getInitialProps } = current;
+      let originData: any = {};
+      if (getInitialProps) {
+        console.log("ajax start");
+        originData = await getInitialProps("testParams");
+        console.log(originData);
+        console.log("ajax end");
+      }
 
-  const matches = matchRoutes(clientRouter, ctx.path);
-
-  if (matches && matches[0] && matches[0].route["actions"]) {
-    const promises = matches[0].route["actions"].map(v => v());
-    await Promise.all(promises);
-  }
-
-  if (
-    matches &&
-    matches[0] &&
-    matches[0].match.params &&
-    matches[0].route["bootstrap"]
-  ) {
-    await matches[0].route["bootstrap"](matches[0].match.params);
-  }
-
-  template = mappingTitle(template, ctx.path, matches);
-  const modules = [];
-  const html = ReactDOMServer.renderToString(
-    <Loadable.Capture report={moduleName => modules.push(moduleName)}>
-      <Provider {...store}>
-        <StaticRouter location={ctx.path} context={{}}>
-          <Layout>
-            <Switch>{renderRoutes(clientRouter)}</Switch>
-          </Layout>
-        </StaticRouter>
-      </Provider>
-    </Loadable.Capture>
-  );
-  const bundles = getBundles(stats, modules);
-  const scripts = generateBundleScripts(bundles);
-  if (matches && matches[0]) {
-    if (matches[0].route["actions"] || matches[0].route["bootstrap"]) {
-      template = template.replace(
-        /(<\/head>)/,
-        "<script>var __SERVER_RENDER__INITIALSTATE__=" +
-          JSON.stringify(store) +
-          ";</script>$1"
+      let template = fs.readFileSync(__dirname + "buy/index.html", {
+        encoding: "utf-8"
+      });
+      const html = ReactDOMServer.renderToString(
+        <RenderWithOriginData originData={originData}>
+          <Component />
+        </RenderWithOriginData>
       );
+      template = template.replace(/(<div id=\"root\">)/, "$1" + html);
+      ctx.body = template;
+    } else {
+      ctx.body = "helloworld";
     }
   }
-  template = template.replace(/(<\/body>)/, scripts.join() + "$1");
-  template = template.replace(/(<div id=\"root\">)/, "$1" + html);
-  ctx.body = template;
 });
 
 export default Router;
