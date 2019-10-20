@@ -1,0 +1,66 @@
+@import (reference) "~buy/common/styles/index.less";
+@p1: {
+  .filter-item {
+    .test () {
+      background: rgba(248, 248, 248, 1);
+      color: rgba(19, 19, 57, 1);
+      margin: 16 * @px auto;
+      text-align: center;
+      height: 30 * @px;
+      line-height: 30 * @px;
+      font-size: 12px;
+      border-radius: 4px;
+      &[data-select="true"] {
+        color: @white;
+        background: @color-blue-liner;
+      }
+    }
+    h3 {
+      .font(16 * @px, @boldWeight, rgba(34, 34, 34, 1));
+      //padding-bottom: 17 * @px;
+      border-bottom: 1px solid @color-border;
+    }
+    > ul.item-container {
+      * {
+        .canclick();
+      }
+      li:last-child {
+        margin-bottom: 0;
+      }
+      &[data-isColor="true"] {
+        [data-select="true"] {
+          span {
+            border: 1px solid rgba(26, 180, 231, 1);
+          }
+        }
+        li {
+          display: inline-block;
+          margin: 0 10 * @px 10 * @px 0;
+        }
+      }
+      //&[data-rendertype="Storage"] {
+      //  li {
+      //    .test();
+      //  }
+      //}
+      &[data-type="Price"],
+      &[data-type="Condition"] {
+        li {
+          .test();
+        }
+      }
+      > li {
+        &.all {
+          display: block;
+        }
+        .font(16 * @px, @normalWeight, rgba(132, 132, 132, 1));
+        margin: 8 * @px 0;
+        &[data-select="true"] {
+          color: rgba(26, 180, 231, 1);
+        }
+      }
+    }
+  }
+};
+
+.hello(@p1);

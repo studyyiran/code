@@ -1,0 +1,19 @@
+@import (reference) "~buy/common/styles/index.less";
+@p: {
+  body {
+    .button-group.buttons-container {
+      flex-direction: column-reverse;
+      > button {
+        max-width: 100%;
+        &:first-child {
+          background: transparent;
+        }
+        &:last-child {
+          margin-bottom: 17 * @px;
+        }
+      }
+    }
+  }
+};
+
+.hello(@p);

@@ -1,0 +1,115 @@
+@import (reference) "~buy/common/styles/index.less";
+@p: {
+  .user-input-submit-button {
+    margin-top: 20 * @px;
+  }
+  .order-layout {
+    .setpage(1170 * @px);
+    > header {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      .mb({justify-content: center;});
+      > .img-container {
+        flex: 0 0 140 * @px;
+        > img {
+          width: 100%;
+        }
+      }
+      > .step-container {
+        display: flex;
+        align-items: center;
+        > li {
+          margin-left: 100 * @px;
+          .font(18 * @px, @normalWeight, rgba(153, 153, 153, 1));
+          &[data-current="true"] {
+            color: rgba(0, 0, 0, 1);
+            font-weight: @boldWeight;
+          }
+        }
+      }
+      padding: 32 * @px 0 24 * @px;
+      border-bottom: 1px solid @color-border;
+    }
+    .main {
+      display: flex;
+      justify-content: space-between;
+      padding: 30 * @px 0 80 * @px;
+      .main-content {
+        flex: 0 0 480 * @px;
+      }
+    }
+  }
+
+  #ismobile {
+    .order-layout {
+      .main {
+        .order-list-container {
+          .content-card {
+            .padding-layout:first-child {
+              .innerdiv {
+                .innerdiv-imgsize(60 * @px);
+                flex: 0 0 60*@px;
+                margin-right: 10*@px;
+              }
+            }
+          }
+        }
+        > *:first-child {
+          background: rgba(245, 247, 249, 1);
+        }
+        padding: 0 0 40 * @px 0;
+        flex-direction: column;
+        .ant-collapse-header {
+          padding-right: 18 * @px;
+        }
+        .mb-collapse-title-container {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          .mb-collapse-title {
+            .font(16 * @px, @normalWeight, rgba(26, 180, 231, 1));
+          }
+          .mb-collapse-title + span {
+            font-weight: @boldWeight;
+            font-size: 16 * @px;
+          }
+        }
+        .ant-collapse-item-active {
+          .ant-collapse-header {
+            border-bottom: 1px solid @color-border;
+            .svg-icon-set {
+              transform: rotate(180deg) !important;
+            }
+          }
+        }
+        .ant-collapse-header {
+          .svg-icon-set {
+            margin-left: 10 * @px;
+            transition: all 0.2s;
+          }
+        }
+        .ant-collapse-header[aria-expanded="false"] {
+          border-bottom: 1px solid @color-border;
+          border-radius: 0;
+        }
+
+        .main-content {
+          .mb-input-layout {
+            margin-bottom: 20 * @px;
+            > .change-user-container:not(:last-child) {
+              border-bottom: none;
+            }
+          }
+          .page-padding();
+          padding-top: 20 * @px;
+        }
+        .ant-collapse-content-box {
+          padding: 0;
+        }
+      }
+    }
+  }
+};
+
+.hello(@p);

@@ -1,0 +1,155 @@
+@import (reference) "~buy/common/styles/index.less";
+
+@world: {
+  .uptrade-policy-wrapper {
+    padding-bottom: 200*@px;
+    .common-home-width(@px);
+    margin: 0 auto;
+    .title {
+      border-bottom: 1px solid rgba(233, 233, 233, 1);
+      padding: 65*@px 0;
+      text-align: center;
+      font-size: 32*@px;
+      color: rgba(0, 0, 0, 1);
+    }
+
+    .content-show-wrapper {
+      margin-top: 55*@px;
+      display: flex;
+
+      .item-wrapper {
+        flex: 1;
+        text-align: center;
+
+        &:first-child {
+          .title-img {
+            width: 180*@px;
+            margin-top: 20*@px;
+          }
+        }
+
+        .title-img {
+          width: 200*@px;
+        }
+
+        .desc-wrapper {
+          margin-top: 10*@px;
+          color: rgba(0, 0, 0, 1);
+
+          .row-one {
+            font-size: 26*@px;
+            font-weight: bolder;
+          }
+
+          .row-second {
+            font-size: 24*@px;
+            margin-top: 10*@px;
+          }
+        }
+      }
+    }
+
+    .desc-content-wrapper {
+      margin-top: 147*@px;
+
+      .desc-title {
+        font-size: 26*@px;
+        color: rgba(0, 0, 0, 1);
+        font-weight: bolder;
+        margin-bottom: 10*@px;
+      }
+
+      .text {
+        font-size: 18*@px;
+        color: rgba(0, 0, 0, 1);
+        margin-bottom: 10*@px;
+      }
+
+      ul {
+        display: block !important;
+        list-style: disc !important;
+        padding-inline-start: 20*@px;
+
+        li {
+          list-style: disc !important;
+          font-size: 18*@px;
+          color: rgba(0, 0, 0, 1);
+          margin-bottom: 7*@px;
+        }
+
+        .phone {
+          color: #1AB4E7;
+          text-decoration: underline;
+        }
+      }
+
+      .banner {
+        width: 928*@px;
+        display: block;
+        margin: 120*@px auto;
+      }
+    }
+  }
+  .ismobile #root {
+    .uptrade-policy-wrapper {
+      width: 100%;
+      padding-left: 16*@px;
+      padding-right: 16*@px;
+      padding-bottom: 75*@px;
+
+      .title {
+        padding: 38*@px 0;
+        font-size: 24*@px;
+      }
+
+      .content-show-wrapper {
+        margin-top: 39*@px;
+        display: block;
+
+        .item-wrapper {
+          margin-bottom: 30*@px;
+        }
+
+        .title-img {
+          width: 150*@px;
+        }
+
+        .desc-wrapper {
+          margin-top: 0;
+
+          .row-one {
+            font-size: 18*@px;
+            font-weight: bolder;
+          }
+
+          .row-second {
+            font-size: 16*@px;
+            margin-top: 4*@px;
+          }
+        }
+      }
+
+      .desc-content-wrapper {
+        margin-top: 44*@px;
+
+        .text {
+          font-size: 16*@px;
+          margin-bottom: 5*@px;
+        }
+
+        ul {
+          li {
+            font-size: 14*@px;
+          }
+        }
+
+        .banner {
+          width: 100%;
+          display: block;
+          margin: 61*@px 0;
+        }
+      }
+    }
+  }
+};
+.hello(@world);

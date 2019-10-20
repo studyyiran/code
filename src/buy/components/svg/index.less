@@ -1,0 +1,16 @@
+@import (reference) '~buy/common/styles/index.less';
+@world: {
+  .svg-icon-set {
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+    // 应该响应的更合适
+    //font-size: 14*@px;
+    // 觉得不能设置
+    font-size: inherit;
+  }
+}
+
+.hello(@world);

@@ -1,0 +1,52 @@
+@import (reference) "~buy/common/styles/index.less";
+
+@p: {
+  .yr-modal.change-user-modal {
+    top: 50 * @px;
+  }
+  .change-user-container {
+    border-radius: 4px;
+    border: 1px solid @color-border;
+    padding: 10 * @px 16 * @px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    > div.left {
+      display: flex;
+      justify-content: space-between;
+      .pc({justify-content: flex-start;});
+      align-items: center;
+      flex: 1 0 0;
+      min-width: 0;
+      > span.tag {
+        color: rgba(132, 132, 132, 1);
+        margin-right: 30 * @px;
+        .pc({flex: 0 0 150 * @px;});
+      }
+      > span.content {
+        .text-overflow();
+        //min-width: 0;
+        //flex: 0 0 10 * @px;
+
+        .mb({max-width: 220 * @px;});
+        color: rgba(34, 34, 34, 1);
+      }
+    }
+    > div.change-button {
+      .canclick();
+      margin-left: 15 * @px;
+      color: rgba(26, 180, 231, 1);
+    }
+  }
+
+  #ismobile {
+    .change-user-container {
+      .left {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  }
+};
+
+.hello(@p);

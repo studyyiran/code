@@ -1,0 +1,43 @@
+@import (reference) "~buy/common/styles/index.less";
+@p1: {
+  .filter-list {
+    padding: 17 * @px;
+    width: 225 * @px;
+    margin-right: 24 * @px;
+    border: 1px solid rgba(233, 233, 233, 1);
+    .ant-collapse-icon-position-right
+      > .ant-collapse-item
+      > .ant-collapse-header
+      .ant-collapse-arrow {
+      right: 0;
+    }
+    [aria-expanded="true"] {
+      svg {
+        color: @color-blue-liner-use-2;
+      }
+    }
+    .ant-collapse-header {
+      border-bottom: 1px solid @color-border;
+    }
+    .ant-collapse > .ant-collapse-item:last-child > .ant-collapse-header {
+      border-radius: 0;
+      padding-bottom: 16 * @px;
+      margin-top: 16 * @px;
+    }
+    .ant-collapse > .ant-collapse-item > .ant-collapse-header {
+      padding: 0;
+      background: @white;
+    }
+    .ant-collapse-content > .ant-collapse-content-box {
+      padding: 0;
+    }
+  }
+  .circle {
+    border-radius: 50%;
+    width: 25 * @px;
+    height: 25 * @px;
+    display: inline-block;
+  }
+};
+
+.hello(@p1);

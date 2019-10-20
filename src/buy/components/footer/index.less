@@ -1,0 +1,231 @@
+@import (reference) "~buy/common/styles/index.less";
+
+@world: {
+  .comp-footer {
+    .flex-grid {
+      // 这块方案需要修改
+      .set-flex-grid(700 * @px);
+    }
+    .title-font() {
+      font-size: 18 * @px;
+      margin-bottom: 17 * @px;
+    }
+    .content-font() {
+      font-size: 14 * @px;
+      color: #ffffff;
+      margin-bottom: 8 * @px;
+    }
+    background: @tab-bar-color;
+    color: @white;
+    padding: 40 * @px 0 0;
+    .page-padding();
+
+    .width-container {
+      .last {
+        margin: 0 25 * @px 10 * @px 0;
+      }
+
+      > header.footer__logo {
+        font-size: 20 * @f;
+        margin-bottom: 30 * @px;
+
+        img {
+          width: 92 * @px;
+        }
+      }
+
+      > .container {
+        margin-bottom: 70 * @px;
+        //.layout-flex-twins(500*@px, 700*@px, {});
+        > .footer__group {
+          display: grid;
+          grid-template-columns: repeat(5, 1fr);
+
+          > ul {
+            // 130不太够似乎。很奇怪
+            > h2 {
+              .title-font();
+            }
+
+            > li {
+              .content-font();
+              //margin-right: 50*@px;
+            }
+          }
+        }
+
+        > .footer__email-form {
+          > h2 {
+            .title-font();
+          }
+        }
+      }
+    }
+
+    .footer-bottom-wrapper {
+      background-color: #4a6989;
+      padding: 17 * @px;
+      text-align: center;
+      font-size: 14 * @px;
+      color: rgba(255, 255, 255, 1);
+
+      .desc {
+        margin-bottom: 9 * @px;
+      }
+    }
+  }
+
+  #ismobile {
+    .comp-footer {
+      max-width: 100%;
+      overflow: hidden;
+      .title-font() {
+        font-size: 0.37rem;
+        margin-bottom: 0.59rem;
+      }
+      .content-font() {
+        color: #ffffff;
+        margin-bottom: 8 * @px;
+      }
+      color: @white;
+      padding: 28 * @px 0 0 * @px;
+
+      .width-container {
+        .page-padding();
+        > .footer__logo {
+          font-size: 1rem;
+          margin: 0 0 22 * @px 0;
+          height: 20 * @px;
+        }
+
+        > .container {
+          display: flex;
+          flex-direction: column-reverse;
+          align-items: stretch;
+
+          > .footer__email-form {
+            > h2 {
+              .title-font();
+            }
+          }
+
+          > .footer__group {
+            display: block;
+
+            > ul {
+              .ant-collapse-header {
+                .font(0.37rem, 500, #ffffff);
+                background: transparent;
+                border-radius: 0 !important;
+                border: none;
+
+                > h2 {
+                  .font(0.37rem, 500, #ffffff);
+                }
+              }
+
+              .ant-collapse-item {
+                margin-bottom: 0.48rem;
+              }
+
+              .ant-collapse,
+              .ant-collapse-item,
+              .ant-collapse-item-active,
+              ant-collapse-content-box,
+              .ant-collapse-content {
+                border: none;
+                background: transparent;
+              }
+
+              .ant-collapse-content {
+                background: transparent;
+                .font(0.43, 400, #7e8396);
+              }
+
+              .ant-collapse-content-box,
+              .ant-collapse-header {
+                padding-left: 0;
+                padding-top: 0;
+              }
+
+              .ant-collapse-content-box {
+                padding-bottom: 0;
+                padding-left: 1rem;
+                color: @white !important;
+              }
+
+              .ant-collapse-content-box {
+                > li {
+                  margin: 0.3rem auto;
+                  .font(0.3rem, 400, #ffffff);
+                }
+              }
+
+              > h2 {
+                .title-font();
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+.hello(@world);
+
+@formPart: {
+  .post-email {
+    height: 56 * @px;
+    display: flex;
+
+    .ant-form-item {
+      display: inline-block;
+    }
+
+    .ant-form-item-control {
+      line-height: 56 * @px;
+    }
+
+    input {
+      height: 56 * @px;
+      background: @white;
+      padding: 16 * @px;
+      border-radius: 5 * @px;
+      width: 416 * @px;
+      margin-right: 33 * @px;
+    }
+
+    button {
+      width: 236 * @px;
+    }
+  }
+  .ismobile {
+    .post-email {
+      margin-bottom: 0.67rem;
+      display: flex;
+      justify-content: space-between;
+
+      .ant-form-item {
+        flex: 1;
+      }
+
+      input {
+        background: @white;
+        height: 1.49rem;
+        padding: 0.43rem;
+        border-radius: 0.11rem;
+        display: inline-block;
+        width: 100%;
+        margin-right: 0 * @px;
+      }
+
+      > button {
+        margin-left: 10 * @px;
+        width: 3.12rem;
+      }
+    }
+  }
+};
+
+.hello(@formPart);

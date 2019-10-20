@@ -1,0 +1,128 @@
+@import (reference) "~buy/common/styles/index.less";
+@p1: {
+  .tips-button {
+    margin-top: 10 * @px;
+    text-align: center;
+  }
+  .load-more-button {
+    color: @color-blue-liner-use;
+    .canclick();
+  }
+  .no-more-data {
+    color: #e9e9e9;
+  }
+
+  .yr-modal.product-list-filter-mb {
+    .yr-modal-content {
+      padding: 0;
+    }
+    .filter-list {
+      border: none;
+    }
+    position: fixed;
+    left: -300px;
+    transition: all 0.3s;
+    height: 100vh;
+    max-height: 100vh;
+  }
+  .product-list-page {
+    @columnWidth: 278 * @px;
+    padding: 52 * @px 0 80 * @px 0;
+    display: flex;
+    justify-content: center;
+    .mb({padding: 21 * @px 0 0;});
+    .filter-part-mb {
+      min-height: 40 * @px;
+      .img-container {
+        width: 70 * @px;
+        min-width: 0;
+        margin-top: 10 * @px;
+        margin-right: 10 * @px;
+        margin-bottom: 5 * @px;
+        > img {
+          width: 100%;
+        }
+      }
+    }
+    .list-part {
+      @quickFilterMaxWidth: 225 * @px;
+      @quickFilterGap: 17 * @px;
+      @quickFilterCount: 5;
+      flex: 0 0 @quickFilterMaxWidth * @quickFilterCount + @quickFilterGap *
+        (@quickFilterCount - 1);
+      .title-part {
+        > h1 {
+          .font(40 * @px, @boldWeight, #000000);
+          .mb({font-size: 26 * @px;});
+        }
+        > p {
+          .font(18 * @px, @normalWeight, #000000);
+          .mb({font-size: 14 * @px;});
+          margin-bottom: 24 * @px;
+        }
+      }
+      .product-list-container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-row-gap: 24 * @px;
+        grid-column-gap: 24 * @px;
+        //justify-items: center;
+        .mb({grid-template-columns: 1fr;});
+        > .phone-product-card {
+          > .innerdiv {
+            @columnWidth: 278 * @px;
+            .innerdiv-imgsize(@columnWidth);
+          }
+        }
+      }
+    }
+  }
+  #ismobile {
+    .product-list-page {
+      .list-part {
+        > *:not(.product-list-container) {
+          .page-padding();
+        }
+        > .product-list-container {
+          //display: flex;
+          //flex-direction: column;
+          grid-row-gap: 0;
+          > .phone-product-card {
+            > .innerdiv {
+              .innerdiv-imgsize(100vw);
+            }
+            border-bottom: none;
+            > .content-container {
+              > h2,
+              .price {
+                .font(16 * @px, @boldWeight, rgba(34, 34, 34, 1));
+              }
+              > .condition,
+              > .id {
+                font-size: 12 * @px;
+              }
+            }
+            &:not(:first-child) {
+              display: flex;
+              align-items: center;
+              > .innerdiv {
+                .innerdiv-imgsize(160 * @px);
+                border-right: 1px solid @color-border;
+                flex: 0 0 160 * @px;
+              }
+              > .content-container {
+                border-top: none;
+                padding-right: 0;
+                padding-top: 0;
+                padding-bottom: 0;
+              }
+            }
+          }
+        }
+        flex: 1 0 0;
+        width: 100%;
+      }
+    }
+  }
+};
+.hello(@p1);

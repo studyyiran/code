@@ -1,0 +1,34 @@
+@import (reference) "~buy/common/styles/index.less";
+
+@world: {
+  .comp-tag {
+    display: inline-block;
+    text-align: center;
+
+    .flex-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .content {
+        padding: 0 18 * @px;
+        // 这个字体，因为是tag的样式，还是有变化比较好
+        font-weight: 500;
+        color: #ffffff;
+        //.font(18*@px, 500, #ffffff);
+        border-radius: 4 * @px;
+        &.success {
+          background-color: #6dd230;
+        }
+
+        &.fail {
+          background-color: #ff0048;
+        }
+        &.padding {
+          background-color: #00aeef;
+        }
+      }
+    }
+  }
+};
+
+.hello(@world);

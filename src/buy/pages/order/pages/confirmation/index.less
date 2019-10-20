@@ -1,0 +1,105 @@
+@import (reference) "../../../../common/styles/index.less";
+
+@world: {
+  .mb-input-layout[data-page="confirmation"] {
+    > .change-user-container > .left > span.content {
+      max-width: 100%;
+      white-space: pre-wrap;
+    }
+  }
+  .user-input-container[data-page="confirmation"] {
+    .left {
+      align-items: flex-start;
+    }
+    > .change-user-container > div.left > span.content {
+      white-space: pre-wrap;
+    }
+  }
+  .order-confirmation-wrapper {
+    .confirmation-wrapper {
+      width: 448 * @px;
+      margin-right: 150 * @px;
+
+      .title {
+        font-size: 24 * @px;
+        color: rgba(0, 0, 0, 1);
+        font-weight: bolder;
+      }
+
+      .order-no {
+        font-size: 16 * @px;
+        color: rgba(0, 0, 0, 1);
+      }
+
+      .desc {
+        margin-top: 24 * @px;
+        font-size: 16 * @px;
+        color: rgba(0, 0, 0, 1);
+      }
+
+      .create-account {
+        margin-top: 17 * @px !important;
+      }
+
+      .button-wrapper {
+        margin-top: 24 * @px;
+        text-align: center;
+
+        button {
+          width: 100%;
+        }
+      }
+
+      .sell-your-order-phone,
+      .or {
+        margin-top: 17 * @px;
+        font-size: 16 * @px;
+        color: rgba(26, 180, 231, 1);
+        text-align: center;
+      }
+    }
+
+    .order-summary-wrapper {
+      flex: 1;
+    }
+  }
+
+  #ismobile {
+    .order-confirmation-wrapper {
+      .confirmation-wrapper {
+        width: 100%;
+        margin-right: 0;
+        padding: 0 18 * @px;
+
+        .title {
+          font-size: 18 * @px;
+        }
+
+        .order-no {
+          font-size: 14 * @px;
+        }
+
+        .desc {
+          margin-top: 17 * @px;
+          font-size: 14 * @px;
+        }
+
+        .button-wrapper {
+          margin-top: 17 * @px;
+          text-align: center;
+          font-size: 18 * @px;
+
+          button {
+            width: 100%;
+          }
+        }
+
+        .continue-shopping {
+          margin-top: 35 * @px;
+        }
+      }
+    }
+  }
+};
+
+.hello(@world);

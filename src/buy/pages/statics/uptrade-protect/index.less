@@ -1,0 +1,203 @@
+@import (reference) "~buy/common/styles/index.less";
+
+@world: {
+  .uptrade-protect-wrapper {
+    .common-home-width(@px);
+    margin: 0 auto;
+
+    .title {
+      border-bottom: 1px solid rgba(233, 233, 233, 1);
+      padding: 65*@px 0;
+      text-align: center;
+
+      .first {
+        font-size: 32*@px;
+        color: rgba(0, 0, 0, 1);
+        font-weight: bolder;
+      }
+
+      .second {
+        margin-top: 13*@px;
+        font-size: 18*@px;
+        color: rgba(34, 34, 34, 1);
+      }
+    }
+
+    .content-list-wrapper {
+      width: 900*@px;
+      padding-top: 90*@px;
+      margin: 0 auto;
+
+      .item-wrapper {
+        display: flex;
+        margin-bottom: 133*@px;
+
+        .left-img {
+          display: block;
+          width: 143*@px;
+          height: 143*@px;
+          margin-top: 36*@px;
+        }
+
+        .right-wrapper {
+          flex: 1;
+          padding-left: 180*@px;
+
+          .row-title1, .row-title2 {
+            font-size: 40*@px;
+            font-weight: bolder;
+            color: rgba(0, 0, 0, 1);
+          }
+
+          .desc {
+            margin-top: 15*@px;
+            font-size: 18*@px;
+            color: rgba(0, 0, 0, 0.85);
+          }
+        }
+      }
+    }
+
+    .table-title {
+      text-align: center;
+      font-size: 40*@px;
+      color: rgba(0, 0, 0, 1);
+      font-weight: bolder;
+    }
+
+    .footer-table-wrapper {
+      margin-top: 20*@px;
+
+      .protect-table {
+        width: 100%;
+        margin-top: 90*@px;
+        text-align: center;
+        margin-bottom: 161*@px;
+
+        tr {
+          &:last-child {
+            td {
+              border-bottom: none;
+            }
+          }
+        }
+
+        td {
+          height: 65*@px;
+          font-size: 17*@px;
+          border-bottom: 1px solid rgba(233, 233, 233, 1);
+          color: rgba(0, 0, 0, 0.85);
+          width: 120*@px;
+
+          &:first-child {
+            text-align: left;
+          }
+
+          &.special {
+            background: rgba(55, 90, 125, 1);
+            box-shadow: 0px 11px 22px 0px rgba(0, 0, 0, 0.16);
+            border-bottom: none;
+            font-size: 22*@px;
+            color: rgba(255, 255, 255, 1);
+          }
+        }
+      }
+    }
+
+    .mob-page {
+      display: none;
+    }
+  }
+  .ismobile #root {
+    .uptrade-protect-wrapper {
+      width: 100%;
+
+      .title {
+        padding: 33*@px 0;
+
+        .first {
+          font-size: 24*@px;
+        }
+
+        .second {
+          font-size: 16*@px;
+        }
+      }
+
+      .content-list-wrapper {
+        width: 100%;
+        padding-top: 48*@px;
+        padding-left: 16*@px;
+        padding-right: 16*@px;
+
+        .item-wrapper {
+          display: block;
+          margin-bottom: 60*@px;
+
+          .left-img {
+            display: block;
+            width: 75*@px;
+            height: 75*@px;
+            margin-top: 0;
+          }
+
+          .right-wrapper {
+            padding-left: 0;
+            margin-top: 33*@px;
+
+            .row-title1, .row-title2 {
+              font-size: 24*@px;
+            }
+
+            .desc {
+              font-size: 14*@px;
+            }
+          }
+        }
+      }
+
+      .table-title {
+        font-size: 32*@px;
+      }
+
+      .footer-table-wrapper {
+        margin-top: 43*@px;
+        padding-left: 16*@px;
+        padding-right: 16*@px;
+        overflow: auto;
+        margin-bottom: 0;
+
+        .protect-table {
+          width: 6*120*@px;
+          margin-top: 0;
+          margin-bottom: 0;
+
+          td {
+            width: 120*@px;
+            height: 50*@px;
+            line-height: 50*@px;
+            font-size: 10*@px;
+
+            &:first-child {
+              font-size: 8*@px;
+            }
+
+            &.special {
+              font-size: 12*@px;
+            }
+          }
+        }
+      }
+
+      .mob-page {
+        display: block;
+        text-align: right;
+        font-size: 14*@px;
+        color: #808080;
+        margin-bottom: 90*@px;
+        margin-right: 20*@px;
+      }
+    }
+  }
+};
+.hello(@world);

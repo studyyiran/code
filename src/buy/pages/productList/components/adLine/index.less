@@ -1,0 +1,57 @@
+@import (reference) "~buy/common/styles/index.less";
+
+@p: {
+  .big {
+    .font(32 * @px, @boldWeight, rgba(255, 255, 255, 1));
+    font-size: 32 * @px;
+    .mb({font-size: 24 * @px;});
+  }
+  .ad-line {
+    position: relative;
+    font-style: italic;
+    &:nth-child(even) {
+      background: rgba(26, 180, 231, 1);
+    }
+    background: rgba(55, 90, 125, 1);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    color: @white;
+    padding: 0 20 * @px;
+    h3 {
+      .big();
+    }
+    > *:first-child + * {
+      margin-top: 20 * @px;
+      .mb({margin: 0; margin-left: 20 * @px;});
+    }
+    ul {
+      > li {
+        list-style: disc;
+      }
+      margin-left: 20 * @px;
+    }
+    a {
+      border-bottom: 3px solid rgba(26, 180, 231, 1);
+      //text-decoration: underline;
+    }
+  }
+
+  #ismobile {
+    .ad-line {
+      height: 80 * @px;
+      flex: 0 0 90 * @px;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      .name {
+        position: absolute;
+        bottom: 10 * @px;
+        right: 20 * @px;
+      }
+    }
+  }
+};
+
+.hello(@p);

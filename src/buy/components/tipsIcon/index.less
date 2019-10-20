@@ -1,0 +1,28 @@
+@import (reference) "~buy/common/styles/index.less";
+@world: {
+  .comp-tips-antd-container {
+    .ant-popover-buttons {
+      display: none;
+    }
+    .ant-popover-message-title {
+      padding-left: 0*@px;
+    }
+  }
+
+  .comp-tips-icon-container {
+    display: inline-block;
+    font-size: 14*@f;
+    border: 1*@f solid transparent;
+    border-left: 10*@f solid transparent;
+    border-right: 10*@f solid transparent;
+    > span {
+      display: flex;
+      text-align: center;
+      align-items: center;
+      justify-content: center;
+      background: #E9E9E9;
+      border-radius: 50%;
+    }
+  }
+}
+.hello(@world);

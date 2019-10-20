@@ -1,0 +1,20 @@
+@import (reference) "~buy/common/styles/index.less";
+
+@p: {
+  .paycard-img-list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    > img {
+      flex: 0 0 50 * @px;
+      .mb({flex: 0 0 30 * @px;});
+      min-width: 0;
+      margin-right: 10 * @px;
+    }
+    > span {
+      font-size: 12 * @px;
+    }
+  }
+};
+
+.hello(@p);

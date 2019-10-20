@@ -1,0 +1,24 @@
+@import (reference) "~buy/common/styles/index.less";
+
+@p: {
+  .collapse-clear-border();
+  .common-collapse {
+    &> .ant-collapse-item > .ant-collapse-header .ant-collapse-arrow {
+      top: 0;
+    }
+    //默认标题大小
+    h3 {
+      font-size: 16 * @px;
+    }
+    .ant-collapse-item-active {
+      .ant-collapse-arrow {
+        transform: rotate(180deg) !important;
+      }
+    }
+    .ant-collapse-arrow {
+      transform: rotate(90deg) !important;
+    }
+  }
+};
+
+.hello(@p);

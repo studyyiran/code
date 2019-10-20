@@ -1,0 +1,31 @@
+@import (reference) "~buy/common/styles/index.less";
+
+@p: {
+  .shipping-select {
+    .checkbox-container-group {
+      border-radius: 4px;
+      border: 1px solid @color-border;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      .checkbox-container {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-right: 20 * @px;
+        .ant-checkbox-wrapper {
+          margin: 0;
+        }
+        .ant-checkbox-wrapper {
+          padding: 15 * @px 30 * @px;
+        }
+        &:first-child {
+          border-bottom: 1px solid @color-border;
+        }
+      }
+    }
+  }
+};
+
+.hello(@p);

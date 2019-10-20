@@ -1,0 +1,67 @@
+@import (reference) "~buy/common/styles/index.less";
+
+@p: {
+  .payment-page {
+    .card {
+      padding: 25 * @px 18 *@px;
+      .mb({padding: 10 * @px;});
+      border-bottom: 1px solid @color-border;
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+    .pay-card {
+      .pay-card-container {
+        border: 1px solid @color-border;
+        margin-bottom: 16 * @px;
+        .card:first-child {
+          > span:first-child {
+            white-space: nowrap;
+          }
+          .paycard-img-list {
+            justify-content: flex-end;
+          }
+        }
+        .ant-form-explain {
+          margin-top: 5 * @px;
+        }
+        .ant-form-explain,
+        .ant-form,
+        .ant-form-item,
+        .ant-input {
+          font-size: 10 * @px;
+        }
+        > header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+        .card {
+          &:last-child {
+            padding-bottom: 0;
+            background: rgba(245, 247, 249, 1);
+            svg {
+              font-size: 20px;
+            }
+          }
+        }
+      }
+    }
+    .address {
+      > h2 {
+        margin-bottom: 0;
+      }
+      .checkbox-container-group {
+        border: 1px solid @color-border;
+        border-radius: 4px;
+        margin-top: 16 * @px;
+        margin-bottom: 32 * @px;
+        .checkbox-container {
+          .card();
+        }
+      }
+    }
+  }
+};
+
+.hello(@p);

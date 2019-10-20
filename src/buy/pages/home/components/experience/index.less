@@ -1,0 +1,186 @@
+@import (reference) "~buy/common/styles/index.less";
+
+@bg-white: #f5f7f9;
+
+@world: {
+
+  .experience-content-wrapper {
+    border: 1px solid rgba(233, 233, 233, 1);
+    .common-home-width(@px);
+    margin: 80*@px auto;
+    display: flex;
+
+    .left-wrapper {
+      padding: 60*@px 31*@px 68*@px 65*@px;
+      flex: 1;
+
+      .title {
+        font-size: 36*@px;
+        font-weight: bolder;
+        color: rgba(0, 0, 0, 1);
+      }
+
+      .desc {
+        margin-top: 15*@px;
+        font-size: 18*@px;
+        color: rgba(0, 0, 0, 1);
+      }
+
+      .comments-tab-content-wrapper {
+        margin-top: 22*@px;
+        position: relative;
+
+        .tab-wrapper {
+          .tab-wrapper-overflow {
+            display: flex;
+            position: relative;
+
+            &::after {
+              position: absolute;
+              content: ' ';
+              height: 2px;
+              background-color: #E9E9E9;
+              width: 100%;
+              left: 0;
+              bottom: -5px;
+            }
+
+            .tab-item {
+              margin-right: 80*@px;
+              cursor: pointer;
+              font-size: 20*@px;
+              color: black;
+              position: relative;
+
+              &:last-child {
+                margin-right: 0;
+              }
+
+              .text {
+                &.active {
+                  position: relative;
+                  font-weight: bolder;
+
+                  &::after {
+                    z-index: 1;
+                    position: absolute;
+                    content: ' ';
+                    height: 2px;
+                    background-color: #1AB4E7;
+                    width: 100%;
+                    left: 0;
+                    bottom: -6px;
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        .tab-item-content-wrapper {
+          .tab-content-title-text {
+            margin-top: 24*@px;
+            font-size: 12*@px;
+            color: rgba(126, 131, 150, 1);
+            font-weight: bolder;
+
+            &.after-content {
+              margin-top: 10*@px;
+            }
+          }
+
+          .tab-content-title {
+            font-size: 24*@px;
+            color: rgba(0, 0, 0, 1);
+            font-weight: bolder;
+          }
+
+          .tab-content-desc {
+            margin-top: 6*@px;
+            font-size: 16*@px;
+            color: rgba(0, 0, 0, 1);
+          }
+        }
+      }
+    }
+
+    .right-wrapper {
+      width: 596*@px;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  .ismobile #root {
+    .experience-content-wrapper {
+      overflow: hidden;
+      border: none;
+      width: 100%;
+      margin: 0;
+      display: block;
+
+      .left-wrapper {
+        padding: 32*@px;
+
+        .title {
+          font-size: 24*@px;
+        }
+
+        .desc {
+          font-size: 14*@px;
+        }
+
+        .comments-tab-content-wrapper {
+          .tab-wrapper {
+            overflow: auto;
+
+            &::-webkit-scrollbar {
+              display: none;
+            }
+
+            .tab-wrapper-overflow {
+              width: 700*@px;
+              display: block;
+
+              &::after {
+                position: absolute;
+                content: ' ';
+                height: 2px;
+                background-color: #E9E9E9;
+                width: 100%;
+                left: 0;
+                bottom: -30px;
+              }
+
+              .tab-item {
+                float: left;
+                height: 40*@px;
+                font-size: 16*@px;
+                margin-right: 70*@px;
+              }
+            }
+          }
+
+          .tab-item-content-wrapper {
+            .tab-content-title {
+              font-size: 18*@px;
+            }
+
+            .tab-content-desc {
+              margin-top: 8*@px;
+              font-size: 14*@px;
+            }
+          }
+        }
+      }
+
+      .right-wrapper {
+        display: none;
+      }
+    }
+  }
+};
+.hello(@world);

@@ -1,0 +1,91 @@
+.hello(@rules) {
+  @media (min-width: 1600px) {
+    @f: 1px;
+    @px: 1px * 1920 / 1920;
+    @rules();
+  }
+  @media (max-width: 1600px) {
+    @f: 1px;
+    @px: 1px * 1600 / 1920;
+    @rules();
+  }
+  @media (max-width: 1440px) {
+    @f: 1px;
+    @px: 1px * 1440 / 1920;
+    @rules();
+  }
+  @media (max-width: 1344px) {
+    @f: 1px;
+    @px: 1px * 1344 / 1920;
+    @rules();
+  }
+  @media (max-width: 1285px) {
+    @f: 1px;
+    @px: 1px * 1285 / 1920;
+    @rules();
+  }
+  @media (max-width: 700px) {
+    @f: 1rem / 37.5;
+    @px: 1rem / 37.5;
+    @rules();
+  }
+  @media (min-width: 10px) {
+    //@f: 1px;
+    //@px: 1px * 1920 / 1920;
+    //@rules();
+  }
+}
+
+.set-flex-grid(@leftWidth) {
+  > *:first-child {
+    flex: 0 0 @leftWidth;
+  }
+  > *:last-child {
+    //400是预留间距
+    flex: 0 0 (1900 * @px - @leftWidth - 400 * @px);
+  }
+}
+
+.set-grid-column(@columnValue) {
+  display: grid;
+  // 为了解决一行填充不满
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(3, 1fr);
+  > * {
+    justify-content: end;
+    display: grid;
+    grid-template-columns: @columnValue;
+    align-items: center;
+    > *:last-child {
+      text-align: right;
+    }
+    // ?
+    margin-bottom: 4 * @px;
+  }
+}
+
+.text-overflow() {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.collapse-clear-border {
+  body {
+    .ant-collapse,
+    .ant-collapse-content {
+      color: inherit;
+    }
+    .ant-collapse,
+    .ant-collapse-item,
+    .ant-collapse-item-active,
+    ant-collapse-content-box,
+    .ant-collapse-content {
+      border: none;
+      background: transparent;
+    }
+    .ant-collapse > .ant-collapse-item {
+      border: none;
+    }
+  }
+}

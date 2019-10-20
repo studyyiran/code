@@ -1,0 +1,322 @@
+//@px2rem: 100 / (37.5 * 37.5);
+
+/*
+56px
+56rem / 37.5 *
+ */
+
+// 方正图片
+.innerdiv-imgsize(@imageWidth) {
+  background-position: center;
+  background-size: cover;
+  width: @imageWidth;
+  height: @imageWidth;
+}
+
+
+.font-size-reset(@px) {
+  //font-size: 14 * @px;
+}
+
+.setpage(@maxWidth) {
+  max-width: @maxWidth;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.font(@size, @weight, @color) {
+  font-size: @size;
+  font-weight: @weight;
+  color: @color;
+}
+
+.page-padding() {
+  //.pc({padding-left: 15px; padding-right: 15px;});
+  .mb({padding-left: 0.53rem; padding-right: 0.53rem;});
+}
+.canclick {
+  cursor: pointer;
+}
+
+
+//my
+@common-button-world: {
+  body {
+    .yr-modal {
+      .yr-modal-content {
+        padding: 30 * @px;
+        .mb({padding: 10 * @px;});
+      }
+    }
+
+    &#ismobile {
+      .buttons-container {
+        flex-direction: column-reverse;
+        > .common-button:not(.second) {
+          margin-bottom: 16 * @px;
+        }
+      }
+      .flex-grid {
+        justify-content: space-between;
+        > *:first-child {
+          flex: 0 1 auto;
+        }
+        > *:last-child {
+          flex: 0 1 auto;
+        }
+      }
+      .ant-modal-close {
+        padding: 0;
+      }
+    }
+
+    .flex-grid {
+      display: flex;
+      // space-around会导致,超出屏幕,这块有缺陷
+      justify-content: space-around;
+      align-items: flex-start;
+      position: relative;
+      z-index: 11;
+      // 默认
+      .set-flex-grid(700 *@px;);
+    }
+    .unit-space {
+      position: relative;
+      left: -6 * @px;
+      //margin-left: -12*@px;
+    }
+    .button-centered {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+    .ant-collapse-content > .ant-collapse-content-box {
+      padding: 16 * @px;
+    }
+    .ant-collapse-icon-position-right
+      > .ant-collapse-item
+      > .ant-collapse-header {
+      padding: 12 * @px 16 * @px;
+      padding-right: 40 * @px;
+    }
+    .common-a {
+      color: @color-blue-liner-use;
+      &:hover {
+        color: @color-blue-liner-use;
+      }
+    }
+    a {
+      .canclick();
+    }
+    .ant-collapse > .ant-collapse-item > .ant-collapse-header {
+      line-height: 1.2;
+    }
+    .common-button {
+      .canclick();
+      // 不希望按钮过宽
+      .pc({max-width: 456 * @px;});
+      border-radius: 6 * @px;
+      width: 100%;
+      height: 56 * @px;
+      line-height: 56 * @px;
+      background: @color-blue-liner;
+      color: @white;
+      //transition: background 0.5s;
+      font-size: 18 * @f;
+
+      > a {
+        display: block;
+      }
+      .ant-btn::before {
+        background: transparent;
+      }
+      > .ant-btn {
+        font-size: inherit;
+        background: transparent;
+        border: none;
+        width: 100%;
+        height: 100%;
+        &:hover {
+          background: transparent !important;
+        }
+      }
+    }
+
+    .common-button.second {
+      background: #f5f7f9;
+      color: #1ab4e7;
+    }
+    .common-button:not(.second) {
+      &:hover:not([disabled]) {
+        background: #1ab4e7;
+      }
+      &[disabled] {
+        //&:hover {
+        //  background: linear-gradient(@color-gray-2, @color-gray-2);
+        //  background: linear-gradient(@color-gray-2, @color-gray-2);
+        //};
+        background: linear-gradient(@color-gray-2, @color-gray-2);
+        background: linear-gradient(@color-gray-2, @color-gray-2);
+      }
+    }
+    .buttons-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      > button {
+        max-width: 346 * @px;
+      }
+    }
+
+    // 重置
+    .ant-form-item .ant-form-item-label label {
+      color: #040e3f;
+      font-size: inherit;
+    }
+    .ant-input {
+      // 16 高度有误 还原
+      font-size: 14 * @f;
+    }
+    .ant-modal-close {
+      padding: 15px;
+    }
+    .ant-modal-close-x {
+      @close-size: 36 * @px;
+      width: @close-size;
+      height: @close-size;
+      line-height: @close-size;
+    }
+    .yr-modal-title {
+      .font(16 * @px, 500, #222222);
+    }
+  }
+};
+.hello(@common-button-world);
+
+.common-card {
+  box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.1);
+  background: @white;
+}
+
+.ahs-flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#root {
+  .mb-ele {
+    // pc端隐藏。
+    display: none;
+  }
+}
+
+.ismobile {
+  #root {
+    .mb-ele {
+      // 移动端展开
+      display: block;
+    }
+  }
+}
+.mb(@rules) {
+  @media (max-width: @screen-mb) {
+    @rules();
+  }
+}
+
+.pc(@rules) {
+  @media (min-width: @screen-mb) {
+    @rules();
+  }
+}
+
+.layout-flex-twins(@left-width, @right-width, @rules) {
+  .pc({
+    display: flex;
+    justify-content: space-between;
+    @rules();
+    &> * {
+      min-width: 0;
+      flex: 0 0 0;
+    }
+    > * {
+      &:first-child {
+        flex-basis: @left-width;
+      }
+    }
+    > *{
+      &:last-child {
+        flex-basis: @left-width;
+      }
+    }
+  });
+}
+
+.line-height-middle(@height) {
+  font-size: 0;
+  line-height: @height;
+  // height后加上来的？似乎也需要？
+  height: @height;
+  text-align: center;
+  > img {
+    vertical-align: middle;
+  }
+}
+
+.comp-top-tag {
+  @height: 24px;
+  min-width: 50px;
+  padding: 0 7px;
+  height: @height;
+  line-height: @height;
+  font-size: 14px;
+  color: @white;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.ismobile {
+  .comp-top-tag {
+    @height: 0.64rem;
+    min-width: 1.33rem;
+    padding: 0 0.24rem;
+    height: @height;
+    line-height: @height;
+    font-size: 0.37rem;
+    color: @white;
+    border-radius: 0.32rem;
+    text-align: center;
+  }
+}
+
+.ant-checkbox-checked .ant-checkbox-inner {
+  background: linear-gradient(
+    90deg,
+    rgba(26, 180, 231, 1) 0%,
+    rgba(52, 152, 219, 1) 100%
+  );
+  border-color: rgba(26, 180, 231, 1);
+}
+.ant-checkbox-checked::after {
+  border: 1px solid rgba(26, 180, 231, 1);
+}
+
+.ant-input {
+  &:hover {
+    border-color: @color-blue-liner-use;
+    //outline: none;
+  }
+}
+
+.ant-input {
+  &:focus {
+    border-color: @color-blue-liner-use;
+    box-shadow: none;
+  }
+}
+
+.common-home-width(@px) {
+  width: 1400 * @px;
+}

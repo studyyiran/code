@@ -1,0 +1,46 @@
+@import (reference) "~buy/common/styles/index.less";
+
+@world: {
+  .uptrade-editor-resolver-wrapper {
+    table {
+      width: 100% !important;
+      height: auto !important;
+      border: none !important;
+      text-align: left !important;
+
+      td {
+        border: none !important;
+        vertical-align: top;
+        padding-left: 20*@px;
+        padding-right: 20*@px;
+      }
+    }
+
+    ul {
+      display: block !important;
+      list-style: disc !important;
+      padding-inline-start: 20*@px;
+
+      li {
+        list-style: disc !important;
+      }
+    }
+  }
+  .ismobile #root {
+    .uptrade-editor-resolver-wrapper {
+      table {
+        td {
+          border: none !important;
+          vertical-align: top;
+          padding-left: 20*@px;
+          padding-right: 20*@px;
+          padding-bottom: 20*@px;
+          width: 100% !important;
+          float: left;
+          height: auto !important;
+        }
+      }
+    }
+  }
+};
+.hello(@world);

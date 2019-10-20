@@ -1,0 +1,61 @@
+@import (reference) "~buy/common/styles/index.less";
+
+@world: {
+  .comp-brand-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    > div.border {
+      &:hover {
+        background: @color-blue-liner;
+        border-color: @color-blue-liner-use;
+      }
+      @width: 101*@px;
+      @height: 80*@px;
+      width: @width;
+      text-align: center;
+      height: @height;
+      line-height: @height;
+      border-style: solid;
+      border-width: 1px;
+      color: @white;
+      border-radius: 5*@px;
+      overflow: hidden;
+      margin-bottom: 10*@px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: @white;
+      font-size: 20*@f;
+      > img {
+        width: 70%;
+      }
+    }
+    > span.name {
+      color: @white;
+      .font(16*@px, 400, #ffffff);
+    }
+  }
+
+  .ismobile #root {
+    .comp-brand-logo {
+      > div.border {
+        &:hover {
+          background: transparent;
+          border-color: initial;
+        }
+        @width: 78*@px;
+        @height: 56*@px;
+        width: @width;
+        text-align: center;
+        height: @height;
+        line-height: @height;
+        overflow: hidden;
+        margin-bottom: 0;
+        font-size: 16*@px;
+      }
+    }
+  }
+};
+.hello(@world);

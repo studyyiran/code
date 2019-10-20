@@ -1,0 +1,92 @@
+@import (reference) "~buy/common/styles/index.less";
+@world: {
+  .yr-modal {
+    position: relative;
+    margin: auto;
+    width: 400 * @px;
+    box-sizing: border-box;
+    -webkit-overflow-scrolling: touch;
+    .modal_pos_top {
+      top: 140 * @px;
+    }
+
+    .yr-modal-content {
+      position: relative;
+      z-index: 10;
+      background-color: white;
+      border-radius: 4 * @px;
+      padding: 0 30 * @px;
+    }
+
+    .yr-modal-header {
+    }
+
+    .yr-modal-title {
+      height: 40 * @px;
+      line-height: 40 * @px;
+    }
+
+    .yr-modal-body {
+    }
+
+    .yr-modal-close {
+      .canclick();
+      position: absolute;
+      top: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15 * @px;
+    }
+
+    .yr-modal-close-x {
+      @value: 30 * @px;
+      width: @value;
+      height: @value;
+      line-height: @value;
+      font-size: @value;
+    }
+
+    .yr-modal-footer {
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 10 * @px 0 * @px;
+    }
+
+    .yr-modal-button {
+      text-align: center;
+      border-radius: 25 * @px;
+      padding: 0 35 * @px;
+    }
+
+    .yr-modal-button-sure {
+      background: #18bce8;
+      color: white;
+    }
+
+    .yr-modal-button-cancel {
+      background: #f8f8f8;
+      color: #999999;
+    }
+  }
+};
+
+.hello(@world);
+.yr-modal-mask {
+  background-color: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+}
+
+.modal_pos_centered {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

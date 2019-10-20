@@ -1,0 +1,68 @@
+@import (reference) "~buy/common/styles/index.less";
+
+@p: {
+  .phone-info {
+    display: flex;
+    font-size: 14 * @px;
+    .ant-checkbox-wrapper {
+      font-size: 14 * @px;
+    }
+    .strong {
+      .font(16 * @f, @boldWeight, rgba(0, 0, 0, 1));
+    }
+    padding: 16 * @px 0;
+    border-bottom: 1px solid @color-border;
+    .level {
+      color: rgba(59, 186, 0, 1);
+    }
+    .bpv-name {
+      color: rgba(132, 132, 132, 1);
+    }
+    .innerdiv {
+      margin-right: 18 * @px;
+      @size: 130 * @px;
+      .innerdiv-imgsize(@size);
+      //.mb({.innerdiv-imgsize(50 * @px) ;});
+    }
+    .info-list {
+      flex: 1;
+      > li {
+        margin-bottom: 5 * @px;
+      }
+    }
+    .price-container {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      color: rgba(0, 0, 0, 1);
+      > h3 {
+        .strong();
+        //font-size: 16 * @px;
+      }
+      > span {
+        .strong();
+      }
+    }
+    .checkbox-protection {
+      .icon-container {
+        display: flex;
+        align-items: center;
+      }
+      .ant-checkbox-wrapper {
+        > .ant-checkbox + * {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          > span {
+            white-space: nowrap;
+            font-size: 12 * @px;
+          }
+        }
+      }
+      .set-grid-column(3fr 1fr);
+      grid-template-rows: 1fr;
+    }
+  }
+};
+
+.hello(@p);

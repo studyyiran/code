@@ -1,0 +1,63 @@
+@import "~buy/common/styles/index.less";
+@p: {
+  .order-list-container {
+    // 换行不好看,不好调,放大从570
+    width: 630 * @px;
+    .mb({width: 100%;});
+    .user-input-container {
+      margin-bottom: 20 *@px;
+      .change-user-container:not(:last-child) {
+        border-bottom: none;
+      }
+    }
+    .content-card {
+      border: 1px solid @color-border;
+      .mb({
+        border: none;
+        border-bottom: 1px solid @color-border;
+      });
+      .title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .padding-layout {
+        > ul {
+          grid-template-columns: 100%;
+          .set-grid-column(1fr 1fr);
+          &:last-child {
+            grid-template-rows: 1fr;
+          }
+        }
+        &.price-detail {
+          font-size: 16 * @f;
+          span {
+            .strong-font();
+          }
+        }
+        &.total {
+          font-size: 16 * @f;
+          .strong-font();
+          border-bottom: none;
+        }
+      }
+    }
+    .title {
+    }
+    // 通用
+    .padding-layout {
+      padding: 25 * @px 32 * @px;
+      .mb({padding: 8 * @px 18 * @px;});
+      border-bottom: 1px solid @color-border;
+    }
+    .strong-font() {
+      .font(16 * @f, @boldWeight, rgba(0, 0, 0, 1));
+    }
+    .phone-info {
+      border-bottom: none;
+      padding: 0;
+    }
+  }
+};
+
+.hello(@p);

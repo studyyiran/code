@@ -1,0 +1,36 @@
+@import (reference) "~buy/common/styles/index.less";
+
+@p: {
+  ul.filter-card-part {
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+    flex-wrap: wrap;
+    > li.filter-card-part-item {
+      margin-bottom: 23 * @px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #fafafa;
+      border-radius: 4 * @f;
+      padding: 10 * @px 16 * @px 10 * @px 5 * @px;
+      color: #375a7d;
+      margin-right: 16 * @px;
+      > svg {
+        color: #000000;
+        margin-left: 5 * @px;
+      }
+    }
+  }
+
+  #ismobile {
+    ul.filter-card-part {
+      > li.filter-card-part-item {
+        margin: 0 8 * @px 8 * @px 0;
+        padding: 5 * @px;
+      }
+    }
+  }
+};
+
+.hello(@p);

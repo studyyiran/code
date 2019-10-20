@@ -1,0 +1,111 @@
+@import (reference) "~buy/common/styles/index.less";
+
+@bg-white: #f5f7f9;
+
+@world: {
+
+  .buy-home-how-it-works-wrapper {
+    .common-home-width(@px);
+    padding-top: 80*@px;
+    padding-bottom: 40*@px;
+    margin: 0 auto;
+
+    .buy-home-how-it-title {
+      text-align: center;
+      font-size: 36*@px;
+      color: rgba(0, 0, 0, 1);
+      font-weight: bolder;
+    }
+
+    .buy-home-how-it-desc {
+      text-align: center;
+      font-size: 18*@px;
+      color: rgba(0, 0, 0, 1);
+      margin: 16*@px 0;
+    }
+
+    .iframe-wrapper {
+      &.hidden {
+        display: none;
+      }
+
+      &.show {
+        display: block;
+      }
+
+      .mob-player {
+        display: none;
+      }
+
+      .web-player {
+        display: block;
+      }
+    }
+
+    .shop-all-wrapper {
+      text-align: center;
+      margin-top: 40*@px;
+
+      .shop-all {
+        font-size: 18*@px;
+        background: linear-gradient(180deg,
+        rgba(26, 180, 231, 1) 0%,
+        rgba(52, 152, 219, 1) 100%);
+        border-radius: 6* @px;
+        padding: 16* @px 150 * @px;
+      }
+    }
+
+    .video-img {
+      width: 100%;
+      height: 568*@px;
+      cursor: pointer;
+
+      &.hidden {
+        display: none;
+      }
+
+      &.show {
+        display: block;
+      }
+    }
+  }
+
+  .ismobile #root {
+    .buy-home-how-it-works-wrapper {
+      width: 100%;
+      padding: 32*@px;
+
+      .buy-home-how-it-title {
+        font-size: 24*@px;
+      }
+
+      .buy-home-how-it-desc {
+        font-size: 14*@px;
+      }
+
+      .iframe-wrapper {
+        .web-player {
+          display: none;
+        }
+
+        .mob-player {
+          display: block;
+        }
+      }
+
+      .shop-all-wrapper {
+        .shop-all {
+          padding: 16* @px 0;
+          width: 100%;
+        }
+      }
+
+      .video-img {
+        width: 100%;
+        height: 240*@px;
+      }
+    }
+  }
+};
+.hello(@world);
