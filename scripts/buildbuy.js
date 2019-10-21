@@ -10,7 +10,7 @@ if (process.env.REACT_APP_SERVER_ENV === 'PUB') {
   // process.env.PUBLIC_URL = 'https://sell.uptradeit.com/';
   process.env.PUBLIC_URL = 'https://d3shkncr7uztfs.cloudfront.net/sell-website/build-v0.0.11';
 } else if (process.env.REACT_APP_SERVER_ENV === 'UAT') {
-  // process.env.PUBLIC_URL = 'http://demo-frontend-2087007985.us-east-2.elb.amazonaws.com';
+  process.env.PUBLIC_URL = '/buy';
 }
 process.env.GENERATE_SOURCEMAP = 'false';
 

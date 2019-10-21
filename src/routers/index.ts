@@ -130,7 +130,7 @@ export default [
       webpack: () => [require.resolveWeak('../containers/home') as number],
     }),
     exact: true,
-    path: '/',
+    path: '/sell',
     // actions: [
     //   () => store['common'].getReviews({
     //     page: 0,
