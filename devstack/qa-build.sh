@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BUILD=$2
+BUILD=$1
 APP_WORKSPACE="$(pwd)"
 BUILD=$1
 
