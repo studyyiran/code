@@ -61,8 +61,19 @@ export const staticContentConfig = {
 };
 
 export function isServer() {
-  return true
-  return typeof window === "undefined";
+  if (typeof window === "undefined") {
+    console.log("1");
+    return true;
+  } else {
+    if (typeof (window as any).AHSENV !== "undefined") {
+      console.log("2");
+      return true;
+    } else {
+      console.log("3");
+      console.log((window as any).AHSENV);
+      return false;
+    }
+  }
 }
 
 export function saveToCache(key: string, storeState: any, needKey: any[]) {

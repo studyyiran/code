@@ -1,6 +1,7 @@
 const dom = new JSDOM('<!DOCTYPE html><p></p>');
 global['document'] = dom.window.document;
 global['window'] = dom.window
+global['window'].AHSENV = "SERVER"
 import Koa from 'koa'
 import path from 'path';
 import staticCache from 'koa-static-cache';
