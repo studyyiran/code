@@ -220,8 +220,8 @@ const gotoSell = async (ctx: any, next: any) => {
       template = template.replace(
         /(<\/head>)/,
         "<script>var __SERVER_RENDER__INITIALSTATE__=" +
-        JSON.stringify(store) +
-        ";</script>$1"
+          JSON.stringify(store) +
+          ";</script>$1"
       );
     }
   }
@@ -232,7 +232,7 @@ const gotoSell = async (ctx: any, next: any) => {
 
 // 跳转值buy端
 const gotoBuy = async (ctx: any, next: any, buyCurrentRouter: any) => {
-  const {title, Component, getInitialProps} = buyCurrentRouter;
+  const { title, Component, getInitialProps } = buyCurrentRouter;
   let originData: any = {};
   if (getInitialProps) {
     console.log("ajax start");
@@ -246,7 +246,9 @@ const gotoBuy = async (ctx: any, next: any, buyCurrentRouter: any) => {
   });
   const html = ReactDOMServer.renderToString(
     <RenderWithOriginData originData={originData}>
-      <Component/>
+      <main>
+        <Component />
+      </main>
     </RenderWithOriginData>
   );
   template = template.replace(/(<div id=\"root\">)/, "$1" + html);
@@ -261,14 +263,13 @@ Router.get("*", async (ctx: any, next: any) => {
     return;
   }
   // 匹配buy端路由，如果匹配的上并且组件存在，直接跳转buy端，否则跳转sell端
-  const buyCurrentRouter = routerConfig.find((r: any) => {
-    console.log(r.path, ctx.path, r.path === ctx.path, r.path + "/" === ctx.path, r.path === ctx.path || r.path + "/" === ctx.path)
-    return r.path === ctx.path || r.path + "/" === ctx.path;
+  const current = routerConfig.find((route: any) => {
+    return !!matchPath(ctx.path, route);
   });
-  console.log("=========", JSON.stringify(buyCurrentRouter));
-  if (buyCurrentRouter && buyCurrentRouter.Component) {
+  console.log("=========", JSON.stringify(current));
+  if (current && current.Component) {
     console.log("buy page");
-    return await gotoBuy(ctx, next, buyCurrentRouter);
+    return await gotoBuy(ctx, next, current);
   } else {
     console.log("sell page");
     return await gotoSell(ctx, next);
