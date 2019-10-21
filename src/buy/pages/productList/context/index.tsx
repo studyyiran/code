@@ -1,9 +1,4 @@
-import React, {
-  createContext,
-  useReducer,
-  useEffect,
-  useCallback
-} from "react";
+import React, { createContext, useEffect, useCallback } from "react";
 import { IReducerAction } from "buy/common/interface/index.interface";
 import {
   getModelList,
@@ -12,10 +7,14 @@ import {
   getManufactureList,
   getDropDownInfo
 } from "../server";
-import { promisify } from "buy/common/utils/util";
+import {getProductListPath, promisify} from "buy/common/utils/util";
 import { IStaticFilterItem, filterListConfig } from "./staticData";
 import { useGetOriginData } from "../../../common/useHook/useGetOriginData";
+import { reducerLog } from "../../../common/hoc";
+import useReducerMiddleware from "../../../common/useHook/useReducerMiddleware";
+import { locationHref } from "../../../common/utils/routerHistory";
 
+const ATTROF = "attrOf";
 export const ProductListContext = createContext({});
 export const StoreProductList = "StoreProductList";
 // state
@@ -48,13 +47,15 @@ export function ProductListContextProvider(props: any) {
     searchInfo: {} as any
   };
   const [state, dispatch, useHehe] = useGetOriginData(
-    reducer,
+    useReducerMiddleware(reducer),
     initState,
     StoreProductList
   );
   const action: IContextActions = useGetAction(state, dispatch);
   // 监听变化
-
+  useEffect(() => {
+    action.replaceSEOUrl();
+  }, [action.replaceSEOUrl]);
   useEffect(() => {
     // TODO
     action.getProductList();
@@ -88,6 +89,7 @@ export interface IProductListContext extends IContextActions {
 // @actions
 interface IContextActions {
   getStaticFilterList: () => void;
+  replaceSEOUrl: () => void;
   getProductList: () => void;
   getModelList: (pn: any) => void;
   getManufactureList: (pn: any) => any;
@@ -105,7 +107,219 @@ function useGetAction(
   state: IContextState,
   dispatch: (action: IReducerAction) => void
 ): IContextActions {
+  function setCurrentFilterSelectHandler(value: any) {
+    dispatch({
+      type: productListReducerActionTypes.setCurrentFilterSelect,
+      value
+    });
+  }
+  function getAnswers() {
+    interface IAnswer {
+      productId?: string;
+      productKey?: string[];
+      buyLevel: string[];
+      filterBQVS: {
+        bpId: string;
+        bpName: string;
+        list: { bpvId: string; bpvName: string }[];
+      }[];
+      filterProductId: string[];
+      brandId: string[];
+      price: { lowPrice: string; highPrice: string }[];
+      pageNum: number;
+      pageSize: number;
+    }
+    const answer: IAnswer = {
+      productId: state.searchInfo.productId,
+      productKey: state.searchInfo.productKey,
+      buyLevel: [], //
+      filterBQVS: [], //
+      filterProductId: [], //
+      brandId: [], //
+      price: [], //
+      pageNum: state.pageNumber.pn, //?
+      pageSize: 20
+    };
+    (state.currentFilterSelect || []).map(({ id: typeAddId }) => {
+      const [type] = typeAddId.split("-");
+      const [typeItem, infoItem]: [any, any] = actions.findInfoById(typeAddId);
+      switch (type) {
+        case "Manufacture":
+          answer.brandId.push(infoItem.id);
+          break;
+        case "attrOf3":
+          // TODO hardcode
+          answer.filterBQVS.push({
+            bpId: typeItem.bpId,
+            bpName: typeItem.title,
+            list: [{ bpvId: "", bpvName: infoItem.id }]
+          });
+          break;
+        case "Model": {
+          answer.filterProductId.push(infoItem.id);
+          break;
+        }
+        case "Condition": {
+          answer.buyLevel.push(infoItem.value);
+          break;
+        }
+        case "Price": {
+          answer.price.push({
+            lowPrice: infoItem.value[0],
+            highPrice: infoItem.value[1]
+          });
+          break;
+        }
+        default:
+          // 无法识别
+          answer.filterBQVS.push({
+            bpId: typeItem.bpId,
+            bpName: typeItem.title,
+            list: [{ bpvId: infoItem.id, bpvName: infoItem.displayName }]
+          });
+      }
+    });
+    const linshi: any = {};
+    answer.filterBQVS.forEach((item: any) => {
+      const { bpId } = item;
+      if (!linshi[bpId]) {
+        linshi[bpId] = item;
+      } else {
+        linshi[bpId].list = linshi[bpId].list.concat(item.list);
+      }
+    });
+    (answer as any).filterBQVS = Object.keys(linshi).map(key => {
+      return linshi[key];
+    });
+    return answer;
+  }
   const actions: IContextActions = {
+    replaceSEOUrl: () => {
+      const answer = getAnswers();
+      // 需要查找的内容
+      const { filterBQVS, filterProductId, brandId } = answer;
+
+      // 先找出最大的index
+      let maxIndex = "";
+      // brand,model,storage,carrier,color
+      const maxSeoUrlLength = 2;
+      const splitOne = "%splitOne%";
+      const splitTwo = "%splitTwo%";
+      // 需要借助属性列表的帮助
+      state.staticFilterList.find((item: any, index) => {
+        const { bpId } = item;
+        if (
+          // 先从属性开始查找
+          filterBQVS.find((userSelect: any) => {
+            return String(userSelect.bpId) === String(bpId);
+          })
+        ) {
+          maxIndex = String(index);
+        }
+      });
+      if (maxIndex) {
+        maxIndex = String(maxSeoUrlLength + Number(maxIndex) + 1);
+      } else {
+        if (brandId && brandId.length) {
+          maxIndex = "1";
+        }
+        // 查找filterProductId
+        if (filterProductId && filterProductId.length) {
+          maxIndex = "2";
+        }
+      }
+      // 获取maxIndex后,根据这个值进行缺省赋值
+
+      // for
+
+      // brand
+      function arrToString(arr: any[], empty: string) {
+        if (arr && arr.length) {
+          return arr.join(",");
+        } else {
+          return empty;
+        }
+      }
+      function addHehe() {
+        let current = 0;
+        let urlString = "";
+        return (link: string, func: any) => {
+          if (current < Number(maxIndex)) {
+            current++;
+            urlString += link + func();
+          }
+          return urlString;
+        };
+      }
+
+      const add = addHehe();
+      // brand
+      add(splitOne, () => {
+        return arrToString(
+          brandId.map((id: any) => {
+            const [typeItem, infoItem]: [any, any] = actions.findInfoById(
+              `Manufacture-${id}`
+            );
+            return infoItem ? infoItem.displayName : "";
+          }),
+          "allBrand"
+        );
+      });
+      // model
+      add(splitOne, () => {
+        return arrToString(
+          filterProductId.map((id: any) => {
+            const [typeItem, infoItem]: [any, any] = actions.findInfoById(
+              `Model-${id}`
+            );
+            return infoItem ? infoItem.displayName : "";
+          }),
+          "allModel"
+        );
+      });
+      // storage
+      let result = "";
+      state.staticFilterList.forEach((staticFilter: any, index: number) => {
+        const findTarget: any = filterBQVS.find((userSelect: any) => {
+          return userSelect.bpId === staticFilter.bpId;
+        });
+        // attr
+
+        result = add(index === 0 ? splitTwo : splitOne, () => {
+          arrToString([], "");
+          return arrToString(
+            (() => {
+              if (findTarget) {
+                const { bpName, list } = findTarget;
+                return list.map(({ bpvName, bpvId }: any) => {
+                  const getName: any = actions.findInfoById(
+                    `${ATTROF}${findTarget.bpId}-${
+                      staticFilter.tag === "ISCOLOR" ? bpvName : bpvId
+                    }`
+                  );
+                  return getName[1] ? getName[1].displayName : "";
+                });
+              } else {
+                return [];
+              }
+            })(),
+            `all${staticFilter.bpDisplayName}`
+          );
+        });
+      });
+      result = result.split(/-|&|\s*/).join("");
+
+      result = getProductListPath() + result
+        .split(splitOne)
+        .join("/")
+        .split(splitTwo)
+        .join("-")
+        .toLowerCase();
+      if (result !==  getProductListPath()) {
+        locationHref(result, "replace");
+      }
+      return result;
+    },
     findInfoById: typeAndId => {
       const [type, id] = typeAndId.split("-");
       let typeInfo;
@@ -132,15 +346,28 @@ function useGetAction(
     },
     setUserSelectFilter: ({ id, type }) => {
       if (id === "all") {
-        dispatch({
-          type: productListReducerActionTypes.setAllFilter,
-          value: type
-        });
+        setCurrentFilterSelectHandler(
+          state.currentFilterSelect.filter(({ id }) => {
+            if (id.indexOf(type) !== -1) {
+              // 现有输入中有这个类别，就筛掉
+              return false;
+            } else {
+              return true;
+            }
+          })
+        );
       } else {
-        dispatch({
-          type: productListReducerActionTypes.setFilter,
-          value: `${type}-${id}`
+        const value = `${type}-${id}`;
+        let arr = state.currentFilterSelect;
+        const targetIndex = arr.findIndex(({ id }: any) => {
+          return id === value;
         });
+        if (targetIndex !== -1) {
+          arr = [...arr.slice(0, targetIndex), ...arr.slice(targetIndex + 1)];
+        } else {
+          arr = arr.concat([{ id: value }]);
+        }
+        setCurrentFilterSelectHandler(arr);
       }
     },
     // 获取排序的列表(整个静态数据,baseAttr,model)
@@ -159,7 +386,7 @@ function useGetAction(
               );
 
               if (findAttr) {
-                afterRes.type = `attrOf${findAttr.bpId}`;
+                afterRes.type = `${ATTROF}${findAttr.bpId}`;
                 afterRes.tag = findAttr.tag;
                 afterRes.title = findAttr.bpDisplayName;
                 afterRes.bpId = findAttr.bpId;
@@ -198,7 +425,7 @@ function useGetAction(
             if (item && item.tag) {
               return item.tag.indexOf("QUICKFILTERBUY") !== -1;
             } else {
-              return false
+              return false;
             }
           });
           let otherItem = preRenderList;
@@ -284,85 +511,7 @@ function useGetAction(
       });
     }),
     getProductList: promisify(async function() {
-      interface IAnswer {
-        productId?: string;
-        productKey?: string[];
-        buyLevel: string[];
-        filterBQVS: {
-          bpId: string;
-          bpName: string;
-          list: { bpvId: string; bpvName: string }[];
-        }[];
-        filterProductId: string[];
-        brandId: string[];
-        price: { lowPrice: string; highPrice: string }[];
-        pageNum: number;
-        pageSize: number;
-      }
-      const answer: IAnswer = {
-        productId: state.searchInfo.productId,
-        productKey: state.searchInfo.productKey,
-        buyLevel: [], //
-        filterBQVS: [], //
-        filterProductId: [], //
-        brandId: [], //
-        price: [], //
-        pageNum: state.pageNumber.pn, //?
-        pageSize: 20
-      };
-      (state.currentFilterSelect || []).map(({ id: typeAddId }) => {
-        const [type, id] = typeAddId.split("-");
-        const [typeItem, infoItem]: [any, any] = actions.findInfoById(
-          typeAddId
-        );
-        switch (type) {
-          case "Manufacture":
-            answer.brandId.push(id);
-            break;
-          case "attrOf3":
-            // TODO hardcode
-            answer.filterBQVS.push({
-              bpId: typeItem.bpId,
-              bpName: typeItem.title,
-              list: [{ bpvId: "", bpvName: infoItem.id }]
-            });
-            break;
-          case "Model": {
-            answer.filterProductId.push(id);
-            break;
-          }
-          case "Condition": {
-            answer.buyLevel.push(infoItem.value);
-            break;
-          }
-          case "Price": {
-            answer.price.push({
-              lowPrice: infoItem.value[0],
-              highPrice: infoItem.value[1]
-            });
-            break;
-          }
-          default:
-            // 无法识别
-            answer.filterBQVS.push({
-              bpId: typeItem.bpId,
-              bpName: typeItem.title,
-              list: [{ bpvId: infoItem.id, bpvName: infoItem.displayName }]
-            });
-        }
-      });
-      const linshi: any = {};
-      answer.filterBQVS.forEach((item: any) => {
-        const { bpId } = item;
-        if (!linshi[bpId]) {
-          linshi[bpId] = item;
-        } else {
-          linshi[bpId].list = linshi[bpId].list.concat(item.list);
-        }
-      });
-      (answer as any).filterBQVS = Object.keys(linshi).map(key => {
-        return linshi[key];
-      });
+      const answer = getAnswers();
       // 发起
       dispatch({
         type: productListReducerActionTypes.setPendingStatus,
@@ -423,6 +572,11 @@ function useGetAction(
   };
   actions.getProductList = useCallback(actions.getProductList, [
     state.pageNumber
+  ]);
+  // 机型,属性值,等.
+  actions.replaceSEOUrl = useCallback(actions.replaceSEOUrl, [
+    state.staticFilterList,
+    state.currentFilterSelect
   ]);
   actions.getModelList = useCallback(actions.getModelList, []);
   actions.getManufactureList = useCallback(actions.getManufactureList, []);
@@ -521,36 +675,6 @@ function reducer(state: IContextState, action: IReducerAction) {
       newState = {
         ...newState,
         currentFilterSelect: value
-      };
-      break;
-    }
-    case productListReducerActionTypes.setAllFilter: {
-      newState = {
-        ...newState,
-        currentFilterSelect: newState.currentFilterSelect.filter(({ id }) => {
-          if (id.indexOf(value) !== -1) {
-            // 现有输入中有这个类别，就筛掉
-            return false;
-          } else {
-            return true;
-          }
-        })
-      };
-      break;
-    }
-    case productListReducerActionTypes.setFilter: {
-      let arr = newState.currentFilterSelect;
-      const targetIndex = arr.findIndex(({ id }: any) => {
-        return id === value;
-      });
-      if (targetIndex !== -1) {
-        arr = [...arr.slice(0, targetIndex), ...arr.slice(targetIndex + 1)];
-      } else {
-        arr = arr.concat([{ id: value }]);
-      }
-      newState = {
-        ...newState,
-        currentFilterSelect: arr
       };
       break;
     }

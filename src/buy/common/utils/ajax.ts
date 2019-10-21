@@ -8,7 +8,11 @@ interface IAjax {
 }
 
 const transUrl = (url: string) => {
-  return getRootApi("/api" + url);
+  if (url.indexOf("http") !== -1) {
+    return url;
+  } else {
+    return getRootApi("/api" + url);
+  }
 };
 
 // 下面是所有api提取

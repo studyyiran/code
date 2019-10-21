@@ -9,6 +9,7 @@ import {
 } from "../../../../api/api";
 import RouterLink from "../../../../components/routerLink";
 import {sellPageGoTo} from "../constant";
+import {getProductListPath} from "../../../../common/utils/util";
 
 export function HomeCardDataList(props: any) {
   const {type} = props
@@ -21,7 +22,7 @@ export function HomeCardDataList(props: any) {
 
 
   const gotoPage = () => {
-    type === 'buy' ? sellPageGoTo("/productlist", true) : sellPageGoTo("/sell-phone", false)
+    type === 'buy' ? sellPageGoTo(getProductListPath()) : sellPageGoTo("/sell-phone", false)
   };
 
   //state

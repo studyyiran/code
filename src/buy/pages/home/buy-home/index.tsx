@@ -10,6 +10,7 @@ import Experience from "../components/experience";
 import BuyConfidence from "../components/buy-confidence";
 import BuyHowItWorks from "../components/how-it-works";
 import {NewBuyNotice} from "../components/newBuyNotice";
+import {getProductListPath} from "../../../common/utils/util";
 
 export default function HomeWrapper(props: any) {
   function clickBrandHandler(value: any) {
@@ -40,7 +41,7 @@ class Home extends React.Component<any, any> {
               ComponentPc={
                 <SearchProduct
                   onClickSubmit={() => {
-                    locationHref("/productList");
+                    locationHref(getProductListPath());
                   }}
                 />
               }
@@ -56,7 +57,7 @@ class Home extends React.Component<any, any> {
               {/*</button>*/}
             </div>
             <div className="mb-home-button-wrapper">
-              <RouterLink to={"/productlist"}>
+              <RouterLink to={getProductListPath()}>
                 <button className="common-home-button mb-home-button">Shop All</button>
               </RouterLink>
             </div>
@@ -86,7 +87,7 @@ class Home extends React.Component<any, any> {
               })}
             </div>
             <div className="learn-more-button-wrapper">
-              <RouterLink to={"/productlist"}>
+              <RouterLink to={getProductListPath()}>
                 <button className="common-home-button learn-more-button">Learn More</button>
               </RouterLink>
             </div>

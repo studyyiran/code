@@ -8,6 +8,7 @@ import SearchProduct from "../../components/SearchProduct";
 import {locationHref} from "../../common/utils/routerHistory";
 import RouterLink from "../../components/routerLink";
 import {brands, buyCardInfo, sellCardInfo, sellPageGoTo} from "./components/constant";
+import {getProductListPath} from "../../common/utils/util";
 
 export default function HomeWrapper(props: any) {
   function clickBrandHandler(value: any) {
@@ -67,7 +68,7 @@ class Home extends React.Component<any, any> {
                 ComponentPc={
                   <SearchProduct
                     onClickSubmit={() => {
-                      locationHref("/productList");
+                      locationHref(getProductListPath());
                     }}
                   />
                 }
@@ -83,7 +84,7 @@ class Home extends React.Component<any, any> {
                 {/*</button>*/}
               </div>
               <div className="mb-home-button-wrapper">
-                <RouterLink to={"/productlist"}>
+                <RouterLink to={getProductListPath()}>
                   <button className="common-home-button mb-home-button">Shop All</button>
                 </RouterLink>
               </div>
@@ -200,7 +201,7 @@ class Home extends React.Component<any, any> {
             </div>
             <div className="learn-more-button-wrapper">
               <button className="common-button" onClick={() => {
-                this.state.homeTab === 'buy' ? sellPageGoTo("/productlist", true) : sellPageGoTo("/how-to-sell-my-home", false)
+                this.state.homeTab === 'buy' ? sellPageGoTo(getProductListPath()) : sellPageGoTo("/how-to-sell-my-home", false)
               }}>Learn More
               </button>
             </div>
@@ -228,7 +229,7 @@ class Home extends React.Component<any, any> {
             </div>
             <div className="img-wrapper">
               <img src={require("buy/pages/home/img/buNow.jpeg")} className="img-item"
-                   onClick={() => sellPageGoTo("/productlist", true)}/>
+                   onClick={() => sellPageGoTo(getProductListPath())}/>
 
               <img src={require("buy/pages/home/img/sellNow.jpeg")} className="img-item last"
                    onClick={() => sellPageGoTo("/sell-phone", false)}/>

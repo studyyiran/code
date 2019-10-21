@@ -1,4 +1,4 @@
-import getSellPath from "../utils/util";
+import getSellPath, {getProductListPath} from "../utils/util";
 
 const footerInfo = [
   {
@@ -7,7 +7,7 @@ const footerInfo = [
     arr: [
       {
         subTitle: "Buy Now",
-        href: "/productList"
+        href: getProductListPath()
       },
       {
         subTitle: "Buy Home",

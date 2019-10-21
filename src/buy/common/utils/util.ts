@@ -151,3 +151,8 @@ export function debounce(callback: any, timer: any) {
   };
   return newFunc;
 }
+
+
+export function getProductListPath() {
+  return '/buy-phone'
+}

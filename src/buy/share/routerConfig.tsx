@@ -7,6 +7,7 @@ import UptradeProtect from "../pages/statics/uptrade-protect";
 import UptradePolicy from "../pages/statics/policy";
 import Home from "../pages/home";
 import React from "react";
+import {getProductListPath} from "../common/utils/util";
 
 export const routerConfig = [
   {
@@ -21,7 +22,7 @@ export const routerConfig = [
     header: "hide"
   },
   {
-    path: "/productlist",
+    path: getProductListPath(),
     title: "Sell My Phone for More Cash | UpTradeit.com",
     Component: ProductList,
     getInitialProps: productListSsrRule

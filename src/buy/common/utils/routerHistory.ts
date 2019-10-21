@@ -9,6 +9,10 @@ export const locationHref = (url: string, params?: string) => {
   switch (params) {
     case "back":
       routerHistory.goBack();
+      break;
+    case "replace":
+      routerHistory.replace(url);
+      break;
     default:
       routerHistory.push(url);
   }

@@ -1,4 +1,6 @@
-import {locationHref} from "../../../common/utils/routerHistory";
+import { locationHref } from "../../../common/utils/routerHistory";
+import { matchPath } from "react-router-dom";
+import { routerConfig } from "../../../share/routerConfig";
 
 export const brands = [
   {
@@ -81,13 +83,20 @@ export const sellCardInfo = [
 ];
 
 //暂时仅用作sell侧跳转
-export const sellPageGoTo = function (url: any, isBuy: boolean) {
+export const sellPageGoTo = function(url: any, isBuy?: boolean) {
   if (isBuy) {
     locationHref(url);
     return;
+  } else if (
+    !routerConfig.find((route: any) => {
+      return !!matchPath(url, route);
+    })
+  ) {
+    locationHref(url);
+    return;
   }
-  const getRootUrl = function (urlRoot: string) {
-    let apiRoot = 'http://qa-sell-552833548.us-east-2.elb.amazonaws.com';
+  const getRootUrl = function(urlRoot: string) {
+    let apiRoot = "http://qa-sell-552833548.us-east-2.elb.amazonaws.com";
     switch (process.env.REACT_APP_SERVER_ENV) {
       case "QA":
         apiRoot = "http://qa-sell-552833548.us-east-2.elb.amazonaws.com";

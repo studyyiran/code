@@ -1,9 +1,10 @@
-import { useContext, useEffect, useReducer } from "react";
+import { useContext, useReducer } from "react";
 import {
   IOriginDataContext,
   OriginDataContext,
   originDataReducerTypes
 } from "../../context/originData";
+import useReducerMiddleware from "./useReducerMiddleware";
 
 /*
 client端添加方法 用于将补救数据填充到store中
@@ -70,7 +71,7 @@ export function useGetOriginData(
 
   // 用merge后的数据进行初始化store
   const [state, dispatch] = useReducer(
-    setOriginDataToStoreHoc(reducer),
+    useReducerMiddleware(setOriginDataToStoreHoc, reducer),
     mergeInitState
   );
   // client回补

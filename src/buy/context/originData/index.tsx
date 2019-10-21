@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import { IReducerAction } from "buy/common/interface/index.interface";
 import { promisify } from "buy/common/utils/util";
-import {reducerLog} from "../../common/hoc";
+import useReducerMiddleware from "../../common/useHook/useReducerMiddleware";
 
 export const OriginDataContext = createContext({});
 // store name
@@ -29,9 +29,12 @@ export function OriginDataContextProvider(props: any) {
   // 注入初始值到originData上
   const initState: IContextState = {
     originData: { ...props.originData },
-    needClientRun: false// 是否开启回补逻辑
+    needClientRun: false // 是否开启回补逻辑
   };
-  const [state, dispatch] = useReducer(reducerLog(reducer), initState);
+  const [state, dispatch] = useReducer(
+    useReducerMiddleware(reducer),
+    initState
+  );
   const action: IOriginDataActions = useGetAction(state, dispatch);
   // 监听变化
   useEffect(() => {

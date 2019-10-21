@@ -2,6 +2,7 @@ import * as React from "react";
 import "./index.less";
 import RouterLink from "../../../../components/routerLink";
 import {useState} from "react";
+import {getProductListPath} from "../../../../common/utils/util";
 
 
 export default function BuyHowItWorks(props: any) {
@@ -30,7 +31,7 @@ export default function BuyHowItWorks(props: any) {
       </div>
 
       <div className={"shop-all-wrapper"}>
-        <RouterLink to={"/productlist"}>
+        <RouterLink to={getProductListPath()}>
           <button className="common-home-button shop-all">View All</button>
         </RouterLink>
       </div>

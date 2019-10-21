@@ -17,6 +17,6 @@ export async function createOrder(orderInfo: any) {
 }
 
 export async function zipCodeToAddressInfo(zipCode: any) {
-  const res = await ajax.get(`/up-api/USPS/state/${zipCode}`);
+  const res = await ajax.get(`http://47.96.53.33/up-trade-it/api/USPS/state/${zipCode}`);
   return res;
 }

@@ -6,7 +6,7 @@ import TestCarousel, { Modal, ModalGateway } from "react-images";
 import { IProductDetailContext, ProductDetailContext } from "./context";
 import Svg from "../../components/svg";
 import TipsIcon from "../../components/tipsIcon";
-import { currencyTrans, staticContentConfig } from "../../common/utils/util";
+import {currencyTrans, getProductListPath, staticContentConfig} from "../../common/utils/util";
 import { RenderByCondition } from "../../components/RenderByCondition";
 import CommonCollapse from "../../components/commonCollapse";
 import MyModal from "../../components/modal";
@@ -314,7 +314,7 @@ export default function ProductDetail(props: any) {
           <section className="similar">
             <header>
               <h2>Similar Phones</h2>
-              <RouterLink to={"/productList"}>VIEW ALL</RouterLink>
+              <RouterLink to={getProductListPath()}>VIEW ALL</RouterLink>
             </header>
             <RenderByCondition
               ComponentMb={

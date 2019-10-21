@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import RouterLink from "../../../../components/routerLink";
 import { IOrderInfoContext, OrderInfoContext } from "../../context";
+import {getProductListPath} from "../../../../common/utils/util";
 
 export default function Confirmation(props: any) {
   const orderInfoContext = useContext(OrderInfoContext);
@@ -32,7 +33,7 @@ export default function Confirmation(props: any) {
           We will send you an email confirmation to your email. Please let us
           know if you have any questions.
         </div>
-        <Link to={"/productlist"}>
+        <Link to={getProductListPath()}>
           <div className={"button-wrapper"}>
             <button className="common-button continue-shopping">
               Continue shopping
