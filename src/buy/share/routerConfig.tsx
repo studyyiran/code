@@ -7,7 +7,9 @@ import UptradeProtect from "../pages/statics/uptrade-protect";
 import UptradePolicy from "../pages/statics/policy";
 import Home from "../pages/home";
 import React from "react";
-import {getProductListPath} from "../common/utils/util";
+import { getProductListPath } from "../common/utils/util";
+import { detailSsrRule } from "../pages/detail/ssr";
+import { ourHomeSsrRule } from "../pages/home/ssr";
 
 export const routerConfig = [
   {
@@ -30,7 +32,8 @@ export const routerConfig = [
   {
     path: "/detail/:productId",
     title: "detail | UpTradeit.com",
-    Component: ProductDetail
+    Component: ProductDetail,
+    getInitialProps: detailSsrRule
   },
   {
     path: "/uptrade/protect",
@@ -52,8 +55,9 @@ export const routerConfig = [
     path: "/",
     title: "buy Phone for More Cash | UpTradeit.com",
     exact: true,
-    Component: Home
-  },
+    Component: Home,
+    getInitialProps: ourHomeSsrRule
+  }
   // {
   //   title: "404 | UpTradeit.com",
   //   Component: () => <div>404</div>

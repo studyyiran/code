@@ -463,8 +463,9 @@ function RenderTradeIn(props: any) {
           <p>
             UpTrade can help you sell your old phone. See{" "}
             <a onClick={() => locationHref(getSellPath())} style={{ color: "rgba(26, 180, 231, 1)",textDecoration: "underline"}}>
-              how much your phone is worth to get started.
+              how much your phone is worth
             </a>
+            &nbsp;to get started.
           </p>
         </TipsIcon>
       </div>

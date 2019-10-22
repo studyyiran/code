@@ -1,6 +1,6 @@
 import Axios from "axios";
 interface IAjax {
-  get: (url: string) => void;
+  get: (url: string, data?: any) => void;
   post: (url: string, data?: any) => void;
   put: (url: string, data?: any) => void;
   delete: (url: string, data?: any) => void;
@@ -53,14 +53,15 @@ ajax.delete = function(url, data) {
   return ajax.fetch({
     url: transUrl(url),
     method: "DELETE",
-    data
+    data: data
   });
 };
 
-ajax.get = function(url) {
+ajax.get = function(url, data) {
   return ajax.fetch({
     url: transUrl(url),
-    method: "GET"
+    method: "GET",
+    data
   });
 };
 

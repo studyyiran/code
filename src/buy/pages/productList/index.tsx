@@ -122,7 +122,7 @@ function RenderFooter() {
   } = productListContext as IProductListContext;
   const { productList, haveMore } = productListContextValue;
   if (productList.length === 0) {
-    return <div>Looks like we couldn't find what you were looking for.</div>;
+    return <div style={{marginBottom: "30px", marginTop: "20px"}}>Looks like we couldn't find what you were looking for.</div>;
   } else {
     if (haveMore) {
       return (

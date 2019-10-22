@@ -1,20 +1,57 @@
 import * as React from "react";
 import "./index.less";
-import {BrandLogo} from "./components/brandLogo";
-import {RenderByCondition} from "buy/components/RenderByCondition";
-import {HomeCardDataList} from "./components/homeCardDataList";
-import {Rate} from "antd";
+import { BrandLogo } from "./components/brandLogo";
+import { RenderByCondition } from "buy/components/RenderByCondition";
+import { HomeCardDataList } from "./components/homeCardDataList";
+import { Rate } from "antd";
 import SearchProduct from "../../components/SearchProduct";
-import {locationHref} from "../../common/utils/routerHistory";
+import { locationHref } from "../../common/utils/routerHistory";
 import RouterLink from "../../components/routerLink";
-import {brands, buyCardInfo, sellCardInfo} from "./components/constant";
-import {getProductListPath, sellPageGoTo} from "../../common/utils/util";
+import { brands, buyCardInfo, sellCardInfo } from "./components/constant";
+import { getProductListPath, sellPageGoTo } from "../../common/utils/util";
+import { useContext } from "react";
+import {
+  IProductListContext,
+  ProductListContext
+} from "../productList/context";
+import { IOurHomeContext, OurHomeContext } from "./context";
+import { ourHomeSsrRule } from "./ssr";
 
 export default function HomeWrapper(props: any) {
-  function clickBrandHandler(value: any) {
-  }
+  function clickBrandHandler(value: any) {}
+  const productListContext = useContext(ProductListContext);
+  const { productListContextValue } = productListContext as IProductListContext;
+  const { manufactureList } = productListContextValue;
 
-  return <Home clickBrandHandler={clickBrandHandler} {...props} />;
+  const ourHomeContext = useContext(OurHomeContext);
+  const {
+    ourHomeContextValue,
+    useClientRepair,
+    getBuyProductList,
+    getSellProductList
+  } = ourHomeContext as IOurHomeContext;
+  const {
+    sellListTitle,
+    buyProductList,
+    sellProductList
+  } = ourHomeContextValue;
+
+  // 告知client执行对应的函数
+  useClientRepair(ourHomeSsrRule);
+
+  return (
+    <Home
+      clickBrandHandler={clickBrandHandler}
+      {...props}
+      getBuyShowList={getBuyProductList}
+      getSellProductList={getSellProductList}
+      buyListTitle={manufactureList}
+      sellListTitle={sellListTitle}
+      sellBrandList={1}
+      buyProductList={buyProductList}
+      sellProductList={sellProductList}
+    />
+  );
 }
 
 class Home extends React.Component<any, any> {
@@ -42,11 +79,11 @@ class Home extends React.Component<any, any> {
       if (this.state.homeTab === "buy") {
         return (
           <div className="container">
-            <img className="mb-head-img" src={url}/>
+            <img className="mb-head-img" src={url} />
             <section className="title">
               <h1>
                 Buy The Best Used
-                <br/>
+                <br />
                 Phones For Less.
               </h1>
               <div className="home-tab-wrapper">
@@ -85,29 +122,31 @@ class Home extends React.Component<any, any> {
               </div>
               <div className="mb-home-button-wrapper">
                 <RouterLink to={getProductListPath()}>
-                  <button className="common-home-button mb-home-button">Shop All</button>
+                  <button className="common-home-button mb-home-button">
+                    Shop All
+                  </button>
                 </RouterLink>
               </div>
             </section>
             <div className="img-container">
-              <img src={url}/>
+              <img src={url} />
             </div>
           </div>
         );
       } else {
         return (
           <div className="container">
-            <img className="mb-head-img" src={url}/>
+            <img className="mb-head-img" src={url} />
             <section className="title">
               <h1>
-                Sell For More. <br/>
+                Sell For More. <br />
                 Without Any Hassles.
               </h1>
               <div className="home-tab-wrapper">
                 <div
                   className={`tab-item ${
                     this.state.homeTab === "buy" ? "active" : ""
-                    }`}
+                  }`}
                   onClick={this.changeTab.bind(this, "buy")}
                 >
                   Buy a Phone
@@ -115,7 +154,7 @@ class Home extends React.Component<any, any> {
                 <div
                   className={`tab-item ${
                     this.state.homeTab === "sell" ? "active" : ""
-                    }`}
+                  }`}
                   onClick={this.changeTab.bind(this, "sell")}
                 >
                   Sell My Phone
@@ -129,7 +168,7 @@ class Home extends React.Component<any, any> {
                       {fixBrands
                         .filter((brand, index) => index < 6)
                         .map((brand, index) => {
-                          const {id} = brand;
+                          const { id } = brand;
                           return (
                             <BrandLogo
                               key={id}
@@ -171,10 +210,15 @@ class Home extends React.Component<any, any> {
                   }
                 />
               </div>
-              <button className="common-button" onClick={() => sellPageGoTo("/sell-phone", false)}>Sell Now</button>
+              <button
+                className="common-button"
+                onClick={() => sellPageGoTo("/sell-phone", false)}
+              >
+                Sell Now
+              </button>
             </section>
             <div className="img-container">
-              <img src={url}/>
+              <img src={url} />
             </div>
           </div>
         );
@@ -190,7 +234,7 @@ class Home extends React.Component<any, any> {
               {homeCardInfo.map((item, index) => {
                 return (
                   <div className="content-item" key={index}>
-                    <img src={item.img} className="item-img"/>
+                    <img src={item.img} className="item-img" />
                     <div className="content">
                       <div className="title">{item.title}</div>
                       <div className="text" dangerouslySetInnerHTML={{__html: item.text}}/>
@@ -200,9 +244,15 @@ class Home extends React.Component<any, any> {
               })}
             </div>
             <div className="learn-more-button-wrapper">
-              <button className="common-button" onClick={() => {
-                this.state.homeTab === 'buy' ? sellPageGoTo(getProductListPath()) : sellPageGoTo("/how-to-sell-my-home", false)
-              }}>Learn More
+              <button
+                className="common-button"
+                onClick={() => {
+                  this.state.homeTab === "buy"
+                    ? sellPageGoTo(getProductListPath())
+                    : sellPageGoTo("/how-to-sell-my-home", false);
+                }}
+              >
+                Learn More
               </button>
             </div>
           </div>
@@ -210,8 +260,18 @@ class Home extends React.Component<any, any> {
 
         <div className="line">&nbsp;</div>
 
-        <HomeCardDataList type={"buy"}/>
-        <HomeCardDataList type={"sell"}/>
+        <HomeCardDataList
+          type={"buy"}
+          titleList={this.props.buyListTitle}
+          onClickHandler={this.props.getBuyShowList}
+          productList={this.props.buyProductList}
+        />
+        <HomeCardDataList
+          type={"sell"}
+          titleList={this.props.sellListTitle}
+          onClickHandler={this.props.getSellProductList}
+          productList={this.props.sellProductList}
+        />
 
         <div className="home-confidence-wrapper">
           <div className="content-detail-home-width">
@@ -222,17 +282,26 @@ class Home extends React.Component<any, any> {
               sold on eBay, considering eBay & PayPal fees”
             </div>
             <div className="start">
-              <Rate disabled defaultValue={5}/>
+              <Rate disabled defaultValue={5} />
             </div>
-            <div className="read-more" onClick={() => sellPageGoTo('/reviews', false)}>
+            <div
+              className="read-more"
+              onClick={() => sellPageGoTo("/reviews", false)}
+            >
               <span className="text">Read more</span>
             </div>
             <div className="img-wrapper">
-              <img src={require("buy/pages/home/img/buNow.jpeg")} className="img-item"
-                   onClick={() => sellPageGoTo(getProductListPath())}/>
+              <img
+                src={require("buy/pages/home/img/buNow.jpeg")}
+                className="img-item"
+                onClick={() => sellPageGoTo(getProductListPath())}
+              />
 
-              <img src={require("buy/pages/home/img/sellNow.jpeg")} className="img-item last"
-                   onClick={() => sellPageGoTo("/sell-phone", false)}/>
+              <img
+                src={require("buy/pages/home/img/sellNow.jpeg")}
+                className="img-item last"
+                onClick={() => sellPageGoTo("/sell-phone", false)}
+              />
             </div>
           </div>
         </div>

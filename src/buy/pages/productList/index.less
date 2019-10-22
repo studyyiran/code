@@ -1,7 +1,8 @@
 @import (reference) "~buy/common/styles/index.less";
 @p1: {
   .tips-button {
-    margin-top: 10 * @px;
+    margin-top: 50 * @px;
+    font-size: 18*@px;
     text-align: center;
   }
   .load-more-button {
@@ -78,6 +79,11 @@
     }
   }
   #ismobile {
+    .tips-button {
+      margin-top: 30 * @px;
+      margin-bottom: 30 * @px;
+      text-align: center;
+    }
     .product-list-page {
       .list-part {
         > *:not(.product-list-container) {

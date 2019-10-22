@@ -2,6 +2,7 @@ import React from "react";
 import "./index.less";
 import { RenderByCondition } from "../../../../components/RenderByCondition";
 import {sellPageGoTo} from "../../../../common/utils/util";
+import {locationHref} from "../../../../common/utils/routerHistory";
 export default function AdLine(props: any) {
   const { line } = props;
   let dom;
@@ -13,7 +14,7 @@ export default function AdLine(props: any) {
             <h3>Questions?</h3>
             <p>We’ve got answers</p>
           </div>
-          <a className="big" onClick={() => sellPageGoTo("/contact", false)}>Get Help</a>
+          <a className="big" onClick={() => locationHref("/contact")}>Get Help</a>
           {/*<RenderByCondition*/}
           {/*  ComponentMb={<a className="big">972-833.0136</a>}*/}
           {/*  ComponentPc={<a className="big">Get Help</a>}*/}

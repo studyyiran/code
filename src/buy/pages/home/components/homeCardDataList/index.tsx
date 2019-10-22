@@ -1,102 +1,111 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import "./index.less";
 import {
-  ajax,
-  GET_HOME_PAGE_BUY_BRANDS,
-  GET_HOME_PAGE_BUY_PRODUCTS,
-  GET_HOME_PAGE_SELL_BRANDS,
-  GET_HOME_PAGE_SELL_PRODUCTS
-} from "../../../../api/api";
-import {currencyTrans, getProductListPath, sellPageGoTo} from "../../../../common/utils/util";
+  getProductListPath,
+  sellPageGoTo,
+  currencyTrans
+} from "../../../../common/utils/util";
+import {IProductListContext, ProductListContext} from "../../../productList/context";
 
 export function HomeCardDataList(props: any) {
-  const {type} = props;
+  const productListContext = useContext(ProductListContext);
+  const {
+    setSearchInfo
+  } = productListContext as IProductListContext;
 
+  const { titleList, type, onClickHandler, productList } = props;
+  console.log(productList);
   //state
-  const [tabNameList, setTabNameList] = useState([]); // tab list
-  const [tab, setTab] = useState('Apple'); //tab的值
-  const [dataList, setDataList] = useState([]);
-
-  //useEffect 组件初始化就加载方法, 并且监听tab，tab变动会重新执行callback
+  const [tab, setTab] = useState("Apple"); //tab的值
   useEffect(() => {
-    let url = type === 'buy' ? GET_HOME_PAGE_BUY_BRANDS : GET_HOME_PAGE_SELL_BRANDS
-    ajax.get(url).then(res => {
-      setTabNameList(res.data.data)
-      setTab(res.data.data[0].brandId)
-      changeTab(res.data.data[0])
-    });
-  }, [type]);
+    if (titleList && titleList.length) {
+      setTab(titleList[0].id);
+    }
+  }, [titleList]);
 
-  const title = type === "buy"
-    ? "Browse Newly Listed Phones"
-    : "We Help Sell Your Phone"; // 根据类型设置title
-  const banner = type === "buy" ? 'url(' + require("buy/pages/home/img/buyBanner.jpeg") + ')' : 'url(' + require("buy/pages/home/img/sellBanner.jpeg") + ')';
+  const title =
+    type === "buy" ? "Browse Newly Listed Phones" : "We Help Sell Your Phone"; // 根据类型设置title
+  const banner =
+    type === "buy"
+      ? "url(" + require("buy/pages/home/img/buyBanner.jpeg") + ")"
+      : "url(" + require("buy/pages/home/img/sellBanner.jpeg") + ")";
 
   const productText = type === "buy" ? "As low as / " : "Cash up to / ";
 
   const gotoPage = () => {
-    type === 'buy' ? sellPageGoTo(getProductListPath(), true) : sellPageGoTo("/sell-phone", false)
+    type === "buy"
+      ? sellPageGoTo(getProductListPath(), true)
+      : sellPageGoTo("/sell-phone", false);
   };
 
-  const dataItemGotoPage = () => {
-    type === 'buy' ? sellPageGoTo(getProductListPath(), true) : sellPageGoTo("/sell-phone/" + tab, false)
+  function goProductListPage (item: any) {
+    setSearchInfo({
+      productId: item.productId,
+      productKey: item.productDisplayName
+    });
+    sellPageGoTo(getProductListPath(), true)
+  }
+
+  const dataItemGotoPage = (item: any) => {
+    type === "buy"
+      ? goProductListPage(item)
+      : sellPageGoTo("/sell-phone/" + tab, false);
   };
 
   function changeTab(tabData: any) {
-    let url = type === 'buy' ? GET_HOME_PAGE_BUY_PRODUCTS : GET_HOME_PAGE_SELL_PRODUCTS
-    ajax.get(url, {
-      params: {brandId: tabData.brandId, seq: tabData.seqNo}
-    }).then(res => {
-      setTab(tabData.brandId);
-      setDataList(res.data.data.map((d: any) => {
-        d.productPrice = d.productPrice <= 0 ? 100 : d.productPrice; //Math.floor(Math.random() * (120 - 28 + 1)) + 28
-        return d;
-      }))
-    });
+    setTab(tabData.id);
+    onClickHandler({ brandId: tabData.id, seq: tabData.seqNo });
   }
 
   return (
     <div className="home-card-content-wrapper">
       <div className="content-detail-home-width">
-        <div className="banner" style={{backgroundImage: banner}}
-             onClick={gotoPage}>
+        <div
+          className="banner"
+          style={{ backgroundImage: banner }}
+          onClick={gotoPage}
+        >
           <span className="text">{title}</span>
         </div>
 
         <div className="tab-bar-wrapper">
-          {tabNameList.map((item: any) => {
+          {titleList.map((item: any) => {
             return (
               <span
-                key={item.brandId}
-                className={`tab-bar-item ${tab === item.brandId ? "active" : ""}`}
-                onClick={() => changeTab(item)}>{item.brandDisplayName}</span>
+                key={item.id}
+                className={`tab-bar-item ${tab === item.id ? "active" : ""}`}
+                onClick={() => changeTab(item)}
+              >
+                {item.displayName}
+              </span>
             );
           })}
         </div>
         <div className="data-list-wrapper">
-          {
-            dataList.map((item: any, index: any) => {
-              return (
-                <div className="data-item-wrapper" key={index}>
-                  <div className="data-item" onClick={dataItemGotoPage}>
-                    <div className="data-img-wrapper">
-                      <img src={item.productImg} className="data-img"/>
-                    </div>
-                    <div className="data-bottom">
-                      <div className="left">{item.productDisplayName}</div>
-                      <div className="right">
-                        <span>{productText}</span>
-                        <span className="price">{currencyTrans(item.productPrice)}</span>
-                      </div>
+          {productList.map((item: any, index: any) => {
+            return (
+              <div className="data-item-wrapper" key={index}>
+                <div className="data-item" onClick={() => dataItemGotoPage(item)}>
+                  <div className="data-img-wrapper">
+                    <img src={item.productImg} className="data-img" />
+                  </div>
+                  <div className="data-bottom">
+                    <div className="left">{item.productDisplayName}</div>
+                    <div className="right">
+                      <span>{productText}</span>
+                      <span className="price">{currencyTrans(item.productPrice)}</span>
                     </div>
                   </div>
                 </div>
-              )
-            })
-          }
+              </div>
+            );
+          })}
         </div>
         <div className="button-wrapper">
-          <button className="common-home-button view-all-button" onClick={gotoPage}>
+          <button
+            className="common-home-button view-all-button"
+            onClick={gotoPage}
+          >
             View All
           </button>
         </div>

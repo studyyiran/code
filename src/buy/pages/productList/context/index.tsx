@@ -580,12 +580,15 @@ function useGetAction(
       if (res && res.length) {
         dispatch({
           type: productListReducerActionTypes.setManufactureList,
-          value: (res || []).map(({ brandId, brandDisplayName }: any) => {
-            return {
-              id: brandId,
-              displayName: brandDisplayName
-            };
-          })
+          value: (res || []).map(
+            ({ brandId, brandDisplayName, seqNo }: any) => {
+              return {
+                seqNo,
+                id: brandId,
+                displayName: brandDisplayName
+              };
+            }
+          )
         });
       }
     })
@@ -693,7 +696,8 @@ function reducer(state: IContextState, action: IReducerAction) {
     case productListReducerActionTypes.setManufactureList: {
       newState = {
         ...newState,
-        manufactureList: newState.manufactureList.concat(value)
+        manufactureList: value
+        // manufactureList: newState.manufactureList.concat(value) 因为没有pn直接替代掉
       };
       break;
     }

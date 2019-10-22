@@ -7,8 +7,17 @@ getInitialProps是一个异步方法.
 传入参数(页面url信息)
  */
 
-import { getBaseAttr, getProductList, stringToUserSelect } from "./server";
-import { ATTROF, StoreProductList } from "./context";
+import {
+  getBaseAttr,
+  getProductList,
+  stringToUserSelect,
+  getManufactureList
+} from "./server";
+import {
+  ATTROF,
+  productListReducerActionTypes,
+  StoreProductList
+} from "./context";
 import { getProductListPath } from "../../common/utils/util";
 
 export const productListSsrRule = async (url: string) => {
@@ -19,6 +28,7 @@ export const productListSsrRule = async (url: string) => {
       staticFilterList: any[]; // 静态列表
       productList: any[]; // 最终渲染的商品列表
       modelList: any[]; // 用户可能点击more来显示.需要回补数据
+      manufactureList: any[]; // 因为用户可能选中,造成渲染异常,所以必须.
     };
   } = {
     storeName: StoreProductList,
@@ -26,7 +36,8 @@ export const productListSsrRule = async (url: string) => {
       currentFilterSelect: [], // 用户的一切选择
       staticFilterList: [], // 静态列表
       productList: [], // 最终渲染的商品列表
-      modelList: [] // 用户可能点击more来显示.需要回补数据
+      modelList: [], // 用户可能点击more来显示.需要回补数据
+      manufactureList: []
     }
   };
   const splitResult = url.split(getProductListPath());
@@ -90,12 +101,6 @@ export const productListSsrRule = async (url: string) => {
       });
     }
   }
-
-  console.log(store);
-  // 0 判定过滤.
-  // 0 解析参数
-  // 1 请求1
-  // 2 请求2
   const userSelectInfo = {
     productKey: [],
     buyLevel: [],
@@ -108,6 +113,18 @@ export const productListSsrRule = async (url: string) => {
   };
   const productList = await getProductList(userSelectInfo);
   store.storeData.productList = productList;
-  // 3 返回值
+
+  const manufactureList: any = await getManufactureList();
+  if (manufactureList && manufactureList.length) {
+    store.storeData.manufactureList = (manufactureList || []).map(
+      ({ brandId, brandDisplayName }: any) => {
+        return {
+          id: brandId,
+          displayName: brandDisplayName
+        };
+      }
+    );
+  }
+
   return store;
 };
