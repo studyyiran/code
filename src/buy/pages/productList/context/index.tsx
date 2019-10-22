@@ -693,7 +693,8 @@ function reducer(state: IContextState, action: IReducerAction) {
     case productListReducerActionTypes.setManufactureList: {
       newState = {
         ...newState,
-        manufactureList: newState.manufactureList.concat(value)
+        manufactureList: value
+        // manufactureList: newState.manufactureList.concat(value) 因为没有pn直接替代掉
       };
       break;
     }
