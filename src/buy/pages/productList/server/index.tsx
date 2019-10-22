@@ -35,8 +35,8 @@ export async function getModelList(pn: any) {
   // });
 }
 
-export async function getManufactureList(pn: any) {
-  const res = await ajax.get(`/home/buy/brand?pageSize=5&pageNum=${pn}`);
+export async function getManufactureList(pn?: any) {
+  const res = await ajax.get(`/home/buy/brand`);
   return res;
   // return getManufactureListMock().map((item: any) => {
   //   return { ...item, displayName: `pn is ${pn}${item.displayName}` };

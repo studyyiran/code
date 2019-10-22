@@ -236,7 +236,8 @@ const gotoBuy = async (ctx: any, next: any, buyCurrentRouter: any) => {
   let originData: any = {};
   if (getInitialProps) {
     console.log("ajax start");
-    originData = await getInitialProps("testParams");
+    console.log(ctx.path);
+    originData = await getInitialProps(ctx.path);
     console.log(originData);
     console.log("ajax end");
   }
@@ -252,6 +253,10 @@ const gotoBuy = async (ctx: any, next: any, buyCurrentRouter: any) => {
     </RenderWithOriginData>
   );
   template = template.replace(/(<div id=\"root\">)/, "$1" + html);
+  template = template.replace(
+    /(<\/head>)/,
+    "<script>var SSRDATA=" + JSON.stringify(originData) + ";</script>$1"
+  );
   ctx.body = template;
 
   next();
