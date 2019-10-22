@@ -257,34 +257,15 @@ const gotoBuy = async (ctx: any, next: any, buyCurrentRouter: any) => {
   next();
 };
 
-// 临时用于判断路由跳转
-function isBuy(routerPath: any, ctxPath: any) {
-  if (!routerPath) { //404 path是空
-    return false;
-  }
-  if (ctxPath === '/') { //buy首页
-    return true;
-  }
-  let routerPathArr = routerPath.split("/");
-  let ctxPathArr = ctxPath.split("/");
-  
-  return routerPathArr[1] === ctxPathArr[1];
-}
-
 Router.get("*", async (ctx: any, next: any) => {
   console.log("=================================", ctx.path);
   if (!ctx.path) {
     return;
   }
-
-  const current = routerConfig.find(r => {
-    return isBuy(r.path, ctx.path);
-  });
-  
   // 匹配buy端路由，如果匹配的上并且组件存在，直接跳转buy端，否则跳转sell端
-  // const current = routerConfig.find((route: any) => {
-  //   return !!matchPath(ctx.path, route);
-  // });
+  const current = routerConfig.find((route: any) => {
+    return !!matchPath(ctx.path, route);
+  });
   console.log("=========", JSON.stringify(current));
   if (current && current.Component) {
     console.log("buy page");
