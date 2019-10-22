@@ -206,6 +206,7 @@ function useGetAction(
       const splitOne = "%splitOne%";
       const splitTwo = "%splitTwo%";
       // 需要借助属性列表的帮助
+      // @ts-ignore
       state.staticFilterList.find((item: any, index) => {
         const { bpId } = item;
         if (

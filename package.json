@@ -105,7 +105,11 @@
     "pm2:qa": "cross-env REACT_APP_SERVER_ENV=QA node scripts/build.js && node scripts/server.js && cp -R ecosystem.config.js build/",
     "running": "node build/compiled.js",
     "test": "node scripts/test.js --env=jsdom",
-    "prerender": "node scripts/prerender.js"
+    "prerender": "node scripts/prerender.js",
+    "all:build": "node scripts/build.js && node scripts/server.js && cp -R ecosystem.config.js build/ && node scripts/buildbuy.js && mkdir -p build/buy && cp -R buildbuy/* build/buy",
+    "ssr:qa": "cross-env REACT_APP_SERVER_ENV=QA && yarn run all:build",
+    "ssr:demo": "cross-env REACT_APP_SERVER_ENV=UAT && yarn run all:build",
+    "ssr:prod": "cross-env REACT_APP_SERVER_ENV=PUB && yarn run all:build"
   },
   "devDependencies": {
     "@babel/plugin-transform-exponentiation-operator": "^7.1.0",
