@@ -5,16 +5,21 @@ import {
   getProductList,
   getBaseAttr,
   getManufactureList,
-  getDropDownInfo
+  getDropDownInfo,
+  productIdToBrandId
 } from "../server";
-import {getProductListPath, promisify} from "buy/common/utils/util";
+import {
+  getProductListPath,
+  promisify,
+  safeEqual
+} from "buy/common/utils/util";
 import { IStaticFilterItem, filterListConfig } from "./staticData";
 import { useGetOriginData } from "../../../common/useHook/useGetOriginData";
 import { reducerLog } from "../../../common/hoc";
 import useReducerMiddleware from "../../../common/useHook/useReducerMiddleware";
 import { locationHref } from "../../../common/utils/routerHistory";
 
-const ATTROF = "attrOf";
+export const ATTROF = "attrOf";
 export const ProductListContext = createContext({});
 export const StoreProductList = "StoreProductList";
 // state
@@ -263,7 +268,7 @@ function useGetAction(
             );
             return infoItem ? infoItem.displayName : "";
           }),
-          "allBrand"
+          "allManufacturer"
         );
       });
       // model
@@ -286,7 +291,7 @@ function useGetAction(
         });
         // attr
 
-        result = add(index === 0 ? splitTwo : splitOne, () => {
+        result = add(splitTwo, () => {
           arrToString([], "");
           return arrToString(
             (() => {
@@ -310,13 +315,15 @@ function useGetAction(
       });
       result = result.split(/-|&|\s*/).join("");
 
-      result = getProductListPath() + result
-        .split(splitOne)
-        .join("/")
-        .split(splitTwo)
-        .join("-")
-        .toLowerCase();
-      if (result !==  getProductListPath()) {
+      result =
+        getProductListPath() +
+        result
+          .split(splitOne)
+          .join("/")
+          .split(splitTwo)
+          .join("-")
+          .toLowerCase();
+      if (window.location.href.indexOf(getProductListPath()) !== -1) {
         locationHref(result, "replace");
       }
       return result;
@@ -345,7 +352,7 @@ function useGetAction(
       }
       return [typeInfo, itemInfo];
     },
-    setUserSelectFilter: ({ id, type }) => {
+    setUserSelectFilter: promisify(async function({ id, type }: any) {
       if (id === "all") {
         setCurrentFilterSelectHandler(
           state.currentFilterSelect.filter(({ id }) => {
@@ -368,9 +375,21 @@ function useGetAction(
         } else {
           arr = arr.concat([{ id: value }]);
         }
+        // 这块穿插一个脏逻辑.
+        if (type === "Model") {
+          const result: any = await productIdToBrandId(id);
+          if (result) {
+            const { id: newBrandId } = result;
+            const setBrandString = `Manufacture-${newBrandId}`;
+            if (!arr.find(({ id }: any) => id === setBrandString)) {
+              arr = arr.concat([{ id: setBrandString }]);
+            }
+          }
+        }
         setCurrentFilterSelectHandler(arr);
       }
-    },
+    }),
+
     // 获取排序的列表(整个静态数据,baseAttr,model)
     getFilterList: () => {
       // 2)静态接口已经拉取
@@ -659,9 +678,15 @@ function reducer(state: IContextState, action: IReducerAction) {
       break;
     }
     case productListReducerActionTypes.setModelList: {
+      // 没有的数据才补充进来
+      const nextValue = value.filter((itemNew: any) => {
+        return !newState.modelList.find((itemOld: any) => {
+          return safeEqual(itemNew.id, itemOld.id);
+        });
+      });
       newState = {
         ...newState,
-        modelList: newState.modelList.concat(value)
+        modelList: newState.modelList.concat(nextValue)
       };
       break;
     }

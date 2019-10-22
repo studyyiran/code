@@ -7,27 +7,91 @@ getInitialProps是一个异步方法.
 传入参数(页面url信息)
  */
 
-import { getProductList } from "./server";
-import { StoreProductList } from "./context";
+import { getBaseAttr, getProductList, stringToUserSelect } from "./server";
+import { ATTROF, StoreProductList } from "./context";
+import { getProductListPath } from "../../common/utils/util";
 
 export const productListSsrRule = async (url: string) => {
-  const paramsArr = url.split(/-|\//);
-  const jsonArr = new Array(5).map((item, index) => {
-    if (paramsArr && paramsArr[index]) {
-      return;
-    } else {
-      return "";
+  const store: {
+    storeName: string;
+    storeData: {
+      currentFilterSelect: any[]; // 用户的一切选择
+      staticFilterList: any[]; // 静态列表
+      productList: any[]; // 最终渲染的商品列表
+      modelList: any[]; // 用户可能点击more来显示.需要回补数据
+    };
+  } = {
+    storeName: StoreProductList,
+    storeData: {
+      currentFilterSelect: [], // 用户的一切选择
+      staticFilterList: [], // 静态列表
+      productList: [], // 最终渲染的商品列表
+      modelList: [] // 用户可能点击more来显示.需要回补数据
     }
-  });
+  };
+  const splitResult = url.split(getProductListPath());
+  url = splitResult && splitResult[1] ? splitResult[1] : "";
+  let paramsArr = url.split(/-|\//);
+  if (paramsArr && paramsArr[0] === "") {
+    paramsArr = paramsArr.slice(1);
+  }
+  const jsonArr = new Array(5)
+    .fill("")
+    .map((item, index) => {
+      if (paramsArr && paramsArr[index]) {
+        return paramsArr[index];
+      } else {
+        return "";
+      }
+    })
+    .map((item: string) => {
+      if (item.indexOf("all") === -1) {
+        return item;
+      } else {
+        return "";
+      }
+    });
   // 分割后，应该最多有5个字符。
   const json = {
-    a: jsonArr[0],
-    b: jsonArr[1],
-    c: [jsonArr[2], jsonArr[3], jsonArr[4]]
+    brandName: jsonArr[0],
+    productName: jsonArr[1],
+    skuAttrNames: [jsonArr[2], jsonArr[3], jsonArr[4]]
   };
+  function addIntoSelect(arr: any[], mapFunc: any) {
+    store.storeData.currentFilterSelect = store.storeData.currentFilterSelect.concat(
+      arr.map(mapFunc)
+    );
+  }
   // 发起请求，获取参数
-  const userSelect = await getProductList(json);
+  const userSelectData: any = await stringToUserSelect(json);
+  if (userSelectData) {
+    const { brandIds, productIds, skuAttrIds } = userSelectData;
+    addIntoSelect(brandIds, (id: any) => ({ id: `Manufacture-${id}` }));
+    addIntoSelect(productIds, (productInfo: any) => {
+      const { id, name } = productInfo;
+      // 顺带着 回补数据
+      store.storeData.modelList.push({
+        id: id,
+        displayName: name
+      });
+      return { id: `Model-${id}` };
+    });
+    // 调用接口获取attr列表.进行匹配
+    const baseAttrRes: any = await getBaseAttr();
+    if (baseAttrRes && baseAttrRes.length) {
+      store.storeData.staticFilterList = baseAttrRes;
+      baseAttrRes.forEach((item: any, index: number) => {
+        const { bpId } = item;
+        (skuAttrIds[index] ? skuAttrIds[index] : []).forEach((id: any) => {
+          store.storeData.currentFilterSelect = store.storeData.currentFilterSelect.concat(
+            [{ id: `${ATTROF}${bpId}-${id}` }] as any
+          );
+        });
+      });
+    }
+  }
 
+  console.log(store);
   // 0 判定过滤.
   // 0 解析参数
   // 1 请求1
@@ -35,21 +99,15 @@ export const productListSsrRule = async (url: string) => {
   const userSelectInfo = {
     productKey: [],
     buyLevel: [],
-    filterBQVS: [],
-    filterProductId: [],
-    brandId: ["1"],
+    filterBQVS: [], //
+    filterProductId: [], //
+    brandId: [], //
     price: [],
     pageNum: 1,
     pageSize: 20
   };
   const productList = await getProductList(userSelectInfo);
+  store.storeData.productList = productList;
   // 3 返回值
-  return {
-    storeName: StoreProductList,
-    storeData: {
-      productList: productList,
-      brandId: [],
-
-    }
-  };
+  return store;
 };

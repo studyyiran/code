@@ -9,9 +9,10 @@ import { getProductDetail, getSimiliar } from "../server";
 import { backgroundCheckList } from "./staticData";
 import { promisify } from "buy/common/utils/util";
 import { useGetOriginData } from "../../../common/useHook/useGetOriginData";
+import { IContextValue } from "../../../common/type";
 
 export const ProductDetailContext = createContext({});
-
+export const StoreDetail = "StoreDetail";
 export interface IProductDetail {
   buyProductImgPc: any;
   buyProductImgM: any;
@@ -47,7 +48,11 @@ export function ProductDetailContextProvider(props: any) {
     productId: "",
     similiarPhoneList: []
   };
-  const [state, dispatch] = useReducer(reducer, initState)
+  const [state, dispatch, useClientRepair] = useGetOriginData(
+    reducer,
+    initState,
+    StoreDetail
+  );
   const action: IContextActions = useGetAction(state, dispatch);
   // 监听变化
 
@@ -60,15 +65,15 @@ export function ProductDetailContextProvider(props: any) {
   }, [action.getSimiliarPhoneList]);
 
   const propsValue: IProductDetailContext = {
+    useClientRepair,
     ...action,
     productDetailContextValue: state,
     productDetailContextDispatch: dispatch
   };
   return <ProductDetailContext.Provider value={propsValue} {...props} />;
 }
-
 // interface
-export interface IProductDetailContext extends IContextActions {
+export interface IProductDetailContext extends IContextActions, IContextValue {
   productDetailContextValue: IContextState;
   productDetailContextDispatch: (action: IReducerAction) => void;
 }
@@ -101,7 +106,6 @@ function useGetAction(
       if (state.productId) {
         const res: any = await getSimiliar({
           buyProductId: state.productId,
-          level: "BETTER",
           pageNum: 1,
           pageSize: 4
         });

@@ -49,3 +49,16 @@ export async function getDropDownInfo(data: any) {
   });
   return res;
 }
+
+export async function stringToUserSelect(data: any) {
+  const res = await ajax.post("/home/buy/getinfoid", data);
+  return res;
+}
+
+
+export async function productIdToBrandId(productId: any) {
+  const res = await ajax.post("/home/buy/getbrandbyproductid", {
+    productId
+  });
+  return res;
+}

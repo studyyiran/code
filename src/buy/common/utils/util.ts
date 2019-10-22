@@ -163,18 +163,5 @@ export function getProductListPath() {
 
 //用于sell跳转以及buy的spa路由跳转
 export const sellPageGoTo = function(url: any, isBuy?: boolean) {
-  if (isBuy) {
-    locationHref(url);
-    return;
-  } else if (
-    !routerConfig.find((route: any) => {
-      return !!matchPath(url, route);
-    })
-  ) {
-    locationHref(url);
-    return;
-  }
-
-  // sell侧直接window跳转，保留当前域名
-  window.location.href = url;
+  locationHref(url);
 };

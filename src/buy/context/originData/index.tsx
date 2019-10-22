@@ -15,7 +15,7 @@ const storeName = "OriginData";
 // @store state
 interface IContextState {
   originData: any;
-  needClientRun: boolean;
+  needClientRepair: boolean;
 }
 
 // @context value(其实还缺少actions)
@@ -29,7 +29,7 @@ export function OriginDataContextProvider(props: any) {
   // 注入初始值到originData上
   const initState: IContextState = {
     originData: { ...props.originData },
-    needClientRun: false // 是否开启回补逻辑
+    needClientRepair: true // 是否开启回补逻辑
   };
   const [state, dispatch] = useReducer(
     useReducerMiddleware(reducer),
@@ -52,7 +52,7 @@ export function OriginDataContextProvider(props: any) {
 // @store actions
 export interface IOriginDataActions {
   getOriginData: () => void;
-  setNeedClientRun: () => any;
+  setNeedClientRepair: (need: boolean) => any;
 }
 
 // store actions
@@ -67,14 +67,14 @@ function useGetAction(
   }
   const actions: IOriginDataActions = {
     getOriginData: promisify(async function() {}),
-    setNeedClientRun: function() {
+    setNeedClientRepair: function(need: boolean) {
       dispatch({
-        type: originDataReducerTypes.setNeedClientRun,
-        value: false
+        type: originDataReducerTypes.setNeedClientRepair,
+        value: need
       });
     }
   };
-  actions.setNeedClientRun = useCallback(actions.setNeedClientRun, []);
+  actions.setNeedClientRepair = useCallback(actions.setNeedClientRepair, []);
   actions.getOriginData = useCallback(actions.getOriginData, []);
   return actions;
 }
@@ -82,7 +82,7 @@ function useGetAction(
 // @Reducer types
 export const originDataReducerTypes = {
   setOriginData: "setOriginData",
-  setNeedClientRun: "setNeedClientRun"
+  setNeedClientRepair: "setNeedClientRepair"
 };
 
 // reducer
@@ -90,10 +90,10 @@ function reducer(state: IContextState, action: IReducerAction) {
   const { type, value } = action;
   let newState = { ...state };
   switch (type) {
-    case originDataReducerTypes.setNeedClientRun: {
+    case originDataReducerTypes.setNeedClientRepair: {
       newState = {
         ...newState,
-        needClientRun: value
+        needClientRepair: value
       };
       break;
     }

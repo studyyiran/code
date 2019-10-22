@@ -8,7 +8,7 @@ const footerInfo = [
       {
         isBuy: true,
         subTitle: "Buy Home",
-        href: "/buy"
+        href: "/"
       },
       {
         isBuy: true, //用于判定是哪一个端的跳转

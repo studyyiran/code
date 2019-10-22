@@ -6,7 +6,11 @@ import TestCarousel, { Modal, ModalGateway } from "react-images";
 import { IProductDetailContext, ProductDetailContext } from "./context";
 import Svg from "../../components/svg";
 import TipsIcon from "../../components/tipsIcon";
-import {currencyTrans, getProductListPath, staticContentConfig} from "../../common/utils/util";
+import {
+  currencyTrans,
+  getProductListPath,
+  staticContentConfig
+} from "../../common/utils/util";
 import { RenderByCondition } from "../../components/RenderByCondition";
 import CommonCollapse from "../../components/commonCollapse";
 import MyModal from "../../components/modal";
@@ -26,6 +30,7 @@ import PayCardImages from "./components/payCardImages";
 import { getDescArr, useGetProductImg } from "./util";
 import { TipsAllPass, TipsProtection } from "./context/staticData";
 import { InnerDivImage } from "./components/innerDivImage";
+import { detailSsrRule } from "./ssr";
 
 function Swiper(props: any) {
   const { buyProductImgPc, buyProductImgM, buyProductVideo } = props;
@@ -114,13 +119,17 @@ export default function ProductDetail(props: any) {
   const productListContext = useContext(ProductDetailContext);
   const {
     setProductId,
-    productDetailContextValue
+    productDetailContextValue,
+    useClientRepair
   } = productListContext as IProductDetailContext;
   const {
     productDetail,
     similiarPhoneList,
-    productId
+    productId,
   } = productDetailContextValue;
+  // 执行ssr
+  useClientRepair(detailSsrRule);
+
   const {
     buyProductRemark,
     backGroundCheck,
@@ -235,7 +244,9 @@ export default function ProductDetail(props: any) {
         <li>
           <header>
             <img src={require("./res/test.svg")} />
-            <h3>Functional Test - All Pass <TipsIcon>{TipsAllPass}</TipsIcon></h3>
+            <h3>
+              Functional Test - All Pass <TipsIcon>{TipsAllPass}</TipsIcon>
+            </h3>
           </header>
           <p>
             <a
@@ -310,7 +321,9 @@ export default function ProductDetail(props: any) {
           <section className="similar">
             <header>
               <h2>Similar Phones</h2>
-              <RouterLink to={getProductListPath()}><span className={"view-all-text"}>VIEW ALL</span></RouterLink>
+              <RouterLink to={getProductListPath()}>
+                <span className={"view-all-text"}>VIEW ALL</span>
+              </RouterLink>
             </header>
             <RenderByCondition
               ComponentMb={

@@ -51,10 +51,11 @@ export const routerConfig = [
   {
     path: "/",
     title: "buy Phone for More Cash | UpTradeit.com",
+    exact: true,
     Component: Home
   },
-  {
-    title: "404 | UpTradeit.com",
-    Component: () => <div>404</div>
-  }
+  // {
+  //   title: "404 | UpTradeit.com",
+  //   Component: () => <div>404</div>
+  // }
 ];

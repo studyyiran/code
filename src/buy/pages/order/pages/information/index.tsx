@@ -184,7 +184,6 @@ function PureForm(props: any) {
             {getFieldDecorator("apartment", {
               rules: [
                 {
-                  required: true,
                   pattern: /\w+/,
                   message: "Please enter a valid address."
                 }
