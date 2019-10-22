@@ -11,6 +11,23 @@ import { getProductList } from "./server";
 import { StoreProductList } from "./context";
 
 export const productListSsrRule = async (url: string) => {
+  const paramsArr = url.split(/-|\//);
+  const jsonArr = new Array(5).map((item, index) => {
+    if (paramsArr && paramsArr[index]) {
+      return;
+    } else {
+      return "";
+    }
+  });
+  // 分割后，应该最多有5个字符。
+  const json = {
+    a: jsonArr[0],
+    b: jsonArr[1],
+    c: [jsonArr[2], jsonArr[3], jsonArr[4]]
+  };
+  // 发起请求，获取参数
+  const userSelect = await getProductList(json);
+
   // 0 判定过滤.
   // 0 解析参数
   // 1 请求1
@@ -30,7 +47,9 @@ export const productListSsrRule = async (url: string) => {
   return {
     storeName: StoreProductList,
     storeData: {
-      productList: productList
+      productList: productList,
+      brandId: [],
+
     }
   };
 };

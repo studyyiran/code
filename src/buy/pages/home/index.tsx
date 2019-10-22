@@ -7,8 +7,8 @@ import {Rate} from "antd";
 import SearchProduct from "../../components/SearchProduct";
 import {locationHref} from "../../common/utils/routerHistory";
 import RouterLink from "../../components/routerLink";
-import {brands, buyCardInfo, sellCardInfo, sellPageGoTo} from "./components/constant";
-import {getProductListPath} from "../../common/utils/util";
+import {brands, buyCardInfo, sellCardInfo} from "./components/constant";
+import {getProductListPath, sellPageGoTo} from "../../common/utils/util";
 
 export default function HomeWrapper(props: any) {
   function clickBrandHandler(value: any) {

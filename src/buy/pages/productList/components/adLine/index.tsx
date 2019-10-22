@@ -43,7 +43,7 @@ export default function AdLine(props: any) {
           <RenderByCondition
             ComponentMb={null}
             ComponentPc={
-              <p>Affortable device & screen damage protection planss</p>
+              <p>Affordable device & screen damage protection plans</p>
             }
           />
         </>

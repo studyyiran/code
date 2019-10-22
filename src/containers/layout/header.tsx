@@ -20,7 +20,9 @@ export default function Header() {
         {arr.map((item: any, index: any) => {
           return (
             <Menu.Item key={index}>
-              <RouterLink to={item.href}>{item.subTitle}</RouterLink>
+              <RouterLink to={item.href} isBuy={item.isBuy}>
+                <span>{item.subTitle}</span>
+              </RouterLink>
             </Menu.Item>
           );
         })}
@@ -28,8 +30,8 @@ export default function Header() {
     );
   }
   const RenderBackHome = () => (
-    <RouterLink to="/">
-      <img className="logo" src={require("images/logo.svg")} />
+    <RouterLink to={"/"} isBuy={true}>
+      <img className="logo" src={require("images/logo.svg")}/>
     </RouterLink>
   );
   return (

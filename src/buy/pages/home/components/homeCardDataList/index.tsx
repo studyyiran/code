@@ -7,23 +7,10 @@ import {
   GET_HOME_PAGE_SELL_BRANDS,
   GET_HOME_PAGE_SELL_PRODUCTS
 } from "../../../../api/api";
-import RouterLink from "../../../../components/routerLink";
-import {sellPageGoTo} from "../constant";
-import {getProductListPath} from "../../../../common/utils/util";
+import {getProductListPath, sellPageGoTo} from "../../../../common/utils/util";
 
 export function HomeCardDataList(props: any) {
-  const {type} = props
-  const title = type === "buy"
-    ? "Browse Newly Listed Phones"
-    : "We Help Sell Your Phone"; // 根据类型设置title
-  const banner = type === "buy" ? 'url(' + require("buy/pages/home/img/buyBanner.jpeg") + ')' : 'url(' + require("buy/pages/home/img/sellBanner.jpeg") + ')';
-
-  const productText = type === "buy" ? "As low as / " : "Cash up to / ";
-
-
-  const gotoPage = () => {
-    type === 'buy' ? sellPageGoTo(getProductListPath()) : sellPageGoTo("/sell-phone", false)
-  };
+  const {type} = props;
 
   //state
   const [tabNameList, setTabNameList] = useState([]); // tab list
@@ -40,13 +27,31 @@ export function HomeCardDataList(props: any) {
     });
   }, [type]);
 
+  const title = type === "buy"
+    ? "Browse Newly Listed Phones"
+    : "We Help Sell Your Phone"; // 根据类型设置title
+  const banner = type === "buy" ? 'url(' + require("buy/pages/home/img/buyBanner.jpeg") + ')' : 'url(' + require("buy/pages/home/img/sellBanner.jpeg") + ')';
+
+  const productText = type === "buy" ? "As low as / " : "Cash up to / ";
+
+  const gotoPage = () => {
+    type === 'buy' ? sellPageGoTo(getProductListPath(), true) : sellPageGoTo("/sell-phone", false)
+  };
+
+  const dataItemGotoPage = () => {
+    type === 'buy' ? sellPageGoTo(getProductListPath(), true) : sellPageGoTo("/sell-phone/" + tab, false)
+  };
+
   function changeTab(tabData: any) {
     let url = type === 'buy' ? GET_HOME_PAGE_BUY_PRODUCTS : GET_HOME_PAGE_SELL_PRODUCTS
     ajax.get(url, {
       params: {brandId: tabData.brandId, seq: tabData.seqNo}
     }).then(res => {
       setTab(tabData.brandId)
-      setDataList(res.data.data)
+      setDataList(res.data.data.map((d: any) => {
+        d.productPrice = d.productPrice <= 0 ? 100 : d.productPrice; //Math.floor(Math.random() * (120 - 28 + 1)) + 28
+        return d;
+      }))
     });
   }
 
@@ -73,7 +78,7 @@ export function HomeCardDataList(props: any) {
             dataList.map((item: any, index: any) => {
               return (
                 <div className="data-item-wrapper" key={index}>
-                  <div className="data-item">
+                  <div className="data-item" onClick={dataItemGotoPage}>
                     <div className="data-img-wrapper">
                       <img src={item.productImg} className="data-img"/>
                     </div>

@@ -235,13 +235,9 @@ export default function ProductDetail(props: any) {
         <li>
           <header>
             <img src={require("./res/test.svg")} />
-            <h3>Functional Test</h3>
+            <h3>Functional Test - All Pass <TipsIcon>{TipsAllPass}</TipsIcon></h3>
           </header>
           <p>
-            <div className="second-line">
-              - All Pass
-              <TipsIcon>{TipsAllPass}</TipsIcon>
-            </div>
             <a
               target="_blank"
               className="report-link"
@@ -314,7 +310,7 @@ export default function ProductDetail(props: any) {
           <section className="similar">
             <header>
               <h2>Similar Phones</h2>
-              <RouterLink to={getProductListPath()}>VIEW ALL</RouterLink>
+              <RouterLink to={getProductListPath()}><span className={"view-all-text"}>VIEW ALL</span></RouterLink>
             </header>
             <RenderByCondition
               ComponentMb={

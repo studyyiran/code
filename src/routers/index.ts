@@ -5,6 +5,25 @@ import store from '../store';
 // import staticBlog from './staticBlog';
 
 export default [
+  {
+    // 首页
+    component: Loadable({
+      loader: () => import('../containers/home'),
+      loading: () => null,
+      modules: ['../containers/home'],
+      webpack: () => [require.resolveWeak('../containers/home') as number],
+    }),
+    exact: true,
+    path: '/sell',
+    // actions: [
+    //   () => store['common'].getReviews({
+    //     page: 0,
+    //     pageSize: 3,
+    //     order: 'desc'
+    //   }),
+    //   store['common'].getModuleOn
+    // ]
+  },
   ...sell,
   ...singlePage,
   // ...staticBlog,
@@ -120,25 +139,6 @@ export default [
         robots: store['blog'].detail.seoRobotsCode,
       }
     }
-  },
-  {
-    // 首页
-    component: Loadable({
-      loader: () => import('../containers/home'),
-      loading: () => null,
-      modules: ['../containers/home'],
-      webpack: () => [require.resolveWeak('../containers/home') as number],
-    }),
-    exact: true,
-    path: '/sell',
-    // actions: [
-    //   () => store['common'].getReviews({
-    //     page: 0,
-    //     pageSize: 3,
-    //     order: 'desc'
-    //   }),
-    //   store['common'].getModuleOn
-    // ]
-  },
+  }
 ];
 

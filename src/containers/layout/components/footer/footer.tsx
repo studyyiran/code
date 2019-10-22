@@ -1,27 +1,42 @@
 import * as React from "react";
+import {useContext} from "react";
 import classnames from "classnames";
-import { Link } from "react-router-dom";
 import "./footer.less";
-import { Row, Col, Input, Button, Form, message } from "antd";
+import {Col, Collapse, Form, message} from "antd";
 // import commonStore from 'store/common'
 import config from "../../../../config";
-import Svg from "components/svg";
-import { RenderByCondition } from "./RenderByCondition/index";
-import { Collapse } from "antd";
-import { useContext } from "react";
-import {
-  SelectModelContext,
-  ISelectModelContext
-} from "pages/sell/selectModelProcess/context";
+import {RenderByCondition} from "./RenderByCondition";
+import {ISelectModelContext, SelectModelContext} from "pages/sell/selectModelProcess/context";
 import RouterLink from "components/routerLink";
 import getSellPath from "utils/util";
+
 const { Panel } = Collapse;
 
 export const footerInfo = [
   {
+    title: "Buy",
+    className: "",
+    arr: [
+      {
+        isBuy: true,
+        subTitle: "Buy Home",
+        href: "/buy"
+      },
+      {
+        isBuy: true, //用于判定是哪一个端的跳转
+        subTitle: "Buy Now",
+        href: "/buy-phone"
+      }
+    ]
+  },
+  {
     title: "Sell",
     className: "",
     arr: [
+      {
+        subTitle: "Sell Home",
+        href: "/sell"
+      },
       {
         subTitle: "How To Sell",
         href: "/how-to-sell-my-home"
@@ -120,11 +135,13 @@ export default class Footer extends React.Component<
                     return (
                       <ul className="item" key={title}>
                         <h2>{title}</h2>
-                        {arr.map(({ subTitle, href }) => {
+                        {
+                          // @ts-ignore
+                          arr.map(({ subTitle, href, isBuy }) => {
                           return (
                             <li key={subTitle}>
-                              <RouterLink onClick={clickUrlHandler} to={href}>
-                                {subTitle}
+                              <RouterLink to={href} isBuy={isBuy}>
+                               <span style={{cursor: "pointer"}} onClick={clickUrlHandler}>{subTitle}</span>
                               </RouterLink>
                             </li>
                           );
@@ -192,7 +209,8 @@ export function MbFooter(props: any): any {
       <ul className="item" key={title}>
         <Collapse expandIconPosition="right">
           <Panel header={<h2>{title}</h2>} key={title}>
-            {arr.map(({ subTitle, href }: any) => {
+            {
+              arr.map(({ subTitle, href, isBuy }: any) => {
               return (
                 <li
                   key={subTitle}
@@ -205,8 +223,8 @@ export function MbFooter(props: any): any {
                     }
                   }}
                 >
-                  <RouterLink to={href}>
-                    <span>{subTitle}</span>
+                  <RouterLink to={href} isBuy={isBuy}>
+                    <span style={{cursor: "pointer"}}>{subTitle}</span>
                   </RouterLink>
                 </li>
               );

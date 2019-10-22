@@ -22,10 +22,10 @@ const getRootApi = function(urlRoot: string) {
     case "QA":
       apiRoot = "http://qa-gateway-801477214.us-east-2.elb.amazonaws.com";
       break;
-    case "DEMO":
+    case "UAT":
       apiRoot = "http://demo-gateway-1613913116.us-east-2.elb.amazonaws.com";
       break;
-    case "PROD":
+    case "PUB":
       apiRoot = "https://api-gateway.uptradeit.com";
       break;
   }

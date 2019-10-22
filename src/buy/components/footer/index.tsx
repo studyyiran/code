@@ -1,12 +1,11 @@
 import * as React from "react";
+import {useContext} from "react";
 import "./index.less";
-import { Form, message } from "antd";
-import { Collapse } from "antd";
-import { useContext } from "react";
-import RouterLink from "buy/components/routerLink";
-import { RenderByCondition } from "buy/components/RenderByCondition";
-import { GlobalSettingContext, IGlobalSettingContext } from "../../context";
+import {Collapse, Form, message} from "antd";
+import {RenderByCondition} from "buy/components/RenderByCondition";
+import {GlobalSettingContext, IGlobalSettingContext} from "../../context";
 import footerInfo from "../../common/config/footerLinks.config";
+import {sellPageGoTo} from "../../common/utils/util";
 
 const { Panel } = Collapse;
 
@@ -33,15 +32,19 @@ export default function Footer(props: any) {
                   return (
                     <ul className="item" key={title}>
                       <h2>{title}</h2>
-                      {arr.map(({ subTitle, href }) => {
-                        return (
-                          <li key={subTitle}>
-                            <RouterLink onClick={clickUrlHandler} to={href}>
-                              {subTitle}
-                            </RouterLink>
-                          </li>
-                        );
-                      })}
+                      {
+                        // @ts-ignore
+                        arr.map(({subTitle, href, isBuy}) => {
+                          return (
+                            <li key={subTitle}>
+                            <span style={{cursor: "pointer"}} onClick={() => {
+                              sellPageGoTo(href, isBuy);
+                              clickUrlHandler();
+                            }}>{subTitle}</span>
+                            </li>
+                          );
+                        })
+                      }
                     </ul>
                   );
                 })}
@@ -57,12 +60,8 @@ export default function Footer(props: any) {
       <div className="footer-bottom-wrapper">
         <div>
           <div className="desc">
-            <RouterLink to="/terms">
-              <span className="last">Terms & Conditions</span>
-            </RouterLink>
-            <RouterLink to="/privacy-policy">
-              <span>Privacy Policy</span>
-            </RouterLink>
+            <span onClick={() => sellPageGoTo("/terms", false)}>Terms & Conditions</span>
+            <span onClick={() => sellPageGoTo("/privacy-policy", false)}>&nbsp;Privacy Policy</span>
           </div>
           <span>© 2019 UP Trade Technologies, Inc.</span>
         </div>
@@ -79,7 +78,7 @@ export function MbFooter(props: any): any {
       <ul className="item" key={title}>
         <Collapse expandIconPosition="right">
           <Panel header={<h2>{title}</h2>} key={title}>
-            {arr.map(({ subTitle, href }: any) => {
+            {arr.map(({ subTitle, href, isBuy }: any) => {
               return (
                 <li
                   key={subTitle}
@@ -92,9 +91,10 @@ export function MbFooter(props: any): any {
                     }
                   }}
                 >
-                  <RouterLink to={href}>
-                    <span>{subTitle}</span>
-                  </RouterLink>
+                  <span style={{cursor: "pointer"}} onClick={() => {
+                    sellPageGoTo(href, isBuy);
+                    clickUrlHandler();
+                  }}>{subTitle}</span>
                 </li>
               );
             })}

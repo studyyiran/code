@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import RouterLink from "../../../../components/routerLink";
 import { IOrderInfoContext, OrderInfoContext } from "../../context";
-import {getProductListPath} from "../../../../common/utils/util";
+import {getProductListPath, sellPageGoTo} from "../../../../common/utils/util";
 
 export default function Confirmation(props: any) {
   const orderInfoContext = useContext(OrderInfoContext);
@@ -41,11 +41,9 @@ export default function Confirmation(props: any) {
           </div>
         </Link>
 
-        <RouterLink to={"/sell"}>
-          <div className={"sell-your-order-phone"}>
-            Sell your old phone > (Emper-TODO:等ssr)
-          </div>
-        </RouterLink>
+        <div className={"sell-your-order-phone"} onClick={() => sellPageGoTo("/sell-phone")}>
+          Sell your old phone >
+        </div>
 
         {/*<div className={"or"}>OR</div>*/}
         {/*<div className={"button-wrapper create-account"}>*/}

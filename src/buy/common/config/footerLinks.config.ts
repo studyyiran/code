@@ -6,14 +6,15 @@ const footerInfo = [
     className: "",
     arr: [
       {
-        subTitle: "Buy Now",
-        href: getProductListPath()
+        isBuy: true,
+        subTitle: "Buy Home",
+        href: "/buy"
       },
       {
-        subTitle: "Buy Home",
-        href: "/"
-      },
-
+        isBuy: true, //用于判定是哪一个端的跳转
+        subTitle: "Buy Now",
+        href: getProductListPath()
+      }
     ]
   },
   {
@@ -21,15 +22,15 @@ const footerInfo = [
     className: "",
     arr: [
       {
+        subTitle: "Sell Home",
+        href: "/sell"
+      },
+      {
         subTitle: "How To Sell",
         href: "/how-to-sell-my-home"
       },
       {
         subTitle: "Sell Now",
-        href: getSellPath()
-      },
-      {
-        subTitle: "Sell Home",
         href: getSellPath()
       }
     ]
@@ -67,6 +68,7 @@ const footerInfo = [
     className: "",
     arr: [
       {
+        isBuy: true,
         subTitle: "Check My Order",
         href: "/check-order"
       }
