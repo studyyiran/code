@@ -14,7 +14,7 @@ export default function Footer(props: any) {
     <footer className="comp-footer">
       <div className="width-container">
         <header className="footer__logo flex-grid">
-          <div>
+          <div onClick={() => sellPageGoTo("/", true)} style={{cursor: "pointer"}}>
             <img src={require("buy/common/static/logo.svg")} />
           </div>
           <div />
@@ -60,12 +60,12 @@ export default function Footer(props: any) {
       <div className="footer-bottom-wrapper">
         <div>
           <div className="desc">
-            <span onClick={() => sellPageGoTo("/terms", false)}>Terms & Conditions</span>
-            <span onClick={() => sellPageGoTo("/privacy-policy", false)}>&nbsp;Privacy Policy</span>
+            <span onClick={() => sellPageGoTo("/terms", false)} style={{cursor:"pointer"}}>Terms & Conditions</span>
+            <span onClick={() => sellPageGoTo("/privacy-policy", false)}  style={{cursor:"pointer"}}>&nbsp;&nbsp;Privacy Policy</span>
           </div>
           <span>© 2019 UP Trade Technologies, Inc.</span>
         </div>
-        <div />
+        <div/>
       </div>
     </footer>
   );

@@ -56,7 +56,7 @@ export const routerConfig: {
       if (payInfo && payInfo.creditCardInfo && payInfo.creditCardInfo.cardNo) {
         return (
           <div>
-            Credit card ending $
+            Credit card ending in $
             {payInfo.creditCardInfo.cardNo.slice(
               payInfo.creditCardInfo.cardNo.length - 4
             )}

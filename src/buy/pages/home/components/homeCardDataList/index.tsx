@@ -7,7 +7,7 @@ import {
   GET_HOME_PAGE_SELL_BRANDS,
   GET_HOME_PAGE_SELL_PRODUCTS
 } from "../../../../api/api";
-import {getProductListPath, sellPageGoTo} from "../../../../common/utils/util";
+import {formatMoney, getProductListPath, sellPageGoTo} from "../../../../common/utils/util";
 
 export function HomeCardDataList(props: any) {
   const {type} = props;
@@ -47,7 +47,7 @@ export function HomeCardDataList(props: any) {
     ajax.get(url, {
       params: {brandId: tabData.brandId, seq: tabData.seqNo}
     }).then(res => {
-      setTab(tabData.brandId)
+      setTab(tabData.brandId);
       setDataList(res.data.data.map((d: any) => {
         d.productPrice = d.productPrice <= 0 ? 100 : d.productPrice; //Math.floor(Math.random() * (120 - 28 + 1)) + 28
         return d;
@@ -86,7 +86,7 @@ export function HomeCardDataList(props: any) {
                       <div className="left">{item.productDisplayName}</div>
                       <div className="right">
                         <span>{productText}</span>
-                        <span className="price">$ {item.productPrice}</span>
+                        <span className="price">${formatMoney(item.productPrice)}</span>
                       </div>
                     </div>
                   </div>

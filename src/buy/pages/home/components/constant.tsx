@@ -46,7 +46,7 @@ export const buyCardInfo = [
   {
     img: require("buy/pages/home/img/photo.png"),
     title: "Authentic Photos",
-    text: "No shortcuts taken. What you see is what you get.",
+    text: "No shortcuts taken. What you<br/> see is what you get.",
     index: 2
   },
   {

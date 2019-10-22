@@ -118,7 +118,9 @@ export default class Footer extends React.Component<
         <div className="width-container">
           <header className="footer__logo flex-grid">
             <div>
-              <img src={require("images/logo.svg")} />
+              <RouterLink to={"/"} isBuy={true}>
+                <img src={require("images/logo.svg")} />
+              </RouterLink>
             </div>
             <div />
           </header>

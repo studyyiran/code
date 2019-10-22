@@ -193,7 +193,7 @@ class Home extends React.Component<any, any> {
                     <img src={item.img} className="item-img"/>
                     <div className="content">
                       <div className="title">{item.title}</div>
-                      <div className="text">{item.text}</div>
+                      <div className="text" dangerouslySetInnerHTML={{__html: item.text}}/>
                     </div>
                   </div>
                 );

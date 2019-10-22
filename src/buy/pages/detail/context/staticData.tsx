@@ -1,4 +1,5 @@
 import React from "react";
+import RouterLink from "../../../components/routerLink";
 
 export interface IBackgroundCheckList {
   title: string;
@@ -78,7 +79,7 @@ export const TipsAllPass = (
 
 export const TipsProtection = (
   <p>
-    UpTrade Protect gives you the ultimate protection.
+    <RouterLink to={"/uptrade/protect"}><span style={{color: "#1ab4e7", fontWeight:"bolder"}}>UpTrade Protect</span></RouterLink> gives you the ultimate protection.
     <br />
     -Extended hardware warranty
     <br />

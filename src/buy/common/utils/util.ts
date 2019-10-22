@@ -165,3 +165,8 @@ export function getProductListPath() {
 export const sellPageGoTo = function(url: any, isBuy?: boolean) {
   locationHref(url);
 };
+
+export function formatMoney(n: any) {
+  //先用js自带的格式化
+  return parseFloat(n).toLocaleString()
+}

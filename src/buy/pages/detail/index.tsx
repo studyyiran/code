@@ -284,7 +284,7 @@ export default function ProductDetail(props: any) {
           <ul className="common-card icons-card">
             <li>
               <img src={require("./res/free-shipping.svg")} />
-              <h3>Free Shipping</h3>
+              <h3>Fast Shipping</h3>
             </li>
             <li>
               <img src={require("./res/return.svg")} />
