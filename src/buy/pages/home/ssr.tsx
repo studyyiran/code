@@ -29,12 +29,18 @@ export const ourHomeSsrRule = async (url: string) => {
       }
     );
   }
-  const buyProductList: any = await getBuyProductList({});
+  const buyProductList: any = await getBuyProductList({
+    seq: sellListTitle[0].seqNo,
+    brandId: sellListTitle[0].brandId
+  });
   if (buyProductList && buyProductList.length) {
     store.storeData.buyProductList = buyProductList;
   }
 
-  const sellProductList: any = await getSellProductList({});
+  const sellProductList: any = await getSellProductList({
+    seq: sellListTitle[0].seqNo,
+    brandId: sellListTitle[0].brandId
+  });
   if (buyProductList && buyProductList.length) {
     store.storeData.sellProductList = sellProductList;
   }

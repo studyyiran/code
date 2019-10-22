@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useCallback } from "react";
+import React, { createContext, useEffect, useCallback, useRef } from "react";
 import { IReducerAction } from "buy/common/interface/index.interface";
 import {
   getModelList,
@@ -112,6 +112,10 @@ function useGetAction(
   state: IContextState,
   dispatch: (action: IReducerAction) => void
 ): IContextActions {
+  const lastType = useRef();
+  if (!lastType.current) {
+    lastType.current = {} as any;
+  }
   function setCurrentFilterSelectHandler(value: any) {
     dispatch({
       type: productListReducerActionTypes.setCurrentFilterSelect,
@@ -199,11 +203,27 @@ function useGetAction(
     return answer;
   }
   const actions: IContextActions = {
-    replaceSEOUrl: () => {
+    replaceSEOUrl: promisify(async function() {
       const answer = getAnswers();
       // 需要查找的内容
       const { filterBQVS, filterProductId, brandId } = answer;
-
+      // 这块将brandId进行一下再处理 查找额外
+      if (
+        lastType &&
+        lastType.current &&
+        (lastType.current as any) === "Model"
+      ) {
+        const result: any = await productIdToBrandId(filterProductId);
+        if (result) {
+          result.forEach((newBrand: any) => {
+            if (
+              !brandId.find(currentBrandId => currentBrandId === newBrand.id)
+            ) {
+              brandId.push(newBrand.brandId);
+            }
+          });
+        }
+      }
       // 先找出最大的index
       let maxIndex = "";
       // brand,model,storage,carrier,color
@@ -327,7 +347,7 @@ function useGetAction(
         locationHref(result, "replace");
       }
       return result;
-    },
+    }),
     findInfoById: typeAndId => {
       const [type, id] = typeAndId.split("-");
       let typeInfo;
@@ -353,6 +373,7 @@ function useGetAction(
       return [typeInfo, itemInfo];
     },
     setUserSelectFilter: promisify(async function({ id, type }: any) {
+      (lastType.current as any) = type;
       if (id === "all") {
         setCurrentFilterSelectHandler(
           state.currentFilterSelect.filter(({ id }) => {
@@ -374,17 +395,6 @@ function useGetAction(
           arr = [...arr.slice(0, targetIndex), ...arr.slice(targetIndex + 1)];
         } else {
           arr = arr.concat([{ id: value }]);
-        }
-        // 这块穿插一个脏逻辑.
-        if (type === "Model") {
-          const result: any = await productIdToBrandId(id);
-          if (result) {
-            const { id: newBrandId } = result;
-            const setBrandString = `Manufacture-${newBrandId}`;
-            if (!arr.find(({ id }: any) => id === setBrandString)) {
-              arr = arr.concat([{ id: setBrandString }]);
-            }
-          }
         }
         setCurrentFilterSelectHandler(arr);
       }

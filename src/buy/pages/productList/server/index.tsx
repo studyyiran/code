@@ -55,10 +55,9 @@ export async function stringToUserSelect(data: any) {
   return res;
 }
 
-
-export async function productIdToBrandId(productId: any) {
+export async function productIdToBrandId(productIds: any) {
   const res = await ajax.post("/home/buy/getbrandbyproductid", {
-    productId
+    productIds
   });
   return res;
 }
