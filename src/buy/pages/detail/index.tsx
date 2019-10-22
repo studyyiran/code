@@ -1,36 +1,28 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import "./index.less";
-import { Carousel, Collapse, Checkbox, Affix } from "antd";
+import {Affix, Carousel, Checkbox} from "antd";
 // @ts-ignore
-import TestCarousel, { Modal, ModalGateway } from "react-images";
-import { IProductDetailContext, ProductDetailContext } from "./context";
+import TestCarousel, {Modal, ModalGateway} from "react-images";
+import {IProductDetailContext, ProductDetailContext} from "./context";
 import Svg from "../../components/svg";
 import TipsIcon from "../../components/tipsIcon";
-import {
-  currencyTrans,
-  getProductListPath,
-  staticContentConfig
-} from "../../common/utils/util";
-import { RenderByCondition } from "../../components/RenderByCondition";
+import getSellPath, {currencyTrans, getProductListPath, staticContentConfig} from "../../common/utils/util";
+import {RenderByCondition} from "../../components/RenderByCondition";
 import CommonCollapse from "../../components/commonCollapse";
 import MyModal from "../../components/modal";
 import PhoneProductCard from "../productList/components/phoneProductCard";
 import PhoneInfo from "./components/phoneInfo";
-import {
-  IOrderInfoContext,
-  OrderInfoContext,
-  orderInfoReducerTypes
-} from "../order/context";
-import { protectPrice } from "../../common/config/staticConst";
-import { locationHref } from "../../common/utils/routerHistory";
+import {IOrderInfoContext, OrderInfoContext, orderInfoReducerTypes} from "../order/context";
+import {protectPrice} from "../../common/config/staticConst";
+import {locationHref} from "../../common/utils/routerHistory";
 import VideoComponent from "../../components/video";
 import EditorResolver from "./components/editorResolver";
 import RouterLink from "../../components/routerLink";
 import PayCardImages from "./components/payCardImages";
-import { getDescArr, useGetProductImg } from "./util";
-import { TipsAllPass, TipsProtection } from "./context/staticData";
-import { InnerDivImage } from "./components/innerDivImage";
-import { detailSsrRule } from "./ssr";
+import {getDescArr, useGetProductImg} from "./util";
+import {TipsAllPass, TipsProtection} from "./context/staticData";
+import {InnerDivImage} from "./components/innerDivImage";
+import {detailSsrRule} from "./ssr";
 
 function Swiper(props: any) {
   const { buyProductImgPc, buyProductImgM, buyProductVideo } = props;
@@ -470,12 +462,9 @@ function RenderTradeIn(props: any) {
         <TipsIcon>
           <p>
             UpTrade can help you sell your old phone. See{" "}
-            <RouterLink
-              href={"uptradeit.com/sell-home"}
-              style={{ color: "rgba(26, 180, 231, 1)" }}
-            >
+            <a onClick={() => locationHref(getSellPath())} style={{ color: "rgba(26, 180, 231, 1)",textDecoration: "underline"}}>
               how much your phone is worth to get started.
-            </RouterLink>
+            </a>
           </p>
         </TipsIcon>
       </div>
