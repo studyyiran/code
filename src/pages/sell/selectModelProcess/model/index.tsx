@@ -48,9 +48,13 @@ function Model(props: any) {
         const next = props.route.path + "/" + findTarget.displayName;
         // const next = props.match.url + "/condition";
         document.title = `Sell My ${findTarget.displayName} | UpTradeit.com`;
+        selectModelContextDispatch({
+          type: "setBrand",
+          value: findTarget.id
+        });
         props.history.replace(removeAllSpace(next));
       } else {
-        // TODo 新增需求 反向查找
+        // TODO 新增需求 反向查找
         const findTarget2: any = brandList.find((item: any) => {
           if (
             item.displayName &&
