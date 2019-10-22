@@ -7,7 +7,7 @@ import {
   GET_HOME_PAGE_SELL_BRANDS,
   GET_HOME_PAGE_SELL_PRODUCTS
 } from "../../../../api/api";
-import {formatMoney, getProductListPath, sellPageGoTo} from "../../../../common/utils/util";
+import {currencyTrans, getProductListPath, sellPageGoTo} from "../../../../common/utils/util";
 
 export function HomeCardDataList(props: any) {
   const {type} = props;
@@ -86,7 +86,7 @@ export function HomeCardDataList(props: any) {
                       <div className="left">{item.productDisplayName}</div>
                       <div className="right">
                         <span>{productText}</span>
-                        <span className="price">${formatMoney(item.productPrice)}</span>
+                        <span className="price">{currencyTrans(item.productPrice)}</span>
                       </div>
                     </div>
                   </div>

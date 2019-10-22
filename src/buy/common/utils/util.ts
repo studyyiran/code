@@ -41,7 +41,7 @@ export function safeEqual(a: any, b: any) {
   return String(a) === String(b);
 }
 export function currencyTrans(value: any, whenFree?: any) {
-  let fixValue = staticContentConfig.priceUnit;
+  let fixValue = "";
   if (String(value).indexOf(".") !== -1) {
     fixValue += Number(value).toFixed(2);
   } else {
@@ -52,9 +52,9 @@ export function currencyTrans(value: any, whenFree?: any) {
     }
   }
   if (whenFree && Number(fixValue) === 0) {
-    return whenFree;
+    return whenFree ? parseFloat(whenFree).toLocaleString() : whenFree;
   } else {
-    return fixValue;
+    return fixValue ? staticContentConfig.priceUnit + parseFloat(fixValue).toLocaleString() : fixValue;
   }
 }
 
@@ -165,8 +165,3 @@ export function getProductListPath() {
 export const sellPageGoTo = function(url: any, isBuy?: boolean) {
   locationHref(url);
 };
-
-export function formatMoney(n: any) {
-  //先用js自带的格式化
-  return parseFloat(n).toLocaleString()
-}
