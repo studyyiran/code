@@ -15,7 +15,8 @@ export const routerConfig = [
   {
     path: "/buy",
     title: "Sell My Phone for More Cash | UpTradeit.com",
-    Component: BuyHome
+    Component: BuyHome,
+    getInitialProps: ourHomeSsrRule
   },
   {
     path: "/order",

@@ -14,7 +14,6 @@ export function HomeCardDataList(props: any) {
   } = productListContext as IProductListContext;
 
   const { titleList, type, onClickHandler, productList } = props;
-  console.log(productList);
   //state
   const [tab, setTab] = useState("Apple"); //tab的值
   useEffect(() => {

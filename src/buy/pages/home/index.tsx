@@ -43,7 +43,7 @@ export default function HomeWrapper(props: any) {
     <Home
       clickBrandHandler={clickBrandHandler}
       {...props}
-      getBuyShowList={getBuyProductList}
+      getBuyProductList={getBuyProductList}
       getSellProductList={getSellProductList}
       buyListTitle={manufactureList}
       sellListTitle={sellListTitle}
@@ -237,7 +237,10 @@ class Home extends React.Component<any, any> {
                     <img src={item.img} className="item-img" />
                     <div className="content">
                       <div className="title">{item.title}</div>
-                      <div className="text" dangerouslySetInnerHTML={{__html: item.text}}/>
+                      <div
+                        className="text"
+                        dangerouslySetInnerHTML={{ __html: item.text }}
+                      />
                     </div>
                   </div>
                 );
@@ -263,7 +266,7 @@ class Home extends React.Component<any, any> {
         <HomeCardDataList
           type={"buy"}
           titleList={this.props.buyListTitle}
-          onClickHandler={this.props.getBuyShowList}
+          onClickHandler={this.props.getBuyProductList}
           productList={this.props.buyProductList}
         />
         <HomeCardDataList
