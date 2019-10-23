@@ -12,7 +12,7 @@ if (process.env.REACT_APP_SERVER_ENV === 'PUB') { //prod
 } else if (process.env.REACT_APP_SERVER_ENV === 'UAT') { //demo
   process.env.PUBLIC_URL = '/buy';
 } else { //qa
-  process.env.PUBLIC_URL = 'https://uptrade-datafeed.s3.us-east-2.amazonaws.com/website/build';
+  process.env.PUBLIC_URL = 'https://uptrade-datafeed.s3.us-east-2.amazonaws.com/website/build/buy';
 }
 process.env.GENERATE_SOURCEMAP = 'false';
 
