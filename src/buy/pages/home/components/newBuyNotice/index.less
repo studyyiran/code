@@ -5,7 +5,7 @@
 @world: {
 
   .buy-home-notice-wrapper {
-    padding: 8*@px;
+    padding: 15*@px 20*@px 20*@px 20*@px;
     display: flex;
     align-items: center;
     background: rgba(255, 255, 255, 1);
@@ -14,22 +14,34 @@
 
     .buy-home-notice-left-img {
       display: block;
-      width: 83*@px;
-      height: 80*@px;
+      width: 64*@px;
+      height: 64*@px;
       margin-right: 20*@px;
       border-radius: 50%;
     }
 
     .buy-home-notice-right-wrapper {
+      flex: 1;
       color: rgba(0, 0, 0, 1);
+      width: 230*@px;
 
       .buy-home-notice-right-title {
         font-size: 14*@px;
         font-weight: bolder;
+        padding-right: 10*@px;
       }
 
       .buy-home-notice-right-desc {
         margin-top: 9*@px;
+
+        svg {
+          vertical-align: middle;
+          background: #1ab4e7;
+          border-radius: 50%;
+          color: #fff;
+          height: 24*@px;
+          width: 24*@px;
+        }
 
         .time {
           margin-left: 15*@px;

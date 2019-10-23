@@ -22,7 +22,18 @@ export function NewBuyNotice(props: any): any {
         d.productPicM = d.productPicM ? d.productPicM : require("../../img/certified.png");
         return d;
       });
-      setChooseData(dataList[dataIndex]);
+      if(dataList.length <= 0) {
+        setChooseData({
+          customer: "",
+          productName: "",
+          city: "",
+          orderTime: "",
+          productPicPC: "",
+          productPicM: ""
+        });
+      } else {
+        setChooseData(dataList[dataIndex]);
+      }
     });
   }
 
@@ -36,6 +47,15 @@ export function NewBuyNotice(props: any): any {
         if (dataIndex >= dataList.length) {
           dataIndex = 0;
         }
+      } else {
+        setChooseData({
+          customer: "",
+          productName: "",
+          city: "",
+          orderTime: "",
+          productPicPC: "",
+          productPicM: ""
+        });
       }
     }, 5000);
 
@@ -49,12 +69,12 @@ export function NewBuyNotice(props: any): any {
     intervalInit();
   }, []);
 
-  return (
+  return chooseData.customer ? (
     <div className="buy-home-notice-wrapper">
-      <img src={chooseData.productPicPC} className={"buy-home-notice-left-img"}/>
+      <div style={{backgroundImage: `url(${chooseData.productPicM})`, backgroundSize: "cover"}} className={"buy-home-notice-left-img"}/>
       <div className={"buy-home-notice-right-wrapper"}>
         <div className={"buy-home-notice-right-title"}>
-          {chooseData.productName}
+          {chooseData.customer} placed an order for {chooseData.productName}
         </div>
         <div className={"buy-home-notice-right-desc"}>
           <Svg/>
@@ -64,5 +84,5 @@ export function NewBuyNotice(props: any): any {
         </div>
       </div>
     </div>
-  )
+  ): (<div>&nbsp;</div>)
 }

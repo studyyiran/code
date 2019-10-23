@@ -5,8 +5,9 @@ import OrderLayout from "./components/orderLayout";
 import "./common.less";
 import ButtonGroup from "./components/buttonGroup";
 import { locationHref } from "../../common/utils/routerHistory";
-import { routerConfig } from "./context/staticData";
+import { routerConfig } from "./routerConfig";
 import { IOrderInfoContext, OrderInfoContext } from "./context";
+import hocDocumentTitle from "../../components/documentTitle";
 
 export default function OrderRouter(props: any) {
   const orderInfoContext = useContext(OrderInfoContext);
@@ -49,14 +50,21 @@ export default function OrderRouter(props: any) {
     <div id="order-common-less">
       <Switch>
         {routerConfig.map(
-          ({ Component, relativePath, continueButton, backButton }) => {
+          ({ Component, relativePath, continueButton, backButton, title }) => {
             return (
               <Route
                 key={`${path}/${relativePath}`}
                 path={`${path}/${relativePath}`}
                 render={routerProps => {
+                  const OrderLayoutWithTitle = hocDocumentTitle(OrderLayout)(
+                    title
+                  );
                   return (
-                    <OrderLayout {...routerProps} relativePath={relativePath}>
+                    <OrderLayoutWithTitle
+                      {...routerProps}
+                      relativePath={relativePath}
+                      title={title}
+                    >
                       <Component
                         {...routerProps}
                         renderButton={(pageNextClick: any) => {
@@ -85,7 +93,7 @@ export default function OrderRouter(props: any) {
                           );
                         }}
                       />
-                    </OrderLayout>
+                    </OrderLayoutWithTitle>
                   );
                 }}
               />

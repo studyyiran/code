@@ -12,7 +12,11 @@ import {
   createOrder,
   zipCodeToAddressInfo
 } from "../server";
-import { getFromCacheStore, promisify, saveToCache } from "buy/common/utils/util";
+import {
+  getFromCacheStore,
+  promisify,
+  saveToCache
+} from "buy/common/utils/util";
 import { getProductDetail } from "../../detail/server";
 import { IProductDetail } from "../../detail/context";
 import { Message } from "../../../components/message";
@@ -42,6 +46,16 @@ export interface IOrderInfoState {
   subOrders: userPhoneOrder[];
   pendingStatus: any; // 页面支付状态
   phoneDetailList: IProductDetail[];
+  checkOrderInfo: {
+    orderList: {
+      productInfo: IProductDetail;
+    }[];
+    sbuTotal: string;
+    protection: string;
+    expressFee: string;
+    tax: string;
+    total: string;
+  };
   taxInfo: any;
   expressInfo: {
     rateId: string;
@@ -54,6 +68,7 @@ export interface IOrderInfoState {
   invoiceInfo: IUserInfo;
   payInfo: {
     paymentType: string;
+    lastNumber: string;
     creditCardInfo: {
       cardNo: string;
       invalidDate: string;
@@ -78,9 +93,11 @@ export function OrderInfoContextProvider(props: any) {
     invoiceInfo: {} as any,
     invoiceSameAddr: true,
     orderInfo: {},
+    checkOrderInfo: {} as any,
     payInfo: {
       paymentType: "",
-      creditCardInfo: {} as any
+      creditCardInfo: {} as any,
+      lastNumber: ""
     }
   };
   const [state, dispatch] = useReducer(reducer, {
@@ -217,13 +234,18 @@ function useGetAction(
               type: orderInfoReducerTypes.setOrderInfo,
               value: res
             });
-            promiseStatus.current.resolve(res);
+            // 清空信用卡信息
+            dispatch({
+              type: orderInfoReducerTypes.resetPayInfo,
+              value: null
+            });
+            promiseStatus.current.resolve && promiseStatus.current.resolve(res);
           })
           .catch(e => {
             if (e && e.resultMessage) {
               Message.error(e.resultMessage);
             }
-            promiseStatus.current.reject(e);
+            promiseStatus.current.reject && promiseStatus.current.reject(e);
             // 报错弹框
           })
           .then(() => {
@@ -321,6 +343,7 @@ export const orderInfoReducerTypes = {
   setInvoiceInfo: "setInvoiceInfo",
   setInvoiceSameAddr: "setInvoiceSameAddr",
   setPayInfo: "setPayInfo",
+  resetPayInfo: "resetPayInfo",
   setPendingStatus: "setPendingStatus",
   setSubOrders: "setSubOrders",
   setOrderInfo: "setOrderInfo"
@@ -332,6 +355,29 @@ function reducer(state: IOrderInfoState, action: IReducerAction) {
   let newState = { ...state };
   // 现在直接替换掉
   switch (type) {
+    // resetPayInfo
+    case orderInfoReducerTypes.resetPayInfo: {
+      let lastNumber = "";
+      if (
+        newState.payInfo &&
+        newState.payInfo.creditCardInfo &&
+        newState.payInfo.creditCardInfo.cardNo
+      ) {
+        lastNumber = newState.payInfo.creditCardInfo.cardNo.slice(
+          newState.payInfo.creditCardInfo.cardNo.length - 4
+        );
+      }
+      newState = {
+        ...newState,
+        subOrders: [], // 制空
+        payInfo: {
+          paymentType: "",
+          creditCardInfo: {} as any,
+          lastNumber: lastNumber
+        }
+      };
+      break;
+    }
     // 设置用户的购物订单信息
     case orderInfoReducerTypes.setOrderInfo: {
       newState = {

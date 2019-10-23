@@ -22,6 +22,8 @@ export interface IProductDetail {
   buyProductBQV: any; // attr描述
   productDisplayName: string;
   buyProductDate: string;
+  buyProductId: string;
+  productId: string;
   buyProductBatteryLife: string;
   bpvDisplayName: string;
   buyProductCode: string; // productId

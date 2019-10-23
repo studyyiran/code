@@ -1,24 +1,30 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import "./index.less";
-import {
-  getProductListPath,
-  sellPageGoTo,
-  currencyTrans
-} from "../../../../common/utils/util";
-import {IProductListContext, ProductListContext} from "../../../productList/context";
+import getSellPath, {currencyTrans, getProductListPath, urlRmSpaceAndToLower} from "../../../../common/utils/util";
+import {locationHref} from "../../../../common/utils/routerHistory";
+
+// buy只显示苹果和三星品牌，业务要求
+function buyBrandFilter(titleList: any, type: any) {
+  if (type === 'buy') {
+    console.log(titleList, "================")
+    let names = ["Apple", "Samsung"];
+    let ids = [1, 2];
+    return titleList.filter((brand: any) => names.indexOf(brand.displayName) > -1 || ids.indexOf(brand.id) > -1)
+  } else {
+    return titleList
+  }
+}
 
 export function HomeCardDataList(props: any) {
-  const productListContext = useContext(ProductListContext);
-  const {
-    setSearchInfo
-  } = productListContext as IProductListContext;
-
   const { titleList, type, onClickHandler, productList } = props;
+
+  let tabList = buyBrandFilter(titleList, type);
+
   //state
-  const [tab, setTab] = useState("Apple"); //tab的值
+  const [tab, setTab] = useState({id: 1, displayName: ""}); //tab的值
   useEffect(() => {
     if (titleList && titleList.length) {
-      setTab(titleList[0].id);
+      setTab(titleList[0]);
     }
   }, [titleList]);
 
@@ -33,26 +39,18 @@ export function HomeCardDataList(props: any) {
 
   const gotoPage = () => {
     type === "buy"
-      ? sellPageGoTo(getProductListPath(), true)
-      : sellPageGoTo("/sell-phone", false);
+      ? locationHref(getProductListPath())
+      : locationHref(getSellPath());
   };
-
-  function goProductListPage (item: any) {
-    setSearchInfo({
-      productId: item.productId,
-      productKey: item.productDisplayName
-    });
-    sellPageGoTo(getProductListPath(), true)
-  }
 
   const dataItemGotoPage = (item: any) => {
     type === "buy"
-      ? goProductListPage(item)
-      : sellPageGoTo("/sell-phone/" + tab, false);
+      ? window.location.href = urlRmSpaceAndToLower(getProductListPath() + "/" + tab.displayName + "/" + item.productDisplayName)
+      : locationHref(getSellPath() + "/" + tab.id);
   };
 
   function changeTab(tabData: any) {
-    setTab(tabData.id);
+    setTab(tabData);
     onClickHandler({ brandId: tabData.id, seq: tabData.seqNo });
   }
 
@@ -68,11 +66,11 @@ export function HomeCardDataList(props: any) {
         </div>
 
         <div className="tab-bar-wrapper">
-          {titleList.map((item: any) => {
+          {tabList.map((item: any) => {
             return (
               <span
                 key={item.id}
-                className={`tab-bar-item ${tab === item.id ? "active" : ""}`}
+                className={`tab-bar-item ${tab.id === item.id ? "active" : ""}`}
                 onClick={() => changeTab(item)}
               >
                 {item.displayName}

@@ -1,28 +1,40 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./index.less";
-import {Affix, Carousel, Checkbox} from "antd";
+import { Affix, Carousel, Checkbox } from "antd";
 // @ts-ignore
-import TestCarousel, {Modal, ModalGateway} from "react-images";
-import {IProductDetailContext, ProductDetailContext} from "./context";
+import TestCarousel, { Modal, ModalGateway } from "react-images";
+import { IProductDetailContext, ProductDetailContext } from "./context";
 import Svg from "../../components/svg";
 import TipsIcon from "../../components/tipsIcon";
-import getSellPath, {currencyTrans, getProductListPath, staticContentConfig} from "../../common/utils/util";
-import {RenderByCondition} from "../../components/RenderByCondition";
+import getSellPath, {
+  currencyTrans,
+  getProductListPath,
+  staticContentConfig
+} from "../../common/utils/util";
+import { RenderByCondition } from "../../components/RenderByCondition";
 import CommonCollapse from "../../components/commonCollapse";
 import MyModal from "../../components/modal";
 import PhoneProductCard from "../productList/components/phoneProductCard";
 import PhoneInfo from "./components/phoneInfo";
-import {IOrderInfoContext, OrderInfoContext, orderInfoReducerTypes} from "../order/context";
-import {protectPrice} from "../../common/config/staticConst";
-import {locationHref} from "../../common/utils/routerHistory";
+import {
+  IOrderInfoContext,
+  OrderInfoContext,
+  orderInfoReducerTypes
+} from "../order/context";
+import { protectPrice } from "../../common/config/staticConst";
+import { locationHref } from "../../common/utils/routerHistory";
 import VideoComponent from "../../components/video";
 import EditorResolver from "./components/editorResolver";
 import RouterLink from "../../components/routerLink";
 import PayCardImages from "./components/payCardImages";
-import {getDescArr, useGetProductImg} from "./util";
-import {TipsAllPass, TipsProtection} from "./context/staticData";
-import {InnerDivImage} from "./components/innerDivImage";
-import {detailSsrRule} from "./ssr";
+import { getDescArr, useGetProductImg } from "./util";
+import { TipsAllPass, TipsProtection } from "./context/staticData";
+import { InnerDivImage } from "./components/innerDivImage";
+import { detailSsrRule } from "./ssr";
+import {
+  IProductListContext,
+  ProductListContext
+} from "../productList/context";
 
 function Swiper(props: any) {
   const { buyProductImgPc, buyProductImgM, buyProductVideo } = props;
@@ -108,16 +120,20 @@ function Swiper(props: any) {
 export default function ProductDetail(props: any) {
   const [showModal, setShowModal] = useState(false);
   const [needProtection, setNeedProtection] = useState(false);
-  const productListContext = useContext(ProductDetailContext);
+  const productDetailContext = useContext(ProductDetailContext);
   const {
     setProductId,
     productDetailContextValue,
     useClientRepair
-  } = productListContext as IProductDetailContext;
+  } = productDetailContext as IProductDetailContext;
+
+  const productListContext = useContext(ProductListContext);
+  const { setSearchInfo } = productListContext as IProductListContext;
+
   const {
     productDetail,
     similiarPhoneList,
-    productId,
+    productId
   } = productDetailContextValue;
   // 执行ssr
   useClientRepair(detailSsrRule);
@@ -126,7 +142,6 @@ export default function ProductDetail(props: any) {
     buyProductRemark,
     backGroundCheck,
     productDisplayName,
-    buyLevel,
     buyPrice,
     skuPrice,
     buyProductCode,
@@ -148,6 +163,13 @@ export default function ProductDetail(props: any) {
       setProductId(props.match.params.productId);
     }
   }, [props.match]);
+
+  function viewAllClickHandler() {
+    setSearchInfo({
+      productId: productDetail.productId,
+      productKey: productDisplayName
+    });
+  }
 
   function renderHeaderPart() {
     return (
@@ -314,7 +336,9 @@ export default function ProductDetail(props: any) {
             <header>
               <h2>Similar Phones</h2>
               <RouterLink to={getProductListPath()}>
-                <span className={"view-all-text"}>VIEW ALL</span>
+                <span className={"view-all-text"} onClick={viewAllClickHandler}>
+                  VIEW ALL
+                </span>
               </RouterLink>
             </header>
             <RenderByCondition
@@ -462,7 +486,13 @@ function RenderTradeIn(props: any) {
         <TipsIcon>
           <p>
             UpTrade can help you sell your old phone. See{" "}
-            <a onClick={() => locationHref(getSellPath())} style={{ color: "rgba(26, 180, 231, 1)",textDecoration: "underline"}}>
+            <a
+              onClick={() => locationHref(getSellPath())}
+              style={{
+                color: "rgba(26, 180, 231, 1)",
+                textDecoration: "underline"
+              }}
+            >
               how much your phone is worth
             </a>
             &nbsp;to get started.

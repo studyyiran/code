@@ -38,27 +38,29 @@ export default function PhoneInfo(props: any) {
         <li className="bpv-name">{lineTwo}</li>
         <li className="bpv-name">{bpvDisplayName}</li>
         <li className="level">Condition {buyLevel}</li>
-        <li className="checkbox-protection">
-          <div>
-            <div className="icon-container">
-              <Checkbox
-                checked={needProtection}
-                onChange={e => {
-                  setNeedProtection(e.target.checked);
-                }}
-              >
-                <span>Add UpTrade Protection</span>
-              </Checkbox>
-              <div>
-                <TipsIcon>{TipsProtection}</TipsIcon>
+        {setNeedProtection ? (
+          <li className="checkbox-protection">
+            <div>
+              <div className="icon-container">
+                <Checkbox
+                  checked={needProtection}
+                  onChange={e => {
+                    setNeedProtection(e.target.checked);
+                  }}
+                >
+                  <span>Add UpTrade Protection</span>
+                </Checkbox>
+                <div>
+                  <TipsIcon>{TipsProtection}</TipsIcon>
+                </div>
               </div>
+              <span className="strong">
+                {currencyTrans(protectPrice)}
+                {staticContentConfig.perMonth}
+              </span>
             </div>
-            <span className="strong">
-              {currencyTrans(protectPrice)}
-              {staticContentConfig.perMonth}
-            </span>
-          </div>
-        </li>
+          </li>
+        ) : null}
       </ul>
     </div>
   );

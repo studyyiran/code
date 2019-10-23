@@ -67,15 +67,11 @@ export const staticContentConfig = {
 
 export function isServer() {
   if (typeof window === "undefined") {
-    console.log("1");
     return true;
   } else {
     if (typeof (window as any).AHSENV !== "undefined") {
-      console.log("2");
       return true;
     } else {
-      console.log("3");
-      console.log((window as any).AHSENV);
       return false;
     }
   }
@@ -166,3 +162,10 @@ export function getProductListPath() {
 export const sellPageGoTo = function(url: any, isBuy?: boolean) {
   locationHref(url);
 };
+
+// 用于将url里空格去掉，并转换成小写 ===> 跳转到商品列表可以使用
+export function urlRmSpaceAndToLower(url: any) {
+  url = url.replace(/\s+/g, "");
+  url = url.toLowerCase();
+  return url;
+}

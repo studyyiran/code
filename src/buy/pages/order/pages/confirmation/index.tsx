@@ -5,14 +5,18 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import RouterLink from "../../../../components/routerLink";
 import { IOrderInfoContext, OrderInfoContext } from "../../context";
-import {getProductListPath, sellPageGoTo} from "../../../../common/utils/util";
+import {
+  getProductListPath,
+  sellPageGoTo
+} from "../../../../common/utils/util";
+import useResetProductList from "../../../productList/useHook/useResetProductList";
 
 export default function Confirmation(props: any) {
   const orderInfoContext = useContext(OrderInfoContext);
   const { orderInfoContextValue } = orderInfoContext as IOrderInfoContext;
   const { orderInfo } = orderInfoContextValue;
   const [orderNo, setOrderNo] = useState("");
-
+  const handler = useResetProductList();
   useEffect(() => {
     if (
       props &&
@@ -23,7 +27,6 @@ export default function Confirmation(props: any) {
       setOrderNo(props.match.params.orderNo);
     }
   }, [props.match]);
-
   return (
     <div className={"order-confirmation-wrapper"}>
       <div className={"confirmation-wrapper"}>
@@ -33,7 +36,13 @@ export default function Confirmation(props: any) {
           We will send you an email confirmation to your email. Please let us
           know if you have any questions.
         </div>
-        <Link to={getProductListPath()}>
+        <Link
+          to={getProductListPath()}
+          onClick={() => {
+            // 临时刷新列表页代码
+            handler();
+          }}
+        >
           <div className={"button-wrapper"}>
             <button className="common-button continue-shopping">
               Continue shopping
@@ -41,7 +50,10 @@ export default function Confirmation(props: any) {
           </div>
         </Link>
 
-        <div className={"sell-your-order-phone"} onClick={() => sellPageGoTo("/sell-phone")}>
+        <div
+          className={"sell-your-order-phone canclick"}
+          onClick={() => sellPageGoTo("/sell-phone")}
+        >
           Sell your old phone >
         </div>
 

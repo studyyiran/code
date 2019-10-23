@@ -11,19 +11,24 @@ import { currencyTrans } from "../../../../common/utils/util";
 import { RenderByCondition } from "../../../../components/RenderByCondition";
 import useGetTotalPrice from "../orderLayout/useHook";
 
-export default function OrderList(props: any) {
+export default function ConfirmOrderLayout(props: any) {
   const orderInfoContext = useContext(OrderInfoContext);
   const {
     orderInfoContextValue,
     orderInfoContextDispatch
   } = orderInfoContext as IOrderInfoContext;
-  const { subOrders, phoneDetailList, taxInfo } = orderInfoContextValue;
+  const { checkOrderInfo } = orderInfoContextValue;
   const {
-    totalProductPrice,
-    totalProtections,
-    calcTotalPrice,
-    getShippingPrice
-  } = useGetTotalPrice();
+    orderList,
+    sbuTotal,
+    protection,
+    tax,
+    expressFee,
+    total
+  } = checkOrderInfo;
+  if (!orderList || !orderList.length) {
+    return null;
+  }
   return (
     <div className="order-list-container">
       <RenderByCondition
@@ -43,40 +48,20 @@ export default function OrderList(props: any) {
             <div className="padding-layout title">
               <h3>Your products</h3>
               <span>
-                {phoneDetailList.length} item
-                {phoneDetailList.length > 1 ? "s" : ""}
+                {orderList.length} item
+                {orderList.length > 1 ? "s" : ""}
               </span>
             </div>
           }
         />
         <div className="padding-layout">
-          {phoneDetailList.map(item => {
-            const subOrderInfo: any = subOrders.find(item => {
-              return String(item.productId) === String(item.productId);
-            });
-            // 当没有subOrders数组的时候  应该跳出
+          {orderList.map((subOrderInfo: any) => {
             if (subOrderInfo) {
               return (
                 <PhoneInfo
                   key={subOrderInfo.productId}
-                  needProtection={subOrderInfo.needProtection}
-                  {...item}
+                  {...subOrderInfo}
                   subOrderInfo={subOrderInfo}
-                  setNeedProtection={(value: boolean) => {
-                    orderInfoContextDispatch({
-                      type: orderInfoReducerTypes.setSubOrders,
-                      value: (item: userPhoneOrder) => {
-                        if (String(item.productId) === String(item.productId)) {
-                          return {
-                            productId: item.productId,
-                            needProtection: value
-                          };
-                        } else {
-                          return item;
-                        }
-                      }
-                    });
-                  }}
                 />
               );
             } else {
@@ -88,26 +73,26 @@ export default function OrderList(props: any) {
           <ul>
             <li>
               <label>Subtotal</label>
-              <span>{currencyTrans(totalProductPrice())}</span>
+              <span>{currencyTrans(sbuTotal)}</span>
             </li>
-            {Number(totalProtections()) ? (
+            {Number(protection) ? (
               <li>
                 <label>Protection</label>
-                <span>{currencyTrans(totalProtections())}</span>
+                <span>{currencyTrans(protection)}</span>
               </li>
             ) : null}
 
-            {taxInfo.totalTax ? (
+            {Number(tax) ? (
               <li>
                 <label>Sales tax</label>
-                <span>{currencyTrans(taxInfo.totalTax)}</span>
+                <span>{currencyTrans(tax)}</span>
               </li>
             ) : null}
 
-            {Number(getShippingPrice()) ? (
+            {Number(expressFee) ? (
               <li>
                 <label>Shipping</label>
-                <span>{currencyTrans(getShippingPrice())}</span>
+                <span>{currencyTrans(expressFee)}</span>
               </li>
             ) : null}
           </ul>
@@ -116,7 +101,7 @@ export default function OrderList(props: any) {
           <ul>
             <li>
               <label>Total</label>
-              <span>{currencyTrans(calcTotalPrice())}</span>
+              <span>{currencyTrans(total)}</span>
             </li>
           </ul>
         </div>

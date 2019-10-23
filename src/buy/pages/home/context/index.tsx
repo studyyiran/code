@@ -76,20 +76,14 @@ function useGetAction(
       const res: any = await getBuyProductList(data);
       dispatch({
         type: ourHomeReducerTypes.setBuyProductList,
-        value: res.map((d: any) => {
-          d.productPrice = d.productPrice <= 0 ? 100 : d.productPrice; //Math.floor(Math.random() * (120 - 28 + 1)) + 28
-          return d;
-        })
+        value: res
       });
     }),
     getSellProductList: promisify(async function(data: any) {
       const res: any = await getSellProductList(data);
       dispatch({
         type: ourHomeReducerTypes.setSellProductList,
-        value: res.map((d: any) => {
-          d.productPrice = d.productPrice <= 0 ? 100 : d.productPrice; //Math.floor(Math.random() * (120 - 28 + 1)) + 28
-          return d;
-        })
+        value: res
       });
     })
   };

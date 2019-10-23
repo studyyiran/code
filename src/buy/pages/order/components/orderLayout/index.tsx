@@ -4,12 +4,22 @@ import "./index.less";
 import { RenderByCondition } from "../../../../components/RenderByCondition";
 import CommonCollapse from "../../../../components/commonCollapse";
 import Svg from "../../../../components/svg";
-import { routerConfig } from "../../context/staticData";
-import { currencyTrans, scrollTop } from "../../../../common/utils/util";
+import { routerConfig } from "../../routerConfig";
+import {
+  currencyTrans,
+  getProductListPath,
+  scrollTop
+} from "../../../../common/utils/util";
 import { IOrderInfoContext, OrderInfoContext } from "../../context";
 import ChangeUserInput from "../changeUserInput";
 import useGetTotalPrice from "./useHook";
 import Button from "../../../../components/button";
+import ConfirmOrderLayout from "../orderList/confirmPageUse";
+import { locationHref } from "../../../../common/utils/routerHistory";
+
+function isConfirmPage(props: any) {
+  return props.relativePath === "confirmation";
+}
 
 function useRenderChangeUserInputList(props: any) {
   const orderInfoContext = useContext(OrderInfoContext);
@@ -27,9 +37,7 @@ function useRenderChangeUserInputList(props: any) {
         <ChangeUserInput
           key={name}
           tag={name}
-          hideChange={
-            props && props.relativePath && props.relativePath === "confirmation"
-          }
+          hideChange={props && props.relativePath && isConfirmPage(props)}
           displayContent={renderDisplayContent(orderInfoContextValue)}
           renderInnerContent={(closeModal: any) => {
             return (
@@ -69,9 +77,20 @@ export default function OrderLayout(props: any) {
   const { calcTotalPrice } = useGetTotalPrice();
   const { path, url } = props.match;
   const renderValue = useRenderChangeUserInputList(props);
+
+  const orderInfoContext = useContext(OrderInfoContext);
+  const { orderInfoContextValue } = orderInfoContext as IOrderInfoContext;
+  const { subOrders } = orderInfoContextValue;
   useEffect(() => {
     scrollTop();
   }, [url]);
+  useEffect(() => {
+    // if (!isConfirmPage(props)) {
+    //   if (!subOrders || !subOrders.length) {
+    //     locationHref(getProductListPath());
+    //   }
+    // }
+  }, []);
   return (
     <div className="order-layout">
       <header>
@@ -116,7 +135,11 @@ export default function OrderLayout(props: any) {
               header="Order summary"
               hideArrow={true}
             >
-              <OrderList {...props} />
+              {isConfirmPage(props) ? (
+                <ConfirmOrderLayout />
+              ) : (
+                <OrderList {...props} />
+              )}
             </CommonCollapse>
 
             <div className="main-content">
@@ -130,7 +153,11 @@ export default function OrderLayout(props: any) {
         ComponentPc={
           <div className="main">
             <div className="main-content">{props.children}</div>
-            <OrderList {...props} renderChangeUserInputList={renderValue} />
+            {isConfirmPage(props) ? (
+              <ConfirmOrderLayout />
+            ) : (
+              <OrderList {...props} renderChangeUserInputList={renderValue} />
+            )}
           </div>
         }
       />

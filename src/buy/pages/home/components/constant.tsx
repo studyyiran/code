@@ -1,7 +1,3 @@
-import {locationHref} from "../../../common/utils/routerHistory";
-import {matchPath} from "react-router-dom";
-import {routerConfig} from "../../../share/routerConfig";
-
 export const brands = [
   {
     iconName: "Apple",
@@ -10,7 +6,7 @@ export const brands = [
   },
   {
     iconName: "Samsung",
-    iconUrl: require(`buy/pages/home/components/brandLogo/res/Samsung.svg`),
+    iconUrl: "https://d3c745jesl5pj3.cloudfront.net/sell/Samsung%20home_bf2005eceda6409ca2eeea2bd7a6a96e.png",
     id: 2
   },
   {
@@ -40,7 +36,7 @@ export const buyCardInfo = [
     img: require("buy/pages/home/img/highQuality.png"),
     title: "High Quality Phones",
     text:
-      "Only the best fully functional phones are sold here. 14 day hassle free returns.",
+      "Only the best fully functional<br/> phones are sold here. 14 day<br/> hassle free returns.",
     index: 1
   },
   {
@@ -53,7 +49,7 @@ export const buyCardInfo = [
     img: require("buy/pages/home/img/certified.png"),
     title: "UpTrade Certified",
     text:
-      "All phones are inspected and certified. Includes full phone history report.",
+      "All phones are inspected and<br/> certified. Includes full phone<br/> history report.",
     index: 3
   }
 ];
@@ -63,21 +59,21 @@ export const sellCardInfo = [
     img: require("buy/pages/home/img/priceGuarantee.png"),
     title: "Price Guarantee",
     text:
-      "Get a minimum guaranteed price based on the market value of your phone. ",
+      "Get a minimum guaranteed<br/> price based on the market<br/> value of your phone. ",
     index: 1
   },
   {
     img: require("buy/pages/home/img/fast.png"),
     title: "Fast and Easy",
     text:
-      "Get started in minutes and get cash payment within 1-2 business days.",
+      "Get started in minutes and<br/> get cash payment within 1-2<br/> business days.",
     index: 2
   },
   {
     img: require("buy/pages/home/img/zeroRisk.png"),
     title: "Zero Risk",
     text:
-      "Ship your phone to us for free. If you change your mind, we ship it back to you for free.",
+      "Ship your phone to us for free.<br/> If you change your mind, we<br/> ship it back to you for free.",
     index: 3
   }
 ];

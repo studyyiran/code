@@ -61,13 +61,18 @@ export function ProductListContextProvider(props: any) {
   useEffect(() => {
     action.replaceSEOUrl();
   }, [action.replaceSEOUrl]);
+
+  // 第一次会执行,之后pn变动都会执行
   useEffect(() => {
-    // TODO
     action.getProductList();
   }, [action.getProductList]);
+
+  // 直接运行
   useEffect(() => {
     action.getManufactureList(1);
   }, [action.getManufactureList]);
+
+  // 第一次会执行,当信息变动会执行
   useEffect(() => {
     dispatch({
       type: productListReducerActionTypes.setPageNumber,
@@ -214,7 +219,6 @@ function useGetAction(
         ((lastType.current as any) === "Model" ||
           (lastType.current as any) === "Manufacture")
       ) {
-
       }
       // 这块性能会有问题
       const brandInfo: any = await productIdToBrandId(filterProductId);
