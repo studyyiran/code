@@ -234,31 +234,29 @@ const gotoSell = async (ctx: any, next: any) => {
 const gotoBuy = async (ctx: any, next: any, buyCurrentRouter: any) => {
   const { title, Component, getInitialProps } = buyCurrentRouter;
   let originData: any = {};
+  let template = fs.readFileSync(__dirname + "/buy/index.html", {
+    encoding: "utf-8"
+  });
   if (getInitialProps) {
     console.log("ajax start");
     console.log(ctx.path);
     originData = await getInitialProps(ctx.path);
     console.log(originData);
     console.log("ajax end");
+    const html = ReactDOMServer.renderToString(
+      <RenderWithOriginData originData={originData}>
+        <main>
+          <Component />
+        </main>
+      </RenderWithOriginData>
+    );
+    template = template.replace(/(<div id=\"root\">)/, "$1" + html);
   }
-
-  let template = fs.readFileSync(__dirname + "/buy/index.html", {
-    encoding: "utf-8"
-  });
-  const html = ReactDOMServer.renderToString(
-    <RenderWithOriginData originData={originData}>
-      <main>
-        <Component />
-      </main>
-    </RenderWithOriginData>
-  );
-  template = template.replace(/(<div id=\"root\">)/, "$1" + html);
   template = template.replace(
     /(<\/head>)/,
     "<script>var SSRDATA=" + JSON.stringify(originData) + ";</script>$1"
   );
   ctx.body = template;
-
   next();
 };
 
