@@ -82,7 +82,7 @@ class Home extends React.Component<any, any> {
             <img className="mb-head-img" src={url} />
             <section className="title">
               <h1>
-                Buy The Best Used 测试版本号
+                Buy The Best Used
                 <br />
                 Phones For Less.
               </h1>
