@@ -3,7 +3,7 @@
 BUILD=$1
 APP_WORKSPACE="$(pwd)"
 BUILD=$1
-S3_PATH=s3://uptrade-datafeed/website/test
+S3_PATH=s3://uptrade-datafeed/website/build
 LAST_VERSION=${S3_PATH}-v0.0.1
 
 echo "APP_WORKSPACE: ${APP_WORKSPACE}, BUILD: ${BUILD}, S3_PATH: ${S3_PATH}, LAST_VERSION: ${LAST_VERSION}"
