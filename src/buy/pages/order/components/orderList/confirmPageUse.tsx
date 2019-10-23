@@ -20,7 +20,7 @@ export default function ConfirmOrderLayout(props: any) {
   const { checkOrderInfo } = orderInfoContextValue;
   const {
     orderList,
-    sbuTotal,
+    subTotal,
     protection,
     tax,
     expressFee,
@@ -55,13 +55,13 @@ export default function ConfirmOrderLayout(props: any) {
           }
         />
         <div className="padding-layout">
-          {orderList.map((subOrderInfo: any) => {
-            if (subOrderInfo) {
+          {orderList.map(({ productInfo }: any) => {
+            if (productInfo) {
               return (
                 <PhoneInfo
-                  key={subOrderInfo.productId}
-                  {...subOrderInfo}
-                  subOrderInfo={subOrderInfo}
+                  key={productInfo.productId}
+                  {...productInfo}
+                  subOrderInfo={productInfo}
                 />
               );
             } else {
@@ -73,7 +73,7 @@ export default function ConfirmOrderLayout(props: any) {
           <ul>
             <li>
               <label>Subtotal</label>
-              <span>{currencyTrans(sbuTotal)}</span>
+              <span>{currencyTrans(subTotal)}</span>
             </li>
             {Number(protection) ? (
               <li>

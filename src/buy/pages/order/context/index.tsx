@@ -10,7 +10,8 @@ import {
   getOrderTax,
   getExpress,
   createOrder,
-  zipCodeToAddressInfo
+  zipCodeToAddressInfo,
+  orderIdToCheckOrderInfo
 } from "../server";
 import {
   getFromCacheStore,
@@ -20,6 +21,7 @@ import {
 import { getProductDetail } from "../../detail/server";
 import { IProductDetail } from "../../detail/context";
 import { Message } from "../../../components/message";
+import { reducerLog } from "../../../common/hoc";
 
 export const OrderInfoContext = createContext({});
 const storeName = "OrderInfo";
@@ -50,7 +52,7 @@ export interface IOrderInfoState {
     orderList: {
       productInfo: IProductDetail;
     }[];
-    sbuTotal: string;
+    subTotal: string;
     protection: string;
     expressFee: string;
     tax: string;
@@ -92,7 +94,7 @@ export function OrderInfoContextProvider(props: any) {
     userInfo: {} as any,
     invoiceInfo: {} as any,
     invoiceSameAddr: true,
-    orderInfo: {},
+    orderInfo: "",
     checkOrderInfo: {} as any,
     payInfo: {
       paymentType: "",
@@ -100,11 +102,15 @@ export function OrderInfoContextProvider(props: any) {
       lastNumber: ""
     }
   };
-  const [state, dispatch] = useReducer(reducer, {
+  const [state, dispatch] = useReducer(reducerLog(reducer), {
     ...initState,
     ...getFromCacheStore(storeName)
   });
   const action: IContextActions = useGetAction(state, dispatch);
+  // 获取
+  useEffect(() => {
+    action.orderIdToCheckOrderInfo();
+  }, [action.orderIdToCheckOrderInfo]);
 
   // 监听变化
   useEffect(() => {
@@ -148,6 +154,7 @@ interface IContextActions {
   startOrder: () => any;
   zipCodeToAddressInfo: (zipCode: string) => any;
   checkAddress: (info: any) => any;
+  orderIdToCheckOrderInfo: () => any;
 }
 
 // useCreateActions
@@ -161,6 +168,15 @@ function useGetAction(
     promiseStatus.current = {};
   }
   const actions: IContextActions = {
+    orderIdToCheckOrderInfo: promisify(async function() {
+      if (state.orderInfo) {
+        const checkOrderInfo = await orderIdToCheckOrderInfo(state.orderInfo);
+        dispatch({
+          type: orderInfoReducerTypes.setCheckOrderInfo,
+          value: checkOrderInfo
+        });
+      }
+    }),
     checkAddress: promisify(async function(userInfo: any) {
       if (state.subOrders.length && userInfo) {
         // 发起
@@ -279,6 +295,7 @@ function useGetAction(
       return await zipCodeToAddressInfo(zipCode);
     }),
     getDetailByProductList: promisify(async function() {
+      // 这行是什么意思? 为什么这边是这样拉的? 订单结束后是否会有影响?
       const detailArr = await Promise.all(
         state.subOrders.map(({ productId }) => {
           return getProductDetail(productId);
@@ -327,6 +344,10 @@ function useGetAction(
     state.userInfo
   ]);
   actions.createOrder = useCallback(actions.createOrder, []);
+  actions.orderIdToCheckOrderInfo = useCallback(
+    actions.orderIdToCheckOrderInfo,
+    [state.orderInfo]
+  );
   // 变更支付状态就发起
   actions.startOrder = useCallback(actions.startOrder, [state.payInfo]);
   return actions;
@@ -346,6 +367,7 @@ export const orderInfoReducerTypes = {
   resetPayInfo: "resetPayInfo",
   setPendingStatus: "setPendingStatus",
   setSubOrders: "setSubOrders",
+  setCheckOrderInfo: "setCheckOrderInfo",
   setOrderInfo: "setOrderInfo"
 };
 
@@ -355,6 +377,13 @@ function reducer(state: IOrderInfoState, action: IReducerAction) {
   let newState = { ...state };
   // 现在直接替换掉
   switch (type) {
+    case orderInfoReducerTypes.setCheckOrderInfo: {
+      newState = {
+        ...newState,
+        checkOrderInfo: value
+      };
+      break;
+    }
     // resetPayInfo
     case orderInfoReducerTypes.resetPayInfo: {
       let lastNumber = "";

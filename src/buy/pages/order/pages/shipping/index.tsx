@@ -62,7 +62,7 @@ export default function Shipping(props: any) {
                   setCurrentUserExpress(token);
                 }}
               >
-                <span>{nameToContent(name)}</span>
+                <span>{nameToContent(token)}</span>
               </Checkbox>
               <span>{currencyTrans(totalFee, "free")}</span>
             </div>

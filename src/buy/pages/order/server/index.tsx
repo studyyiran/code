@@ -1,4 +1,8 @@
-import { getExpressMock, getOrderTaxMock, orderIdToProductInfoMock } from "./mock";
+import {
+  getExpressMock,
+  getOrderTaxMock,
+  orderIdToProductInfoMock
+} from "./mock";
 import ajax from "../../../common/utils/ajax";
 
 export async function getOrderTax(info: any) {
@@ -23,8 +27,9 @@ export async function zipCodeToAddressInfo(zipCode: any) {
   return res;
 }
 
-export async function orderIdToProductInfo(orderId: any) {
-  const res = await ajax.get(`http://47.96.53/${orderId}`);
-  return orderIdToProductInfoMock;
+export async function orderIdToCheckOrderInfo(groupOrderNo: any) {
+  const res = await ajax.post(`/buy/order/detail`, {
+    groupOrderNo
+  });
   return res;
 }
