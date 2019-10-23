@@ -2,7 +2,7 @@
   "apps": [
     {
       "name": "uptrade",
-      "script": "/Users/aihuishou/workspace/avril/build/compiled.js",
+      "script": "/home/ec2-user/uptrade-home/build/compiled.js",
       "watch": false,
       "env_prod": {
         "REACT_APP_SERVER_ENV": "PUB"
