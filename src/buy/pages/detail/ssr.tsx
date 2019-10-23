@@ -1,14 +1,17 @@
 import { IProductDetail, StoreDetail } from "./context";
 import { getProductDetail, getSimiliar } from "./server";
+import { getDescArr } from "./util";
 
 export const detailSsrRule = async (url: string) => {
   const store: {
+    ssrTitle: string;
     storeName: string;
     storeData: {
       similiarPhoneList: any[];
       productDetail: any[];
     };
   } = {
+    ssrTitle: "",
     storeName: StoreDetail,
     storeData: {
       similiarPhoneList: [],
@@ -25,6 +28,18 @@ export const detailSsrRule = async (url: string) => {
       if (productDetail) {
         // @ts-ignore
         store.storeData.productDetail = productDetail;
+        const {
+          brandDisplayName,
+          buyProductBQV,
+          productDisplayName
+        } = productDetail as IProductDetail;
+        const [lineOne, lineTwo] = getDescArr(
+          buyProductBQV,
+          productDisplayName
+        );
+        // ssrTitle
+        store.ssrTitle = `Buy ${brandDisplayName} ${lineOne} ${lineTwo} | UpTradeit.com`;
+        console.log(store.ssrTitle);
       }
       const similiarPhoneList: any = await getSimiliar({
         buyProductId: productId,
@@ -37,5 +52,6 @@ export const detailSsrRule = async (url: string) => {
       // 调用
     }
   }
+
   return store;
 };

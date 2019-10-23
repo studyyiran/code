@@ -22,6 +22,7 @@ import { getProductListPath } from "../../common/utils/util";
 
 export const productListSsrRule = async (url: string) => {
   const store: {
+    ssrTitle: string;
     storeName: string;
     storeData: {
       currentFilterSelect: any[]; // 用户的一切选择
@@ -31,6 +32,7 @@ export const productListSsrRule = async (url: string) => {
       manufactureList: any[]; // 因为用户可能选中,造成渲染异常,所以必须.
     };
   } = {
+    ssrTitle: "",
     storeName: StoreProductList,
     storeData: {
       currentFilterSelect: [], // 用户的一切选择
@@ -68,6 +70,32 @@ export const productListSsrRule = async (url: string) => {
     productName: jsonArr[1],
     skuAttrNames: [jsonArr[2], jsonArr[3], jsonArr[4]]
   };
+  // ssrTitle
+  // 当有机型的时候
+  const titleTemplete = `Buy used REPLACE | Uptradeit.com`;
+  if (json.productName) {
+    if (json.skuAttrNames && json.skuAttrNames[0]) {
+      store.ssrTitle = titleTemplete.replace(
+        "REPLACE",
+        `${json.productName.split(",")[0]} ${
+          json.skuAttrNames[0].split(",")[0]
+        }`
+      );
+    } else {
+      store.ssrTitle = titleTemplete.replace(
+        "REPLACE",
+        `${json.productName.split(",")[0]}`
+      );
+    }
+  } else {
+    if (json.brandName) {
+      store.ssrTitle = titleTemplete.replace(
+        "REPLACE",
+        `${json.brandName.split(",")[0]}`
+      );
+    }
+  }
+  console.log(store.ssrTitle);
   function addIntoSelect(arr: any[], mapFunc: any) {
     store.storeData.currentFilterSelect = store.storeData.currentFilterSelect.concat(
       arr.map(mapFunc)

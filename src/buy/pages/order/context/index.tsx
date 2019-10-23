@@ -102,7 +102,7 @@ export function OrderInfoContextProvider(props: any) {
       lastNumber: ""
     }
   };
-  const [state, dispatch] = useReducer(reducerLog(reducer), {
+  const [state, dispatch] = useReducer(reducer, {
     ...initState,
     ...getFromCacheStore(storeName)
   });
