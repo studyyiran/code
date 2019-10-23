@@ -1,7 +1,7 @@
-import {UserInformation} from "./pages/information";
-import {IOrderInfoState} from "./context";
+import { UserInformation } from "./pages/information";
+import { IOrderInfoState } from "./context";
 import Shipping from "./pages/shipping";
-import {nameToContent} from "./util";
+import { nameToContent } from "./util";
 import Payment from "./pages/payment";
 import Confirmation from "./pages/confirmation";
 import React from "react";
@@ -16,7 +16,7 @@ export const routerConfig: {
   Component: any;
 }[] = [
   {
-    title: 'Check out - Information | Uptradeit.com',
+    title: "Check out - Information | Uptradeit.com",
     continueButton: "Continue to shipping",
     backButton: "< Back to store",
     relativePath: "info",
@@ -30,7 +30,7 @@ export const routerConfig: {
     }
   },
   {
-    title: 'Check out - Shipping | Uptradeit.com',
+    title: "Check out - Shipping | Uptradeit.com",
     continueButton: "Continue to payment",
     backButton: "< Back to information",
     relativePath: "shipping",
@@ -44,12 +44,14 @@ export const routerConfig: {
         if (result && result.token) {
           return nameToContent(result.token);
         }
+      } else if (userExpress) {
+        return nameToContent(userExpress);
       }
       return "";
     }
   },
   {
-    title: 'Check out - Payment | Uptradeit.com',
+    title: "Check out - Payment | Uptradeit.com",
     continueButton: "Pay now",
     backButton: "< Back to shipping",
     relativePath: "payment",
@@ -60,19 +62,21 @@ export const routerConfig: {
       if (payInfo && payInfo.creditCardInfo && payInfo.creditCardInfo.cardNo) {
         return (
           <div>
-            Credit card ending in $
+            Credit card ending in
             {payInfo.creditCardInfo.cardNo.slice(
               payInfo.creditCardInfo.cardNo.length - 4
             )}
           </div>
         );
+      } else if (payInfo && payInfo.creditCardInfo && payInfo.lastNumber) {
+        return <div>Credit card ending in {payInfo.lastNumber}</div>;
       } else {
         return "";
       }
     }
   },
   {
-    title: 'Check out - Confirm | Uptradeit.com',
+    title: "Check out - Confirm | Uptradeit.com",
     relativePath: "confirmation",
     name: "Confirmation",
     Component: Confirmation

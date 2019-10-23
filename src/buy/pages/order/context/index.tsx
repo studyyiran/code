@@ -170,7 +170,22 @@ function useGetAction(
   const actions: IContextActions = {
     orderIdToCheckOrderInfo: promisify(async function() {
       if (state.orderInfo) {
-        const checkOrderInfo = await orderIdToCheckOrderInfo(state.orderInfo);
+        const checkOrderInfo: any = await orderIdToCheckOrderInfo(
+          state.orderInfo
+        );
+        const { shippoToken, payment, paymentAccount } = checkOrderInfo;
+        // 这些回补是临时修复
+        // 设置信用卡信息
+        dispatch({
+          type: orderInfoReducerTypes.setPayInfo,
+          value: { ...state.payInfo, paymentType: payment, lastNumber: paymentAccount }
+        });
+        // 设置物流信息
+        dispatch({
+          type: orderInfoReducerTypes.setUserExpress,
+          value: shippoToken
+        });
+        // 设置
         dispatch({
           type: orderInfoReducerTypes.setCheckOrderInfo,
           value: checkOrderInfo
@@ -226,7 +241,11 @@ function useGetAction(
     }),
     startOrder: promisify(async function() {
       // 临时trigger检验变量.这块需要系统封装好.
-      if (state.payInfo && state.payInfo.paymentType) {
+      if (
+        state.payInfo &&
+        state.payInfo.creditCardInfo &&
+        state.payInfo.creditCardInfo.cardNo
+      ) {
         const orderResult = createOrder({
           userInfo: state.userInfo,
           payInfo: state.payInfo,
