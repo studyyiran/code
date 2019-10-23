@@ -252,10 +252,13 @@ const gotoBuy = async (ctx: any, next: any, buyCurrentRouter: any) => {
     );
     template = template.replace(/(<div id=\"root\">)/, "$1" + html);
   }
-  template = template.replace(
-    /(<div id=\"ssrtitle\">)/,
-    "$1" + originData.ssrTitle ? originData.ssrTitle : title
-  );
+  // need help
+  // template = template.replace(
+  //   '<title id="ssrtitle"></title>',
+  //   `<title id="ssrtitle">${
+  //     originData.ssrTitle ? originData.ssrTitle : title
+  //   }</title>`
+  // );
   template = template.replace(
     /(<\/head>)/,
     "<script>var SSRDATA=" + JSON.stringify(originData) + ";</script>$1"
