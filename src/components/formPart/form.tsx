@@ -14,7 +14,7 @@ function FormPart(props: any) {
           resetFields();
           message.success("Message Sent");
           window.setTimeout(() => {
-            props.history.push("/");
+            window.location.href = "/";
           }, 1000);
         });
       }
