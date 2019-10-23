@@ -12,6 +12,13 @@ import { getDescArr, useGetProductImg } from "../../../../pages/detail/util";
 import { InnerDivImage } from "../../../../pages/detail/components/innerDivImage";
 import { locationHref } from "../../../../common/utils/routerHistory";
 
+function isSoldOut(status: string) {
+  return (
+    status === staticContentConfig.SOLDOUT ||
+    status === staticContentConfig.INTRANSACTION
+  );
+}
+
 export default function PhoneProductCard(props: any) {
   const productDetailContext = useContext(ProductDetailContext);
   const { setProductId } = productDetailContext as IProductDetailContext;
@@ -30,18 +37,18 @@ export default function PhoneProductCard(props: any) {
   const productImg = useGetProductImg(props);
   return (
     <section
-      data-disabled={buyProductStatus === staticContentConfig.SOLDOUT ? "true" : "false"}
+      data-disabled={isSoldOut(buyProductStatus) ? "true" : "false"}
       className="phone-product-card"
       onClick={() => {
-        if (buyProductStatus !== staticContentConfig.SOLDOUT) {
+        if (!isSoldOut(buyProductStatus)) {
           locationHref(`/detail/${buyProductId}`);
         }
       }}
     >
-      {buyProductStatus === staticContentConfig.SOLDOUT ? (
+      {isSoldOut(buyProductStatus) ? (
         <img src={require("./res/sold.svg")} />
       ) : null}
-      {buyProductStatus === staticContentConfig.SOLDOUT ? (
+      {isSoldOut(buyProductStatus) ? (
         <InnerDivImage imgUrl={productImg}>
           <div className="modal"></div>
         </InnerDivImage>

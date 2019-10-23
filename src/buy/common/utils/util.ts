@@ -61,7 +61,8 @@ export function currencyTrans(value: any, whenFree?: any) {
 export const staticContentConfig = {
   priceUnit: "$",
   perMonth: "/mo",
-  SOLDOUT: "SOLDOUT"
+  SOLDOUT: "SOLDOUT",
+  INTRANSACTION: "INTRANSACTION",
 };
 
 export function isServer() {

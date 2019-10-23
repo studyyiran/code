@@ -14,19 +14,19 @@ import { ourHomeSsrRule } from "../pages/home/ssr";
 export const routerConfig = [
   {
     path: "/buy",
-    title: "Sell My Phone for More Cash | UpTradeit.com",
+    title: "Buy Used Cell Phones | UpTradeit.com",
     Component: BuyHome,
     getInitialProps: ourHomeSsrRule
   },
   {
     path: "/order",
-    title: "Sell My Phone for More Cash | UpTradeit.com",
+    title: "Check out - Information | Uptradeit.com",
     Component: OrderRouter,
     header: "hide"
   },
   {
     path: getProductListPath(),
-    title: "Sell My Phone for More Cash | UpTradeit.com",
+    title: "Buy Used Cell Phones | UpTradeit.com",
     Component: ProductList,
     getInitialProps: productListSsrRule
   },
@@ -38,7 +38,7 @@ export const routerConfig = [
   },
   {
     path: "/uptrade/protect",
-    title: "UptradeProtect | UpTradeit.com",
+    title: "UpTrade Protect - Extended Warranty | UpTradeit.com",
     meta: {
       desc: "这是静态页面，meta参数可以删除，这里只是备注一下"
     },
@@ -46,7 +46,7 @@ export const routerConfig = [
   },
   {
     path: "/uptrade/policy",
-    title: "policy | UpTradeit.com",
+    title: "Return & Exchange Policy | Uptradeit.com",
     meta: {
       desc: "这是静态页面，meta参数可以删除，这里只是备注一下"
     },
@@ -54,7 +54,7 @@ export const routerConfig = [
   },
   {
     path: "/",
-    title: "buy Phone for More Cash | UpTradeit.com",
+    title: "Buy Used Phones | Sell My Phone | UpTradeit.com",
     exact: true,
     Component: Home,
     getInitialProps: ourHomeSsrRule

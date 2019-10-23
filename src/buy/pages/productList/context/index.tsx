@@ -211,19 +211,25 @@ function useGetAction(
       if (
         lastType &&
         lastType.current &&
-        (lastType.current as any) === "Model"
+        ((lastType.current as any) === "Model" ||
+          (lastType.current as any) === "Manufacture")
       ) {
-        const result: any = await productIdToBrandId(filterProductId);
-        if (result) {
-          result.forEach((newBrand: any) => {
-            if (
-              !brandId.find(currentBrandId => currentBrandId === newBrand.id)
-            ) {
-              brandId.push(newBrand.brandId);
-            }
-          });
-        }
+
       }
+      // 这块性能会有问题
+      const brandInfo: any = await productIdToBrandId(filterProductId);
+      if (brandInfo) {
+        brandInfo.forEach((newBrand: any) => {
+          if (
+            !brandId.find(currentBrandId =>
+              safeEqual(currentBrandId, newBrand.brandId)
+            )
+          ) {
+            brandId.push(newBrand.brandId);
+          }
+        });
+      }
+
       // 先找出最大的index
       let maxIndex = "";
       // brand,model,storage,carrier,color
