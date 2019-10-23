@@ -241,7 +241,7 @@ const gotoBuy = async (ctx: any, next: any, buyCurrentRouter: any) => {
     console.log("ajax start");
     console.log(ctx.path);
     originData = await getInitialProps(ctx.path);
-    console.log(originData);
+    // console.log(JSON.stringify(originData));
     console.log("ajax end");
     const html = ReactDOMServer.renderToString(
       <RenderWithOriginData originData={originData}>
@@ -267,7 +267,6 @@ const gotoBuy = async (ctx: any, next: any, buyCurrentRouter: any) => {
 };
 
 Router.get("*", async (ctx: any, next: any) => {
-  console.log("=================================", ctx.path);
   if (!ctx.path) {
     return;
   }
@@ -275,7 +274,6 @@ Router.get("*", async (ctx: any, next: any) => {
   const current = routerConfig.find((route: any) => {
     return !!matchPath(ctx.path, route);
   });
-  console.log("=========", JSON.stringify(current));
   if (current && current.Component) {
     console.log("buy page");
     return await gotoBuy(ctx, next, current);
