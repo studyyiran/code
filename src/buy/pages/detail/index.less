@@ -28,13 +28,13 @@
     }
     .yr-modal-content {
       padding: 30 * @px;
-      .mb({padding: 20 * @px;});
+      .mb({padding: 15 * @px;});
     }
     .price-list {
       padding: 15 * @px 0;
       .mb({padding: 10 * @px;});
       border-bottom: 1px solid @color-border;
-      font-size: 16 * @px;
+      font-size: 16 * @f;
       .set-grid-column(100 * @px 100 * @px);
       .protect {
         font-weight: @boldWeight;
@@ -56,7 +56,10 @@
       top: 35%;
     }
 
-    .common-collapse > .ant-collapse-item-active > .ant-collapse-header .ant-collapse-arrow {
+    .common-collapse
+      > .ant-collapse-item-active
+      > .ant-collapse-header
+      .ant-collapse-arrow {
       color: #1ab4e7 !important;
     }
 
@@ -280,9 +283,16 @@
           }
         }
         .list {
-          display: flex;
-          justify-content: space-between;
           @widthSize: 280 * @px;
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          justify-items: center;
+          :first-child {
+            justify-self: start;
+          }
+          :last-child {
+            justify-self: end;
+          }
           .phone-product-card {
             .innerdiv {
               .innerdiv-imgsize(@widthSize);

@@ -178,7 +178,11 @@ function useGetAction(
         // 设置信用卡信息
         dispatch({
           type: orderInfoReducerTypes.setPayInfo,
-          value: { ...state.payInfo, paymentType: payment, lastNumber: paymentAccount }
+          value: {
+            creditCardInfo: {} as any,
+            paymentType: payment,
+            lastNumber: paymentAccount
+          }
         });
         // 设置物流信息
         dispatch({

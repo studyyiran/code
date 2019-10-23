@@ -372,6 +372,7 @@ export default function ProductDetail(props: any) {
           </section>
         </div>
         <MyModal
+          needDefaultScroll={true}
           className="cart-modal"
           visible={showModal}
           maskClosable={false}

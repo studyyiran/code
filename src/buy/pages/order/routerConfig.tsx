@@ -23,10 +23,10 @@ export const routerConfig: {
     name: "Information",
     Component: UserInformation,
     renderDisplayContent: ({ userInfo }: IOrderInfoState) => {
-      const { firstName, lastName, street, apartment, userPhone } = userInfo;
+      const { firstName, lastName, street, apartment, userPhone, city, zipCode, state } = userInfo;
       return `${firstName} ${lastName}, ${
         apartment ? street + " " + apartment : street
-      }, ${userPhone}`;
+      }, ${zipCode}, ${city}, ${state}, ${userPhone}`;
     }
   },
   {
