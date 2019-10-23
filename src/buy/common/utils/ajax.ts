@@ -34,7 +34,6 @@ const getRootApi = function(urlRoot: string) {
 
 const ajax: IAjax = {} as any;
 ajax.post = function(url, data) {
-  console.log("post, url: = ============", transUrl(url))
   return ajax.fetch({
     url: transUrl(url),
     method: "post",
@@ -43,7 +42,6 @@ ajax.post = function(url, data) {
 };
 
 ajax.put = function(url, data) {
-  console.log("put, url: = ============", transUrl(url))
   return ajax.fetch({
     url: transUrl(url),
     method: "put",
@@ -52,7 +50,6 @@ ajax.put = function(url, data) {
 };
 
 ajax.delete = function(url, data) {
-  console.log("detele, url: = ============", transUrl(url))
   return ajax.fetch({
     url: transUrl(url),
     method: "DELETE",
@@ -61,7 +58,6 @@ ajax.delete = function(url, data) {
 };
 
 ajax.get = function(url, data) {
-  console.log("get, url: = ============", transUrl(url))
   return ajax.fetch({
     url: transUrl(url),
     method: "GET",
