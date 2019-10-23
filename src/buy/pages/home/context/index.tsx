@@ -20,6 +20,7 @@ interface IContextState {
   buyProductList: any[];
   sellProductList: any[];
   sellListTitle: any[];
+  buyListTitle: any[];
 }
 
 // interface(其实还缺少actions)
@@ -33,7 +34,8 @@ export function OurHomeContextProvider(props: any) {
   const initState: IContextState = {
     buyProductList: [],
     sellProductList: [],
-    sellListTitle: []
+    sellListTitle: [],
+    buyListTitle: []
   };
   const [state, dispatch, useClientRepair] = useGetOriginData(
     useReducerMiddleware(reducer),

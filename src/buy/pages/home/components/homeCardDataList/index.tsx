@@ -6,7 +6,6 @@ import {locationHref} from "../../../../common/utils/routerHistory";
 // buy只显示苹果和三星品牌，业务要求
 function buyBrandFilter(titleList: any, type: any) {
   if (type === 'buy') {
-    console.log(titleList, "================")
     let names = ["Apple", "Samsung"];
     let ids = [1, 2];
     return titleList.filter((brand: any) => names.indexOf(brand.displayName) > -1 || ids.indexOf(brand.id) > -1)

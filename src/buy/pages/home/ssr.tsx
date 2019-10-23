@@ -1,4 +1,9 @@
-import { getSellBrand, getBuyProductList, getSellProductList } from "./server";
+import {
+  getSellBrand,
+  getBuyProductList,
+  getSellProductList,
+  getBuyBrand
+} from "./server";
 import { OurHomeStoreName } from "./context";
 
 export const ourHomeSsrRule = async (url: string) => {
@@ -6,6 +11,7 @@ export const ourHomeSsrRule = async (url: string) => {
     storeName: string;
     storeData: {
       sellListTitle: any[];
+      buyListTitle: any[];
       buyProductList: any[];
       sellProductList: any[];
     };
@@ -13,6 +19,7 @@ export const ourHomeSsrRule = async (url: string) => {
     storeName: OurHomeStoreName,
     storeData: {
       sellListTitle: [],
+      buyListTitle: [],
       buyProductList: [],
       sellProductList: []
     }
@@ -29,6 +36,20 @@ export const ourHomeSsrRule = async (url: string) => {
       }
     );
   }
+
+  const buyListTitle: any = await getBuyBrand();
+  if (buyListTitle) {
+    store.storeData.buyListTitle = (buyListTitle || []).map(
+      ({ brandId, brandDisplayName, seqNo }: any) => {
+        return {
+          seqNo,
+          id: brandId,
+          displayName: brandDisplayName
+        };
+      }
+    );
+  }
+
   const buyProductList: any = await getBuyProductList({
     seq: sellListTitle[0].seqNo,
     brandId: sellListTitle[0].brandId

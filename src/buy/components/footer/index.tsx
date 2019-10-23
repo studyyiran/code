@@ -57,7 +57,7 @@ export default function Footer(props: any) {
           </div>
         </div>
       </div>
-      <div className="footer-bottom-wrapper">
+      <div className="footer-bottom-wrapper flex-grid">
         <div>
           <div className="desc">
             <span onClick={() => sellPageGoTo("/terms", false)} style={{cursor:"pointer"}}>Terms & Conditions</span>

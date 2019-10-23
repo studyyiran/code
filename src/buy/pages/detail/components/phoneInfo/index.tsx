@@ -17,6 +17,7 @@ export default function PhoneInfo(props: any) {
   const {
     buyProductImgPc,
     productDisplayName,
+    bpvDispalyName,
     buyPrice,
     bpvDisplayName,
     buyLevel,
@@ -25,7 +26,37 @@ export default function PhoneInfo(props: any) {
     buyProductBQV,
     subOrderInfo
   } = props;
-  const [lineOne, lineTwo] = getDescArr(buyProductBQV, productDisplayName);
+  function calc() {
+    if (
+      bpvDispalyName &&
+      bpvDispalyName.split(",") &&
+      bpvDispalyName.split(",").length > 2
+    ) {
+      return [
+        {
+          bpName: "Storage",
+          bpSort: "1",
+          bpvName: bpvDispalyName.split(",")[0],
+          tag: ""
+        },
+        {
+          bpName: "Carrier",
+          bpSort: "2",
+          bpvName: bpvDispalyName.split(",")[1],
+          tag: "QUICKFILTERBUY"
+        },
+        {
+          bpName: "Color",
+          bpSort: "3",
+          bpvName: bpvDispalyName.split(",").slice(2).join(" "),
+          tag: "ISCOLOR"
+        }
+      ];
+    } else {
+      return productDisplayName;
+    }
+  }
+  const [lineOne, lineTwo] = getDescArr(calc(), productDisplayName);
   const productImg = useGetProductImg(props);
   return (
     <div className="phone-info">

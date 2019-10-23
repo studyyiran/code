@@ -5,6 +5,9 @@ import Modal from "../../../../components/modal";
 export default function ChangeUserInput(props: any) {
   const { tag, displayContent, renderInnerContent } = props;
   const [showModal, setShowModal] = useState(false);
+  if (!displayContent) {
+    return null;
+  }
   return (
     <div className="change-user-container">
       <div className="left">

@@ -160,7 +160,10 @@ export default function OrderLayout(props: any) {
           <div className="main">
             <div className="main-content">{props.children}</div>
             {isConfirmPage(props) ? (
-              <ConfirmOrderLayout />
+              <ConfirmOrderLayout
+                {...props}
+                renderChangeUserInputList={renderValue}
+              />
             ) : (
               <OrderList {...props} renderChangeUserInputList={renderValue} />
             )}
