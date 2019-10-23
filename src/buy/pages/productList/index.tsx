@@ -62,7 +62,7 @@ export default function ProductList(props: any) {
             visible={showModal}
             title={""}
             className="product-list-filter-mb"
-            maskClosable={true}
+            maskClosable={false}
             footer={false}
             needDefaultScroll={true}
             closable={false}

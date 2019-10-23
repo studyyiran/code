@@ -37,7 +37,7 @@ export const detailSsrRule = async (url: string) => {
           buyProductBQV,
           productDisplayName
         );
-        // ssrTitle
+        // 设置路径
         store.ssrTitle = `Buy ${brandDisplayName} ${lineOne} ${lineTwo} | UpTradeit.com`;
         console.log(store.ssrTitle);
       }

@@ -8,6 +8,7 @@ import { routerConfig } from "../../routerConfig";
 import {
   currencyTrans,
   getProductListPath,
+  isServer,
   scrollTop
 } from "../../../../common/utils/util";
 import { IOrderInfoContext, OrderInfoContext } from "../../context";
@@ -77,7 +78,12 @@ export default function OrderLayout(props: any) {
   const { calcTotalPrice } = useGetTotalPrice();
   const { path, url } = props.match;
   const renderValue = useRenderChangeUserInputList(props);
-
+  // 这块需要注意一下.hoc进不来.日后解决
+  useEffect(() => {
+    if (!isServer() && props.title) {
+      document.title = props.title;
+    }
+  }, []);
   const orderInfoContext = useContext(OrderInfoContext);
   const { orderInfoContextValue } = orderInfoContext as IOrderInfoContext;
   const { subOrders } = orderInfoContextValue;

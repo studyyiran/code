@@ -56,11 +56,8 @@ export default function OrderRouter(props: any) {
                 key={`${path}/${relativePath}`}
                 path={`${path}/${relativePath}`}
                 render={routerProps => {
-                  const OrderLayoutWithTitle = hocDocumentTitle(OrderLayout)(
-                    title
-                  );
                   return (
-                    <OrderLayoutWithTitle
+                    <OrderLayout
                       {...routerProps}
                       relativePath={relativePath}
                       title={title}
@@ -93,7 +90,7 @@ export default function OrderRouter(props: any) {
                           );
                         }}
                       />
-                    </OrderLayoutWithTitle>
+                    </OrderLayout>
                   );
                 }}
               />

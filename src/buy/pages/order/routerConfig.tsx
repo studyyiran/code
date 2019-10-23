@@ -41,8 +41,8 @@ export const routerConfig: {
         const result = expressInfo.find(({ token }) => {
           return String(token) === String(userExpress);
         });
-        if (result && result.name) {
-          return nameToContent(result.name);
+        if (result && result.token) {
+          return nameToContent(result.token);
         }
       }
       return "";

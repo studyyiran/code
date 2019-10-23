@@ -374,6 +374,7 @@ export default function ProductDetail(props: any) {
         <MyModal
           className="cart-modal"
           visible={showModal}
+          maskClosable={false}
           title="Your cart"
           width={410}
           onCancel={() => setShowModal(false)}

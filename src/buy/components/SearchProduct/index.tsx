@@ -101,6 +101,7 @@ export default function SearchProduct(props: any) {
             <Input
               suffix={
                 <Svg
+                  onPressEnter={searchHandler}
                   icon="wrong"
                   onClick={(e: any) => {
                     // 清空
@@ -137,6 +138,7 @@ export default function SearchProduct(props: any) {
             // optionLabelProp="text"
           >
             <Input
+              onPressEnter={searchHandler}
               suffix={
                 <Svg
                   icon="wrong"

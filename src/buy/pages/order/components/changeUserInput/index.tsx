@@ -22,6 +22,7 @@ export default function ChangeUserInput(props: any) {
         </div>
       ) : null}
       <Modal
+        maskClosable={false}
         needDefaultScroll={true}
         className="change-user-modal"
         visible={showModal}

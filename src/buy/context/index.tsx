@@ -6,6 +6,8 @@ import React, {
 } from "react";
 import { IReducerAction } from "buy/common/interface/index.interface";
 import { promisify } from "buy/common/utils/util";
+import ajax from "buy/common/utils/ajax";
+import {GET_HOME_PAGE_SELL_BRANDS} from "../pages/home/server";
 
 export const GlobalSettingContext = createContext({});
 
@@ -100,7 +102,9 @@ function useGetAction(
         (document.querySelector("body") as any).setAttribute("id", "");
       }
     }),
-    emailSubscribed: promisify(async function(a: any, b: any) {})
+    emailSubscribed: promisify(async function(a: any, b: any) {
+      return ajax.post("/message_books/subscribed", {userEmail: a});
+    })
   };
   actions.setIsMobile = useCallback(actions.setIsMobile, []);
   return actions;

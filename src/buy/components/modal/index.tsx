@@ -28,7 +28,7 @@ maskStyle
 export default class Modal extends React.Component<any, any> {
   public static defaultProps = {
     children: "",
-    maskClosable: true,
+    maskClosable: false,
     closable: true,
     footer: "default",
     title: "提示",
@@ -296,6 +296,7 @@ Modal.confirm = function(props: any) {
       <Modal
         {...props}
         visible={bool}
+        maskClosable={false}
         destoryFunc={() => {
           destroy(addEle);
         }}
