@@ -8,11 +8,11 @@ process.env.NODE_ENV = 'production';
 // }
 if (process.env.REACT_APP_SERVER_ENV === 'PUB') { //prod
   // process.env.PUBLIC_URL = 'https://sell.uptradeit.com/';
-  process.env.PUBLIC_URL = 'https://d3shkncr7uztfs.cloudfront.net/sell-website/build-v0.0.11';
+  process.env.PUBLIC_URL = 'https://d3shkncr7uztfs.cloudfront.net/sell-website/build/buy';
 } else if (process.env.REACT_APP_SERVER_ENV === 'UAT') { //demo
   process.env.PUBLIC_URL = '/buy';
 } else { //qa
-  process.env.PUBLIC_URL = 'https://uptrade-datafeed.s3.us-east-2.amazonaws.com/website/build/buy';
+  process.env.PUBLIC_URL = '/buy';
 }
 process.env.GENERATE_SOURCEMAP = 'false';
 
