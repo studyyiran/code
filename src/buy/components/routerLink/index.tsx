@@ -21,7 +21,6 @@ export default function RouterLink(props: {
         onClick();
       }}
       {...other}
-      target="_blank"
     />
   );
 }
