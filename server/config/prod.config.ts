@@ -1,5 +1,5 @@
 export default {
   port: 3006,
-  proxyUrl: "https://classic.uptradeit.com/",
+  proxyUrl: "http://10.114.0.22/",
   routerIgnore: ["/check-order", "/order", "/sell-phone"]
 };
