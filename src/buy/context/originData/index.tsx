@@ -5,7 +5,10 @@ import React, {
   useCallback,
   useRef
 } from "react";
-import { IReducerAction } from "buy/common/interface/index.interface";
+import {
+  IReducerAction,
+  ISsrFileStore
+} from "buy/common/interface/index.interface";
 import { promisify } from "buy/common/utils/util";
 import useReducerMiddleware from "../../common/useHook/useReducerMiddleware";
 
@@ -19,7 +22,7 @@ export interface IOriginData {
 }
 // @store state
 interface IContextState {
-  originData: IOriginData[];
+  originData: ISsrFileStore;
   needClientRepair: boolean;
 }
 
@@ -34,7 +37,7 @@ export function OriginDataContextProvider(props: any) {
   console.log(props.originData);
   // 注入初始值到originData上
   const initState: IContextState = {
-    originData: props.originData || [],
+    originData: props.originData || { storeList: [], ssrConfig: {} },
     needClientRepair: false // 是否开启回补逻辑,改为true用于本地客户端开发
   };
   const [state, dispatch] = useReducer(

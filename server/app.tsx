@@ -20,6 +20,10 @@ import stats from "../build/react-loadable.json";
 import SiteMap from "./lib/sitemap";
 import { routerConfig } from "../src/buy/share/routerConfig";
 import { RenderWithOriginData } from "../src/buy/share/renderWithOriginData";
+import { ISsrFileStore } from "../src/buy/common/interface/index.interface";
+
+import { getDeviceIsMb } from "./util";
+import { StoreNameGlobalSetting } from "../src/buy/context";
 
 const Router = new router();
 
@@ -233,7 +237,7 @@ const gotoSell = async (ctx: any, next: any) => {
 // 跳转值buy端
 const gotoBuy = async (ctx: any, next: any, buyCurrentRouter: any) => {
   const { title, Component, getInitialProps } = buyCurrentRouter;
-  let originData: any = {};
+  let originData = {} as ISsrFileStore;
   let template = fs.readFileSync(__dirname + "/buy/index.html", {
     encoding: "utf-8"
   });
@@ -241,8 +245,16 @@ const gotoBuy = async (ctx: any, next: any, buyCurrentRouter: any) => {
     console.log("ajax start");
     console.log(ctx.path);
     originData = await getInitialProps(ctx.path);
-    // console.log(JSON.stringify(originData));
     console.log("ajax end");
+    // 根据环境变量 设置ssr文件的参数
+    const userAgent = ctx.header["user-agent"];
+    originData.storeList.push({
+      storeName: StoreNameGlobalSetting,
+      storeData: {
+        isMobile: getDeviceIsMb(userAgent)
+      }
+    });
+    console.log(originData);
     const html = ReactDOMServer.renderToString(
       <RenderWithOriginData originData={originData}>
         <main>
@@ -253,9 +265,12 @@ const gotoBuy = async (ctx: any, next: any, buyCurrentRouter: any) => {
     template = template.replace(/(<div id=\"root\">)/, "$1" + html);
   }
   // need help
-  let htmlTitle = originData.ssrTitle ? originData.ssrTitle : title;
+  let htmlTitle =
+    originData.ssrConfig && originData.ssrConfig.ssrTitle
+      ? originData.ssrConfig.ssrTitle
+      : title;
   template = template.replace(
-    '<ssrTitle/>',
+    "<ssrTitle/>",
     "<title>" + htmlTitle + "</title>$1"
   );
   template = template.replace(

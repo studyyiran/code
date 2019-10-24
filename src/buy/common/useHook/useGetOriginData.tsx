@@ -49,12 +49,11 @@ export function useGetOriginData(
   } = originDataContext as IOriginDataContext;
   // 读取server端渲染数据(a.server运行.  b.client运行回补)
   const { originData } = originDataContextValue;
-
   // 最终数据
   let mergeInitState = { ...initState };
 
   // 遍历,找到对应的,然后修改
-  const targetStore = originData.find(({ storeName }) => {
+  const targetStore = originData.storeList.find(({ storeName }) => {
     return storeName === currentStoreName;
   });
   // 填充到对应的仓库:如果当前调用者store和需要被填充的数据目标store相同.
