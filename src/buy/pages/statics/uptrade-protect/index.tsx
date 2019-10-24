@@ -30,7 +30,7 @@ export default function UptradeProtect() {
   ];
 
   const tableData = [
-    {desc: 'Monthly Fee', uptrade: '$15', version: '$17', mobile: '$11.99', protection: '$15', sprint: '$15'},
+    {desc: 'Monthly Fee', uptrade: '$5', version: '$17', mobile: '$11.99', protection: '$15', sprint: '$15'},
     {
       desc: 'Screen damage and other accidental damages',
       uptrade: 'Unlimited',
