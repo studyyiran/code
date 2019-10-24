@@ -151,7 +151,10 @@ class Shipping extends React.Component<any, any> {
             }
             onClick={this.handleCollapseExtend.bind(this, EShipmentType.USPS)}
           >
-            <div className="USPS-bg" />
+            <img
+              className="USPS-bg"
+              src={require("/images/yourphone/USPS.png")}
+            />
             {rightContent}
           </div>
           <div
@@ -161,7 +164,10 @@ class Shipping extends React.Component<any, any> {
             }
             onClick={this.handleCollapseExtend.bind(this, EShipmentType.FEDEX)}
           >
-            <div className="fedex-bg" />
+            <img
+              className="fedex-bg"
+              src={require("/images/yourphone/FedEx.png")}
+            />
             {leftContent}
           </div>
         </div>
