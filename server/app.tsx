@@ -264,13 +264,19 @@ const gotoBuy = async (ctx: any, next: any, buyCurrentRouter: any) => {
     }
     console.log("isMobile" + getDeviceIsMb(userAgent));
     console.log(originData);
-    const html = ReactDOMServer.renderToString(
-      <RenderWithOriginData originData={originData}>
-        <main>
-          <Component />
-        </main>
-      </RenderWithOriginData>
-    );
+    let html;
+    try {
+      html = ReactDOMServer.renderToString(
+        <RenderWithOriginData originData={originData}>
+          <main>
+            <Component />
+          </main>
+        </RenderWithOriginData>
+      );
+    } catch (e) {
+      console.log("error!!!!");
+      console.error(e);
+    }
     template = template.replace(/(<div id=\"root\">)/, "$1" + html);
   }
   // need help
