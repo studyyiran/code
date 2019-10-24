@@ -248,12 +248,20 @@ const gotoBuy = async (ctx: any, next: any, buyCurrentRouter: any) => {
     console.log("ajax end");
     // 根据环境变量 设置ssr文件的参数
     const userAgent = ctx.header["user-agent"];
+    const isMobile = getDeviceIsMb(userAgent);
     originData.storeList.push({
       storeName: StoreNameGlobalSetting,
       storeData: {
-        isMobile: getDeviceIsMb(userAgent)
+        isMobile
       }
     });
+    // 设置移动端的标记
+    if (isMobile) {
+      template = template.replace(
+        "<body>",
+        "<body class='ismobile' id='ismobile'>"
+      );
+    }
     console.log("isMobile" + getDeviceIsMb(userAgent));
     console.log(originData);
     const html = ReactDOMServer.renderToString(
@@ -271,7 +279,7 @@ const gotoBuy = async (ctx: any, next: any, buyCurrentRouter: any) => {
       ? originData.ssrConfig.ssrTitle
       : title;
   template = template.replace(
-    "<ssrTitle/>",
+    "<ssrtitle/>",
     "<title>" + htmlTitle + "</title>$1"
   );
   template = template.replace(
