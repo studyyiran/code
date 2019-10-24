@@ -42,7 +42,7 @@ Axios.interceptors.response.use(
 
 const Request = <T>(opts: IOpts, code?: number[]): Promise<T> => {
   // 代理名
-  let defaultProxyName: string = process.env.REACT_APP_SERVER_ENV === "DEV" ? "/up-api" : "https://classic.uptradeit.com/up-api"
+  let defaultProxyName: string = process.env.REACT_APP_SERVER_ENV === "DEV" ? "/up-api" : "/up-api"
   if (opts.isMock) {
     defaultProxyName = "/mock";
   }
