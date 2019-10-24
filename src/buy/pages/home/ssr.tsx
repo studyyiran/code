@@ -69,9 +69,10 @@ export const ourHomeSsrRule = async (url: string) => {
     seq: sellListTitle[0].seqNo,
     brandId: sellListTitle[0].brandId
   });
-  if (buyProductList && buyProductList.length) {
+  if (sellProductList && sellProductList.length) {
     store.storeData.sellProductList = sellProductList;
   }
+
   ssrRes.storeList.push(store);
   return ssrRes;
 };

@@ -40,7 +40,6 @@ export default function HomeWrapper(props: any) {
       getSellProductList={getSellProductList}
       buyListTitle={buyListTitle}
       sellListTitle={sellListTitle}
-      sellBrandList={1}
       buyProductList={buyProductList}
       sellProductList={sellProductList}
     />
