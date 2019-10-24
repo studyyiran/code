@@ -1,6 +1,6 @@
 import { GlobalSettingContext, IGlobalSettingContext } from "../../../context";
 import { useContext } from "react";
-import {RenderByCondition} from "../../../components/RenderByCondition";
+import { RenderByCondition } from "../../../components/RenderByCondition";
 
 export function getDescArr(info: any, displayName: any) {
   const firstLine: any[] = [];

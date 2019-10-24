@@ -10,17 +10,17 @@ import { OurHomeContextProvider } from "../pages/home/context";
 export function RenderWithOriginData(props: any) {
   return (
     <OriginDataContextProvider originData={props.originData}>
-      <OurHomeContextProvider>
-        <OrderInfoContextProvider>
-          <ProductDetailContextProvider>
-            <GlobalSettingContextProvider>
+      <GlobalSettingContextProvider>
+        <OurHomeContextProvider>
+          <OrderInfoContextProvider>
+            <ProductDetailContextProvider>
               <ProductListContextProvider>
                 {props.children}
               </ProductListContextProvider>
-            </GlobalSettingContextProvider>
-          </ProductDetailContextProvider>
-        </OrderInfoContextProvider>
-      </OurHomeContextProvider>
+            </ProductDetailContextProvider>
+          </OrderInfoContextProvider>
+        </OurHomeContextProvider>
+      </GlobalSettingContextProvider>
     </OriginDataContextProvider>
   );
 }

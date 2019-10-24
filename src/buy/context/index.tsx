@@ -44,14 +44,14 @@ function reducer(state: IContextState, action: IReducerAction) {
 
 // state
 interface IContextState {
-  isMobile: any[];
+  isMobile: boolean;
   categoryId: string;
 }
 
 // @provider
 export function GlobalSettingContextProvider(props: any) {
   const initState: IContextState = {
-    isMobile: [],
+    isMobile: false,
     categoryId: ""
   };
   const [state, dispatch] = useReducer(reducer, initState);
