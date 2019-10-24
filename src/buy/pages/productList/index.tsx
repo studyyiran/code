@@ -53,6 +53,19 @@ export default function ProductList(props: any) {
   }
   return (
     <div className="product-list-page">
+      <div>
+        <a href={"/buy-phone/Apple"}>Apple</a>
+        <a href={"/buy-phone/apple/iphone8plus"}>iphone8plus</a>
+        <a href={"/buy-phone/samsung"} style={{ display: "none" }}>
+          samsung
+        </a>
+        <a
+          href={"/buy-phone/samsung/galaxys10plus"}
+          style={{ visibility: "hidden" }}
+        >
+          galaxys10plus
+        </a>
+      </div>
       <LoadingMask visible={pendingStatus} />
       <RenderByCondition
         ComponentMb={
@@ -122,7 +135,11 @@ function RenderFooter() {
   } = productListContext as IProductListContext;
   const { productList, haveMore } = productListContextValue;
   if (productList.length === 0) {
-    return <div style={{marginBottom: "30px", marginTop: "20px"}}>Looks like we couldn't find what you were looking for.</div>;
+    return (
+      <div style={{ marginBottom: "30px", marginTop: "20px" }}>
+        Looks like we couldn't find what you were looking for.
+      </div>
+    );
   } else {
     if (haveMore) {
       return (
