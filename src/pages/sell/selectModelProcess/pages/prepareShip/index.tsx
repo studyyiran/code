@@ -121,7 +121,7 @@ export default function(props: any) {
           </div>
         </section>
         <button className="common-button second">
-          <RouterLink className="common-button second" to="/">
+          <RouterLink className="common-button second" to="/sell">
             Go back home
           </RouterLink>
         </button>
