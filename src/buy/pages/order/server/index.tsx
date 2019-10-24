@@ -22,7 +22,7 @@ export async function createOrder(orderInfo: any) {
 
 export async function zipCodeToAddressInfo(zipCode: any) {
   const res = await ajax.get(
-    `https://classic.uptradeit.com/up-api/USPS/state/${zipCode}`
+    `https://classic.uptradeit.com/up-api/up-trade-it/api/USPS/state/${zipCode}`
   );
   return res;
 }
