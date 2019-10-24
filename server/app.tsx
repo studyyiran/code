@@ -264,7 +264,7 @@ const gotoBuy = async (ctx: any, next: any, buyCurrentRouter: any) => {
     }
     console.log("isMobile" + getDeviceIsMb(userAgent));
     console.log(originData);
-    let html;
+    let html = "";
     try {
       html = ReactDOMServer.renderToString(
         <RenderWithOriginData originData={originData}>
