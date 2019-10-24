@@ -237,7 +237,8 @@ const gotoSell = async (ctx: any, next: any) => {
 // 跳转值buy端
 const gotoBuy = async (ctx: any, next: any, buyCurrentRouter: any) => {
   const { title, Component, getInitialProps } = buyCurrentRouter;
-  let originData = {} as ISsrFileStore;
+  // fix 对象报错
+  let originData: ISsrFileStore = { storeList: [], ssrConfig: {} } as any;
   let template = fs.readFileSync(__dirname + "/buy/index.html", {
     encoding: "utf-8"
   });
@@ -281,7 +282,7 @@ const gotoBuy = async (ctx: any, next: any, buyCurrentRouter: any) => {
   }
   // need help
   let htmlTitle =
-    originData.ssrConfig && originData.ssrConfig.ssrTitle
+    originData && originData.ssrConfig && originData.ssrConfig.ssrTitle
       ? originData.ssrConfig.ssrTitle
       : title;
   template = template.replace(

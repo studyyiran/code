@@ -86,7 +86,7 @@ export default function OrderLayout(props: any) {
   }, []);
   const orderInfoContext = useContext(OrderInfoContext);
   const { orderInfoContextValue } = orderInfoContext as IOrderInfoContext;
-  const { subOrders } = orderInfoContextValue;
+  const { checkOrderInfo } = orderInfoContextValue;
   useEffect(() => {
     scrollTop();
   }, [url]);
@@ -132,8 +132,11 @@ export default function OrderLayout(props: any) {
                       {title}
                       <Svg icon="arrow_down" />
                     </span>
-                    {Number(calcTotalPrice()) ? (
+                    {!isConfirmPage && Number(calcTotalPrice()) ? (
                       <span>{currencyTrans(calcTotalPrice())}</span>
+                    ) : null}
+                    {isConfirmPage && checkOrderInfo && checkOrderInfo.total ? (
+                      <span>{currencyTrans(checkOrderInfo.total)}</span>
                     ) : null}
                   </div>
                 );
