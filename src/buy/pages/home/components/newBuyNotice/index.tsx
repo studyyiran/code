@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import "./index.less";
 import Svg from "../../../../components/svg";
-import {ajax, BUY_ORDER_LASTEST} from "../../../../api/api";
+import { ajax, BUY_ORDER_LASTEST } from "../../../../api/api";
 
 export function NewBuyNotice(props: any): any {
   const [chooseData, setChooseData] = useState({
@@ -18,11 +18,15 @@ export function NewBuyNotice(props: any): any {
   function getTopData() {
     ajax.post(BUY_ORDER_LASTEST).then(res => {
       dataList = res.data.data.map((d: any) => {
-        d.productPicPC = d.productPicPC ? d.productPicPC : require("../../img/certified.png");
-        d.productPicM = d.productPicM ? d.productPicM : require("../../img/certified.png");
+        d.productPicPC = d.productPicPC
+          ? d.productPicPC
+          : require("../../img/certified.png");
+        d.productPicM = d.productPicM
+          ? d.productPicM
+          : require("../../img/certified.png");
         return d;
       });
-      if(dataList.length <= 0) {
+      if (dataList.length <= 0) {
         setChooseData({
           customer: "",
           productName: "",
@@ -68,21 +72,26 @@ export function NewBuyNotice(props: any): any {
   useEffect(() => {
     intervalInit();
   }, []);
-
-  return chooseData.customer ? (
+  return chooseData && chooseData.customer ? (
     <div className="buy-home-notice-wrapper">
-      <div style={{backgroundImage: `url(${chooseData.productPicM})`, backgroundSize: "cover"}} className={"buy-home-notice-left-img"}/>
+      <div
+        style={{
+          backgroundImage: `url(${chooseData.productPicM})`,
+          backgroundSize: "cover"
+        }}
+        className={"buy-home-notice-left-img"}
+      />
       <div className={"buy-home-notice-right-wrapper"}>
         <div className={"buy-home-notice-right-title"}>
           {chooseData.customer} placed an order for {chooseData.productName}
         </div>
         <div className={"buy-home-notice-right-desc"}>
-          <Svg/>
-          <span className={"time"}>
-            {chooseData.orderTime}
-          </span>
+          <Svg />
+          <span className={"time"}>{chooseData.orderTime}</span>
         </div>
       </div>
     </div>
-  ): (<div>&nbsp;</div>)
+  ) : (
+    <div>&nbsp;</div>
+  );
 }
