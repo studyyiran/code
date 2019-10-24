@@ -5,6 +5,7 @@
       "script": "/home/ec2-user/uptrade-home/build/compiled.js",
       "watch": false,
       "instances": "max",
+      "max_memory_restart": "3500M",
       "env_prod": {
         "REACT_APP_SERVER_ENV": "PUB"
       },
