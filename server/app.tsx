@@ -280,7 +280,7 @@ const gotoBuy = async (ctx: any, next: any, buyCurrentRouter: any) => {
       : title;
   template = template.replace(
     "<ssrtitle/>",
-    "<title>" + htmlTitle + "</title>$1"
+    "<title>" + htmlTitle + "</title>"
   );
   template = template.replace(
     /(<\/head>)/,
