@@ -159,6 +159,6 @@ export const productListSsrRule = async (url: string) => {
       }
     );
   }
-
-  return ssrRes.storeList.push(store);
+  ssrRes.storeList.push(store);
+  return ssrRes;
 };
