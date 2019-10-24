@@ -12,26 +12,18 @@ import BuyHowItWorks from "../components/how-it-works";
 import { NewBuyNotice } from "../components/newBuyNotice";
 import { getProductListPath } from "../../../common/utils/util";
 import { useContext } from "react";
-import {
-  IProductListContext,
-  ProductListContext
-} from "../../productList/context";
 import { IOurHomeContext, OurHomeContext } from "../context";
 import { ourHomeSsrRule } from "../ssr";
 
 export default function HomeWrapper(props: any) {
   function clickBrandHandler(value: any) {}
-  const productListContext = useContext(ProductListContext);
-  const { productListContextValue } = productListContext as IProductListContext;
-  const { manufactureList } = productListContextValue;
-
   const ourHomeContext = useContext(OurHomeContext);
   const {
     ourHomeContextValue,
     useClientRepair,
     getBuyProductList
   } = ourHomeContext as IOurHomeContext;
-  const { buyProductList } = ourHomeContextValue;
+  const { buyProductList, buyListTitle } = ourHomeContextValue;
 
   // 告知client执行对应的函数
   useClientRepair(ourHomeSsrRule);
@@ -39,7 +31,7 @@ export default function HomeWrapper(props: any) {
     <Home
       clickBrandHandler={clickBrandHandler}
       {...props}
-      buyListTitle={manufactureList}
+      buyListTitle={buyListTitle}
       buyProductList={buyProductList}
       getBuyProductList={getBuyProductList}
     />
@@ -108,7 +100,10 @@ class Home extends React.Component<any, any> {
                     <img src={item.img} className="item-img" />
                     <div className="content">
                       <div className="title">{item.title}</div>
-                      <div className="text" dangerouslySetInnerHTML={{__html: item.text}}/>
+                      <div
+                        className="text"
+                        dangerouslySetInnerHTML={{ __html: item.text }}
+                      />
                     </div>
                   </div>
                 );

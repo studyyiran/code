@@ -27,3 +27,10 @@ export const locationHref = (url: string, params?: string) => {
       routerHistory.push(url);
   }
 };
+
+export const checkIsBuyUrl = (url: string) => {
+  const findInBuyRouter = routerConfig.find((route: any) => {
+    return !!matchPath(url, route);
+  });
+  return findInBuyRouter;
+};

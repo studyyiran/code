@@ -1,1 +1,1 @@
-export const protectPrice = 15;
+export const protectPrice = 5;

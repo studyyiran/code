@@ -26,7 +26,14 @@ const getRootApi = function(urlRoot: string) {
       apiRoot = "http://demo-gateway-1613913116.us-east-2.elb.amazonaws.com";
       break;
     case "PUB":
-      apiRoot = "https://api-gateway.uptradeit.com";
+      if (process.env.SSR_SERVER) {
+        //ssr
+        apiRoot =
+          "http://internal-prod-gateway-inner-2143196506.us-east-2.elb.amazonaws.com";
+      } else {
+        //web
+        apiRoot = "https://api-gateway.uptradeit.com";
+      }
       break;
   }
   return apiRoot + urlRoot;
@@ -34,7 +41,7 @@ const getRootApi = function(urlRoot: string) {
 
 const ajax: IAjax = {} as any;
 ajax.post = function(url, data) {
-  console.log("post ajax: ", transUrl(url), JSON.stringify(data))
+  console.log("post ajax: ", transUrl(url), JSON.stringify(data));
   return ajax.fetch({
     url: transUrl(url),
     method: "post",
@@ -43,7 +50,7 @@ ajax.post = function(url, data) {
 };
 
 ajax.put = function(url, data) {
-  console.log("put ajax: ", transUrl(url), JSON.stringify(data))
+  console.log("put ajax: ", transUrl(url), JSON.stringify(data));
   return ajax.fetch({
     url: transUrl(url),
     method: "put",
@@ -52,7 +59,7 @@ ajax.put = function(url, data) {
 };
 
 ajax.delete = function(url, data) {
-  console.log("delete ajax: ", transUrl(url), JSON.stringify(data))
+  console.log("delete ajax: ", transUrl(url), JSON.stringify(data));
   return ajax.fetch({
     url: transUrl(url),
     method: "DELETE",
@@ -61,7 +68,7 @@ ajax.delete = function(url, data) {
 };
 
 ajax.get = function(url, data) {
-  console.log("get ajax: ", transUrl(url), JSON.stringify(data))
+  console.log("get ajax: ", transUrl(url), JSON.stringify(data));
   return ajax.fetch({
     url: transUrl(url),
     method: "GET",

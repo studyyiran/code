@@ -7,13 +7,16 @@
       "instances": "max",
       "max_memory_restart": "3500M",
       "env_prod": {
-        "REACT_APP_SERVER_ENV": "PUB"
+        "REACT_APP_SERVER_ENV": "PUB",
+        "SSR_SERVER": true
       },
       "env_demo": {
-        "REACT_APP_SERVER_ENV": "UAT"
+        "REACT_APP_SERVER_ENV": "UAT",
+        "SSR_SERVER": true
       },
       "env_qa": {
-        "REACT_APP_SERVER_ENV": "QA"
+        "REACT_APP_SERVER_ENV": "QA",
+        "SSR_SERVER": true
       }
     }
   ]
