@@ -26,7 +26,7 @@ const getRootApi = function(urlRoot: string) {
       apiRoot = "http://demo-gateway-1613913116.us-east-2.elb.amazonaws.com";
       break;
     case "PUB":
-      apiRoot = "http://internal-prod-gateway-inner-2143196506.us-east-2.elb.amazonaws.com";
+      apiRoot = "https://api-gateway.uptradeit.com";
       break;
   }
   return apiRoot + urlRoot;
