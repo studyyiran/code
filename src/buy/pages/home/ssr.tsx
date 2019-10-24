@@ -5,8 +5,15 @@ import {
   getBuyBrand
 } from "./server";
 import { OurHomeStoreName } from "./context";
+import { ISsrFileStore } from "../../common/interface/index.interface";
 
 export const ourHomeSsrRule = async (url: string) => {
+  const ssrRes: ISsrFileStore = {
+    ssrConfig: {
+      ssrTitle: ""
+    },
+    storeList: []
+  };
   const store: {
     storeName: string;
     storeData: {
@@ -65,5 +72,6 @@ export const ourHomeSsrRule = async (url: string) => {
   if (buyProductList && buyProductList.length) {
     store.storeData.sellProductList = sellProductList;
   }
-  return store;
+  ssrRes.storeList.push(store);
+  return ssrRes;
 };

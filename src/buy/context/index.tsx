@@ -7,9 +7,10 @@ import React, {
 import { IReducerAction } from "buy/common/interface/index.interface";
 import { promisify } from "buy/common/utils/util";
 import ajax from "buy/common/utils/ajax";
-import {GET_HOME_PAGE_SELL_BRANDS} from "../pages/home/server";
+import { useGetOriginData } from "../common/useHook/useGetOriginData";
 
 export const GlobalSettingContext = createContext({});
+export const StoreNameGlobalSetting = "GlobalSetting";
 
 // action types
 const reducerActionTypes = {
@@ -54,7 +55,11 @@ export function GlobalSettingContextProvider(props: any) {
     isMobile: false,
     categoryId: ""
   };
-  const [state, dispatch] = useReducer(reducer, initState);
+  const [state, dispatch, useClientRepair] = useGetOriginData(
+    reducer,
+    initState,
+    StoreNameGlobalSetting
+  );
   const action: IContextActions = useGetAction(state, dispatch);
   useEffect(() => {
     window.addEventListener(
@@ -71,6 +76,7 @@ export function GlobalSettingContextProvider(props: any) {
     dispatch({ type: "setCategoryId", value: CategoryId });
   }, []);
   const propsValue: IGlobalSettingContext = {
+    ...useClientRepair,
     ...action,
     globalSettingContextValue: state,
     globalSettingContextDispatch: dispatch
@@ -93,17 +99,17 @@ function useGetAction(
     setIsMobile: promisify(async function(a: any, b: any) {
       const clientWidth = document.body.clientWidth;
       if (clientWidth <= 700) {
-        dispatch({type: reducerActionTypes.setIsMobile, value: true})
+        dispatch({ type: reducerActionTypes.setIsMobile, value: true });
         document.body.classList.add("ismobile");
         (document.querySelector("body") as any).setAttribute("id", "ismobile");
       } else {
-        dispatch({type: reducerActionTypes.setIsMobile, value: false})
+        dispatch({ type: reducerActionTypes.setIsMobile, value: false });
         document.body.classList.remove("ismobile");
         (document.querySelector("body") as any).setAttribute("id", "");
       }
     }),
     emailSubscribed: promisify(async function(a: any, b: any) {
-      return ajax.post("/message_books/subscribed", {userEmail: a});
+      return ajax.post("/message_books/subscribed", { userEmail: a });
     })
   };
   actions.setIsMobile = useCallback(actions.setIsMobile, []);

@@ -10,19 +10,11 @@ import RouterLink from "../../components/routerLink";
 import { brands, buyCardInfo, sellCardInfo } from "./components/constant";
 import { getProductListPath, sellPageGoTo } from "../../common/utils/util";
 import { useContext } from "react";
-import {
-  IProductListContext,
-  ProductListContext
-} from "../productList/context";
 import { IOurHomeContext, OurHomeContext } from "./context";
 import { ourHomeSsrRule } from "./ssr";
 
 export default function HomeWrapper(props: any) {
   function clickBrandHandler(value: any) {}
-  const productListContext = useContext(ProductListContext);
-  const { productListContextValue } = productListContext as IProductListContext;
-  const { manufactureList } = productListContextValue;
-
   const ourHomeContext = useContext(OurHomeContext);
   const {
     ourHomeContextValue,
@@ -32,6 +24,7 @@ export default function HomeWrapper(props: any) {
   } = ourHomeContext as IOurHomeContext;
   const {
     sellListTitle,
+    buyListTitle,
     buyProductList,
     sellProductList
   } = ourHomeContextValue;
@@ -45,7 +38,7 @@ export default function HomeWrapper(props: any) {
       {...props}
       getBuyProductList={getBuyProductList}
       getSellProductList={getSellProductList}
-      buyListTitle={manufactureList}
+      buyListTitle={buyListTitle}
       sellListTitle={sellListTitle}
       sellBrandList={1}
       buyProductList={buyProductList}

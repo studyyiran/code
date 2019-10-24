@@ -19,8 +19,15 @@ import {
   StoreProductList
 } from "./context";
 import { getProductListPath } from "../../common/utils/util";
+import { ISsrFileStore } from "../../common/interface/index.interface";
 
 export const productListSsrRule = async (url: string) => {
+  const ssrRes: ISsrFileStore = {
+    ssrConfig: {
+      ssrTitle: ""
+    },
+    storeList: []
+  };
   const store: {
     ssrTitle: string;
     storeName: string;
@@ -75,27 +82,26 @@ export const productListSsrRule = async (url: string) => {
   const titleTemplete = `Buy used REPLACE | Uptradeit.com`;
   if (json.productName) {
     if (json.skuAttrNames && json.skuAttrNames[0]) {
-      store.ssrTitle = titleTemplete.replace(
+      ssrRes.ssrConfig.ssrTitle = titleTemplete.replace(
         "REPLACE",
         `${json.productName.split(",")[0]} ${
           json.skuAttrNames[0].split(",")[0]
         }`
       );
     } else {
-      store.ssrTitle = titleTemplete.replace(
+      ssrRes.ssrConfig.ssrTitle = titleTemplete.replace(
         "REPLACE",
         `${json.productName.split(",")[0]}`
       );
     }
   } else {
     if (json.brandName) {
-      store.ssrTitle = titleTemplete.replace(
+      ssrRes.ssrConfig.ssrTitle = titleTemplete.replace(
         "REPLACE",
         `${json.brandName.split(",")[0]}`
       );
     }
   }
-  console.log(store.ssrTitle);
   function addIntoSelect(arr: any[], mapFunc: any) {
     store.storeData.currentFilterSelect = store.storeData.currentFilterSelect.concat(
       arr.map(mapFunc)
@@ -154,5 +160,5 @@ export const productListSsrRule = async (url: string) => {
     );
   }
 
-  return store;
+  return ssrRes.storeList.push(store);
 };

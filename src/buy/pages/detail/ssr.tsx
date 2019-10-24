@@ -1,17 +1,16 @@
 import { IProductDetail, StoreDetail } from "./context";
 import { getProductDetail, getSimiliar } from "./server";
 import { getDescArr } from "./util";
+import { ISsrFileStore } from "../../common/interface/index.interface";
 
 export const detailSsrRule = async (url: string) => {
-  const store: {
-    ssrTitle: string;
-    storeName: string;
-    storeData: {
-      similiarPhoneList: any[];
-      productDetail: any[];
-    };
-  } = {
-    ssrTitle: "",
+  const ssrRes: ISsrFileStore = {
+    ssrConfig: {
+      ssrTitle: ""
+    },
+    storeList: []
+  };
+  const store = {
     storeName: StoreDetail,
     storeData: {
       similiarPhoneList: [],
@@ -38,8 +37,7 @@ export const detailSsrRule = async (url: string) => {
           productDisplayName
         );
         // 设置路径
-        store.ssrTitle = `Buy ${brandDisplayName} ${lineOne} ${lineTwo} | UpTradeit.com`;
-        console.log(store.ssrTitle);
+        ssrRes.ssrConfig.ssrTitle = `Buy ${brandDisplayName} ${lineOne} ${lineTwo} | UpTradeit.com`;
       }
       const similiarPhoneList: any = await getSimiliar({
         buyProductId: productId,
@@ -52,6 +50,6 @@ export const detailSsrRule = async (url: string) => {
       // 调用
     }
   }
-
-  return store;
+  ssrRes.storeList.push(store);
+  return ssrRes;
 };

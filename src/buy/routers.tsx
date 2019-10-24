@@ -7,10 +7,13 @@ import { routerHistory } from "./common/utils/routerHistory";
 import { scrollTop } from "./common/utils/util";
 import { routerConfig } from "./share/routerConfig";
 import { RenderWithOriginData } from "./share/renderWithOriginData";
+import { IOriginData } from "./context/originData";
 
 export default function ContextProviderWrapper() {
   // 这段脚本只在浏览器运行 从window中获取.进行脱水
-  const originData = (window as any).SSRDATA ? (window as any).SSRDATA : {};
+  const originData: IOriginData[] = (window as any).SSRDATA
+    ? (window as any).SSRDATA
+    : undefined;
   return (
     <RenderWithOriginData originData={originData}>
       <AppRouters routerConfig={routerConfig} />

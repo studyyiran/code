@@ -12,9 +12,14 @@ import useReducerMiddleware from "../../common/useHook/useReducerMiddleware";
 export const OriginDataContext = createContext({});
 // store name
 const storeName = "OriginData";
+
+export interface IOriginData {
+  storeName: string;
+  storeData: any;
+}
 // @store state
 interface IContextState {
-  originData: any;
+  originData: IOriginData[];
   needClientRepair: boolean;
 }
 
@@ -26,9 +31,10 @@ export interface IOriginDataContext extends IOriginDataActions {
 
 // store provider
 export function OriginDataContextProvider(props: any) {
+  console.log(props.originData);
   // 注入初始值到originData上
   const initState: IContextState = {
-    originData: { ...props.originData },
+    originData: props.originData || [],
     needClientRepair: false // 是否开启回补逻辑,改为true用于本地客户端开发
   };
   const [state, dispatch] = useReducer(

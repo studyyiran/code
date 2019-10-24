@@ -5,6 +5,7 @@ import {
 } from "../../context/originData";
 import useReducerMiddleware from "./useReducerMiddleware";
 import { isServer } from "../utils/util";
+import { ISsrFileStore } from "../interface/index.interface";
 
 /*
 
@@ -20,18 +21,24 @@ export function useGetOriginData(
   // 不能在context阶段执行,是因为这个ssr文件是业务性的,需要在页面层次.
   // 既然文件是在页面层次.他的执行,也需要页面层次去.没办法轻易委托到context.而且也不划算.
 
+  // 这段代码,只能执行当前store,没办法修改其他的store
   const useClientRepair = (getInitialProps: any) => {
     if (!isServer() && originDataContextValue.needClientRepair) {
       // 立刻关闭
       setNeedClientRepair(false);
       // 目前的需求都是url参数能够满足的.
-      getInitialProps(window.location.pathname).then((res: any) => {
-        const { storeData } = res;
-        // 赋值到本地store
-        dispatch({
-          type: mergeOriginDataReducerKey,
-          value: storeData
+      getInitialProps(window.location.pathname).then((res: ISsrFileStore) => {
+        const { storeList } = res;
+        const storeJson = storeList.find(({ storeName }) => {
+          return storeName === currentStoreName;
         });
+        // 赋值到本地store
+        if (storeJson) {
+          dispatch({
+            type: mergeOriginDataReducerKey,
+            value: storeJson.storeData
+          });
+        }
       });
     }
   };
@@ -46,10 +53,13 @@ export function useGetOriginData(
   // 最终数据
   let mergeInitState = { ...initState };
 
-  const { storeName, storeData } = originData;
+  // 遍历,找到对应的,然后修改
+  const targetStore = originData.find(({ storeName }) => {
+    return storeName === currentStoreName;
+  });
   // 填充到对应的仓库:如果当前调用者store和需要被填充的数据目标store相同.
-  if (storeName === currentStoreName) {
-    mergeInitState = { ...mergeInitState, ...storeData };
+  if (targetStore) {
+    mergeInitState = { ...mergeInitState, ...targetStore.storeData };
   }
 
   // 用merge后的数据进行初始化store
