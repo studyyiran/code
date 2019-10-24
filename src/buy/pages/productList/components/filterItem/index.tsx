@@ -35,7 +35,7 @@ export function FilterItem(props: Interface) {
       <ul
         data-type={type}
         className="item-container"
-        data-isColor={tag && tag.indexOf("ISCOLOR") !== -1}
+        data-iscolor={tag && tag.indexOf("ISCOLOR") !== -1}
       >
         {allTitle ? (
           <li
