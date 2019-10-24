@@ -4,6 +4,7 @@
       "name": "uptrade",
       "script": "/home/ec2-user/uptrade-home/build/compiled.js",
       "watch": false,
+      "instances": "max",
       "env_prod": {
         "REACT_APP_SERVER_ENV": "PUB"
       },
