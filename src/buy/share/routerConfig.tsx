@@ -32,7 +32,7 @@ export const routerConfig = [
   },
   {
     path: "/detail/:productId",
-    title: "detail | UpTradeit.com",
+    title: "Buy Used Phones | Sell My Phone | UpTradeit.com",
     Component: ProductDetail,
     getInitialProps: detailSsrRule
   },
