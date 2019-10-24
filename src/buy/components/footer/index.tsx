@@ -1,11 +1,11 @@
 import * as React from "react";
-import {useContext} from "react";
+import { useContext } from "react";
 import "./index.less";
-import {Collapse, Form, message} from "antd";
-import {RenderByCondition} from "buy/components/RenderByCondition";
-import {GlobalSettingContext, IGlobalSettingContext} from "../../context";
+import { Collapse, Form, message } from "antd";
+import { RenderByCondition } from "buy/components/RenderByCondition";
+import { GlobalSettingContext, IGlobalSettingContext } from "../../context";
 import footerInfo from "../../common/config/footerLinks.config";
-import {sellPageGoTo} from "../../common/utils/util";
+import RouterLink from "../routerLink";
 
 const { Panel } = Collapse;
 
@@ -14,9 +14,9 @@ export default function Footer(props: any) {
     <footer className="comp-footer">
       <div className="width-container">
         <header className="footer__logo flex-grid">
-          <div onClick={() => sellPageGoTo("/", true)} style={{cursor: "pointer"}}>
+          <RouterLink to={"/"}>
             <img src={require("buy/common/static/logo.svg")} />
-          </div>
+          </RouterLink>
           <div />
         </header>
         <div className="container flex-grid">
@@ -28,23 +28,23 @@ export default function Footer(props: any) {
             }
             ComponentPc={
               <div className="footer__group">
-                {footerInfo.map(({ title, arr }) => {
+                {footerInfo.map(({ title, arr }: any) => {
                   return (
                     <ul className="item" key={title}>
                       <h2>{title}</h2>
-                      {
-                        // @ts-ignore
-                        arr.map(({subTitle, href, isBuy}) => {
-                          return (
-                            <li key={subTitle}>
-                            <span style={{cursor: "pointer"}} onClick={() => {
-                              sellPageGoTo(href, isBuy);
-                              clickUrlHandler();
-                            }}>{subTitle}</span>
-                            </li>
-                          );
-                        })
-                      }
+                      {arr.map(({ subTitle, href, isBuy }: any) => {
+                        return (
+                          <li key={subTitle}>
+                            <RouterLink
+                              isBuy={isBuy}
+                              to={href}
+                              onClick={() => {}}
+                            >
+                              {subTitle}
+                            </RouterLink>
+                          </li>
+                        );
+                      })}
                     </ul>
                   );
                 })}
@@ -60,12 +60,14 @@ export default function Footer(props: any) {
       <div className="footer-bottom-wrapper flex-grid">
         <div>
           <div className="desc">
-            <span onClick={() => sellPageGoTo("/terms", false)} style={{cursor:"pointer"}}>Terms & Conditions</span>
-            <span onClick={() => sellPageGoTo("/privacy-policy", false)}  style={{cursor:"pointer"}}>&nbsp;&nbsp;Privacy Policy</span>
+            <RouterLink to={"/terms"}>Terms & Conditions</RouterLink>
+            <RouterLink to={"/privacy-policy"}>
+              &nbsp;&nbsp;Privacy Policy
+            </RouterLink>
           </div>
           <span>© 2019 UP Trade Technologies, Inc.</span>
         </div>
-        <div/>
+        <div />
       </div>
     </footer>
   );
@@ -86,15 +88,9 @@ export function MbFooter(props: any): any {
                     if (onClickHandler) {
                       onClickHandler();
                     }
-                    if (clickUrlHandler) {
-                      clickUrlHandler();
-                    }
                   }}
                 >
-                  <span style={{cursor: "pointer"}} onClick={() => {
-                    sellPageGoTo(href, isBuy);
-                    clickUrlHandler();
-                  }}>{subTitle}</span>
+                  <RouterLink to={href} isBuy={isBuy}>{subTitle}</RouterLink>
                 </li>
               );
             })}
@@ -142,8 +138,4 @@ function RenderEmailForm() {
   );
   const A = Form.create({ name: "dontknow" })(EmailForm);
   return <A />;
-}
-
-function clickUrlHandler() {
-  window.scroll(0, 0);
 }

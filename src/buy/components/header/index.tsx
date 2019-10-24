@@ -6,7 +6,6 @@ import Svg from "buy/components/svg";
 import RouterLink from "buy/components/routerLink";
 import { RenderByCondition } from "../RenderByCondition";
 import footerInfo from "../../common/config/footerLinks.config";
-import {sellPageGoTo} from "../../common/utils/util";
 
 const { Panel } = Collapse;
 
@@ -18,7 +17,9 @@ export default function Header() {
         {arr.map((item: any, index: any) => {
           return (
             <Menu.Item key={index}>
-              <span onClick={() => sellPageGoTo(item.href, item.isBuy)}>{item.subTitle}</span>
+              <RouterLink to={item.href} isBuy={item.isBuy}>
+                {item.subTitle}
+              </RouterLink>
             </Menu.Item>
           );
         })}
