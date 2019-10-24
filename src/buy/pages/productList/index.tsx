@@ -54,23 +54,23 @@ export default function ProductList(props: any) {
   return (
     <div className="product-list-page">
       <LoadingMask visible={pendingStatus} />
-      <RenderByCondition
-        ComponentServer={
-          <ul>
-            <a href={"/buy-phone/Apple"}>Apple</a>
-            <a href={"/buy-phone/apple/iphone8plus"}>iphone8plus</a>
-            <a href={"/buy-phone/samsung"} style={{ display: "none" }}>
-              samsung
-            </a>
-            <a
-              href={"/buy-phone/samsung/galaxys10plus"}
-              style={{ visibility: "hidden" }}
-            >
-              galaxys10plus
-            </a>
-          </ul>
-        }
-      />
+      {/*<RenderByCondition*/}
+      {/*  ComponentServer={*/}
+      {/*    <ul>*/}
+      {/*      <a href={"/buy-phone/Apple"}>Apple</a>*/}
+      {/*      <a href={"/buy-phone/apple/iphone8plus"}>iphone8plus</a>*/}
+      {/*      <a href={"/buy-phone/samsung"} style={{ display: "none" }}>*/}
+      {/*        samsung*/}
+      {/*      </a>*/}
+      {/*      <a*/}
+      {/*        href={"/buy-phone/samsung/galaxys10plus"}*/}
+      {/*        style={{ visibility: "hidden" }}*/}
+      {/*      >*/}
+      {/*        galaxys10plus*/}
+      {/*      </a>*/}
+      {/*    </ul>*/}
+      {/*  }*/}
+      {/*/>*/}
       <RenderByCondition
         ComponentMb={
           <Modal
