@@ -132,10 +132,10 @@ export default function OrderLayout(props: any) {
                       {title}
                       <Svg icon="arrow_down" />
                     </span>
-                    {!isConfirmPage && Number(calcTotalPrice()) ? (
+                    {!isConfirmPage(props) && Number(calcTotalPrice()) ? (
                       <span>{currencyTrans(calcTotalPrice())}</span>
                     ) : null}
-                    {isConfirmPage && checkOrderInfo && checkOrderInfo.total ? (
+                    {isConfirmPage(props) && checkOrderInfo && checkOrderInfo.total ? (
                       <span>{currencyTrans(checkOrderInfo.total)}</span>
                     ) : null}
                   </div>
