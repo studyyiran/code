@@ -153,7 +153,7 @@ class Shipping extends React.Component<any, any> {
           >
             <img
               className="USPS-bg"
-              src={require("/images/yourphone/USPS.png")}
+              src={require("images/yourphone/USPS.png")}
             />
             {rightContent}
           </div>
@@ -166,7 +166,7 @@ class Shipping extends React.Component<any, any> {
           >
             <img
               className="fedex-bg"
-              src={require("/images/yourphone/FedEx.png")}
+              src={require("images/yourphone/FedEx.png")}
             />
             {leftContent}
           </div>
