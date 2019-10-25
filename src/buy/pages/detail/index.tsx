@@ -9,6 +9,7 @@ import TipsIcon from "../../components/tipsIcon";
 import getSellPath, {
   currencyTrans,
   getProductListPath,
+  safeEqual,
   staticContentConfig
 } from "../../common/utils/util";
 import { RenderByCondition } from "../../components/RenderByCondition";
@@ -35,6 +36,11 @@ import {
   IProductListContext,
   ProductListContext
 } from "../productList/context";
+import {
+  callBackWhenPassAllFunc,
+  useIsCurrentPage,
+  useWhenUrlChange
+} from "./context/test";
 
 function Swiper(props: any) {
   const { buyProductImgPc, buyProductImgM, buyProductVideo } = props;
@@ -153,16 +159,37 @@ export default function ProductDetail(props: any) {
     buyProductHistoryPdf,
     buyProductBQV
   } = productDetail;
+  // 依赖 采用基于依赖的写法,这行代码写在哪里就一点都不重要了.因为页面和刷新只不过是一种依赖条件而已.
+  const id = useWhenUrlChange("productId");
+  const isPage = useIsCurrentPage("/detail");
+
   useEffect(() => {
-    if (
-      props &&
-      props.match &&
-      props.match.params &&
-      props.match.params.productId
-    ) {
-      setProductId(props.match.params.productId);
-    }
-  }, [props.match]);
+    // 1.id 有值
+    // 2.id和当前的和当前的并不相等
+    // 3.在当前页面
+    callBackWhenPassAllFunc(
+      [
+        () => id,
+        () => !safeEqual(id, productId),
+        () => isPage
+      ],
+      () => {
+        if (id.indexOf("token") !== -1) {
+          // 调用全新接口,获取数据,借用detail的渲染字段
+        } else {
+          // 调用常规的接口
+          setProductId(id);
+        }
+      }
+    );
+  }, [id]);
+
+  useEffect(() => {
+    return () => {
+      // 离开的时候清空
+      setProductId(null);
+    };
+  }, []);
 
   function viewAllClickHandler() {
     setSearchInfo({

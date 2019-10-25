@@ -84,7 +84,7 @@ export interface IProductDetailContext extends IContextActions, IContextValue {
 // @actions
 interface IContextActions {
   getProductDetail: () => void;
-  setProductId: (id: string) => any;
+  setProductId: (id: string | null) => any;
   getSimiliarPhoneList: () => any;
 }
 
