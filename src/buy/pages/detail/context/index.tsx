@@ -126,7 +126,7 @@ function useGetAction(
       const res: IProductDetail = await getProductDetail(state.productId);
       if (res) {
         dispatch({
-          type: reducerActionTypes.setProductDetail,
+          type: storeDetailActionTypes.setProductDetail,
           value: res
         });
       }
@@ -138,13 +138,13 @@ function useGetAction(
         pageSize: 4
       });
       dispatch({
-        type: reducerActionTypes.setSimiliarPhoneList,
+        type: storeDetailActionTypes.setSimiliarPhoneList,
         value: res
       });
     }),
     setProductId: promisify(async function(id: string) {
       dispatch({
-        type: reducerActionTypes.setProductId,
+        type: storeDetailActionTypes.setProductId,
         value: id
       });
     })
@@ -160,7 +160,7 @@ function useGetAction(
 }
 
 // action types
-const reducerActionTypes = {
+export const storeDetailActionTypes = {
   setProductDetail: "setProductDetail",
   setProductId: "setProductId",
   setSimiliarPhoneList: "setSimiliarPhoneList"
@@ -171,21 +171,21 @@ function reducer(state: IContextState, action: IReducerAction) {
   const { type, value } = action;
   let newState = { ...state };
   switch (type) {
-    case reducerActionTypes.setSimiliarPhoneList: {
+    case storeDetailActionTypes.setSimiliarPhoneList: {
       newState = {
         ...newState,
         similiarPhoneList: value
       };
       break;
     }
-    case reducerActionTypes.setProductDetail: {
+    case storeDetailActionTypes.setProductDetail: {
       newState = {
         ...newState,
         productDetail: value
       };
       break;
     }
-    case reducerActionTypes.setProductId: {
+    case storeDetailActionTypes.setProductId: {
       newState = {
         ...newState,
         productId: value

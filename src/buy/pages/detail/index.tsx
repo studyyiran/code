@@ -155,6 +155,7 @@ export default function ProductDetail(props: any) {
     skuPrice,
     buyProductCode,
     bpvDisplayName,
+    buyProductId,
     buyProductImgPc,
     buyProductImgM,
     buyProductVideo,
@@ -296,7 +297,7 @@ export default function ProductDetail(props: any) {
     );
   }
   const productImg = useGetProductImg(productDetail);
-  if (buyProductRemark) {
+  if (buyProductId) {
     return (
       <div className="product-detail-page">
         <Swiper

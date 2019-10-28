@@ -11,6 +11,7 @@ import { getProductListPath } from "../common/utils/util";
 import { detailSsrRule } from "../pages/detail/ssr";
 import { ourHomeSsrRule } from "../pages/home/ssr";
 import BuyCheckOrder from "../pages/checkOrder/routers";
+import DetailPreviewWrapper from "../pages/detail/detailPreviewWrapper";
 
 export const routerConfig = [
   {
@@ -43,7 +44,7 @@ export const routerConfig = [
     path: "/detail-preview/:token",
     exact: true,
     title: "Buy Used Phones | Sell My Phone | UpTradeit.com",
-    Component: ProductDetail,
+    Component: DetailPreviewWrapper
   },
   {
     path: "/uptrade/protect",
