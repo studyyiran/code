@@ -272,11 +272,13 @@ const gotoBuy = async (ctx: any, next: any, buyCurrentRouter: any) => {
       html = ReactDOMServer.renderToString(
         <StaticRouter location={ctx.path}>
           <RenderWithOriginData originData={originData}>
-            <Header />
-            <main>
-              <Component />
-            </main>
-            <Footer />
+            <div className="layout">
+              <Header />
+              <main>
+                <Component />
+              </main>
+              <Footer />
+            </div>
           </RenderWithOriginData>
         </StaticRouter>
       );
