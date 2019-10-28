@@ -10,10 +10,12 @@ import React from "react";
 import { getProductListPath } from "../common/utils/util";
 import { detailSsrRule } from "../pages/detail/ssr";
 import { ourHomeSsrRule } from "../pages/home/ssr";
+import BuyCheckOrder from "../pages/checkOrder/routers";
 
 export const routerConfig = [
   {
     path: "/buy",
+    exact: true,
     title: "Buy Used Cell Phones | UpTradeit.com",
     Component: BuyHome,
     getInitialProps: ourHomeSsrRule
@@ -32,9 +34,16 @@ export const routerConfig = [
   },
   {
     path: "/detail/:productId",
+    exact: true,
     title: "Buy Used Phones | Sell My Phone | UpTradeit.com",
     Component: ProductDetail,
     getInitialProps: detailSsrRule
+  },
+  {
+    path: "/detail-preview/:token",
+    exact: true,
+    title: "Buy Used Phones | Sell My Phone | UpTradeit.com",
+    Component: ProductDetail,
   },
   {
     path: "/uptrade/protect",
@@ -51,6 +60,11 @@ export const routerConfig = [
       desc: "这是静态页面，meta参数可以删除，这里只是备注一下"
     },
     Component: UptradePolicy
+  },
+  {
+    path: "/buy/checkorder",
+    title: "",
+    Component: BuyCheckOrder
   },
   {
     path: "/",

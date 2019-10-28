@@ -13,6 +13,7 @@ export const detailSsrRule = async (url: string) => {
   const store = {
     storeName: StoreDetail,
     storeData: {
+      productId: "",
       similiarPhoneList: [],
       productDetail: []
     }
@@ -21,23 +22,29 @@ export const detailSsrRule = async (url: string) => {
   if (arr && arr.length) {
     const productId = Number(arr[arr.length - 1]);
     if (productId !== NaN) {
-      const productDetail: IProductDetail = await getProductDetail(
-        String(productId)
-      );
-      if (productDetail) {
-        // @ts-ignore
-        store.storeData.productDetail = productDetail;
-        const {
-          brandDisplayName,
-          buyProductBQV,
-          productDisplayName
-        } = productDetail as IProductDetail;
-        const [lineOne, lineTwo] = getDescArr(
-          buyProductBQV,
-          productDisplayName
+      if (String(productId).indexOf("token") !== -1) {
+        // 调用全新接口,获取数据,借用detail的渲染字段
+      } else {
+        // 调用常规的接口
+        const productDetail: IProductDetail = await getProductDetail(
+          String(productId)
         );
-        // 设置路径
-        ssrRes.ssrConfig.ssrTitle = `Buy ${brandDisplayName} ${lineOne} ${lineTwo} | UpTradeit.com`;
+        if (productDetail) {
+          store.storeData.productId = String(productId);
+          // @ts-ignore
+          store.storeData.productDetail = productDetail;
+          const {
+            brandDisplayName,
+            buyProductBQV,
+            productDisplayName
+          } = productDetail as IProductDetail;
+          const [lineOne, lineTwo] = getDescArr(
+            buyProductBQV,
+            productDisplayName
+          );
+          // 设置路径
+          ssrRes.ssrConfig.ssrTitle = `Buy ${brandDisplayName} ${lineOne} ${lineTwo} | UpTradeit.com`;
+        }
       }
       const similiarPhoneList: any = await getSimiliar({
         buyProductId: productId,
@@ -47,7 +54,6 @@ export const detailSsrRule = async (url: string) => {
       if (similiarPhoneList) {
         store.storeData.similiarPhoneList = similiarPhoneList;
       }
-      // 调用
     }
   }
   ssrRes.storeList.push(store);

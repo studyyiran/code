@@ -9,6 +9,7 @@ import TipsIcon from "../../components/tipsIcon";
 import getSellPath, {
   currencyTrans,
   getProductListPath,
+  isServer,
   safeEqual,
   staticContentConfig
 } from "../../common/utils/util";
@@ -97,24 +98,26 @@ function Swiper(props: any) {
               >
                 {dom}
               </div>
-              <ModalGateway>
-                {showImageModal ? (
-                  <Modal
-                    onClose={() => {
-                      setShowImgModal(false);
-                    }}
-                  >
-                    <TestCarousel
-                      currentIndex={Number(currentImageIndex)}
-                      views={buyProductImgPc.map((item: any) => ({
-                        src: item
-                      }))}
+              {isServer() ? null : (
+                <ModalGateway>
+                  {showImageModal ? (
+                    <Modal
+                      onClose={() => {
+                        setShowImgModal(false);
+                      }}
                     >
-                      {dom}
-                    </TestCarousel>
-                  </Modal>
-                ) : null}
-              </ModalGateway>
+                      <TestCarousel
+                        currentIndex={Number(currentImageIndex)}
+                        views={buyProductImgPc.map((item: any) => ({
+                          src: item
+                        }))}
+                      >
+                        {dom}
+                      </TestCarousel>
+                    </Modal>
+                  ) : null}
+                </ModalGateway>
+              )}
             </div>
           );
         })()}
@@ -165,31 +168,21 @@ export default function ProductDetail(props: any) {
 
   useEffect(() => {
     // 1.id 有值
-    // 2.id和当前的和当前的并不相等
-    // 3.在当前页面
-    callBackWhenPassAllFunc(
-      [
-        () => id,
-        () => !safeEqual(id, productId),
-        () => isPage
-      ],
-      () => {
-        if (id.indexOf("token") !== -1) {
-          // 调用全新接口,获取数据,借用detail的渲染字段
-        } else {
-          // 调用常规的接口
-          setProductId(id);
-        }
+    // 2.正确的页面
+    callBackWhenPassAllFunc([() => id, () => isPage], () => {
+      if (true) {
+        // 调用常规的接口
+        setProductId(id);
       }
-    );
-  }, [id]);
+    });
+  }, [id, isPage, setProductId]);
 
   useEffect(() => {
     return () => {
       // 离开的时候清空
       setProductId(null);
     };
-  }, []);
+  }, [setProductId]);
 
   function viewAllClickHandler() {
     setSearchInfo({

@@ -7,9 +7,10 @@ import React, {
 import { IReducerAction } from "buy/common/interface/index.interface";
 import { getProductDetail, getSimiliar } from "../server";
 import { backgroundCheckList } from "./staticData";
-import { promisify } from "buy/common/utils/util";
+import { promisify, safeEqual } from "buy/common/utils/util";
 import { useGetOriginData } from "../../../common/useHook/useGetOriginData";
 import { IContextValue } from "../../../common/type";
+import { callBackWhenPassAllFunc, useIsCurrentPage } from "./test";
 
 export const ProductDetailContext = createContext({});
 export const StoreDetail = "StoreDetail";
@@ -57,15 +58,42 @@ export function ProductDetailContextProvider(props: any) {
     StoreDetail
   );
   const action: IContextActions = useGetAction(state, dispatch);
-  // 监听变化
+  const { getProductDetail, getSimiliarPhoneList } = action;
+
+  const isPage = useIsCurrentPage("/detail");
+  useEffect(() => {
+    // 条件:
+    // id有值
+    // 并且在当前页面
+    // 并且和xx不一样
+    callBackWhenPassAllFunc(
+      [
+        () => state.productId,
+        () => isPage,
+        () => {
+          if (
+            !state.productDetail ||
+            !safeEqual(state.productDetail.buyProductId, state.productId)
+          ) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      ],
+      getProductDetail
+    );
+  }, [getProductDetail, state.productDetail, state.productId]);
 
   useEffect(() => {
-    action.getProductDetail();
-  }, [action.getProductDetail]);
-
-  useEffect(() => {
-    action.getSimiliarPhoneList();
-  }, [action.getSimiliarPhoneList]);
+    // 条件:
+    // id有值
+    // 并且在当前页面.
+    callBackWhenPassAllFunc(
+      [() => state.productId, () => isPage],
+      getSimiliarPhoneList
+    );
+  }, [getSimiliarPhoneList, isPage, state.productId]);
 
   const propsValue: IProductDetailContext = {
     useClientRepair,
@@ -95,28 +123,24 @@ function useGetAction(
 ): IContextActions {
   const actions: IContextActions = {
     getProductDetail: promisify(async function() {
-      if (state.productId) {
-        const res: IProductDetail = await getProductDetail(state.productId);
-        if (res) {
-          dispatch({
-            type: reducerActionTypes.setProductDetail,
-            value: res
-          });
-        }
-      }
-    }),
-    getSimiliarPhoneList: promisify(async function() {
-      if (state.productId) {
-        const res: any = await getSimiliar({
-          buyProductId: state.productId,
-          pageNum: 1,
-          pageSize: 4
-        });
+      const res: IProductDetail = await getProductDetail(state.productId);
+      if (res) {
         dispatch({
-          type: reducerActionTypes.setSimiliarPhoneList,
+          type: reducerActionTypes.setProductDetail,
           value: res
         });
       }
+    }),
+    getSimiliarPhoneList: promisify(async function() {
+      const res: any = await getSimiliar({
+        buyProductId: state.productId,
+        pageNum: 1,
+        pageSize: 4
+      });
+      dispatch({
+        type: reducerActionTypes.setSimiliarPhoneList,
+        value: res
+      });
     }),
     setProductId: promisify(async function(id: string) {
       dispatch({

@@ -1,17 +1,28 @@
 import React from "react";
 import { useParams, useRouteMatch } from "react-router-dom";
+import { isServer } from "../../../common/utils/util";
 
 /*
 当url变化的时候,返回给我们监听的ual
  */
 export function useWhenUrlChange(paramKey: string) {
-  const params = useParams();
-  return params[paramKey];
+  try {
+    const params = useParams();
+    return params[paramKey];
+  } catch (e) {
+    console.error(e);
+  }
+  return null
 }
 
 export function useIsCurrentPage(pagePath: string) {
-  const match = useRouteMatch(pagePath);
-  return !!match;
+  try {
+    const match = useRouteMatch(pagePath);
+    return !!match;
+  } catch (e) {
+    console.error(e);
+  }
+  return false
 }
 
 export async function callBackWhenPassAllFunc(arr: any[], callBack: any) {

@@ -34,7 +34,6 @@ export interface IOriginDataContext extends IOriginDataActions {
 
 // store provider
 export function OriginDataContextProvider(props: any) {
-  console.log(props.originData);
   // 注入初始值到originData上
   const initState: IContextState = {
     originData: props.originData || { storeList: [], ssrConfig: {} },
