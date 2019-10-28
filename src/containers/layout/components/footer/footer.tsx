@@ -1,12 +1,15 @@
 import * as React from "react";
-import {useContext} from "react";
+import { useContext } from "react";
 import classnames from "classnames";
 import "./footer.less";
-import {Col, Collapse, Form, message} from "antd";
+import { Col, Collapse, Form, message } from "antd";
 // import commonStore from 'store/common'
 import config from "../../../../config";
-import {RenderByCondition} from "./RenderByCondition";
-import {ISelectModelContext, SelectModelContext} from "pages/sell/selectModelProcess/context";
+import { RenderByCondition } from "./RenderByCondition";
+import {
+  ISelectModelContext,
+  SelectModelContext
+} from "pages/sell/selectModelProcess/context";
 import RouterLink from "components/routerLink";
 import getSellPath from "utils/util";
 
@@ -91,28 +94,24 @@ interface IFooterState {
   email: string;
 }
 
-export default class Footer extends React.Component<
-  { router: any },
-  IFooterState
-> {
+export default class Footer extends React.Component<{}, IFooterState> {
   public readonly state = {
     email: ""
   };
   public render() {
-    const linksGroup = config.FOOTERLINKS.map((group, key) => (
-      <Col span={5} key={key} className="links-group">
-        {group.map((link, index) => (
-          <p
-            key={index}
-            className={classnames("item", { nocursor: !link.href })}
-            onClick={this.handleLink.bind(this, link)}
-            data-href={link.href}
-          >
-            {link.text}
-          </p>
-        ))}
-      </Col>
-    ));
+    function RenderFunc(props: any) {
+      return props.arr.map(({ subTitle, href, isBuy }: any) => {
+        return (
+          <li key={subTitle}>
+            <RouterLink to={href} isBuy={isBuy}>
+              <span style={{ cursor: "pointer" }} onClick={clickUrlHandler}>
+                {subTitle}
+              </span>
+            </RouterLink>
+          </li>
+        );
+      });
+    }
     return (
       <footer className="comp-footer">
         <div className="width-container">
@@ -137,27 +136,17 @@ export default class Footer extends React.Component<
                     return (
                       <ul className="item" key={title}>
                         <h2>{title}</h2>
-                        {
-                          // @ts-ignore
-                          arr.map(({ subTitle, href, isBuy }) => {
-                          return (
-                            <li key={subTitle}>
-                              <RouterLink to={href} isBuy={isBuy}>
-                               <span style={{cursor: "pointer"}} onClick={clickUrlHandler}>{subTitle}</span>
-                              </RouterLink>
-                            </li>
-                          );
-                        })}
+                        <RenderFunc arr={arr} />
                       </ul>
                     );
                   })}
                 </div>
               }
             />
-            <form className="footer__email-form">
+            <div className="footer__email-form">
               <h2>Subscribe To Our Newsletter</h2>
               <RenderEmailForm />
-            </form>
+            </div>
           </div>
           <div className="flex-grid">
             <div>
@@ -178,21 +167,6 @@ export default class Footer extends React.Component<
     );
   }
 
-  private handleLink = (link: { [key: string]: string }) => {
-    if (!link.href) {
-      return false;
-    }
-    if (
-      /\/faq/.test(link.href) &&
-      this.props.router.history.location.pathname === "/faq"
-    ) {
-      window.location.href = location.origin + link.href;
-      return false;
-    }
-    this.props.router.history.push(link.href);
-    return true;
-  };
-
   private handChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({
       email: e.target.value
@@ -211,8 +185,7 @@ export function MbFooter(props: any): any {
       <ul className="item" key={title}>
         <Collapse expandIconPosition="right">
           <Panel header={<h2>{title}</h2>} key={title}>
-            {
-              arr.map(({ subTitle, href, isBuy }: any) => {
+            {arr.map(({ subTitle, href, isBuy }: any) => {
               return (
                 <li
                   key={subTitle}
@@ -226,7 +199,7 @@ export function MbFooter(props: any): any {
                   }}
                 >
                   <RouterLink to={href} isBuy={isBuy}>
-                    <span style={{cursor: "pointer"}}>{subTitle}</span>
+                    <span style={{ cursor: "pointer" }}>{subTitle}</span>
                   </RouterLink>
                 </li>
               );

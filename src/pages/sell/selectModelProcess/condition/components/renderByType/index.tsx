@@ -103,7 +103,7 @@ export function RenderByType(props: IRenderByType) {
             className="my-select"
             key={subQuestionId}
             value={userSubAnswer.answer}
-            onChange={answer => {
+            onChange={(answer: any) => {
               onUserInputHandler({
                 questionId,
                 answerId: subQuestionId,
