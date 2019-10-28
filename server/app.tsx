@@ -24,6 +24,8 @@ import { ISsrFileStore } from "../src/buy/common/interface/index.interface";
 
 import { getDeviceIsMb } from "./util";
 import { StoreNameGlobalSetting } from "../src/buy/context";
+import Footer from "../src/buy/components/footer";
+import Header from "../src/buy/components/header";
 
 const Router = new router();
 
@@ -268,11 +270,15 @@ const gotoBuy = async (ctx: any, next: any, buyCurrentRouter: any) => {
     let html = "";
     try {
       html = ReactDOMServer.renderToString(
-        <RenderWithOriginData originData={originData}>
-          <main>
-            <Component />
-          </main>
-        </RenderWithOriginData>
+        <StaticRouter location={ctx.path}>
+          <RenderWithOriginData originData={originData}>
+            <Header />
+            <main>
+              <Component />
+            </main>
+            <Footer />
+          </RenderWithOriginData>
+        </StaticRouter>
       );
     } catch (e) {
       console.log("error!!!!");
