@@ -14,12 +14,8 @@ function detailFormat(res: any) {
     } else {
       returenRes.buyProductBQV = {};
     }
-    if (returenRes.buyProductImgPc) {
-      returenRes.buyProductImgPc = returenRes.buyProductImgPc.split(",");
-    }
-    if (returenRes.buyProductImgM) {
-      returenRes.buyProductImgM = returenRes.buyProductImgM.split(",");
-    }
+    returenRes.buyProductImgPc = returenRes.buyProductImgPc.split(",");
+    returenRes.buyProductImgM = returenRes.buyProductImgM.split(",");
 
     returenRes.backGroundCheck = backgroundCheckList.map((item, index) => {
       let newItem = { ...item };

@@ -11,7 +11,8 @@ import getSellPath, {
   getProductListPath,
   isServer,
   safeEqual,
-  staticContentConfig, urlRmSpaceAndToLower
+  staticContentConfig,
+  urlRmSpaceAndToLower
 } from "../../common/utils/util";
 import { RenderByCondition } from "../../components/RenderByCondition";
 import CommonCollapse from "../../components/commonCollapse";
@@ -186,7 +187,13 @@ export default function ProductDetail(props: any) {
   }, [setProductId]);
 
   function viewAllClickHandler() {
-    window.location.href = urlRmSpaceAndToLower(getProductListPath() + "/" + productDetail.brandDisplayName + "/" + productDisplayName)
+    window.location.href = urlRmSpaceAndToLower(
+      getProductListPath() +
+        "/" +
+        productDetail.brandDisplayName +
+        "/" +
+        productDisplayName
+    );
   }
 
   function renderHeaderPart() {
