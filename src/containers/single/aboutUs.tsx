@@ -66,6 +66,11 @@ interface IUserIntro {
 
 const userIntro: IUserIntro[] = [
   {
+    headimg: require("./res/whoWeAre/head_6.png"),
+    name: "Kerry Chen",
+    desc: "CEO"
+  },
+  {
     headimg: require("./res/whoWeAre/head_1.png"),
     name: "Marco Mai",
     desc: "Head of Operations"
@@ -89,7 +94,12 @@ const userIntro: IUserIntro[] = [
     headimg: require("./res/whoWeAre/head_5.png"),
     name: "Christine Huang",
     desc: "Operation"
-  }
+  },
+  {
+    headimg: require("./res/whoWeAre/head_0.png"),
+    name: "Alex Wang",
+    desc: "Business Development"
+  },
 ];
 
 const ArticleComp = (props: {
