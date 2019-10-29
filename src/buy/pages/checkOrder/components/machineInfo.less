@@ -1,0 +1,27 @@
+@import (reference) "~buy/common/styles/index.less";
+
+@world: {
+  .comp-order-machineInfo {
+    .information-list {
+      border-bottom: 1 * @px solid @color-border;
+      flex-wrap: wrap;
+      > *:first-child {
+        flex: 0 0 100%;
+      }
+    }
+    p.total {
+      text-align: right;
+      padding-top: 20 * @px;
+      & > span {
+        &:first-child {
+          color: #848484;
+          margin-right: 55 * @px;
+        }
+        &:last-child {
+          .font(16 * @f, 500, #000000);
+        }
+      }
+    }
+  }
+};
+.hello(@world);

@@ -1,0 +1,53 @@
+@import (reference) "~buy/common/styles/index.less";
+
+.comp-collapse-panel-list {
+  .collapse-clear-border();
+  .ant-collapse-content > .ant-collapse-content-box {
+    padding: 0px;
+  }
+  .ant-collapse-icon-position-right > .ant-collapse-item > .ant-collapse-header .ant-collapse-arrow {
+    right: 0;
+  }
+  .ant-collapse-icon-position-right > .ant-collapse-item > .ant-collapse-header {
+    border-bottom: 1px solid @color-border;
+    padding: 17px 35px 22px 0;
+    font-size: 18px;
+    color: #222222;
+    font-weight: 600;
+    justify-content: space-between;
+    .ant-collapse-arrow {
+      width: 32px;
+      height: 32px;
+      background: #F0F0F0;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  .ant-collapse > .ant-collapse-item > .ant-collapse-header {
+    line-height: 1.2;
+    display: flex;
+
+  }
+}
+
+.ismobile {
+  .comp-collapse-panel-list {
+    .collapse-clear-border();
+    .ant-collapse-content > .ant-collapse-content-box {
+      padding: 0rem * @px2rem;
+    }
+    .ant-collapse-icon-position-right > .ant-collapse-item > .ant-collapse-header {
+      border-bottom: 1rem * @px2rem solid @color-border;
+      padding: 10rem * @px2rem 35rem * @px2rem 13rem * @px2rem 0;
+      font-size: 18rem * @px2rem;
+      color: #222222;
+      font-weight: 600;
+      .ant-collapse-arrow {
+        width: 32rem * @px2rem;
+        height: 32rem * @px2rem;
+      }
+    }
+  }
+}

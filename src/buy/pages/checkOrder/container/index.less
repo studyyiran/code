@@ -1,0 +1,44 @@
+@import (reference) "~buy/common/styles/index.less";
+@world: {
+  .order-information-page {
+    .page-padding();
+    padding-bottom: 158*@px;
+    .setpage(1200*@px);
+    .header-title {
+      margin-bottom: 15*@px;
+    }
+    > h2 {
+      .font(26*@f, 500, #131339);
+      margin-bottom: 25*@px;
+    }
+    .order-container {
+      padding: 15*@px;
+      border: 1*@px solid @color-border;
+      border-radius: 8*@px;
+      .ant-collapse-content-active {
+        border-bottom: 1*@px solid @color-border;
+      }
+    }
+  }
+
+  .ismobile {
+    .order-information-page {
+      .page-padding();
+      padding-bottom: 158*@px;
+      .header-title {
+        margin-bottom: 15*@px;
+      }
+      > h2 {
+        .font(18*@f, 500, #131339);
+        margin-bottom: 25*@px;
+      }
+      .order-container {
+        padding: 15*@px;
+        border: 1*@px solid @color-border;
+        border-radius: 8*@px;
+      }
+    }
+  }
+};
+
+.hello(@world);

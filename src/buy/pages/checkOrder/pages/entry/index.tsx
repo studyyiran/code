@@ -1,11 +1,21 @@
-import React, { useEffect, useLayoutEffect } from "react";
+import React, { useContext, useEffect, useLayoutEffect } from "react";
 import { Form, Input, Button } from "antd";
+import { IStoreCheckOrderContext, StoreCheckOrderContext } from "../../context";
 
 const Dom = Form.create({ name: "dontknow" })(CheckOrderEntryForm);
 
 export default Dom;
 
 function CheckOrderEntryForm(props: any) {
+  const storeCheckOrderContext = useContext(StoreCheckOrderContext);
+  const {
+    storeCheckOrderContextValue,
+    getCheckOrderDetail
+  } = storeCheckOrderContext as IStoreCheckOrderContext;
+  useEffect(() => {
+    getCheckOrderDetail({ a: "test" });
+  }, []);
+  console.log(storeCheckOrderContextValue);
   const { form } = props;
   const { getFieldDecorator, validateFields, getFieldsError } = form;
   useLayoutEffect(() => {
