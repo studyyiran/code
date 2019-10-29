@@ -11,7 +11,7 @@ import getSellPath, {
   getProductListPath,
   isServer,
   safeEqual,
-  staticContentConfig
+  staticContentConfig, urlRmSpaceAndToLower
 } from "../../common/utils/util";
 import { RenderByCondition } from "../../components/RenderByCondition";
 import CommonCollapse from "../../components/commonCollapse";
@@ -186,10 +186,7 @@ export default function ProductDetail(props: any) {
   }, [setProductId]);
 
   function viewAllClickHandler() {
-    setSearchInfo({
-      productId: productDetail.productId,
-      productKey: productDisplayName
-    });
+    window.location.href = urlRmSpaceAndToLower(getProductListPath() + "/" + productDetail.brandDisplayName + "/" + productDisplayName)
   }
 
   function renderHeaderPart() {
@@ -356,11 +353,11 @@ export default function ProductDetail(props: any) {
           <section className="similar">
             <header>
               <h2>Similar Phones</h2>
-              <RouterLink to={getProductListPath()}>
+              <a>
                 <span className={"view-all-text"} onClick={viewAllClickHandler}>
                   VIEW ALL
                 </span>
-              </RouterLink>
+              </a>
             </header>
             <RenderByCondition
               ComponentMb={
