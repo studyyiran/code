@@ -34,7 +34,6 @@ export const SelectModelContext = createContext({});
 
 function reducer(state: IContextState, action: IReducerAction) {
   const { type, value } = action;
-  console.log("reducer" + type);
   let newState = { ...state };
   switch (type) {
     case "setSkuId": {

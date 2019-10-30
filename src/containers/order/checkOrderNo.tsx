@@ -9,7 +9,6 @@ import {
 import { setOrderCache } from "containers/order/util";
 import "../../containers/commonCss/contact.less";
 import { getQueryString } from "utils";
-import { locationHref } from "../../buy/common/utils/routerHistory";
 import { buyCheckOrder } from "./api/order.api";
 const nextUrl = "/order";
 
@@ -168,7 +167,7 @@ class CheckOrderNo extends React.Component<any, any> {
         // 如果是销售侧的订单
         if (orderId.indexOf("XS") !== -1) {
           const checkOrderBuyUrl = "/buy/checkorder/order";
-          locationHref(checkOrderBuyUrl);
+          window.location.href = checkOrderBuyUrl;
         } else {
           this.props.history.push(nextUrl);
         }

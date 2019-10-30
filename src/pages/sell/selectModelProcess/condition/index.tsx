@@ -1,3 +1,5 @@
+import { conditionPageReport } from "./dataReport";
+
 const firstQuestionKey = "aboutYourPhone";
 const lastQuestionKey = "allFinish";
 import React, { useReducer, useState, useEffect, useContext } from "react";
@@ -14,6 +16,7 @@ import {
   serverAnswerToRenderAnswer
 } from "./util";
 import { ISelectModelContext, SelectModelContext } from "../context";
+import { useReducerLog } from "../../../../common/useHook";
 
 /*
 default 和 active似乎 遵从active
@@ -209,6 +212,11 @@ export function ConditionForm(props: IConditionForm) {
     if (getStatus(questionId) === "done" && !(editKey && editKey.length)) {
       dispatch({ type: "setEditKey", value: questionId });
     } else if (getStatus(questionId) === "edit" && isSave) {
+      conditionPageReport({
+        step: editKey ? editKey[0] : "",
+        phoneConditionQuestion,
+        phoneConditionAnswer
+      });
       dispatch({ type: "setEditKey", value: [] });
     }
   }
@@ -218,6 +226,11 @@ export function ConditionForm(props: IConditionForm) {
     const findCurrent = questionProcess.findIndex(
       (key: string) => key === maxActiveKey
     );
+    conditionPageReport({
+      step: maxActiveKey,
+      phoneConditionQuestion,
+      phoneConditionAnswer
+    });
     if (findCurrent !== -1) {
       if (findCurrent < questionProcess.length - 1) {
         setMaxActiveKey(questionProcess[findCurrent + 1]);
