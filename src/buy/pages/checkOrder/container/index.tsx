@@ -101,26 +101,26 @@ export function OrderList(props: any) {
       let subOrderStatus = order.subOrderStatus;
       let orderStatusHistories = order.orderStatusHistories;
       const NUMBER9_RETURN_COMPLETE = "NUMBER9_RETURN_COMPLETE";
-      // TODO 超级恶心.
-      if (subOrderStatus === "TRANSACTION_FAILED") {
-        // 如果状态7并且xxx
-        if (returnShippoLabelCode) {
-          subOrderStatus = NUMBER9_RETURN_COMPLETE;
-        }
-      }
       // TODO 已经习惯的
       const deleteStatus = "TO_BE_PLATFORM_RECEIVED";
       if (subOrderStatus === deleteStatus) {
         subOrderStatus = "TO_BE_RETURNED";
       }
       const findDeleteStatus = orderStatusHistories.findIndex(
-        (item: any) => item.status === deleteStatus
+        (item: any) => item.orderStatus === deleteStatus
       );
       if (findDeleteStatus !== -1) {
         orderStatusHistories = [
           ...order.orderStatusHistories.slice(0, findDeleteStatus),
-          order.orderStatusHistories.slice(findDeleteStatus)
+          ...order.orderStatusHistories.slice(findDeleteStatus + 1)
         ];
+      }
+      // TODO 超级恶心.
+      if (subOrderStatus === "TRANSACTION_FAILED") {
+        // 如果状态7并且xxx
+        if (returnShippoLabelCode) {
+          subOrderStatus = NUMBER9_RETURN_COMPLETE;
+        }
       }
       /*
       TO_BE_SHIPPED(1, "To Be Shipped", "Order Placed"),

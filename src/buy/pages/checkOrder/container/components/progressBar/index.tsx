@@ -6,7 +6,7 @@ import {
   GlobalSettingContext,
   IGlobalSettingContext
 } from "../../../../../context";
-import {safeEqual} from "../../../../../common/utils/util";
+import { safeEqual } from "../../../../../common/utils/util";
 
 interface IDot {
   isActive: boolean;
@@ -52,24 +52,44 @@ export default function ProgressBar(props: any) {
     } else {
       start = propsData.currentIndex - 1;
     }
-    showList = propsData.dataList.slice(start, start + count);
+    return (
+      <div className={cls.join(" ")}>
+        {showList
+          .map((t, i) => {
+            const isCurrent = safeEqual(propsData.currentIndex, i);
+            return (
+              <Dot isActive={true} key={i} isCurrent={isCurrent}>
+                {isCurrent && t.img && (
+                  <div className="icon">
+                    <img src={t.img} alt="" />
+                  </div>
+                )}
+                <div className="title">{t.name}</div>
+                {t.date && <div className="date">{t.date}</div>}
+              </Dot>
+            );
+          })
+          .slice(start, start + count)}
+      </div>
+    );
+  } else {
+    return (
+      <div className={cls.join(" ")}>
+        {showList.map((t, i) => {
+          const isCurrent = safeEqual(propsData.currentIndex, i);
+          return (
+            <Dot isActive={true} key={i} isCurrent={isCurrent}>
+              {isCurrent && t.img && (
+                <div className="icon">
+                  <img src={t.img} alt="" />
+                </div>
+              )}
+              <div className="title">{t.name}</div>
+              {t.date && <div className="date">{t.date}</div>}
+            </Dot>
+          );
+        })}
+      </div>
+    );
   }
-  return (
-    <div className={cls.join(" ")}>
-      {showList.map((t, i) => {
-        const isCurrent = safeEqual(propsData.currentIndex, i);
-        return (
-          <Dot isActive={true} key={i} isCurrent={isCurrent}>
-            {isCurrent && t.img && (
-              <div className="icon">
-                <img src={t.img} alt="" />
-              </div>
-            )}
-            <div className="title">{t.name}</div>
-            {t.date && <div className="date">{t.date}</div>}
-          </Dot>
-        );
-      })}
-    </div>
-  );
 }

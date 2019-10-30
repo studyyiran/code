@@ -105,7 +105,6 @@ TRANSACTION_SUCCEED(8, "Transaction Success", "Transaction Success")
           img: OrderCompleteIcon
         }
       ];
-      break;
     case "RETURN_FAILED":
       // 退货失败
       dataList = [
@@ -130,7 +129,6 @@ TRANSACTION_SUCCEED(8, "Transaction Success", "Transaction Success")
           img: OrderCompleteIcon
         }
       ];
-      break;
     default:
     // 普通状态
 
