@@ -1,6 +1,10 @@
 import React, { useContext, useEffect, useLayoutEffect } from "react";
-import { Form, Input, Button } from "antd";
+import "./index.less";
+import "../../common.less";
+import { Form, Input } from "antd";
 import { IStoreCheckOrderContext, StoreCheckOrderContext } from "../../context";
+import Button from "../../../../components/button";
+import { locationHref } from "../../../../common/utils/routerHistory";
 
 const Dom = Form.create({ name: "dontknow" })(CheckOrderEntryForm);
 
@@ -12,9 +16,27 @@ function CheckOrderEntryForm(props: any) {
     storeCheckOrderContextValue,
     getCheckOrderDetail
   } = storeCheckOrderContext as IStoreCheckOrderContext;
-  useEffect(() => {
-    getCheckOrderDetail({ a: "test" });
-  }, []);
+
+  const { isLoading } = storeCheckOrderContextValue;
+
+  const submitHandler = (e: any) => {
+    e.preventDefault();
+    validateFields((error: any, values: any) => {
+      if (!error) {
+        console.log(values);
+        const { email, orderId } = values;
+        getCheckOrderDetail({
+          groupOrderNo: orderId,
+          userEmail: email
+        }).then((res: any) => {
+          console.log("get it and go");
+          locationHref("/buy/checkorder/order");
+          console.log(res);
+        });
+      }
+    });
+  };
+
   console.log(storeCheckOrderContextValue);
   const { form } = props;
   const { getFieldDecorator, validateFields, getFieldsError } = form;
@@ -50,7 +72,6 @@ function CheckOrderEntryForm(props: any) {
         rules: [
           {
             required: true,
-            type: "email",
             message: "Please enter a valid email."
           }
         ]
@@ -64,12 +85,13 @@ function CheckOrderEntryForm(props: any) {
       options: {},
       renderProps: (params: any) => {
         return (
-          <button
+          <Button
             className="common-button"
             // disabled={hasErrors(getFieldsError())}
+            isLoading={isLoading && isLoading.getCheckOrderDetail}
           >
             Check Order
-          </button>
+          </Button>
         );
       }
     }
@@ -86,16 +108,7 @@ function CheckOrderEntryForm(props: any) {
           <div className="form ">
             <div className="check-label">Contact Email on My Order</div>
             <div className="check-label">My Order Number</div>
-            <Form
-              onSubmit={e => {
-                e.preventDefault();
-                validateFields((error: any, values: any) => {
-                  if (!error) {
-                    console.log(values);
-                  }
-                });
-              }}
-            >
+            <Form onSubmit={submitHandler}>
               {config.map((config: any) => {
                 const { id, options, renderProps } = config;
                 return (

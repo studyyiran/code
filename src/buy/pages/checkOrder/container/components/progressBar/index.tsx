@@ -6,6 +6,7 @@ import {
   GlobalSettingContext,
   IGlobalSettingContext
 } from "../../../../../context";
+import {safeEqual} from "../../../../../common/utils/util";
 
 interface IDot {
   isActive: boolean;
@@ -56,8 +57,7 @@ export default function ProgressBar(props: any) {
   return (
     <div className={cls.join(" ")}>
       {showList.map((t, i) => {
-        const isCurrent =
-          t.name === propsData.dataList[propsData.currentIndex].name;
+        const isCurrent = safeEqual(propsData.currentIndex, i);
         return (
           <Dot isActive={true} key={i} isCurrent={isCurrent}>
             {isCurrent && t.img && (

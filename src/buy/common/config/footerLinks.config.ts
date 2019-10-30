@@ -6,12 +6,10 @@ const footerInfo = [
     className: "",
     arr: [
       {
-        isBuy: true,
         subTitle: "Buy Home",
         href: "/buy"
       },
       {
-        isBuy: true, //用于判定是哪一个端的跳转
         subTitle: "Buy Now",
         href: getProductListPath()
       }
@@ -68,7 +66,6 @@ const footerInfo = [
     className: "",
     arr: [
       {
-        isBuy: true,
         subTitle: "Check My Order",
         href: "/check-order"
       }

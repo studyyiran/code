@@ -1,3 +1,63 @@
+export const shippingMock = {
+  "carrier":"usps",
+  "trackingNumber":"92612902416755000001655381",
+  "addressFrom":"Address [city=Anaheim, state=CA, zip=92815, country=US]",
+  "addressTo":"Address [city=Allen, state=TX, zip=75013, country=US]",
+  "eta":"2019-11-04 00:00:00",
+  "serviceLevel":{
+    "token":"usps_parcel_select",
+    "name":"Parcel Select"
+  },
+  "metadata":null,
+  "trackingStatus":{
+    "objectCreated":"2019-10-29 03:41:31",
+    "objectUpdated":"2019-10-29 03:41:31",
+    "objectId":"403eb658accb42b38499e89e4e3b1079",
+    "status":"TRANSIT",
+    "statusDetails":"Your shipment has arrived at the USPS regional origin facility.",
+    "statusDate":"2019-10-28 21:46:00",
+    "location":"Address [city=Anaheim Ca Distribution Center, state=, zip=, country=US]"
+  },
+  "trackingHistory":[
+    {
+      "objectCreated":"2019-10-29 03:41:31",
+      "objectUpdated":"2019-10-29 03:41:31",
+      "objectId":"403eb658accb42b38499e89e4e3b1079",
+      "status":"TRANSIT",
+      "statusDetails":"Your shipment has arrived at the USPS regional origin facility.",
+      "statusDate":"2019-10-28 21:46:00",
+      "location":"Address [city=Anaheim Ca Distribution Center, state=, zip=, country=US]"
+    },
+    {
+      "objectCreated":"2019-10-29 03:41:31",
+      "objectUpdated":"2019-10-29 03:41:31",
+      "objectId":"7ff89d7573c7497f80e14894c71dd984",
+      "status":"TRANSIT",
+      "statusDetails":"USPS is in possession of the item.",
+      "statusDate":"2019-10-28 19:08:00",
+      "location":"Address [city=Anaheim, state=CA, zip=92815, country=US]"
+    },
+    {
+      "objectCreated":"2019-10-29 03:41:31",
+      "objectUpdated":"2019-10-29 03:41:31",
+      "objectId":"717585e2fd4045499e2661b1081bc104",
+      "status":"TRANSIT",
+      "statusDetails":"USPS is in possession of the item.",
+      "statusDate":"2019-10-28 18:40:00",
+      "location":"Address [city=Anaheim, state=CA, zip=92815, country=US]"
+    },
+    {
+      "objectCreated":"2019-10-28 16:26:11",
+      "objectUpdated":"2019-10-29 03:41:31",
+      "objectId":"ce8ab2e328b341869d2b49b716322844",
+      "status":null,
+      "statusDetails":"The shipping label has been created and the USPS is awaiting the item.",
+      "statusDate":"2019-10-28 18:32:00",
+      "location":"Address [city=Anaheim, state=CA, zip=92815, country=US]"
+    }
+  ]
+}
+
 export const checkForOrdermockOld = {
   groupOrderNo: "XS2019102818515788438778",
   orderCreateDate: "2019-10-28 05:52:01",

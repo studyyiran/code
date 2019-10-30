@@ -2,11 +2,13 @@
 
 @world: {
   .comp-order-machineInfo {
-    .information-list {
+    ul.information-list {
       border-bottom: 1 * @px solid @color-border;
       flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
       > *:first-child {
-        flex: 0 0 100%;
+        grid-column-start: span 3;
       }
     }
     p.total {

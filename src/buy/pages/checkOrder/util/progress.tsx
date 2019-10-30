@@ -1,4 +1,5 @@
 import { IProgressDot, IProgressType } from "../interface/order.inerface";
+import * as moment from "moment-timezone";
 const OrderPlacedIcon = require("../static/orderPlaced.png"); // 1
 const PackageSentIcon = require("../static/packageSent.png"); // 2
 const PackageReceivedIcon = require("../static/packageReceived.png"); // 3 货物完成
@@ -6,7 +7,6 @@ const InspectionCompleteIcon = require("../static/inspectionComplete.png"); // ?
 const ListSaleIcon = require("../static/listForSale.png"); // ?
 const OrderCompleteIcon = require("../static/orderComplete.png"); // 总之完成了
 const ReturnRequestIcon = require("../static/returnRequest.png"); // 要求退货
-const { packageDate } = require("./index");
 
 const NUMBER9_RETURN_COMPLETE = "NUMBER9_RETURN_COMPLETE";
 
@@ -124,9 +124,9 @@ export function getProgressType({
       if (orderStatusHistories[index]) {
         return {
           ...roadMapInfo,
-          name: "name",
+          name: "status name",
           img: OrderPlacedIcon,
-          date: "date"
+          date: packageDate(orderStatusHistories[index].date)
         };
       } else {
         return roadMapInfo;
@@ -137,7 +137,7 @@ export function getProgressType({
   // 确认当前的
   if (orderStatusHistories && orderStatusHistories.length) {
     currentIndex = orderStatusHistories.findIndex((order: any) => {
-      return order.status === subOrderStatus;
+      return order.orderStatus === subOrderStatus;
     });
   }
 
@@ -183,7 +183,7 @@ export function statusToRenderConfig(currentStatus: string) {
       break;
     }
     // 退货
-    case "TO_BE_SHIPPED": {
+    case "TO_BE_RETURNED": {
     }
     case "TO_BE_PLATFORM_RECEIVED": {
       config.printLabelbutton = true;
@@ -206,4 +206,12 @@ export function statusToRenderConfig(currentStatus: string) {
     default:
   }
   return config;
+}
+
+export function packageDate(b: string | undefined) {
+  if (b) {
+    const date = moment.tz(b, "America/Chicago");
+    return date.format("MMM DD");
+  }
+  return b;
 }

@@ -99,7 +99,10 @@ function useGetAction(
     // 拉取订单信息
     checkForOrder: promisify(async function(userEmail: any, groupOrderNo: any) {
       try {
-        const res: any = await serverCheckOrderDetail({ userEmail, groupOrderNo });
+        const res: any = await serverCheckOrderDetail({
+          userEmail,
+          groupOrderNo
+        });
         // const res = checkforordermock;
         // 然后还需要获取订单物流信息
         if (res && res.subOrders && res.subOrders.length) {
@@ -119,7 +122,7 @@ function useGetAction(
         return Promise.reject(e);
       }
     }),
-    // 请求获取当前的物流信息
+    // 请求获取当前的物流信息 当current变化的时候,获取对应的.
     getTranshipping: promisify(async function() {
       const { totalOrderInfo, currentSubOrderNo } = state;
       const current: any = getSubOrderByNo(totalOrderInfo, currentSubOrderNo);

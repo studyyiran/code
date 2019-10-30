@@ -57,14 +57,6 @@ export function getReactNodeConfig(status: any, showReturnShipping?: string) {
   return ReactNodeConfig;
 }
 
-export function packageDate(b: string | undefined) {
-  if (b) {
-    const date = moment.tz(b, "America/Chicago");
-    return date.format("MMM DD");
-  }
-  return b;
-}
-
 export function getDeliverNoInfo(info: any[]) {
   const deliverNoInfo: any = {};
   if (info && info.length) {

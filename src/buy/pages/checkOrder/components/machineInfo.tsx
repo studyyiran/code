@@ -4,7 +4,7 @@ import { currencyTrans, staticContentConfig } from "../../../common/utils/util";
 
 export default function MachineInfo(props: any) {
   const { productInfo } = props;
-  const { productDisplayName, buyLevel, buyPrice, buyProductCode } = productInfo;
+  const { productDisplayName, buyLevel, buyPrice, buyProductCode, productPns } = productInfo;
   return (
     <div className="comp-order-machineInfo">
       <ul className="information-list">
@@ -12,14 +12,14 @@ export default function MachineInfo(props: any) {
           <span>Model</span>
           <span>{productDisplayName}</span>
         </li>
-        {/*{props.submitted.productPns.map(({ ppnName, name }: any) => {*/}
-        {/*  return (*/}
-        {/*    <li key={ppnName}>*/}
-        {/*      <span>{ppnName}</span>*/}
-        {/*      <span>{name}</span>*/}
-        {/*    </li>*/}
-        {/*  );*/}
-        {/*})}*/}
+        {productPns.map(({ ppnName, name }: any) => {
+          return (
+            <li key={ppnName}>
+              <span>{ppnName}</span>
+              <span>{name}</span>
+            </li>
+          );
+        })}
         <li>
           <span>Condition</span>
           <span>{buyLevel}</span>
