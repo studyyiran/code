@@ -116,7 +116,7 @@ export function OrderList(props: any) {
       const findDeleteStatus = orderStatusHistories.findIndex(
         (item: any) => item.status === deleteStatus
       );
-      if (findDeleteStatus) {
+      if (findDeleteStatus !== -1) {
         orderStatusHistories = [
           ...order.orderStatusHistories.slice(0, findDeleteStatus),
           order.orderStatusHistories.slice(findDeleteStatus)

@@ -43,6 +43,7 @@ import {
   useIsCurrentPage,
   useWhenUrlChange
 } from "./context/test";
+import Button from "../../components/button";
 
 function Swiper(props: any) {
   const { buyProductImgPc, buyProductImgM, buyProductVideo } = props;
@@ -162,6 +163,7 @@ export default function ProductDetail(props: any) {
     buyProductVideo,
     productDescription,
     buyProductHistoryPdf,
+    buyProductStatus,
     buyProductBQV
   } = productDetail;
   // 依赖 采用基于依赖的写法,这行代码写在哪里就一点都不重要了.因为页面和刷新只不过是一种依赖条件而已.
@@ -235,7 +237,10 @@ export default function ProductDetail(props: any) {
                     <span>{currencyTrans(skuPrice)}</span>
                   </div>
                 </div>
-                <StartBuyButton onClick={() => setShowModal(true)} />
+                <StartBuyButton
+                  onClick={() => setShowModal(true)}
+                  buyProductStatus={buyProductStatus}
+                />
               </div>
               <CheckBoxProtection
                 needProtectionState={[needProtection, setNeedProtection]}
@@ -450,11 +455,11 @@ export default function ProductDetail(props: any) {
 }
 
 function StartBuyButton(props: any) {
-  const { onClick } = props;
+  const { onClick, buyProductStatus } = props;
   return (
-    <button className="common-button" onClick={onClick}>
+    <Button disabled={buyProductStatus === "INTRANSACTION"} onClick={onClick}>
       Start Your Purchase
-    </button>
+    </Button>
   );
 }
 
