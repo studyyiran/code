@@ -9,7 +9,8 @@ import {
 import { setOrderCache } from "containers/order/util";
 import "../../containers/commonCss/contact.less";
 import { getQueryString } from "utils";
-
+import { locationHref } from "../../buy/common/utils/routerHistory";
+import { buyCheckOrder } from "./api/order.api";
 const nextUrl = "/order";
 
 export default function CheckOrderNoContainer(props: any) {
@@ -147,7 +148,16 @@ class CheckOrderNo extends React.Component<any, any> {
       return;
     }
     try {
-      const b = await this.props.checkForOrder(email, orderId);
+      let b;
+      // 销售侧订单
+      if (orderId.indexOf("XS") !== -1) {
+        b = await buyCheckOrder({
+          groupOrderNo: orderId,
+          userEmail: email
+        });
+      } else {
+        b = await this.props.checkForOrder(email, orderId);
+      }
       if (b.groupOrderNo) {
         // 应该不能单独取消一个子订单？这个应该放在内部去判断。
         // 根据操作记录判断CRM取消订单
@@ -155,7 +165,13 @@ class CheckOrderNo extends React.Component<any, any> {
           email,
           orderId
         });
-        this.props.history.push(nextUrl);
+        // 如果是销售侧的订单
+        if (orderId.indexOf("XS") !== -1) {
+          const checkOrderBuyUrl = "/buy/checkorder/order";
+          locationHref(checkOrderBuyUrl);
+        } else {
+          this.props.history.push(nextUrl);
+        }
       } else {
         this.setState({
           formError: "The email address does not match the order number"
