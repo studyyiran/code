@@ -40,7 +40,7 @@ export default function MachineInfo(props: any) {
         </li>
       </ul>
       <p className="total">
-        <span>Subtotal</span>
+        <span>Price</span>
         <span>{currencyTrans(buyPrice)}</span>
       </p>
     </div>
