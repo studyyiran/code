@@ -8,15 +8,17 @@ const ListSaleIcon = require("../static/listForSale.png"); // ?
 const OrderCompleteIcon = require("../static/orderComplete.png"); // 总之完成了
 const ReturnRequestIcon = require("../static/returnRequest.png"); // 要求退货
 
-const NUMBER9_RETURN_COMPLETE = "NUMBER9_RETURN_COMPLETE";
-
 function statusToRoadMap(currentStatus: string): any[] {
-  // 做出区分
-  if (currentStatus === "TRANSACTION_SUCCEED") {
-    if (false) {
-      currentStatus = "NUMBER9_RETURN_COMPLETE";
-    }
-  }
+  /*
+TO_BE_SHIPPED(1, "To Be Shipped", "Order Placed"),
+TO_BE_RECEIVED(2, "To Be Delivered", "Package Sent"),
+TO_BE_COMFIRMED(3, "To Be Confirmed", "Package Delivered"),
+TO_BE_RETURNED(4, "To Be Returned", "Return Requested"),
+TO_BE_PLATFORM_RECEIVED(5, "To Be Received", "To Be Received"),
+RETURN_FAILED(6, "Transaction Succeed", "Return Failed"),
+TRANSACTION_FAILED(7, "Transaction Failed", "Transaction Failed"),
+TRANSACTION_SUCCEED(8, "Transaction Success", "Transaction Success")
+ */
   let dataList: IProgressDot[] = [
     {
       name: "Order Placed",
@@ -77,8 +79,10 @@ function statusToRoadMap(currentStatus: string): any[] {
         }
       ];
       break;
-    default:
-      // 普通状态
+    case "TO_BE_RETURNED":
+    case "TO_BE_PLATFORM_RECEIVED":
+    case `NUMBER9_RETURN_COMPLETE`:
+      // 退货成功
       dataList = [
         {
           name: "Order Placed",
@@ -101,6 +105,33 @@ function statusToRoadMap(currentStatus: string): any[] {
           img: OrderCompleteIcon
         }
       ];
+    case "RETURN_FAILED":
+      // 退货失败
+      dataList = [
+        {
+          name: "Order Placed",
+          img: OrderPlacedIcon
+        },
+        {
+          name: "Package Sent",
+          img: PackageSentIcon
+        },
+        {
+          name: "Package Delivered",
+          img: OrderCompleteIcon
+        },
+        {
+          name: "Return Requested",
+          img: ReturnRequestIcon
+        },
+        {
+          name: "Return Failed",
+          img: OrderCompleteIcon
+        }
+      ];
+    default:
+    // 普通状态
+
     // 退货1
   }
   return dataList;
@@ -124,7 +155,7 @@ export function getProgressType({
       if (orderStatusHistories[index]) {
         return {
           ...roadMapInfo,
-          name: "status name",
+          name: roadMapInfo.name,
           img: OrderPlacedIcon,
           date: packageDate(orderStatusHistories[index].date)
         };
@@ -137,7 +168,12 @@ export function getProgressType({
   // 确认当前的
   if (orderStatusHistories && orderStatusHistories.length) {
     currentIndex = orderStatusHistories.findIndex((order: any) => {
-      return order.orderStatus === subOrderStatus;
+      // 如果是9
+      if (subOrderStatus === "NUMBER9_RETURN_COMPLETE") {
+        return order.orderStatus === "TRANSACTION_FAILED";
+      } else {
+        return order.orderStatus === subOrderStatus;
+      }
     });
   }
 
@@ -146,17 +182,6 @@ export function getProgressType({
     dataList
   };
 }
-
-/*
-TO_BE_SHIPPED(1, "To Be Shipped", "Order Placed"),
-TO_BE_RECEIVED(2, "To Be Delivered", "Package Sent"),
-TO_BE_COMFIRMED(3, "To Be Confirmed", "Package Delivered"),
-TO_BE_RETURNED(4, "To Be Returned", "Return Requested"),
-TO_BE_PLATFORM_RECEIVED(5, "To Be Received", "To Be Received"),
-RETURN_FAILED(6, "Transaction Succeed", "Return Failed"),
-TRANSACTION_FAILED(7, "Transaction Failed", "Transaction Failed"),
-TRANSACTION_SUCCEED(8, "Transaction Success", "Transaction Success")
- */
 
 export function statusToRenderConfig(currentStatus: string) {
   let config = {

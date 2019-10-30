@@ -46,7 +46,6 @@ export function OrderList(props: any) {
     currentSubOrderNo,
     isLoading
   } = storeCheckOrderContextValue;
-  console.log(checkOrderDetail);
   useEffect(() => {
     // 当没有的时候.从缓存中获取.获取失败应该跳转
     callBackWhenPassAllFunc(
@@ -94,27 +93,45 @@ export function OrderList(props: any) {
       const {
         subOrderNo,
         subOrderStatusDisplayName,
-        subOrderStatus,
         orderStatusHistories,
         productInfo,
-        returnShippoLabelCode
+        returnShippoLabelCode,
+        refund
       } = order;
-      console.log(order);
+      let subOrderStatus = order.subOrderStatus;
+      const NUMBER9_RETURN_COMPLETE = "NUMBER9_RETURN_COMPLETE";
+      // TODO 超级恶心.
+      if (subOrderStatus === "TRANSACTION_FAILED") {
+        // 如果状态7并且xxx
+        if (returnShippoLabelCode) {
+          subOrderStatus = NUMBER9_RETURN_COMPLETE;
+        }
+      }
       /*
-TO_BE_SHIPPED(1, "To Be Shipped", "Order Placed"),
-TO_BE_RECEIVED(2, "To Be Delivered", "Package Sent"),
-TO_BE_COMFIRMED(3, "To Be Confirmed", "Package Delivered"),
-TO_BE_RETURNED(4, "To Be Returned", "Return Requested"),
-TO_BE_PLATFORM_RECEIVED(5, "To Be Received", "To Be Received"),
-RETURN_FAILED(6, "Transaction Succeed", "Return Failed"),
-TRANSACTION_FAILED(7, "Transaction Failed", "Transaction Failed"),
-TRANSACTION_SUCCEED(8, "Transaction Success", "Transaction Success")
- */
+      TO_BE_SHIPPED(1, "To Be Shipped", "Order Placed"),
+      TO_BE_RECEIVED(2, "To Be Delivered", "Package Sent"),
+      TO_BE_COMFIRMED(3, "To Be Confirmed", "Package Delivered"),
+      TO_BE_RETURNED(4, "To Be Returned", "Return Requested"),
+      TO_BE_PLATFORM_RECEIVED(5, "To Be Received", "To Be Received"),
+      RETURN_FAILED(6, "Transaction Succeed", "Return Failed"),
+      TRANSACTION_FAILED(7, "Transaction Failed", "Transaction Failed"),
+      TRANSACTION_SUCCEED(8, "Transaction Success", "Transaction Success")
+       */
       const reactNodeConfig = statusToRenderConfig(subOrderStatus);
       const needShowName = productInfo.productDisplayName;
-      console.log(reactNodeConfig);
+      const progressInfo = getProgressType({
+        orderStatusHistories: orderStatusHistories,
+        orderCreateDate: checkOrderDetail.orderCreateDate,
+        subOrderStatus,
+        subOrderStatusDisplayName
+      });
+      let displayStatus = "";
+      if (progressInfo && orderStatusHistories && orderStatusHistories.length) {
+        displayStatus = progressInfo.dataList[progressInfo.currentIndex].name;
+      }
+
       return {
-        header: `${needShowName}-${subOrderStatus}`,
+        header: `${needShowName}-${displayStatus}`,
         key: subOrderNo,
         children: (
           <div>
@@ -124,14 +141,7 @@ TRANSACTION_SUCCEED(8, "Transaction Success", "Transaction Success")
               productInfo={productInfo}
               {...order}
             />
-            <ProgressBar
-              data={getProgressType({
-                orderStatusHistories: orderStatusHistories,
-                orderCreateDate: checkOrderDetail.orderCreateDate,
-                subOrderStatus,
-                subOrderStatusDisplayName
-              })}
-            />
+            <ProgressBar data={progressInfo} />
             {reactNodeConfig.showDeliverStatus ? (
               <DeliverSatus {...order} />
             ) : null}
@@ -182,9 +192,9 @@ TRANSACTION_SUCCEED(8, "Transaction Success", "Transaction Success")
                 </Button>
               </div>
             ) : null}
-            {false ? (
+            {refund ? (
               <div className="have-refund">
-                <h3>Refund Issued {currencyTrans(123)}</h3>
+                <h3>Refund Issued {currencyTrans(refund)}</h3>
                 <Svg />
               </div>
             ) : null}

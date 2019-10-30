@@ -17,17 +17,16 @@ class UserInfo extends React.Component<IUserInformation> {
             <div className="block">
               {this.props.telAndEmail.map((t, i) => (
                 <span className="address-item" key={i}>
-                    {t}
-                  </span>
+                  {t}
+                </span>
               ))}
             </div>
           </li>
           <li>
             <span>Payment Method</span>
+            <span>Credit card ending in</span>
             {this.props.paymentMethod.map((t, i) => (
-              <span key={i}>
-                    {t}
-                  </span>
+              <span key={i}>{t}</span>
             ))}
           </li>
           <li>

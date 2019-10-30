@@ -146,7 +146,7 @@ export function getInfo({
 
   // 3pay信息
   const paymentMethod: string[] = [];
-  paymentMethod.push("CREDIT_CARD");
+  // paymentMethod.push("CREDIT_CARD");
   paymentMethod.push(paymentInfo.creditCardInfo);
 
   return {

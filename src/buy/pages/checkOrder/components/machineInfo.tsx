@@ -25,7 +25,7 @@ export default function MachineInfo(props: any) {
           <span>{buyLevel}</span>
         </li>
         <li>
-          <span>Product Id</span>
+          <span>Product ID</span>
           <span>{buyProductCode}</span>
         </li>
       </ul>
