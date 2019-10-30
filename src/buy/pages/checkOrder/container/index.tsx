@@ -37,7 +37,8 @@ export function OrderList(props: any) {
     storeCheckOrderContextDispatch,
     reloadOrderFromCache,
     serverRequestReturn,
-    storeCheckOrderContextValue
+    storeCheckOrderContextValue,
+    serverCancelOrder
   } = totalOrderInfoContext as IStoreCheckOrderContext;
 
   // 获取
@@ -93,12 +94,12 @@ export function OrderList(props: any) {
       const {
         subOrderNo,
         subOrderStatusDisplayName,
-        orderStatusHistories,
         productInfo,
         returnShippoLabelCode,
         refund
       } = order;
       let subOrderStatus = order.subOrderStatus;
+      let orderStatusHistories = order.orderStatusHistories;
       const NUMBER9_RETURN_COMPLETE = "NUMBER9_RETURN_COMPLETE";
       // TODO 超级恶心.
       if (subOrderStatus === "TRANSACTION_FAILED") {
@@ -106,6 +107,20 @@ export function OrderList(props: any) {
         if (returnShippoLabelCode) {
           subOrderStatus = NUMBER9_RETURN_COMPLETE;
         }
+      }
+      // TODO 已经习惯的
+      const deleteStatus = "TO_BE_PLATFORM_RECEIVED";
+      if (subOrderStatus === deleteStatus) {
+        subOrderStatus = "TO_BE_RETURNED";
+      }
+      const findDeleteStatus = orderStatusHistories.findIndex(
+        (item: any) => item.status === deleteStatus
+      );
+      if (findDeleteStatus) {
+        orderStatusHistories = [
+          ...order.orderStatusHistories.slice(0, findDeleteStatus),
+          order.orderStatusHistories.slice(findDeleteStatus)
+        ];
       }
       /*
       TO_BE_SHIPPED(1, "To Be Shipped", "Order Placed"),
@@ -150,7 +165,7 @@ export function OrderList(props: any) {
             {reactNodeConfig.returnButton ? (
               <Button
                 isLoading={isLoading && isLoading.serverRequestReturn}
-                className="button-centered"
+                className="button-centered disabled-status"
                 onClick={serverRequestReturn}
               >
                 Request Return
@@ -159,8 +174,8 @@ export function OrderList(props: any) {
             {reactNodeConfig.cancelButton ? (
               <Button
                 isLoading={isLoading && isLoading.serverRequestReturn}
-                className="button-centered"
-                onClick={serverRequestReturn}
+                className="button-centered disabled-status"
+                onClick={serverCancelOrder}
               >
                 Cancel Order
               </Button>
@@ -187,6 +202,7 @@ export function OrderList(props: any) {
                 </ul>
                 <Button className="button-centered">
                   <RouterLink
+                    target="_blank"
                     to={`/api/buy/shippo/downloadlabel?shippolablecode=${returnShippoLabelCode}`}
                   >
                     Print Label

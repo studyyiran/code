@@ -17,50 +17,19 @@ export default function PhoneInfo(props: any) {
   const {
     buyProductImgPc,
     productDisplayName,
-    bpvDispalyName,
+    buyProductBQV,
     buyPrice,
     bpvDisplayName,
     buyLevel,
     needProtection,
     setNeedProtection,
-    buyProductBQV,
     subOrderInfo
   } = props;
-  function calc() {
-    if (
-      bpvDispalyName &&
-      bpvDispalyName.split(",") &&
-      bpvDispalyName.split(",").length > 2
-    ) {
-      return [
-        {
-          bpName: "Storage",
-          bpSort: "1",
-          bpvName: bpvDispalyName.split(",")[0],
-          tag: ""
-        },
-        {
-          bpName: "Carrier",
-          bpSort: "2",
-          bpvName: bpvDispalyName.split(",")[1],
-          tag: "QUICKFILTERBUY"
-        },
-        {
-          bpName: "Color",
-          bpSort: "3",
-          bpvName: bpvDispalyName.split(",").slice(2).join(" "),
-          tag: "ISCOLOR"
-        }
-      ];
-    } else {
-      return productDisplayName;
-    }
-  }
-  const [lineOne, lineTwo] = getDescArr(calc(), productDisplayName);
+  const [lineOne, lineTwo] = getDescArr(buyProductBQV, productDisplayName);
   const productImg = useGetProductImg(props);
   return (
     <div className="phone-info">
-      <InnerDivImage imgUrl={productImg} />
+      <InnerDivImage imgUrl={productImg} lazyload={false} />
       <ul className="info-list">
         <li className="price-container">
           <h3>{lineOne}</h3>

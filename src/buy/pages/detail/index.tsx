@@ -262,23 +262,21 @@ export default function ProductDetail(props: any) {
             <img src={require("./res/background-check.svg")} />
             <h3>Background Check</h3>
           </header>
-          <p>
-            <ul>
-              {backGroundCheck.map(({ content, title }, index) => {
-                if (content) {
-                  return (
-                    <li className="bg-check">
-                      <label>{title}</label>
-                      <span>{content}</span>
-                      {index > 1 ? <Svg /> : null}
-                    </li>
-                  );
-                } else {
-                  return null;
-                }
-              })}
-            </ul>
-          </p>
+          <ul>
+            {backGroundCheck.map(({ content, title }, index) => {
+              if (content) {
+                return (
+                  <li className="bg-check" key={index}>
+                    <label>{title}</label>
+                    <span>{content}</span>
+                    {index > 1 ? <Svg /> : null}
+                  </li>
+                );
+              } else {
+                return null;
+              }
+            })}
+          </ul>
         </li>
         <li>
           <header>

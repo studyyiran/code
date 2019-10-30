@@ -7,6 +7,7 @@ export default function RouterLink(props: {
   isBuy?: boolean;
   onClick?: any;
   children?: any;
+  target?: any;
 }) {
   const { isBuy, onClick, to, ...other } = props;
   // 必然返回 或者是
