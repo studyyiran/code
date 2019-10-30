@@ -127,7 +127,9 @@ export function OrderList(props: any) {
       });
       let displayStatus = "";
       if (progressInfo && orderStatusHistories && orderStatusHistories.length) {
-        displayStatus = progressInfo.dataList[progressInfo.currentIndex].name;
+        displayStatus = progressInfo.dataList[progressInfo.currentIndex]
+          ? progressInfo.dataList[progressInfo.currentIndex].name
+          : "";
       }
 
       return {
