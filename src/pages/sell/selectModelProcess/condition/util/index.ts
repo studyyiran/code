@@ -200,6 +200,7 @@ export function tranServerQuestionToLocalRender(staticQuestion: any) {
     justPush(newQuestion.subQuestionArr, {
       subQuestionContent: displayName,
       tips: question,
+      // title: name,
       sort,
       type,
       subQuestionId: id,
@@ -224,6 +225,7 @@ export function tranServerQuestionToLocalRender(staticQuestion: any) {
   function insertSubQuestion({
     root,
     subQuestionContent,
+    // title,
     type,
     subQuestionId,
     qualityPropertyValueDtos,
@@ -236,6 +238,7 @@ export function tranServerQuestionToLocalRender(staticQuestion: any) {
       sort,
       id: subQuestionId,
       content: subQuestionContent,
+      // title,
       type: staticMap[type],
       questionDesc: qualityPropertyValueDtos.map((questionOption: any) => {
         // 为了防止会后一个违题目提示文本的bug
@@ -255,6 +258,7 @@ export function tranServerQuestionToLocalRender(staticQuestion: any) {
             subQuesiton.isMoreCondition = [optionId];
             justPush(root, {
               sort: qualityPropertyDtos[0].sort,
+              // title: qualityPropertyDtos[0].name,
               subQuestionContent: qualityPropertyDtos[0].displayName,
               tips: qualityPropertyDtos[0].question,
               type: qualityPropertyDtos[0].type,

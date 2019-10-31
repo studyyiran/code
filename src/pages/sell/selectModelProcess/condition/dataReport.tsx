@@ -8,6 +8,8 @@ import React, {
 import { getServerAnswerFormat } from "./util";
 import { IReducerAction } from "../../../../interface/index.interface";
 import { ISelectModelContext, SelectModelContext } from "../context";
+import { dataReport } from "../../../../common/dataReport";
+import { safeEqual } from "../../../../utils/util";
 export const DataReportConditionContext = createContext({});
 // store name
 export const DataReportCondition = "DataReportCondition";
@@ -49,12 +51,13 @@ function useGetAction(
 ): IDataReportConditionActions {
   const selectModelContext = useContext(SelectModelContext);
   const { selectModelContextValue } = selectModelContext as ISelectModelContext;
-
+  console.log(selectModelContextValue);
   const {
     qualityList: phoneConditionQuestion,
-    phoneConditionStaticAnswer,
     brand,
-    modelInfo
+    modelInfo,
+    productsList,
+    brandList
   } = selectModelContextValue;
   console.log("!!!!!!");
   console.log(phoneConditionQuestion);
@@ -65,30 +68,145 @@ function useGetAction(
   }
   const actions: IDataReportConditionActions = {
     dataReport: function(params: { step: string; phoneConditionAnswer: any }) {
-      const { step, phoneConditionAnswer } = params;
-      console.log(step);
-      if (step === "aboutYourPhone") {
-        // 问题1
-        console.log(brand);
-        console.log(modelInfo);
-      } else {
-        const hehe = step.split("parent");
-        if (hehe && hehe[1]) {
-          const target = hehe[1];
-          console.log(target);
-          console.log(phoneConditionAnswer);
-          console.log(phoneConditionQuestion);
-          const result = getServerAnswerFormat(
+      try {
+        const { step, phoneConditionAnswer } = params;
+        console.log(step);
+        if (step === "aboutYourPhone") {
+          // 问题1
+          let dataReportJson = {
+            step: "1",
+            manufacturer: "",
+            model: ""
+          };
+          // 获取brand名称
+          const targetBrand: any = brandList.find((item: any) =>
+            safeEqual(brand, item.id)
+          );
+          if (targetBrand) {
+            dataReportJson.manufacturer = targetBrand.displayName;
+          }
+          // 获取
+          let { modelId, othersAttr } = modelInfo;
+          othersAttr = Object.keys(othersAttr).map(item => othersAttr[item]);
+          console.log(othersAttr);
+          // 获取机型名称
+          const productInfo: any = productsList.find((item: any) =>
+            safeEqual(item.id, modelId)
+          );
+          if (productInfo) {
+            const { displayName, list } = productInfo;
+            list.forEach((item: any) => {
+              const { displayName, propertyValue } = item;
+              const targetEleValue = propertyValue.find(({ id }: any) => {
+                console.log(targetEleValue);
+                return othersAttr.find((eleValue: any) =>
+                  safeEqual(id, eleValue)
+                );
+              });
+              if (targetEleValue && displayName) {
+                dataReportJson[displayName] = targetEleValue.displayName;
+              }
+            });
+            console.log(productInfo);
+            dataReportJson.model = displayName;
+          }
+          dataReport(dataReportJson);
+        } else {
+          const uselessResult = getServerAnswerFormat(
             phoneConditionQuestion,
             phoneConditionAnswer
           );
-          console.log(result);
+          let resultWithOutUseless = phoneConditionAnswer.map((item1: any) => {
+            return {
+              ...item1,
+              subAnswerArr: item1.subAnswerArr.filter((item2: any) => {
+                return (
+                  item2.answer &&
+                  item2.answer[0] &&
+                  uselessResult.find((item3: any) =>
+                    safeEqual(item2.answer[0].optionId, item3.id)
+                  )
+                );
+              })
+            };
+          });
+          console.log(phoneConditionQuestion);
+          console.log(resultWithOutUseless);
+
+          const finalResultArr = resultWithOutUseless.map(
+            (item1: any, index1: number) => {
+              return {
+                ...item1,
+                subAnswerArr: item1.subAnswerArr.map(
+                  (item2: any, index2: number) => {
+                    return {
+                      ...item2,
+                      // title:
+                      //   phoneConditionQuestion[index1].subQuestionArr[index2]
+                      //     .title,
+                      answer: item2.answer.map((item3: any, index3: number) => {
+                        return {
+                          ...item3,
+                          titleKey: (phoneConditionQuestion[
+                            index1
+                          ].subQuestionArr[index2].questionDesc.find(
+                            (item4: any) =>
+                              safeEqual(item4.optionId, item3.optionId)
+                          ) as any).optionContent
+                        };
+                      })
+                    };
+                  }
+                )
+              };
+            }
+          );
+          console.log(finalResultArr);
+
+          // 先用target对应上关系.
+          if (finalResultArr && step) {
+            const tagAndId = step.split("parent");
+            const targetId = tagAndId[1];
+            let dataReportJson = {
+              step: Number(targetId) + 1
+            };
+            const finalResultAnswer = finalResultArr.find((item: any) =>
+              safeEqual(item.id, step)
+            );
+            const finalResultQuestion = phoneConditionQuestion.find(
+              (item1: any) => safeEqual(item1.id, step)
+            );
+            // 结果是题目映射后的对应.
+            if (finalResultQuestion && finalResultQuestion.subQuestionArr) {
+              finalResultQuestion.subQuestionArr.forEach(
+                (item2: any, index2: number) => {
+                  const title = item2.title.split(" ").join("");
+                  if (finalResultAnswer.subAnswerArr[index2]) {
+                    dataReportJson[title] = finalResultAnswer.subAnswerArr[
+                      index2
+                    ].answer
+                      .map(
+                        (item4: any) => item4.optionContent || item4.titleKey
+                      )
+                      .join(",");
+                  } else {
+                    dataReportJson[title] = "";
+                  }
+                }
+              );
+            }
+            dataReport(dataReportJson);
+          }
         }
+      } catch (e) {
+        console.error(e);
       }
     }
   };
   actions.dataReport = useCallback(actions.dataReport, [
-    phoneConditionQuestion
+    phoneConditionQuestion,
+    productsList,
+    brandList
   ]);
   return actions;
 }

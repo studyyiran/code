@@ -7,7 +7,7 @@ const eventType = {
   stepCompleted: "stepCompleted"
 };
 
-export function dataReport(params: IDataReport) {
+export function dataReport(params: any) {
   if (!params.event) {
     params.event = eventType.stepCompleted;
   }
