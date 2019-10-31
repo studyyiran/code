@@ -293,7 +293,7 @@ export default function ProductDetail(props: any) {
           <div>
             <ul>
               <li className="fixtag">
-                - All Pass <TipsIcon>{TipsAllPass}</TipsIcon>
+                All Pass <TipsIcon>{TipsAllPass}</TipsIcon>
               </li>
               <li>
                 <a
