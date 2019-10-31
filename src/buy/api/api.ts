@@ -17,7 +17,7 @@ axios.interceptors.response.use(response => {
 export const ajax = axios;
 
 // 下面是所有api提取
-const getRootApi = function (urlRoot: string) {
+export const getRootApi = function (urlRoot: string) {
   let apiRoot = 'http://qa-gateway-801477214.us-east-2.elb.amazonaws.com';
   switch (process.env.REACT_APP_SERVER_ENV) {
     case "QA":

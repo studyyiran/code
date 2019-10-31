@@ -26,6 +26,7 @@ import Button from "../../../components/button";
 import RouterLink from "../../../components/routerLink";
 import Svg from "../../../components/svg";
 import { currencyTrans } from "../../../common/utils/util";
+import { getRootApi } from "../../../api/api";
 
 export function OrderList(props: any) {
   const informationKey = "informaion";
@@ -203,7 +204,9 @@ export function OrderList(props: any) {
                 <Button className="button-centered">
                   <RouterLink
                     target="_blank"
-                    to={`/api/buy/shippo/downloadlabel?shippolablecode=${returnShippoLabelCode}`}
+                    to={getRootApi(
+                      `/api/buy/shippo/downloadlabel?shippolablecode=${returnShippoLabelCode}`
+                    )}
                   >
                     Print Label
                   </RouterLink>

@@ -20,7 +20,7 @@ export default function RouterLink(props: {
       href={`${to}`}
       onClick={() => {
         clickUrlHandler();
-        onClick();
+        onClick && onClick();
       }}
       {...other}
     />
