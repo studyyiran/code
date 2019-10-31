@@ -102,7 +102,23 @@ export function OrderList(props: any) {
       let subOrderStatus = order.subOrderStatus;
       let orderStatusHistories = order.orderStatusHistories;
       const NUMBER9_RETURN_COMPLETE = "NUMBER9_RETURN_COMPLETE";
-      // TODO 已经习惯的
+
+      // TODO 已经习惯的1
+      const deleteStatus1 = "TRANSACTION_SUCCEED";
+      // if (subOrderStatus === deleteStatus1) {
+      //   subOrderStatus = "TRANSACTION_SUCCEED";
+      // }
+      const findDeleteStatus1 = orderStatusHistories.findIndex(
+        (item: any) => item.orderStatus === deleteStatus1
+      );
+      if (findDeleteStatus1 !== -1) {
+        orderStatusHistories = [
+          ...order.orderStatusHistories.slice(0, findDeleteStatus1 - 1),
+          ...order.orderStatusHistories.slice(findDeleteStatus1)
+        ];
+      }
+
+      // TODO 已经习惯的2
       const deleteStatus = "TO_BE_PLATFORM_RECEIVED";
       if (subOrderStatus === deleteStatus) {
         subOrderStatus = "TO_BE_RETURNED";
@@ -116,7 +132,7 @@ export function OrderList(props: any) {
           ...order.orderStatusHistories.slice(findDeleteStatus + 1)
         ];
       }
-      // TODO 超级恶心.
+      // TODO 超级恶心3
       if (subOrderStatus === "TRANSACTION_FAILED") {
         // 如果状态7并且xxx
         if (returnShippoLabelCode) {
