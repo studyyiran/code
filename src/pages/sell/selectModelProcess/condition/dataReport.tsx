@@ -67,6 +67,8 @@ function useGetAction(
   const actions: IDataReportConditionActions = {
     dataReport: function(params: { step: string; phoneConditionAnswer: any }) {
       try {
+        // 清空
+        (window as any).phonePlaceOrder = 1;
         const { step, phoneConditionAnswer } = params;
         if (step === "aboutYourPhone") {
           // 问题1
@@ -87,9 +89,11 @@ function useGetAction(
           let { modelId, othersAttr } = modelInfo;
           othersAttr = Object.keys(othersAttr).map(item => othersAttr[item]);
           // 获取机型名称
+          console.log(productsList);
           const productInfo: any = productsList.find((item: any) =>
             safeEqual(item.id, modelId)
           );
+          console.log(productInfo);
           if (productInfo) {
             const { displayName, list } = productInfo;
             list.forEach((item: any) => {
@@ -199,7 +203,8 @@ function useGetAction(
   actions.dataReport = useCallback(actions.dataReport, [
     phoneConditionQuestion,
     productsList,
-    brandList
+    brandList,
+    modelInfo
   ]);
   return actions;
 }
