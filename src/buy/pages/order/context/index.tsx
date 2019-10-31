@@ -180,7 +180,7 @@ function useGetAction(
               item1.productInfo.productPns.map((item: any) => {
                 return {
                   bpSort: item.sort,
-                  bpvName: item.ppnName,
+                  bpvName: item.name,
                   tag: item.tag
                 };
               })
