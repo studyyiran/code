@@ -288,19 +288,24 @@ export default function ProductDetail(props: any) {
         <li>
           <header>
             <img src={require("./res/test.svg")} />
-            <h3>
-              Functional Test - All Pass <TipsIcon>{TipsAllPass}</TipsIcon>
-            </h3>
+            <h3>Functional Test</h3>
           </header>
-          <p>
-            <a
-              target="_blank"
-              className="report-link"
-              href={buyProductHistoryPdf}
-            >
-              View full phone history report
-            </a>
-          </p>
+          <div>
+            <ul>
+              <li className="fixtag">
+                - All Pass <TipsIcon>{TipsAllPass}</TipsIcon>
+              </li>
+              <li>
+                <a
+                  target="_blank"
+                  className="report-link"
+                  href={buyProductHistoryPdf}
+                >
+                  View full phone history report
+                </a>
+              </li>
+            </ul>
+          </div>
         </li>
       </ul>
     );

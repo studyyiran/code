@@ -35,7 +35,7 @@ export default function MachineInfo(props: any) {
         <li>
           <span>Product ID</span>
           <RouterLink to={`/detail/${buyProductId}`} className={"color-blue"}>
-            {buyProductCode}
+            #{buyProductCode}
           </RouterLink>
         </li>
       </ul>
