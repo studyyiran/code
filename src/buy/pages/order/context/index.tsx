@@ -174,6 +174,22 @@ function useGetAction(
           state.orderInfo
         );
         const { shippoToken, payment, paymentAccount } = checkOrderInfo;
+        try {
+          checkOrderInfo.orderList.forEach((item1: any) => {
+            item1.productInfo.buyProductBQV = JSON.stringify(
+              item1.productInfo.productPns.map((item: any) => {
+                return {
+                  bpSort: item.sort,
+                  bpvName: item.ppnName,
+                  tag: item.tag
+                };
+              })
+            );
+          });
+        } catch (e) {
+          console.error(e);
+        }
+        // checkOrderInfo.orderList.productInfo.buyProductBQV = ;
         // 这些回补是临时修复
         // 设置信用卡信息
         dispatch({
