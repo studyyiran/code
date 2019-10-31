@@ -43,12 +43,12 @@ export default function ProgressBar(props: any) {
   //
   let showList = propsData.dataList;
   if (isMobile) {
-    const count = 3;
+    const count = showList.length > 2 ? 3 : showList.length;
     let start;
     if (propsData.currentIndex === 0) {
       start = 0;
     } else if (propsData.currentIndex === propsData.dataList.length - 1) {
-      start = propsData.dataList.length - 3;
+      start = propsData.dataList.length - count;
     } else {
       start = propsData.currentIndex - 1;
     }

@@ -27,6 +27,7 @@ import RouterLink from "../../../components/routerLink";
 import Svg from "../../../components/svg";
 import { currencyTrans } from "../../../common/utils/util";
 import { getRootApi } from "../../../api/api";
+import { locationHref } from "../../../common/utils/routerHistory";
 
 export function OrderList(props: any) {
   const informationKey = "informaion";
@@ -52,7 +53,11 @@ export function OrderList(props: any) {
     // 当没有的时候.从缓存中获取.获取失败应该跳转
     callBackWhenPassAllFunc(
       [() => !checkOrderDetail || !checkOrderDetail.groupOrderNo],
-      reloadOrderFromCache
+      () => {
+        reloadOrderFromCache().catch(() => {
+          locationHref("/check-order");
+        });
+      }
     );
   }, [checkOrderDetail, reloadOrderFromCache]);
 
@@ -258,7 +263,14 @@ export function OrderList(props: any) {
         <CollapsePanelList
           onChange={selectHandler}
           list={list}
-          activeKey={currentSubOrderNo || currentPageKey}
+          activeKey={
+            currentSubOrderNo ||
+            currentPageKey ||
+            (checkOrderDetail &&
+              checkOrderDetail.subOrders &&
+              checkOrderDetail.subOrders[0] &&
+              checkOrderDetail.subOrders[0].subOrderNo)
+          }
         />
       </div>
     </div>

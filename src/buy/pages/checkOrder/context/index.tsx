@@ -99,7 +99,7 @@ export function StoreCheckOrderContextProvider(props: any) {
 // @actions
 export interface IStoreCheckOrderActions {
   getCheckOrderDetail: (data: IOrderParam) => any;
-  reloadOrderFromCache: () => void;
+  reloadOrderFromCache: () => any;
   getTranshipping: () => void;
   updateCheckForOrder: () => void;
   serverRequestReturn: () => void;
@@ -205,10 +205,12 @@ function useGetAction(
       const orderCache = getOrderCache();
       if (orderCache) {
         const { email, orderId } = orderCache;
-        actions.getCheckOrderDetail({
+        return actions.getCheckOrderDetail({
           userEmail: email,
           groupOrderNo: orderId
         });
+      } else {
+        return Promise.reject();
       }
     }),
     updateCheckForOrder: promisify(async function() {
