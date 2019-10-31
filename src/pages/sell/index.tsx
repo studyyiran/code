@@ -21,7 +21,13 @@ import Breadcrumb from "./selectModelProcess/components/breadcrumb/index";
 import { staticRouter } from "pages/sell/selectModelProcess/config/staticRouter";
 import { inject, observer } from "mobx-react";
 import { removeAllSpace } from "pages/sell/util";
-import getSellPath, { getFromSession, isServer, setSession } from "utils/util";
+import getSellPath, {
+  getFromSession,
+  isServer,
+  safeEqual,
+  setSession
+} from "utils/util";
+import { dataReport } from "../../common/dataReport";
 
 let haveinit = false;
 
@@ -151,11 +157,51 @@ export default function Sell(props: any) {
   }
   function goNextPage(currentPage?: any): void {
     const next: any = getNextUrl(currentPage);
-    console.log("get it");
-    console.log(next);
-
+    function getReportData(key: string) {
+      if (!isServer()) {
+        const result = sessionStorage.getItem(key);
+        try {
+          if (result) {
+            return JSON.parse(result);
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      }
+      return null;
+    }
     if (next && next.indexOf("/phone/info") !== -1) {
-      
+      dataReport({ step: 8 });
+    }
+    if (next && next.indexOf("/phone/payment") !== -1) {
+      dataReport({ step: 9 });
+    }
+    if (next && next.indexOf("/phone/shipping") !== -1) {
+      const data = getReportData("preOrder");
+      if (data && data.payment) {
+        dataReport({ step: 10, paymentType: data.payment });
+      }
+    }
+    if (next && next.indexOf("/phone/summary") !== -1) {
+      const data = getReportData("preOrder");
+      const data2 = getReportData("modelContext");
+      if (data && data.expressCarrier && data2) {
+        const { expressOption, needInsurance } = data2;
+        dataReport({
+          step: 11,
+          packaging: safeEqual(
+            3,
+            expressOption ? expressOption.sendDateType : ""
+          )
+            ? "send me a box"
+            : "",
+          shippingOption: data.expressCarrier,
+          shippingInsurance: needInsurance ? "yes" : "no"
+        });
+      }
+    }
+    if (next && next.indexOf("/phone/prepare-ship") !== -1) {
+      dataReport({ step: 12 });
     }
     if (next) {
       props.history.push(removeAllSpace(next));

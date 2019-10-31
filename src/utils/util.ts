@@ -4,7 +4,7 @@ export function requestWrapper(obj: any, all?: boolean) {
     case "DEV":
       // fixUrl = "http://10.180.22.252:9001/api";
       // fixUrl = "https://api-gateway.uptradeit.com/api";
-      fixUrl = "http://demo-gateway-1613913116.us-east-2.elb.amazonaws.com/api";
+      fixUrl = "http://qa-gateway-801477214.us-east-2.elb.amazonaws.com/api";
       break;
     case "UAT":
       fixUrl = "http://demo-gateway-1613913116.us-east-2.elb.amazonaws.com/api";

@@ -7,6 +7,7 @@ import { Collapse } from "antd";
 const { Panel } = Collapse;
 import "./index.less";
 import Svg from "components/svg";
+import { isServer } from "../../../../../../utils/util";
 
 const priceUnit = "$";
 
@@ -16,7 +17,13 @@ export default function OrderInfo() {
   const { selectModelContextValue } = selectModelContext as ISelectModelContext;
   const { priceInfo, needInsurance, expressOption } = selectModelContextValue;
   const { resultList, guaranteedPayout, shippingInsurance } = priceInfo;
-
+  // 数据上报
+  if (!isServer()) {
+    (window as any).netPayout =
+      guaranteedPayout -
+      ((expressOption && expressOption.fee) || 0) -
+      ((needInsurance && shippingInsurance) || 0);
+  }
   function RenderOneProductOrder(props: any) {
     const { productName, bpvIds, inquiryKey, subTotal, children } = props;
     return (

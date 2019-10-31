@@ -1,7 +1,3 @@
-interface IDataReport {
-  event?: string;
-  step: string;
-}
 
 const eventType = {
   stepCompleted: "stepCompleted"

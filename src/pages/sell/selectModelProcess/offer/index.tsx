@@ -82,8 +82,8 @@ export default function Brand(props: any) {
               <div className="phone-model">
                 <span>{productName}</span>
                 <span>
-                  {bpvIds.map((attr: any) => {
-                    return <span key={attr}>{` ${attr.name} `}</span>;
+                  {bpvIds.map((attr: any, index: number) => {
+                    return <span key={index}>{` ${attr.name} `}</span>;
                   })}
                 </span>
               </div>

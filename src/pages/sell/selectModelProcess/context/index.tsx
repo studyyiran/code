@@ -26,6 +26,7 @@ import {
 } from "../condition/util";
 import { setOrderCache } from "containers/order/util";
 import { getFromSession, setSession } from "utils/util";
+import { dataReport } from "../../../../common/dataReport";
 
 let haveLoad = false;
 const sessionKey = "modelContext";
@@ -498,6 +499,42 @@ function useGetAction(
             userInfo,
             subOrders
           } = res;
+          // 数据上报.
+          try {
+            dataReport({
+              event: "transaction",
+              transactionId: groupOrderNo,
+              transactionAffiliation: "Up Trade",
+              transactionTotal: (window as any).netPayout,
+              transactionProducts: [
+                {
+                  sku: subOrders
+                    .map((item: any) => {
+                      return item.inquiryInfo.submitted.productId;
+                    })
+                    .join(","),
+                  name: subOrders
+                    .map((item: any) => {
+                      return item.inquiryInfo.submitted.productName;
+                    })
+                    .join(","),
+                  price: subOrders
+                    .map((item: any) => {
+                      return item.inquiryInfo.submitted.amount;
+                    })
+                    .join(","),
+                  brand: subOrders
+                    .map((item: any) => {
+                      return item.inquiryInfo.submitted.brandName;
+                    })
+                    .join(","),
+                  quantity: subOrders.length
+                }
+              ]
+            });
+          } catch (e) {
+            console.error(e);
+          }
           const lableCode = subOrders[0].shippingInfo.sendInfo[0].lableCode;
           const { userEmail } = userInfo;
           if (groupOrderNo && userEmail) {
