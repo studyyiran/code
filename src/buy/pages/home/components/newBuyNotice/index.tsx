@@ -26,7 +26,7 @@ export function NewBuyNotice(props: any): any {
           : require("../../img/certified.png");
         return d;
       });
-      if (dataList.length <= 0) {
+      if (dataList.length < 12) {
         setChooseData({
           customer: "",
           productName: "",
@@ -45,12 +45,12 @@ export function NewBuyNotice(props: any): any {
     getTopData();
 
     window.setInterval(() => {
-      if (dataList && dataList.length > 0) {
+      if (dataList && dataList.length >= 12) {
         dataIndex++;
-        setChooseData(dataList[dataIndex]);
         if (dataIndex >= dataList.length) {
           dataIndex = 0;
         }
+        setChooseData(dataList[dataIndex]);
       } else {
         setChooseData({
           customer: "",
