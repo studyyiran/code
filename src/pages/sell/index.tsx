@@ -21,11 +21,7 @@ import Breadcrumb from "./selectModelProcess/components/breadcrumb/index";
 import { staticRouter } from "pages/sell/selectModelProcess/config/staticRouter";
 import { inject, observer } from "mobx-react";
 import { removeAllSpace } from "pages/sell/util";
-import getSellPath, {
-  getFromSession,
-  isServer,
-  setSession
-} from "utils/util";
+import getSellPath, { getFromSession, isServer, setSession } from "utils/util";
 
 let haveinit = false;
 
@@ -154,7 +150,13 @@ export default function Sell(props: any) {
     return next as any;
   }
   function goNextPage(currentPage?: any): void {
-    const next = getNextUrl(currentPage);
+    const next: any = getNextUrl(currentPage);
+    console.log("get it");
+    console.log(next);
+
+    if (next && next.indexOf("/phone/info") !== -1) {
+      
+    }
     if (next) {
       props.history.push(removeAllSpace(next));
       window.scrollTo(0, 0);

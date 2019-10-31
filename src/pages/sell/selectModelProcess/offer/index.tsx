@@ -40,7 +40,9 @@ export default function Brand(props: any) {
   }
   // 添加新机型
   function addNewHandler() {
+    selectModelContextDispatch({ type: "brandHahaAdd" });
     selectModelContextDispatch({ type: "changeModelCache", value: "reset" });
+    // 更新这个brandHaha
     props.history.push(props.route.path);
   }
   function renderList() {

@@ -54,6 +54,7 @@ function useGetAction(
   const {
     qualityList: phoneConditionQuestion,
     brand,
+    phonePlaceOrder,
     modelInfo,
     productsList,
     brandList
@@ -71,6 +72,7 @@ function useGetAction(
           // 问题1
           let dataReportJson = {
             step: "1",
+            placeOrder: phonePlaceOrder,
             manufacturer: "",
             model: ""
           };
@@ -158,6 +160,7 @@ function useGetAction(
             const tagAndId = step.split("parent");
             const targetId = tagAndId[1];
             let dataReportJson = {
+              placeOrder: phonePlaceOrder,
               step: Number(targetId) + 1
             };
             const finalResultAnswer = finalResultArr.find((item: any) =>

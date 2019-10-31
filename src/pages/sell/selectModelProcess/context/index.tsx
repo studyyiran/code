@@ -126,6 +126,14 @@ function reducer(state: IContextState, action: IReducerAction) {
       }
       break;
     }
+    case "brandHahaAdd": {
+      if (window && (window as any).phonePlaceOrder) {
+        (window as any).phonePlaceOrder = (window as any).phonePlaceOrder + 1;
+      } else {
+        (window as any).phonePlaceOrder = 2;
+      }
+      break;
+    }
     // reset
     case "setModelInfo": {
       // 如果变更了sku
@@ -170,34 +178,34 @@ function reducer(state: IContextState, action: IReducerAction) {
       }
       break;
     }
-    case "updateUserProductListSetInquiryKey":
-      {
-        const newProduct = {
-          brand: newState.brand,
-          modelInfo: newState.modelInfo,
-          inquiryKey: value,
-          phoneConditionStaticAnswer: newState.phoneConditionStaticAnswer
-        };
-        const productTargetIndex = newState.userProductList.findIndex(
-          userProduct => {
-            // 首先判定，当前的状态
-            return userProduct.inquiryKey === newState.inquiryKey;
-          }
-        );
-        // 强行变更数组。深比较
-        newState.userProductList = newState.userProductList.concat([]);
-        if (productTargetIndex !== -1) {
-          // 更新
-          newState.userProductList[productTargetIndex] = newProduct;
-        } else {
-          newState.userProductList.push(newProduct);
+    case "updateUserProductListSetInquiryKey": {
+      const newProduct = {
+        brand: newState.brand,
+        phonePlaceOrder: newState.phonePlaceOrder,
+        modelInfo: newState.modelInfo,
+        inquiryKey: value,
+        phoneConditionStaticAnswer: newState.phoneConditionStaticAnswer
+      };
+      const productTargetIndex = newState.userProductList.findIndex(
+        userProduct => {
+          // 首先判定，当前的状态
+          return userProduct.inquiryKey === newState.inquiryKey;
         }
-        // 更新当前选中的key
-        newState.inquiryKey = value;
-        newState = { ...newState };
-        break;
+      );
+      // 强行变更数组。深比较
+      newState.userProductList = newState.userProductList.concat([]);
+      if (productTargetIndex !== -1) {
+        // 更新
+        newState.userProductList[productTargetIndex] = newProduct;
+      } else {
+        newState.userProductList.push(newProduct);
       }
-      // reset
+      // 更新当前选中的key
+      newState.inquiryKey = value;
+      newState = { ...newState };
+      break;
+    }
+    // reset
     case "resetAllUserInputData": {
       (newState as any) = {
         ...newState,
@@ -229,6 +237,7 @@ function reducer(state: IContextState, action: IReducerAction) {
           },
           // categoryId: "",// 不需要
           brand: "",
+          phonePlaceOrder: (window as any).phonePlaceOrder || 1,
           inquiryKey: "",
           phoneConditionStaticAnswer: []
         });
@@ -241,10 +250,16 @@ function reducer(state: IContextState, action: IReducerAction) {
       newState = { ...newState };
   }
   // justtest 避免覆盖
-  if (state.brand || type === "changeModelCache" || type === "resetAllUserInputData" || (newState.userProductList && newState.userProductList.length)) {
+  if (
+    state.brand ||
+    type === "changeModelCache" ||
+    type === "resetAllUserInputData" ||
+    (newState.userProductList && newState.userProductList.length)
+  ) {
     saveToCache(sessionKey, newState, [
       "modelInfo",
       "brand",
+      "phonePlaceOrder",
       "categoryId",
       "userProductList",
       "needInsurance",
@@ -599,6 +614,7 @@ interface IContextState {
   modelInfo: IModelInfo; // 1用户数据
   categoryId: string; // 1用户数据（但是不需要清空）
   brand: string; // 1用户数据
+  phonePlaceOrder: number; // 机子添加顺序指纹
   phoneConditionStaticAnswer: any[]; // 用户数据
   inquiryKey: string; // 1用户数据
   userProductList: any[]; // 用户数据2
@@ -632,6 +648,7 @@ export function ModelContextProvider(props: any) {
     categoryId: "",
     inquiryKey: "",
     brand: "",
+    phonePlaceOrder: 1,
     expressOption: null,
     needInsurance: false,
     lastestOrder: [],
