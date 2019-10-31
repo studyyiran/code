@@ -7,6 +7,7 @@ import routes from "./routers";
 import store from "./store";
 import { ModelContextProvider } from "./pages/sell/selectModelProcess/context";
 import { TotalOrderInfoProvider } from "./containers/order/container/context";
+import { DataReportConditionContextProvider } from "./pages/sell/selectModelProcess/condition/dataReport";
 const setIsMobile = (fn?: () => void) => {
   const clientWidth = document.body.clientWidth;
   const confuseWidth = 0;
@@ -55,9 +56,11 @@ export default () => {
       <TotalOrderInfoProvider>
         <ModelContextProvider>
           <BrowserRouter>
-            <Layout>
-              <Switch>{renderRoutes(routes)}</Switch>
-            </Layout>
+            <DataReportConditionContextProvider>
+              <Layout>
+                <Switch>{renderRoutes(routes)}</Switch>
+              </Layout>
+            </DataReportConditionContextProvider>
           </BrowserRouter>
         </ModelContextProvider>
       </TotalOrderInfoProvider>

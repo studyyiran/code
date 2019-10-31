@@ -1,4 +1,7 @@
-import { conditionPageReport } from "./dataReport";
+import {
+  DataReportConditionContext,
+  IDataReportConditionContext
+} from "./dataReport";
 
 const firstQuestionKey = "aboutYourPhone";
 const lastQuestionKey = "allFinish";
@@ -102,6 +105,11 @@ interface IConditionForm {
 }
 
 export function ConditionForm(props: IConditionForm) {
+  const dataReportConditionContext = useContext(DataReportConditionContext);
+  const {
+    dataReport
+  } = dataReportConditionContext as IDataReportConditionContext;
+
   const selectModelContext = useContext(SelectModelContext);
   const {
     getInquiryByIds,
@@ -212,9 +220,8 @@ export function ConditionForm(props: IConditionForm) {
     if (getStatus(questionId) === "done" && !(editKey && editKey.length)) {
       dispatch({ type: "setEditKey", value: questionId });
     } else if (getStatus(questionId) === "edit" && isSave) {
-      conditionPageReport({
-        step: editKey ? editKey[0] : "",
-        phoneConditionQuestion,
+      dataReport({
+        step: Array.isArray(editKey) ? editKey[0] : editKey,
         phoneConditionAnswer
       });
       dispatch({ type: "setEditKey", value: [] });
@@ -226,9 +233,8 @@ export function ConditionForm(props: IConditionForm) {
     const findCurrent = questionProcess.findIndex(
       (key: string) => key === maxActiveKey
     );
-    conditionPageReport({
+    dataReport({
       step: maxActiveKey,
-      phoneConditionQuestion,
       phoneConditionAnswer
     });
     if (findCurrent !== -1) {

@@ -1,6 +1,13 @@
-import React, { createContext, useReducer, useCallback, useRef } from "react";
+import React, {
+  createContext,
+  useReducer,
+  useCallback,
+  useRef,
+  useContext
+} from "react";
 import { getServerAnswerFormat } from "./util";
 import { IReducerAction } from "../../../../interface/index.interface";
+import { ISelectModelContext, SelectModelContext } from "../context";
 export const DataReportConditionContext = createContext({});
 // store name
 export const DataReportCondition = "DataReportCondition";
@@ -40,29 +47,49 @@ function useGetAction(
   state: IContextState,
   dispatch: (action: IReducerAction) => void
 ): IDataReportConditionActions {
+  const selectModelContext = useContext(SelectModelContext);
+  const { selectModelContextValue } = selectModelContext as ISelectModelContext;
+
+  const {
+    qualityList: phoneConditionQuestion,
+    phoneConditionStaticAnswer,
+    brand,
+    modelInfo
+  } = selectModelContextValue;
+  console.log("!!!!!!");
+  console.log(phoneConditionQuestion);
   // 新增promise ref
   const promiseStatus: any = useRef();
   if (!promiseStatus.current) {
     promiseStatus.current = {};
   }
   const actions: IDataReportConditionActions = {
-    dataReport: function(params: {
-      step: string;
-      phoneConditionQuestion: any;
-      phoneConditionAnswer: any;
-    }) {
-      const { step, phoneConditionQuestion, phoneConditionAnswer } = params;
-      console.log(params.step);
-      console.log(params.phoneConditionQuestion);
-      console.log(params.phoneConditionAnswer);
-      const result = getServerAnswerFormat(
-        phoneConditionQuestion,
-        phoneConditionAnswer
-      );
-      console.log(result);
+    dataReport: function(params: { step: string; phoneConditionAnswer: any }) {
+      const { step, phoneConditionAnswer } = params;
+      console.log(step);
+      if (step === "aboutYourPhone") {
+        // 问题1
+        console.log(brand);
+        console.log(modelInfo);
+      } else {
+        const hehe = step.split("parent");
+        if (hehe && hehe[1]) {
+          const target = hehe[1];
+          console.log(target);
+          console.log(phoneConditionAnswer);
+          console.log(phoneConditionQuestion);
+          const result = getServerAnswerFormat(
+            phoneConditionQuestion,
+            phoneConditionAnswer
+          );
+          console.log(result);
+        }
+      }
     }
   };
-  actions.dataReport = useCallback(actions.dataReport, []);
+  actions.dataReport = useCallback(actions.dataReport, [
+    phoneConditionQuestion
+  ]);
   return actions;
 }
 
