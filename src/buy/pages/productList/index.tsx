@@ -15,6 +15,7 @@ import Modal from "../../components/modal";
 import AdLine from "./components/adLine";
 import LoadingMask from "./components/loading";
 import { productListSsrRule } from "./ssr";
+import { callBackWhenPassAllFunc } from "../detail/context/test";
 
 export default function ProductList(props: any) {
   const productListContext = useContext(ProductListContext);
@@ -24,14 +25,32 @@ export default function ProductList(props: any) {
   const {
     productListContextValue,
     getStaticFilterList,
-    useHehe
+    useHehe,
+    getManufactureList,
   } = productListContext as IProductListContext;
-  const { productList, pendingStatus } = productListContextValue;
+  const {
+    productList,
+    pendingStatus,
+    manufactureList,
+    staticFilterList
+  } = productListContextValue;
   useHehe(productListSsrRule);
-  // 进入界面.请求静态属性filterList
+
   useEffect(() => {
-    getStaticFilterList();
+    // 在当前页面 没有值
+    callBackWhenPassAllFunc(
+      [() => !staticFilterList || !staticFilterList.length],
+      getStaticFilterList
+    );
   }, []);
+
+  useEffect(() => {
+    // 在当前页面 没有值
+    callBackWhenPassAllFunc(
+      [() => !manufactureList || !manufactureList.length],
+      getManufactureList
+    );
+  }, [getManufactureList]);
 
   function renderList() {
     if (productList && productList.length) {
@@ -151,8 +170,7 @@ function RenderFooter() {
           className="load-more-button tips-button"
           onClick={() => {
             productListContextDispatch({
-              type: productListReducerActionTypes.setPageNumber,
-              value: 1
+              type: productListReducerActionTypes.setPageNumber
             });
           }}
         >

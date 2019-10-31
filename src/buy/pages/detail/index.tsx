@@ -9,7 +9,10 @@ import TipsIcon from "../../components/tipsIcon";
 import getSellPath, {
   currencyTrans,
   getProductListPath,
-  staticContentConfig
+  isServer,
+  safeEqual,
+  staticContentConfig,
+  urlRmSpaceAndToLower
 } from "../../common/utils/util";
 import { RenderByCondition } from "../../components/RenderByCondition";
 import CommonCollapse from "../../components/commonCollapse";
@@ -35,6 +38,12 @@ import {
   IProductListContext,
   ProductListContext
 } from "../productList/context";
+import {
+  callBackWhenPassAllFunc,
+  useIsCurrentPage,
+  useWhenUrlChange
+} from "./context/test";
+import Button from "../../components/button";
 
 function Swiper(props: any) {
   const { buyProductImgPc, buyProductImgM, buyProductVideo } = props;
@@ -91,24 +100,26 @@ function Swiper(props: any) {
               >
                 {dom}
               </div>
-              <ModalGateway>
-                {showImageModal ? (
-                  <Modal
-                    onClose={() => {
-                      setShowImgModal(false);
-                    }}
-                  >
-                    <TestCarousel
-                      currentIndex={Number(currentImageIndex)}
-                      views={buyProductImgPc.map((item: any) => ({
-                        src: item
-                      }))}
+              {isServer() ? null : (
+                <ModalGateway>
+                  {showImageModal ? (
+                    <Modal
+                      onClose={() => {
+                        setShowImgModal(false);
+                      }}
                     >
-                      {dom}
-                    </TestCarousel>
-                  </Modal>
-                ) : null}
-              </ModalGateway>
+                      <TestCarousel
+                        currentIndex={Number(currentImageIndex)}
+                        views={buyProductImgPc.map((item: any) => ({
+                          src: item
+                        }))}
+                      >
+                        {dom}
+                      </TestCarousel>
+                    </Modal>
+                  ) : null}
+                </ModalGateway>
+              )}
             </div>
           );
         })()}
@@ -146,29 +157,45 @@ export default function ProductDetail(props: any) {
     skuPrice,
     buyProductCode,
     bpvDisplayName,
+    buyProductId,
     buyProductImgPc,
     buyProductImgM,
     buyProductVideo,
     productDescription,
     buyProductHistoryPdf,
+    buyProductStatus,
     buyProductBQV
   } = productDetail;
+  // 依赖 采用基于依赖的写法,这行代码写在哪里就一点都不重要了.因为页面和刷新只不过是一种依赖条件而已.
+  const id = useWhenUrlChange("productId");
+  const isPage = useIsCurrentPage("/detail");
+
   useEffect(() => {
-    if (
-      props &&
-      props.match &&
-      props.match.params &&
-      props.match.params.productId
-    ) {
-      setProductId(props.match.params.productId);
-    }
-  }, [props.match]);
+    // 1.id 有值
+    // 2.正确的页面
+    callBackWhenPassAllFunc([() => id, () => isPage], () => {
+      if (true) {
+        // 调用常规的接口
+        setProductId(id);
+      }
+    });
+  }, [id, isPage, setProductId]);
+
+  useEffect(() => {
+    return () => {
+      // 离开的时候清空
+      setProductId(null);
+    };
+  }, [setProductId]);
 
   function viewAllClickHandler() {
-    setSearchInfo({
-      productId: productDetail.productId,
-      productKey: productDisplayName
-    });
+    window.location.href = urlRmSpaceAndToLower(
+      getProductListPath() +
+        "/" +
+        productDetail.brandDisplayName +
+        "/" +
+        productDisplayName
+    );
   }
 
   function renderHeaderPart() {
@@ -210,7 +237,10 @@ export default function ProductDetail(props: any) {
                     <span>{currencyTrans(skuPrice)}</span>
                   </div>
                 </div>
-                <StartBuyButton onClick={() => setShowModal(true)} />
+                <StartBuyButton
+                  onClick={() => setShowModal(true)}
+                  buyProductStatus={buyProductStatus}
+                />
               </div>
               <CheckBoxProtection
                 needProtectionState={[needProtection, setNeedProtection]}
@@ -237,12 +267,12 @@ export default function ProductDetail(props: any) {
             <img src={require("./res/background-check.svg")} />
             <h3>Background Check</h3>
           </header>
-          <p>
+          <div>
             <ul>
               {backGroundCheck.map(({ content, title }, index) => {
                 if (content) {
                   return (
-                    <li className="bg-check">
+                    <li className="bg-check" key={index}>
                       <label>{title}</label>
                       <span>{content}</span>
                       {index > 1 ? <Svg /> : null}
@@ -253,7 +283,7 @@ export default function ProductDetail(props: any) {
                 }
               })}
             </ul>
-          </p>
+          </div>
         </li>
         <li>
           <header>
@@ -276,7 +306,7 @@ export default function ProductDetail(props: any) {
     );
   }
   const productImg = useGetProductImg(productDetail);
-  if (buyProductRemark) {
+  if (buyProductId) {
     return (
       <div className="product-detail-page">
         <Swiper
@@ -320,7 +350,10 @@ export default function ProductDetail(props: any) {
                   <CheckBoxProtection
                     needProtectionState={[needProtection, setNeedProtection]}
                   />
-                  <StartBuyButton onClick={() => setShowModal(true)} />
+                  <StartBuyButton
+                    onClick={() => setShowModal(true)}
+                    buyProductStatus={buyProductStatus}
+                  />
                 </div>
               </Affix>
             }
@@ -335,11 +368,11 @@ export default function ProductDetail(props: any) {
           <section className="similar">
             <header>
               <h2>Similar Phones</h2>
-              <RouterLink to={getProductListPath()}>
+              <a>
                 <span className={"view-all-text"} onClick={viewAllClickHandler}>
                   VIEW ALL
                 </span>
-              </RouterLink>
+              </a>
             </header>
             <RenderByCondition
               ComponentMb={
@@ -427,11 +460,11 @@ export default function ProductDetail(props: any) {
 }
 
 function StartBuyButton(props: any) {
-  const { onClick } = props;
+  const { onClick, buyProductStatus } = props;
   return (
-    <button className="common-button" onClick={onClick}>
+    <Button disabled={buyProductStatus === "INTRANSACTION"} onClick={onClick}>
       Start Your Purchase
-    </button>
+    </Button>
   );
 }
 

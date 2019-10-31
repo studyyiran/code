@@ -1,7 +1,7 @@
 import { createBrowserHistory, createMemoryHistory } from "history";
 import { isServer } from "./util";
 import { routerConfig } from "../../share/routerConfig";
-import { matchPath } from "react-router";
+import { matchPath } from "react-router-dom";
 
 export const routerHistory = isServer()
   ? createMemoryHistory()

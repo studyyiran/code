@@ -7,18 +7,20 @@ export default function RouterLink(props: {
   isBuy?: boolean;
   onClick?: any;
   children?: any;
+  target?: any;
+  className?: any;
 }) {
   const { isBuy, onClick, to, ...other } = props;
   // 必然返回 或者是
   if (!isServer() && (isBuy || checkIsBuyUrl(to))) {
-    return <Link onClick={onClick} {...props} />;
+    return <Link onClick={onClick} {...other} to={to} />;
   }
   return (
     <a
       href={`${to}`}
       onClick={() => {
         clickUrlHandler();
-        onClick();
+        onClick && onClick();
       }}
       {...other}
     />

@@ -1,3 +1,8 @@
+import {
+  DataReportConditionContext,
+  IDataReportConditionContext
+} from "./dataReport";
+
 const firstQuestionKey = "aboutYourPhone";
 const lastQuestionKey = "allFinish";
 import React, { useReducer, useState, useEffect, useContext } from "react";
@@ -14,6 +19,7 @@ import {
   serverAnswerToRenderAnswer
 } from "./util";
 import { ISelectModelContext, SelectModelContext } from "../context";
+import { useReducerLog } from "../../../../common/useHook";
 
 /*
 default 和 active似乎 遵从active
@@ -99,6 +105,11 @@ interface IConditionForm {
 }
 
 export function ConditionForm(props: IConditionForm) {
+  const dataReportConditionContext = useContext(DataReportConditionContext);
+  const {
+    dataReport
+  } = dataReportConditionContext as IDataReportConditionContext;
+
   const selectModelContext = useContext(SelectModelContext);
   const {
     getInquiryByIds,
@@ -209,6 +220,10 @@ export function ConditionForm(props: IConditionForm) {
     if (getStatus(questionId) === "done" && !(editKey && editKey.length)) {
       dispatch({ type: "setEditKey", value: questionId });
     } else if (getStatus(questionId) === "edit" && isSave) {
+      dataReport({
+        step: Array.isArray(editKey) ? editKey[0] : editKey,
+        phoneConditionAnswer
+      });
       dispatch({ type: "setEditKey", value: [] });
     }
   }
@@ -218,6 +233,10 @@ export function ConditionForm(props: IConditionForm) {
     const findCurrent = questionProcess.findIndex(
       (key: string) => key === maxActiveKey
     );
+    dataReport({
+      step: maxActiveKey,
+      phoneConditionAnswer
+    });
     if (findCurrent !== -1) {
       if (findCurrent < questionProcess.length - 1) {
         setMaxActiveKey(questionProcess[findCurrent + 1]);

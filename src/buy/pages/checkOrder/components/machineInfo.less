@@ -1,0 +1,43 @@
+@import (reference) "~buy/common/styles/index.less";
+
+@world: {
+  .comp-order-machineInfo {
+    .color-blue {
+      color: @color-blue-liner-use;
+      text-decoration: underline;
+    }
+    ul.information-list {
+      border-bottom: 1 * @px solid @color-border;
+      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      > *:first-child {
+        grid-column-start: span 3;
+      }
+    }
+    p.total {
+      text-align: right;
+      padding-top: 20 * @px;
+      & > span {
+        &:first-child {
+          color: #848484;
+          margin-right: 55 * @px;
+        }
+        &:last-child {
+          .font(16 * @f, 500, #000000);
+        }
+      }
+    }
+  }
+  #ismobile {
+    .comp-order-machineInfo {
+      ul.information-list {
+        grid-template-columns: 1fr;
+        > *:first-child {
+          grid-column-start: span 1;
+        }
+      }
+    }
+  }
+};
+.hello(@world);

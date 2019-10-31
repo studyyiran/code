@@ -64,6 +64,17 @@ export function revisedPriceReject<T>(params: any) {
   return requestGetResponse(Request<T>(requestWrapper(opts)));
 }
 
+
+export function buyCheckOrder<T>(postData: any) {
+  const opts: IOpts = {
+    method: "POST",
+    url: `/buy/order/checkfororder`,
+    params: postData,
+    loading: false
+  };
+  return requestGetResponse(Request<T>(requestWrapper(opts)));
+}
+
 /*________________________________________________________*/
 
 // 采用一次性token获取订单详情

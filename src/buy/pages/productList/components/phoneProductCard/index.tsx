@@ -34,7 +34,8 @@ export default function PhoneProductCard(props: any) {
   } = props;
   const imgUrl = require("buy/common/static/pic.png");
   const [lineOne, lineTwo] = getDescArr(buyProductBQV, buyProductName);
-  const productImg = useGetProductImg(props);
+  // const productImg = useGetProductImg(props);
+  const productImg = props ? props.buyProductImgM : ""
   return (
     <section
       data-disabled={isSoldOut(buyProductStatus) ? "true" : "false"}

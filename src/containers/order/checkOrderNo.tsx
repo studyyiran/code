@@ -9,7 +9,7 @@ import {
 import { setOrderCache } from "containers/order/util";
 import "../../containers/commonCss/contact.less";
 import { getQueryString } from "utils";
-
+import { buyCheckOrder } from "./api/order.api";
 const nextUrl = "/order";
 
 export default function CheckOrderNoContainer(props: any) {
@@ -136,18 +136,27 @@ class CheckOrderNo extends React.Component<any, any> {
   private postEmail = async (email: any, orderId: any) => {
     // 检测orderId的新老
     // HS是新订单
-    if (orderId.indexOf("HS") === -1) {
+    if (orderId.indexOf("HS") === -1 && orderId.indexOf("XS") === -1) {
       // 那么就是老订单
       let linkUrl =
         process.env.REACT_APP_SERVER_ENV === "PUB"
           ? `https://classic.uptradeit.com/`
-          : `http://uptrade-www-staging.aihuishou.com/`;
+          : `https://classic.uptradeit.com/`;
       linkUrl += `check-order?email=${email}&orderId=${orderId}`;
       window.location.href = linkUrl;
       return;
     }
     try {
-      const b = await this.props.checkForOrder(email, orderId);
+      let b;
+      // 销售侧订单
+      if (orderId.indexOf("XS") !== -1) {
+        b = await buyCheckOrder({
+          groupOrderNo: orderId,
+          userEmail: email
+        });
+      } else {
+        b = await this.props.checkForOrder(email, orderId);
+      }
       if (b.groupOrderNo) {
         // 应该不能单独取消一个子订单？这个应该放在内部去判断。
         // 根据操作记录判断CRM取消订单
@@ -155,7 +164,13 @@ class CheckOrderNo extends React.Component<any, any> {
           email,
           orderId
         });
-        this.props.history.push(nextUrl);
+        // 如果是销售侧的订单
+        if (orderId.indexOf("XS") !== -1) {
+          const checkOrderBuyUrl = "/buy/checkorder/order";
+          window.location.href = checkOrderBuyUrl;
+        } else {
+          this.props.history.push(nextUrl);
+        }
       } else {
         this.setState({
           formError: "The email address does not match the order number"

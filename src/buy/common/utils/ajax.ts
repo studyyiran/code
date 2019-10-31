@@ -69,6 +69,13 @@ ajax.delete = function(url, data) {
 
 ajax.get = function(url, data) {
   console.log("get ajax: ", transUrl(url), JSON.stringify(data));
+  if (data) {
+    let tag = "?";
+    Object.keys(data).map(key => {
+      url += `${tag}${key}=${data[key]}`;
+      tag = "&";
+    });
+  }
   return ajax.fetch({
     url: transUrl(url),
     method: "GET",

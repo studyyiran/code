@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 // import MobileHeader from './mobile/header';
 import Header from './header';
 @observer
-export default class HeaderHoc extends React.Component<{ router: any }> {
+export default class HeaderHoc extends React.Component {
   public render() {
     return (
       <>

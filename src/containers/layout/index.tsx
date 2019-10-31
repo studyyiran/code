@@ -8,6 +8,7 @@ import FooterHoc from "./footerHoc";
 import commonStore from "store/common";
 import Raven from "raven-js";
 import { useContext, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import {
   ISelectModelContext,
   SelectModelContext
@@ -21,24 +22,19 @@ export default function LayoutIndexWrapper(props: any) {
   } = selectModelContext as ISelectModelContext;
   useEffect(() => {
     // TODO
-    if (window.location.href.indexOf('#') !== -1) {
-      window.location.replace('/notfound')
+    if (window.location.href.indexOf("#") !== -1) {
+      window.location.replace("/notfound");
     }
   });
   useEffect(() => {
     const CategoryId = "1";
     selectModelContextDispatch({ type: "setCategoryId", value: CategoryId });
   }, []);
-  return <LayoutIndex {...props} />;
+  let routerHistory = useHistory();
+  return <LayoutIndex {...props} routerHistory={routerHistory} />;
 }
 
-class LayoutIndex extends React.Component {
-  // 通过context 拿到 router 对象
-  public static contextTypes = {
-    router: PropTypes.shape({
-      history: PropTypes.object.isRequired
-    }).isRequired
-  };
+class LayoutIndex extends React.Component<any, {}> {
   // public readonly state = {
   //   showMobileFooter: true
   // }
@@ -54,14 +50,14 @@ class LayoutIndex extends React.Component {
     // }
 
     // message.loading(ECommonText.LOADING, 1);
-    window["__history__"] = this.context.router.history;
+    window["__history__"] = this.props.routerHistory;
     // 获取title 配置 以及拿到所有的title key
     const titles = config.TITLE_CONFIG;
     const titlesKey = Object.keys(titles);
     // 初始化先匹配一次
     this.onMappingTitles(titlesKey, titles);
     // listen 路由改变，重新匹配一次
-    this.context.router.history.listen(() => {
+    this.props.routerHistory.listen(() => {
       // message.loading(ECommonText.LOADING, 1);
       this.onMappingTitles(titlesKey, titles);
       if (commonStore.isMobile) {
@@ -69,10 +65,6 @@ class LayoutIndex extends React.Component {
           window.scrollTo(0, 0);
         }, 0);
       }
-
-      // if (!sessionStorage.getItem('invitationCode') && location.pathname !== '/invitationCode') {
-      //   this.context.router.history.push('/invitationCode')
-      // }
     });
   }
 
@@ -85,13 +77,13 @@ class LayoutIndex extends React.Component {
   public onMappingTitles = (titlesKey: string[], titles: object) => {
     // 得到所有和当前路由匹配的数组
     const arr = titlesKey.filter(v =>
-      new RegExp(v).test(this.context.router.history.location.pathname)
+      new RegExp(v).test(this.props.routerHistory.location.pathname)
     );
     // 设置title
     const currentConfig = titles[arr[arr.length - 1]];
     // TODO这个地方需要关注一下
     if (!isServer()) {
-      if (window.location.href.indexOf('sell-phone') === -1) {
+      if (window.location.href.indexOf("sell-phone") === -1) {
         document.title = currentConfig ? currentConfig.title : "";
       }
     }
@@ -106,9 +98,9 @@ class LayoutIndex extends React.Component {
   public render() {
     return (
       <div className="layout-container">
-        <HeaderHoc router={this.context.router} />
+        <HeaderHoc />
         <main>{this.props.children}</main>
-        <FooterHoc router={this.context.router} />
+        <FooterHoc />
       </div>
     );
   }

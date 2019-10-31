@@ -15,9 +15,12 @@ import {
 } from "buy/common/utils/util";
 import { IStaticFilterItem, filterListConfig } from "./staticData";
 import { useGetOriginData } from "../../../common/useHook/useGetOriginData";
-import { reducerLog } from "../../../common/hoc";
 import useReducerMiddleware from "../../../common/useHook/useReducerMiddleware";
 import { locationHref } from "../../../common/utils/routerHistory";
+import {
+  callBackWhenPassAllFunc,
+  useIsCurrentPage
+} from "../../detail/context/test";
 
 export const ATTROF = "attrOf";
 export const ProductListContext = createContext({});
@@ -57,28 +60,19 @@ export function ProductListContextProvider(props: any) {
     StoreProductList
   );
   const action: IContextActions = useGetAction(state, dispatch);
-  // 监听变化
-  useEffect(() => {
-    action.replaceSEOUrl();
-  }, [action.replaceSEOUrl]);
+  const isCurrentPage = useIsCurrentPage(getProductListPath());
 
-  // 第一次会执行,之后pn变动都会执行
+  const { getProductList, replaceSEOUrl } = action;
+  
+  // 当属性变化的时候,进行调用
   useEffect(() => {
-    action.getProductList();
-  }, [action.getProductList]);
+    callBackWhenPassAllFunc([() => isCurrentPage], getProductList);
+  }, [isCurrentPage, getProductList]);
 
-  // 直接运行
+  // 当属性变化的时候,进行调用
   useEffect(() => {
-    action.getManufactureList(1);
-  }, [action.getManufactureList]);
-
-  // 第一次会执行,当信息变动会执行
-  useEffect(() => {
-    dispatch({
-      type: productListReducerActionTypes.setPageNumber,
-      value: "init"
-    });
-  }, [state.currentFilterSelect, state.searchInfo]);
+    callBackWhenPassAllFunc([() => isCurrentPage], replaceSEOUrl);
+  }, [isCurrentPage, replaceSEOUrl]);
 
   const propsValue: IProductListContext = {
     useHehe,
@@ -99,6 +93,7 @@ export interface IProductListContext extends IContextActions {
 // @actions
 interface IContextActions {
   getStaticFilterList: () => void;
+  resetPageNumber: () => any;
   replaceSEOUrl: () => void;
   getProductList: () => void;
   getModelList: (pn: any) => void;
@@ -120,12 +115,6 @@ function useGetAction(
   const lastType = useRef();
   if (!lastType.current) {
     lastType.current = {} as any;
-  }
-  function setCurrentFilterSelectHandler(value: any) {
-    dispatch({
-      type: productListReducerActionTypes.setCurrentFilterSelect,
-      value
-    });
   }
   function getAnswers() {
     interface IAnswer {
@@ -382,19 +371,21 @@ function useGetAction(
       }
       return [typeInfo, itemInfo];
     },
+    resetPageNumber: () => {
+      dispatch({ type: productListReducerActionTypes.setPageNumber, value: 1 });
+    },
     setUserSelectFilter: promisify(async function({ id, type }: any) {
+      let setValue;
       (lastType.current as any) = type;
       if (id === "all") {
-        setCurrentFilterSelectHandler(
-          state.currentFilterSelect.filter(({ id }) => {
-            if (id.indexOf(type) !== -1) {
-              // 现有输入中有这个类别，就筛掉
-              return false;
-            } else {
-              return true;
-            }
-          })
-        );
+        setValue = state.currentFilterSelect.filter(({ id }) => {
+          if (id.indexOf(type) !== -1) {
+            // 现有输入中有这个类别，就筛掉
+            return false;
+          } else {
+            return true;
+          }
+        });
       } else {
         const value = `${type}-${id}`;
         let arr = state.currentFilterSelect;
@@ -406,8 +397,13 @@ function useGetAction(
         } else {
           arr = arr.concat([{ id: value }]);
         }
-        setCurrentFilterSelectHandler(arr);
+        setValue = arr;
       }
+      actions.resetPageNumber();
+      dispatch({
+        type: productListReducerActionTypes.setCurrentFilterSelect,
+        value: setValue
+      });
     }),
 
     // 获取排序的列表(整个静态数据,baseAttr,model)
@@ -533,6 +529,7 @@ function useGetAction(
       return dropDownInfo;
     }),
     setSearchInfo: function(info) {
+      actions.resetPageNumber();
       dispatch({
         type: productListReducerActionTypes.setSearchInfo,
         value: info
@@ -613,16 +610,19 @@ function useGetAction(
       }
     })
   };
+  // 至少有这些
   actions.getProductList = useCallback(actions.getProductList, [
-    state.pageNumber
+    state.pageNumber,
+    state.searchInfo,
+    state.currentFilterSelect
   ]);
   // 机型,属性值,等.
   actions.replaceSEOUrl = useCallback(actions.replaceSEOUrl, [
-    state.staticFilterList,
     state.currentFilterSelect
   ]);
   actions.getModelList = useCallback(actions.getModelList, []);
   actions.getManufactureList = useCallback(actions.getManufactureList, []);
+  actions.resetPageNumber = useCallback(actions.resetPageNumber, []);
   return actions;
 }
 
@@ -661,18 +661,10 @@ function reducer(state: IContextState, action: IReducerAction) {
       break;
     }
     case productListReducerActionTypes.setPageNumber: {
-      if (value === "init") {
-        newState = {
-          ...newState,
-          pageNumber: { pn: 1 }
-        };
-      } else {
-        newState = {
-          ...newState,
-          pageNumber: { pn: newState.pageNumber.pn + 1 }
-        };
-      }
-
+      newState = {
+        ...newState,
+        pageNumber: { pn: value || newState.pageNumber.pn + 1 }
+      };
       break;
     }
     case productListReducerActionTypes.setSearchInfo: {

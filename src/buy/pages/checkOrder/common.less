@@ -1,0 +1,57 @@
+@import (reference) "~buy/common/styles/index.less";
+
+@p1: {
+  .contact-common-css {
+    // 1）提供模块样式
+    .page__blue {
+      height: 420*@px;
+      background: @bg-color-blue;
+    }
+
+    .bg-container {
+      .page-padding();
+      > *:first-child {
+        .setpage(1402*@px);
+      }
+    }
+
+    > .bg-1 {
+      background: @bg-color-blue;
+      height: 420*@px;
+      .page-container__title {
+        padding-top: 106*@px;
+        > h1 {
+          font-size: 36*@f;
+          color: @white;
+          margin-bottom: 20*@px;
+        }
+        > p.sub-desc {
+          font-size: 16*@f;
+          color: #444b54;
+        }
+      }
+    }
+    > .bg-2 {
+      background: @white;
+      > .common-card {
+        padding: 0 @padding-value;
+        position: relative;
+        top: -100*@px;
+        > section {
+          padding-top: 75*@px;
+          padding-bottom: 69*@px;
+          max-width: 888*@px;
+          margin: auto;
+          > h2 {
+            font-size: 18*@f;
+            margin-bottom: 25*@px;
+          }
+          .form {
+            margin: auto;
+          }
+        }
+      }
+    }
+  }
+}
+.hello(@p1);

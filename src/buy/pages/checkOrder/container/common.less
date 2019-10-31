@@ -1,0 +1,95 @@
+@import (reference) "~buy/common/styles/index.less";
+// 模块公用css
+@world: {
+  .ismobile {
+    .order-information-page {
+      .comp-order-sale {
+        display: flex;
+        flex-direction: column;
+      }
+      ul.information-list {
+        flex-direction: column;
+        > * {
+          flex: 1 1 0;
+        }
+        li {
+          margin-bottom: 16 * @px;
+        }
+      }
+    }
+  }
+  .order-information-page {
+    .comp-order-sale {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-column-gap: 32px;
+      .information-list {
+        border-bottom: none;
+      }
+    }
+    .comp-tag.padding {
+      background: @white;
+      color: #6dd230;
+      font-weight: 500;
+      border: 1px solid;
+    }
+    @padding-left: 9 * @px;
+    .comp-tag .flex-container .content {
+      font-size: 14 * @px;
+      padding: 2 * @px 5 * @px;
+    }
+    .content-tag-container {
+      display: flex;
+      align-items: flex-start;
+
+      > *:first-child {
+        flex: 0 0 170 * @px;
+      }
+      > *:last-child {
+        flex: 0 0 0 * @px;
+        white-space: nowrap;
+      }
+    }
+    .line-with-title {
+      padding-top: 14 * @px;
+      padding-left: @padding-left;
+      padding-bottom: 10 * @px;
+      border-bottom: 1 * @px solid @color-border;
+      align-items: center;
+      height: 60 * @px;
+      > h3 {
+        .font(18 * @px, 600, #222222);
+        .mb({.font(14 * @px, 600, #222222) ;});
+      }
+    }
+    ul.information-list {
+      display: flex;
+      padding: 18 * @px @padding-left 0 * @px;
+      > * {
+        flex: 1 1 0;
+      }
+      li {
+        margin-bottom: 20 * @px;
+        > span:first-child {
+          font-size: 14 * @f;
+          color: #848484;
+          margin-bottom: 8 * @px;
+        }
+        span {
+          font-size: 16 * @f;
+          display: block;
+        }
+      }
+    }
+
+    .price-view {
+      > [data-matched="true"] {
+        color: #1ab4e7;
+      }
+      > [data-matched="false"] {
+        color: #ff0000;
+      }
+    }
+  }
+};
+.hello(@world);

@@ -1,0 +1,44 @@
+@import (reference) "~buy/common/styles/index.less";
+
+@world: {
+  .page-checkOrder-container {
+    .title {
+      height: 52 * @px;
+      font-size: 42 * @px;
+      color: rgba(0, 207, 255, 1);
+      line-height: 52 * @px;
+      text-align: center;
+      margin-bottom: 47 * @px;
+    }
+
+    .form {
+      max-width: 800 * @px;
+      margin: auto;
+      padding: 60 * @px 0 * @px;
+
+      .check-label {
+        font-size: 14 * @f;
+        color: rgba(102, 102, 102, 1);
+        line-height: 30 * @px;
+      }
+
+      .form-error {
+        margin-bottom: 14 * @px;
+        height: 30 * @px;
+        background: rgba(255, 229, 234, 1);
+        border-radius: 4 * @px;
+        border: 2 * @px solid rgba(252, 34, 73, 1);
+        font-size: 12 * @f;
+        color: rgba(252, 34, 73, 1);
+        line-height: 28 * @px;
+        text-align: center;
+      }
+    }
+
+    .common-button {
+      display: block;
+      margin: auto;
+    }
+  }
+};
+.hello(@world);
