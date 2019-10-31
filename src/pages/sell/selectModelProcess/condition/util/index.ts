@@ -356,7 +356,7 @@ export function serverAnswerToRenderAnswer(question: any, staticAnswer: any) {
   staticAnswer.forEach((item2: any) => {
     const newItem = {
       optionId: item2.id,
-      optionContent: item2.name
+      optionContent: item2.remark
     };
     // 查找对对应的属性。
     // 1 从现有的树种查找
