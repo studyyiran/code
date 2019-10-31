@@ -51,7 +51,6 @@ function useGetAction(
 ): IDataReportConditionActions {
   const selectModelContext = useContext(SelectModelContext);
   const { selectModelContextValue } = selectModelContext as ISelectModelContext;
-  console.log(selectModelContextValue);
   const {
     qualityList: phoneConditionQuestion,
     brand,
@@ -59,8 +58,6 @@ function useGetAction(
     productsList,
     brandList
   } = selectModelContextValue;
-  console.log("!!!!!!");
-  console.log(phoneConditionQuestion);
   // 新增promise ref
   const promiseStatus: any = useRef();
   if (!promiseStatus.current) {
@@ -70,7 +67,6 @@ function useGetAction(
     dataReport: function(params: { step: string; phoneConditionAnswer: any }) {
       try {
         const { step, phoneConditionAnswer } = params;
-        console.log(step);
         if (step === "aboutYourPhone") {
           // 问题1
           let dataReportJson = {
@@ -88,7 +84,6 @@ function useGetAction(
           // 获取
           let { modelId, othersAttr } = modelInfo;
           othersAttr = Object.keys(othersAttr).map(item => othersAttr[item]);
-          console.log(othersAttr);
           // 获取机型名称
           const productInfo: any = productsList.find((item: any) =>
             safeEqual(item.id, modelId)
@@ -98,7 +93,6 @@ function useGetAction(
             list.forEach((item: any) => {
               const { displayName, propertyValue } = item;
               const targetEleValue = propertyValue.find(({ id }: any) => {
-                console.log(targetEleValue);
                 return othersAttr.find((eleValue: any) =>
                   safeEqual(id, eleValue)
                 );
@@ -107,7 +101,6 @@ function useGetAction(
                 dataReportJson[displayName] = targetEleValue.displayName;
               }
             });
-            console.log(productInfo);
             dataReportJson.model = displayName;
           }
           dataReport(dataReportJson);
@@ -130,8 +123,6 @@ function useGetAction(
               })
             };
           });
-          console.log(phoneConditionQuestion);
-          console.log(resultWithOutUseless);
 
           const finalResultArr = resultWithOutUseless.map(
             (item1: any, index1: number) => {
@@ -141,9 +132,9 @@ function useGetAction(
                   (item2: any, index2: number) => {
                     return {
                       ...item2,
-                      // title:
-                      //   phoneConditionQuestion[index1].subQuestionArr[index2]
-                      //     .title,
+                      title:
+                        phoneConditionQuestion[index1].subQuestionArr[index2]
+                          .title,
                       answer: item2.answer.map((item3: any, index3: number) => {
                         return {
                           ...item3,
@@ -161,7 +152,6 @@ function useGetAction(
               };
             }
           );
-          console.log(finalResultArr);
 
           // 先用target对应上关系.
           if (finalResultArr && step) {
