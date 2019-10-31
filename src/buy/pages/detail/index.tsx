@@ -350,7 +350,10 @@ export default function ProductDetail(props: any) {
                   <CheckBoxProtection
                     needProtectionState={[needProtection, setNeedProtection]}
                   />
-                  <StartBuyButton onClick={() => setShowModal(true)} />
+                  <StartBuyButton
+                    onClick={() => setShowModal(true)}
+                    buyProductStatus={buyProductStatus}
+                  />
                 </div>
               </Affix>
             }
