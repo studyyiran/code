@@ -488,6 +488,7 @@ function useGetAction(
       }
     }),
     createOrderStart: promisify(async function(postData: any) {
+      dataReport({ step: 12 });
       try {
         const res: any = await createOrderStart(postData);
         if (res) {

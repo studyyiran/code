@@ -200,9 +200,9 @@ export default function Sell(props: any) {
         });
       }
     }
-    if (next && next.indexOf("/phone/prepare-ship") !== -1) {
-      dataReport({ step: 12 });
-    }
+    // if (next && next.indexOf("/phone/prepare-ship") !== -1) {
+    //  
+    // }
     if (next) {
       props.history.push(removeAllSpace(next));
       window.scrollTo(0, 0);
