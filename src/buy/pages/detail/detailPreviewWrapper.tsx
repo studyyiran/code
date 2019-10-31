@@ -24,6 +24,7 @@ export default function DetailPreviewWrapper(props: any) {
 
   async function startTokenToDetail() {
     try {
+      // @ts-ignore
       const detail = await getProductDetailByToken(token);
       productDetailContextDispatch({
         type: storeDetailActionTypes.setProductDetail,
