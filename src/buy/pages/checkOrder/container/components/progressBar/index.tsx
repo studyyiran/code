@@ -7,6 +7,7 @@ import {
   IGlobalSettingContext
 } from "../../../../../context";
 import { safeEqual } from "../../../../../common/utils/util";
+import Svg from "../../../../../components/svg";
 
 interface IDot {
   isActive: boolean;
@@ -22,7 +23,7 @@ class Dot extends React.Component<IDot> {
     }
     return (
       <div className={cls}>
-        <div className="dot-icon" />
+        <Svg icon="dot" className="dot-icon" />
         {this.props.children && (
           <div className={childCls}>{this.props.children}</div>
         )}

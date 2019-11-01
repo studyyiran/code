@@ -61,6 +61,20 @@ export function OrderList(props: any) {
     );
   }, [checkOrderDetail, reloadOrderFromCache]);
 
+  useEffect(() => {
+    if (
+      checkOrderDetail &&
+      checkOrderDetail.subOrders &&
+      checkOrderDetail.subOrders[0] &&
+      checkOrderDetail.subOrders[0].subOrderNo
+    ) {
+      storeCheckOrderContextDispatch({
+        type: storeCheckOrderReducerTypes.setCurrentSubOrderNo,
+        value: checkOrderDetail.subOrders[0].subOrderNo
+      });
+    }
+  }, [checkOrderDetail]);
+
   const currentModel = (checkOrderDetail.subOrders || []).find(subOrder => {
     return subOrder.subOrderNo === currentSubOrderNo;
   });
@@ -263,14 +277,7 @@ export function OrderList(props: any) {
         <CollapsePanelList
           onChange={selectHandler}
           list={list}
-          activeKey={
-            currentSubOrderNo ||
-            currentPageKey ||
-            (checkOrderDetail &&
-              checkOrderDetail.subOrders &&
-              checkOrderDetail.subOrders[0] &&
-              checkOrderDetail.subOrders[0].subOrderNo)
-          }
+          activeKey={currentSubOrderNo || currentPageKey}
         />
       </div>
     </div>
