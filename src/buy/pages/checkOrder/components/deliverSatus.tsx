@@ -4,10 +4,10 @@ import {
   IDeliverSatus,
   IShippingAddress
 } from "../interface/order.inerface";
-// @ts-ignore
-import UPSICON from "../static/upsIcon.png";
 import "./deliverSatus.less";
 import { Modal } from "antd";
+const FEDICON = require("../static/fedIcon.png");
+const UPSICON = require("../static/uspsIcon.png");
 
 export default function(props: any) {
   console.log(props.transInfo);
@@ -93,7 +93,15 @@ class DeliverSatus extends React.Component<IOrderProps, IDeliverSatus> {
           </div>
           <div className="col-2">
             <div>
-              <img src={UPSICON} alt="" />
+              <img
+                src={
+                  shippoTransaction.carrier &&
+                  shippoTransaction.carrier === "USPS"
+                    ? UPSICON
+                    : FEDICON
+                }
+                alt=""
+              />
               {shippoTransaction && (
                 <div>
                   <p className="name">{shippoTransaction.carrier}</p>
@@ -123,7 +131,15 @@ class DeliverSatus extends React.Component<IOrderProps, IDeliverSatus> {
           <div className="antd-modal-deliverSatus-body">
             <div className="col-2">
               <div>
-                <img src={UPSICON} alt="" />
+                <img
+                  src={
+                    shippoTransaction.carrier &&
+                    shippoTransaction.carrier === "USPS"
+                      ? UPSICON
+                      : FEDICON
+                  }
+                  alt=""
+                />
                 {shippoTransaction && (
                   <div>
                     <p className="name">{shippoTransaction.carrier}</p>
