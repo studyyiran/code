@@ -60,26 +60,28 @@
       .dot-icon {
         display: inline-block;
         vertical-align: top;
-        width: 14 * @px;
-        height: 14 * @px;
-        background-color: #fff;
-        border-radius: 50%;
         position: absolute;
-        top: 70 * @px;
+        top: 58 * @px;
         left: 50%;
         transform: translate(-50%, 0);
+        color: #848484;
+        font-size: 40 *@px;
+        .mb({
+          top: 24 * @px;
+          font-size: 30 *@px;
+        })
       }
 
-      &.dot-active {
-        .dot-icon {
-          background-color: #848484;
-        }
-
-        &::before,
-        &::after {
-          background-color: #848484;
-        }
-      }
+      //&.dot-active {
+      //  .dot-icon {
+      //    background-color: #848484;
+      //  }
+      //
+      //  &::before,
+      //  &::after {
+      //    background-color: #848484;
+      //  }
+      //}
 
       .currentMark {
         width: 0;
@@ -153,9 +155,6 @@
         display: inline-block;
         @extravalue: 15;
         min-width: (90 + @extravalue) * @px;
-        .dot-icon {
-          top: 32rem * @px2rem;
-        }
 
         &::after {
           width: (39 + @extravalue) * @px;

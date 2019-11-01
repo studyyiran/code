@@ -105,6 +105,7 @@ export default class Reviews extends React.Component<ICommonProps> {
                             </h2>
                             <div className="rating">
                               <Rate
+                                value={Math.ceil(Number(item.rating))}
                                 disabled={true}
                                 defaultValue={Math.ceil(Number(item.rating))}
                               />
