@@ -247,7 +247,11 @@ const gotoBuy = async (ctx: any, next: any, buyCurrentRouter: any) => {
   if (getInitialProps) {
     console.log("ajax start");
     console.log(ctx.path);
-    originData = await getInitialProps(ctx.path);
+    try {
+      originData = await getInitialProps(ctx.path);
+    } catch (e) {
+      console.error(e);
+    }
     console.log("ajax end");
     // 根据环境变量 设置ssr文件的参数
     const userAgent = ctx.header["user-agent"];
