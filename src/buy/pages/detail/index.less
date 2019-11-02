@@ -215,6 +215,7 @@
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         > li {
+           min-width: 0;
           > header {
             display: flex;
             align-items: center;
@@ -229,6 +230,7 @@
           > p,
           div {
             white-space: pre-line;
+            word-wrap: break-word;
             .second-line {
               .font(18 * @f, @mediumWeight, rgba(0, 0, 0, 1));
             }

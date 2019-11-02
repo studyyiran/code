@@ -11,6 +11,7 @@ import { promisify, safeEqual } from "buy/common/utils/util";
 import { useGetOriginData } from "../../../common/useHook/useGetOriginData";
 import { IContextValue } from "../../../common/type";
 import { callBackWhenPassAllFunc, useIsCurrentPage } from "./test";
+import { locationHref } from "../../../common/utils/routerHistory";
 
 export const ProductDetailContext = createContext({});
 export const StoreDetail = "StoreDetail";
@@ -124,12 +125,23 @@ function useGetAction(
 ): IContextActions {
   const actions: IContextActions = {
     getProductDetail: promisify(async function() {
-      const res: IProductDetail = await getProductDetail(state.productId);
-      if (res) {
-        dispatch({
-          type: storeDetailActionTypes.setProductDetail,
-          value: res
-        });
+      function redirect() {
+        locationHref("/buy-phone");
+      }
+      try {
+        const res: IProductDetail = await getProductDetail(state.productId);
+        if (!res) {
+          redirect();
+        }
+        if (res) {
+          dispatch({
+            type: storeDetailActionTypes.setProductDetail,
+            value: res
+          });
+        }
+      } catch (e) {
+        console.error(e);
+        redirect();
       }
     }),
     getSimiliarPhoneList: promisify(async function() {
