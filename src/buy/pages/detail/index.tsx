@@ -468,7 +468,9 @@ function StartBuyButton(props: any) {
   const { onClick, buyProductStatus } = props;
   return (
     <Button disabled={buyProductStatus === "INTRANSACTION"} onClick={onClick}>
-      Start Your Purchase
+      {buyProductStatus === "INTRANSACTION"
+        ? "SOLD OUT"
+        : "Start Your Purchase"}
     </Button>
   );
 }
