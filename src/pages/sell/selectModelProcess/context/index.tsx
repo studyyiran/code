@@ -519,11 +519,16 @@ function useGetAction(
                       return item.inquiryInfo.submitted.productName;
                     })
                     .join(","),
-                  price: subOrders
-                    .map((item: any) => {
-                      return item.inquiryInfo.submitted.amount;
-                    })
-                    .join(","),
+                  price:
+                    subOrders &&
+                    subOrders[0] &&
+                    subOrders[0].inquiryInfo.submitted.amount
+                      ? Number(
+                          subOrders &&
+                            subOrders[0] &&
+                            subOrders[0].inquiryInfo.submitted.amount
+                        )
+                      : 0,
                   brand: subOrders
                     .map((item: any) => {
                       return item.inquiryInfo.submitted.brandName;
