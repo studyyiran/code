@@ -25,7 +25,6 @@ export function dataReport(params: any) {
   };
   let formatParams = {};
   Object.keys(params).forEach(key => {
-    debugger;
     if (mapping[key]) {
       formatParams[mapping[key]] = params[key];
     } else {
