@@ -507,36 +507,15 @@ function useGetAction(
               transactionId: groupOrderNo,
               transactionAffiliation: "Up Trade",
               transactionTotal: (window as any).netPayout,
-              transactionProducts: [
-                {
-                  sku: subOrders
-                    .map((item: any) => {
-                      return item.inquiryInfo.submitted.productId;
-                    })
-                    .join(","),
-                  name: subOrders
-                    .map((item: any) => {
-                      return item.inquiryInfo.submitted.productName;
-                    })
-                    .join(","),
-                  price:
-                    subOrders &&
-                    subOrders[0] &&
-                    subOrders[0].inquiryInfo.submitted.amount
-                      ? Number(
-                          subOrders &&
-                            subOrders[0] &&
-                            subOrders[0].inquiryInfo.submitted.amount
-                        )
-                      : 0,
-                  brand: subOrders
-                    .map((item: any) => {
-                      return item.inquiryInfo.submitted.brandName;
-                    })
-                    .join(","),
-                  quantity: subOrders.length
-                }
-              ]
+              transactionProducts: subOrders.map((item: any) => {
+                return {
+                  sku: String(item.inquiryInfo.submitted.productId),
+                  name: item.inquiryInfo.submitted.productName,
+                  price: item.inquiryInfo.submitted.amount,
+                  brand: item.inquiryInfo.submitted.brandName,
+                  quantity: 1
+                };
+              })
             });
           } catch (e) {
             console.error(e);
