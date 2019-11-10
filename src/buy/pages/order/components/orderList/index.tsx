@@ -50,9 +50,9 @@ export default function OrderList(props: any) {
           }
         />
         <div className="padding-layout">
-          {phoneDetailList.map(item => {
-            const subOrderInfo: any = subOrders.find(item => {
-              return String(item.productId) === String(item.productId);
+          {phoneDetailList.map(item1 => {
+            const subOrderInfo: any = subOrders.find(item2 => {
+              return String(item1.buyProductId) === String(item2.productId);
             });
             // 当没有subOrders数组的时候  应该跳出
             if (subOrderInfo) {
@@ -60,7 +60,7 @@ export default function OrderList(props: any) {
                 <PhoneInfo
                   key={subOrderInfo.productId}
                   needProtection={subOrderInfo.needProtection}
-                  {...item}
+                  {...item1}
                   subOrderInfo={subOrderInfo}
                   setNeedProtection={(value: boolean) => {
                     orderInfoContextDispatch({

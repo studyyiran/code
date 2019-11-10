@@ -2,7 +2,9 @@ import { useContext } from "react";
 import { IOrderInfoContext, OrderInfoContext } from "../../../context";
 import { protectPrice } from "../../../../../common/config/staticConst";
 
-export default function useGetTotalPrice(): {
+export default function useGetTotalPrice(
+  props?: any
+): {
   totalProductPrice: () => number;
   totalProtections: () => number;
   calcTotalPrice: () => number;
@@ -10,13 +12,8 @@ export default function useGetTotalPrice(): {
 } {
   const orderInfoContext = useContext(OrderInfoContext);
   const { orderInfoContextValue } = orderInfoContext as IOrderInfoContext;
-  const {
-    subOrders,
-    phoneDetailList,
-    taxInfo,
-    userExpress,
-    expressInfo
-  } = orderInfoContextValue;
+  const { subOrders, phoneDetailList, taxInfo, userExpress, expressInfo } =
+    orderInfoContextValue || props;
   function totalProductPrice() {
     let total = 0;
     phoneDetailList.forEach((item: any) => {
