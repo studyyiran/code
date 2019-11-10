@@ -22,6 +22,8 @@ import { getProductDetail } from "../../detail/server";
 import { IProductDetail } from "../../detail/context";
 import { Message } from "../../../components/message";
 import { reducerLog } from "../../../common/hoc";
+import { dataReport } from "../../../common/dataReport";
+import useGetTotalPrice from "../components/orderLayout/useHook";
 
 export const OrderInfoContext = createContext({});
 const storeName = "OrderInfo";
@@ -167,6 +169,8 @@ function useGetAction(
   if (!promiseStatus.current) {
     promiseStatus.current = {};
   }
+  // 数据上报计算
+  const { calcTotalPrice, getShippingPrice } = useGetTotalPrice(state);
   const actions: IContextActions = {
     orderIdToCheckOrderInfo: promisify(async function() {
       if (state.orderInfo) {
@@ -284,6 +288,37 @@ function useGetAction(
         });
         orderResult
           .then(res => {
+            try {
+              dataReport({
+                event: "buyerTransaction",
+                transactionId: res,
+                transactionAffiliation: "Up Trade",
+                transactionTotal: calcTotalPrice(),
+                transactionTax:
+                  state.taxInfo && state.taxInfo.totalTax
+                    ? Number(state.taxInfo.totalTax)
+                    : 0,
+                transactionShipping: getShippingPrice(),
+                transactionProducts: state.subOrders.map((item: any) => {
+                  const { productId, needProtection } = item;
+                  const subOrderInfo: any = state.phoneDetailList.find(item => {
+                    return String(item.buyProductId) === String(productId);
+                  });
+                  return {
+                    sku: String(productId),
+                    name: subOrderInfo ? subOrderInfo.productDisplayName : "",
+                    price: subOrderInfo ? subOrderInfo.buyPrice : -1,
+                    brand: subOrderInfo ? subOrderInfo.brandDisplayName : "",
+                    dimension1: true, //buyer
+                    dimension2: false, //seller
+                    dimension3: state.userExpress, //update this USPS Parcel Select or USPS Priority
+                    dimension4: needProtection ? "yes" : "no" // if they select UpTrade Protect which is our $5/month insurance plan
+                  };
+                })
+              });
+            } catch (e) {
+              console.error(e);
+            }
             // 保存order参数
             dispatch({
               type: orderInfoReducerTypes.setOrderInfo,
