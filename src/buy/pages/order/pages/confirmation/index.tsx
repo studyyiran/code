@@ -14,7 +14,7 @@ import useResetProductList from "../../../productList/useHook/useResetProductLis
 export default function Confirmation(props: any) {
   const orderInfoContext = useContext(OrderInfoContext);
   const { orderInfoContextValue } = orderInfoContext as IOrderInfoContext;
-  const { orderInfo } = orderInfoContextValue;
+  const { orderInfo, checkOrderInfo } = orderInfoContextValue;
   const [orderNo, setOrderNo] = useState("");
   const handler = useResetProductList();
   useEffect(() => {
@@ -27,6 +27,21 @@ export default function Confirmation(props: any) {
       setOrderNo(props.match.params.orderNo);
     }
   }, [props.match]);
+  function PostDataImg() {
+    if (checkOrderInfo) {
+      const { groupOrderNo, total } = checkOrderInfo as any;
+      if (groupOrderNo) {
+        return (
+          <img
+            src={`https://www.shareasale.com/sale.cfm?tracking=${groupOrderNo}&amount=${total}&merchantID=92948&transtype=sale&sscidmode=6&sscid=`}
+            width="1"
+            height="1"
+          />
+        );
+      }
+    }
+    return null;
+  }
   return (
     <div className={"order-confirmation-wrapper"}>
       <div className={"confirmation-wrapper"}>
@@ -61,6 +76,7 @@ export default function Confirmation(props: any) {
         {/*<div className={"button-wrapper create-account"}>*/}
         {/*  <button className="common-button">Create an account</button>*/}
         {/*</div>*/}
+        <PostDataImg />
       </div>
     </div>
   );
