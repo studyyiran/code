@@ -16,6 +16,8 @@ import AdLine from "./components/adLine";
 import LoadingMask from "./components/loading";
 import { productListSsrRule } from "./ssr";
 import { callBackWhenPassAllFunc } from "../detail/context/test";
+import { dataReport } from "../../common/dataReport";
+import { safeEqual } from "../../common/utils/util";
 
 export default function ProductList(props: any) {
   const productListContext = useContext(ProductListContext);
@@ -26,7 +28,7 @@ export default function ProductList(props: any) {
     productListContextValue,
     getStaticFilterList,
     useHehe,
-    getManufactureList,
+    getManufactureList
   } = productListContext as IProductListContext;
   const {
     productList,
@@ -68,6 +70,56 @@ export default function ProductList(props: any) {
       return renderArr;
     } else {
       return null;
+    }
+  }
+  function onClickSubmitHandler(searchValues: any) {
+    try {
+      if (productListContextValue.currentFilterSelect) {
+        const userInputTarget = productListContextValue.currentFilterSelect
+          .filter((userInput: any) => {
+            return (
+              userInput &&
+              userInput.id &&
+              userInput.id.indexOf("attrOf2-") !== -1
+            );
+          })
+          .map((userInput: any) => {
+            return userInput.id.split("attrOf2-")
+              ? userInput.id.split("attrOf2-")[1]
+              : "";
+          });
+        if (
+          productListContextValue.staticFilterList &&
+          userInputTarget &&
+          userInputTarget.length
+        ) {
+          const carrierTarget = productListContextValue.staticFilterList.find(
+            (item: any) => {
+              return item.bpDisplayName === "Carrier";
+            }
+          );
+          const answer: string[] = [];
+          if (carrierTarget) {
+            const { bqvList } = carrierTarget;
+            if (bqvList && bqvList.length) {
+              bqvList.forEach((item2: any) => {
+                return userInputTarget.forEach((item3: any) => {
+                  if (safeEqual(item2.bpvId, item3)) {
+                    answer.push(item2.bpvDisplayName);
+                  }
+                });
+              });
+            }
+          }
+          dataReport({
+            event: "buyerSearch",
+            searchterm: searchValues,
+            network: answer.join(",")
+          });
+        }
+      }
+    } catch (e) {
+      console.error(e);
     }
   }
   return (
@@ -122,7 +174,7 @@ export default function ProductList(props: any) {
             cleaned, and sanitized by UpTrade.{" "}
           </p>
         </section>
-        <SearchProduct />
+        <SearchProduct onClickSubmit={onClickSubmitHandler} />
         <QuickSelect />
         <RenderByCondition
           ComponentMb={
