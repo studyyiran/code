@@ -621,7 +621,8 @@ function ProductInfo(props: any) {
         <span className="attr">{lineTwo ? lineTwo : ""}</span>
         <span className="condition">Condition {buyLevel}</span>
       </div>
-      <img className="check-icon" src={require("./res/uptrade-check.svg")} />
+      {/*暂时强制更新*/}
+      <img key={Date.now()} className="check-icon" src={require("./res/uptrade-check.svg")} />
     </section>
   );
 }
