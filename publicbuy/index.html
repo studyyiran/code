@@ -48,6 +48,37 @@
       })(window, document, "script", "dataLayer", "GTM-5S2WC9J");
     </script>
     <!-- End Google Tag Manager -->
+    <script>
+        var shareasaleSSCID = shareasaleGetParameterByName("sscid");
+        function shareasaleSetCookie(e, a, r, s, t) {
+            if (e && a) {
+                var o,
+                    n = s ? "; path=" + s : "",
+                    i = t ? "; domain=" + t : "",
+                    l = "";
+                r &&
+                ((o = new Date()).setTime(o.getTime() + r),
+                    (l = "; expires=" + o.toUTCString())),
+                    (document.cookie = e + "=" + a + l + n + i);
+            }
+        }
+        function shareasaleGetParameterByName(e, a) {
+            a || (a = window.location.href), (e = e.replace(/[\ [\]]/g, "\\$&"));
+            var r = new RegExp("[?&]" + e + "(=([^&#]*)|&|#|$)").exec(a);
+            return r
+                ? r[2]
+                    ? decodeURIComponent(r[2].replace(/\+/g, " "))
+                    : ""
+                : null;
+        }
+        shareasaleSSCID &&
+        shareasaleSetCookie(
+            "shareasaleSSCID",
+            shareasaleSSCID,
+            94670778e4,
+            "/"
+        );
+    </script>
     <!-- Google Tag Manager (noscript) -->
     <noscript
       ><iframe
