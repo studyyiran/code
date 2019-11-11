@@ -307,7 +307,9 @@ function useGetAction(
                   return {
                     sku: String(productId),
                     name: subOrderInfo ? subOrderInfo.productDisplayName : "",
-                    price: subOrderInfo ? subOrderInfo.buyPrice : -1,
+                    price: subOrderInfo
+                      ? Number(subOrderInfo.buyPrice).toFixed(2)
+                      : -1,
                     brand: subOrderInfo ? subOrderInfo.brandDisplayName : "",
                     dimension1: true, //buyer
                     dimension2: false, //seller

@@ -44,6 +44,7 @@ import {
   useWhenUrlChange
 } from "./context/test";
 import Button from "../../components/button";
+import { dataReport } from "../../common/dataReport";
 
 function Swiper(props: any) {
   const { buyProductImgPc, buyProductImgM, buyProductVideo } = props;
@@ -163,8 +164,7 @@ export default function ProductDetail(props: any) {
     buyProductVideo,
     productDescription,
     buyProductHistoryPdf,
-    buyProductStatus,
-    buyProductBQV
+    buyProductStatus
   } = productDetail;
   // 依赖 采用基于依赖的写法,这行代码写在哪里就一点都不重要了.因为页面和刷新只不过是一种依赖条件而已.
   const id = useWhenUrlChange("productId");
@@ -187,6 +187,39 @@ export default function ProductDetail(props: any) {
       setProductId(null);
     };
   }, [setProductId]);
+
+  useEffect(() => {
+    // 借用这个来监听路由的变化
+    if (isPage) {
+      const {
+        productId,
+        buyLevel,
+        brandDisplayName,
+        buyPrice,
+        productDisplayName,
+        buyProductBQV
+      } = productDetail;
+      let bqvParams: any = {};
+      if (buyProductBQV) {
+        buyProductBQV.forEach((item: any) => {
+          if (item && item.bpName) {
+            bqvParams[item.bpName.toLowerCase()] = item.bpvName;
+          }
+        });
+      }
+      dataReport(
+        Object.assign(bqvParams, {
+          event: "productPageViewed",
+          manufacturer: brandDisplayName, //update this
+          model: productDisplayName, //update this
+          condition: buyLevel, //update this
+          productID: productId, //update this
+          price: buyPrice, //update this
+          protectionPlan: false //update this
+        })
+      );
+    }
+  }, [isPage, productDetail]);
 
   function viewAllClickHandler() {
     window.location.href = urlRmSpaceAndToLower(
@@ -622,7 +655,11 @@ function ProductInfo(props: any) {
         <span className="condition">Condition {buyLevel}</span>
       </div>
       {/*暂时强制更新*/}
-      <img key={Date.now()} className="check-icon" src={require("./res/uptrade-check.svg")} />
+      <img
+        key={Date.now()}
+        className="check-icon"
+        src={require("./res/uptrade-check.svg")}
+      />
     </section>
   );
 }
