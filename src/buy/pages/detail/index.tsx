@@ -203,7 +203,12 @@ export default function ProductDetail(props: any) {
       if (buyProductBQV) {
         buyProductBQV.forEach((item: any) => {
           if (item && item.bpName) {
-            bqvParams[item.bpName.toLowerCase()] = item.bpvName;
+            if (item.bpName.toLowerCase() === 'color') {
+              bqvParams.colour = item.bpvName;
+            } else {
+              bqvParams[item.bpName.toLowerCase()] = item.bpvName;
+            }
+
           }
         });
       }

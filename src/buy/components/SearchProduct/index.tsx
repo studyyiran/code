@@ -74,7 +74,7 @@ export default function SearchProduct(props: any) {
       productKey: searchValue
     });
     if (props && props.onClickSubmit) {
-      props.onClickSubmit();
+      props.onClickSubmit(searchValue);
     }
   }
   return (
