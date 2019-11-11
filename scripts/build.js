@@ -11,6 +11,8 @@ if (process.env.REACT_APP_SERVER_ENV === 'PUB') { //prod
   process.env.PUBLIC_URL = 'https://d3shkncr7uztfs.cloudfront.net/sell-website/build';
 } else if (process.env.REACT_APP_SERVER_ENV === 'UAT') { //demo
   process.env.PUBLIC_URL = '/';
+} else if (process.env.REACT_APP_SERVER_ENV === 'QA') {
+  process.env.PUBLIC_URL = '/';
 } else { //qa
   process.env.PUBLIC_URL = '/';
 }
