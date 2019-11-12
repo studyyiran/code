@@ -219,7 +219,7 @@ export default function ProductDetail(props: any) {
             model: productDisplayName, //update this
             condition: buyLevel, //update this
             productID: buyProductId, //update this
-            price: buyPrice, //update this
+            price: Number(buyPrice), //update this
             protectionPlan: false //update this
           })
         );
