@@ -125,9 +125,9 @@ function useGetAction(
         promiseStatus.current.reject = reject;
       });
       let password = authInfo.password;
-      // if (password) {
-      //   password = rsaPassWord(password);
-      // }
+      if (password) {
+        password = rsaPassWord(password);
+      }
       if (password) {
         const res = await userLogin({ email: authInfo.email, password });
         if (res) {
