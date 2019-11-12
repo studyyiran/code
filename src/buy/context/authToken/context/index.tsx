@@ -16,8 +16,8 @@ import useReducerMiddleware from "../../../common/useHook/useReducerMiddleware";
 import { IContextValue } from "../../../common/type";
 import { useIsCurrentPage } from "../../../common/useHook";
 import { globalStore } from "../../../common/store";
-import { rsaPassWord } from "../../../common/utils/user-util";
 import {storeCheckOrderReducerTypes} from "../../../pages/checkOrder/context";
+import { rsaPassWord } from "../../../common/utils/user-util";
 export const StoreAuthContext = createContext({});
 
 // store name
@@ -125,9 +125,9 @@ function useGetAction(
         promiseStatus.current.reject = reject;
       });
       let password = authInfo.password;
-      if (password) {
-        password = rsaPassWord(password);
-      }
+      // if (password) {
+      //   password = rsaPassWord(password);
+      // }
       if (password) {
         const res = await userLogin({ email: authInfo.email, password });
         if (res) {
