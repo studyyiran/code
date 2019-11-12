@@ -43,6 +43,7 @@
     "html-webpack-plugin": "2.29.0",
     "jest": "22.4.2",
     "js-base64": "^2.4.9",
+    "jsencrypt": "^3.0.0-rc.1",
     "koa": "^2.7.0",
     "koa-mount": "^4.0.0",
     "koa-proxies": "^0.8.1",
