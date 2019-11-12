@@ -308,7 +308,7 @@ function useGetAction(
                     sku: String(productId),
                     name: subOrderInfo ? subOrderInfo.productDisplayName : "",
                     price: subOrderInfo
-                      ? Number(subOrderInfo.buyPrice).toFixed(2)
+                      ? Number(Number(subOrderInfo.buyPrice).toFixed(2))
                       : -1,
                     brand: subOrderInfo ? subOrderInfo.brandDisplayName : "",
                     dimension1: true, //buyer
