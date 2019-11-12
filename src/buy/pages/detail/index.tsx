@@ -189,42 +189,43 @@ export default function ProductDetail(props: any) {
   }, [setProductId]);
 
   useEffect(() => {
-    // 借用这个来监听路由的变化
-    if (isPage) {
+    // 只有有商品属性 并且有页面id的时候.并且相等.才进行上报操作
+    if (productDetail && id) {
       const {
-        productId,
+        buyProductId,
         buyLevel,
         brandDisplayName,
         buyPrice,
         productDisplayName,
         buyProductBQV
       } = productDetail;
-      let bqvParams: any = {};
-      if (buyProductBQV) {
-        buyProductBQV.forEach((item: any) => {
-          if (item && item.bpName) {
-            if (item.bpName.toLowerCase() === 'color') {
-              bqvParams.colour = item.bpvName;
-            } else {
-              bqvParams[item.bpName.toLowerCase()] = item.bpvName;
+      if (safeEqual(id, productDetail.buyProductId)) {
+        let bqvParams: any = {};
+        if (buyProductBQV) {
+          buyProductBQV.forEach((item: any) => {
+            if (item && item.bpName) {
+              if (item.bpName.toLowerCase() === "color") {
+                bqvParams.colour = item.bpvName;
+              } else {
+                bqvParams[item.bpName.toLowerCase()] = item.bpvName;
+              }
             }
-
-          }
-        });
+          });
+        }
+        dataReport(
+          Object.assign(bqvParams, {
+            event: "productPageViewed",
+            manufacturer: brandDisplayName, //update this
+            model: productDisplayName, //update this
+            condition: buyLevel, //update this
+            productID: String(buyProductId), //update this
+            price: Number(buyPrice), //update this
+            protectionPlan: false //update this
+          })
+        );
       }
-      dataReport(
-        Object.assign(bqvParams, {
-          event: "productPageViewed",
-          manufacturer: brandDisplayName, //update this
-          model: productDisplayName, //update this
-          condition: buyLevel, //update this
-          productID: productId, //update this
-          price: buyPrice, //update this
-          protectionPlan: false //update this
-        })
-      );
     }
-  }, [isPage, productDetail]);
+  }, [id, productDetail]);
 
   function viewAllClickHandler() {
     window.location.href = urlRmSpaceAndToLower(

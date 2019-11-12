@@ -511,7 +511,7 @@ function useGetAction(
                 return {
                   sku: String(item.inquiryInfo.submitted.productId),
                   name: item.inquiryInfo.submitted.productName,
-                  price: item.inquiryInfo.submitted.amount,
+                  price: Number(item.inquiryInfo.submitted.amount),
                   brand: item.inquiryInfo.submitted.brandName,
                   quantity: 1
                 };
