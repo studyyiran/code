@@ -218,7 +218,7 @@ export default function ProductDetail(props: any) {
             manufacturer: brandDisplayName, //update this
             model: productDisplayName, //update this
             condition: buyLevel, //update this
-            productID: buyProductId, //update this
+            productID: String(buyProductId), //update this
             price: Number(buyPrice), //update this
             protectionPlan: false //update this
           })
