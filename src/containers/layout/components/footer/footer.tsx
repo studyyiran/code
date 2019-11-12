@@ -65,6 +65,10 @@ export const footerInfo = [
       {
         subTitle: "FAQs",
         href: "/faq"
+      },
+      {
+        subTitle: "Return and Exchange Policy",
+        href: "/return-policy"
       }
     ]
   },
