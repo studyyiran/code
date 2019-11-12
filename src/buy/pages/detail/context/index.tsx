@@ -7,11 +7,11 @@ import React, {
 import { IReducerAction } from "buy/common/interface/index.interface";
 import { getProductDetail, getSimiliar } from "../server";
 import { backgroundCheckList } from "./staticData";
-import { promisify, safeEqual } from "buy/common/utils/util";
+import {callBackWhenPassAllFunc, promisify, safeEqual} from "buy/common/utils/util";
 import { useGetOriginData } from "../../../common/useHook/useGetOriginData";
 import { IContextValue } from "../../../common/type";
-import { callBackWhenPassAllFunc, useIsCurrentPage } from "./test";
 import { locationHref } from "../../../common/utils/routerHistory";
+import {useIsCurrentPage} from "../../../common/useHook";
 
 export const ProductDetailContext = createContext({});
 export const StoreDetail = "StoreDetail";

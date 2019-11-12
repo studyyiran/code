@@ -1,3 +1,5 @@
+import {constValue} from "../../../common/constValue";
+
 export const brands = [
   {
     iconName: "Apple",
@@ -35,8 +37,7 @@ export const buyCardInfo = [
   {
     img: require("buy/pages/home/img/highQuality.png"),
     title: "High Quality Phones",
-    text:
-      "Only the best fully functional<br/> phones are sold here. 14 day<br/> hassle free returns.",
+    text: `Only the best fully functional<br/> phones are sold here. ${constValue.REFUNDTIME} day<br/> hassle free returns.`,
     index: 1
   },
   {

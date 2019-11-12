@@ -9,6 +9,7 @@ import {
   productIdToBrandId
 } from "../server";
 import {
+  callBackWhenPassAllFunc,
   getProductListPath,
   promisify,
   safeEqual
@@ -17,11 +18,7 @@ import { IStaticFilterItem, filterListConfig } from "./staticData";
 import { useGetOriginData } from "../../../common/useHook/useGetOriginData";
 import useReducerMiddleware from "../../../common/useHook/useReducerMiddleware";
 import { locationHref } from "../../../common/utils/routerHistory";
-import {
-  callBackWhenPassAllFunc,
-  useIsCurrentPage
-} from "../../detail/context/test";
-
+import {useIsCurrentPage} from "../../../common/useHook";
 export const ATTROF = "attrOf";
 export const ProductListContext = createContext({});
 export const StoreProductList = "StoreProductList";
@@ -63,7 +60,7 @@ export function ProductListContextProvider(props: any) {
   const isCurrentPage = useIsCurrentPage(getProductListPath());
 
   const { getProductList, replaceSEOUrl } = action;
-  
+
   // 当属性变化的时候,进行调用
   useEffect(() => {
     callBackWhenPassAllFunc([() => isCurrentPage], getProductList);

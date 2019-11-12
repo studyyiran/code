@@ -15,10 +15,9 @@ import Modal from "../../components/modal";
 import AdLine from "./components/adLine";
 import LoadingMask from "./components/loading";
 import { productListSsrRule } from "./ssr";
-import { callBackWhenPassAllFunc } from "../detail/context/test";
+import {callBackWhenPassAllFunc} from "../../common/utils/util";
 import { dataReport } from "../../common/dataReport";
 import { safeEqual } from "../../common/utils/util";
-
 export default function ProductList(props: any) {
   const productListContext = useContext(ProductListContext);
 

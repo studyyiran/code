@@ -7,9 +7,8 @@ import {
   storeDetailActionTypes
 } from "./context";
 import { getProductDetailByToken } from "./server";
-import { callBackWhenPassAllFunc } from "./context/test";
 import { Message } from "../../components/message";
-
+import { callBackWhenPassAllFunc } from "../../common/utils/util";
 export default function DetailPreviewWrapper(props: any) {
   const { token } = useParams();
   const productDetailContext = useContext(ProductDetailContext);

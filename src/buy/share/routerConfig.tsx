@@ -12,6 +12,8 @@ import { detailSsrRule } from "../pages/detail/ssr";
 import { ourHomeSsrRule } from "../pages/home/ssr";
 import BuyCheckOrder from "../pages/checkOrder/routers";
 import DetailPreviewWrapper from "../pages/detail/detailPreviewWrapper";
+import PersonalLogin from "../pages/personal/pages/login";
+import AccountPage from "../pages/personal/pages/account";
 
 export const routerConfig = [
   {
@@ -55,11 +57,8 @@ export const routerConfig = [
     Component: UptradeProtect
   },
   {
-    path: "/uptrade/policy",
+    path: "/return-policy",
     title: "Return & Exchange Policy | Uptradeit.com",
-    meta: {
-      desc: "这是静态页面，meta参数可以删除，这里只是备注一下"
-    },
     Component: UptradePolicy
   },
   {
@@ -73,6 +72,18 @@ export const routerConfig = [
     exact: true,
     Component: Home,
     getInitialProps: ourHomeSsrRule
+  },
+  {
+    path: "/login",
+    title: "???",
+    exact: true,
+    Component: PersonalLogin
+  },
+  {
+    path: "/account",
+    title: "???",
+    exact: true,
+    Component: AccountPage
   }
   // {
   //   title: "404 | UpTradeit.com",

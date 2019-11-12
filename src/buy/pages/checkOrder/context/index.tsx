@@ -12,14 +12,11 @@ import {
   serverApplyReturn,
   serverCancelOrder
 } from "../server";
-import { promisify, safeEqual } from "buy/common/utils/util";
+import {callBackWhenPassAllFunc, promisify, safeEqual} from "buy/common/utils/util";
 import { IContextValue } from "../../../common/type";
 import useReducerMiddleware from "../../../common/useHook/useReducerMiddleware";
 import { Message } from "../../../components/message";
-import { productListReducerActionTypes } from "../../productList/context";
-import { callBackWhenPassAllFunc } from "../../detail/context/test";
 import { getDeliverInfos, getOrderCache, setOrderCache } from "../util";
-
 export const StoreCheckOrderContext = createContext({});
 // store name
 export const StoreCheckOrder = "StoreCheckOrder";

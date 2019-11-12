@@ -1,4 +1,5 @@
 import Axios from "axios";
+import { globalStore } from "../store";
 interface IAjax {
   get: (url: string, data?: any) => void;
   post: (url: string, data?: any) => void;
@@ -101,6 +102,13 @@ ajax.fetch = function(config) {
         }
       })
       .catch(e => {
+        // 处理404
+        const { code } = e;
+        if (code === 403) {
+          globalStore.dispatch({
+            type: "clearToken"
+          });
+        }
         // catch 404 500异常
         rejectError(config, reject, {});
       });
