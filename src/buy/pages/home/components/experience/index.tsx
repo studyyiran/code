@@ -1,12 +1,13 @@
 import * as React from "react";
 import {useState} from "react";
 import "./index.less";
+import {constValue} from "../../../../common/constValue";
 
 
 export default function Experience(props: any) {
 
   const [tab, setTab] = useState('Price'); // tab list
-  const tabList = ['Price', 'Quality', '14-Day Returns', 'Device Protection'];
+  const tabList = ['Price', 'Quality', `${constValue.REFUNDTIME}-Day Returns`, 'Device Protection'];
   const tabContent = {
     [tabList[0]]: {
       before: 'BEFORE',
@@ -29,7 +30,7 @@ export default function Experience(props: any) {
       beforeTitle: 'Buyer’s remorse? You’re stuck',
       beforeDesc: 'You thought you scored a great phone, only to find out later that the phone has functional issues that appeared weeks later.',
       after: 'AFTER',
-      afterTitle: '14 Day Trial',
+      afterTitle: `${constValue.REFUNDTIME} Day Trial`,
       afterDesc: 'Use the phone for up to two weeks. Get familiar with your new phone and put it through its paces as you normally would. If you’re not completely satisfied, we’ll take it back and refund you the full amount.'
     },
     [tabList[3]]: {
