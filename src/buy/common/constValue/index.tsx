@@ -1,3 +1,4 @@
 export const constValue = {
-  REFUNDTIME: 30
+  REFUNDTIME: 30,
+  priceUnit: "$",
 }

@@ -1,6 +1,7 @@
 import { locationHref } from "./routerHistory";
 import { matchPath } from "react-router-dom";
 import { routerConfig } from "../../share/routerConfig";
+import {constValue} from "../constValue";
 
 export const staticContentConfig = {
   priceUnit: "$",
@@ -72,7 +73,7 @@ export function currencyTrans(value: any, whenFree?: any) {
     return whenFree;
   } else {
     return fixValue
-      ? staticContentConfig.priceUnit + transNumber(fixValue)
+      ? constValue.priceUnit + transNumber(fixValue)
       : fixValue;
   }
 }
