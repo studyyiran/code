@@ -1,12 +1,13 @@
 import { locationHref } from "./routerHistory";
 import { matchPath } from "react-router-dom";
 import { routerConfig } from "../../share/routerConfig";
+import {constValue} from "../constValue";
 
 export const staticContentConfig = {
   priceUnit: "$",
   perMonth: "/mo",
   SOLDOUT: "SOLDOUT",
-  INTRANSACTION: "INTRANSACTION",
+  INTRANSACTION: "INTRANSACTION"
 };
 
 export function requestWrapper(obj: any, all?: boolean) {
@@ -58,10 +59,22 @@ export function currencyTrans(value: any, whenFree?: any) {
       fixValue = "";
     }
   }
+  function transNumber(number: any) {
+    if (!isServer()) {
+      try {
+        return parseFloat(number).toLocaleString();
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    return number;
+  }
   if (whenFree && Number(fixValue) === 0) {
-    return whenFree ? parseFloat(whenFree).toLocaleString() : whenFree;
+    return whenFree;
   } else {
-    return fixValue ? staticContentConfig.priceUnit + parseFloat(fixValue).toLocaleString() : fixValue;
+    return fixValue
+      ? constValue.priceUnit + transNumber(fixValue)
+      : fixValue;
   }
 }
 
@@ -153,9 +166,8 @@ export function debounce(callback: any, timer: any) {
   return newFunc;
 }
 
-
 export function getProductListPath() {
-  return '/buy-phone'
+  return "/buy-phone";
 }
 
 //用于sell跳转以及buy的spa路由跳转

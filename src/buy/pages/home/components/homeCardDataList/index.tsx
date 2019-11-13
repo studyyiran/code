@@ -89,7 +89,7 @@ export function HomeCardDataList(props: any) {
                     <div className="left">{item.productDisplayName}</div>
                     <div className="right">
                       <span>{productText}</span>
-                      <span className="price">{currencyTrans(item.productPrice)}</span>
+                      <span className="price">${item.productPrice}</span>
                     </div>
                   </div>
                 </div>
