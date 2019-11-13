@@ -62,7 +62,7 @@ export function currencyTrans(value: any, whenFree?: any) {
   function transNumber(number: any) {
     if (!isServer()) {
       try {
-        return parseFloat(whenFree).toLocaleString();
+        return parseFloat(number).toLocaleString();
       } catch (e) {
         console.error(e);
       }
