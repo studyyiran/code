@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import './index.less';
 import Svg from "../../../components/svg";
+import {constValue} from "../../../common/constValue";
 
 /**
  * UpTrade Protect 静态页面
@@ -9,7 +10,7 @@ import Svg from "../../../components/svg";
 export default function Policy() {
 
   const dataList = [
-    {img: require("buy/pages/statics/img/returnPeriod.png"), title: 'Return & Exchange Period', desc: '14 days of shipment arrival.'},
+    {img: require("buy/pages/statics/img/returnPeriod.png"), title: 'Return & Exchange Period', desc: `${constValue.REFUNDTIME} days of shipment arrival.`},
     {img: require("buy/pages/statics/img/restoreFee.png"), title: 'Restocking Fee', desc: 'Zero. While others may<br> charge, we don\'t'},
     {img: require("buy/pages/statics/img/returnShipping.png"), title: 'Return Shipping', desc: ' No worries. It\'s on us'},
   ]

@@ -7,6 +7,7 @@ import { IProductDetailContext, ProductDetailContext } from "./context";
 import Svg from "../../components/svg";
 import TipsIcon from "../../components/tipsIcon";
 import getSellPath, {
+  callBackWhenPassAllFunc,
   currencyTrans,
   getProductListPath,
   isServer,
@@ -38,14 +39,10 @@ import {
   IProductListContext,
   ProductListContext
 } from "../productList/context";
-import {
-  callBackWhenPassAllFunc,
-  useIsCurrentPage,
-  useWhenUrlChange
-} from "./context/test";
-import Button from "../../components/button";
 import { dataReport } from "../../common/dataReport";
-
+import Button from "../../components/button";
+import { useIsCurrentPage, useWhenUrlChange } from "../../common/useHook";
+import {constValue} from "../../common/constValue";
 function Swiper(props: any) {
   const { buyProductImgPc, buyProductImgM, buyProductVideo } = props;
   const maxNumber = 3;
@@ -376,7 +373,7 @@ export default function ProductDetail(props: any) {
             </li>
             <li>
               <img src={require("./res/return.svg")} />
-              <h3>14 Days Return</h3>
+              <h3>{constValue.REFUNDTIME} Days Return</h3>
             </li>
             <li>
               <img src={require("./res/secure-payment.svg")} />

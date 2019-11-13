@@ -2,6 +2,13 @@ import { locationHref } from "./routerHistory";
 import { matchPath } from "react-router-dom";
 import { routerConfig } from "../../share/routerConfig";
 
+export const staticContentConfig = {
+  priceUnit: "$",
+  perMonth: "/mo",
+  SOLDOUT: "SOLDOUT",
+  INTRANSACTION: "INTRANSACTION",
+};
+
 export function requestWrapper(obj: any, all?: boolean) {
   let fixUrl = "";
   switch (process.env.REACT_APP_SERVER_ENV) {
@@ -57,13 +64,6 @@ export function currencyTrans(value: any, whenFree?: any) {
     return fixValue ? staticContentConfig.priceUnit + parseFloat(fixValue).toLocaleString() : fixValue;
   }
 }
-
-export const staticContentConfig = {
-  priceUnit: "$",
-  perMonth: "/mo",
-  SOLDOUT: "SOLDOUT",
-  INTRANSACTION: "INTRANSACTION",
-};
 
 export function isServer() {
   if (typeof window === "undefined") {
@@ -168,4 +168,23 @@ export function urlRmSpaceAndToLower(url: any) {
   url = url.replace(/\s+/g, "");
   url = url.toLowerCase();
   return url;
+}
+
+export async function callBackWhenPassAllFunc(arr: any[], callBack: any) {
+  let promiseArr = [] as any;
+  let normalArr = [] as any;
+  arr.forEach(condition => {
+    if (condition instanceof Promise) {
+      promiseArr.push(condition);
+    } else {
+      normalArr.push(condition);
+    }
+  });
+  const result1 = await Promise.all(promiseArr);
+  const result2 = normalArr.every((normalCondition: any) => {
+    return normalCondition();
+  });
+  if (result1 && result2) {
+    callBack();
+  }
 }

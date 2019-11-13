@@ -16,7 +16,6 @@ import UserInfo from "./components/userInfo";
 
 import { HeaderTitle } from "buy/components/headerTitle";
 import CollapsePanelList from "./components/collapsePanelList";
-import { callBackWhenPassAllFunc } from "../../detail/context/test";
 import {
   IStoreCheckOrderContext,
   StoreCheckOrderContext,
@@ -25,7 +24,7 @@ import {
 import Button from "../../../components/button";
 import RouterLink from "../../../components/routerLink";
 import Svg from "../../../components/svg";
-import { currencyTrans } from "../../../common/utils/util";
+import {callBackWhenPassAllFunc, currencyTrans} from "../../../common/utils/util";
 import { getRootApi } from "../../../api/api";
 import { locationHref } from "../../../common/utils/routerHistory";
 

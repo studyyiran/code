@@ -3,31 +3,35 @@ import ajax from "../../../common/utils/ajax";
 import { backgroundCheckList } from "../context/staticData";
 
 function detailFormat(res: any) {
-  let returenRes = { ...res };
-  if (returenRes) {
-    if (returenRes.buyProductBQV) {
-      try {
-        returenRes.buyProductBQV = JSON.parse(returenRes.buyProductBQV);
-      } catch (e) {
-        console.error(e);
+  if (res) {
+    let returenRes = { ...res };
+    if (returenRes) {
+      if (returenRes.buyProductBQV) {
+        try {
+          returenRes.buyProductBQV = JSON.parse(returenRes.buyProductBQV);
+        } catch (e) {
+          console.error(e);
+        }
+      } else {
+        returenRes.buyProductBQV = {};
       }
-    } else {
-      returenRes.buyProductBQV = {};
-    }
-    returenRes.buyProductImgPc = returenRes.buyProductImgPc.split(",");
-    returenRes.buyProductImgM = returenRes.buyProductImgM.split(",");
+      returenRes.buyProductImgPc = returenRes.buyProductImgPc.split(",");
+      returenRes.buyProductImgM = returenRes.buyProductImgM.split(",");
 
-    returenRes.backGroundCheck = backgroundCheckList.map((item, index) => {
-      let newItem = { ...item };
-      if (index === 0 && returenRes.buyProductDate) {
-        newItem.content = returenRes.buyProductDate;
-      } else if (index === 1 && returenRes.buyProductBatteryLife) {
-        newItem.content = returenRes.buyProductBatteryLife;
-      }
-      return newItem;
-    });
+      returenRes.backGroundCheck = backgroundCheckList.map((item, index) => {
+        let newItem = { ...item };
+        if (index === 0 && returenRes.buyProductDate) {
+          newItem.content = returenRes.buyProductDate;
+        } else if (index === 1 && returenRes.buyProductBatteryLife) {
+          newItem.content = returenRes.buyProductBatteryLife;
+        }
+        return newItem;
+      });
+    }
+    return returenRes;
+  } else {
+    return null;
   }
-  return returenRes;
 }
 
 export async function getProductDetail(id: string) {
