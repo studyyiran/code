@@ -108,7 +108,7 @@ export default [
         store["common"].getReviews({
           page: 0,
           pageSize: 100,
-          order: "desc"
+          order: "rating"
         })
     ]
   },
