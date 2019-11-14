@@ -8,7 +8,11 @@ import React, {
 } from "react";
 import { IReducerAction } from "buy/common/interface/index.interface";
 import { currentUserInfo } from "../server";
-import { callBackWhenPassAllFunc, promisify } from "buy/common/utils/util";
+import {
+  callBackWhenPassAllFunc,
+  isServer,
+  promisify
+} from "buy/common/utils/util";
 import useReducerMiddleware from "../../../common/useHook/useReducerMiddleware";
 import { IContextValue } from "../../../common/type";
 import { useIsCurrentPage } from "../../../common/useHook";
@@ -59,13 +63,23 @@ export function AccountInfoContextProvider(props: any) {
   // @useEffect
   useEffect(() => {
     // 1 如果有token
-    if (tokenInfo && tokenInfo.token) {
-      callBackWhenPassAllFunc([], () => {
+    callBackWhenPassAllFunc([() => tokenInfo && tokenInfo.token], () => {
+      if (!isServer()) {
+        // 这块可能更新不的时候 redux还没有更新 做延迟处理.
         window.setTimeout(() => {
-          action.currentUserInfo()
-        }, 1000)
+          action.currentUserInfo();
+        }, 10);
+      }
+    });
+  }, [tokenInfo]);
+
+  // 只要token发生变化 直接粗暴清空
+  useEffect(() => {
+    callBackWhenPassAllFunc([], () => {
+      dispatch({
+        type: accountInfoReducerTypes.setUserInfo,
       });
-    }
+    });
   }, [tokenInfo]);
 
   const propsValue: IAccountInfoContext = {
@@ -79,6 +93,7 @@ export function AccountInfoContextProvider(props: any) {
 // @actions
 export interface IAccountInfoActions {
   currentUserInfo: () => any;
+  resetUserInfo: () => any;
 }
 
 // useCreateActions
@@ -92,6 +107,12 @@ function useGetAction(
     promiseStatus.current = {};
   }
   const actions: IAccountInfoActions = {
+    resetUserInfo: function() {
+      dispatch({
+        type: accountInfoReducerTypes.setUserInfo,
+        value: {}
+      });
+    },
     currentUserInfo: promisify(async function() {
       const res = await currentUserInfo();
       dispatch({

@@ -1,6 +1,7 @@
 import Axios from "axios";
 import { globalStore } from "../store";
 import { constValue } from "../constValue";
+import { safeEqual } from "./util";
 interface IAjax {
   get: (url: string, data?: any) => void;
   post: (url: string, data?: any) => void;
@@ -90,7 +91,7 @@ ajax.fetch = function(config) {
   if (globalStore) {
     const state = globalStore.getState();
     const authToken = state.token;
-    if (authToken && config.url.indexOf('auth') !== -1) {
+    if (authToken && config.url.indexOf("auth") !== -1) {
       config.headers = {};
       config.headers[constValue.AUTHKEY] = authToken;
     }
@@ -113,16 +114,23 @@ ajax.fetch = function(config) {
         }
       })
       .catch(e => {
-        // 处理404
-        const { code } = e;
-        if (code === 403) {
-          globalStore.dispatch({
-            type: "setToken",
-            value: ""
-          });
+        if (e) {
+          const { response } = e;
+          if (response) {
+            // 处理403
+            const { data, status } = response;
+            if (safeEqual(status, 403)) {
+              if (safeEqual(data.code, 403)) {
+                globalStore.dispatch({
+                  type: "reduxSetToken",
+                  value: null
+                });
+              }
+            }
+            rejectError(config, reject, {});
+            // catch 404 500异常
+          }
         }
-        // catch 404 500异常
-        rejectError(config, reject, {});
       });
   });
 };

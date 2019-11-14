@@ -9,5 +9,5 @@ export default function AccountPage() {
   } = storeTestNameContext as IAccountInfoContext;
   const { userInfo } = accountInfoContextValue;
   console.log(userInfo);
-  return <div className="account-page">{123}</div>;
+  return <div className="account-page">{userInfo && userInfo.email ? userInfo.email : 'empty'}</div>;
 }

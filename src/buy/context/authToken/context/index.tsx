@@ -19,7 +19,12 @@ import { useIsCurrentPage } from "../../../common/useHook";
 import { globalStore } from "../../../common/store";
 import { rsaPassWord } from "../../../common/utils/user-util";
 import { constValue } from "../../../common/constValue";
-import { userLogin, userRegister, userActive, userActiveEmailResend } from "../server";
+import {
+  userLogin,
+  userRegister,
+  userActive,
+  userActiveEmailResend
+} from "../server";
 
 export const StoreAuthContext = createContext({});
 
@@ -65,22 +70,36 @@ export function StoreAuthContextProvider(props: any) {
   // @useEffect
   // 当token有值的时候,同步增加在session和globalStore中
   useEffect(() => {
-    callBackWhenPassAllFunc(
-      [() => state.tokenInfo && state.tokenInfo.token],
-      () => {
-        // 1 设置cookie
+    callBackWhenPassAllFunc([], () => {
+      // 有效值的时候填充
+      if (state.tokenInfo && state.tokenInfo.token) {
         const { token, cookieExpired } = state.tokenInfo;
         if (token) {
           setSession(constValue.AUTHKEY, token);
           if (globalStore && globalStore.dispatch) {
             globalStore.dispatch({
-              type: "setToken",
+              type: "reduxSetToken",
               value: token
             });
           }
         }
+      } else if (state.tokenInfo === null) {
+        // 清空store(null变为{})
+        dispatch({
+          type: storeAuthReducerTypes.setToken,
+          value: { token: "" }
+        });
+        // 清空redux
+        if (globalStore && globalStore.dispatch) {
+          globalStore.dispatch({
+            type: "reduxSetToken",
+            value: ""
+          });
+        }
+        // 清空sesstion
+        setSession(constValue.AUTHKEY, "");
       }
-    );
+    });
   }, [state.tokenInfo]);
 
   // 从storage中回补
@@ -93,27 +112,18 @@ export function StoreAuthContextProvider(props: any) {
           value: { token: cookieInfo }
         });
       }
-      // if (!isServer()) {
-      //   if (document.cookie) {
-      //     const cookieInfo = document.cookie.split(constValue.AUTHKEY + "=");
-      //     if (cookieInfo && cookieInfo.length) {
-      //       dispatch({
-      //         type: storeAuthReducerTypes.setToken,
-      //         value: { token: cookieInfo[1] }
-      //       });
-      //     }
-      //   }
-      // }
+    });
+
+    callBackWhenPassAllFunc([], () => {
+      // 当ajax判定403过期的时候.清空store
+      globalStore.subscribe(() => {
+        if (globalStore.getState().token === null) {
+          // 登出
+          userLogout();
+        }
+      });
     });
   }, []);
-
-  // 当ajax判定403过期的时候.清空store
-  globalStore.subscribe(() => {
-    if (!globalStore.getState().token) {
-      // 登出
-      userLogout();
-    }
-  });
 
   const propsValue: IStoreAuthContext = {
     ...action,
@@ -249,13 +259,13 @@ function useGetAction(
       if (password) {
         try {
           const res = await userRegister({ email: authInfo.email, password });
-          dispatch({
-            type: storeAuthReducerTypes.setRegisterInfo,
-            value: {
-              email: authInfo.email,
-              password: password
-            }
-          });
+          // dispatch({
+          //   type: storeAuthReducerTypes.setRegisterInfo,
+          //   value: {
+          //     email: authInfo.email,
+          //     password: password
+          //   }
+          // });
           promiseStatus.current.resolve(res);
         } catch (e) {
           console.error(e);
@@ -273,17 +283,8 @@ function useGetAction(
       // 清空store
       dispatch({
         type: storeAuthReducerTypes.setToken,
-        value: {}
+        value: null
       });
-      // 清空redux
-      if (globalStore && globalStore.dispatch) {
-        globalStore.dispatch({
-          type: "setToken",
-          value: ""
-        });
-      }
-      // 清空sesstion
-      setSession(constValue.AUTHKEY, "");
     }
   };
   actions.userLogin = useCallback(actions.userLogin, []);

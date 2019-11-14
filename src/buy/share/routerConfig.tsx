@@ -26,6 +26,12 @@ export const routerConfig = [
     getInitialProps: ourHomeSsrRule
   },
   {
+    path: "/order",
+    title: "Check out - Information | Uptradeit.com",
+    Component: OrderRouter,
+    header: "hide"
+  },
+  {
     path: getProductListPath(),
     title: "Buy Used Cell Phones | UpTradeit.com",
     Component: ProductList,
@@ -61,12 +67,6 @@ export const routerConfig = [
     path: "/buy/checkorder",
     title: "",
     Component: BuyCheckOrder
-  },
-  {
-    path: "/buy",
-    title: "Check out - Information | Uptradeit.com",
-    Component: OrderRouter,
-    header: "hide"
   },
   {
     path: "/",
