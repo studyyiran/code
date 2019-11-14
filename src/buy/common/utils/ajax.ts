@@ -1,5 +1,6 @@
 import Axios from "axios";
 import { globalStore } from "../store";
+import { constValue } from "../constValue";
 interface IAjax {
   get: (url: string, data?: any) => void;
   post: (url: string, data?: any) => void;
@@ -85,6 +86,16 @@ ajax.get = function(url, data) {
 };
 
 ajax.fetch = function(config) {
+  // 暂时插入处理函数
+  if (globalStore) {
+    const state = globalStore.getState();
+    const authToken = state.token;
+    if (authToken && config.url.indexOf('auth') !== -1) {
+      config.headers = {};
+      config.headers[constValue.AUTHKEY] = authToken;
+    }
+  }
+
   return new Promise((resolve, reject) => {
     Axios(config)
       .then(res => {
@@ -106,7 +117,8 @@ ajax.fetch = function(config) {
         const { code } = e;
         if (code === 403) {
           globalStore.dispatch({
-            type: "clearToken"
+            type: "setToken",
+            value: ""
           });
         }
         // catch 404 500异常

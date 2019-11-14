@@ -17,15 +17,18 @@ export function NewBuyNotice(props: any): any {
 
   function getTopData() {
     ajax.post(BUY_ORDER_LASTEST).then(res => {
-      dataList = res.data.data.map((d: any) => {
-        d.productPicPC = d.productPicPC
-          ? d.productPicPC
-          : require("../../img/certified.png");
-        d.productPicM = d.productPicM
-          ? d.productPicM
-          : require("../../img/certified.png");
-        return d;
-      });
+      dataList =
+        res && res.data && res.data.data
+          ? res.data.data.map((d: any) => {
+              d.productPicPC = d.productPicPC
+                ? d.productPicPC
+                : require("../../img/certified.png");
+              d.productPicM = d.productPicM
+                ? d.productPicM
+                : require("../../img/certified.png");
+              return d;
+            })
+          : [];
       if (dataList.length < 12) {
         setChooseData({
           customer: "",

@@ -168,6 +168,16 @@ export function getProductListPath() {
   return "/buy-phone";
 }
 
+export function getLocationUrl(type: string) {
+  switch (type) {
+    case "login": {
+      return "/user-login";
+    }
+    default:
+      return "";
+  }
+}
+
 //用于sell跳转以及buy的spa路由跳转
 export const sellPageGoTo = function(url: any, isBuy?: boolean) {
   locationHref(url);
@@ -196,6 +206,24 @@ export async function callBackWhenPassAllFunc(arr: any[], callBack: any) {
   });
   if (result1 && result2) {
     callBack();
+  }
+}
+
+export function getUrlAllParams() {
+  if (!isServer()) {
+    let url = decodeURI(window.location.href);
+    let res = {} as any;
+    let url_data = url.split("?").length > 1 ? url.split("?")[1] : null;
+    if (!url_data) return null;
+    let params_arr = url_data.split("&");
+    params_arr.forEach(function(item) {
+      let key = item.split("=")[0];
+      let value = item.split("=")[1];
+      res[key] = value;
+    });
+    return res;
+  } else {
+    return null;
   }
 }
 

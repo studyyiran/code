@@ -7,13 +7,15 @@ import UptradeProtect from "../pages/statics/uptrade-protect";
 import UptradePolicy from "../pages/statics/policy";
 import Home from "../pages/home";
 import React from "react";
-import { getProductListPath } from "../common/utils/util";
+import {getLocationUrl, getProductListPath} from "../common/utils/util";
 import { detailSsrRule } from "../pages/detail/ssr";
 import { ourHomeSsrRule } from "../pages/home/ssr";
 import BuyCheckOrder from "../pages/checkOrder/routers";
 import DetailPreviewWrapper from "../pages/detail/detailPreviewWrapper";
 import PersonalLogin from "../pages/personal/pages/login";
 import AccountPage from "../pages/personal/pages/account";
+import UserRegister from "../pages/personal/pages/register";
+import UserRegisterEmail from "../pages/personal/pages/registerEmail";
 
 export const routerConfig = [
   {
@@ -73,18 +75,30 @@ export const routerConfig = [
     Component: Home,
     getInitialProps: ourHomeSsrRule
   },
-  // {
-  //   path: "/login",
-  //   title: "???",
-  //   exact: true,
-  //   Component: PersonalLogin
-  // },
-  // {
-  //   path: "/account",
-  //   title: "???",
-  //   exact: true,
-  //   Component: AccountPage
-  // }
+  {
+    path: getLocationUrl('login'),
+    title: "???",
+    exact: true,
+    Component: PersonalLogin
+  },
+  {
+    path: "/user-account",
+    title: "???",
+    exact: true,
+    Component: AccountPage
+  },
+  {
+    path: "/user-register",
+    title: "???",
+    exact: true,
+    Component: UserRegister
+  },
+  {
+    path: "/user-register-email/:token",
+    title: "???",
+    exact: true,
+    Component: UserRegisterEmail
+  }
   // {
   //   title: "404 | UpTradeit.com",
   //   Component: () => <div>404</div>
