@@ -532,7 +532,7 @@ function CheckOutButton(props: any) {
         }
         // 2 短暂delay
         window.setTimeout(() => {
-          locationHref("/order/info");
+          locationHref("/buy/info");
         }, 100);
       }}
     >
