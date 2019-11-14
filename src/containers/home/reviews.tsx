@@ -6,6 +6,8 @@ import { ICommonProps, IReview } from "store/interface/common.interface";
 import "./reviews.less";
 import { Rate } from "antd";
 
+const defaultSelect = "rating"
+
 @inject("common")
 @observer
 export default class Reviews extends React.Component<ICommonProps> {
@@ -19,7 +21,7 @@ export default class Reviews extends React.Component<ICommonProps> {
     } else {
       this.props.common.getReviews({
         pageSize: 100,
-        order: "desc"
+        order: defaultSelect
       });
     }
   }
@@ -60,7 +62,7 @@ export default class Reviews extends React.Component<ICommonProps> {
             <Form className="form">
               {!this.props.common.reviewsPagation.rating && (
                 <Form.Item label="Sort by" className="form-item">
-                  <Select defaultValue="desc" onChange={this.handleChangeOrder}>
+                  <Select defaultValue={defaultSelect} onChange={this.handleChangeOrder}>
                     <Select.Option value="desc">Most Recent</Select.Option>
                     <Select.Option value="rating">Highest Rated</Select.Option>
                   </Select>
@@ -153,7 +155,7 @@ export default class Reviews extends React.Component<ICommonProps> {
     this.props.common.getReviews({
       page: 0,
       pageSize: 100,
-      order: "desc",
+      order: defaultSelect,
       min_rating: value,
       max_rating: value
     });
