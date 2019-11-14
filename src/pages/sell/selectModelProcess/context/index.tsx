@@ -513,7 +513,9 @@ function useGetAction(
                   name: item.inquiryInfo.submitted.productName,
                   price: Number(item.inquiryInfo.submitted.amount),
                   brand: item.inquiryInfo.submitted.brandName,
-                  quantity: 1
+                  quantity: 1,
+                  dimension1: false, //buyer
+                  dimension2: true //seller
                 };
               })
             });

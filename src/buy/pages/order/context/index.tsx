@@ -311,6 +311,7 @@ function useGetAction(
                       ? Number(Number(subOrderInfo.buyPrice).toFixed(2))
                       : -1,
                     brand: subOrderInfo ? subOrderInfo.brandDisplayName : "",
+                    quantity: 1,
                     dimension1: true, //buyer
                     dimension2: false, //seller
                     dimension3: state.userExpress, //update this USPS Parcel Select or USPS Priority
