@@ -24,12 +24,6 @@ export const routerConfig = [
     getInitialProps: ourHomeSsrRule
   },
   {
-    path: "/order",
-    title: "Check out - Information | Uptradeit.com",
-    Component: OrderRouter,
-    header: "hide"
-  },
-  {
     path: getProductListPath(),
     title: "Buy Used Cell Phones | UpTradeit.com",
     Component: ProductList,
@@ -67,24 +61,30 @@ export const routerConfig = [
     Component: BuyCheckOrder
   },
   {
+    path: "/buy",
+    title: "Check out - Information | Uptradeit.com",
+    Component: OrderRouter,
+    header: "hide"
+  },
+  {
     path: "/",
     title: "Buy Used Phones | Sell My Phone | UpTradeit.com",
     exact: true,
     Component: Home,
     getInitialProps: ourHomeSsrRule
   },
-  {
-    path: "/login",
-    title: "???",
-    exact: true,
-    Component: PersonalLogin
-  },
-  {
-    path: "/account",
-    title: "???",
-    exact: true,
-    Component: AccountPage
-  }
+  // {
+  //   path: "/login",
+  //   title: "???",
+  //   exact: true,
+  //   Component: PersonalLogin
+  // },
+  // {
+  //   path: "/account",
+  //   title: "???",
+  //   exact: true,
+  //   Component: AccountPage
+  // }
   // {
   //   title: "404 | UpTradeit.com",
   //   Component: () => <div>404</div>

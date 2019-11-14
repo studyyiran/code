@@ -314,9 +314,11 @@ Router.get("*", async (ctx: any, next: any) => {
     return;
   }
   // 匹配buy端路由，如果匹配的上并且组件存在，直接跳转buy端，否则跳转sell端
+  console.log(ctx.path)
   const current = routerConfig.find((route: any) => {
     return !!matchPath(ctx.path, route);
   });
+  console.log(current)
   if (current && current.Component) {
     console.log("buy page");
     return await gotoBuy(ctx, next, current);
