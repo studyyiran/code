@@ -74,7 +74,7 @@ TRANSACTION_SUCCEED(8, "Transaction Success", "Transaction Success")
           img: OrderPlacedIcon
         },
         {
-          name: "Order Cancelled",
+          name: "Order Refunded",
           img: OrderCompleteIcon
         }
       ];

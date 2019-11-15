@@ -178,7 +178,7 @@ class CheckOrderNo extends React.Component<any, any> {
       }
     } catch (e) {
       this.setState({
-        formError: e.resultMessage
+        formError: "The email address does not match the order number"
       });
     }
   };
