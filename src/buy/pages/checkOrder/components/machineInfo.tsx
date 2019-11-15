@@ -4,7 +4,7 @@ import { currencyTrans, staticContentConfig } from "../../../common/utils/util";
 import RouterLink from "../../../components/routerLink";
 
 export default function MachineInfo(props: any) {
-  const { productInfo } = props;
+  const { productInfo, tax, protection } = props;
   const {
     productDisplayName,
     buyLevel,
@@ -13,6 +13,19 @@ export default function MachineInfo(props: any) {
     buyProductId,
     productPns
   } = productInfo;
+  function calcTotal() {
+    let totalPrice = 0;
+    if (buyPrice) {
+      totalPrice += Number(buyPrice);
+    }
+    if (tax) {
+      totalPrice += Number(tax);
+    }
+    if (protection) {
+      totalPrice += Number(protection);
+    }
+    return currencyTrans(totalPrice);
+  }
   return (
     <div className="comp-order-machineInfo">
       <ul className="information-list">
@@ -41,7 +54,7 @@ export default function MachineInfo(props: any) {
       </ul>
       <p className="total">
         <span>Price</span>
-        <span>{currencyTrans(buyPrice)}</span>
+        <span>{calcTotal()}</span>
       </p>
     </div>
   );
