@@ -32,16 +32,20 @@ export default function Footer(props: any) {
                   return (
                     <ul className="item" key={title}>
                       <h2>{title}</h2>
-                      {arr.map(({ subTitle, href, isBuy }: any) => {
+                      {arr.map(({ subTitle, href, Component, isBuy }: any) => {
                         return (
                           <li key={subTitle}>
-                            <RouterLink
-                              isBuy={isBuy}
-                              to={href}
-                              onClick={() => {}}
-                            >
-                              {subTitle}
-                            </RouterLink>
+                            {Component ? (
+                              <Component />
+                            ) : (
+                              <RouterLink
+                                isBuy={isBuy}
+                                to={href}
+                                onClick={() => {}}
+                              >
+                                {subTitle}
+                              </RouterLink>
+                            )}
                           </li>
                         );
                       })}
@@ -90,7 +94,9 @@ export function MbFooter(props: any): any {
                     }
                   }}
                 >
-                  <RouterLink to={href} isBuy={isBuy}>{subTitle}</RouterLink>
+                  <RouterLink to={href} isBuy={isBuy}>
+                    {subTitle}
+                  </RouterLink>
                 </li>
               );
             })}

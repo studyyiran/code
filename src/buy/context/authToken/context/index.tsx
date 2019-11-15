@@ -25,6 +25,7 @@ import {
   userActive,
   userActiveEmailResend
 } from "../server";
+import { Message } from "../../../components/message";
 
 export const StoreAuthContext = createContext({});
 
@@ -268,7 +269,7 @@ function useGetAction(
           // });
           promiseStatus.current.resolve(res);
         } catch (e) {
-          console.error(e);
+          Message.error(e && e.resultMessage ? e.resultMessage : "error");
         }
       }
       dispatch({

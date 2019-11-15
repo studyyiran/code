@@ -15,11 +15,16 @@ export default function Header() {
     return (
       <Menu>
         {arr.map((item: any, index: any) => {
+          const { href, subTitle, Component } = item;
           return (
             <Menu.Item key={index}>
-              <RouterLink to={item.href} isBuy={item.isBuy}>
-                {item.subTitle}
-              </RouterLink>
+              {Component ? (
+                <Component />
+              ) : (
+                <RouterLink to={href} isBuy={item.isBuy}>
+                  {subTitle}
+                </RouterLink>
+              )}
             </Menu.Item>
           );
         })}

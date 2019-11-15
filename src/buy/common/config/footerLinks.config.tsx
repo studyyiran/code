@@ -1,4 +1,6 @@
 import getSellPath, {getProductListPath} from "../utils/util";
+import RouterLink from "../../components/routerLink";
+import {LoginButton} from "../../pages/personal/components/loginButton";
 
 const footerInfo = [
   {
@@ -69,6 +71,9 @@ const footerInfo = [
     title: "Account",
     className: "",
     arr: [
+      {
+        Component: LoginButton,
+      },
       {
         subTitle: "Check My Order",
         href: "/check-order"

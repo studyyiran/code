@@ -10,6 +10,7 @@ import {
   sellPageGoTo
 } from "../../../../common/utils/util";
 import useResetProductList from "../../../productList/useHook/useResetProductList";
+import { LoginWrapper } from "../../../personal/components/loginButton";
 
 export default function Confirmation(props: any) {
   const orderInfoContext = useContext(OrderInfoContext);
@@ -72,11 +73,19 @@ export default function Confirmation(props: any) {
           Sell your old phone >
         </div>
 
-        {/*<div className={"or"}>OR</div>*/}
-        {/*<div className={"button-wrapper create-account"}>*/}
-        {/*  <button className="common-button">Create an account</button>*/}
-        {/*</div>*/}
-        <PostDataImg />
+        <LoginWrapper
+          renderNotLogin={({ url }: any) => (
+            <div>
+              <div className={"or"}>OR</div>
+              <div className={"button-wrapper create-account"}>
+                <button className="common-button">
+                  <RouterLink to={url}>Create an account</RouterLink>
+                </button>
+              </div>
+              <PostDataImg />
+            </div>
+          )}
+        />
       </div>
     </div>
   );
