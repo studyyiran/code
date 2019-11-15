@@ -110,11 +110,6 @@ export default function ProductList(props: any) {
               });
             }
           }
-          dataReport({
-            event: "buyerSearch",
-            searchterm: searchValues,
-            network: answer.join(",")
-          });
         }
       }
     } catch (e) {

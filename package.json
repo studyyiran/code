@@ -98,6 +98,7 @@
   },
   "scripts": {
     "start": "cross-env REACT_APP_SERVER_ENV=DEV node scripts/start.js",
+    "startbuy": "cross-env REACT_APP_SERVER_ENV=DEV node scripts/startbuy.js",
     "uat": "cross-env REACT_APP_SERVER_ENV=UAT node scripts/build.js",
     "uatbuy": "cross-env REACT_APP_SERVER_ENV=UAT node scripts/buildbuy.js",
     "pre": "cross-env REACT_APP_SERVER_ENV=PRE node scripts/build.js",
