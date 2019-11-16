@@ -357,8 +357,8 @@ class YourPayment extends React.Component<IPaymentProps, IPaymentStates> {
             <span>- No Fees</span>
           </header>
           <p className="description">
-            eChecks works just like regular checks. We email it to you and you
-            print it. After you print, it works just like a regular check.
+            An eCheck is an electronic paper check we send via email that you
+            print out and deposit at any bank of your choosing.
           </p>
           {rightContent}
         </div>

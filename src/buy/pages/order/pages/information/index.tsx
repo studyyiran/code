@@ -285,7 +285,7 @@ function PureForm(props: any) {
   return (
     <div className={"page-infomation-container"}>
       {!props.hideTitle ? (
-        <h2 className="order-common-less-title">Customer Information</h2>
+        <h2 className="order-common-less-title">Shipping Address</h2>
       ) : null}
       <div className="container">{infomationHTML}</div>
       {renderButton(handleNext)}
