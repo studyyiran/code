@@ -34,7 +34,7 @@ export default function ButtonGroup(props: any) {
         }}
         disabled={disabled || isLoading}
       >
-        {children ? children : "Continue to shipping"}
+        {children ? children : "Continue"}
         {isLoading ? <Loading /> : null}
       </button>
     </div>

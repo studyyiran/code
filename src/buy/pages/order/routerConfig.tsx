@@ -17,7 +17,7 @@ export const routerConfig: {
 }[] = [
   {
     title: "Check out - Information | Uptradeit.com",
-    continueButton: "Continue to shipping",
+    continueButton: "Continue",
     backButton: "< Back to store",
     relativePath: "info",
     name: "Information",
