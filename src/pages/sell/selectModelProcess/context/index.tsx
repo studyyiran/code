@@ -504,20 +504,26 @@ function useGetAction(
           try {
             dataReport({
               event: "transaction",
-              transactionId: groupOrderNo,
-              transactionAffiliation: "Up Trade",
-              transactionTotal: (window as any).netPayout,
-              transactionProducts: subOrders.map((item: any) => {
-                return {
-                  sku: String(item.inquiryInfo.submitted.productId),
-                  name: item.inquiryInfo.submitted.productName,
-                  price: Number(item.inquiryInfo.submitted.amount),
-                  brand: item.inquiryInfo.submitted.brandName,
-                  quantity: 1,
-                  dimension1: false, //buyer
-                  dimension2: true //seller
-                };
-              })
+              ecommerce: {
+                purchase: {
+                  actionField: {
+                    id: groupOrderNo,
+                    affiliation: "Up Trade",
+                    revenue: (window as any).netPayout
+                  },
+                  products: subOrders.map((item: any) => {
+                    return {
+                      sku: String(item.inquiryInfo.submitted.productId),
+                      name: item.inquiryInfo.submitted.productName,
+                      price: Number(item.inquiryInfo.submitted.amount),
+                      brand: item.inquiryInfo.submitted.brandName,
+                      quantity: 1,
+                      dimension1: false, //buyer
+                      dimension2: true //seller
+                    };
+                  })
+                }
+              }
             });
           } catch (e) {
             console.error(e);

@@ -291,33 +291,34 @@ function useGetAction(
             try {
               dataReport({
                 event: "buyerTransaction",
-                transactionId: res,
-                transactionAffiliation: "Up Trade",
-                transactionTotal: calcTotalPrice(),
-                transactionTax:
-                  state.taxInfo && state.taxInfo.totalTax
-                    ? Number(state.taxInfo.totalTax)
-                    : 0,
-                transactionShipping: getShippingPrice(),
-                transactionProducts: state.subOrders.map((item: any) => {
-                  const { productId, needProtection } = item;
-                  const subOrderInfo: any = state.phoneDetailList.find(item => {
-                    return String(item.buyProductId) === String(productId);
-                  });
-                  return {
-                    sku: String(productId),
-                    name: subOrderInfo ? subOrderInfo.productDisplayName : "",
-                    price: subOrderInfo
-                      ? Number(Number(subOrderInfo.buyPrice).toFixed(2))
-                      : -1,
-                    brand: subOrderInfo ? subOrderInfo.brandDisplayName : "",
-                    quantity: 1,
-                    dimension1: true, //buyer
-                    dimension2: false, //seller
-                    dimension3: state.userExpress, //update this USPS Parcel Select or USPS Priority
-                    dimension4: needProtection ? "yes" : "no" // if they select UpTrade Protect which is our $5/month insurance plan
-                  };
-                })
+                ecommerce: {
+                  purchase: {
+                    actionField: {
+                      id: res,
+                      affiliation: "Up Trade",
+                      revenue: calcTotalPrice()
+                    },
+                    products: state.subOrders.map((item: any) => {
+                      const { productId, needProtection } = item;
+                      const subOrderInfo: any = state.phoneDetailList.find(item => {
+                        return String(item.buyProductId) === String(productId);
+                      });
+                      return {
+                        sku: String(productId),
+                        name: subOrderInfo ? subOrderInfo.productDisplayName : "",
+                        price: subOrderInfo
+                          ? Number(Number(subOrderInfo.buyPrice).toFixed(2))
+                          : -1,
+                        brand: subOrderInfo ? subOrderInfo.brandDisplayName : "",
+                        quantity: 1,
+                        dimension1: true, //buyer
+                        dimension2: false, //seller
+                        dimension3: state.userExpress, //update this USPS Parcel Select or USPS Priority
+                        dimension4: needProtection ? "yes" : "no" // if they select UpTrade Protect which is our $5/month insurance plan
+                      };
+                    })
+                  }
+                }
               });
             } catch (e) {
               console.error(e);

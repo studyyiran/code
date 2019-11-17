@@ -194,7 +194,8 @@ export default function ProductDetail(props: any) {
         brandDisplayName,
         buyPrice,
         productDisplayName,
-        buyProductBQV
+        buyProductBQV,
+        skuId,
       } = productDetail;
       if (safeEqual(id, productDetail.buyProductId)) {
         let bqvParams: any = {};
@@ -217,7 +218,17 @@ export default function ProductDetail(props: any) {
             condition: buyLevel, //update this
             productID: String(buyProductId), //update this
             price: Number(buyPrice), //update this
-            protectionPlan: false //update this
+            protectionPlan: false, //update this
+            ecommerce: {
+              currencyCode: 'USD',
+              detail: {
+                products: [{
+                  sku: String(skuId),
+                  name: productDisplayName,
+                  price: Number(buyPrice)
+                }]
+              }
+            }
           })
         );
       }
