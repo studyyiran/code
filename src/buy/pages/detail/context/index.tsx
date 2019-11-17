@@ -24,6 +24,7 @@ export interface IProductDetail {
   buyProductHistoryPdf: string; // pdf文件
   productDescription: string; // 富文本
   buyProductBQV: any; // attr描述
+  skuId: any; 
   productDisplayName: string;
   buyProductDate: string;
   buyProductId: string;

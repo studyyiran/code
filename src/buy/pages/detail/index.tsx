@@ -42,7 +42,7 @@ import {
 import { dataReport } from "../../common/dataReport";
 import Button from "../../components/button";
 import { useIsCurrentPage, useWhenUrlChange } from "../../common/useHook";
-import {constValue} from "../../common/constValue";
+import { constValue } from "../../common/constValue";
 function Swiper(props: any) {
   const { buyProductImgPc, buyProductImgM, buyProductVideo } = props;
   const maxNumber = 3;
@@ -161,7 +161,8 @@ export default function ProductDetail(props: any) {
     buyProductVideo,
     productDescription,
     buyProductHistoryPdf,
-    buyProductStatus
+    buyProductStatus,
+    skuId
   } = productDetail;
   // 依赖 采用基于依赖的写法,这行代码写在哪里就一点都不重要了.因为页面和刷新只不过是一种依赖条件而已.
   const id = useWhenUrlChange("productId");
@@ -194,7 +195,8 @@ export default function ProductDetail(props: any) {
         brandDisplayName,
         buyPrice,
         productDisplayName,
-        buyProductBQV
+        buyProductBQV,
+        skuId
       } = productDetail;
       if (safeEqual(id, productDetail.buyProductId)) {
         let bqvParams: any = {};
@@ -217,7 +219,19 @@ export default function ProductDetail(props: any) {
             condition: buyLevel, //update this
             productID: String(buyProductId), //update this
             price: Number(buyPrice), //update this
-            protectionPlan: false //update this
+            protectionPlan: false, //update this
+            ecommerce: {
+              currencyCode: "USD",
+              detail: {
+                products: [
+                  {
+                    sku: String(skuId),
+                    name: productDisplayName,
+                    price: Number(buyPrice)
+                  }
+                ]
+              }
+            }
           })
         );
       }
@@ -274,7 +288,24 @@ export default function ProductDetail(props: any) {
                   </div>
                 </div>
                 <StartBuyButton
-                  onClick={() => setShowModal(true)}
+                  onClick={() => {
+                    dataReport({
+                      event: "EEaddToCart",
+                      ecommerce: {
+                        currencyCode: "USD",
+                        add: {
+                          products: [
+                            {
+                              sku: String(skuId),
+                              name: productDisplayName,
+                              price: Number(buyPrice)
+                            }
+                          ]
+                        }
+                      }
+                    });
+                    setShowModal(true);
+                  }}
                   buyProductStatus={buyProductStatus}
                 />
               </div>
@@ -488,6 +519,21 @@ export default function ProductDetail(props: any) {
               needProtection={needProtection}
               onClick={() => {
                 setShowModal(false);
+                dataReport({
+                  event: "EEcheckout",
+                  ecommerce: {
+                    currencyCode: "USD",
+                    add: {
+                      products: [
+                        {
+                          sku: String(skuId),
+                          name: productDisplayName,
+                          price: Number(buyPrice)
+                        }
+                      ]
+                    }
+                  }
+                });
               }}
             />
             <PayCardImages />
