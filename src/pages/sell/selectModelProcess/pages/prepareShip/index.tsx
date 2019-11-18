@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./index.less";
 import VideoComponent from "components/video";
-import RouterLink from "components/routerLink";
 import {
   ISelectModelContext,
   SelectModelContext
@@ -11,6 +10,8 @@ import { Tabs } from "components/tabs";
 const { TabPane } = Tabs as any;
 // subOrders[0].shippingInfo.sendInfo[0].lableCode
 import { getFromSession } from "utils/util";
+import {LoginWrapper} from "../../../../../buy/common-modules/components/loginButton";
+import RouterLink from "../../../../../buy/common-modules/components/routerLink";
 
 const videoConfig = [
   {
@@ -125,6 +126,18 @@ export default function(props: any) {
             Go back home
           </a>
         </button>
+        <LoginWrapper
+          renderNotLogin={({ url }: any) => (
+            <div>
+              <div className={"or"}>OR</div>
+              <div className={"button-wrapper create-account"}>
+                <button className="common-button">
+                  <RouterLink to={url}>Create an account</RouterLink>
+                </button>
+              </div>
+            </div>
+          )}
+        />
       </div>
     );
   } else {
