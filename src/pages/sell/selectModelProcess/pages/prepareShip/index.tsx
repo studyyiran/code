@@ -130,7 +130,7 @@ export default function(props: any) {
           renderNotLogin={({ url }: any) => (
             <div>
               <div className={"or"}>OR</div>
-              <div className={"button-wrapper create-account"}>
+              <div className={"button-wrapper button-centered"}>
                 <button className="common-button">
                   <RouterLink to={url}>Create an account</RouterLink>
                 </button>
