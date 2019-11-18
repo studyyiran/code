@@ -5,12 +5,12 @@ import "./header.less";
 import { Collapse, Dropdown, Menu } from "antd";
 const { Panel } = Collapse;
 import {
-  footerInfo,
   MbFooter
 } from "containers/layout/components/footer/footer";
 import Svg from "components/svg";
 import RouterLink from "components/routerLink";
 import { RenderByCondition } from "containers/layout/components/footer/RenderByCondition";
+import footerInfo from "../../buy/common-modules/config/footerLinks.config";
 
 export default function Header() {
   const [openColl, setOpenColl] = useState(false);
