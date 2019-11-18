@@ -11,34 +11,20 @@ export default function RouterLink(props: {
   className?: any;
 }) {
   const { isBuy, onClick, to, ...other } = props;
-  function RenderA() {
-    return (
-      <a
-        href={`${to}`}
-        onClick={() => {
-          clickUrlHandler();
-          onClick && onClick();
-        }}
-        {...other}
-      />
-    );
-  }
-  
-  function RenderLink() {
+  // 必然返回 或者是
+  if (!isServer() && (isBuy || checkIsBuyUrl(to))) {
     return <Link onClick={onClick} {...other} to={to} />;
   }
-  if (isServer()) {
-    return <RenderA />
-  } else {
-    const {LOCATIONENV} = window as any
-    if (LOCATIONENV === 'buy' && checkIsBuyUrl(to)) {
-      return <RenderLink />
-    }
-    if (LOCATIONENV === 'sell' && !checkIsBuyUrl(to)) {
-      return <RenderLink />
-    }
-    return <RenderA />
-  }
+  return (
+    <a
+      href={`${to}`}
+      onClick={() => {
+        clickUrlHandler();
+        onClick && onClick();
+      }}
+      {...other}
+    />
+  );
 }
 
 function clickUrlHandler() {
