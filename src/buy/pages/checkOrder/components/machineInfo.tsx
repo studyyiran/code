@@ -1,7 +1,7 @@
 import * as React from "react";
 import "./machineInfo.less";
 import { currencyTrans, staticContentConfig } from "../../../common/utils/util";
-import RouterLink from "../../../components/routerLink";
+import RouterLink from "../../../common-modules/components/routerLink";
 
 export default function MachineInfo(props: any) {
   const { productInfo, tax, protection } = props;

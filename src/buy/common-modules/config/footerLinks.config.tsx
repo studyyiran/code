@@ -1,6 +1,5 @@
-import getSellPath, {getProductListPath} from "../utils/util";
-import RouterLink from "../../components/routerLink";
-import {LoginButton} from "../../pages/personal/components/loginButton";
+import getSellPath, {getProductListPath} from "../../common/utils/util";
+import {LoginButton} from "../components/loginButton";
 
 const footerInfo = [
   {

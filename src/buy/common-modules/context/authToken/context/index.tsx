@@ -13,21 +13,25 @@ import {
   promisify,
   setSession
 } from "buy/common/utils/util";
-import useReducerMiddleware from "../../../common/useHook/useReducerMiddleware";
-import { IContextValue } from "../../../common/type";
-import { useIsCurrentPage } from "../../../common/useHook";
-import { globalStore } from "../../../common/store";
-import { rsaPassWord } from "../../../common/utils/user-util";
-import { constValue } from "../../../common/constValue";
+import useReducerMiddleware from "../../../../common/useHook/useReducerMiddleware";
+import { IContextValue } from "../../../../common/type";
+import { useIsCurrentPage } from "../../../../common/useHook";
+import { globalStore } from "../../../../common/store";
+import { rsaPassWord } from "../../../../common/utils/user-util";
+import { constValue } from "../../../../common/constValue";
 import {
   userLogin,
   userRegister,
   userActive,
-  userActiveEmailResend
+  userActiveEmailResend,
+  currentUserInfo
 } from "../server";
-import { Message } from "../../../components/message";
+import { Message } from "../../../../components/message";
 
-export const StoreAuthContext = createContext({});
+export const StoreAuthContext = createContext({
+  storeAuthContextValue: {},
+  storeAuthContextDispatch: {}
+});
 
 // store name
 export const StoreAuth = "StoreAuth";
@@ -36,6 +40,14 @@ interface IContextState {
   tokenInfo: {
     token: string;
     cookieExpired: number;
+  };
+  userInfo: {
+    id: number;
+    firstName: string;
+    lastName: string;
+    name: string;
+    email: string;
+    addressList: any[];
   };
   registerInfo: any;
   isLoading: any;
@@ -57,6 +69,7 @@ export function StoreAuthContextProvider(props: any) {
   const initState: IContextState = {
     tokenInfo: {} as any,
     registerInfo: {} as any,
+    userInfo: {} as any,
     isLoading: {}
   };
   const [state, dispatch] = useReducer(
@@ -64,8 +77,6 @@ export function StoreAuthContextProvider(props: any) {
     initState
   );
   const action: IStoreAuthActions = useGetAction(state, dispatch);
-
-  const isPage = useIsCurrentPage("/test");
 
   const { userLogout } = action;
   // @useEffect
@@ -126,6 +137,28 @@ export function StoreAuthContextProvider(props: any) {
     });
   }, []);
 
+  // 如果有token变化就用token换取用户信息
+  useEffect(() => {
+    callBackWhenPassAllFunc(
+      [() => state.tokenInfo && state.tokenInfo.token],
+      () => {
+        if (!isServer()) {
+          // 这块可能更新不的时候 redux还没有更新 做延迟处理.
+          window.setTimeout(() => {
+            action.getCurrentUserInfo();
+          }, 10);
+        }
+      }
+    );
+  }, [state.tokenInfo]);
+
+  // 只要token发生变化 直接粗暴清空
+  useEffect(() => {
+    callBackWhenPassAllFunc([], () => {
+      action.resetUserInfo();
+    });
+  }, [state.tokenInfo]);
+
   const propsValue: IStoreAuthContext = {
     ...action,
     storeAuthContextValue: state,
@@ -141,6 +174,8 @@ export interface IStoreAuthActions {
   userActive: (token: string) => any;
   userActiveEmailResend: (token: string) => any;
   userLogout: () => void;
+  getCurrentUserInfo: () => any;
+  resetUserInfo: () => any;
 }
 
 // useCreateActions
@@ -286,12 +321,27 @@ function useGetAction(
         type: storeAuthReducerTypes.setToken,
         value: null
       });
-    }
+    },
+    resetUserInfo: function() {
+      dispatch({
+        type: storeAuthReducerTypes.setUserInfo,
+        value: {}
+      });
+    },
+    getCurrentUserInfo: promisify(async function() {
+      const res = await currentUserInfo();
+      dispatch({
+        type: storeAuthReducerTypes.setUserInfo,
+        value: res
+      });
+    })
   };
   actions.userLogin = useCallback(actions.userLogin, []);
   actions.userLogout = useCallback(actions.userLogout, []);
   actions.userRegister = useCallback(actions.userRegister, []);
   actions.userActive = useCallback(actions.userActive, []);
+  actions.getCurrentUserInfo = useCallback(actions.getCurrentUserInfo, []);
+  actions.resetUserInfo = useCallback(actions.resetUserInfo, []);
   return actions;
 }
 
@@ -299,7 +349,8 @@ function useGetAction(
 export const storeAuthReducerTypes = {
   setToken: "setToken",
   setRegisterInfo: "setRegisterInfo",
-  setLoadingObjectStatus: "setLoadingObjectStatus"
+  setLoadingObjectStatus: "setLoadingObjectStatus",
+  setUserInfo: "setUserInfo"
 };
 
 // reducer
@@ -328,6 +379,13 @@ function reducer(state: IContextState, action: IReducerAction) {
           ...newState.isLoading,
           ...value
         }
+      };
+      break;
+    }
+    case storeAuthReducerTypes.setUserInfo: {
+      newState = {
+        ...newState,
+        userInfo: value
       };
       break;
     }

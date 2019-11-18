@@ -7,14 +7,14 @@ import { FormWrapper } from "../../../../components/formWrapper";
 import {
   IStoreAuthContext,
   StoreAuthContext
-} from "../../../../context/authToken/context";
+} from "../../../../common-modules/context/authToken/context";
 import Button from "../../../../components/button";
 import { locationHref } from "../../../../common/utils/routerHistory";
 import {
   callBackWhenPassAllFunc,
   getUrlAllParams
 } from "../../../../common/utils/util";
-import RouterLink from "../../../../components/routerLink";
+import RouterLink from "../../../../common-modules/components/routerLink";
 import { RenderByCondition } from "../../../../components/RenderByCondition";
 
 export default function PersonalLogin() {

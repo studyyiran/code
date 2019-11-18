@@ -22,7 +22,7 @@ import {
   storeCheckOrderReducerTypes
 } from "../context";
 import Button from "../../../components/button";
-import RouterLink from "../../../components/routerLink";
+import RouterLink from "../../../common-modules/components/routerLink";
 import Svg from "../../../components/svg";
 import {
   callBackWhenPassAllFunc,

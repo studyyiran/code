@@ -3,14 +3,14 @@ import "./index.less";
 import { useContext, useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import RouterLink from "../../../../components/routerLink";
+import RouterLink from "../../../../common-modules/components/routerLink";
 import { IOrderInfoContext, OrderInfoContext } from "../../context";
 import {
   getProductListPath,
   sellPageGoTo
 } from "../../../../common/utils/util";
 import useResetProductList from "../../../productList/useHook/useResetProductList";
-import { LoginWrapper } from "../../../personal/components/loginButton";
+import { LoginWrapper } from "../../../../common-modules/components/loginButton";
 
 export default function Confirmation(props: any) {
   const orderInfoContext = useContext(OrderInfoContext);

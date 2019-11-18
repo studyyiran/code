@@ -1,11 +1,10 @@
 import React, { useContext } from "react";
-import RouterLink from "../../../../components/routerLink";
-import Button from "../../../../components/button";
-import { getLocationUrl } from "../../../../common/utils/util";
+import RouterLink from "../routerLink";
+import { getLocationUrl } from "../../../common/utils/util";
 import {
   IStoreAuthContext,
   StoreAuthContext
-} from "../../../../context/authToken/context";
+} from "../../context/authToken/context";
 
 export function LoginButton(props: any) {
   const storeAuthContext = useContext(StoreAuthContext);

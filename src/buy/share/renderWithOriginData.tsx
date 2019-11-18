@@ -8,7 +8,7 @@ import React from "react";
 import { OurHomeContextProvider } from "../pages/home/context";
 import { StoreCheckOrderContextProvider } from "../pages/checkOrder/context";
 import { TotalOrderInfoProvider } from "../pages/checkOrder/container/context";
-import { StoreAuthContextProvider } from "../context/authToken/context";
+import { StoreAuthContextProvider } from "../common-modules/context/authToken/context";
 import {AccountInfoContextProvider} from "../pages/personal/context";
 
 export function RenderWithOriginData(props: any) {

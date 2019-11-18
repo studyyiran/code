@@ -3,12 +3,12 @@ import "./index.less";
 import {
   IStoreAuthContext,
   StoreAuthContext
-} from "../../../../context/authToken/context";
+} from "../../../../common-modules/context/authToken/context";
 import Button from "../../../../components/button";
 import { Message } from "../../../../components/message";
 import { getUrlAllParams } from "../../../../common/utils/util";
 import { useParams } from "react-router-dom";
-import RouterLink from "../../../../components/routerLink";
+import RouterLink from "../../../../common-modules/components/routerLink";
 import { RenderByCondition } from "../../../../components/RenderByCondition";
 
 export default function UserRegisterEmail() {

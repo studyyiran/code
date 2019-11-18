@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
 import "./index.less";
-import {AccountInfoContext, IAccountInfoContext} from "../../context";
+import {IStoreAuthContext, StoreAuthContext} from "../../../../common-modules/context/authToken/context";
 
 export default function AccountPage() {
-  const storeTestNameContext = useContext(AccountInfoContext);
+  const storeTestNameContext = useContext(StoreAuthContext);
   const {
-    accountInfoContextValue
-  } = storeTestNameContext as IAccountInfoContext;
-  const { userInfo } = accountInfoContextValue;
+    storeAuthContextValue
+  } = storeTestNameContext as IStoreAuthContext;
+  const { userInfo } = storeAuthContextValue;
   console.log(userInfo);
   return <div className="account-page">{userInfo && userInfo.email ? userInfo.email : 'empty'}</div>;
 }

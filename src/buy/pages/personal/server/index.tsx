@@ -4,9 +4,9 @@ import { getTestAjaxResultMock } from "./mock";
 /**
  * 首页相关
  * */
-export const currentUserInfoUrl = "/authorized/auth/website/current/user/info";
+export const userEditProfileUrl = "/authorized/auth/website/user/edit/profile";
 
-export async function currentUserInfo() {
-  const res: any = await ajax.get(currentUserInfoUrl);
+export async function userEditProfile(data: any) {
+  const res: any = await ajax.put(userEditProfileUrl, data);
   return res;
 }

@@ -29,7 +29,7 @@ import { protectPrice } from "../../common/config/staticConst";
 import { locationHref } from "../../common/utils/routerHistory";
 import VideoComponent from "../../components/video";
 import EditorResolver from "./components/editorResolver";
-import RouterLink from "../../components/routerLink";
+import RouterLink from "../../common-modules/components/routerLink";
 import PayCardImages from "./components/payCardImages";
 import { getDescArr, useGetProductImg } from "./util";
 import { TipsAllPass, TipsProtection } from "./context/staticData";
