@@ -5,8 +5,7 @@ import { Collapse, Form, message } from "antd";
 import { RenderByCondition } from "buy/components/RenderByCondition";
 import { GlobalSettingContext, IGlobalSettingContext } from "../../context";
 import footerInfo from "../../common-modules/config/footerLinks.config";
-import RouterLink from "../../common-modules/components/routerLink";
-import FooterComponent from "../../common-modules/components/footer";
+import RouterLink from "../routerLink";
 
 const { Panel } = Collapse;
 
@@ -33,7 +32,23 @@ export default function Footer(props: any) {
                   return (
                     <ul className="item" key={title}>
                       <h2>{title}</h2>
-                      <FooterComponent arr={arr} />
+                      {arr.map(({ subTitle, href, Component, isBuy }: any) => {
+                        return (
+                          <li key={subTitle}>
+                            {Component ? (
+                              <Component />
+                            ) : (
+                              <RouterLink
+                                isBuy={isBuy}
+                                to={href}
+                                onClick={() => {}}
+                              >
+                                {subTitle}
+                              </RouterLink>
+                            )}
+                          </li>
+                        );
+                      })}
                     </ul>
                   );
                 })}
@@ -69,7 +84,22 @@ export function MbFooter(props: any): any {
       <ul className="item" key={title}>
         <Collapse expandIconPosition="right">
           <Panel header={<h2>{title}</h2>} key={title}>
-            <FooterComponent arr={arr} onClickHandler={onClickHandler}/>
+            {arr.map(({ subTitle, href, isBuy }: any) => {
+              return (
+                <li
+                  key={subTitle}
+                  onClick={() => {
+                    if (onClickHandler) {
+                      onClickHandler();
+                    }
+                  }}
+                >
+                  <RouterLink to={href} isBuy={isBuy}>
+                    {subTitle}
+                  </RouterLink>
+                </li>
+              );
+            })}
           </Panel>
         </Collapse>
       </ul>

@@ -28,10 +28,7 @@ import {
 } from "../server";
 import { Message } from "../../../../components/message";
 
-export const StoreAuthContext = createContext({
-  storeAuthContextValue: {},
-  storeAuthContextDispatch: {}
-});
+export const StoreAuthContext = createContext({});
 
 // store name
 export const StoreAuth = "StoreAuth";
@@ -139,17 +136,14 @@ export function StoreAuthContextProvider(props: any) {
 
   // 如果有token变化就用token换取用户信息
   useEffect(() => {
-    callBackWhenPassAllFunc(
-      [() => state.tokenInfo && state.tokenInfo.token],
-      () => {
-        if (!isServer()) {
-          // 这块可能更新不的时候 redux还没有更新 做延迟处理.
-          window.setTimeout(() => {
-            action.getCurrentUserInfo();
-          }, 10);
-        }
+    callBackWhenPassAllFunc([() => state.tokenInfo && state.tokenInfo.token], () => {
+      if (!isServer()) {
+        // 这块可能更新不的时候 redux还没有更新 做延迟处理.
+        window.setTimeout(() => {
+          action.getCurrentUserInfo();
+        }, 10);
       }
-    );
+    });
   }, [state.tokenInfo]);
 
   // 只要token发生变化 直接粗暴清空

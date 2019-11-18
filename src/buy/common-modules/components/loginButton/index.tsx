@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import RouterLink from "../routerLink";
+import RouterLink from "../../../components/routerLink";
 import { getLocationUrl } from "../../../common/utils/util";
 import {
   IStoreAuthContext,

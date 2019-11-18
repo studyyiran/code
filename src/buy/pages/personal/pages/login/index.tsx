@@ -14,7 +14,7 @@ import {
   callBackWhenPassAllFunc,
   getUrlAllParams
 } from "../../../../common/utils/util";
-import RouterLink from "../../../../common-modules/components/routerLink";
+import RouterLink from "../../../../components/routerLink";
 import { RenderByCondition } from "../../../../components/RenderByCondition";
 
 export default function PersonalLogin() {

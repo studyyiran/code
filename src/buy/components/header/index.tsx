@@ -3,17 +3,33 @@ import "./index.less";
 import { Collapse, Dropdown, Menu } from "antd";
 import { MbFooter } from "buy/components/footer";
 import Svg from "buy/components/svg";
-import RouterLink from "buy/common-modules/components/routerLink";
+import RouterLink from "buy/components/routerLink";
 import { RenderByCondition } from "../RenderByCondition";
 import footerInfo from "../../common-modules/config/footerLinks.config";
-import HeaderComponent from "../../common-modules/components/header";
 
 const { Panel } = Collapse;
 
 export default function Header() {
   const [openColl, setOpenColl] = useState(false);
   function renderArr(arr: any) {
-    return <HeaderComponent arr={arr} />;
+    return (
+      <Menu>
+        {arr.map((item: any, index: any) => {
+          const { href, subTitle, Component } = item;
+          return (
+            <Menu.Item key={index}>
+              {Component ? (
+                <Component />
+              ) : (
+                <RouterLink to={href} isBuy={item.isBuy}>
+                  {subTitle}
+                </RouterLink>
+              )}
+            </Menu.Item>
+          );
+        })}
+      </Menu>
+    );
   }
   const RenderBackHome = () => (
     <RouterLink to="/">
