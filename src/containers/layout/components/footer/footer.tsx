@@ -9,6 +9,7 @@ import {
 } from "pages/sell/selectModelProcess/context";
 import RouterLink from "components/routerLink";
 import footerInfo from "../../../../buy/common-modules/config/footerLinks.config";
+import FooterComponent from "../../../../buy/common-modules/components/footer";
 
 const { Panel } = Collapse;
 
@@ -22,17 +23,7 @@ export default class Footer extends React.Component<{}, IFooterState> {
   };
   public render() {
     function RenderFunc(props: any) {
-      return props.arr.map(({ subTitle, href, isBuy }: any) => {
-        return (
-          <li key={subTitle}>
-            <RouterLink to={href} isBuy={isBuy}>
-              <span style={{ cursor: "pointer" }} onClick={clickUrlHandler}>
-                {subTitle}
-              </span>
-            </RouterLink>
-          </li>
-        );
-      });
+      return <FooterComponent arr={props.arr} />
     }
     return (
       <footer className="comp-footer">
@@ -102,30 +93,12 @@ function clickUrlHandler() {
 
 export function MbFooter(props: any): any {
   const { onClickHandler } = props;
-  return footerInfo.map(({ className, title, arr }: any) => {
+  return footerInfo.map(({ title, arr }: any) => {
     return (
       <ul className="item" key={title}>
         <Collapse expandIconPosition="right">
           <Panel header={<h2>{title}</h2>} key={title}>
-            {arr.map(({ subTitle, href, isBuy }: any) => {
-              return (
-                <li
-                  key={subTitle}
-                  onClick={() => {
-                    if (onClickHandler) {
-                      onClickHandler();
-                    }
-                    if (clickUrlHandler) {
-                      clickUrlHandler();
-                    }
-                  }}
-                >
-                  <RouterLink to={href} isBuy={isBuy}>
-                    <span style={{ cursor: "pointer" }}>{subTitle}</span>
-                  </RouterLink>
-                </li>
-              );
-            })}
+            <FooterComponent arr={arr} onClickHandler={onClickHandler} />
           </Panel>
         </Collapse>
       </ul>

@@ -11,23 +11,12 @@ import Svg from "components/svg";
 import RouterLink from "components/routerLink";
 import { RenderByCondition } from "containers/layout/components/footer/RenderByCondition";
 import footerInfo from "../../buy/common-modules/config/footerLinks.config";
+import HeaderComponent from "../../buy/common-modules/components/header";
 
 export default function Header() {
   const [openColl, setOpenColl] = useState(false);
   function renderArr(arr: any) {
-    return (
-      <Menu>
-        {arr.map((item: any, index: any) => {
-          return (
-            <Menu.Item key={index}>
-              <RouterLink to={item.href} isBuy={item.isBuy}>
-                <span>{item.subTitle}</span>
-              </RouterLink>
-            </Menu.Item>
-          );
-        })}
-      </Menu>
-    );
+    return <HeaderComponent arr={arr} />
   }
   const RenderBackHome = () => (
     <RouterLink to={"/"} isBuy={true}>

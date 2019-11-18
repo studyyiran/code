@@ -8,6 +8,7 @@ import store from "./store";
 import { ModelContextProvider } from "./pages/sell/selectModelProcess/context";
 import { TotalOrderInfoProvider } from "./containers/order/container/context";
 import { DataReportConditionContextProvider } from "./pages/sell/selectModelProcess/condition/dataReport";
+import { StoreAuthContextProvider } from "./buy/common-modules/context/authToken/context";
 const setIsMobile = (fn?: () => void) => {
   const clientWidth = document.body.clientWidth;
   const confuseWidth = 0;
@@ -53,17 +54,20 @@ document.body.classList.add("isrender");
 export default () => {
   return (
     <Provider {...store}>
-      <TotalOrderInfoProvider>
-        <ModelContextProvider>
-          <BrowserRouter>
-            <DataReportConditionContextProvider>
-              <Layout>
-                <Switch>{renderRoutes(routes)}</Switch>
-              </Layout>
-            </DataReportConditionContextProvider>
-          </BrowserRouter>
-        </ModelContextProvider>
-      </TotalOrderInfoProvider>
+      {/*登录*/}
+      <StoreAuthContextProvider>
+        <TotalOrderInfoProvider>
+          <ModelContextProvider>
+            <BrowserRouter>
+              <DataReportConditionContextProvider>
+                <Layout>
+                  <Switch>{renderRoutes(routes)}</Switch>
+                </Layout>
+              </DataReportConditionContextProvider>
+            </BrowserRouter>
+          </ModelContextProvider>
+        </TotalOrderInfoProvider>
+      </StoreAuthContextProvider>
     </Provider>
   );
 };
