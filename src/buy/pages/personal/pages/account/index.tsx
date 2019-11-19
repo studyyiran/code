@@ -9,7 +9,6 @@ import NameAndEmail from "./components/nameAndEmail";
 import PasswordUpdateForm from "./components/passwordUpdate";
 import AddressFormUpdate from "./components/addressFormUpdate";
 
-const {RenderButton} = UpdateFormLayout
 
 export default function AccountPage() {
   const storeTestNameContext = useContext(StoreAuthContext);

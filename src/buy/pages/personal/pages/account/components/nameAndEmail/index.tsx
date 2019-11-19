@@ -5,7 +5,7 @@ import { AccountInfoContext, IAccountInfoContext } from "../../../../context";
 import { UpdateFormLayout } from "../updateFormLayout";
 import { hocFormCompare } from "../../../../../../common-modules/commonUtil";
 import { callBackWhenPassAllFunc } from "../../../../../../common/utils/util";
-const { RenderButton } = UpdateFormLayout;
+const { RenderButton } = UpdateFormLayout as any;
 
 export default function NameAndEmail(props: any) {
   const accountInfoContext = useContext(AccountInfoContext);

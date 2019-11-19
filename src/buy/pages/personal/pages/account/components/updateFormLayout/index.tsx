@@ -51,7 +51,7 @@ export function UpdateFormLayout(props: IHehe) {
   );
 }
 
-UpdateFormLayout.RenderButton = function RenderButton(props: any) {
+(UpdateFormLayout as any).RenderButton = function RenderButton(props: any) {
   const { onClick, ...others } = props;
   const shareContext = useContext(ShareContext);
   const { isEdit, setIsEdit } = shareContext as any;

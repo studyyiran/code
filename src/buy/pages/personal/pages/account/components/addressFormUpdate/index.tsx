@@ -11,7 +11,7 @@ import {
   IOrderInfoContext,
   OrderInfoContext
 } from "../../../../../order/context";
-const { RenderButton } = UpdateFormLayout;
+const { RenderButton } = UpdateFormLayout as any;
 
 export default function AddressFormUpdate(props: any) {
   const orderInfoContext = useContext(OrderInfoContext);

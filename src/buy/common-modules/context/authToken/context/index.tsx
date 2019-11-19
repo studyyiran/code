@@ -17,7 +17,6 @@ import {
 } from "buy/common/utils/util";
 import useReducerMiddleware from "../../../../common/useHook/useReducerMiddleware";
 import { IContextValue } from "../../../../common/type";
-import { useIsCurrentPage } from "../../../../common/useHook";
 import { globalStore } from "../../../../common/store";
 import { rsaPassWord } from "../../../../common/utils/user-util";
 import { constValue } from "../../../../common/constValue";
