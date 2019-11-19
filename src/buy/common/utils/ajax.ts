@@ -127,6 +127,8 @@ ajax.fetch = function(config) {
                 });
               }
             }
+            // 这块为什么主动扔出去?
+            // 这块应该加一个全局报错.
             rejectError(config, reject, {});
             // catch 404 500异常
           }

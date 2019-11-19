@@ -16,6 +16,8 @@ import PersonalLogin from "../pages/personal/pages/login";
 import AccountPage from "../pages/personal/pages/account";
 import UserRegister from "../pages/personal/pages/register";
 import UserRegisterEmail from "../pages/personal/pages/registerEmail";
+import UserForgetPassword from "../pages/personal/pages/userForgetPassword";
+import UserResetPassword from "../pages/personal/pages/userResetPassword";
 
 export const routerConfig = [
   {
@@ -98,7 +100,19 @@ export const routerConfig = [
     title: "???",
     exact: true,
     Component: UserRegisterEmail
-  }
+  },
+  {
+    path: "/user-forget-password",
+    title: "???",
+    exact: true,
+    Component: UserForgetPassword,
+  },
+  {
+    path: "/user-reset-password/:token",
+    title: "???",
+    exact: true,
+    Component: UserResetPassword
+  },
   // {
   //   title: "404 | UpTradeit.com",
   //   Component: () => <div>404</div>

@@ -156,7 +156,7 @@ interface IContextActions {
   getExpress: () => void;
   createOrder: (info: any) => any;
   startOrder: () => any;
-  zipCodeToAddressInfo: (zipCode: string) => any;
+  zipCodeToAddressInfo: (zipCode: string, form: any) => any;
   checkAddress: (info: any) => any;
   orderIdToCheckOrderInfo: () => any;
   validaddress: (data: any) => any;
@@ -384,8 +384,27 @@ function useGetAction(
         promiseStatus.current.reject = reject;
       });
     }),
-    zipCodeToAddressInfo: promisify(async function(zipCode: string) {
-      return await zipCodeToAddressInfo(zipCode);
+    zipCodeToAddressInfo: promisify(async function(value: string, form: any) {
+      const { setFieldsValue, setFields } = form;
+      if (!/(\d{5,5})|(0\d{4,4})/.test(value)) {
+        return;
+      }
+      const addressInfo: any = await zipCodeToAddressInfo(value);
+      if (addressInfo.state && addressInfo.city) {
+        setFieldsValue({ state: addressInfo.state });
+        setFieldsValue({ city: addressInfo.city });
+        return null;
+      } else {
+        setFieldsValue({ state: "" });
+        setFieldsValue({ city: "" });
+        // setFields({
+        //   zipCode: {
+        //     value: value,
+        //     errors: [new Error("Please enter a valid zipCode")]
+        //   }
+        // });
+        return "Please enter a valid zipCode";
+      }
     }),
     getDetailByProductList: promisify(async function() {
       // 这行是什么意思? 为什么这边是这样拉的? 订单结束后是否会有影响?

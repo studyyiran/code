@@ -3,10 +3,12 @@ import React, {
   useReducer,
   useCallback,
   useRef,
-  useEffect
+  useEffect,
+  useMemo
 } from "react";
 import { IReducerAction } from "buy/common/interface/index.interface";
 import {
+  actionsWithCatchAndLoading,
   callBackWhenPassAllFunc,
   getFromSession,
   isServer,
@@ -19,14 +21,16 @@ import { useIsCurrentPage } from "../../../../common/useHook";
 import { globalStore } from "../../../../common/store";
 import { rsaPassWord } from "../../../../common/utils/user-util";
 import { constValue } from "../../../../common/constValue";
+import { Message } from "../../../../components/message";
 import {
   userLogin,
   userRegister,
   userActive,
   userActiveEmailResend,
-  currentUserInfo
+  currentUserInfo,
+  changePasswordByToken,
+  forgetPasswordEmail
 } from "../server";
-import { Message } from "../../../../components/message";
 
 export const StoreAuthContext = createContext({
   storeAuthContextValue: {},
@@ -49,6 +53,7 @@ interface IContextState {
     email: string;
     addressList: any[];
   };
+  userInfoForm: any;
   registerInfo: any;
   isLoading: any;
 }
@@ -70,6 +75,7 @@ export function StoreAuthContextProvider(props: any) {
     tokenInfo: {} as any,
     registerInfo: {} as any,
     userInfo: {} as any,
+    userInfoForm: {} as any,
     isLoading: {}
   };
   const [state, dispatch] = useReducer(
@@ -77,7 +83,26 @@ export function StoreAuthContextProvider(props: any) {
     initState
   );
   const action: IStoreAuthActions = useGetAction(state, dispatch);
-
+  // 直接修改state值看起来有点危险.其实用dispatch才正确.
+  state.userInfoForm = useMemo(() => {
+    let userInfoForm = {};
+    if (state.userInfo) {
+      const { firstName, lastName, addressList, email } = state.userInfo;
+      userInfoForm = {
+        ...userInfoForm,
+        firstName,
+        lastName,
+        userEmail: email
+      };
+      if (addressList && addressList[0]) {
+        userInfoForm = {
+          ...userInfoForm,
+          ...addressList[0]
+        };
+      }
+    }
+    return userInfoForm;
+  }, [state.userInfo]);
   const { userLogout } = action;
   // @useEffect
   // 当token有值的时候,同步增加在session和globalStore中
@@ -176,6 +201,8 @@ export interface IStoreAuthActions {
   userLogout: () => void;
   getCurrentUserInfo: () => any;
   resetUserInfo: () => any;
+  forgetPasswordEmail: (data: any) => any;
+  changePasswordByToken: (data: any) => any;
 }
 
 // useCreateActions
@@ -314,6 +341,32 @@ function useGetAction(
         }
       });
       return returnPromise;
+    }),
+    forgetPasswordEmail: promisify(async function(data: any) {
+      const res = actionsWithCatchAndLoading({
+        dispatch,
+        loadingDispatchName: storeAuthReducerTypes.setLoadingObjectStatus,
+        loadingObjectKey: "forgetPasswordEmail",
+        promiseFunc: () => {
+          return forgetPasswordEmail(data);
+        }
+      });
+      return res;
+    }),
+    changePasswordByToken: promisify(async function(data: any) {
+      const res = actionsWithCatchAndLoading({
+        dispatch,
+        loadingDispatchName: storeAuthReducerTypes.setLoadingObjectStatus,
+        loadingObjectKey: "changePasswordByToken",
+        promiseFunc: () => {
+          const { password, token } = data;
+          return changePasswordByToken({
+            password: rsaPassWord(password),
+            token
+          });
+        }
+      });
+      return res;
     }),
     userLogout: function() {
       // 清空store

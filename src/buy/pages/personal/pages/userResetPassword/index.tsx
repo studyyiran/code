@@ -12,32 +12,22 @@ import { locationHref } from "../../../../common/utils/routerHistory";
 import RouterLink from "../../../../common-modules/components/routerLink";
 import { RenderByCondition } from "../../../../components/RenderByCondition";
 import { hocFormCompare } from "../../../../common-modules/commonUtil";
+import { useParams } from "react-router-dom";
 
-export default function UserRegister() {
+export default function UserResetPassword() {
   const formRef: any = useRef(null);
   formRef.current = null;
+  const { token } = useParams();
   const storeAuthContext = useContext(StoreAuthContext);
   const {
-    userRegister,
+    changePasswordByToken,
     storeAuthContextValue
   } = storeAuthContext as IStoreAuthContext;
   const { isLoading } = storeAuthContextValue;
 
   const formConfig = [
     {
-      label: "Email",
-      id: "email",
-      rules: [
-        {
-          type: "email",
-          required: true,
-          message: "Please enter a valid email"
-        }
-      ],
-      renderFormEle: () => <Input />
-    },
-    {
-      label: "Password",
+      label: "New Password",
       id: "password",
       validateTrigger: "onBlur",
       rules: [
@@ -61,7 +51,7 @@ export default function UserRegister() {
       renderFormEle: () => <Input.Password />
     },
     {
-      label: "Confirm Password",
+      label: "Confirm New Password",
       id: "confirmPassword",
       validateTrigger: "onBlur",
       rules: [
@@ -81,7 +71,7 @@ export default function UserRegister() {
     },
     {
       renderFormEle: () => (
-        <Button isLoading={isLoading && isLoading.userRegister}>
+        <Button isLoading={isLoading && isLoading.changePasswordByToken}>
           Create an account
         </Button>
       )
@@ -89,40 +79,41 @@ export default function UserRegister() {
   ];
 
   function onSubmitHandler(values: any) {
-    userRegister(values).then((res: string) => {
+    values.token = token;
+    changePasswordByToken(values).then((res: string) => {
       // 点击登录成功后进行跳转
       if (res) {
-        locationHref(
-          `/user-register-email/${res}/?email=${
-            values && values.email ? values.email : ""
-          }`
-        );
+        locationHref(`/user-login`);
       }
     });
   }
 
-  return (
-    <div className="user-page user-register">
-      <div className="pc-common-card">
-        <div className="form-left-part">
-          <h1>Create new account</h1>
-          <div className="form-wrapper-component">
-            <FormWrapper
-              wrappedComponentRef={(inst: any) => (formRef.current = inst)}
-              formConfig={formConfig}
-              onSubmit={onSubmitHandler}
-            />
-            <p className="more-action">
-              <span>Already have an account? </span>
-              <RouterLink to={"/user-login"}>Log in</RouterLink>
-            </p>
+  if (token) {
+    return (
+      <div className="user-page user-register">
+        <div className="pc-common-card">
+          <div className="form-left-part">
+            <h1>Create new account</h1>
+            <div className="form-wrapper-component">
+              <FormWrapper
+                wrappedComponentRef={(inst: any) => (formRef.current = inst)}
+                formConfig={formConfig}
+                onSubmit={onSubmitHandler}
+              />
+              <p className="more-action">
+                <span>Already have an account? </span>
+                <RouterLink to={"/user-login"}>Log in</RouterLink>
+              </p>
+            </div>
           </div>
+          <RenderByCondition
+            ComponentMb={null}
+            ComponentPc={<img src={require("../../res/bg.jpg")} />}
+          />
         </div>
-        <RenderByCondition
-          ComponentMb={null}
-          ComponentPc={<img src={require("../../res/bg.jpg")} />}
-        />
       </div>
-    </div>
-  );
+    );
+  } else {
+    return null;
+  }
 }

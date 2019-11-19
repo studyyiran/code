@@ -13,12 +13,10 @@ import RouterLink from "../../../../common-modules/components/routerLink";
 import { RenderByCondition } from "../../../../components/RenderByCondition";
 import { hocFormCompare } from "../../../../common-modules/commonUtil";
 
-export default function UserRegister() {
-  const formRef: any = useRef(null);
-  formRef.current = null;
+export default function UserForgetPassword() {
   const storeAuthContext = useContext(StoreAuthContext);
   const {
-    userRegister,
+    forgetPasswordEmail,
     storeAuthContextValue
   } = storeAuthContext as IStoreAuthContext;
   const { isLoading } = storeAuthContextValue;
@@ -37,51 +35,8 @@ export default function UserRegister() {
       renderFormEle: () => <Input />
     },
     {
-      label: "Password",
-      id: "password",
-      validateTrigger: "onBlur",
-      rules: [
-        {
-          required: true,
-          message: "Incorrect email or password"
-        },
-        {
-          validator: (rule: any, value: any, callback: any) => {
-            const minLength = 8;
-            if (value && value.length >= minLength) {
-              callback();
-            } else {
-              callback(
-                `Password is too short(minimum is ${minLength} characters)`
-              );
-            }
-          }
-        }
-      ],
-      renderFormEle: () => <Input.Password />
-    },
-    {
-      label: "Confirm Password",
-      id: "confirmPassword",
-      validateTrigger: "onBlur",
-      rules: [
-        {
-          required: true,
-          message: "Incorrect email or password"
-        },
-        {
-          validator: hocFormCompare(
-            formRef,
-            "password",
-            "Two passwords that you enter is inconsistent!"
-          )
-        }
-      ],
-      renderFormEle: () => <Input.Password />
-    },
-    {
       renderFormEle: () => (
-        <Button isLoading={isLoading && isLoading.userRegister}>
+        <Button isLoading={isLoading && isLoading.forgetPasswordEmail}>
           Create an account
         </Button>
       )
@@ -89,7 +44,7 @@ export default function UserRegister() {
   ];
 
   function onSubmitHandler(values: any) {
-    userRegister(values).then((res: string) => {
+    forgetPasswordEmail(values).then((res: string) => {
       // 点击登录成功后进行跳转
       if (res) {
         locationHref(
@@ -108,7 +63,6 @@ export default function UserRegister() {
           <h1>Create new account</h1>
           <div className="form-wrapper-component">
             <FormWrapper
-              wrappedComponentRef={(inst: any) => (formRef.current = inst)}
               formConfig={formConfig}
               onSubmit={onSubmitHandler}
             />

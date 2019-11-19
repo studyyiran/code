@@ -3,12 +3,12 @@ import React, {
   useReducer,
   useCallback,
   useRef,
-  useEffect,
   useContext
 } from "react";
 import { IReducerAction } from "buy/common/interface/index.interface";
-import { userEditProfile } from "../server";
+
 import {
+  actionsWithCatchAndLoading,
   callBackWhenPassAllFunc,
   isServer,
   promisify
@@ -18,14 +18,19 @@ import { IContextValue } from "../../../common/type";
 import { useIsCurrentPage } from "../../../common/useHook";
 import {
   IStoreAuthContext,
-  StoreAuthContext
+  StoreAuthContext,
 } from "../../../common-modules/context/authToken/context";
+import { userEditProfile, userEditPassword, userEditAddress } from "../server";
+import { Message } from "../../../components/message";
+import {rsaPassWord} from "../../../common/utils/user-util";
 
 export const AccountInfoContext = createContext({});
 // store name
 export const AccountInfo = "AccountInfo";
 // store state
-interface IContextState {}
+interface IContextState {
+  isLoading: any;
+}
 
 // interface
 export interface IAccountInfoContext
@@ -37,7 +42,9 @@ export interface IAccountInfoContext
 
 // store provider
 export function AccountInfoContextProvider(props: any) {
-  const initState: IContextState = {};
+  const initState: IContextState = {
+    isLoading: {}
+  };
   const [state, dispatch] = useReducer(
     useReducerMiddleware(reducer),
     initState
@@ -54,7 +61,9 @@ export function AccountInfoContextProvider(props: any) {
 
 // @actions
 export interface IAccountInfoActions {
-  userEditProfile: () => any;
+  userEditProfile: (data: any) => any;
+  userEditPassword: (data: any) => any;
+  userEditAddress: (data: any) => any;
 }
 
 // useCreateActions
@@ -63,7 +72,10 @@ function useGetAction(
   dispatch: (action: IReducerAction) => void
 ): IAccountInfoActions {
   const storeAuthContext = useContext(StoreAuthContext);
-  const { storeAuthContextValue, getCurrentUserInfo } = storeAuthContext as IStoreAuthContext;
+  const {
+    storeAuthContextValue,
+    getCurrentUserInfo
+  } = storeAuthContext as IStoreAuthContext;
   const { tokenInfo } = storeAuthContextValue;
   // 新增promise ref
   const promiseStatus: any = useRef();
@@ -71,18 +83,76 @@ function useGetAction(
     promiseStatus.current = {};
   }
   const actions: IAccountInfoActions = {
+    userEditPassword: promisify(async function(data: any) {
+      if (data) {
+        const { currentPassword, password } = data;
+        dispatch({
+          type: accountInfoReducerTypes.setLoadingObjectStatus,
+          value: {
+            userEditPassword: true
+          }
+        });
+        const res = userEditPassword({
+          currentPassword: rsaPassWord(currentPassword),
+          password: rsaPassWord(password),
+        });
+        res.catch(e => {
+          Message.error(e);
+        });
+        dispatch({
+          type: accountInfoReducerTypes.setLoadingObjectStatus,
+          value: {
+            userEditPassword: false
+          }
+        });
+        return res;
+      }
+
+    }),
     userEditProfile: promisify(async function(data: any) {
-      const res = await userEditProfile(data);
+      dispatch({
+        type: accountInfoReducerTypes.setLoadingObjectStatus,
+        value: {
+          userEditProfile: true
+        }
+      });
+      const res = userEditProfile(data);
+      res.catch(e => {
+        Message.error(e);
+      });
+      dispatch({
+        type: accountInfoReducerTypes.setLoadingObjectStatus,
+        value: {
+          userEditProfile: false
+        }
+      });
+      // 更新
       getCurrentUserInfo();
+      return res;
+    }),
+    userEditAddress: promisify(async function(data: any) {
+      const res = actionsWithCatchAndLoading({
+        dispatch,
+        loadingDispatchName: accountInfoReducerTypes.setLoadingObjectStatus,
+        loadingObjectKey: "userEditAddress",
+        promiseFunc: () => {
+          return userEditAddress(data);
+        }
+      });
+      res.then(() => {
+        // 更新
+        getCurrentUserInfo();
+      })
+      return res;
     })
   };
-  actions.userEditProfile = useCallback(actions.userEditProfile, []);
+  actions.userEditAddress = useCallback(actions.userEditAddress, []);
   return actions;
 }
 
 // action types
 export const accountInfoReducerTypes = {
-  // setUserInfo: "setUserInfo"
+  setLoadingObjectStatus: "setLoadingObjectStatus"
 };
 
 // reducer
@@ -90,13 +160,16 @@ function reducer(state: IContextState, action: IReducerAction) {
   const { type, value } = action;
   let newState = { ...state };
   switch (type) {
-    // case accountInfoReducerTypes.setUserInfo: {
-    //   newState = {
-    //     ...newState,
-    //     userInfo: value
-    //   };
-    //   break;
-    // }
+    case accountInfoReducerTypes.setLoadingObjectStatus: {
+      newState = {
+        ...newState,
+        isLoading: {
+          ...newState.isLoading,
+          ...value
+        }
+      };
+      break;
+    }
     default:
       newState = { ...newState };
   }

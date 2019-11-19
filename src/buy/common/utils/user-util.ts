@@ -4,7 +4,7 @@ const key =
 
 export function rsaPassWord(password: string) {
   if (!password) {
-    return undefined;
+    return "";
   }
   let encryptor = new JSEncrypt();
   encryptor.setPublicKey(key);
