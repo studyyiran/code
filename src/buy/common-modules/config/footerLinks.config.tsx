@@ -90,11 +90,11 @@ const footerInfo = [
         }
       },
       {
-        Component: LoginButton
-      },
-      {
         subTitle: "Check My Order",
         href: "/check-order"
+      },
+      {
+        Component: LoginButton
       }
     ]
   }

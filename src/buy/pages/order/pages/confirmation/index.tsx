@@ -74,12 +74,12 @@ export default function Confirmation(props: any) {
         </div>
 
         <LoginWrapper
-          renderNotLogin={({ url }: any) => (
+          renderNotLogin={({ url, createUrl }: any) => (
             <div>
               <div className={"or"}>OR</div>
               <div className={"button-wrapper create-account"}>
                 <button className="common-button">
-                  <RouterLink to={url}>Create an account</RouterLink>
+                  <RouterLink to={createUrl}>Create an account</RouterLink>
                 </button>
               </div>
               <PostDataImg />

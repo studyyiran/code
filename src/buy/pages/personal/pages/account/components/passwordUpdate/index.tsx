@@ -4,8 +4,10 @@ import { Input } from "antd";
 import { AccountInfoContext, IAccountInfoContext } from "../../../../context";
 import { UpdateFormLayout } from "../updateFormLayout";
 import { hocFormCompare } from "../../../../../../common-modules/commonUtil";
-import { callBackWhenPassAllFunc } from "../../../../../../common/utils/util";
-import {tipsContent} from "../../../../../../common/constValue";
+import {
+  safeEqual
+} from "../../../../../../common/utils/util";
+import { tipsContent } from "../../../../../../common/constValue";
 const { RenderButton } = UpdateFormLayout as any;
 
 export default function PasswordUpdateForm(props: any) {
@@ -20,24 +22,23 @@ export default function PasswordUpdateForm(props: any) {
   const { userInfo, isEdit, setIsEdit } = props;
 
   // useEffect(() => {
-    // callBackWhenPassAllFunc([() => isEdit], () => {
-    //   const { form } = formRef.current.props;
-    //   const { setFields, resetFields } = form;
-    //   // 为什么reset不生效 为什么充满了异步的问题?
-    //   setFields({
-    //     currentPassword: {
-    //       value: ""
-    //     }
-    //   });
-    // });
+  // callBackWhenPassAllFunc([() => isEdit], () => {
+  //   const { form } = formRef.current.props;
+  //   const { setFields, resetFields } = form;
+  //   // 为什么reset不生效 为什么充满了异步的问题?
+  //   setFields({
+  //     currentPassword: {
+  //       value: ""
+  //     }
+  //   });
+  // });
   // }, [isEdit]);
 
   const formConfigView = [
     {
+      needFieldDecorator: false,
       label: "Password",
-      id: "currentPassword",
-      initialValue: "12345678",
-      renderFormEle: () => <Input.Password disabled={!isEdit} />
+      renderFormEle: () => <Input.Password disabled={!isEdit} value="********" />
     },
     {
       renderFormEle: () => (
@@ -50,10 +51,11 @@ export default function PasswordUpdateForm(props: any) {
     {
       label: "Current password",
       id: "currentPassword",
-      initialValue: '',
+      initialValue: "",
       rules: [
         {
-          required: true
+          required: true,
+          message: tipsContent.currentPasswordError
         }
       ],
       renderFormEle: () => <Input.Password disabled={!isEdit} />
@@ -61,7 +63,7 @@ export default function PasswordUpdateForm(props: any) {
     {
       label: "New password",
       id: "password",
-      initialValue: '',
+      initialValue: "",
       validateTrigger: "onBlur",
       rules: [
         {
@@ -83,7 +85,7 @@ export default function PasswordUpdateForm(props: any) {
     {
       label: "Confirm New password",
       id: "confirmPassword",
-      initialValue: '',
+      initialValue: "",
       validateTrigger: "onBlur",
       rules: [
         {
@@ -91,7 +93,7 @@ export default function PasswordUpdateForm(props: any) {
           validator: hocFormCompare(
             formRef,
             "password",
-            tipsContent.passwordMismatch
+            "New " + tipsContent.passwordMismatch
           )
         }
       ],
@@ -106,8 +108,27 @@ export default function PasswordUpdateForm(props: any) {
 
   async function onSubmitHandler(values: any) {
     if (values) {
-      await userEditPassword(values);
-      setIsEdit(false);
+      try {
+        await userEditPassword(values);
+        props.successHandler();
+      } catch (e) {
+        if (e && e.code && safeEqual(20002, e.code)) {
+          if (
+            formRef &&
+            formRef.current &&
+            formRef.current.props &&
+            formRef.current.props.form &&
+            formRef.current.props.form.setFields
+          ) {
+            formRef.current.props.form.setFields({
+              // 能否只新增错误信息?不改变value
+              currentPassword: {
+                errors: [new Error(tipsContent.currentPasswordError)]
+              }
+            });
+          }
+        }
+      }
     }
   }
 

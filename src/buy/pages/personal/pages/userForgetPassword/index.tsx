@@ -33,7 +33,7 @@ export default function UserForgetPassword() {
         {
           type: "email",
           required: true,
-          message: "Please enter a valid email"
+          message: tipsContent.emailMistake
         }
       ],
       renderFormEle: () => <Input />

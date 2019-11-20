@@ -51,9 +51,6 @@ export default function UserResetPassword(props: any) {
       rules: [
         {
           required: true,
-          message: "Incorrect email or password"
-        },
-        {
           validator: (rule: any, value: any, callback: any) => {
             const minLength = 8;
             if (value && value.length >= minLength) {
@@ -75,9 +72,6 @@ export default function UserResetPassword(props: any) {
       rules: [
         {
           required: true,
-          message: "Incorrect email or password"
-        },
-        {
           validator: hocFormCompare(
             formRef,
             "password",

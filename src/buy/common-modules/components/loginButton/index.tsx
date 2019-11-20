@@ -18,7 +18,7 @@ export function LoginButton(props: any) {
     return <a onClick={userLogout}>Log Out</a>;
   } else {
     return (
-      <RouterLink to={getLocationUrl("login")}>Login In/Sign Up</RouterLink>
+      <RouterLink to={getLocationUrl("login")}>Log In/Sign Up</RouterLink>
     );
   }
 }
@@ -37,13 +37,15 @@ export function LoginWrapper(props: {
   if (tokenInfo && tokenInfo.token) {
     if (renderWhenHaveLogin) {
       return renderWhenHaveLogin({
-        url: getLocationUrl("login")
+        url: getLocationUrl("login"),
+        createUrl: '/account/create'
       });
     }
   } else {
     if (renderNotLogin) {
       return renderNotLogin({
-        url: getLocationUrl("login")
+        url: getLocationUrl("login"),
+        createUrl: '/account/create'
       });
     }
   }

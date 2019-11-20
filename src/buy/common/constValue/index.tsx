@@ -7,11 +7,16 @@ export const constValue = {
 }
 
 export const tipsContent = {
-  emailMismatch: "Email address mismatch.",// 邮箱只要不一致 就会报错
-  passwordMismatch: "Passwords mismatch.",// 密码设定只要不一致 就会报错
+  emailMistake: "Please enter a valid email address.",// 格式错误的邮箱
   errorPassword: "Mismatched email and password.",// 密码和用户名不一致
 
+  emailMismatch: "Email address mismatch.",// 邮箱只要不一致 就会报错
+  passwordMismatch: "Passwords mismatch.",// 密码设定只要不一致 就会报错
+
+
   unverifiedEmail: "Unverified email.",// 用户未激活 就试图登录
+
+  currentPasswordError: "Wrong current password.",// 登录后 修改密码时 密码错误
 
 
   checkEmail: "Please enter a valid email address.",// 邮箱格式不合法 就会报错

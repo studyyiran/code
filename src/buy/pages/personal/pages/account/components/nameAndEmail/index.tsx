@@ -114,7 +114,7 @@ export default function NameAndEmail(props: any) {
         {
           required: true,
           type: "email",
-          message: "Please enter a valid email"
+          message: tipsContent.emailMistake
         },
         {
           validator: async (rule: any, value: any, callback: any) => {
@@ -144,10 +144,6 @@ export default function NameAndEmail(props: any) {
       rules: [
         {
           required: true,
-          type: "email",
-          message: "Please enter a valid email"
-        },
-        {
           validator: hocFormCompare(formRef, "email", tipsContent.emailMismatch)
         }
       ],

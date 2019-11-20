@@ -326,42 +326,19 @@ function useGetAction(
       return returnPromise;
     }),
     userRegister: promisify(async function(authInfo: IAuthInfo) {
-      dispatch({
-        type: storeAuthReducerTypes.setLoadingObjectStatus,
-        value: {
-          userRegister: true
+      const res = actionsWithCatchAndLoading({
+        needError: false,
+        dispatch,
+        loadingDispatchName: storeAuthReducerTypes.setLoadingObjectStatus,
+        loadingObjectKey: "userRegister",
+        promiseFunc: () => {
+          return userRegister({
+            email: authInfo.email,
+            password: rsaPassWord(authInfo ? authInfo.password : "")
+          });
         }
       });
-      const returnPromise = new Promise((resolve, reject) => {
-        promiseStatus.current.resolve = resolve;
-        promiseStatus.current.reject = reject;
-      });
-      let password = authInfo.password;
-      if (password) {
-        password = rsaPassWord(password);
-      }
-      if (password) {
-        try {
-          const res = await userRegister({ email: authInfo.email, password });
-          // dispatch({
-          //   type: storeAuthReducerTypes.setRegisterInfo,
-          //   value: {
-          //     email: authInfo.email,
-          //     password: password
-          //   }
-          // });
-          promiseStatus.current.resolve(res);
-        } catch (e) {
-          Message.error(e && e.resultMessage ? e.resultMessage : "error");
-        }
-      }
-      dispatch({
-        type: storeAuthReducerTypes.setLoadingObjectStatus,
-        value: {
-          userRegister: false
-        }
-      });
-      return returnPromise;
+      return res;
     }),
     forgetPasswordEmail: promisify(async function(data: any) {
       const res = actionsWithCatchAndLoading({

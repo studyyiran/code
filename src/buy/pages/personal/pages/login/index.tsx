@@ -38,7 +38,7 @@ export default function PersonalLogin() {
       rules: [
         {
           type: "email",
-          message: "Please enter a valid email"
+          message: tipsContent.emailMistake
         }
       ],
       renderFormEle: () => <Input />
@@ -48,7 +48,7 @@ export default function PersonalLogin() {
       id: "password",
       rules: [
         {
-          message: "Incorrect email or password"
+          message: tipsContent.errorPassword
         }
       ],
       renderFormEle: () => <Input.Password />

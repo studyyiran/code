@@ -10,6 +10,7 @@ const ShareContext = React.createContext({});
 interface IHehe {
   children: any;
   title: string;
+  successHandler: any;
 }
 
 /*
@@ -21,7 +22,7 @@ interface IHehe {
 通过renderProps传入进去?
  */
 export function UpdateFormLayout(props: IHehe) {
-  const { title, children } = props;
+  const { title, children, ...others } = props;
   const [isEdit, setIsEdit] = useState(false);
 
   const { Provider } = ShareContext;
@@ -34,6 +35,11 @@ export function UpdateFormLayout(props: IHehe) {
   function renderChildren(children: any) {
     return React.Children.map(children, child => {
       return React.cloneElement(child, {
+        ...others,
+        successHandler: () => {
+          others && others.successHandler();
+          setIsEdit(false);
+        },
         isEdit,
         setIsEdit
       });

@@ -12,7 +12,7 @@ import { locationHref } from "../../../../common/utils/routerHistory";
 import RouterLink from "../../../../common-modules/components/routerLink";
 import { RenderByCondition } from "../../../../components/RenderByCondition";
 import { hocFormCompare } from "../../../../common-modules/commonUtil";
-import {tipsContent} from "../../../../common/constValue";
+import { tipsContent } from "../../../../common/constValue";
 
 export default function UserRegister() {
   const formRef: any = useRef(null);
@@ -32,7 +32,7 @@ export default function UserRegister() {
         {
           type: "email",
           required: true,
-          message: "Please enter a valid email"
+          message: tipsContent.emailMistake
         }
       ],
       renderFormEle: () => <Input />
@@ -44,9 +44,6 @@ export default function UserRegister() {
       rules: [
         {
           required: true,
-          message: "Incorrect email or password"
-        },
-        {
           validator: (rule: any, value: any, callback: any) => {
             const minLength = 8;
             if (value && value.length >= minLength) {
@@ -68,9 +65,6 @@ export default function UserRegister() {
       rules: [
         {
           required: true,
-          message: "Incorrect email or password"
-        },
-        {
           validator: hocFormCompare(
             formRef,
             "password",
@@ -90,16 +84,34 @@ export default function UserRegister() {
   ];
 
   function onSubmitHandler(values: any) {
-    userRegister(values).then((res: string) => {
-      // 点击登录成功后进行跳转
-      if (res) {
-        locationHref(
-          `/account/create/${res}?email=${
-            values && values.email ? values.email : ""
-          }`
-        );
-      }
-    });
+    userRegister(values)
+      .then((res: string) => {
+        // 点击登录成功后进行跳转
+        if (res) {
+          locationHref(
+            `/account/create/${res}?email=${
+              values && values.email ? values.email : ""
+            }`
+          );
+        }
+      })
+      .catch(() => {
+        if (
+          formRef &&
+          formRef.current &&
+          formRef.current.props &&
+          formRef.current.props.form &&
+          formRef.current.props.form.setFields
+        ) {
+          formRef.current.props.form.setFields({
+            // 能否只新增错误信息?不改变value
+            email: {
+              value: values.email,
+              errors: [new Error(tipsContent.emailHaveRegistered)]
+            }
+          });
+        }
+      });
   }
 
   return (

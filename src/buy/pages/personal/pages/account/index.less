@@ -2,18 +2,45 @@
 
 @p1: {
   .account-page {
-    padding: 20 * @px;
-    .tips {
+    h1 {
+      font-size: 32 * @px;
       text-align: center;
-      svg {
-        border: 1px solid green;
-        color: green;
-        border-radius: 50%;
-        margin-left: 5px;
-      }
+      padding: 30 * @px 0;
+      .pc({padding: 64 * @px;});
+      border-bottom: 1px solid @color-border;
     }
-    .form-part {
-      padding: 5 * @px;
+    .main {
+      padding: 10 * @px 20 * @px;
+      .setpage(1168 * @px);
+      .pc({padding-bottom: 80 * @px;});
+
+      .pc({padding-top: 32 * @px;});
+      .tabbar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 20 * @px;
+        margin-bottom: 10 * @px;
+        .pc({margin: 26 * @px auto 43 * @px;});
+        span {
+          font-size: 24 * @px;
+          padding-bottom: 5 * @px;
+          border-bottom: 2px solid rgba(4, 14, 63, 1);
+        }
+      }
+      .tips {
+        text-align: center;
+        font-size: 18 * @px;
+        svg {
+          border: 1px solid rgba(109, 210, 48, 1);
+          color: rgba(109, 210, 48, 1);
+          border-radius: 50%;
+          margin-left: 5px;
+        }
+      }
+      .form-part {
+        padding: 5 * @px;
+      }
     }
   }
 };
