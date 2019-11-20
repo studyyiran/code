@@ -8,6 +8,8 @@ import { Modal, Form, Input, Button, message } from "antd";
 import ReportModalContent from "containers/order/container/components/reportModalContent";
 import InspectPart from "containers/order/container/components/inspectPart";
 import ResultPart from "containers/order/container/components/resultPart";
+import { currencyTrans } from "../../../utils/util";
+import { ShowFeePrice } from "../container/components/showFeePrice";
 const { TextArea } = Input;
 
 const priceUnit = "$";
@@ -22,7 +24,10 @@ export default function InspectionWrapper(props: any) {
     revisedPriceReject,
     phoneConditionQuestion,
     subOrderStatus,
-    paymentInfo
+    paymentInfo,
+    reserveSlowShipping,
+    reserveSubTotal,
+    reserveGuarantee
   } = props;
   function postEmailFormHandler(data: any) {
     postEmailForm({
@@ -34,6 +39,9 @@ export default function InspectionWrapper(props: any) {
   // subOrderStatus 用于确认接受差异的状态
   return (
     <Inspection
+      reserveSubTotal={reserveSubTotal}
+      reserveSlowShipping={reserveSlowShipping}
+      reserveGuarantee={reserveGuarantee}
       subOrderNo={subOrderNo}
       productDisplayName={productDisplayName}
       paymentInfo={paymentInfo}
@@ -81,7 +89,10 @@ class Inspection extends React.Component<any, any> {
       phoneConditionQuestion,
       inquiryInfo,
       subOrderStatus,
-      paymentInfo
+      paymentInfo,
+      reserveSubTotal,
+      reserveSlowShipping,
+      reserveGuarantee
     } = this.props;
     const { submitted, revised, isDifferent, differentReason } = inquiryInfo;
     const price = revised ? revised.amount : submitted.amount;
@@ -134,13 +145,30 @@ class Inspection extends React.Component<any, any> {
               <div className="content-container">
                 <section className="revised-part">
                   <div className="revised-line">
-                    <h3>Your revised offer is</h3>
-                    <div>
-                      <span>
-                        {priceUnit}
-                        {price}
-                      </span>
+                    <div className="title">
+                      <h3>Your revised offer is</h3>
+                      <div>
+                        <span>
+                          {priceUnit}
+                          {reserveGuarantee}
+                        </span>
+                      </div>
                     </div>
+                    <ul className="price-list">
+                      <li className="mytb">
+                        <span>Revised Subtotal</span>
+                        <span>{currencyTrans(reserveSubTotal)}</span>
+                      </li>
+                      <li className="mytb">
+                        <span>Slow Shipping</span>
+                        <span>{currencyTrans(reserveSlowShipping)}</span>
+                      </li>
+                      <li className="mytb">
+                        <span>Revised Price Guarantee</span>
+                        <span>{currencyTrans(reserveGuarantee)}</span>
+                      </li>
+                      <ShowFeePrice />
+                    </ul>
                   </div>
                   {that.renderAcceptLine({
                     postEmailFormHandler,
@@ -185,7 +213,7 @@ class Inspection extends React.Component<any, any> {
     }
     return (
       <div className="page-difference">
-        <ResultPart {...inquiryInfo} {...paymentInfo} />
+        {/*<ResultPart {...inquiryInfo} {...paymentInfo} />*/}
         {renderByType()}
       </div>
     );

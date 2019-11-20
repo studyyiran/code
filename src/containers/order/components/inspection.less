@@ -7,7 +7,7 @@
     }
     .common-button {
       max-width: 100%;
-      margin-top: 32*@px;
+      margin-top: 32 * @px;
     }
     .ant-modal-body {
       padding-top: 0;
@@ -16,8 +16,8 @@
       margin-bottom: 0;
     }
     .canclick {
-      color: #1AB4E7;
-      margin-top: 32 *@px;
+      color: #1ab4e7;
+      margin-top: 32 * @px;
     }
   }
 
@@ -27,9 +27,6 @@
       > section.revised-part {
         flex: 1;
         .revised-line {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
           padding-bottom: 21 * @px;
           border-bottom: 1 * @px solid @color-border;
           margin-bottom: 30 * @px;
@@ -38,6 +35,33 @@
           }
           > div {
             .font(26 * @f, 500, #222222);
+          }
+          > .title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          }
+          > .price-list {
+            //width: 40%;
+            display: grid;
+            //grid-template-columns: 500px;
+            grid-row-gap: 20 * @px;
+            .mb({grid-row-gap: 10 * @px;});
+            //justify-content: end;
+            > li.mytb {
+              .pc({justify-content: end;});
+              //justify-items: end;
+              > span:last-child {
+                justify-self: end;
+              }
+              display: grid;
+              grid-template-columns: auto  100 * @px;
+              .mb({grid-template-columns: auto  50 * @px;});
+            }
+            > .red-tips {
+              color: red;
+              text-align: right;
+            }
           }
         }
       }
@@ -88,21 +112,21 @@
         > section.revised-part {
           flex: 1;
           .revised-line {
-            display: block;
-            text-align: center;
-            padding-bottom: 21rem * @px2rem;
-            border-bottom: none;
-            margin-bottom: 30rem * @px2rem;
+            //display: block;
+            //text-align: center;
+            //padding-bottom: 21rem * @px2rem;
+            //border-bottom: none;
+            //margin-bottom: 30rem * @px2rem;
             > h3 {
-              .font(26rem * @px2rem, 500, #000000);
-              padding-bottom: 21rem * @px2rem;
-              margin-bottom: 15rem * @px2rem;
-              border-bottom: 1px solid @color-border;
+              .font(18rem * @px2rem, 500, #000000);
+              //padding-bottom: 21rem * @px2rem;
+              //margin-bottom: 15rem * @px2rem;
+              //border-bottom: 1px solid @color-border;
             }
             > div {
               //position: absolute;
-              display: block;
-              .font(26rem * @px2rem, 500, #222222);
+              //display: block;
+              .font(18rem * @px2rem, 500, #222222);
             }
           }
         }
