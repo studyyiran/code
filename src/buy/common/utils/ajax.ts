@@ -106,6 +106,7 @@ ajax.fetch = function(config) {
           if (Number(code) === 200 || success || Number(code) === 0) {
             resolve(res.data.data);
           } else {
+            // 业务性报错
             rejectError(config, reject, {
               code: code,
               resultMessage: resultMessage

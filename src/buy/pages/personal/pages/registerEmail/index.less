@@ -2,9 +2,18 @@
 
 @p1: {
   .user-register {
+    .content-container {
+      padding: 20 * @px;
+      .button-container {
+        margin-top: 40 * @px;
+        >*:first-child {
+          margin-bottom: 20 *@px;
+        }
+      }
+    }
     p.result {
-      font-size: 24 * @px;
-      margin: 30 *@px auto;
+      //font-size: 24 * @px;
+      margin: 30 * @px auto;
       white-space: pre-line;
       word-wrap: break-word;
     }
@@ -23,12 +32,16 @@
       background: linear-gradient(#f0f0f0, #f0f0f0);
       color: @color-blue-liner-use;
     }
-    button {
-      margin-top: 30 *@px;
-      a {
-        display: initial;
+    .ant-form {
+      > :last-child {
+        margin-top: 30 * @px;
       }
     }
+    //button {
+    //  a {
+    //display: initial;
+    //}
+    //}
   }
 };
 

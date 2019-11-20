@@ -219,7 +219,7 @@ export function getUrlAllParams() {
     params_arr.forEach(function(item) {
       let key = item.split("=")[0];
       let value = item.split("=")[1];
-      res[key] = value;
+      res[key] = decodeURIComponent(value);
     });
     return res;
   } else {

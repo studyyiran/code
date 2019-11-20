@@ -5,10 +5,19 @@ import { AccountInfoContext, IAccountInfoContext } from "../../../../context";
 import { UpdateFormLayout } from "../updateFormLayout";
 import { hocFormCompare } from "../../../../../../common-modules/commonUtil";
 import { callBackWhenPassAllFunc } from "../../../../../../common/utils/util";
+import { tipsContent } from "../../../../../../common/constValue";
+import Modal from "../../../../../../components/modal";
+import "./index.less";
+import {
+  IStoreAuthContext,
+  StoreAuthContext
+} from "../../../../../../common-modules/context/authToken/context";
 const { RenderButton } = UpdateFormLayout as any;
 
 export default function NameAndEmail(props: any) {
   const accountInfoContext = useContext(AccountInfoContext);
+  const storeAuthContext = useContext(StoreAuthContext);
+  const { userLogout, userEmailExist } = storeAuthContext as IStoreAuthContext;
   const {
     accountInfoContextValue,
     userEditProfile
@@ -100,11 +109,30 @@ export default function NameAndEmail(props: any) {
     {
       label: "Email",
       id: "email",
+      validateTrigger: "onBlur",
       rules: [
         {
           required: true,
           type: "email",
           message: "Please enter a valid email"
+        },
+        {
+          validator: async (rule: any, value: any, callback: any) => {
+            if (value) {
+              try {
+                const res = await userEmailExist(value);
+                // true 代表邮箱已经存在了
+                if (res) {
+                  callback(tipsContent.emailExists);
+                }
+                // false代表邮箱未存在 所以可用
+                callback();
+              } catch (e) {
+                // 代码邮箱有问题.
+                callback('Email error');
+              }
+            }
+          }
         }
       ],
       renderFormEle: () => <Input disabled={!isEdit} />
@@ -120,11 +148,7 @@ export default function NameAndEmail(props: any) {
           message: "Please enter a valid email"
         },
         {
-          validator: hocFormCompare(
-            formRef,
-            "email",
-            "Two email that you enter is inconsistent!"
-          )
+          validator: hocFormCompare(formRef, "email", tipsContent.emailMismatch)
         }
       ],
       renderFormEle: () => <Input disabled={!isEdit} />
@@ -139,13 +163,42 @@ export default function NameAndEmail(props: any) {
   async function onSubmitHandler(values: any) {
     if (values) {
       const { firstName, lastName, email } = values;
-      await userEditProfile({
-        firstName,
-        lastName,
-        email
-      });
+      // 判断email是否相同
+      const next = async () => {
+        await userEditProfile({
+          firstName,
+          lastName,
+          email
+        });
+        setIsEdit(false);
+      };
+      if (!userInfo || email !== userInfo.email) {
+        (Modal as any).confirm({
+          width: "70%",
+          title: "send?",
+          className: "reset-email-modal",
+          maskClosable: true,
+          onOk: () => {
+            next().then(userLogout);
+          },
+          children: (
+            <div className="content">
+              <p>
+                We will send a message to {email} with a link to verify your new
+                email. Be sure to check your spam filters if you can't find the
+                email in your in-box.
+              </p>
+              <p>
+                And you will be forced to log out before you verify your new
+                email, do you still need to update the email?
+              </p>
+            </div>
+          )
+        });
+      } else {
+        next();
+      }
     }
-    setIsEdit(false);
   }
 
   return (

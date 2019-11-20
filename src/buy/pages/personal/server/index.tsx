@@ -6,7 +6,6 @@ import { getTestAjaxResultMock } from "./mock";
  * */
 export const userEditProfileUrl = "/authorized/auth/website/user/edit/profile";
 export const userEditPasswordUrl = "/authorized/auth/website/user/edit/password";
-export const userEmailExistUrl = "/authorized/auth/website/user/email/exist";
 export const userEditAddressUrl = "/authorized/auth/website/user/edit/address";
 
 export async function userEditProfile(data: any) {
@@ -18,11 +17,7 @@ export async function userEditPassword(data: any) {
   const res: any = await ajax.put(userEditPasswordUrl, data);
   return res;
 }
-// 暂时不需要
-export async function userEmailExist(data: any) {
-  const res: any = await ajax.get(userEmailExistUrl, data);
-  return res;
-}
+
 export async function userEditAddress(data: any) {
   const res: any = await ajax.put(userEditAddressUrl, data);
   return res;

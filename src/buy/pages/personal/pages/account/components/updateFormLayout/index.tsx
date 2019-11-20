@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import Button from "../../../../../../components/button";
+import "./index.less";
 const ShareContext = React.createContext({});
 /*
 提供isEdit注入
@@ -43,7 +44,7 @@ export function UpdateFormLayout(props: IHehe) {
   // 深层次的内容自己使用context解决
   return (
     <Provider value={contextState}>
-      <div>
+      <div className="update-form-layout">
         <h2>{title}</h2>
         {renderChildren(children)}
       </div>
@@ -56,7 +57,11 @@ export function UpdateFormLayout(props: IHehe) {
   const shareContext = useContext(ShareContext);
   const { isEdit, setIsEdit } = shareContext as any;
   if (isEdit) {
-    return <Button type="submit" {...others}>Update</Button>;
+    return (
+      <Button type="submit" {...others}>
+        Update
+      </Button>
+    );
   } else {
     return (
       <Button
@@ -68,7 +73,7 @@ export function UpdateFormLayout(props: IHehe) {
           // 加入timer fix掉点击按钮后 submit行为有误
           window.setTimeout(() => {
             setIsEdit(true);
-          }, 0)
+          }, 0);
         }}
       >
         Edit

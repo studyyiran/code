@@ -79,25 +79,25 @@ export const routerConfig = [
   },
   {
     path: getLocationUrl('login'),
-    title: "???",
+    title: "Log in | UpTradeit.com",
     exact: true,
     Component: PersonalLogin
   },
   {
-    path: "/user-account",
-    title: "???",
+    path: "/account/management",
+    title: "My Account | UpTradeit.com",
     exact: true,
     Component: AccountPage
   },
   {
-    path: "/user-register",
-    title: "???",
+    path: "/account/create",
+    title: "Create an Account | UpTradeit.com",
     exact: true,
     Component: UserRegister
   },
   {
-    path: "/user-register-email/:token",
-    title: "???",
+    path: "/account/create/:token",
+    title: "Create an Account | UpTradeit.com",
     exact: true,
     Component: UserRegisterEmail
   },

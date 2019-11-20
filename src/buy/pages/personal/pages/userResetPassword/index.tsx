@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import "./index.less";
 // import { EntryPageContext, IEntryPageContext } from "./context";
 import { Input } from "antd";
@@ -12,19 +12,37 @@ import { locationHref } from "../../../../common/utils/routerHistory";
 import RouterLink from "../../../../common-modules/components/routerLink";
 import { RenderByCondition } from "../../../../components/RenderByCondition";
 import { hocFormCompare } from "../../../../common-modules/commonUtil";
-import { useParams } from "react-router-dom";
+import { UseGetParams } from "../../../../common-modules/commonUseHook";
+import { getLocationUrl } from "../../../../common/utils/util";
+import { tipsContent } from "../../../../common/constValue";
+import { Message } from "../../../../components/message";
 
-export default function UserResetPassword() {
+export default function UserResetPassword(props: any) {
   const formRef: any = useRef(null);
+  const [token, setToken] = useState("");
   formRef.current = null;
-  const { token } = useParams();
+  const { token: tokenFromUrl } = UseGetParams();
+
   const storeAuthContext = useContext(StoreAuthContext);
   const {
     changePasswordByToken,
-    storeAuthContextValue
+    storeAuthContextValue,
+    userTokenValid
   } = storeAuthContext as IStoreAuthContext;
   const { isLoading } = storeAuthContextValue;
-
+  useEffect(() => {
+    if (tokenFromUrl) {
+      userTokenValid(tokenFromUrl)
+        .then(() => {
+          setToken(tokenFromUrl);
+        })
+        .catch(() => {
+          locationHref(getLocationUrl("login"));
+        });
+    } else {
+      locationHref(getLocationUrl("login"));
+    }
+  }, [token]);
   const formConfig = [
     {
       label: "New Password",
@@ -63,7 +81,7 @@ export default function UserResetPassword() {
           validator: hocFormCompare(
             formRef,
             "password",
-            "Two passwords that you enter is inconsistent!"
+            tipsContent.passwordMismatch
           )
         }
       ],
@@ -72,7 +90,7 @@ export default function UserResetPassword() {
     {
       renderFormEle: () => (
         <Button isLoading={isLoading && isLoading.changePasswordByToken}>
-          Create an account
+          Log in
         </Button>
       )
     }
@@ -82,9 +100,8 @@ export default function UserResetPassword() {
     values.token = token;
     changePasswordByToken(values).then((res: string) => {
       // 点击登录成功后进行跳转
-      if (res) {
-        locationHref(`/user-login`);
-      }
+      Message.success(tipsContent.PasswordFinishReset);
+      locationHref(getLocationUrl("login"));
     });
   }
 
@@ -93,7 +110,7 @@ export default function UserResetPassword() {
       <div className="user-page user-register">
         <div className="pc-common-card">
           <div className="form-left-part">
-            <h1>Create new account</h1>
+            <h1>Create New Password</h1>
             <div className="form-wrapper-component">
               <FormWrapper
                 wrappedComponentRef={(inst: any) => (formRef.current = inst)}

@@ -12,10 +12,12 @@ import Button from "../../../../components/button";
 import { locationHref } from "../../../../common/utils/routerHistory";
 import {
   callBackWhenPassAllFunc,
-  getUrlAllParams
+  getUrlAllParams,
+  safeEqual
 } from "../../../../common/utils/util";
 import RouterLink from "../../../../common-modules/components/routerLink";
 import { RenderByCondition } from "../../../../components/RenderByCondition";
+import { tipsContent } from "../../../../common/constValue";
 
 export default function PersonalLogin() {
   const formRef: any = useRef(null);
@@ -24,7 +26,9 @@ export default function PersonalLogin() {
   const {
     userLogin,
     userActive,
-    storeAuthContextValue
+    userEmailChange,
+    storeAuthContextValue,
+    setCurrentStatus
   } = storeAuthContext as IStoreAuthContext;
   const { isLoading } = storeAuthContextValue;
   const formConfig = [
@@ -50,7 +54,11 @@ export default function PersonalLogin() {
       renderFormEle: () => <Input.Password />
     },
     {
-      renderFormEle: () => <RouterLink to='/user-forget-password' className="forget-button">Forgot password</RouterLink>
+      renderFormEle: () => (
+        <RouterLink to="/user-forget-password" className="forget-button">
+          Forgot password
+        </RouterLink>
+      )
     },
     {
       renderFormEle: () => (
@@ -64,16 +72,24 @@ export default function PersonalLogin() {
       const params = getUrlAllParams();
       if (params) {
         const { domaintype, authtoken, uptradeemail } = params;
+        // 当成功的时候
+        const success = (type: string) => {
+          formRef.current.props.form.setFields({
+            email: {
+              value: uptradeemail
+            }
+          });
+          setCurrentStatus(type);
+        };
+
         switch (domaintype) {
           case "WEBSITE_USER_ACTIVE":
             // 激活用户请求
-            userActive(authtoken);
-            const { form } = formRef.current.props;
-            form.setFields({
-              email: {
-                value: uptradeemail
-              }
-            });
+            userActive(authtoken).then(success.bind({}, domaintype));
+            break;
+          case "WEBSITE_USER_CHANGE_EMAIL":
+            // 激活用户请求
+            userEmailChange(authtoken).then(success.bind({}, domaintype));
             break;
         }
       }
@@ -84,13 +100,23 @@ export default function PersonalLogin() {
     userLogin(values)
       .then((res: string) => {
         // 点击登录成功后进行跳转
-        locationHref("/user-account");
+        locationHref("/account/management");
       })
       .catch((e: any) => {
         const { form } = formRef.current.props;
+        let error = {};
+        if (e && e.code) {
+          if (safeEqual(e.code, 20006)) {
+            error = new Error(tipsContent.unverifiedEmail);
+          } else {
+            error = new Error(tipsContent.errorPassword);
+          }
+        } else {
+          error = new Error(tipsContent.errorPassword);
+        }
         form.setFields({
           password: {
-            errors: [new Error(e && e.resultMessage ? e.resultMessage : "")]
+            errors: [error]
           }
         });
       });
@@ -109,7 +135,7 @@ export default function PersonalLogin() {
             />
             <p className="more-action">
               <span>Dont have an account? </span>
-              <RouterLink to={"/user-register"}>Create an account</RouterLink>
+              <RouterLink to={"/account/create"}>Create an account</RouterLink>
             </p>
           </div>
         </div>

@@ -12,6 +12,7 @@ import { locationHref } from "../../../../common/utils/routerHistory";
 import RouterLink from "../../../../common-modules/components/routerLink";
 import { RenderByCondition } from "../../../../components/RenderByCondition";
 import { hocFormCompare } from "../../../../common-modules/commonUtil";
+import {tipsContent} from "../../../../common/constValue";
 
 export default function UserRegister() {
   const formRef: any = useRef(null);
@@ -73,7 +74,7 @@ export default function UserRegister() {
           validator: hocFormCompare(
             formRef,
             "password",
-            "Two passwords that you enter is inconsistent!"
+            tipsContent.passwordMismatch
           )
         }
       ],
@@ -93,7 +94,7 @@ export default function UserRegister() {
       // 点击登录成功后进行跳转
       if (res) {
         locationHref(
-          `/user-register-email/${res}/?email=${
+          `/account/create/${res}?email=${
             values && values.email ? values.email : ""
           }`
         );

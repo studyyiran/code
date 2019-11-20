@@ -28,7 +28,10 @@ import {
   userActiveEmailResend,
   currentUserInfo,
   changePasswordByToken,
-  forgetPasswordEmail
+  userTokenValid,
+  userEmailChange,
+  forgetPasswordEmail,
+  userEmailExist
 } from "../server";
 
 export const StoreAuthContext = createContext({
@@ -55,6 +58,7 @@ interface IContextState {
   userInfoForm: any;
   registerInfo: any;
   isLoading: any;
+  currentStatus: any;
 }
 
 export interface IAuthInfo {
@@ -75,7 +79,8 @@ export function StoreAuthContextProvider(props: any) {
     registerInfo: {} as any,
     userInfo: {} as any,
     userInfoForm: {} as any,
-    isLoading: {}
+    isLoading: {},
+    currentStatus: ""
   };
   const [state, dispatch] = useReducer(
     useReducerMiddleware(reducer),
@@ -147,6 +152,12 @@ export function StoreAuthContextProvider(props: any) {
           type: storeAuthReducerTypes.setToken,
           value: { token: cookieInfo }
         });
+      } else {
+        // 如果第一次没有cookie.那么就需要认为是未登录状态了.
+        dispatch({
+          type: storeAuthReducerTypes.setToken,
+          value: { token: "" }
+        });
       }
     });
 
@@ -202,6 +213,10 @@ export interface IStoreAuthActions {
   resetUserInfo: () => any;
   forgetPasswordEmail: (data: any) => any;
   changePasswordByToken: (data: any) => any;
+  userTokenValid: (data: any) => any;
+  setCurrentStatus: (data: any) => any;
+  userEmailChange: (data: any) => any;
+  userEmailExist: (data: any) => any;
 }
 
 // useCreateActions
@@ -215,30 +230,37 @@ function useGetAction(
     promiseStatus.current = {};
   }
   const actions: IStoreAuthActions = {
+    setCurrentStatus: function(value: any) {
+      dispatch({
+        type: storeAuthReducerTypes.setCurrentStatus,
+        value: value
+      });
+    },
+    userEmailExist: promisify(async function(email: string) {
+      return userEmailExist({
+        email
+      });
+    }),
+    userTokenValid: promisify(async function(token: string) {
+      return userTokenValid({
+        token
+      });
+    }),
+    userEmailChange: promisify(async function(token: string) {
+      return userEmailChange({
+        token
+      });
+    }),
     userActiveEmailResend: promisify(async function(token: string) {
-      dispatch({
-        type: storeAuthReducerTypes.setLoadingObjectStatus,
-        value: {
-          userActiveEmailResend: true
+      const res = actionsWithCatchAndLoading({
+        dispatch,
+        loadingDispatchName: storeAuthReducerTypes.setLoadingObjectStatus,
+        loadingObjectKey: "userActiveEmailResend",
+        promiseFunc: () => {
+          return userActiveEmailResend(token);
         }
       });
-      const returnPromise = new Promise((resolve, reject) => {
-        promiseStatus.current.resolve = resolve;
-        promiseStatus.current.reject = reject;
-      });
-      if (token) {
-        const res = await userActiveEmailResend(token);
-        if (res) {
-          promiseStatus.current.resolve(res);
-        }
-      }
-      dispatch({
-        type: storeAuthReducerTypes.setLoadingObjectStatus,
-        value: {
-          userActiveEmailResend: false
-        }
-      });
-      return returnPromise;
+      return res;
     }),
     userActive: promisify(async function(token: string) {
       dispatch({
@@ -402,7 +424,8 @@ export const storeAuthReducerTypes = {
   setToken: "setToken",
   setRegisterInfo: "setRegisterInfo",
   setLoadingObjectStatus: "setLoadingObjectStatus",
-  setUserInfo: "setUserInfo"
+  setUserInfo: "setUserInfo",
+  setCurrentStatus: "setCurrentStatus"
 };
 
 // reducer
@@ -410,6 +433,13 @@ function reducer(state: IContextState, action: IReducerAction) {
   const { type, value } = action;
   let newState = { ...state };
   switch (type) {
+    case storeAuthReducerTypes.setCurrentStatus: {
+      newState = {
+        ...newState,
+        currentStatus: value
+      };
+      break;
+    }
     case storeAuthReducerTypes.setRegisterInfo: {
       newState = {
         ...newState,

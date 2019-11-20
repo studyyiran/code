@@ -31,9 +31,9 @@ export default class Modal extends React.Component<any, any> {
     maskClosable: false,
     closable: true,
     footer: "default",
-    title: "提示",
-    okText: "确认",
-    cancelText: "取消",
+    title: "Tips",
+    okText: "Yes",
+    cancelText: "No",
     centered: false,
     needDefaultScroll: false,
     reverseButton: false
