@@ -10,10 +10,8 @@ import { IReducerAction } from "buy/common/interface/index.interface";
 import {
   actionsWithCatchAndLoading,
   callBackWhenPassAllFunc,
-  getFromSession,
   isServer,
   promisify,
-  setSession
 } from "buy/common/utils/util";
 import useReducerMiddleware from "../../../../common/useHook/useReducerMiddleware";
 import { IContextValue } from "../../../../common/type";
@@ -116,7 +114,7 @@ export function StoreAuthContextProvider(props: any) {
       if (state.tokenInfo && state.tokenInfo.token) {
         const { token, cookieExpired } = state.tokenInfo;
         if (token) {
-          setSession(constValue.AUTHKEY, token);
+          setCookie(state.tokenInfo);
           if (globalStore && globalStore.dispatch) {
             globalStore.dispatch({
               type: "reduxSetToken",
@@ -138,15 +136,55 @@ export function StoreAuthContextProvider(props: any) {
           });
         }
         // 清空sesstion
-        setSession(constValue.AUTHKEY, "");
+        setCookie({});
       }
     });
+  }, [state.tokenInfo]);
+
+  function setCookie(info: any) {
+    // 1 设置cookie
+    if (!isServer()) {
+      const { token, cookieExpired = 0 } = info;
+      let exp = new Date();
+      exp.setTime(exp.getTime() + Number(cookieExpired * 1000));
+      if (token && cookieExpired) {
+        document.cookie =
+          constValue.AUTHKEY +
+          "=" +
+          escape(token) +
+          ";expires=" +
+          exp.toUTCString();
+      } else if (!token) {
+        // 清空cookie
+        document.cookie = `${constValue.AUTHKEY}=; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+      }
+    }
+  }
+
+  function getFromCookie() {
+    if (!isServer()) {
+      if (document && document.cookie) {
+        const cookieInfo = document.cookie.split(constValue.AUTHKEY + "=");
+        return cookieInfo[1];
+      } else {
+        return "";
+      }
+    } else {
+      return ""
+    }
+  }
+  // @useEffect
+  useEffect(() => {
+    callBackWhenPassAllFunc(
+      [() => state.tokenInfo && state.tokenInfo.token],
+      () => {}
+    );
   }, [state.tokenInfo]);
 
   // 从storage中回补
   useEffect(() => {
     callBackWhenPassAllFunc([], () => {
-      const cookieInfo = getFromSession(constValue.AUTHKEY);
+      const cookieInfo = getFromCookie();
       if (cookieInfo) {
         dispatch({
           type: storeAuthReducerTypes.setToken,
