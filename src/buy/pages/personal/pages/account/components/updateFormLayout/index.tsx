@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Button from "../../../../../../components/button";
 import "./index.less";
 const ShareContext = React.createContext({});
@@ -11,6 +11,7 @@ interface IHehe {
   children: any;
   title: string;
   successHandler: any;
+  userInfo: any;
 }
 
 /*
@@ -22,7 +23,7 @@ interface IHehe {
 通过renderProps传入进去?
  */
 export function UpdateFormLayout(props: IHehe) {
-  const { title, children, ...others } = props;
+  const { userInfo, title, children, ...others } = props;
   const [isEdit, setIsEdit] = useState(false);
 
   const { Provider } = ShareContext;
@@ -32,28 +33,41 @@ export function UpdateFormLayout(props: IHehe) {
     setIsEdit
   };
 
+  useEffect(() => {
+    // 当收到userInfo更新的时候,一定需要关闭.大胆假设
+    setIsEdit(false);
+  }, [userInfo]);
+
   function renderChildren(children: any) {
-    return React.Children.map(children, child => {
-      return React.cloneElement(child, {
-        ...others,
-        successHandler: () => {
-          others && others.successHandler();
-          setIsEdit(false);
-        },
-        isEdit,
-        setIsEdit
+    if (userInfo && userInfo.email) {
+      return React.Children.map(children, child => {
+        return React.cloneElement(child, {
+          ...others,
+          userInfo: userInfo,
+          isEdit,
+          setIsEdit,
+          successHandler: () => {
+            if (others && others.successHandler) {
+              others.successHandler();
+            }
+          }
+        });
       });
-    });
+    } else {
+      return null;
+    }
   }
   // 遇到一个问题.children如何获取这个注入的值???
   // 获取不了.children默认被注入state.
   // 深层次的内容自己使用context解决
   return (
     <Provider value={contextState}>
-      <div className="update-form-layout">
-        <h2>{title}</h2>
-        {renderChildren(children)}
-      </div>
+      {userInfo && userInfo.email ? (
+        <div className="update-form-layout">
+          <h2>{title}</h2>
+          {renderChildren(children)}
+        </div>
+      ) : null}
     </Provider>
   );
 }
@@ -72,6 +86,8 @@ export function UpdateFormLayout(props: IHehe) {
           className="disabled-status"
           type="button"
           {...others}
+          isLoading={false}
+          disabled={false}
           onClick={() => {
             setIsEdit(false);
           }}

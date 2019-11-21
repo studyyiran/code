@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./index.less";
 import {
   IStoreAuthContext,
@@ -6,21 +6,32 @@ import {
 } from "../../../../common-modules/context/authToken/context";
 import Button from "../../../../components/button";
 import { Message } from "../../../../components/message";
-import { getUrlAllParams } from "../../../../common/utils/util";
+import { getLocationUrl } from "../../../../common/utils/util";
 import RouterLink from "../../../../common-modules/components/routerLink";
 import { RenderByCondition } from "../../../../components/RenderByCondition";
 import { UseGetParams } from "../../../../common-modules/commonUseHook";
+import { locationHref } from "../../../../common/utils/routerHistory";
 
 export default function UserRegisterEmail() {
   const [time, setTime] = useState(0);
   const storeAuthContext = useContext(StoreAuthContext);
-  const { token } = UseGetParams();
+  const { token, email } = UseGetParams();
   const {
     storeAuthContextValue,
-    userActiveEmailResend
+    userActiveEmailResend,
+    userTokenValid
   } = storeAuthContext as IStoreAuthContext;
   const { isLoading } = storeAuthContextValue;
-  const params = getUrlAllParams();
+
+  useEffect(() => {
+    if (token) {
+      userTokenValid(token).catch(() => {
+        locationHref(getLocationUrl("login"));
+      });
+    } else {
+      locationHref(getLocationUrl("login"));
+    }
+  }, [token]);
 
   function onSubmitHandler() {
     userActiveEmailResend(token).then((res: string) => {
@@ -39,11 +50,12 @@ export default function UserRegisterEmail() {
           <div className="form-left-part">
             <h1>One Step to Go</h1>
             <div className="content-container">
-              <p className="result">
-                We sent a message to{" "}
-                {params && params.email ? params.email : ""} with a link to
-                verify your account.
-              </p>
+              {email ? (
+                <p className="result">
+                  We sent a message to {email} with a link to verify your
+                  account.
+                </p>
+              ) : null}
               <p className="content">
                 Be sure to check your spam filters if you can't find the email
                 in your in-box.

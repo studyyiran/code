@@ -51,7 +51,6 @@ export default function AccountPage() {
   }
 
   function successHandler(name: string) {
-    debugger
     Message.success(`Your ${name} updated successfully`);
   }
 
@@ -65,28 +64,31 @@ export default function AccountPage() {
         </div>
         <div className="form-part">
           <UpdateFormLayout
+            userInfo={userInfo}
             title="Edit Profile"
             successHandler={() => {
               successHandler("profile");
             }}
           >
-            <NameAndEmail userInfo={userInfo} />
+            <NameAndEmail />
           </UpdateFormLayout>
           <UpdateFormLayout
+            userInfo={userInfo}
             title="Password Setting"
             successHandler={() => {
               successHandler("password");
             }}
           >
-            <PasswordUpdateForm userInfo={userInfo} />
+            <PasswordUpdateForm />
           </UpdateFormLayout>
           <UpdateFormLayout
+            userInfo={userInfo}
             title="Address Details"
             successHandler={() => {
               successHandler("address");
             }}
           >
-            <AddressFormUpdate userInfo={userInfo} />
+            <AddressFormUpdate />
           </UpdateFormLayout>
         </div>
       </div>

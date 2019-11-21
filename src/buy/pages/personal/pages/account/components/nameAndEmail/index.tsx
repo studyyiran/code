@@ -25,9 +25,10 @@ export default function NameAndEmail(props: any) {
   const { isLoading } = accountInfoContextValue;
   const formRef: any = useRef(null);
   const { userInfo, isEdit, setIsEdit } = props;
-  // 设置表单数据
+  // 设置表单数据.时刻同步更新
   useEffect(() => {
-    if (userInfo) {
+    // 在打开表单的时候,填充上正确的数据
+    if (isEdit && userInfo) {
       const { email, firstName, lastName } = userInfo;
       // 为什么第一帧的时候 current没有值
       const { form } = formRef.current.props;
@@ -47,29 +48,8 @@ export default function NameAndEmail(props: any) {
         }
       });
     }
-  }, [userInfo]);
+  }, [userInfo, isEdit]);
 
-  useEffect(() => {
-    callBackWhenPassAllFunc([() => isEdit], () => {
-      const { email, firstName, lastName } = userInfo;
-      const { form } = formRef.current.props;
-      const { setFields } = form;
-      setFields({
-        email: {
-          value: email
-        },
-        confirmEmail: {
-          value: email
-        },
-        firstName: {
-          value: firstName
-        },
-        lastName: {
-          value: lastName
-        }
-      });
-    });
-  }, [isEdit]);
   const { email, firstName, lastName } = userInfo;
   const formConfigView = [
     {
@@ -172,6 +152,7 @@ export default function NameAndEmail(props: any) {
       if (!userInfo || email !== userInfo.email) {
         (Modal as any).confirm({
           width: "70%",
+          closable: false,
           title: null,
           className: "reset-email-modal",
           maskClosable: true,

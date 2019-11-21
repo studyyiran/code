@@ -96,7 +96,7 @@ export const routerConfig = [
     Component: UserRegister
   },
   {
-    path: "/account/create/:token",
+    path: "/account/create/:token/:email",
     title: "Create an Account | UpTradeit.com",
     exact: true,
     Component: UserRegisterEmail

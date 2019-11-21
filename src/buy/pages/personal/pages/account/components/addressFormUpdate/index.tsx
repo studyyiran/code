@@ -27,7 +27,32 @@ export default function AddressFormUpdate(props: any) {
   const { isLoading } = accountInfoContextValue;
   const formRef: any = useRef(null);
   const { isEdit, setIsEdit } = props;
+  // 设置表单数据.时刻同步更新
 
+  useEffect(() => {
+    // 这是为了 让他在初始化和xx的时候 都能显示
+    if (userInfoForm) {
+      debugger
+      // 为什么第一帧的时候 current没有值
+      const { form } = formRef.current.props;
+      const keyMap = [
+        "street",
+        "apartment",
+        "zipCode",
+        "city",
+        "state",
+        "userPhone"
+      ];
+      let obj: any = {};
+      keyMap.forEach(key => {
+        obj[key] = {
+          value: userInfoForm ? userInfoForm[key] : ""
+        };
+      });
+      const { setFields } = form;
+      setFields(obj);
+    }
+  }, [userInfoForm, isEdit]);
   const formConfigUpdate = [
     {
       label: "Street",
@@ -91,7 +116,7 @@ export default function AddressFormUpdate(props: any) {
           required: true,
           pattern: /\w+/,
           message: "Please enter a valid city."
-        },
+        }
       ],
       renderFormEle: () => <Input disabled={!isEdit} />
     },
@@ -130,7 +155,7 @@ export default function AddressFormUpdate(props: any) {
           required: true,
           pattern: /\w+/,
           message: "Please enter a valid city."
-        },
+        }
       ],
       renderFormEle: () => <Input disabled={true} />
     },

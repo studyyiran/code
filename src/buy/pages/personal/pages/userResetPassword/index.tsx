@@ -112,7 +112,7 @@ export default function UserResetPassword(props: any) {
               />
               <p className="more-action">
                 <span>Already have an account? </span>
-                <RouterLink to={"/user-login"}>Log in</RouterLink>
+                <RouterLink to={getLocationUrl('login')}>Log in</RouterLink>
               </p>
             </div>
           </div>

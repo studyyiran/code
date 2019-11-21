@@ -115,6 +115,7 @@ export default function PersonalLogin() {
         }
         form.setFields({
           password: {
+            value: values && values.password,
             errors: [error]
           }
         });

@@ -13,6 +13,7 @@ import RouterLink from "../../../../common-modules/components/routerLink";
 import { RenderByCondition } from "../../../../components/RenderByCondition";
 import { hocFormCompare } from "../../../../common-modules/commonUtil";
 import { tipsContent } from "../../../../common/constValue";
+import {getLocationUrl} from "../../../../common/utils/util";
 
 export default function UserRegister() {
   const formRef: any = useRef(null);
@@ -88,7 +89,7 @@ export default function UserRegister() {
         // 点击登录成功后进行跳转
         if (res) {
           locationHref(
-            `/account/create/${res}?email=${
+            `/account/create/${res}/${
               values && values.email ? values.email : ""
             }`
           );
@@ -126,7 +127,7 @@ export default function UserRegister() {
             />
             <p className="more-action">
               <span>Already have an account? </span>
-              <RouterLink to={"/user-login"}>Log in</RouterLink>
+              <RouterLink to={getLocationUrl('login')}>Log in</RouterLink>
             </p>
           </div>
         </div>

@@ -90,6 +90,7 @@ function useGetAction(
           dispatch,
           loadingDispatchName: accountInfoReducerTypes.setLoadingObjectStatus,
           loadingObjectKey: "userEditPassword",
+          needError: false,
           promiseFunc: () => {
             return userEditPassword({
               currentPassword: rsaPassWord(currentPassword),

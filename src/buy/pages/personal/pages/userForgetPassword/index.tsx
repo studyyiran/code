@@ -52,6 +52,7 @@ export default function UserForgetPassword() {
       .then((res: string) => {
         (Modal as any).confirm({
           width: "70%",
+          closable: false,
           title: null,
           footer: "single",
           maskClosable: true,
