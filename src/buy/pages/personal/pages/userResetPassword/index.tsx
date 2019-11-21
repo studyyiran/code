@@ -20,6 +20,7 @@ import { Message } from "../../../../components/message";
 export default function UserResetPassword(props: any) {
   const formRef: any = useRef(null);
   const [token, setToken] = useState("");
+  // @ts-ignore
   const { token: tokenFromUrl } = UseGetParams();
 
   const storeAuthContext = useContext(StoreAuthContext);

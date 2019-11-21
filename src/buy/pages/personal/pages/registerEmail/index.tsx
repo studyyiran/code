@@ -15,6 +15,7 @@ import { locationHref } from "../../../../common/utils/routerHistory";
 export default function UserRegisterEmail() {
   const [time, setTime] = useState(0);
   const storeAuthContext = useContext(StoreAuthContext);
+  // @ts-ignore
   const { token, email } = UseGetParams();
   const {
     storeAuthContextValue,
