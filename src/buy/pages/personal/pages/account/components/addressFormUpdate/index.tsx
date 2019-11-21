@@ -32,7 +32,6 @@ export default function AddressFormUpdate(props: any) {
   useEffect(() => {
     // 这是为了 让他在初始化和xx的时候 都能显示
     if (userInfoForm) {
-      debugger
       // 为什么第一帧的时候 current没有值
       const { form } = formRef.current.props;
       const keyMap = [

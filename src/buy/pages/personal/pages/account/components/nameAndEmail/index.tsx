@@ -86,6 +86,7 @@ export default function NameAndEmail(props: any) {
       label: "Email",
       id: "email",
       validateTrigger: "onBlur",
+      validateFirst: true,
       rules: [
         {
           required: true,

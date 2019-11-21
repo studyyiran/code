@@ -31,15 +31,22 @@ export default function UserRegisterEmail() {
     } else {
       locationHref(getLocationUrl("login"));
     }
-  }, [token]);
+  }, [token, userTokenValid]);
 
   function onSubmitHandler() {
     userActiveEmailResend(token).then((res: string) => {
       // 点击登录成功后进行跳转
       Message.success("resend success");
       setTime(60);
-      window.setInterval(() => {
-        setTime(time => --time);
+      const timeref = window.setInterval(() => {
+        setTime(time => {
+          if (time <= 0) {
+            window.clearInterval(timeref);
+            return time;
+          } else {
+            return --time;
+          }
+        });
       }, 1000);
     });
   }

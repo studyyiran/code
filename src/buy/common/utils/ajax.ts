@@ -91,7 +91,8 @@ ajax.fetch = function(config) {
   if (globalStore) {
     const state = globalStore.getState();
     const authToken = state.token;
-    if (authToken && config.url.indexOf("auth") !== -1) {
+    // 11-21修改.默认主动设置
+    if (authToken) {
       config.headers = {};
       config.headers[constValue.AUTHKEY] = authToken;
     }
