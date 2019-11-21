@@ -51,6 +51,7 @@ export default function AccountPage() {
   }
 
   function successHandler(name: string) {
+    debugger
     Message.success(`Your ${name} updated successfully`);
   }
 

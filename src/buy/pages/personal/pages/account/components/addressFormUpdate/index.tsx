@@ -158,7 +158,7 @@ export default function AddressFormUpdate(props: any) {
   async function onSubmitHandler(values: any) {
     if (values) {
       await userEditAddress(values);
-      setIsEdit(false);
+      props.successHandler();
     }
   }
 

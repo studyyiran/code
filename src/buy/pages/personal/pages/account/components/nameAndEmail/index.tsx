@@ -70,22 +70,19 @@ export default function NameAndEmail(props: any) {
       });
     });
   }, [isEdit]);
-
+  const { email, firstName, lastName } = userInfo;
   const formConfigView = [
     {
       label: "First name",
-      id: "firstName",
-      renderFormEle: () => <Input disabled={!isEdit} />
+      renderFormEle: () => <Input disabled={!isEdit} value={firstName} />
     },
     {
       label: "Last name",
-      id: "lastName",
-      renderFormEle: () => <Input disabled={!isEdit} />
+      renderFormEle: () => <Input disabled={!isEdit} value={lastName} />
     },
     {
       label: "Email",
-      id: "email",
-      renderFormEle: () => <Input disabled={!isEdit} />
+      renderFormEle: () => <Input disabled={!isEdit} value={email} />
     },
     {
       renderFormEle: () => (
@@ -170,12 +167,12 @@ export default function NameAndEmail(props: any) {
           lastName,
           email
         });
-        setIsEdit(false);
+        props.successHandler();
       };
       if (!userInfo || email !== userInfo.email) {
         (Modal as any).confirm({
           width: "70%",
-          title: "send?",
+          title: null,
           className: "reset-email-modal",
           maskClosable: true,
           onOk: () => {

@@ -18,11 +18,11 @@ import { IContextValue } from "../../../common/type";
 import { useIsCurrentPage } from "../../../common/useHook";
 import {
   IStoreAuthContext,
-  StoreAuthContext,
+  StoreAuthContext
 } from "../../../common-modules/context/authToken/context";
 import { userEditProfile, userEditPassword, userEditAddress } from "../server";
 import { Message } from "../../../components/message";
-import {rsaPassWord} from "../../../common/utils/user-util";
+import { rsaPassWord } from "../../../common/utils/user-util";
 
 export const AccountInfoContext = createContext({});
 // store name
@@ -86,48 +86,37 @@ function useGetAction(
     userEditPassword: promisify(async function(data: any) {
       if (data) {
         const { currentPassword, password } = data;
-        dispatch({
-          type: accountInfoReducerTypes.setLoadingObjectStatus,
-          value: {
-            userEditPassword: true
+        const res = actionsWithCatchAndLoading({
+          dispatch,
+          loadingDispatchName: accountInfoReducerTypes.setLoadingObjectStatus,
+          loadingObjectKey: "userEditPassword",
+          promiseFunc: () => {
+            return userEditPassword({
+              currentPassword: rsaPassWord(currentPassword),
+              password: rsaPassWord(password)
+            });
           }
         });
-        const res = userEditPassword({
-          currentPassword: rsaPassWord(currentPassword),
-          password: rsaPassWord(password),
-        });
-        res.catch(e => {
-          Message.error(e);
-        });
-        dispatch({
-          type: accountInfoReducerTypes.setLoadingObjectStatus,
-          value: {
-            userEditPassword: false
-          }
+        res.then(() => {
+          // 更新
+          getCurrentUserInfo();
         });
         return res;
       }
-
     }),
     userEditProfile: promisify(async function(data: any) {
-      dispatch({
-        type: accountInfoReducerTypes.setLoadingObjectStatus,
-        value: {
-          userEditProfile: true
+      const res = actionsWithCatchAndLoading({
+        dispatch,
+        loadingDispatchName: accountInfoReducerTypes.setLoadingObjectStatus,
+        loadingObjectKey: "userEditProfile",
+        promiseFunc: () => {
+          return userEditProfile(data);
         }
       });
-      const res = userEditProfile(data);
-      res.catch(e => {
-        Message.error(e);
+      res.then(() => {
+        // 更新
+        getCurrentUserInfo();
       });
-      dispatch({
-        type: accountInfoReducerTypes.setLoadingObjectStatus,
-        value: {
-          userEditProfile: false
-        }
-      });
-      // 更新
-      getCurrentUserInfo();
       return res;
     }),
     userEditAddress: promisify(async function(data: any) {
@@ -142,11 +131,13 @@ function useGetAction(
       res.then(() => {
         // 更新
         getCurrentUserInfo();
-      })
+      });
       return res;
     })
   };
   actions.userEditAddress = useCallback(actions.userEditAddress, []);
+  actions.userEditProfile = useCallback(actions.userEditProfile, []);
+  actions.userEditPassword = useCallback(actions.userEditPassword, []);
   return actions;
 }
 
