@@ -64,26 +64,40 @@ export function UpdateFormLayout(props: IHehe) {
   const { isEdit, setIsEdit } = shareContext as any;
   if (isEdit) {
     return (
-      <Button type="submit" {...others}>
-        Update
-      </Button>
+      <div className="update-button-container">
+        <Button type="submit" {...others}>
+          Update
+        </Button>
+        <Button
+          className="disabled-status"
+          type="button"
+          {...others}
+          onClick={() => {
+            setIsEdit(false);
+          }}
+        >
+          Cancel
+        </Button>
+      </div>
     );
   } else {
     return (
-      <Button
-        type="button"
-        {...others}
-        onClick={() => {
-          onClick && onClick(isEdit);
-          // 使用type 来框定点击后的行为.
-          // 加入timer fix掉点击按钮后 submit行为有误
-          window.setTimeout(() => {
-            setIsEdit(true);
-          }, 0);
-        }}
-      >
-        Edit
-      </Button>
+      <div className="update-button-container">
+        <Button
+          type="button"
+          {...others}
+          onClick={() => {
+            onClick && onClick(isEdit);
+            // 使用type 来框定点击后的行为.
+            // 加入timer fix掉点击按钮后 submit行为有误
+            window.setTimeout(() => {
+              setIsEdit(true);
+            }, 0);
+          }}
+        >
+          Edit
+        </Button>
+      </div>
     );
   }
 };

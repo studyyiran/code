@@ -9,6 +9,19 @@
     &:not(:last-child) {
       border-bottom: none;
     }
+    .disabled-status {
+      color: @color-blue-liner-use;
+    }
+    .update-button-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-column-gap: 24*@px;
+      .mb({
+        grid-template-columns: 1fr;
+        grid-column-gap: 0;
+        grid-row-gap: 14 *@px;
+      })
+    }
     h2 {
       font-size: 18 * @px;
       margin-bottom: 16 * @px;
@@ -20,7 +33,7 @@
         grid-column-gap: 24 *@px;
         > *:last-child {
           grid-column-start: 1;
-          grid-column-end: 2;
+          grid-column-end: 3;
           button {
             max-width: initial;
           }

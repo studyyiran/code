@@ -19,7 +19,7 @@ import useReducerMiddleware from "../../../../common/useHook/useReducerMiddlewar
 import { IContextValue } from "../../../../common/type";
 import { globalStore } from "../../../../common/store";
 import { rsaPassWord } from "../../../../common/utils/user-util";
-import { constValue } from "../../../../common/constValue";
+import { constValue, tipsContent } from "../../../../common/constValue";
 import { Message } from "../../../../components/message";
 import {
   userLogin,
@@ -166,7 +166,9 @@ export function StoreAuthContextProvider(props: any) {
       globalStore.subscribe(() => {
         if (globalStore.getState().token === null) {
           // 登出
-          userLogout();
+          userLogout({
+            hideToast: true
+          });
         }
       });
     });
@@ -208,7 +210,7 @@ export interface IStoreAuthActions {
   userRegister: (authInfo: IAuthInfo) => any;
   userActive: (token: string) => any;
   userActiveEmailResend: (token: string) => any;
-  userLogout: () => void;
+  userLogout: (data?: any) => void;
   getCurrentUserInfo: () => any;
   resetUserInfo: () => any;
   forgetPasswordEmail: (data: any) => any;
@@ -366,7 +368,13 @@ function useGetAction(
       });
       return res;
     }),
-    userLogout: function() {
+    userLogout: function(config: any) {
+      if (config && config.hideToast) {
+      } else {
+        window.setTimeout(() => {
+          Message.success(tipsContent.logOutTips);
+        }, 100);
+      }
       // 清空store
       dispatch({
         type: storeAuthReducerTypes.setToken,

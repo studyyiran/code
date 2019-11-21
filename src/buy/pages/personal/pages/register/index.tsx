@@ -16,7 +16,6 @@ import { tipsContent } from "../../../../common/constValue";
 
 export default function UserRegister() {
   const formRef: any = useRef(null);
-  formRef.current = null;
   const storeAuthContext = useContext(StoreAuthContext);
   const {
     userRegister,

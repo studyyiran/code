@@ -14,10 +14,10 @@ import { RenderByCondition } from "../../../../components/RenderByCondition";
 import { hocFormCompare } from "../../../../common-modules/commonUtil";
 import { tipsContent } from "../../../../common/constValue";
 import Modal from "../../../../components/modal";
+import { getLocationUrl } from "../../../../common/utils/util";
 
 export default function UserForgetPassword() {
   const formRef: any = useRef(null);
-  formRef.current = null;
   const storeAuthContext = useContext(StoreAuthContext);
   const {
     forgetPasswordEmail,
@@ -52,16 +52,19 @@ export default function UserForgetPassword() {
       .then((res: string) => {
         (Modal as any).confirm({
           width: "70%",
-          title:null,
+          title: null,
           footer: "single",
           maskClosable: true,
           cancelText: "Got it",
+          onCancel: () => {
+            locationHref(getLocationUrl("buyhome"));
+          },
           children: (
             <div className="content">
               <p>
-                We have sent a message to roger.{values ? values.email : ""}{" "}
-                with a link to reset your password. Be sure to check your spam
-                filters if you can't find the email in your in-box.
+                We have sent a message to {values ? values.email : ""} with a
+                link to reset your password. Be sure to check your spam filters
+                if you can't find the email in your in-box.
               </p>
             </div>
           )

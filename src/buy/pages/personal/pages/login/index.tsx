@@ -21,7 +21,6 @@ import { tipsContent } from "../../../../common/constValue";
 
 export default function PersonalLogin() {
   const formRef: any = useRef(null);
-  formRef.current = null;
   const storeAuthContext = useContext(StoreAuthContext);
   const {
     userLogin,

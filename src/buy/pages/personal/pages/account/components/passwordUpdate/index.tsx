@@ -18,7 +18,6 @@ export default function PasswordUpdateForm(props: any) {
   } = accountInfoContext as IAccountInfoContext;
   const { isLoading } = accountInfoContextValue;
   const formRef: any = useRef(null);
-  formRef.current = null;
   const { userInfo, isEdit, setIsEdit } = props;
 
   // useEffect(() => {

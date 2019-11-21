@@ -9,6 +9,7 @@ export const constValue = {
 export const tipsContent = {
   emailMistake: "Please enter a valid email address.",// 格式错误的邮箱
   errorPassword: "Mismatched email and password.",// 密码和用户名不一致
+  logOutTips: "Succeed to log out.",// 退出登录文案
 
   emailMismatch: "Email address mismatch.",// 邮箱只要不一致 就会报错
   passwordMismatch: "Passwords mismatch.",// 密码设定只要不一致 就会报错

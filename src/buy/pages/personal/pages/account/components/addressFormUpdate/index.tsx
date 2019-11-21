@@ -26,7 +26,6 @@ export default function AddressFormUpdate(props: any) {
   } = accountInfoContext as IAccountInfoContext;
   const { isLoading } = accountInfoContextValue;
   const formRef: any = useRef(null);
-  formRef.current = null;
   const { isEdit, setIsEdit } = props;
 
   const formConfigUpdate = [

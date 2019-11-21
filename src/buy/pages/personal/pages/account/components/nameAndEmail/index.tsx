@@ -24,7 +24,6 @@ export default function NameAndEmail(props: any) {
   } = accountInfoContext as IAccountInfoContext;
   const { isLoading } = accountInfoContextValue;
   const formRef: any = useRef(null);
-  formRef.current = null;
   const { userInfo, isEdit, setIsEdit } = props;
   // 设置表单数据
   useEffect(() => {
@@ -119,6 +118,9 @@ export default function NameAndEmail(props: any) {
         {
           validator: async (rule: any, value: any, callback: any) => {
             if (value) {
+              if (value === userInfo.email) {
+                callback();
+              }
               try {
                 const res = await userEmailExist(value);
                 // true 代表邮箱已经存在了
@@ -131,6 +133,8 @@ export default function NameAndEmail(props: any) {
                 // 代码邮箱有问题.
                 callback('Email error');
               }
+            } else {
+              callback(tipsContent.emailMistake);
             }
           }
         }
