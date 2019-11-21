@@ -31,7 +31,7 @@ export default function OrderInfo() {
         <ul key={inquiryKey}>
           <li>
             <h3>Model</h3>
-            <p>{productName + bpvIds[0].name}</p>
+            <p>{productName + " " + bpvIds[0].name}</p>
           </li>
           <li>
             <h3>Carrier</h3>
