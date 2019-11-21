@@ -11,7 +11,7 @@ import {
   actionsWithCatchAndLoading,
   callBackWhenPassAllFunc,
   isServer,
-  promisify,
+  promisify
 } from "buy/common/utils/util";
 import useReducerMiddleware from "../../../../common/useHook/useReducerMiddleware";
 import { IContextValue } from "../../../../common/type";
@@ -161,16 +161,22 @@ export function StoreAuthContextProvider(props: any) {
     }
   }
 
-  function getFromCookie() {
+  function getFromCookie(sKey: string) {
     if (!isServer()) {
-      if (document && document.cookie) {
-        const cookieInfo = document.cookie.split(constValue.AUTHKEY + "=");
-        return cookieInfo[1];
-      } else {
-        return "";
-      }
+      return (
+        decodeURIComponent(
+          document.cookie.replace(
+            new RegExp(
+              "(?:(?:^|.*;)\\s*" +
+                encodeURIComponent(sKey).replace(/[-.+*]/g, "\\$&") +
+                "\\s*\\=\\s*([^;]*).*$)|^.*$"
+            ),
+            "$1"
+          )
+        ) || null
+      );
     } else {
-      return ""
+      return null;
     }
   }
   // @useEffect
@@ -184,7 +190,7 @@ export function StoreAuthContextProvider(props: any) {
   // 从storage中回补
   useEffect(() => {
     callBackWhenPassAllFunc([], () => {
-      const cookieInfo = getFromCookie();
+      const cookieInfo = getFromCookie(constValue.AUTHKEY);
       if (cookieInfo) {
         dispatch({
           type: storeAuthReducerTypes.setToken,

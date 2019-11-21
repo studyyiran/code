@@ -22,7 +22,7 @@ function UserInformationWrapper(props: any) {
   } = orderInfoContext as IOrderInfoContext;
   const { userInfo } = orderInfoContextValue;
   const { storeAuthContextValue } = accountInfoContext as IStoreAuthContext;
-  const { userInfoForm } = storeAuthContextValue;
+  const {userInfoForm} = storeAuthContextValue
   return (
     <PureForm
       {...props}
@@ -100,6 +100,15 @@ function PureForm(props: any) {
     } else {
       return false;
     }
+  }
+
+  async function handleZipCodeChange(e: any) {
+    const { setFieldsValue, setFields } = form;
+    const value = e.target.value;
+    if (!/(\d{5,5})|(0\d{4,4})/.test(value)) {
+      return;
+    }
+    await zipCodeToAddressInfo(value, form);
   }
 
   const infomationHTML = (
@@ -185,24 +194,17 @@ function PureForm(props: any) {
                   message: <>&nbsp;Please enter a valid zipCode.</>,
                   required: true,
                   pattern: /(\d{5,5})|(0\d{4,4})/
-                },
-                {
-                  validator: (rule: any, value: any, callback: any) => {
-                    zipCodeToAddressInfo(value, form).then(
-                      (result: any) => {
-                        if (result) {
-                          callback(result);
-                        } else {
-                          callback();
-                        }
-                      }
-                    );
-                  }
                 }
               ],
               validateTrigger: "onBlur",
               initialValue: propsInfo.zipCode
-            })(<Input maxLength={5} />)}
+            })(
+              <Input
+                onChange={handleZipCodeChange}
+                maxLength={5}
+                onBlur={handleZipCodeBlur}
+              />
+            )}
           </Form.Item>
         </Col>
       </Row>
