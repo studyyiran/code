@@ -102,14 +102,14 @@ export const routerConfig = [
     Component: UserRegisterEmail
   },
   {
-    path: "/user-forget-password",
-    title: "???",
+    path: "/account/forget-password",
+    title: "Forget Password | UpTradeit.com",
     exact: true,
     Component: UserForgetPassword,
   },
   {
-    path: "/user-reset-password/:token",
-    title: "???",
+    path: "/account/reset-password/:token",
+    title: "Reset Password | UpTradeit.com",
     exact: true,
     Component: UserResetPassword
   },

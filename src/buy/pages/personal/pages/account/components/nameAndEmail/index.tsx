@@ -123,9 +123,9 @@ export default function NameAndEmail(props: any) {
               }
               try {
                 const res = await userEmailExist(value);
-                // true 代表邮箱已经存在了
+                // true 代表邮箱已经存在了.所有要报错
                 if (res) {
-                  callback(tipsContent.emailExists);
+                  callback(tipsContent.emailHaveRegistered);
                 }
                 // false代表邮箱未存在 所以可用
                 callback();

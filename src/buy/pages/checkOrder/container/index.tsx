@@ -246,12 +246,12 @@ export function OrderList(props: any) {
                 </Button>
               </div>
             ) : null}
-            {refund && subOrderStatus !== "TRANSACTION_FAILED" ? (
-              <div className="have-refund">
-                <h3>Refund Issued {currencyTrans(refund)}</h3>
-                <Svg />
-              </div>
-            ) : null}
+            {/*{refund ? (*/}
+            {/*  <div className="have-refund">*/}
+            {/*    <h3>Refund Issued {currencyTrans(refund)}</h3>*/}
+            {/*    <Svg />*/}
+            {/*  </div>*/}
+            {/*) : null}*/}
           </div>
         )
       };

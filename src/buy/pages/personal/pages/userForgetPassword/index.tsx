@@ -77,7 +77,7 @@ export default function UserForgetPassword() {
           // 能否只新增错误信息?不改变value
           email: {
             value: values.email,
-            errors: [new Error(tipsContent.emailHaveRegistered)]
+            errors: [new Error(tipsContent.emailCantSendNotRegistered)]
           }
         });
       });

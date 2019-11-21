@@ -1,10 +1,8 @@
 export const constValue = {
   REFUNDTIME: 30,
   priceUnit: "$",
-  AUTHKEY: 'uptrade_us_frontend_super_fuck_token',
-  fiveActValue: 1.4,
-  paypalButtonId: "paypal-button-container"
-}
+  AUTHKEY: "uptrade_us_frontend_super_fuck_token"
+};
 
 export const tipsContent = {
   emailMistake: "Please enter a valid email address.",// 格式错误的邮箱
@@ -21,9 +19,16 @@ export const tipsContent = {
 
 
   checkEmail: "Please enter a valid email address.",// 邮箱格式不合法 就会报错
-  emailHaveRegistered: "The email address is not registered.",// 试图重置密码输入邮箱的时候 判断邮箱是否是已经注册了的.
+
+  // 设置个个人信息页面  注册的时候
+  emailHaveRegistered: "The email address already exists.",// 试图重置密码输入邮箱的时候 判断邮箱是否是已经注册了的.
+
+
   emailUpdateSuccess: "Your profile updated successfully.",
-  emailExists: "The email address already exists.",// 修改个人信息的时候 判断优先
+  // emailExists: "The email address already exists.",// 修改个人信息的时候 判断优先
   PasswordFinishReset: "Password Reset Success!",// 用户重置密码成功后的  跳转到login in 的文案
+
+  // forget password 页面
+  emailCantSendNotRegistered: "The email address is not registered.",//
 
 };

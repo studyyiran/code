@@ -171,7 +171,7 @@ export function getProductListPath() {
 export function getLocationUrl(type: string) {
   switch (type) {
     case "login": {
-      return "/user-login";
+      return "/account/login";
     }
     case "buyhome": {
       return "/buy";

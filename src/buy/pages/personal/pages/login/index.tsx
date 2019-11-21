@@ -54,7 +54,7 @@ export default function PersonalLogin() {
     },
     {
       renderFormEle: () => (
-        <RouterLink to="/user-forget-password" className="forget-button">
+        <RouterLink to="/account/forget-password" className="forget-button">
           Forgot password
         </RouterLink>
       )
