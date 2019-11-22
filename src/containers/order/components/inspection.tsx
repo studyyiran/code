@@ -135,7 +135,6 @@ class Inspection extends React.Component<any, any> {
                   </span>
                 </li>
                 <RenderReserveInfo {...paymentInfo} />
-                <ShowFeePrice />
                 <RenderHammerInfo {...inquiryInfo} {...paymentInfo} />
               </ul>
             </section>
@@ -187,7 +186,7 @@ class Inspection extends React.Component<any, any> {
                         <span>Revised Price Guarantee</span>
                         <span>{currencyTrans(reserveGuarantee)}</span>
                       </li>
-                      {/*<ShowFeePrice />*/}
+                      <ShowFeePrice />
                     </ul>
                   </div>
                   {that.renderAcceptLine({
