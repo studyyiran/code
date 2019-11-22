@@ -6,6 +6,9 @@ import InspectPart from "../container/components/inspectPart";
 import ResultPart from "../container/components/resultPart";
 import "../container/common.less";
 
+// 这应该是待上架的组件.
+// 这次需求删除了Auction模块.并merge
+
 export default function ListedForSaleWrapper(props: any) {
   const { inquiryInfo, paymentInfo, phoneConditionQuestion } = props;
   const { submitted, revised, isDifferent, differentReason } = inquiryInfo;
@@ -34,9 +37,10 @@ class ListedForSale extends React.Component<any> {
     };
     // const paymentInfo = this.props.order.paymentInfo;
     return (
-      <div className="comp-order-sale">
+      <div>
         {/*<ResultPart {...inquiryInfo} {...paymentInfo} />*/}
         <InspectPart
+          paymentInfo={paymentInfo}
           inquiryInfo={inquiryInfo}
           phoneConditionQuestion={phoneConditionQuestion}
         />

@@ -6,4 +6,17 @@
       text-align: left;
     }
   }
+  .line-with-title-with-inspection {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    >.content-tag-container:first-child {
+      > h3:first-child {
+        flex: 1;
+      }
+    }
+    .comp-check-inspect {
+      margin-bottom: 0;
+    }
+  }
 }
