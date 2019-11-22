@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
-import './index.less'
+import "./index.less";
 import { ITotalOrderInfoContext, TotalOrderInfoContext } from "../../context";
-import {currencyTrans} from "../../../../../utils/util";
+import { currencyTrans } from "../../../../../utils/util";
 
-export function ShowFeePrice() {
+export function ShowFeePrice(props: { containInsuranceFee?: boolean }) {
+  const { containInsuranceFee } = props;
   // 监听
   const totalOrderInfoContext = useContext(TotalOrderInfoContext);
   // 获取
@@ -12,12 +13,19 @@ export function ShowFeePrice() {
   } = totalOrderInfoContext as ITotalOrderInfoContext;
   // 获取
   const { totalOrderInfo } = totalOrderInfoContextValue;
+  console.log(totalOrderInfo);
   const { chargedInsurance, insuranceFee } = totalOrderInfo as any;
-  if (!chargedInsurance && insuranceFee) {
+  if (chargedInsurance && insuranceFee) {
     return (
       <p className="fee-red-tips">
-        *Your shipping insurance {currencyTrans(insuranceFee)} will be charged at your 1st
-        payout
+        *Your shipping insurance {currencyTrans(insuranceFee)} will be charged
+        at your 1st payout
+      </p>
+    );
+  } else if (chargedInsurance && containInsuranceFee) {
+    return (
+      <p className="fee-red-tips">
+        *Shipping insurance {currencyTrans(insuranceFee)} is charged
       </p>
     );
   }
