@@ -8,6 +8,10 @@ import { Modal, Form, Input, Button, message } from "antd";
 import ReportModalContent from "containers/order/container/components/reportModalContent";
 import InspectPart from "containers/order/container/components/inspectPart";
 import ResultPart from "containers/order/container/components/resultPart";
+import { currencyTrans } from "../../../utils/util";
+import { ShowFeePrice } from "../container/components/showFeePrice";
+import {RenderReserveInfo} from "../container/components/renderReserveInfo";
+import {RenderHammerInfo} from "../container/components/renderHammerInfo";
 const { TextArea } = Input;
 
 const priceUnit = "$";
@@ -22,7 +26,11 @@ export default function InspectionWrapper(props: any) {
     revisedPriceReject,
     phoneConditionQuestion,
     subOrderStatus,
-    paymentInfo
+    paymentInfo,
+    reserveSlowShipping,
+    reserveSubTotal,
+    reserveGuarantee,
+    containInsuranceFee
   } = props;
   function postEmailFormHandler(data: any) {
     postEmailForm({
@@ -34,6 +42,9 @@ export default function InspectionWrapper(props: any) {
   // subOrderStatus 用于确认接受差异的状态
   return (
     <Inspection
+      reserveSubTotal={reserveSubTotal}
+      reserveSlowShipping={reserveSlowShipping}
+      reserveGuarantee={reserveGuarantee}
       subOrderNo={subOrderNo}
       productDisplayName={productDisplayName}
       paymentInfo={paymentInfo}
@@ -45,6 +56,7 @@ export default function InspectionWrapper(props: any) {
         revised,
         submitted
       }}
+      containInsuranceFee={containInsuranceFee}
       phoneConditionQuestion={phoneConditionQuestion}
       postEmailFormHandler={postEmailFormHandler}
       revisedPriceConfirm={() => {
@@ -81,7 +93,11 @@ class Inspection extends React.Component<any, any> {
       phoneConditionQuestion,
       inquiryInfo,
       subOrderStatus,
-      paymentInfo
+      paymentInfo,
+      reserveSubTotal,
+      reserveSlowShipping,
+      reserveGuarantee,
+      containInsuranceFee
     } = this.props;
     const { submitted, revised, isDifferent, differentReason } = inquiryInfo;
     const price = revised ? revised.amount : submitted.amount;
@@ -97,35 +113,46 @@ class Inspection extends React.Component<any, any> {
         </section>
       );
       if (!isDifferent) {
+        // {/*永远的胜出者 质检无差异*/}
         return (
           <>
             <Header />
             <section>
               <ul className="information-list">
-                <li className="price-view">
-                  <span>Subtotal</span>
-                  <span data-matched={isDifferent ? "false" : "true"}>
-                    {priceUnit}
-                    {price}
-                  </span>
-                </li>
+                {/*删除永久的subtotal*/}
+                {/*<li className="price-view">*/}
+                {/*  <span>Subtotal</span>*/}
+                {/*  <span data-matched={isDifferent ? "false" : "true"}>*/}
+                {/*    {priceUnit}*/}
+                {/*    {price}*/}
+                {/*  </span>*/}
+                {/*  */}
+                {/*</li>*/}
                 <li>
                   <span>Congratulations!</span>
                   <span>
                     The condition you selected matches our inspection result.
                   </span>
                 </li>
+                <RenderReserveInfo {...paymentInfo} containInsuranceFee={containInsuranceFee} />
+                <RenderHammerInfo {...inquiryInfo} {...paymentInfo} />
               </ul>
             </section>
           </>
         );
       } else {
         if (subOrderStatus === "TO_BE_LISTED") {
+          // 这是质检结束后的质检模块
           return (
-            <InspectPart
-              inquiryInfo={inquiryInfo}
-              phoneConditionQuestion={phoneConditionQuestion}
-            />
+              <div>
+                <InspectPart
+                  containInsuranceFee={containInsuranceFee}
+                  paymentInfo={paymentInfo}
+                  inquiryInfo={inquiryInfo}
+                  phoneConditionQuestion={phoneConditionQuestion}
+                />
+              </div>
+            
           );
         } else {
           return (
@@ -134,13 +161,33 @@ class Inspection extends React.Component<any, any> {
               <div className="content-container">
                 <section className="revised-part">
                   <div className="revised-line">
-                    <h3>Your revised offer is</h3>
-                    <div>
-                      <span>
-                        {priceUnit}
-                        {price}
-                      </span>
+                    <div className="title">
+                      <h3>Your revised offer is</h3>
+                      <div>
+                        <span>
+                          {priceUnit}
+                          {reserveGuarantee}
+                        </span>
+                      </div>
                     </div>
+                    {/*这是质检期间的质检模块*/}
+                    <ul className="price-list">
+                      <li className="mytb">
+                        <span>Revised Subtotal</span>
+                        <span>{currencyTrans(reserveSubTotal)}</span>
+                      </li>
+                      {reserveSlowShipping ? (
+                        <li className="mytb">
+                          <span>Slow Shipping</span>
+                          <span>-{currencyTrans(reserveSlowShipping)}</span>
+                        </li>
+                      ) : null}
+                      <li className="mytb">
+                        <span>Revised Price Guarantee</span>
+                        <span>{currencyTrans(reserveGuarantee)}</span>
+                      </li>
+                      <ShowFeePrice />
+                    </ul>
                   </div>
                   {that.renderAcceptLine({
                     postEmailFormHandler,
@@ -185,7 +232,7 @@ class Inspection extends React.Component<any, any> {
     }
     return (
       <div className="page-difference">
-        <ResultPart {...inquiryInfo} {...paymentInfo} />
+        {/*<ResultPart {...inquiryInfo} {...paymentInfo} />*/}
         {renderByType()}
       </div>
     );

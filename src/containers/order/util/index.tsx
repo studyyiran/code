@@ -221,7 +221,6 @@ export function getInfo({
 
 function findDate(status: IProgressType, orderStatusHistories: any) {
   // if (status === IProgressType.TO_BE_LISTED) {
-  // debugger;
   // }
   function findFirstEleFromTarget(b: any, f: any) {
     const vArray = b.filter(f);
