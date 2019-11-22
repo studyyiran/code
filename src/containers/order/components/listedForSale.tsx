@@ -6,8 +6,16 @@ import InspectPart from "../container/components/inspectPart";
 import ResultPart from "../container/components/resultPart";
 import "../container/common.less";
 
+// 这应该是待上架的组件.
+// 这次需求删除了Auction模块.并merge
+
 export default function ListedForSaleWrapper(props: any) {
-  const { inquiryInfo, paymentInfo, phoneConditionQuestion } = props;
+  const {
+    inquiryInfo,
+    paymentInfo,
+    phoneConditionQuestion,
+    containInsuranceFee
+  } = props;
   const { submitted, revised, isDifferent, differentReason } = inquiryInfo;
   const innerProps = {
     inquiryInfo: {
@@ -20,13 +28,14 @@ export default function ListedForSaleWrapper(props: any) {
     paymentInfo,
     phoneConditionQuestion: phoneConditionQuestion
   };
-  return <ListedForSale {...innerProps} />;
+  return (
+    <ListedForSale {...innerProps} containInsuranceFee={containInsuranceFee} />
+  );
 }
 
 class ListedForSale extends React.Component<any> {
   public render() {
-    // debugger;
-    const { inquiryInfo, paymentInfo, phoneConditionQuestion } = this.props;
+    const { inquiryInfo, paymentInfo, phoneConditionQuestion, containInsuranceFee } = this.props;
     const { isDifferent, differentReason, price } = inquiryInfo;
     const tag = {
       type: isDifferent,
@@ -34,9 +43,12 @@ class ListedForSale extends React.Component<any> {
     };
     // const paymentInfo = this.props.order.paymentInfo;
     return (
-      <div className="comp-order-sale">
-        <ResultPart {...inquiryInfo} {...paymentInfo} />
+      <div>
+        {/*两个inspectPart里面 只有这个才有可能需要渲染tips */}
+        {/*<ResultPart {...inquiryInfo} {...paymentInfo} />*/}
         <InspectPart
+          containInsuranceFee={containInsuranceFee}
+          paymentInfo={paymentInfo}
           inquiryInfo={inquiryInfo}
           phoneConditionQuestion={phoneConditionQuestion}
         />

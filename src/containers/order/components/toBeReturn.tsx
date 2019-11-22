@@ -2,7 +2,9 @@ import * as React from "react";
 import { IOrderProps } from "containers/order/interface/order.inerface";
 // import './toBeReturn.less';
 import Tag from "components/tag";
+import {ShowFeePrice} from "../container/components/showFeePrice";
 
+// 这个模块是否需要添加? 我建议没搞懂不要添加先.
 class ToBeReturn extends React.Component<IOrderProps> {
   public render() {
     const inspectionInfo = this.props.order.inspectionInfo;
@@ -23,6 +25,7 @@ class ToBeReturn extends React.Component<IOrderProps> {
             <div className="col-1">
               <div>Price Guarantee</div>
               <div>${inspectionInfo.amount}</div>
+              {/*<ShowFeePrice/>*/}
             </div>
             <div className="col-2">
               <p>
