@@ -10,6 +10,7 @@ import { getProductDetailByToken } from "./server";
 import { Message } from "../../components/message";
 import { callBackWhenPassAllFunc } from "../../common/utils/util";
 export default function DetailPreviewWrapper(props: any) {
+  // @ts-ignore
   const { token } = useParams();
   const productDetailContext = useContext(ProductDetailContext);
   const {
