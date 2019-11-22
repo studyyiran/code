@@ -10,7 +10,7 @@ const priceUnit = "$";
 
 // 这个模块渲染质检.
 export default function InspectPart(props: any) {
-  const { inquiryInfo, phoneConditionQuestion, paymentInfo } = props;
+  const { inquiryInfo, phoneConditionQuestion, paymentInfo, containInsuranceFee } = props;
   const { isDifferent, price, differentReason } = inquiryInfo;
   return (
     <div className="comp-inspect-part">
@@ -36,7 +36,7 @@ export default function InspectPart(props: any) {
       <ul className="information-list">
         <li className="price-view">
           {/*删除了suborder 11-22*/}
-          <RenderReserveInfo {...paymentInfo} isDifferent={isDifferent} />
+          <RenderReserveInfo {...paymentInfo} isDifferent={isDifferent} containInsuranceFee={containInsuranceFee}/>
           <RenderHammerInfo  {...paymentInfo} />
         </li>
       </ul>
