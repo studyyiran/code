@@ -11,7 +11,7 @@ export default function CheckInspectDiff(props: any) {
         (Modal as any).confirm({
           width: "90%",
           className: "comp-check-inspect__modal",
-          title: 'Inspection Report',
+          title: "Inspection Report",
           centered: true,
           maskClosable: true,
           footer: null,

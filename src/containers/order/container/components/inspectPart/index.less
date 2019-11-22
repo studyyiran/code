@@ -1,22 +1,34 @@
-.comp-inspect-part {
-  .information-list {
-    display: flex;
-    flex-direction: column;
-    .comp-check-inspect {
-      text-align: left;
-    }
-  }
-  .line-with-title-with-inspection {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    >.content-tag-container:first-child {
-      > h3:first-child {
-        flex: 1;
+@import (reference) "~buy/common/styles/index.less";
+
+@p1: {
+  .comp-inspect-part {
+    .information-list {
+      display: flex;
+      flex-direction: column;
+      .comp-check-inspect {
+        text-align: left;
       }
     }
-    .comp-check-inspect {
-      margin-bottom: 0;
+    .line-with-title-with-inspection {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .mb(
+        {flex-direction: column;align-items: flex-start;.comp-tag {margin-left:
+          0;}}
+      );
+
+      > .content-tag-container:first-child {
+        .mb({flex-direction: column;});
+        > h3:first-child {
+          flex: 1;
+        }
+      }
+      .comp-check-inspect {
+        margin-bottom: 0;
+      }
     }
   }
-}
+};
+
+.hello(@p1);
