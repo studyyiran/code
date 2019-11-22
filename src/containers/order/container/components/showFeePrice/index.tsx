@@ -13,9 +13,9 @@ export function ShowFeePrice(props: { containInsuranceFee?: boolean }) {
   } = totalOrderInfoContext as ITotalOrderInfoContext;
   // 获取
   const { totalOrderInfo } = totalOrderInfoContextValue;
-  console.log(totalOrderInfo);
   const { chargedInsurance, insuranceFee } = totalOrderInfo as any;
-  if (chargedInsurance && insuranceFee) {
+  // 没付款和付款的纠纷
+  if (!chargedInsurance && insuranceFee) {
     return (
       <p className="fee-red-tips">
         *Your shipping insurance {currencyTrans(insuranceFee)} will be charged

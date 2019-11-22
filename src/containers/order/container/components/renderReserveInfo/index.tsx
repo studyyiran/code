@@ -20,7 +20,7 @@ export function RenderReserveInfo(props: {
       <>
         <div className="content-tag-container">
           <li className={isDifferent ? "long" : ""}>
-            <span>{isDifferent ? "Revised" : ""}Price Guarantee</span>
+            <span>{isDifferent ? "Revised " : ""}Price Guarantee</span>
             <span>{currencyTrans(amount)}</span>
           </li>
           <Tag status={paymentStatus === "To Be Paid" ? "padding" : "success"}>
