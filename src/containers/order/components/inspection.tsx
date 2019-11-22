@@ -134,7 +134,7 @@ class Inspection extends React.Component<any, any> {
                     The condition you selected matches our inspection result.
                   </span>
                 </li>
-                <RenderReserveInfo {...paymentInfo} />
+                <RenderReserveInfo {...paymentInfo} containInsuranceFee={containInsuranceFee} />
                 <RenderHammerInfo {...inquiryInfo} {...paymentInfo} />
               </ul>
             </section>
