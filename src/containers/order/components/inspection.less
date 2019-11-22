@@ -55,11 +55,14 @@
                 justify-self: end;
               }
               display: grid;
-              grid-template-columns: auto  100 * @px;
-              .mb({grid-template-columns: auto  50 * @px;});
+              grid-template-columns: auto 100 * @px;
+              .mb({grid-template-columns: auto 50 * @px;});
             }
             > .red-tips {
               color: red;
+              text-align: right;
+            }
+            .fee-red-tips {
               text-align: right;
             }
           }
@@ -99,6 +102,9 @@
           margin-bottom: 21 * @px;
         }
       }
+    }
+    .information-list {
+      flex-direction: column;
     }
   }
 

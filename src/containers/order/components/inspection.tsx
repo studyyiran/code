@@ -10,6 +10,8 @@ import InspectPart from "containers/order/container/components/inspectPart";
 import ResultPart from "containers/order/container/components/resultPart";
 import { currencyTrans } from "../../../utils/util";
 import { ShowFeePrice } from "../container/components/showFeePrice";
+import {RenderReserveInfo} from "../container/components/renderReserveInfo";
+import {RenderHammerInfo} from "../container/components/renderHammerInfo";
 const { TextArea } = Input;
 
 const priceUnit = "$";
@@ -108,35 +110,46 @@ class Inspection extends React.Component<any, any> {
         </section>
       );
       if (!isDifferent) {
+        // {/*永远的胜出者 质检无差异*/}
         return (
           <>
             <Header />
             <section>
               <ul className="information-list">
-                <li className="price-view">
-                  <span>Subtotal</span>
-                  <span data-matched={isDifferent ? "false" : "true"}>
-                    {priceUnit}
-                    {price}
-                  </span>
-                </li>
+                {/*删除永久的subtotal*/}
+                {/*<li className="price-view">*/}
+                {/*  <span>Subtotal</span>*/}
+                {/*  <span data-matched={isDifferent ? "false" : "true"}>*/}
+                {/*    {priceUnit}*/}
+                {/*    {price}*/}
+                {/*  </span>*/}
+                {/*  */}
+                {/*</li>*/}
                 <li>
                   <span>Congratulations!</span>
                   <span>
                     The condition you selected matches our inspection result.
                   </span>
                 </li>
+                <RenderReserveInfo {...paymentInfo} />
+                <ShowFeePrice />
+                <RenderHammerInfo {...inquiryInfo} {...paymentInfo} />
               </ul>
             </section>
           </>
         );
       } else {
         if (subOrderStatus === "TO_BE_LISTED") {
+          // 这是质检结束后的质检模块
           return (
-            <InspectPart
-              inquiryInfo={inquiryInfo}
-              phoneConditionQuestion={phoneConditionQuestion}
-            />
+              <div>
+                <InspectPart
+                  paymentInfo={paymentInfo}
+                  inquiryInfo={inquiryInfo}
+                  phoneConditionQuestion={phoneConditionQuestion}
+                />
+              </div>
+            
           );
         } else {
           return (
@@ -154,15 +167,18 @@ class Inspection extends React.Component<any, any> {
                         </span>
                       </div>
                     </div>
+                    {/*这是质检期间的质检模块*/}
                     <ul className="price-list">
                       <li className="mytb">
                         <span>Revised Subtotal</span>
                         <span>{currencyTrans(reserveSubTotal)}</span>
                       </li>
-                      <li className="mytb">
-                        <span>Slow Shipping</span>
-                        <span>{currencyTrans(reserveSlowShipping)}</span>
-                      </li>
+                      {reserveSlowShipping ? (
+                        <li className="mytb">
+                          <span>Slow Shipping</span>
+                          <span>-{currencyTrans(reserveSlowShipping)}</span>
+                        </li>
+                      ) : null}
                       <li className="mytb">
                         <span>Revised Price Guarantee</span>
                         <span>{currencyTrans(reserveGuarantee)}</span>
