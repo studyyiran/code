@@ -35,7 +35,6 @@ export default function ListedForSaleWrapper(props: any) {
 
 class ListedForSale extends React.Component<any> {
   public render() {
-    // debugger;
     const { inquiryInfo, paymentInfo, phoneConditionQuestion, containInsuranceFee } = this.props;
     const { isDifferent, differentReason, price } = inquiryInfo;
     const tag = {

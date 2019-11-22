@@ -14,6 +14,8 @@ export function ShowFeePrice(props: { containInsuranceFee?: boolean }) {
   // 获取
   const { totalOrderInfo } = totalOrderInfoContextValue;
   const { chargedInsurance, insuranceFee } = totalOrderInfo as any;
+  // chargedInsurance 是否已经扣除了保险费
+  // containInsuranceFee 是否包含保险费
   // 没付款和付款的纠纷
   if (!chargedInsurance && insuranceFee) {
     return (

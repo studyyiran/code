@@ -29,7 +29,8 @@ export default function InspectionWrapper(props: any) {
     paymentInfo,
     reserveSlowShipping,
     reserveSubTotal,
-    reserveGuarantee
+    reserveGuarantee,
+    containInsuranceFee
   } = props;
   function postEmailFormHandler(data: any) {
     postEmailForm({
@@ -55,6 +56,7 @@ export default function InspectionWrapper(props: any) {
         revised,
         submitted
       }}
+      containInsuranceFee={containInsuranceFee}
       phoneConditionQuestion={phoneConditionQuestion}
       postEmailFormHandler={postEmailFormHandler}
       revisedPriceConfirm={() => {
@@ -94,7 +96,8 @@ class Inspection extends React.Component<any, any> {
       paymentInfo,
       reserveSubTotal,
       reserveSlowShipping,
-      reserveGuarantee
+      reserveGuarantee,
+      containInsuranceFee
     } = this.props;
     const { submitted, revised, isDifferent, differentReason } = inquiryInfo;
     const price = revised ? revised.amount : submitted.amount;
@@ -144,6 +147,7 @@ class Inspection extends React.Component<any, any> {
           return (
               <div>
                 <InspectPart
+                  containInsuranceFee={containInsuranceFee}
                   paymentInfo={paymentInfo}
                   inquiryInfo={inquiryInfo}
                   phoneConditionQuestion={phoneConditionQuestion}
@@ -183,7 +187,7 @@ class Inspection extends React.Component<any, any> {
                         <span>Revised Price Guarantee</span>
                         <span>{currencyTrans(reserveGuarantee)}</span>
                       </li>
-                      <ShowFeePrice />
+                      {/*<ShowFeePrice />*/}
                     </ul>
                   </div>
                   {that.renderAcceptLine({
