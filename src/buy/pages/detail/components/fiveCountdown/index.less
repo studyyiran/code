@@ -1,0 +1,37 @@
+@import (reference) "~buy/common/styles/index.less";
+
+@p1: {
+  .act-timer {
+    display: flex;
+    align-items: center;
+    .img-container {
+      margin-right: 2 * @px;
+      margin-left: 5 * @px;
+      line-height: 0;
+      > * {
+        vertical-align: middle;
+      }
+      img {
+        width: 16 *@px;
+      }
+    }
+    .content {
+      display: flex;
+      flex-direction: column;
+      font-size: 12*@px;
+      .timer {
+        font-size: 10 *@px;
+      }
+      span:first-child {
+        font-weight: bold;
+        //font-size: 18 *@px;
+      }
+      span:last-child {
+        color: @actred;
+      }
+    }
+  }
+};
+
+.hello(@p1);
+

@@ -2,58 +2,36 @@ import React, {
   createContext,
   useReducer,
   useCallback,
-  useEffect
+  useEffect,
+  useState
 } from "react";
 import { IReducerAction } from "buy/common/interface/index.interface";
 import { promisify } from "buy/common/utils/util";
 import ajax from "buy/common/utils/ajax";
 import { useGetOriginData } from "../common/useHook/useGetOriginData";
+import { getBlackFiveTime } from "./globalSetting/server";
+import { myTimer } from "../common-modules/components/timer";
 
 export const GlobalSettingContext = createContext({});
 export const StoreNameGlobalSetting = "GlobalSetting";
-
-// action types
-const reducerActionTypes = {
-  setIsMobile: "setIsMobile",
-  setCategoryId: "setCategoryId"
-};
-
-// reducer
-function reducer(state: IContextState, action: IReducerAction) {
-  const { type, value } = action;
-  let newState = { ...state };
-  switch (type) {
-    case reducerActionTypes.setIsMobile: {
-      newState = {
-        ...newState,
-        isMobile: value
-      };
-      break;
-    }
-    case reducerActionTypes.setCategoryId: {
-      newState = {
-        ...newState,
-        categoryId: value
-      };
-      break;
-    }
-    default:
-      newState = { ...newState };
-  }
-  return newState;
-}
 
 // state
 interface IContextState {
   isMobile: boolean;
   categoryId: string;
+  blackHappyHour: number;
+  isBlackHappyHour: boolean;
+  blackHappyCountDown: any[];
 }
 
 // @provider
 export function GlobalSettingContextProvider(props: any) {
   const initState: IContextState = {
     isMobile: false,
-    categoryId: ""
+    categoryId: "",
+    blackHappyHour: -1, // 只在初始化的时候设定
+    isBlackHappyHour: false,
+    blackHappyCountDown: []
   };
   const [state, dispatch, useClientRepair] = useGetOriginData(
     reducer,
@@ -71,10 +49,36 @@ export function GlobalSettingContextProvider(props: any) {
     );
     action.setIsMobile();
   }, []);
+
   useEffect(() => {
     const CategoryId = "1";
     dispatch({ type: "setCategoryId", value: CategoryId });
   }, []);
+
+  useEffect(() => {
+    action.getBlackFiveTime();
+  }, []);
+
+  useEffect(() => {
+    const info = {
+      time: state.blackHappyHour,
+      minInterval: -1000,
+      runCallBack: (times: any) => {
+        dispatch({
+          type: reducerActionTypes.setBlackHappyCountDown,
+          value: times
+        });
+      },
+      finishCallBack: action.resetFiveAct
+    };
+    // @ts-ignore
+    const timer = new myTimer(info as any);
+    timer.start();
+    return () => {
+      timer.stop();
+    };
+  }, [state.blackHappyHour]);
+
   const propsValue: IGlobalSettingContext = {
     ...useClientRepair,
     ...action,
@@ -88,6 +92,8 @@ export function GlobalSettingContextProvider(props: any) {
 interface IContextActions {
   setIsMobile: () => void;
   emailSubscribed: (email: string) => any;
+  getBlackFiveTime: () => any;
+  resetFiveAct: () => any;
 }
 
 // useCreateActions
@@ -96,6 +102,25 @@ function useGetAction(
   dispatch: (action: IReducerAction) => void
 ): IContextActions {
   const actions: IContextActions = {
+    resetFiveAct: function() {
+      dispatch({
+        type: reducerActionTypes.setIsBlackHappyHour,
+        value: false
+      });
+    },
+    getBlackFiveTime: promisify(async function() {
+      const res = await getBlackFiveTime();
+      if (res && res > 0) {
+        dispatch({
+          type: reducerActionTypes.setBlackHappyHour,
+          value: res
+        });
+        dispatch({
+          type: reducerActionTypes.setIsBlackHappyHour,
+          value: true
+        });
+      }
+    }),
     setIsMobile: promisify(async function(a: any, b: any) {
       const clientWidth = document.body.clientWidth;
       if (clientWidth <= 700) {
@@ -120,4 +145,59 @@ function useGetAction(
 export interface IGlobalSettingContext extends IContextActions {
   globalSettingContextValue: IContextState;
   globalSettingContextDispatch: (action: IReducerAction) => void;
+}
+
+// action types
+const reducerActionTypes = {
+  setIsMobile: "setIsMobile",
+  setCategoryId: "setCategoryId",
+  setBlackHappyHour: "setBlackHappyHour",
+  setBlackHappyCountDown: "setBlackHappyCountDown",
+  setIsBlackHappyHour: "setIsBlackHappyHour"
+};
+
+// reducer
+function reducer(state: IContextState, action: IReducerAction) {
+  const { type, value } = action;
+  let newState = { ...state };
+  switch (type) {
+    case reducerActionTypes.setIsBlackHappyHour: {
+      newState = {
+        ...newState,
+        isBlackHappyHour: value
+      };
+      break;
+    }
+    case reducerActionTypes.setBlackHappyCountDown: {
+      newState = {
+        ...newState,
+        blackHappyCountDown: value
+      };
+      break;
+    }
+    case reducerActionTypes.setBlackHappyHour: {
+      newState = {
+        ...newState,
+        blackHappyHour: value
+      };
+      break;
+    }
+    case reducerActionTypes.setIsMobile: {
+      newState = {
+        ...newState,
+        isMobile: value
+      };
+      break;
+    }
+    case reducerActionTypes.setCategoryId: {
+      newState = {
+        ...newState,
+        categoryId: value
+      };
+      break;
+    }
+    default:
+      newState = { ...newState };
+  }
+  return newState;
 }
