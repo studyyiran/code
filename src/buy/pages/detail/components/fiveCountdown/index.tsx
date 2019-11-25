@@ -13,21 +13,23 @@ export function FiveCountDown(props: { timeArr?: any[]; children?: any }) {
     let timerString = "";
     timeArr.forEach((time: string, index: number) => {
       // 秒的处理.
-      if (index === 3) {
-        timerString += ` ${time}${staticArr[index]}`;
-      } else if (!safeEqual(time, 0)) {
-        // 前两位删除首0
-        if (safeEqual(0, time[0])) {
-          if (time.length > 1) {
-            // 如果有两位
-            time = time[1];
-          } else {
-            // 如果真的为0
-            time = ''
-          }
-        }
-        if (time) {
+      if (time) {
+        if (index === 3) {
           timerString += ` ${time}${staticArr[index]}`;
+        } else if (!safeEqual(time, 0)) {
+          // 前两位删除首0
+          if (safeEqual(0, time[0])) {
+            if (time.length > 1) {
+              // 如果有两位
+              time = time[1];
+            } else {
+              // 如果真的为0
+              time = ''
+            }
+          }
+          if (time) {
+            timerString += ` ${time}${staticArr[index]}`;
+          }
         }
       }
     });

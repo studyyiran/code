@@ -188,7 +188,6 @@
                 display: flex;
                 align-items: center;
                 margin-right: 32 * @px;
-                .mb({justify-content: space-between;});
                 .buy-price {
                   margin-right: 20 * @px;
                   .font(24 * @f, @boldWeight, rgba(34, 34, 34, 1));
@@ -214,10 +213,12 @@
               vertical-align: text-bottom;
             }
           }
+          /*移动端*/
           .price-and-button {
             .price {
               display: flex;
               align-items: flex-start;
+              justify-content: space-between;
             }
           }
           .bottom {

@@ -66,12 +66,25 @@ myTimer.prototype.format = function(second: any) {
     let result = Math.floor(lastTime / unit);
     lastTime = lastTime - result * unit;
     if (result > 9) {
-      return result;
+      return String(result);
     } else if (result > 0) {
       return "0" + result;
     } else {
       return "0";
     }
   });
-  return arr;
+  let newArr = []
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] === "0") {
+      // 如果上一位也是空的话
+      if (i === 0 || newArr[i - 1] === "") {
+        newArr.push("");
+      } else {
+        newArr.push(arr[i]);
+      }
+    } else {
+      newArr.push(arr[i]);
+    }
+  }
+  return newArr;
 };
