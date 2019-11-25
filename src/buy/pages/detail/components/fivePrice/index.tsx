@@ -6,7 +6,7 @@ import "./index.less";
 export function FivePrice(props: { price: any }) {
   const { price } = props;
   if (price) {
-    const hehe = [constValue.fiveActValue * Number(price), Number(price)];
+    const hehe = [Math.round(constValue.fiveActValue * Number(price)), Number(price)];
     return (
       <div className="five-inner-wrapper">
         <span className="act-origin-price">{currencyTrans(hehe[0])}</span>
