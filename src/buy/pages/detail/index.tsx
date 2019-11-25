@@ -546,7 +546,7 @@ export default function ProductDetail(props: any) {
           visible={showModal}
           maskClosable={false}
           title="Your cart"
-          width={410}
+          width={"90%"}
           onCancel={() => setShowModal(false)}
           footer={null}
         >
