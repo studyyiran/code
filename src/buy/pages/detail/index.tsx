@@ -43,6 +43,10 @@ import { dataReport } from "../../common/dataReport";
 import Button from "../../components/button";
 import { useIsCurrentPage, useWhenUrlChange } from "../../common/useHook";
 import { constValue } from "../../common/constValue";
+import { RenderByIsFive } from "../../components/RenderByIsFive";
+import { FiveCountDown } from "./components/fiveCountdown";
+import { FivePrice } from "./components/fivePrice";
+import { FiveCalcPrice } from "./components/fiveCalcPrice";
 function Swiper(props: any) {
   const { buyProductImgPc, buyProductImgM, buyProductVideo } = props;
   const maxNumber = 3;
@@ -256,20 +260,51 @@ export default function ProductDetail(props: any) {
             <div className="top">
               <ProductInfo {...productDetail} />
             </div>
-            <div className="bottom">
-              <div className="price">
-                <span className="buy-price">{currencyTrans(buyPrice)}</span>
-                {skuPrice ? (
-                  <div className="sku-price">
-                    <label>Retail</label>
-                    <span>{currencyTrans(skuPrice)}</span>
+            <RenderByIsFive
+              renderFive={(blackHappyCountDown: any[]) => {
+                return (
+                  <>
+                    <div>
+                      <div className="sku-price">
+                        <label>Retail</label>
+                        <span>{currencyTrans(skuPrice)}</span>
+                      </div>
+                      <div className="price-and-button">
+                        <div className="price">
+                          <span className="buy-price">
+                            <FivePrice price={buyPrice} />
+                            <FiveCalcPrice
+                              buyPrice={buyPrice}
+                              skuPrice={skuPrice}
+                            />
+                          </span>
+                          <FiveCountDown timeArr={blackHappyCountDown} />
+                        </div>
+                      </div>
+                      <span className="product-id">
+                        <span>Product ID {buyProductCode}</span>
+                      </span>
+                    </div>
+                  </>
+                );
+              }}
+              ComponentNormal={
+                <div className="bottom">
+                  <div className="price">
+                    <span className="buy-price">{currencyTrans(buyPrice)}</span>
+                    {skuPrice ? (
+                      <div className="sku-price">
+                        <label>Retail</label>
+                        <span>{currencyTrans(skuPrice)}</span>
+                      </div>
+                    ) : null}
                   </div>
-                ) : null}
-              </div>
-              <span className="product-id">
-                <span>Product ID {buyProductCode}</span>
-              </span>
-            </div>
+                  <span className="product-id">
+                    <span>Product ID {buyProductCode}</span>
+                  </span>
+                </div>
+              }
+            />
           </div>
         }
         ComponentPc={
@@ -279,38 +314,67 @@ export default function ProductDetail(props: any) {
               <span>Product ID {buyProductCode}</span>
             </div>
             <div className="right">
-              <div className="price-and-button">
-                <div className="price">
-                  <span className="buy-price">{currencyTrans(buyPrice)}</span>
-                  <div className="sku-price">
-                    <label>Retail</label>
-                    <span>{currencyTrans(skuPrice)}</span>
+              <RenderByIsFive
+                renderFive={(blackHappyCountDown: any[]) => {
+                  return (
+                    <>
+                      <div className="sku-price">
+                        <label>Retail</label>
+                        <span>{currencyTrans(skuPrice)}</span>
+                      </div>
+                      <div className="price-and-button">
+                        <div className="price">
+                          <span className="buy-price">
+                            <FivePrice price={buyPrice} />
+                            <FiveCalcPrice
+                              buyPrice={buyPrice}
+                              skuPrice={skuPrice}
+                            />
+                          </span>
+                          <FiveCountDown timeArr={blackHappyCountDown} />
+                        </div>
+                      </div>
+                    </>
+                  );
+                }}
+                ComponentNormal={
+                  <div className="price-and-button">
+                    <div className="price">
+                      <span className="buy-price">
+                        {currencyTrans(buyPrice)}
+                      </span>
+                      <div className="sku-price">
+                        <label>Retail</label>
+                        <span>{currencyTrans(skuPrice)}</span>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <StartBuyButton
-                  onClick={() => {
-                    dataReport({
-                      event: "EEaddToCart",
-                      ecommerce: {
-                        currencyCode: "USD",
-                        add: {
-                          products: [
-                            {
-                              sku: String(skuId),
-                              name: productDisplayName,
-                              price: Number(buyPrice)
-                            }
-                          ]
-                        }
-                      }
-                    });
-                    setShowModal(true);
-                  }}
-                  buyProductStatus={buyProductStatus}
-                />
-              </div>
+                }
+              />
+
               <CheckBoxProtection
                 needProtectionState={[needProtection, setNeedProtection]}
+              />
+              <StartBuyButton
+                onClick={() => {
+                  dataReport({
+                    event: "EEaddToCart",
+                    ecommerce: {
+                      currencyCode: "USD",
+                      add: {
+                        products: [
+                          {
+                            sku: String(skuId),
+                            name: productDisplayName,
+                            price: Number(buyPrice)
+                          }
+                        ]
+                      }
+                    }
+                  });
+                  setShowModal(true);
+                }}
+                buyProductStatus={buyProductStatus}
               />
             </div>
           </div>
@@ -482,7 +546,7 @@ export default function ProductDetail(props: any) {
           visible={showModal}
           maskClosable={false}
           title="Your cart"
-          width={410}
+          width={"90%"}
           onCancel={() => setShowModal(false)}
           footer={null}
         >

@@ -1,0 +1,1 @@
+export const getTestAjaxResultMock = 60 * 1000

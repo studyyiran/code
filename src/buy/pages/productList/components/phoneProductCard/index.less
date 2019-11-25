@@ -2,6 +2,10 @@
 
 @p2: {
   .phone-product-card {
+    .five-wrapper {
+      display: flex;
+    }
+
     &[data-disabled="false"] {
       .canclick();
     }
@@ -24,7 +28,8 @@
     > div.content-container {
       display: flex;
       flex-direction: column;
-      padding: 16 * @px;
+      padding: 12 * @px;
+      padding-right: 0;
       border-top: 1px solid @color-border;
       > * {
         margin-bottom: 4 * @px;
