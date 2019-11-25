@@ -1,0 +1,25 @@
+@import (reference) "~buy/common/styles/index.less";
+
+@p1: {
+  .five-inner-wrapper {
+    display: flex;
+    .price-and-button {
+      display: flex;
+      align-items: flex-start;
+    }
+    .act-origin-price {
+      font-size: 16 * @px;
+      font-weight: bold;
+      text-decoration: line-through;
+      text-decoration-color: @actred;
+      margin-right: 5 * @px;
+    }
+    .act-buy-price {
+      font-size: 16 * @px;
+      font-weight: bold;
+      color: @actred;
+    }
+  }
+};
+
+.hello(@p1);
