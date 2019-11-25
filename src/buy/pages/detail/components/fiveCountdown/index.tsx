@@ -11,7 +11,6 @@ export function FiveCountDown(props: { timeArr?: any[]; children?: any }) {
   function renderTimer(timeArr: any[]) {
     const staticArr = ["d", "h", "m", "s"];
     let timerString = "";
-    console.log(timeArr);
     timeArr.forEach((time: string, index: number) => {
       // 秒的处理.
       if (index === 3) {
