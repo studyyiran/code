@@ -151,7 +151,7 @@
         .act-origin-price,
         .act-buy-price {
           font-size: 18 * @px;
-          .pc({font-size: 24 * @px;});
+          .pc({font-size: 24 * @f;});
         }
 
         .act-timer {
@@ -183,11 +183,15 @@
                   flex: 1;
                 }
                 display: flex;
-                align-items: center;
+                align-items: flex-start;
                 margin-right: 32 * @px;
                 .buy-price {
                   margin-right: 20 * @px;
                   .font(24 * @f, @boldWeight, rgba(34, 34, 34, 1));
+                }
+                .act-timer {
+                  .content {
+                  }
                 }
               }
             }

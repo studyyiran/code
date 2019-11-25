@@ -11,7 +11,7 @@ export function FiveCalcPrice(props: any) {
     <div className="off-price">
       You save
       <span className="discount">
-        {currencyTrans(skuPrice - buyPrice)}({calcPrice()}%)
+        {currencyTrans(skuPrice - buyPrice)} ({calcPrice()}%)
       </span>
     </div>
   );
