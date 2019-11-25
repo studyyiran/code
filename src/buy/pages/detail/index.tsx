@@ -767,9 +767,8 @@ function ProductInfo(props: any) {
         <span className="attr">{lineTwo ? lineTwo : ""}</span>
         <span className="condition">Condition {buyLevel}</span>
       </div>
-      {/*暂时强制更新*/}
+      {/*暂时强制更新 为了解决首次不正常渲染的问题*/}
       <img
-        key={Date.now()}
         className="check-icon"
         src={require("./res/uptrade-check.svg")}
       />
