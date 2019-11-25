@@ -15,6 +15,12 @@ export function FiveCountDown(props: { timeArr?: any[]; children?: any }) {
     timeArr.forEach((time: string, index: number) => {
       // 秒的处理.
       if (index === 3) {
+        if (safeEqual(0, time[0])) {
+          if (time.length > 1) {
+            // 如果有两位
+            time = time[1];
+          }
+        }
         timerString += ` ${time ? time : "0"}${staticArr[index]}`;
       } else if (time) {
         // 前两位删除首0
