@@ -5,9 +5,7 @@ import "./index.less";
 export function FiveCalcPrice(props: any) {
   const { buyPrice, skuPrice } = props;
   function calcPrice() {
-    return Math.round(
-      parseInt(String((100 * Number(skuPrice - buyPrice)) / Number(skuPrice)))
-    );
+    return Math.round((100 * Number(skuPrice - buyPrice)) / Number(skuPrice));
   }
   return (
     <div className="off-price">
