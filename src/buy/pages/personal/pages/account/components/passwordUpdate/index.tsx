@@ -37,7 +37,7 @@ export default function PasswordUpdateForm(props: any) {
     {
       needFieldDecorator: false,
       label: "Password",
-      renderFormEle: () => <Input.Password disabled={!isEdit} value="********" />
+      renderFormEle: () => <Input disabled={!isEdit} value="********" />
     },
     {
       renderFormEle: () => (

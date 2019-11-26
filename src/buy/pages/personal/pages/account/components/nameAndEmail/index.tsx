@@ -109,7 +109,7 @@ export default function NameAndEmail(props: any) {
                 callback();
               } catch (e) {
                 // 代码邮箱有问题.
-                callback('Email error');
+                callback("Email error");
               }
             } else {
               callback(tipsContent.emailMistake);
@@ -148,7 +148,10 @@ export default function NameAndEmail(props: any) {
           lastName,
           email
         });
-        props.successHandler();
+        // 如果两者不相等,name就不要弹.
+        props.successHandler({
+          hideMessage: email !== userInfo.email
+        });
       };
       if (!userInfo || email !== userInfo.email) {
         (Modal as any).confirm({

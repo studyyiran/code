@@ -24,6 +24,9 @@ export default function AccountPage() {
     }
   }, [tokenInfo]);
 
+  /*
+  根据上一步的状态,返回成功弹框的内容
+   */
   function currentStatusToContent(domaintype: string) {
     switch (domaintype) {
       case "WEBSITE_USER_ACTIVE":
@@ -50,7 +53,13 @@ export default function AccountPage() {
     }
   }
 
-  function successHandler(name: string) {
+  /*
+  根据操作的名称,弹出对应的success弹框
+   */
+  function successHandler(name: string, obj: any) {
+    if (obj && obj.hideMessage) {
+      return;
+    }
     Message.success(`Your ${name} updated successfully`);
   }
 
@@ -66,27 +75,21 @@ export default function AccountPage() {
           <UpdateFormLayout
             userInfo={userInfo}
             title="Edit Profile"
-            successHandler={() => {
-              successHandler("profile");
-            }}
+            successHandler={successHandler.bind({}, "profile")}
           >
             <NameAndEmail />
           </UpdateFormLayout>
           <UpdateFormLayout
             userInfo={userInfo}
             title="Password Setting"
-            successHandler={() => {
-              successHandler("password");
-            }}
+            successHandler={successHandler.bind({}, "password")}
           >
             <PasswordUpdateForm />
           </UpdateFormLayout>
           <UpdateFormLayout
             userInfo={userInfo}
             title="Address Details"
-            successHandler={() => {
-              successHandler("address");
-            }}
+            successHandler={successHandler.bind({}, "address")}
           >
             <AddressFormUpdate />
           </UpdateFormLayout>

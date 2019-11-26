@@ -46,11 +46,7 @@ export function UpdateFormLayout(props: IHehe) {
           userInfo: userInfo,
           isEdit,
           setIsEdit,
-          successHandler: () => {
-            if (others && others.successHandler) {
-              others.successHandler();
-            }
-          }
+          successHandler: others.successHandler
         });
       });
     } else {

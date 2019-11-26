@@ -107,12 +107,16 @@ export default function PersonalLogin() {
         if (e && e.code) {
           if (safeEqual(e.code, 20006)) {
             error = new Error(tipsContent.unverifiedEmail);
-          } else {
-            error = new Error(tipsContent.errorPassword);
+            form.setFields({
+              email: {
+                value: values && values.email,
+                errors: [error]
+              }
+            });
+            return;
           }
-        } else {
-          error = new Error(tipsContent.errorPassword);
         }
+        error = new Error(tipsContent.errorPassword);
         form.setFields({
           password: {
             value: values && values.password,
