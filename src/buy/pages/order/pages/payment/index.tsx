@@ -17,14 +17,13 @@ function PaymentInner(props: any) {
 
   // 计算总价
   const { calcTotalPrice } = useGetTotalPrice();
-
+  const totalPrice = calcTotalPrice();
   //  价格变化的时候，重新设置。
   useEffect(() => {
-    const totalPrice = calcTotalPrice();
     callBackWhenPassAllFunc([() => totalPrice], () => {
       paypalPay(totalPrice);
     });
-  }, [calcTotalPrice]);
+  }, [totalPrice]);
 
   function paypalPay(amount: any) {
     // @ts-ignore
@@ -51,10 +50,10 @@ function PaymentInner(props: any) {
               payInfo: {
                 paymentType: "CREDIT_CARD",
                 creditCardInfo: {},
-                paypalOrderId: details.id,
+                paypalOrderId: details.id
               },
               invoiceSameAddr: sameAsShipping
-            })
+            });
           });
         }
       })
@@ -98,100 +97,115 @@ function PaymentInner(props: any) {
       <section className="pay-card">
         <h2 className="order-common-less-title">Payment information</h2>
         <div className="pay-card-container">
-          <header className="card">
-            <span>Credit card</span>
-            <PayCardImages />
+          <header className="paypayl-part card">
+            <span>
+              PayPal<span>-2.9%+$0.30 Fee</span>
+            </span>
+
+            <div className="img-container">
+              <img src={require("./res/paypal.png")} />
+            </div>
           </header>
-          <Form className="card">
-            <Form.Item>
-              {getFieldDecorator("cardNo", {
-                initialValue: getCreditValue("cardNo"),
-                rules: [
-                  {
-                    required: true,
-                    validateTrigger: "onBlur",
-                    message: "Enter a valid card number"
-                  }
-                ]
-              })(
-                <Input
-                  placeholder={"Card number"}
-                  suffix={<Svg icon={"lock"} />}
-                />
-              )}
-            </Form.Item>
-            <Form.Item>
-              {getFieldDecorator("userName", {
-                initialValue: getCreditValue("userName"),
-                rules: [
-                  {
-                    required: true,
-                    validateTrigger: "onBlur",
-                    message:
-                      "Enter your name exactly as it's written on your card"
-                  }
-                ]
-              })(<Input placeholder={"Name on card"} />)}
-            </Form.Item>
-            <Row gutter={24}>
-              <Col sm={14} xs={14}>
-                <Form.Item>
-                  {getFieldDecorator("invalidDate", {
-                    initialValue: getCreditValue("invalidDate"),
-                    rules: [
-                      {
-                        required: true,
-                        validateTrigger: "onBlur",
-                        message: "Enter a valid card expiry date"
-                      }
-                    ]
-                  })(<Input placeholder={"Expiration date(MM/YY)"} />)}
-                </Form.Item>
-              </Col>
-              <Col sm={10} xs={10}>
-                <Form.Item>
-                  {getFieldDecorator("pinCode", {
-                    initialValue: getCreditValue("pinCode"),
-                    rules: [
-                      {
-                        required: true,
-                        validateTrigger: "onBlur",
-                        message: "Enter the CVV or security code on your card"
-                      }
-                    ]
-                  })(<Input placeholder={"Security code"} />)}
-                </Form.Item>
-              </Col>
-            </Row>
-          </Form>
+          <div />
         </div>
       </section>
-      <section className="address">
-        <h2 className="order-common-less-title">Billing Address</h2>
-        <p>Select the address that matches your card or payment method.</p>
-        <div className="checkbox-container-group">
-          <div className="checkbox-container">
-            <Checkbox
-              checked={sameAsShipping === true}
-              onChange={() => {
-                setSameAsShipping(true);
-              }}
-            >
-              <span>Same as shipping address</span>
-            </Checkbox>
-          </div>
-          <div className="checkbox-container">
-            <Checkbox
-              checked={sameAsShipping === false}
-              onChange={() => {
-                setSameAsShipping(false);
-              }}
-            >
-              <span>Use a different billing address</span>
-            </Checkbox>
-          </div>
-        </div>
-      </section>
+      {/*<section className="pay-card">*/}
+      {/*  <h2 className="order-common-less-title">Payment information</h2>*/}
+      {/*  <div className="pay-card-container">*/}
+      {/*    <header className="card">*/}
+      {/*      <span>Credit card</span>*/}
+      {/*      <PayCardImages />*/}
+      {/*    </header>*/}
+      {/*    <Form className="card">*/}
+      {/*      <Form.Item>*/}
+      {/*        {getFieldDecorator("cardNo", {*/}
+      {/*          initialValue: getCreditValue("cardNo"),*/}
+      {/*          rules: [*/}
+      {/*            {*/}
+      {/*              required: true,*/}
+      {/*              validateTrigger: "onBlur",*/}
+      {/*              message: "Enter a valid card number"*/}
+      {/*            }*/}
+      {/*          ]*/}
+      {/*        })(*/}
+      {/*          <Input*/}
+      {/*            placeholder={"Card number"}*/}
+      {/*            suffix={<Svg icon={"lock"} />}*/}
+      {/*          />*/}
+      {/*        )}*/}
+      {/*      </Form.Item>*/}
+      {/*      <Form.Item>*/}
+      {/*        {getFieldDecorator("userName", {*/}
+      {/*          initialValue: getCreditValue("userName"),*/}
+      {/*          rules: [*/}
+      {/*            {*/}
+      {/*              required: true,*/}
+      {/*              validateTrigger: "onBlur",*/}
+      {/*              message:*/}
+      {/*                "Enter your name exactly as it's written on your card"*/}
+      {/*            }*/}
+      {/*          ]*/}
+      {/*        })(<Input placeholder={"Name on card"} />)}*/}
+      {/*      </Form.Item>*/}
+      {/*      <Row gutter={24}>*/}
+      {/*        <Col sm={14} xs={14}>*/}
+      {/*          <Form.Item>*/}
+      {/*            {getFieldDecorator("invalidDate", {*/}
+      {/*              initialValue: getCreditValue("invalidDate"),*/}
+      {/*              rules: [*/}
+      {/*                {*/}
+      {/*                  required: true,*/}
+      {/*                  validateTrigger: "onBlur",*/}
+      {/*                  message: "Enter a valid card expiry date"*/}
+      {/*                }*/}
+      {/*              ]*/}
+      {/*            })(<Input placeholder={"Expiration date(MM/YY)"} />)}*/}
+      {/*          </Form.Item>*/}
+      {/*        </Col>*/}
+      {/*        <Col sm={10} xs={10}>*/}
+      {/*          <Form.Item>*/}
+      {/*            {getFieldDecorator("pinCode", {*/}
+      {/*              initialValue: getCreditValue("pinCode"),*/}
+      {/*              rules: [*/}
+      {/*                {*/}
+      {/*                  required: true,*/}
+      {/*                  validateTrigger: "onBlur",*/}
+      {/*                  message: "Enter the CVV or security code on your card"*/}
+      {/*                }*/}
+      {/*              ]*/}
+      {/*            })(<Input placeholder={"Security code"} />)}*/}
+      {/*          </Form.Item>*/}
+      {/*        </Col>*/}
+      {/*      </Row>*/}
+      {/*    </Form>*/}
+      {/*  </div>*/}
+      {/*</section>*/}
+      {/*<section className="address">*/}
+      {/*  <h2 className="order-common-less-title">Billing Address</h2>*/}
+      {/*  <p>Select the address that matches your card or payment method.</p>*/}
+      {/*  <div className="checkbox-container-group">*/}
+      {/*    <div className="checkbox-container">*/}
+      {/*      <Checkbox*/}
+      {/*        checked={sameAsShipping === true}*/}
+      {/*        onChange={() => {*/}
+      {/*          setSameAsShipping(true);*/}
+      {/*        }}*/}
+      {/*      >*/}
+      {/*        <span>Same as shipping address</span>*/}
+      {/*      </Checkbox>*/}
+      {/*    </div>*/}
+      {/*    <div className="checkbox-container">*/}
+      {/*      <Checkbox*/}
+      {/*        checked={sameAsShipping === false}*/}
+      {/*        onChange={() => {*/}
+      {/*          setSameAsShipping(false);*/}
+      {/*        }}*/}
+      {/*      >*/}
+      {/*        <span>Use a different billing address</span>*/}
+      {/*      </Checkbox>*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*</section>*/}
       <div id={constValue.paypalButtonId} />
       {/*选择决定表单*/}
       {/*暂时屏蔽*/}
