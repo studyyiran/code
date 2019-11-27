@@ -73,6 +73,7 @@ export interface IOrderInfoState {
   payInfo: {
     paymentType: string;
     lastNumber: string;
+    paypalOrderId?: string;
     creditCardInfo: {
       cardNo: string;
       invalidDate: string;
@@ -266,9 +267,10 @@ function useGetAction(
     startOrder: promisify(async function() {
       // 临时trigger检验变量.这块需要系统封装好.
       if (
-        state.payInfo &&
-        state.payInfo.creditCardInfo &&
-        state.payInfo.creditCardInfo.cardNo
+        (state.payInfo &&
+          state.payInfo.creditCardInfo &&
+          state.payInfo.creditCardInfo.cardNo) ||
+        (state.payInfo && state.payInfo.paypalOrderId)
       ) {
         const orderResult = createOrder({
           userInfo: state.userInfo,
@@ -300,16 +302,24 @@ function useGetAction(
                     },
                     products: state.subOrders.map((item: any) => {
                       const { productId, needProtection } = item;
-                      const subOrderInfo: any = state.phoneDetailList.find(item => {
-                        return String(item.buyProductId) === String(productId);
-                      });
+                      const subOrderInfo: any = state.phoneDetailList.find(
+                        item => {
+                          return (
+                            String(item.buyProductId) === String(productId)
+                          );
+                        }
+                      );
                       return {
                         sku: String(productId),
-                        name: subOrderInfo ? subOrderInfo.productDisplayName : "",
+                        name: subOrderInfo
+                          ? subOrderInfo.productDisplayName
+                          : "",
                         price: subOrderInfo
                           ? Number(Number(subOrderInfo.buyPrice).toFixed(2))
                           : -1,
-                        brand: subOrderInfo ? subOrderInfo.brandDisplayName : "",
+                        brand: subOrderInfo
+                          ? subOrderInfo.brandDisplayName
+                          : "",
                         quantity: 1,
                         dimension1: true, //buyer
                         dimension2: false, //seller

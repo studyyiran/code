@@ -61,6 +61,7 @@ function PaymentInner(props: any) {
           return actions.order.capture().then(function(details: any) {
             // This function shows a transaction success message to your buyer.
             //那这个id，和接口一起传到后台就行
+            console.log(details.id)
             createOrder({
               payInfo: {
                 paymentType: "PAYPAL",
@@ -222,6 +223,7 @@ function PaymentInner(props: any) {
       {/*  </div>*/}
       {/*</section>*/}
       <div id={constValue.paypalButtonId} />
+      {props.renderButton()}
       {/*选择决定表单*/}
       {/*暂时屏蔽*/}
       {/*{sameAsShipping === true ? (*/}
