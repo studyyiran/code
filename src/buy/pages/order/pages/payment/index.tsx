@@ -7,7 +7,10 @@ import PayCardImages from "../../../../pages/detail/components/payCardImages";
 import Svg from "../../../../components/svg";
 import useGetTotalPrice from "../../components/orderLayout/useHook";
 import { constValue } from "../../../../common/constValue";
-import { callBackWhenPassAllFunc } from "../../../../common/utils/util";
+import {
+  callBackWhenPassAllFunc,
+  isServer
+} from "../../../../common/utils/util";
 function PaymentInner(props: any) {
   const orderInfoContext = useContext(OrderInfoContext);
   const {
@@ -19,8 +22,18 @@ function PaymentInner(props: any) {
   const { calcTotalPrice } = useGetTotalPrice();
   const totalPrice = calcTotalPrice();
   //  价格变化的时候，重新设置。
+  console.log(totalPrice);
   useEffect(() => {
     callBackWhenPassAllFunc([() => totalPrice], () => {
+      if (!isServer()) {
+        // 清空操作
+        const dom: any = document.querySelector(
+          `#${constValue.paypalButtonId}`
+        );
+        if (dom) {
+          dom.innerHTML = "";
+        }
+      }
       paypalPay(totalPrice);
     });
   }, [totalPrice]);
