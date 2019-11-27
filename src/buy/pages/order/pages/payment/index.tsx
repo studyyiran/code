@@ -19,10 +19,10 @@ function PaymentInner(props: any) {
   } = orderInfoContext as IOrderInfoContext;
 
   // 计算总价
-  const { calcTotalPrice } = useGetTotalPrice();
+  const { calcTotalPrice, totalProductPrice } = useGetTotalPrice();
   const totalPrice = calcTotalPrice();
+  const productPrice = totalProductPrice();
   //  价格变化的时候，重新设置。
-  console.log(totalPrice);
   useEffect(() => {
     callBackWhenPassAllFunc([() => totalPrice], () => {
       if (!isServer()) {
@@ -34,7 +34,9 @@ function PaymentInner(props: any) {
           dom.innerHTML = "";
         }
       }
-      paypalPay(totalPrice);
+      if (productPrice) {
+        paypalPay(totalPrice);
+      }
     });
   }, [totalPrice]);
 
@@ -61,7 +63,7 @@ function PaymentInner(props: any) {
             //那这个id，和接口一起传到后台就行
             createOrder({
               payInfo: {
-                paymentType: "CREDIT_CARD",
+                paymentType: "PAYPAL",
                 creditCardInfo: {},
                 paypalOrderId: details.id
               },
