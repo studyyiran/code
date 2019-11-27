@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./index.less";
 import { Checkbox, Form, Input, Row, Col } from "antd";
 import { PaymentInformation } from "../information";
@@ -6,50 +6,61 @@ import { IOrderInfoContext, OrderInfoContext } from "../../context";
 import PayCardImages from "../../../../pages/detail/components/payCardImages";
 import Svg from "../../../../components/svg";
 import useGetTotalPrice from "../../components/orderLayout/useHook";
-import {constValue} from "../../../../common/constValue";
+import { constValue } from "../../../../common/constValue";
+import { callBackWhenPassAllFunc } from "../../../../common/utils/util";
 function PaymentInner(props: any) {
   const orderInfoContext = useContext(OrderInfoContext);
   const {
     orderInfoContextValue,
     createOrder
   } = orderInfoContext as IOrderInfoContext;
-  
+
   // 计算总价
-  const {
-    calcTotalPrice,
-  } = useGetTotalPrice();
-  
+  const { calcTotalPrice } = useGetTotalPrice();
+
   //  价格变化的时候，重新设置。
   useEffect(() => {
-    paypalPay(calcTotalPrice())
-  }, [calcTotalPrice])
-  
+    const totalPrice = calcTotalPrice();
+    callBackWhenPassAllFunc([() => totalPrice], () => {
+      paypalPay(totalPrice);
+    });
+  }, [calcTotalPrice]);
+
   function paypalPay(amount: any) {
     // @ts-ignore
-    paypal.Buttons({
-      createOrder: function (data: any, actions: any) {
-        // This function sets up the details of the transaction, including the amount and line item details.
-        return actions.order.create({
-          purchase_units: [{
-            amount: {
-              value: amount
-            }
-          }]
-        });
-      },
-      onApprove: function (data: any, actions: any) {
-        // This function captures the funds from the transaction.
-        return actions.order.capture().then(function (details: any) {
-          // This function shows a transaction success message to your buyer.
-          //那这个id，和接口一起传到后台就行
-          alert('Transaction completed by ' + details.id);
-          console.log(JSON.stringify(details), details)
-        });
-      }
-    }).render('#paypal-button-container');
+    paypal
+      .Buttons({
+        createOrder: function(data: any, actions: any) {
+          // This function sets up the details of the transaction, including the amount and line item details.
+          return actions.order.create({
+            purchase_units: [
+              {
+                amount: {
+                  value: amount
+                }
+              }
+            ]
+          });
+        },
+        onApprove: function(data: any, actions: any) {
+          // This function captures the funds from the transaction.
+          return actions.order.capture().then(function(details: any) {
+            // This function shows a transaction success message to your buyer.
+            //那这个id，和接口一起传到后台就行
+            createOrder({
+              payInfo: {
+                paymentType: "CREDIT_CARD",
+                creditCardInfo: {},
+                paypalOrderId: details.id,
+              },
+              invoiceSameAddr: sameAsShipping
+            })
+          });
+        }
+      })
+      .render("#paypal-button-container");
   }
-  
-  
+
   const { invoiceSameAddr, payInfo } = orderInfoContextValue;
   const { getFieldDecorator, validateFields } = props.form;
   const [sameAsShipping, setSameAsShipping] = useState(invoiceSameAddr);
@@ -81,7 +92,6 @@ function PaymentInner(props: any) {
       ? (payInfo.creditCardInfo as any)[key]
       : "";
   }
-  return <div id={constValue.paypalButtonId}></div>
 
   return (
     <div className="payment-page">
@@ -182,23 +192,26 @@ function PaymentInner(props: any) {
           </div>
         </div>
       </section>
-      {sameAsShipping === true ? (
-        props.renderButton(handleNext)
-      ) : (
-        <PaymentInformation
-          renderButton={(informationHandleNext: any) => {
-            return props.renderButton(() => {
-              // 检测表单
-              if (informationHandleNext()) {
-                // 设置开始提交
-                return handleNext();
-              } else {
-                return false;
-              }
-            });
-          }}
-        />
-      )}
+      <div id={constValue.paypalButtonId} />
+      {/*选择决定表单*/}
+      {/*暂时屏蔽*/}
+      {/*{sameAsShipping === true ? (*/}
+      {/*  props.renderButton(handleNext)*/}
+      {/*) : (*/}
+      {/*  <PaymentInformation*/}
+      {/*    renderButton={(informationHandleNext: any) => {*/}
+      {/*      return props.renderButton(() => {*/}
+      {/*        // 检测表单*/}
+      {/*        if (informationHandleNext()) {*/}
+      {/*          // 设置开始提交*/}
+      {/*          return handleNext();*/}
+      {/*        } else {*/}
+      {/*          return false;*/}
+      {/*        }*/}
+      {/*      });*/}
+      {/*    }}*/}
+      {/*  />*/}
+      {/*)}*/}
     </div>
   );
 }

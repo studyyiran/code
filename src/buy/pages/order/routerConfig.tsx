@@ -53,7 +53,7 @@ export const routerConfig: {
   },
   {
     title: "Check out - Payment | Uptradeit.com",
-    continueButton: <div id={constValue.paypalButtonId} />,
+    continueButton: null,
     backButton: "< Back to shipping",
     relativePath: "payment",
     name: "Payment",
