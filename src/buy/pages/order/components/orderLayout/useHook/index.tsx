@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { IOrderInfoContext, OrderInfoContext } from "../../../context";
 import { protectPrice } from "../../../../../common/config/staticConst";
-
+import NP from "number-precision";
 export default function useGetTotalPrice(
   props?: any
 ): {
@@ -18,7 +18,7 @@ export default function useGetTotalPrice(
     let total = 0;
     phoneDetailList.forEach((item: any) => {
       if (item && item.buyPrice) {
-        total += Number(item.buyPrice);
+        total = NP.plus(total, Number(item.buyPrice));
       }
     });
     return total;
@@ -27,7 +27,7 @@ export default function useGetTotalPrice(
     let total = 0;
     subOrders.forEach(({ needProtection }) => {
       if (needProtection) {
-        total += protectPrice;
+        total = NP.plus(total, Number(protectPrice));
       }
     });
     return total;
@@ -35,15 +35,15 @@ export default function useGetTotalPrice(
   function calcTotalPrice() {
     let total = 0;
     // 计算商品价格
-    total += totalProductPrice();
+    total = NP.plus(total, totalProductPrice());
     // 计算protecttion
-    total += totalProtections();
+    total = NP.plus(total, totalProtections());
     // 计算tax
     if (taxInfo && taxInfo.totalTax) {
-      total += Number(taxInfo.totalTax);
+      total = NP.plus(total, Number(taxInfo.totalTax));
     }
     // 计算shipping
-    total += getShippingPrice();
+    total = NP.plus(total, getShippingPrice());
     return Number(total);
   }
   function getShippingPrice() {
