@@ -125,18 +125,18 @@ function PaymentInner(props: any) {
     <div className="payment-page">
       <section className="pay-card">
         <h2 className="order-common-less-title">Payment information</h2>
-        <div className="pay-card-container">
-          <header className="paypayl-part card">
-            <span>
-              PayPal<span>-2.9%+$0.30 Fee</span>
-            </span>
-
-            <div className="img-container">
-              <img src={require("./res/paypal.png")} />
-            </div>
-          </header>
-          <div />
-        </div>
+        {/*<div className="pay-card-container">*/}
+        {/*  <header className="paypayl-part card">*/}
+        {/*    <span>*/}
+        {/*      PayPal<span>-2.9%+$0.30 Fee</span>*/}
+        {/*    </span>*/}
+        
+        {/*    <div className="img-container">*/}
+        {/*      <img src={require("./res/paypal.png")} />*/}
+        {/*    </div>*/}
+        {/*  </header>*/}
+        {/*  <div />*/}
+        {/*</div>*/}
       </section>
       {/*<section className="pay-card">*/}
       {/*  <h2 className="order-common-less-title">Payment information</h2>*/}
