@@ -11,12 +11,16 @@ import {
   callBackWhenPassAllFunc,
   isServer
 } from "../../../../common/utils/util";
+import { locationHref } from "../../../../common/utils/routerHistory";
+import LoadingMask from "../../../productList/components/loading";
 function PaymentInner(props: any) {
   const orderInfoContext = useContext(OrderInfoContext);
   const {
     orderInfoContextValue,
     createOrder
   } = orderInfoContext as IOrderInfoContext;
+
+  const [showLoadingMask, setShowLoadingMask] = useState(false);
 
   // 计算总价
   const { calcTotalPrice, totalProductPrice } = useGetTotalPrice();
@@ -58,18 +62,27 @@ function PaymentInner(props: any) {
         },
         onApprove: function(data: any, actions: any) {
           // This function captures the funds from the transaction.
-          return actions.order.capture().then(function(details: any) {
+          return actions.order.capture().then(async function(details: any) {
             // This function shows a transaction success message to your buyer.
             //那这个id，和接口一起传到后台就行
-            console.log(details.id)
-            createOrder({
-              payInfo: {
-                paymentType: "PAYPAL",
-                creditCardInfo: {},
-                paypalOrderId: details.id
-              },
-              invoiceSameAddr: sameAsShipping
-            });
+            console.log(details.id);
+            // startLoading
+            try {
+              setShowLoadingMask(true);
+              // 开启全屏loading
+              await createOrder({
+                payInfo: {
+                  paymentType: "PAYPAL",
+                  creditCardInfo: {},
+                  paypalOrderId: details.id
+                },
+                invoiceSameAddr: sameAsShipping
+              });
+              locationHref("/buy/confirmation");
+            } catch (e) {
+              console.error(e);
+            }
+            setShowLoadingMask(false);
           });
         }
       })
@@ -222,6 +235,7 @@ function PaymentInner(props: any) {
       {/*    </div>*/}
       {/*  </div>*/}
       {/*</section>*/}
+      <LoadingMask visible={showLoadingMask} />
       <div id={constValue.paypalButtonId} />
       {props.renderButton()}
       {/*选择决定表单*/}
