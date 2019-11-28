@@ -2,6 +2,33 @@
 
 @p: {
   .payment-page {
+    //.paypal-powered-by {
+    //  display: none !important;
+    //}
+    //.buttons-container.button-group {
+    //  .common-button:last-child {
+    //    background: transparent;
+    //  }
+    //}
+    //.paypal-powered-by {
+    //  display: none;
+    //}
+    .paypayl-part {
+      border: none !important;
+      span {
+        > span {
+          display: inline-block;
+          margin-left: 20 *@px;
+        }
+      }
+      .img-container {
+        padding: 10 *@px 5*@px 5 *@px;
+        border: 1px solid @color-border;
+        img {
+          width: 100 *@px;
+        }
+      }
+    }
     .card {
       padding: 25 * @px 18 *@px;
       .mb({padding: 10 * @px;});

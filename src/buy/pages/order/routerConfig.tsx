@@ -5,9 +5,10 @@ import { nameToContent } from "./util";
 import Payment from "./pages/payment";
 import Confirmation from "./pages/confirmation";
 import React from "react";
+import {constValue} from "../../common/constValue";
 
 export const routerConfig: {
-  continueButton?: string;
+  continueButton?: any;
   title: string;
   backButton?: string;
   relativePath: string;
@@ -52,7 +53,7 @@ export const routerConfig: {
   },
   {
     title: "Check out - Payment | Uptradeit.com",
-    continueButton: "Pay now",
+    continueButton: null,
     backButton: "< Back to shipping",
     relativePath: "payment",
     name: "Payment",

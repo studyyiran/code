@@ -11,6 +11,7 @@ export default function ButtonGroup(props: any) {
     backContent,
     isLoading
   } = props;
+
   return (
     <div className="buttons-container button-group">
       <button
@@ -25,18 +26,20 @@ export default function ButtonGroup(props: any) {
       >
         {backContent ? backContent : `< Back to store`}
       </button>
-      <button
-        className="common-button"
-        onClick={() => {
-          if (!isLoading) {
-            handleNext();
-          }
-        }}
-        disabled={disabled || isLoading}
-      >
-        {children ? children : "Continue"}
-        {isLoading ? <Loading /> : null}
-      </button>
+      {children !== null ? (
+        <button
+          className="common-button"
+          onClick={() => {
+            if (!isLoading) {
+              handleNext();
+            }
+          }}
+          disabled={disabled || isLoading}
+        >
+          {children ? children : "Continue"}
+          {isLoading ? <Loading /> : null}
+        </button>
+      ) : null}
     </div>
   );
 }
