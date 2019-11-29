@@ -12,16 +12,25 @@ import Svg from "../../../../components/svg";
 import useGetTotalPrice from "../../components/orderLayout/useHook";
 import { constValue } from "../../../../common/constValue";
 import {
+  afterMinTimeCall,
   callBackWhenPassAllFunc,
   isServer
 } from "../../../../common/utils/util";
 import { locationHref } from "../../../../common/utils/routerHistory";
 import LoadingMask from "../../../productList/components/loading";
+import { Message } from "../../../../components/message";
+
+let addressErrorTips = "The address could not be found.";
+
 function PaymentInner(props: any) {
   const orderInfoContext = useContext(OrderInfoContext);
+  const ajaxStatus = useRef();
+  const [validAddressSuccessful, setValidAddressSuccessful] = useState(false);
+
   const {
     orderInfoContextDispatch,
     orderInfoContextValue,
+    validaddress,
     createOrder
   } = orderInfoContext as IOrderInfoContext;
 
@@ -40,33 +49,60 @@ function PaymentInner(props: any) {
   const [sameAsShipping, setSameAsShipping] = useState(invoiceSameAddr);
   console.log(sameAsShipping);
 
+  function isOkInfo() {
+    if (sameAsShipping) {
+      // 因为是obj.检验一个必填
+      if (userInfo && userInfo.userEmail) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      const notRequiredArr: any[] = ["apartment"];
+      // 地址合法 有值 就行
+      return (
+        validAddressSuccessful &&
+        invoiceInfo &&
+        invoiceInfo.country &&
+        Object.keys(invoiceInfo).every((key: string) => {
+          return (
+            notRequiredArr.some(notRequired => notRequired === key) ||
+            invoiceInfo[key]
+          );
+        })
+      );
+    }
+  }
+
+  function RenderFakeButton() {}
+
   const totalPrice = calcTotalPrice();
   const productPrice = totalProductPrice();
   //  价格变化的时候，重新设置。
   const timeRef = useRef();
+  const isOkBool = isOkInfo();
   useEffect(() => {
-    if (totalPrice) {
-      if (productPrice) {
-        let info = {};
-        if (sameAsShipping) {
-          info = userInfo;
-        } else {
-          info = { ...invoiceInfo, userEmail: userInfo.userEmail };
+    // 只有有价格才是有效的
+    if (productPrice && !isServer()) {
+      let info = {};
+      // 根据形势整合数据
+      if (sameAsShipping) {
+        info = userInfo;
+      } else {
+        info = { ...invoiceInfo, userEmail: userInfo.userEmail };
+      }
+      if (info) {
+        if (timeRef && timeRef.current) {
+          window.clearTimeout(timeRef.current);
         }
-        if (info && !isServer()) {
-          if (timeRef && timeRef.current) {
-            window.clearTimeout(timeRef.current);
-          }
+        if (isOkBool) {
           (timeRef.current as any) = window.setTimeout(() => {
             // 每次触发更新操作的时候.清空
-            if (!isServer()) {
-              // 清空操作
-              const dom: any = document.querySelector(
-                `#${constValue.paypalButtonId}`
-              );
-              if (dom) {
-                dom.innerHTML = "";
-              }
+            const dom: any = document.querySelector(
+              `#${constValue.paypalButtonId}`
+            );
+            if (dom) {
+              dom.innerHTML = "";
             }
             paypalPay(totalPrice, info);
           }, 400);
@@ -79,9 +115,17 @@ function PaymentInner(props: any) {
       }
     }
     return () => {};
-  }, [totalPrice, userInfo, invoiceInfo, sameAsShipping]);
+  }, [
+    productPrice,
+    totalPrice,
+    userInfo,
+    invoiceInfo,
+    sameAsShipping,
+    isOkBool
+  ]);
 
   function paypalPay(amount: any, info: any) {
+    console.log("start paypalPay");
     console.log(info);
     // @ts-ignore
     paypal
@@ -311,29 +355,122 @@ function PaymentInner(props: any) {
       <LoadingMask visible={showLoadingMask} />
       {/*选择决定表单*/}
       {/*暂时屏蔽*/}
-      {sameAsShipping === true ? null : (
-        <PaymentInformation
-          onFormChangeHandler={(values: any) => {
-            orderInfoContextDispatch({
-              type: orderInfoReducerTypes.setInvoiceInfo,
-              value: values
-            });
-          }}
-          // renderButton={(informationHandleNext: any) => {
-          //   return props.renderButton(() => {
-          //     // 检测表单
-          //     if (informationHandleNext()) {
-          //       // 设置开始提交
-          //       return handleNext();
-          //     } else {
-          //       return false;
-          //     }
-          //   });
-          // }}
-        />
-      )}
-      <div className="placeholder" />
-      <div id={constValue.paypalButtonId} />
+      <div className="paypal-container">
+        {sameAsShipping === true ? null : (
+          <PaymentInformation
+            onFormChangeHandler={(
+              props: any,
+              changedValues: any,
+              allValues: any
+            ) => {
+              // 如果监听到目标变更 都进行重置.然后重新验证.
+              let arr = [
+                {
+                  name: "street",
+                  time: 1000
+                },
+                {
+                  name: "city",
+                  time: 1
+                }
+              ];
+              let findTarget = arr.find((item1: any) => {
+                return !!Object.keys(changedValues).find((item2: any) => {
+                  return item2 === item1.name;
+                });
+              });
+              // 只有当前变更 并且都有值的时候
+              if (findTarget && arr.every(item => allValues[item.name])) {
+                // 重置
+                setValidAddressSuccessful(false);
+                props.form.setFields({
+                  street: {
+                    value: allValues.street
+                  }
+                });
+                // @ts-ignore
+                function checkFunc() {
+                  ajaxStatus.current = validaddress({ userInfo: allValues });
+                  (ajaxStatus.current as any).then((res: any) => {
+                    setValidAddressSuccessful(true);
+                  });
+                  (ajaxStatus.current as any).catch(() => {
+                    (ajaxStatus.current as any) = checkFunc;
+                    Message.error(
+                      "Something went wrong, please check the billing address."
+                    );
+                    props.form.setFields({
+                      street: {
+                        errors: [new Error(addressErrorTips)]
+                      }
+                    });
+                  });
+                }
+                // 验证
+                afterMinTimeCall(findTarget.time, checkFunc);
+              }
+              orderInfoContextDispatch({
+                type: orderInfoReducerTypes.setInvoiceInfo,
+                value: allValues
+              });
+            }}
+            // renderButton={(informationHandleNext: any) => {
+            //   return props.renderButton(() => {
+            //     // 检测表单
+            //     if (informationHandleNext()) {
+            //       // 设置开始提交
+            //       return handleNext();
+            //     } else {
+            //       return false;
+            //     }
+            //   });
+            // }}
+            renderButton={(informationHandleNext: any, formInnerProps: any) => {
+              if (isOkInfo()) {
+                return null;
+              } else {
+                return (
+                  <div
+                    className="paypal-button-mask"
+                    onClick={() => {
+                      formInnerProps.form.validateFieldsAndScroll(
+                        (err: any, values: any) => {
+                          // 先验证表单
+                          if (!err) {
+                            // 如果验证通过了
+                            if (!validAddressSuccessful) {
+                              // 如果当前没有?
+                              if (!ajaxStatus.current) {
+                                // 直接设置非法
+                                formInnerProps.form.setFields({
+                                  street: {
+                                    errors: [new Error(addressErrorTips)]
+                                  }
+                                });
+                              } else {
+                                // 如果promise已经变成方法
+                                if (
+                                  (ajaxStatus.current as any) instanceof
+                                  Function
+                                ) {
+                                  (ajaxStatus.current as any)();
+                                }
+                              }
+                            }
+                          }
+                        }
+                      );
+                      informationHandleNext();
+                    }}
+                  />
+                );
+              }
+            }}
+          />
+        )}
+        <div className="placeholder" />
+        <div id={constValue.paypalButtonId} />
+      </div>
       {props.renderButton()}
     </div>
   );

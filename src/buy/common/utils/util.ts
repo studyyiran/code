@@ -1,7 +1,7 @@
 import { locationHref } from "./routerHistory";
 import { matchPath } from "react-router-dom";
 import { routerConfig } from "../../share/routerConfig";
-import {constValue} from "../constValue";
+import { constValue } from "../constValue";
 
 export const staticContentConfig = {
   priceUnit: "$",
@@ -72,9 +72,7 @@ export function currencyTrans(value: any, whenFree?: any) {
   if (whenFree && Number(fixValue) === 0) {
     return whenFree;
   } else {
-    return fixValue
-      ? constValue.priceUnit + transNumber(fixValue)
-      : fixValue;
+    return fixValue ? constValue.priceUnit + transNumber(fixValue) : fixValue;
   }
 }
 
@@ -198,5 +196,16 @@ export async function callBackWhenPassAllFunc(arr: any[], callBack: any) {
   });
   if (result1 && result2) {
     callBack();
+  }
+}
+
+let lastTimeRef = 0;
+export function afterMinTimeCall(time: number, callback: any) {
+  if (!isServer()) {
+    //  如果有time直接清空
+    if (lastTimeRef) {
+      window.clearTimeout(lastTimeRef);
+    }
+    lastTimeRef = window.setTimeout(callback, time);
   }
 }

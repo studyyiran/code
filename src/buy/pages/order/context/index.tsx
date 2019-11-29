@@ -11,7 +11,8 @@ import {
   getExpress,
   createOrder,
   zipCodeToAddressInfo,
-  orderIdToCheckOrderInfo
+  orderIdToCheckOrderInfo,
+  validaddress
 } from "../server";
 import {
   getFromCacheStore,
@@ -158,6 +159,7 @@ interface IContextActions {
   zipCodeToAddressInfo: (zipCode: string) => any;
   checkAddress: (info: any) => any;
   orderIdToCheckOrderInfo: () => any;
+  validaddress: (data: any) => any;
 }
 
 // useCreateActions
@@ -173,6 +175,9 @@ function useGetAction(
   // 数据上报计算
   const { calcTotalPrice, getShippingPrice } = useGetTotalPrice(state);
   const actions: IContextActions = {
+    validaddress: promisify(async function(data: any) {
+      return validaddress(data);
+    }),
     orderIdToCheckOrderInfo: promisify(async function() {
       if (state.orderInfo) {
         const checkOrderInfo: any = await orderIdToCheckOrderInfo(
