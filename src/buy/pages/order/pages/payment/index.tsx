@@ -80,6 +80,7 @@ function PaymentInner(props: any) {
   const productPrice = totalProductPrice();
   //  价格变化的时候，重新设置。
   const timeRef = useRef();
+  const isOkBool = isOkInfo();
   useEffect(() => {
     // 只有有价格才是有效的
     if (productPrice && !isServer()) {
@@ -94,7 +95,7 @@ function PaymentInner(props: any) {
         if (timeRef && timeRef.current) {
           window.clearTimeout(timeRef.current);
         }
-        if (isOkInfo()) {
+        if (isOkBool) {
           (timeRef.current as any) = window.setTimeout(() => {
             // 每次触发更新操作的时候.清空
             const dom: any = document.querySelector(
@@ -114,7 +115,14 @@ function PaymentInner(props: any) {
       }
     }
     return () => {};
-  }, [productPrice, totalPrice, userInfo, invoiceInfo, sameAsShipping]);
+  }, [
+    productPrice,
+    totalPrice,
+    userInfo,
+    invoiceInfo,
+    sameAsShipping,
+    isOkBool
+  ]);
 
   function paypalPay(amount: any, info: any) {
     console.log("start paypalPay");
