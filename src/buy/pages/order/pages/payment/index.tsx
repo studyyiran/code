@@ -2,7 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import "./index.less";
 import { Checkbox, Form, Input, Row, Col } from "antd";
 import { PaymentInformation } from "../information";
-import { IOrderInfoContext, OrderInfoContext } from "../../context";
+import {
+  IOrderInfoContext,
+  OrderInfoContext,
+  orderInfoReducerTypes
+} from "../../context";
 import PayCardImages from "../../../../pages/detail/components/payCardImages";
 import Svg from "../../../../components/svg";
 import useGetTotalPrice from "../../components/orderLayout/useHook";
@@ -16,6 +20,7 @@ import LoadingMask from "../../../productList/components/loading";
 function PaymentInner(props: any) {
   const orderInfoContext = useContext(OrderInfoContext);
   const {
+    orderInfoContextDispatch,
     orderInfoContextValue,
     createOrder
   } = orderInfoContext as IOrderInfoContext;
@@ -33,8 +38,6 @@ function PaymentInner(props: any) {
   } = orderInfoContextValue;
   const { getFieldDecorator, validateFields } = props.form;
   const [sameAsShipping, setSameAsShipping] = useState(invoiceSameAddr);
-  console.log(userInfo);
-  console.log(invoiceInfo);
   console.log(sameAsShipping);
 
   const totalPrice = calcTotalPrice();
@@ -60,7 +63,7 @@ function PaymentInner(props: any) {
   }, [totalPrice]);
 
   function paypalPay(amount: any, info: any) {
-    console.log(info)
+    console.log(info);
     // @ts-ignore
     paypal
       .Buttons({
@@ -89,7 +92,7 @@ function PaymentInner(props: any) {
               }
             },
             application_context: {
-              shipping_preference: 'NO_SHIPPING'
+              shipping_preference: "NO_SHIPPING"
             },
             purchase_units: [
               {
@@ -278,20 +281,26 @@ function PaymentInner(props: any) {
       {/*暂时屏蔽*/}
       {sameAsShipping === true ? null : (
         <PaymentInformation
-        // renderButton={(informationHandleNext: any) => {
-        //   return props.renderButton(() => {
-        //     // 检测表单
-        //     if (informationHandleNext()) {
-        //       // 设置开始提交
-        //       return handleNext();
-        //     } else {
-        //       return false;
-        //     }
-        //   });
-        // }}
+          onFormChangeHandler={(values: any) => {
+            orderInfoContextDispatch({
+              type: orderInfoReducerTypes.setInvoiceInfo,
+              value: values
+            });
+          }}
+          // renderButton={(informationHandleNext: any) => {
+          //   return props.renderButton(() => {
+          //     // 检测表单
+          //     if (informationHandleNext()) {
+          //       // 设置开始提交
+          //       return handleNext();
+          //     } else {
+          //       return false;
+          //     }
+          //   });
+          // }}
         />
       )}
-      <div className="placeholder"/>
+      <div className="placeholder" />
       <div id={constValue.paypalButtonId} />
       {props.renderButton()}
     </div>

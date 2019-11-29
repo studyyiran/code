@@ -295,9 +295,9 @@ function PureForm(props: any) {
 export const UserInformation = Form.create<any>()(UserInformationWrapper);
 export const PaymentInformation = Form.create<any>({
   onValuesChange: (props, changedValues, allValues) => {
-    console.log(props);
-    console.log(changedValues);
-    console.log(allValues);
+    if (props && props.onFormChangeHandler) {
+      props.onFormChangeHandler(allValues)
+    }
     // 如果所有值都ok.
     // 那么每次都延迟生成一个表单.(冲掉之前的.)
     // 也就是时刻都同步了dispatch 这边的功能是进行转发
