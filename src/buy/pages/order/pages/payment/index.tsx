@@ -380,13 +380,14 @@ function PaymentInner(props: any) {
                     value: allValues.street
                   }
                 });
-                // 验证
-                afterMinTimeCall(findTarget.time, () => {
+                // @ts-ignore
+                function checkFunc() {
                   ajaxStatus.current = validaddress({ userInfo: allValues });
                   (ajaxStatus.current as any).then((res: any) => {
                     setValidAddressSuccessful(true);
                   });
                   (ajaxStatus.current as any).catch(() => {
+                    (ajaxStatus.current as any) = checkFunc;
                     Message.error(
                       "Something went wrong, please check the billing address."
                     );
@@ -396,7 +397,9 @@ function PaymentInner(props: any) {
                       }
                     });
                   });
-                });
+                }
+                // 验证
+                afterMinTimeCall(findTarget.time, checkFunc);
               }
               orderInfoContextDispatch({
                 type: orderInfoReducerTypes.setInvoiceInfo,
@@ -436,6 +439,14 @@ function PaymentInner(props: any) {
                                     errors: [new Error(addressErrorTips)]
                                   }
                                 });
+                              } else {
+                                // 如果promise已经变成方法
+                                if (
+                                  (ajaxStatus.current as any) instanceof
+                                  Function
+                                ) {
+                                  (ajaxStatus.current as any)();
+                                }
                               }
                             }
                           }
