@@ -351,14 +351,23 @@ function PaymentInner(props: any) {
               allValues: any
             ) => {
               // 如果监听到目标变更 都进行重置.然后重新验证.
-              let arr = ["street", "city"];
-              const findTarget = arr.some((item1: any) => {
+              let arr = [
+                {
+                  name: "street",
+                  time: 1000
+                },
+                {
+                  name: "city",
+                  time: 1
+                }
+              ];
+              let findTarget = arr.find((item1: any) => {
                 return !!Object.keys(changedValues).find((item2: any) => {
-                  return item2 === item1;
+                  return item2 === item1.name;
                 });
               });
               // 只有当前变更 并且都有值的时候
-              if (findTarget && arr.every(item => allValues[item])) {
+              if (findTarget && arr.every(item => allValues[item.name])) {
                 // 重置
                 setValidAddressSuccessful(false);
                 props.form.setFields({
@@ -367,7 +376,7 @@ function PaymentInner(props: any) {
                   }
                 });
                 // 验证
-                afterMinTimeCall(800, () => {
+                afterMinTimeCall(findTarget.time, () => {
                   validaddress({ userInfo: allValues })
                     .then((res: any) => {
                       setValidAddressSuccessful(true);
