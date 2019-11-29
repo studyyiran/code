@@ -1,8 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import "./index.less";
 import { Checkbox, Form, Input, Row, Col } from "antd";
 import { PaymentInformation } from "../information";
-import { IOrderInfoContext, OrderInfoContext } from "../../context";
+import {
+  IOrderInfoContext,
+  OrderInfoContext,
+  orderInfoReducerTypes
+} from "../../context";
 import PayCardImages from "../../../../pages/detail/components/payCardImages";
 import Svg from "../../../../components/svg";
 import useGetTotalPrice from "../../components/orderLayout/useHook";
@@ -16,6 +20,7 @@ import LoadingMask from "../../../productList/components/loading";
 function PaymentInner(props: any) {
   const orderInfoContext = useContext(OrderInfoContext);
   const {
+    orderInfoContextDispatch,
     orderInfoContextValue,
     createOrder
   } = orderInfoContext as IOrderInfoContext;
@@ -24,37 +29,110 @@ function PaymentInner(props: any) {
 
   // 计算总价
   const { calcTotalPrice, totalProductPrice } = useGetTotalPrice();
+
+  const {
+    invoiceSameAddr,
+    payInfo,
+    userInfo,
+    invoiceInfo
+  } = orderInfoContextValue;
+  const { getFieldDecorator, validateFields } = props.form;
+  const [sameAsShipping, setSameAsShipping] = useState(invoiceSameAddr);
+  console.log(sameAsShipping);
+
   const totalPrice = calcTotalPrice();
   const productPrice = totalProductPrice();
   //  价格变化的时候，重新设置。
+  const timeRef = useRef();
   useEffect(() => {
-    callBackWhenPassAllFunc([() => totalPrice], () => {
-      if (!isServer()) {
-        // 清空操作
-        const dom: any = document.querySelector(
-          `#${constValue.paypalButtonId}`
-        );
-        if (dom) {
-          dom.innerHTML = "";
+    if (totalPrice) {
+      
+      if (productPrice) {
+        let info = {};
+        if (sameAsShipping) {
+          info = userInfo;
+        } else {
+          info = { ...invoiceInfo, userEmail: userInfo.userEmail };
+        }
+        if (info && !isServer()) {
+          if (timeRef && timeRef.current) {
+            window.clearTimeout(timeRef.current);
+          }
+          (timeRef.current as any) = window.setTimeout(() => {
+            // 每次触发更新操作的时候.清空
+            if (!isServer()) {
+              // 清空操作
+              const dom: any = document.querySelector(
+                `#${constValue.paypalButtonId}`
+              );
+              if (dom) {
+                dom.innerHTML = "";
+              }
+            }
+            paypalPay(totalPrice, info);
+          }, 400);
+          return () => {
+            if (timeRef.current) {
+              window.clearTimeout(timeRef.current);
+            }
+          };
         }
       }
-      if (productPrice) {
-        paypalPay(totalPrice);
-      }
-    });
-  }, [totalPrice]);
+    }
+    return () => {};
+  }, [totalPrice, userInfo, invoiceInfo, sameAsShipping]);
 
-  function paypalPay(amount: any) {
+  function paypalPay(amount: any, info: any) {
+    console.log(info);
     // @ts-ignore
     paypal
       .Buttons({
         createOrder: function(data: any, actions: any) {
           // This function sets up the details of the transaction, including the amount and line item details.
+          const {
+            firstName = undefined,
+            userEmail = undefined,
+            lastName = undefined,
+            street = undefined,
+            apartment = undefined,
+            city = undefined,
+            state = undefined,
+            zipCode = undefined,
+            userPhone = undefined
+          } = info;
           return actions.order.create({
+            payer: {
+              name: {
+                given_name: firstName,
+                surname: lastName
+              },
+              address: {
+                address_line_1: street,
+                address_line_2: apartment,
+                admin_area_2: city,
+                admin_area_1: state,
+                postal_code: zipCode,
+                country_code: "US"
+              },
+              email_address: userEmail,
+              phone: userPhone
+                ? {
+                    phone_type: "MOBILE",
+                    phone_number: {
+                      national_number: "1",
+                      phone_number: userPhone
+                    }
+                  }
+                : null
+            },
+            application_context: {
+              shipping_preference: "NO_SHIPPING"
+            },
             purchase_units: [
               {
                 amount: {
-                  value: amount
+                  value: amount,
+                  currency_code: "USD"
                 }
               }
             ]
@@ -89,9 +167,6 @@ function PaymentInner(props: any) {
       .render("#paypal-button-container");
   }
 
-  const { invoiceSameAddr, payInfo } = orderInfoContextValue;
-  const { getFieldDecorator, validateFields } = props.form;
-  const [sameAsShipping, setSameAsShipping] = useState(invoiceSameAddr);
   function handleNext() {
     let result;
     // 检测card表单
@@ -130,7 +205,7 @@ function PaymentInner(props: any) {
         {/*    <span>*/}
         {/*      PayPal<span>-2.9%+$0.30 Fee</span>*/}
         {/*    </span>*/}
-        
+
         {/*    <div className="img-container">*/}
         {/*      <img src={require("./res/paypal.png")} />*/}
         {/*    </div>*/}
@@ -209,54 +284,59 @@ function PaymentInner(props: any) {
       {/*    </Form>*/}
       {/*  </div>*/}
       {/*</section>*/}
-      {/*<section className="address">*/}
-      {/*  <h2 className="order-common-less-title">Billing Address</h2>*/}
-      {/*  <p>Select the address that matches your card or payment method.</p>*/}
-      {/*  <div className="checkbox-container-group">*/}
-      {/*    <div className="checkbox-container">*/}
-      {/*      <Checkbox*/}
-      {/*        checked={sameAsShipping === true}*/}
-      {/*        onChange={() => {*/}
-      {/*          setSameAsShipping(true);*/}
-      {/*        }}*/}
-      {/*      >*/}
-      {/*        <span>Same as shipping address</span>*/}
-      {/*      </Checkbox>*/}
-      {/*    </div>*/}
-      {/*    <div className="checkbox-container">*/}
-      {/*      <Checkbox*/}
-      {/*        checked={sameAsShipping === false}*/}
-      {/*        onChange={() => {*/}
-      {/*          setSameAsShipping(false);*/}
-      {/*        }}*/}
-      {/*      >*/}
-      {/*        <span>Use a different billing address</span>*/}
-      {/*      </Checkbox>*/}
-      {/*    </div>*/}
-      {/*  </div>*/}
-      {/*</section>*/}
+      <section className="address">
+        <h2 className="order-common-less-title">Billing Address</h2>
+        <p>Select the address that matches your card or payment method.</p>
+        <div className="checkbox-container-group">
+          <div className="checkbox-container">
+            <Checkbox
+              checked={sameAsShipping === true}
+              onChange={() => {
+                setSameAsShipping(true);
+              }}
+            >
+              <span>Same as shipping address</span>
+            </Checkbox>
+          </div>
+          <div className="checkbox-container">
+            <Checkbox
+              checked={sameAsShipping === false}
+              onChange={() => {
+                setSameAsShipping(false);
+              }}
+            >
+              <span>Use a different billing address</span>
+            </Checkbox>
+          </div>
+        </div>
+      </section>
       <LoadingMask visible={showLoadingMask} />
-      <div id={constValue.paypalButtonId} />
-      {props.renderButton()}
       {/*选择决定表单*/}
       {/*暂时屏蔽*/}
-      {/*{sameAsShipping === true ? (*/}
-      {/*  props.renderButton(handleNext)*/}
-      {/*) : (*/}
-      {/*  <PaymentInformation*/}
-      {/*    renderButton={(informationHandleNext: any) => {*/}
-      {/*      return props.renderButton(() => {*/}
-      {/*        // 检测表单*/}
-      {/*        if (informationHandleNext()) {*/}
-      {/*          // 设置开始提交*/}
-      {/*          return handleNext();*/}
-      {/*        } else {*/}
-      {/*          return false;*/}
-      {/*        }*/}
-      {/*      });*/}
-      {/*    }}*/}
-      {/*  />*/}
-      {/*)}*/}
+      {sameAsShipping === true ? null : (
+        <PaymentInformation
+          onFormChangeHandler={(values: any) => {
+            orderInfoContextDispatch({
+              type: orderInfoReducerTypes.setInvoiceInfo,
+              value: values
+            });
+          }}
+          // renderButton={(informationHandleNext: any) => {
+          //   return props.renderButton(() => {
+          //     // 检测表单
+          //     if (informationHandleNext()) {
+          //       // 设置开始提交
+          //       return handleNext();
+          //     } else {
+          //       return false;
+          //     }
+          //   });
+          // }}
+        />
+      )}
+      <div className="placeholder" />
+      <div id={constValue.paypalButtonId} />
+      {props.renderButton()}
     </div>
   );
 }

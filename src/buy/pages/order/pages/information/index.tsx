@@ -288,9 +288,27 @@ function PureForm(props: any) {
         <h2 className="order-common-less-title">Shipping Address</h2>
       ) : null}
       <div className="container">{infomationHTML}</div>
-      {renderButton(handleNext)}
+      {renderButton ? renderButton(handleNext) : null}
     </div>
   );
 }
 export const UserInformation = Form.create<any>()(UserInformationWrapper);
-export const PaymentInformation = Form.create<any>()(PaymentInformationWrapper);
+export const PaymentInformation = Form.create<any>({
+  onValuesChange: (props, changedValues, allValues) => {
+    if (props && props.onFormChangeHandler) {
+      props.onFormChangeHandler(allValues)
+    }
+    // 如果所有值都ok.
+    // 那么每次都延迟生成一个表单.(冲掉之前的.)
+    // 也就是时刻都同步了dispatch 这边的功能是进行转发
+
+    // 外面的功能是进行渲染.根据不同的情况,使用永远正确的数值,进行渲染.就和修改价格一样.
+
+    // 外部根据用户的选择,来进行对应的判定和按钮渲染.
+    // currentSelect状态  currentShippingInfo状态.
+
+    // props.form.validateFields((err: any, values: any) => {
+    //   console.log(err);
+    // });
+  }
+})(PaymentInformationWrapper);
