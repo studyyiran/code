@@ -5,6 +5,15 @@ import {
 } from "./mock";
 import ajax from "../../../common/utils/ajax";
 
+const validaddressUrl = '/buy/order/validaddress'
+
+export async function validaddress(info: any) {
+  const res = await ajax.post(validaddressUrl, info);
+  return res;
+}
+
+
+
 export async function getOrderTax(info: any) {
   const res = await ajax.post(`/buy/order/getordertax`, info);
   return res;
