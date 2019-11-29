@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import "./index.less";
 import { Checkbox, Form, Input, Row, Col } from "antd";
 import { PaymentInformation } from "../information";
@@ -43,8 +43,9 @@ function PaymentInner(props: any) {
   const totalPrice = calcTotalPrice();
   const productPrice = totalProductPrice();
   //  价格变化的时候，重新设置。
+  const timeRef = useRef();
   useEffect(() => {
-    callBackWhenPassAllFunc([() => totalPrice], () => {
+    if (totalPrice) {
       // 每次触发更新操作的时候.清空
       if (!isServer()) {
         // 清空操作
@@ -56,12 +57,28 @@ function PaymentInner(props: any) {
         }
       }
       if (productPrice) {
-        const info = sameAsShipping ? userInfo : invoiceInfo;
-        if (info) {
-          paypalPay(totalPrice, info);
+        let info = {};
+        if (sameAsShipping) {
+          info = userInfo;
+        } else {
+          info = { ...invoiceInfo, userEmail: userInfo.userEmail };
+        }
+        if (info && !isServer()) {
+          if (timeRef && timeRef.current) {
+            window.clearTimeout(timeRef.current);
+          }
+          (timeRef.current as any) = window.setTimeout(() => {
+            paypalPay(totalPrice, info);
+          }, 400);
+          return () => {
+            if (timeRef.current) {
+              window.clearTimeout(timeRef.current);
+            }
+          };
         }
       }
-    });
+    }
+    return () => {};
   }, [totalPrice, userInfo, invoiceInfo, sameAsShipping]);
 
   function paypalPay(amount: any, info: any) {
@@ -80,7 +97,7 @@ function PaymentInner(props: any) {
             city = undefined,
             state = undefined,
             zipCode = undefined,
-            userPhone = undefined,
+            userPhone = undefined
           } = info;
           return actions.order.create({
             payer: {
@@ -97,12 +114,15 @@ function PaymentInner(props: any) {
                 country_code: "US"
               },
               email_address: userEmail,
-              phone: userPhone ? {
-                phone_type: "MOBILE",
-                phone_number: {
-                  national_number: userPhone
-                }
-              } : null
+              phone: userPhone
+                ? {
+                    phone_type: "MOBILE",
+                    phone_number: {
+                      national_number: "1",
+                      phone_number: userPhone
+                    }
+                  }
+                : null
             },
             application_context: {
               shipping_preference: "NO_SHIPPING"
