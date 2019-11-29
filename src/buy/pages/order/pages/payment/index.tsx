@@ -57,10 +57,12 @@ function PaymentInner(props: any) {
       }
       if (productPrice) {
         const info = sameAsShipping ? userInfo : invoiceInfo;
-        paypalPay(totalPrice, info);
+        if (info) {
+          paypalPay(totalPrice, info);
+        }
       }
     });
-  }, [totalPrice]);
+  }, [totalPrice, userInfo, invoiceInfo, sameAsShipping]);
 
   function paypalPay(amount: any, info: any) {
     console.log(info);
@@ -69,27 +71,38 @@ function PaymentInner(props: any) {
       .Buttons({
         createOrder: function(data: any, actions: any) {
           // This function sets up the details of the transaction, including the amount and line item details.
+          const {
+            firstName = undefined,
+            userEmail = undefined,
+            lastName = undefined,
+            street = undefined,
+            apartment = undefined,
+            city = undefined,
+            state = undefined,
+            zipCode = undefined,
+            userPhone = undefined,
+          } = info;
           return actions.order.create({
             payer: {
               name: {
-                given_name: info.firstName,
-                surname: info.lastName
+                given_name: firstName,
+                surname: lastName
               },
               address: {
-                address_line_1: info.street,
-                address_line_2: info.apartment,
-                admin_area_2: info.city,
-                admin_area_1: info.state,
-                postal_code: info.zipCode,
+                address_line_1: street,
+                address_line_2: apartment,
+                admin_area_2: city,
+                admin_area_1: state,
+                postal_code: zipCode,
                 country_code: "US"
               },
-              email_address: info.userEmail,
-              phone: {
+              email_address: userEmail,
+              phone: userPhone ? {
                 phone_type: "MOBILE",
                 phone_number: {
-                  national_number: info.userPhone
+                  national_number: userPhone
                 }
-              }
+              } : null
             },
             application_context: {
               shipping_preference: "NO_SHIPPING"
