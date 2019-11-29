@@ -18,11 +18,13 @@ import {
 } from "../../../../common/utils/util";
 import { locationHref } from "../../../../common/utils/routerHistory";
 import LoadingMask from "../../../productList/components/loading";
+import { Message } from "../../../../components/message";
 
 let addressErrorTips = "The address could not be found.";
 
 function PaymentInner(props: any) {
   const orderInfoContext = useContext(OrderInfoContext);
+  const ajaxStatus = useRef();
   const [validAddressSuccessful, setValidAddressSuccessful] = useState(false);
 
   const {
@@ -380,18 +382,20 @@ function PaymentInner(props: any) {
                 });
                 // 验证
                 afterMinTimeCall(findTarget.time, () => {
-                  validaddress({ userInfo: allValues })
-                    .then((res: any) => {
-                      setValidAddressSuccessful(true);
-                    })
-                    .catch(() => {
-                      props.form.setFields({
-                        street: {
-                          value: allValues.street,
-                          errors: [new Error(addressErrorTips)]
-                        }
-                      });
+                  ajaxStatus.current = validaddress({ userInfo: allValues });
+                  (ajaxStatus.current as any).then((res: any) => {
+                    setValidAddressSuccessful(true);
+                  });
+                  (ajaxStatus.current as any).catch(() => {
+                    Message.error(
+                      "Something went wrong, please check the billing address."
+                    );
+                    props.form.setFields({
+                      street: {
+                        errors: [new Error(addressErrorTips)]
+                      }
                     });
+                  });
                 });
               }
               orderInfoContextDispatch({
@@ -418,15 +422,26 @@ function PaymentInner(props: any) {
                   <div
                     className="paypal-button-mask"
                     onClick={() => {
-                      informationHandleNext();
-                      // 如果压根就没过
-                      if (!validAddressSuccessful) {
-                        formInnerProps.form.setFields({
-                          street: {
-                            errors: [new Error(addressErrorTips)]
+                      formInnerProps.form.validateFieldsAndScroll(
+                        (err: any, values: any) => {
+                          // 先验证表单
+                          if (!err) {
+                            // 如果验证通过了
+                            if (!validAddressSuccessful) {
+                              // 如果当前没有?
+                              if (!ajaxStatus.current) {
+                                // 直接设置非法
+                                formInnerProps.form.setFields({
+                                  street: {
+                                    errors: [new Error(addressErrorTips)]
+                                  }
+                                });
+                              }
+                            }
                           }
-                        });
-                      }
+                        }
+                      );
+                      informationHandleNext();
                     }}
                   />
                 );
