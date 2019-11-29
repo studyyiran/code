@@ -46,7 +46,6 @@ function PaymentInner(props: any) {
   const timeRef = useRef();
   useEffect(() => {
     if (totalPrice) {
-      
       if (productPrice) {
         let info = {};
         if (sameAsShipping) {
@@ -119,8 +118,7 @@ function PaymentInner(props: any) {
                 ? {
                     phone_type: "MOBILE",
                     phone_number: {
-                      national_number: "1",
-                      phone_number: userPhone
+                      national_number: userPhone
                     }
                   }
                 : null
