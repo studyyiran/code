@@ -40,33 +40,57 @@ function PaymentInner(props: any) {
   const [sameAsShipping, setSameAsShipping] = useState(invoiceSameAddr);
   console.log(sameAsShipping);
 
+  function isOkInfo() {
+    if (sameAsShipping) {
+      // 因为是obj.检验一个必填
+      if (userInfo && userInfo.userEmail) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      const notRequiredArr: any[] = ["apartment"];
+      return (
+        invoiceInfo &&
+        invoiceInfo.country &&
+        Object.keys(invoiceInfo).every((key: string) => {
+          return (
+            notRequiredArr.some(notRequired => notRequired === key) ||
+            invoiceInfo[key]
+          );
+        })
+      );
+    }
+  }
+
+  function RenderFakeButton() {}
+
   const totalPrice = calcTotalPrice();
   const productPrice = totalProductPrice();
   //  价格变化的时候，重新设置。
   const timeRef = useRef();
   useEffect(() => {
-    if (totalPrice) {
-      if (productPrice) {
-        let info = {};
-        if (sameAsShipping) {
-          info = userInfo;
-        } else {
-          info = { ...invoiceInfo, userEmail: userInfo.userEmail };
+    // 只有有价格才是有效的
+    if (productPrice && !isServer()) {
+      let info = {};
+      // 根据形势整合数据
+      if (sameAsShipping) {
+        info = userInfo;
+      } else {
+        info = { ...invoiceInfo, userEmail: userInfo.userEmail };
+      }
+      if (info) {
+        if (timeRef && timeRef.current) {
+          window.clearTimeout(timeRef.current);
         }
-        if (info && !isServer()) {
-          if (timeRef && timeRef.current) {
-            window.clearTimeout(timeRef.current);
-          }
+        if (isOkInfo()) {
           (timeRef.current as any) = window.setTimeout(() => {
             // 每次触发更新操作的时候.清空
-            if (!isServer()) {
-              // 清空操作
-              const dom: any = document.querySelector(
-                `#${constValue.paypalButtonId}`
-              );
-              if (dom) {
-                dom.innerHTML = "";
-              }
+            const dom: any = document.querySelector(
+              `#${constValue.paypalButtonId}`
+            );
+            if (dom) {
+              dom.innerHTML = "";
             }
             paypalPay(totalPrice, info);
           }, 400);
@@ -79,9 +103,10 @@ function PaymentInner(props: any) {
       }
     }
     return () => {};
-  }, [totalPrice, userInfo, invoiceInfo, sameAsShipping]);
+  }, [productPrice, totalPrice, userInfo, invoiceInfo, sameAsShipping]);
 
   function paypalPay(amount: any, info: any) {
+    console.log('start paypalPay')
     console.log(info);
     // @ts-ignore
     paypal
@@ -311,29 +336,43 @@ function PaymentInner(props: any) {
       <LoadingMask visible={showLoadingMask} />
       {/*选择决定表单*/}
       {/*暂时屏蔽*/}
-      {sameAsShipping === true ? null : (
-        <PaymentInformation
-          onFormChangeHandler={(values: any) => {
-            orderInfoContextDispatch({
-              type: orderInfoReducerTypes.setInvoiceInfo,
-              value: values
-            });
-          }}
-          // renderButton={(informationHandleNext: any) => {
-          //   return props.renderButton(() => {
-          //     // 检测表单
-          //     if (informationHandleNext()) {
-          //       // 设置开始提交
-          //       return handleNext();
-          //     } else {
-          //       return false;
-          //     }
-          //   });
-          // }}
-        />
-      )}
-      <div className="placeholder" />
-      <div id={constValue.paypalButtonId} />
+      <div className="paypal-container">
+        {sameAsShipping === true ? null : (
+          <PaymentInformation
+            onFormChangeHandler={(values: any) => {
+              orderInfoContextDispatch({
+                type: orderInfoReducerTypes.setInvoiceInfo,
+                value: values
+              });
+            }}
+            // renderButton={(informationHandleNext: any) => {
+            //   return props.renderButton(() => {
+            //     // 检测表单
+            //     if (informationHandleNext()) {
+            //       // 设置开始提交
+            //       return handleNext();
+            //     } else {
+            //       return false;
+            //     }
+            //   });
+            // }}
+            renderButton={(informationHandleNext: any) => {
+              if (isOkInfo()) {
+                return null;
+              } else {
+                return (
+                  <div
+                    className="paypal-button-mask"
+                    onClick={informationHandleNext}
+                  />
+                );
+              }
+            }}
+          />
+        )}
+        <div className="placeholder" />
+        <div id={constValue.paypalButtonId} />
+      </div>
       {props.renderButton()}
     </div>
   );
