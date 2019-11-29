@@ -46,16 +46,7 @@ function PaymentInner(props: any) {
   const timeRef = useRef();
   useEffect(() => {
     if (totalPrice) {
-      // 每次触发更新操作的时候.清空
-      if (!isServer()) {
-        // 清空操作
-        const dom: any = document.querySelector(
-          `#${constValue.paypalButtonId}`
-        );
-        if (dom) {
-          dom.innerHTML = "";
-        }
-      }
+      
       if (productPrice) {
         let info = {};
         if (sameAsShipping) {
@@ -68,6 +59,16 @@ function PaymentInner(props: any) {
             window.clearTimeout(timeRef.current);
           }
           (timeRef.current as any) = window.setTimeout(() => {
+            // 每次触发更新操作的时候.清空
+            if (!isServer()) {
+              // 清空操作
+              const dom: any = document.querySelector(
+                `#${constValue.paypalButtonId}`
+              );
+              if (dom) {
+                dom.innerHTML = "";
+              }
+            }
             paypalPay(totalPrice, info);
           }, 400);
           return () => {
