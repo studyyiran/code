@@ -12,6 +12,7 @@ import Svg from "../../../../components/svg";
 import useGetTotalPrice from "../../components/orderLayout/useHook";
 import { constValue } from "../../../../common/constValue";
 import {
+  afterMinTimeCall,
   callBackWhenPassAllFunc,
   isServer
 } from "../../../../common/utils/util";
@@ -19,9 +20,12 @@ import { locationHref } from "../../../../common/utils/routerHistory";
 import LoadingMask from "../../../productList/components/loading";
 function PaymentInner(props: any) {
   const orderInfoContext = useContext(OrderInfoContext);
+  const [validAddressSuccessful, setValidAddressSuccessful] = useState(false);
+
   const {
     orderInfoContextDispatch,
     orderInfoContextValue,
+    validaddress,
     createOrder
   } = orderInfoContext as IOrderInfoContext;
 
@@ -50,7 +54,9 @@ function PaymentInner(props: any) {
       }
     } else {
       const notRequiredArr: any[] = ["apartment"];
+      // 地址合法 有值 就行
       return (
+        validAddressSuccessful &&
         invoiceInfo &&
         invoiceInfo.country &&
         Object.keys(invoiceInfo).every((key: string) => {
@@ -106,7 +112,7 @@ function PaymentInner(props: any) {
   }, [productPrice, totalPrice, userInfo, invoiceInfo, sameAsShipping]);
 
   function paypalPay(amount: any, info: any) {
-    console.log('start paypalPay')
+    console.log("start paypalPay");
     console.log(info);
     // @ts-ignore
     paypal
@@ -339,10 +345,47 @@ function PaymentInner(props: any) {
       <div className="paypal-container">
         {sameAsShipping === true ? null : (
           <PaymentInformation
-            onFormChangeHandler={(values: any) => {
+            onFormChangeHandler={(
+              props: any,
+              changedValues: any,
+              allValues: any
+            ) => {
+              // 如果监听到目标变更 都进行重置.然后重新验证.
+              let arr = ["street", "city"];
+              const findTarget = arr.some((item1: any) => {
+                return !!Object.keys(changedValues).find((item2: any) => {
+                  return item2 === item1;
+                });
+              });
+              // 只有当前变更 并且都有值的时候
+              if (findTarget && arr.every(item => allValues[item])) {
+                // 重置
+                setValidAddressSuccessful(false);
+                props.form.setFields({
+                  street: {
+                    value: allValues.street
+                  }
+                });
+                // 验证
+                afterMinTimeCall(800, () => {
+                  validaddress({ userInfo: allValues })
+                    .then((res: any) => {
+                      setValidAddressSuccessful(true);
+                    })
+                    .catch(() => {
+                      props.form.setFields({
+                        street: {
+                          value: allValues.street,
+                          errors: [new Error("Please enter a valid zipCode")]
+                        }
+                      });
+                    });
+                });
+              }
+
               orderInfoContextDispatch({
                 type: orderInfoReducerTypes.setInvoiceInfo,
-                value: values
+                value: allValues
               });
             }}
             // renderButton={(informationHandleNext: any) => {

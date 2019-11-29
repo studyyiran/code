@@ -296,7 +296,7 @@ export const UserInformation = Form.create<any>()(UserInformationWrapper);
 export const PaymentInformation = Form.create<any>({
   onValuesChange: (props, changedValues, allValues) => {
     if (props && props.onFormChangeHandler) {
-      props.onFormChangeHandler(allValues)
+      props.onFormChangeHandler(props, changedValues, allValues);
     }
     // 如果所有值都ok.
     // 那么每次都延迟生成一个表单.(冲掉之前的.)
