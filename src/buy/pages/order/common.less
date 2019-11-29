@@ -4,6 +4,9 @@
   // 组件公用样式重写
   .buttons-container {
     margin-top: 24 * @px;
+    //支付页避免遮罩所以要提升
+    position: relative;
+    z-index: 2000;
   }
   // 公用样式抽象
   .order-common-less {
