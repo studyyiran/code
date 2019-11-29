@@ -18,6 +18,9 @@ import {
 } from "../../../../common/utils/util";
 import { locationHref } from "../../../../common/utils/routerHistory";
 import LoadingMask from "../../../productList/components/loading";
+
+let addressErrorTips = "The address could not be found.";
+
 function PaymentInner(props: any) {
   const orderInfoContext = useContext(OrderInfoContext);
   const [validAddressSuccessful, setValidAddressSuccessful] = useState(false);
@@ -385,13 +388,12 @@ function PaymentInner(props: any) {
                       props.form.setFields({
                         street: {
                           value: allValues.street,
-                          errors: [new Error("Please enter a valid zipCode")]
+                          errors: [new Error(addressErrorTips)]
                         }
                       });
                     });
                 });
               }
-
               orderInfoContextDispatch({
                 type: orderInfoReducerTypes.setInvoiceInfo,
                 value: allValues
@@ -408,14 +410,24 @@ function PaymentInner(props: any) {
             //     }
             //   });
             // }}
-            renderButton={(informationHandleNext: any) => {
+            renderButton={(informationHandleNext: any, formInnerProps: any) => {
               if (isOkInfo()) {
                 return null;
               } else {
                 return (
                   <div
                     className="paypal-button-mask"
-                    onClick={informationHandleNext}
+                    onClick={() => {
+                      informationHandleNext();
+                      // 如果压根就没过
+                      if (!validAddressSuccessful) {
+                        formInnerProps.form.setFields({
+                          street: {
+                            errors: [new Error(addressErrorTips)]
+                          }
+                        });
+                      }
+                    }}
                   />
                 );
               }

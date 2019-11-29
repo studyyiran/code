@@ -74,7 +74,7 @@ function PureForm(props: any) {
 
   function validateData() {
     let result = false;
-    form.validateFields((err: any, values: any) => {
+    form.validateFieldsAndScroll((err: any, values: any) => {
       if (!err) {
         result = values;
       }
@@ -288,7 +288,7 @@ function PureForm(props: any) {
         <h2 className="order-common-less-title">Shipping Address</h2>
       ) : null}
       <div className="container">{infomationHTML}</div>
-      {renderButton ? renderButton(handleNext) : null}
+      {renderButton ? renderButton(handleNext, props) : null}
     </div>
   );
 }
