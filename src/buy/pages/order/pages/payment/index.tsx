@@ -81,6 +81,41 @@ function PaymentInner(props: any) {
   //  价格变化的时候，重新设置。
   const timeRef = useRef();
   const isOkBool = isOkInfo();
+
+  // 首次展示
+  useEffect(() => {
+    // 只有有价格才是有效的
+    if (productPrice && !isServer()) {
+      let info = userInfo;
+      // 根据形势整合数据
+      if (info) {
+        if (timeRef && timeRef.current) {
+          window.clearTimeout(timeRef.current);
+        }
+        (timeRef.current as any) = window.setTimeout(() => {
+          // 每次触发更新操作的时候.清空
+          const dom: any = document.querySelector(
+            `#${constValue.paypalButtonId}`
+          );
+          if (dom) {
+            dom.innerHTML = "";
+          }
+          paypalPay(totalPrice, info);
+        }, 400);
+        return () => {
+          if (timeRef.current) {
+            window.clearTimeout(timeRef.current);
+          }
+        };
+      }
+    }
+    return () => {};
+  }, [
+    productPrice,
+    totalPrice,
+    userInfo,
+  ]);
+  
   useEffect(() => {
     // 只有有价格才是有效的
     if (productPrice && !isServer()) {
@@ -92,10 +127,10 @@ function PaymentInner(props: any) {
         info = { ...invoiceInfo, userEmail: userInfo.userEmail };
       }
       if (info) {
-        if (timeRef && timeRef.current) {
-          window.clearTimeout(timeRef.current);
-        }
         if (isOkBool) {
+          if (timeRef && timeRef.current) {
+            window.clearTimeout(timeRef.current);
+          }
           (timeRef.current as any) = window.setTimeout(() => {
             // 每次触发更新操作的时候.清空
             const dom: any = document.querySelector(
