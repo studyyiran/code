@@ -2,7 +2,7 @@ import { locationHref } from "./routerHistory";
 import { matchPath } from "react-router-dom";
 import { routerConfig } from "../../share/routerConfig";
 import { constValue } from "../constValue";
-
+import { Message } from "../../components/message";
 export const staticContentConfig = {
   priceUnit: "$",
   perMonth: "/mo",
@@ -228,6 +228,48 @@ export function getUrlAllParams() {
   } else {
     return null;
   }
+}
+
+export function actionsWithCatchAndLoading({
+  dispatch,
+  loadingDispatchName,
+  loadingObjectKey,
+  promiseFunc,
+  needError = true
+}: {
+  dispatch: any;
+  loadingDispatchName: string;
+  loadingObjectKey: string;
+  promiseFunc: any;
+  needError?: any;
+}) {
+  let dispatchJson: any = {};
+  dispatchJson[loadingObjectKey] = true;
+  dispatch({
+    type: loadingDispatchName,
+    value: dispatchJson
+  });
+  const res = promiseFunc();
+  res.catch((e: any) => {
+    if (needError) {
+      Message.error(e);
+    }
+
+    dispatchJson[loadingObjectKey] = false;
+    dispatch({
+      type: loadingDispatchName,
+      value: dispatchJson
+    });
+  });
+  res.then(() => {
+    dispatchJson[loadingObjectKey] = false;
+    dispatch({
+      type: loadingDispatchName,
+      value: dispatchJson
+    });
+  });
+
+  return res;
 }
 
 let lastTimeRef = 0;
