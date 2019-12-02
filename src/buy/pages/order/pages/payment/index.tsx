@@ -46,11 +46,9 @@ function PaymentInner(props: any) {
     invoiceInfo
   } = orderInfoContextValue;
   const { getFieldDecorator, validateFields } = props.form;
-  const [sameAsShipping, setSameAsShipping] = useState(invoiceSameAddr);
-  console.log(sameAsShipping);
 
   function isOkInfo() {
-    if (sameAsShipping) {
+    if (invoiceSameAddr) {
       // 因为是obj.检验一个必填
       if (userInfo && userInfo.userEmail) {
         return true;
@@ -110,18 +108,14 @@ function PaymentInner(props: any) {
       }
     }
     return () => {};
-  }, [
-    productPrice,
-    totalPrice,
-    userInfo,
-  ]);
-  
+  }, [productPrice, totalPrice, userInfo]);
+
   useEffect(() => {
     // 只有有价格才是有效的
     if (productPrice && !isServer()) {
       let info = {};
       // 根据形势整合数据
-      if (sameAsShipping) {
+      if (invoiceSameAddr) {
         info = userInfo;
       } else {
         info = { ...invoiceInfo, userEmail: userInfo.userEmail };
@@ -155,7 +149,7 @@ function PaymentInner(props: any) {
     totalPrice,
     userInfo,
     invoiceInfo,
-    sameAsShipping,
+    invoiceSameAddr,
     isOkBool
   ]);
 
@@ -231,7 +225,7 @@ function PaymentInner(props: any) {
                   creditCardInfo: {},
                   paypalOrderId: details.id
                 },
-                invoiceSameAddr: sameAsShipping
+                invoiceSameAddr: invoiceSameAddr
               });
               locationHref("/buy/confirmation");
             } catch (e) {
@@ -255,7 +249,7 @@ function PaymentInner(props: any) {
             paymentType: "CREDIT_CARD",
             creditCardInfo: values
           },
-          invoiceSameAddr: sameAsShipping
+          invoiceSameAddr: invoiceSameAddr
         });
       } else {
         result = false;
@@ -367,9 +361,12 @@ function PaymentInner(props: any) {
         <div className="checkbox-container-group">
           <div className="checkbox-container">
             <Checkbox
-              checked={sameAsShipping === true}
+              checked={invoiceSameAddr === true}
               onChange={() => {
-                setSameAsShipping(true);
+                orderInfoContextDispatch({
+                  type: orderInfoReducerTypes.setInvoiceSameAddr,
+                  value: true
+                });
               }}
             >
               <span>Same as shipping address</span>
@@ -377,9 +374,12 @@ function PaymentInner(props: any) {
           </div>
           <div className="checkbox-container">
             <Checkbox
-              checked={sameAsShipping === false}
+              checked={invoiceSameAddr === false}
               onChange={() => {
-                setSameAsShipping(false);
+                orderInfoContextDispatch({
+                  type: orderInfoReducerTypes.setInvoiceSameAddr,
+                  value: false
+                });
               }}
             >
               <span>Use a different billing address</span>
@@ -391,7 +391,7 @@ function PaymentInner(props: any) {
       {/*选择决定表单*/}
       {/*暂时屏蔽*/}
       <div className="paypal-container">
-        {sameAsShipping === true ? null : (
+        {invoiceSameAddr === true ? null : (
           <PaymentInformation
             onFormChangeHandler={(
               props: any,
