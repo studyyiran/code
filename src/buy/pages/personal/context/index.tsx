@@ -29,13 +29,24 @@ import {
 import { Message } from "../../../components/message";
 import { rsaPassWord } from "../../../common/utils/user-util";
 
+export interface IOrderList {
+  createdDt: string;
+  groupOrderNo: string;
+  subOrderList: {
+    img: string;
+    productName: string;
+    status: string;
+    subOrderNo: string;
+  }[];
+}
+
 export const AccountInfoContext = createContext({});
 // store name
 export const AccountInfo = "AccountInfo";
 // store state
 interface IContextState {
   isLoading: any;
-  userOrderList: any;
+  userOrderList: IOrderList[];
 }
 
 // interface

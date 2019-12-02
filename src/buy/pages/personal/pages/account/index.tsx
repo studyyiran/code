@@ -12,7 +12,7 @@ import { locationHref } from "../../../../common/utils/routerHistory";
 import { getLocationUrl } from "../../../../common/utils/util";
 import Svg from "../../../../components/svg";
 import { Message } from "../../../../components/message";
-import { UserOrderList } from "./pages/orderList";
+import { UserOrderList } from "./pages/userOrderList";
 
 export default function AccountPage() {
   const storeTestNameContext = useContext(StoreAuthContext);
