@@ -35,6 +35,7 @@ export const AccountInfo = "AccountInfo";
 // store state
 interface IContextState {
   isLoading: any;
+  userOrderList: any;
 }
 
 // interface
@@ -48,7 +49,8 @@ export interface IAccountInfoContext
 // store provider
 export function AccountInfoContextProvider(props: any) {
   const initState: IContextState = {
-    isLoading: {}
+    isLoading: {},
+    userOrderList: []
   };
   const [state, dispatch] = useReducer(
     useReducerMiddleware(reducer),
@@ -69,7 +71,7 @@ export interface IAccountInfoActions {
   userEditProfile: (data: any) => any;
   userEditPassword: (data: any) => any;
   userEditAddress: (data: any) => any;
-  userOrderList: () => any;
+  getUserOrderList: () => any;
 }
 
 // useCreateActions
@@ -89,7 +91,7 @@ function useGetAction(
     promiseStatus.current = {};
   }
   const actions: IAccountInfoActions = {
-    userOrderList: promisify(async function() {
+    getUserOrderList: promisify(async function() {
       const res = actionsWithCatchAndLoading({
         dispatch,
         loadingDispatchName: accountInfoReducerTypes.setLoadingObjectStatus,
@@ -162,7 +164,8 @@ function useGetAction(
 
 // action types
 export const accountInfoReducerTypes = {
-  setLoadingObjectStatus: "setLoadingObjectStatus"
+  setLoadingObjectStatus: "setLoadingObjectStatus",
+  setUserOrderList: "setUserOrderList"
 };
 
 // reducer
@@ -170,6 +173,13 @@ function reducer(state: IContextState, action: IReducerAction) {
   const { type, value } = action;
   let newState = { ...state };
   switch (type) {
+    case accountInfoReducerTypes.setUserOrderList: {
+      newState = {
+        ...newState,
+        userOrderList: value
+      };
+      break;
+    }
     case accountInfoReducerTypes.setLoadingObjectStatus: {
       newState = {
         ...newState,

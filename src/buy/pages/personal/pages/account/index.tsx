@@ -12,6 +12,7 @@ import { locationHref } from "../../../../common/utils/routerHistory";
 import { getLocationUrl } from "../../../../common/utils/util";
 import Svg from "../../../../components/svg";
 import { Message } from "../../../../components/message";
+import { UserOrderList } from "./pages/orderList";
 
 export default function AccountPage() {
   const storeTestNameContext = useContext(StoreAuthContext);
@@ -66,6 +67,7 @@ export default function AccountPage() {
   return (
     <div className="account-page">
       <h1>Account overview</h1>
+      <UserOrderList />
       <div className="main">
         <div className="tips">{currentStatusToContent(currentStatus)}</div>
         <div className="tabbar">
