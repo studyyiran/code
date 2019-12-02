@@ -13,7 +13,7 @@ import RouterLink from "../../../../common-modules/components/routerLink";
 import { RenderByCondition } from "../../../../components/RenderByCondition";
 import { hocFormCompare } from "../../../../common-modules/commonUtil";
 import { UseGetParams } from "../../../../common-modules/commonUseHook";
-import { getLocationUrl } from "../../../../common/utils/util";
+import { getLocationUrl, getUrlAllParams } from "../../../../common/utils/util";
 import { tipsContent } from "../../../../common/constValue";
 import { Message } from "../../../../components/message";
 
@@ -22,12 +22,14 @@ export default function UserResetPassword(props: any) {
   const [token, setToken] = useState("");
   // @ts-ignore
   const { token: tokenFromUrl } = UseGetParams();
+  const params = getUrlAllParams();
 
   const storeAuthContext = useContext(StoreAuthContext);
   const {
     changePasswordByToken,
     storeAuthContextValue,
-    userTokenValid
+    userTokenValid,
+    userLogin
   } = storeAuthContext as IStoreAuthContext;
   const { isLoading } = storeAuthContextValue;
   useEffect(() => {
@@ -95,7 +97,18 @@ export default function UserResetPassword(props: any) {
     changePasswordByToken(values).then((res: string) => {
       // 点击登录成功后进行跳转
       Message.success(tipsContent.PasswordFinishReset);
-      locationHref(getLocationUrl("login"));
+      // 如果有email
+      if (params && params.uptradeemail && values && values.password) {
+        // 试图调用登录
+        userLogin({
+          email: params.uptradeemail,
+          password: values.password
+        }).then(() => {
+          locationHref("/account/management");
+        });
+      } else {
+        locationHref(getLocationUrl("login"));
+      }
     });
   }
 
@@ -113,7 +126,7 @@ export default function UserResetPassword(props: any) {
               />
               <p className="more-action">
                 <span>Already have an account? </span>
-                <RouterLink to={getLocationUrl('login')}>Log in</RouterLink>
+                <RouterLink to={getLocationUrl("login")}>Log in</RouterLink>
               </p>
             </div>
           </div>
