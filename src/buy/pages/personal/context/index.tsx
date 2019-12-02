@@ -20,9 +20,25 @@ import {
   IStoreAuthContext,
   StoreAuthContext
 } from "../../../common-modules/context/authToken/context";
-import { userEditProfile, userEditPassword, userEditAddress } from "../server";
+import {
+  userEditProfile,
+  userEditPassword,
+  userEditAddress,
+  userOrderList
+} from "../server";
 import { Message } from "../../../components/message";
 import { rsaPassWord } from "../../../common/utils/user-util";
+
+export interface IOrderList {
+  createdDt: string;
+  groupOrderNo: string;
+  subOrderList: {
+    img: string;
+    productName: string;
+    status: string;
+    subOrderNo: string;
+  }[];
+}
 
 export const AccountInfoContext = createContext({});
 // store name
@@ -30,6 +46,7 @@ export const AccountInfo = "AccountInfo";
 // store state
 interface IContextState {
   isLoading: any;
+  userOrderList: IOrderList[];
 }
 
 // interface
@@ -43,7 +60,8 @@ export interface IAccountInfoContext
 // store provider
 export function AccountInfoContextProvider(props: any) {
   const initState: IContextState = {
-    isLoading: {}
+    isLoading: {},
+    userOrderList: []
   };
   const [state, dispatch] = useReducer(
     useReducerMiddleware(reducer),
@@ -64,6 +82,7 @@ export interface IAccountInfoActions {
   userEditProfile: (data: any) => any;
   userEditPassword: (data: any) => any;
   userEditAddress: (data: any) => any;
+  getUserOrderList: () => any;
 }
 
 // useCreateActions
@@ -83,6 +102,18 @@ function useGetAction(
     promiseStatus.current = {};
   }
   const actions: IAccountInfoActions = {
+    getUserOrderList: promisify(async function() {
+      const res = actionsWithCatchAndLoading({
+        dispatch,
+        loadingDispatchName: accountInfoReducerTypes.setLoadingObjectStatus,
+        loadingObjectKey: "userOrderList",
+        needError: false,
+        promiseFunc: () => {
+          return userOrderList();
+        }
+      });
+      return res;
+    }),
     userEditPassword: promisify(async function(data: any) {
       if (data) {
         const { currentPassword, password } = data;
@@ -144,7 +175,8 @@ function useGetAction(
 
 // action types
 export const accountInfoReducerTypes = {
-  setLoadingObjectStatus: "setLoadingObjectStatus"
+  setLoadingObjectStatus: "setLoadingObjectStatus",
+  setUserOrderList: "setUserOrderList"
 };
 
 // reducer
@@ -152,6 +184,13 @@ function reducer(state: IContextState, action: IReducerAction) {
   const { type, value } = action;
   let newState = { ...state };
   switch (type) {
+    case accountInfoReducerTypes.setUserOrderList: {
+      newState = {
+        ...newState,
+        userOrderList: value
+      };
+      break;
+    }
     case accountInfoReducerTypes.setLoadingObjectStatus: {
       newState = {
         ...newState,

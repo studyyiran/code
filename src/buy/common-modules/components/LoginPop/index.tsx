@@ -11,6 +11,7 @@ import { FormWrapper } from "../../../components/formWrapper";
 import { LoginWrapper } from "../loginButton";
 import { locationHref } from "../../../common/utils/routerHistory";
 import { safeEqual } from "../../../common/utils/util";
+import "./index.less";
 
 export function LoginPop() {
   const formRef: any = useRef(null);
@@ -26,7 +27,7 @@ export function LoginPop() {
     userLogin(values)
       .then((res: string) => {
         // 点击登录成功后进行跳转
-        locationHref("/account/management");
+        setShowLogin(false);
       })
       .catch((e: any) => {
         const { form } = formRef.current.props;
@@ -76,7 +77,12 @@ export function LoginPop() {
     },
     {
       renderFormEle: () => (
-        <Button isLoading={isLoading && isLoading.login}>Log in</Button>
+        <Button
+          className="button-centered"
+          isLoading={isLoading && isLoading.login}
+        >
+          Log in
+        </Button>
       )
     }
   ];
@@ -84,24 +90,34 @@ export function LoginPop() {
     <>
       <LoginWrapper
         renderNotLogin={({ url, createUrl }: any) => (
-          <div>
-            <button
-              className="common-button"
-              onClick={() => {
-                setShowLogin(true);
-              }}
-            >
-              Log In
-            </button>
-            <button className="common-button">
+          <div className="login-pop">
+            <h2 className="title">Express checkout</h2>
+            <div className="content-container">
+              <button
+                className="common-button"
+                onClick={() => {
+                  setShowLogin(true);
+                }}
+              >
+                Log In
+              </button>
               <a target="_blank" href={createUrl}>
                 Create an account
               </a>
-            </button>
+            </div>
           </div>
         )}
       />
-      <Modal visible={showLogin} title="Log In" footer={null}>
+      <Modal
+        className="login-form-modal"
+        width={"85%"}
+        visible={showLogin}
+        title="Log In"
+        footer={null}
+        onCancel={() => {
+          setShowLogin(false);
+        }}
+      >
         <FormWrapper
           wrappedComponentRef={(inst: any) => (formRef.current = inst)}
           onSubmit={loginSubmit}
