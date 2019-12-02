@@ -3,7 +3,6 @@ import {
   IStoreAuthContext,
   StoreAuthContext
 } from "../../context/authToken/context";
-import RouterLink from "../routerLink";
 import Modal from "../../../components/modal";
 import { tipsContent } from "../../../common/constValue";
 import { Input } from "antd";
@@ -95,7 +94,9 @@ export function LoginPop() {
               Log In
             </button>
             <button className="common-button">
-              <RouterLink to={createUrl}>Create an account</RouterLink>
+              <a target="_blank" href={createUrl}>
+                Create an account
+              </a>
             </button>
           </div>
         )}
