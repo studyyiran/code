@@ -20,7 +20,12 @@ import {
   IStoreAuthContext,
   StoreAuthContext
 } from "../../../common-modules/context/authToken/context";
-import { userEditProfile, userEditPassword, userEditAddress } from "../server";
+import {
+  userEditProfile,
+  userEditPassword,
+  userEditAddress,
+  userOrderList
+} from "../server";
 import { Message } from "../../../components/message";
 import { rsaPassWord } from "../../../common/utils/user-util";
 
@@ -64,6 +69,7 @@ export interface IAccountInfoActions {
   userEditProfile: (data: any) => any;
   userEditPassword: (data: any) => any;
   userEditAddress: (data: any) => any;
+  userOrderList: () => any;
 }
 
 // useCreateActions
@@ -83,6 +89,18 @@ function useGetAction(
     promiseStatus.current = {};
   }
   const actions: IAccountInfoActions = {
+    userOrderList: promisify(async function() {
+      const res = actionsWithCatchAndLoading({
+        dispatch,
+        loadingDispatchName: accountInfoReducerTypes.setLoadingObjectStatus,
+        loadingObjectKey: "userOrderList",
+        needError: false,
+        promiseFunc: () => {
+          return userOrderList();
+        }
+      });
+      return res;
+    }),
     userEditPassword: promisify(async function(data: any) {
       if (data) {
         const { currentPassword, password } = data;
