@@ -1,8 +1,28 @@
 @import (reference) "~buy/common/styles/index.less";
 
 @p1: {
-  .test-page {
-    background: yellow;
+  .login-pop {
+    text-align: center;
+    border: 1px solid @color-border;
+    padding-bottom: 24 * @px;
+    .mb({padding-bottom: 0;});
+    > .title {
+      position: relative;
+      display: inline-block;
+      top: -15px;
+      background: @white;
+      padding: 0 10 * @px;
+    }
+    > .content-container {
+      padding: 0 16 * @px;
+      .pc({grid-template-columns: 1fr 1fr; grid-column-gap: 20 * @px;});
+      .mb({grid-template-rows: 1fr 1fr; grid-row-gap: 0 * @px;});
+      display: grid;
+      align-items: center;
+      > a {
+        color: @color-blue-liner-use;
+      }
+    }
   }
 };
 
