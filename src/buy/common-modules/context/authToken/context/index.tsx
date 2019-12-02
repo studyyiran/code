@@ -363,6 +363,7 @@ function useGetAction(
           promiseStatus.current.reject(e);
         }
       }
+      Message.success("Succeed to log in.");
       dispatch({
         type: storeAuthReducerTypes.setLoadingObjectStatus,
         value: {
