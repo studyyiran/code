@@ -13,6 +13,7 @@ import {
   IStoreAuthContext,
   StoreAuthContext
 } from "../../../../../buy/common-modules/context/authToken/context";
+import { LoginPop } from "../../../../../buy/common-modules/components/LoginPop";
 // create form value 变化时候判断 按钮是否能高亮
 const onValuesChange = (props: any, changedValues: any, allValues: any) => {
   let disabled = false;
@@ -336,6 +337,7 @@ class Information extends React.Component<IShippingProps, IShippingState> {
     );
     return (
       <div className={"page-infomation-container"}>
+        <LoginPop />
         <h2>Information</h2>
         <div className="container">{infomationHTML}</div>
         <ButtonGroup
