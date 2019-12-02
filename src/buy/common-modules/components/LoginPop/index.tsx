@@ -77,7 +77,12 @@ export function LoginPop() {
     },
     {
       renderFormEle: () => (
-        <Button isLoading={isLoading && isLoading.login}>Log in</Button>
+        <Button
+          className="button-centered"
+          isLoading={isLoading && isLoading.login}
+        >
+          Log in
+        </Button>
       )
     }
   ];
@@ -103,7 +108,16 @@ export function LoginPop() {
           </div>
         )}
       />
-      <Modal visible={showLogin} title="Log In" footer={null}>
+      <Modal
+        className="login-form-modal"
+        width={"85%"}
+        visible={showLogin}
+        title="Log In"
+        footer={null}
+        onCancel={() => {
+          setShowLogin(false);
+        }}
+      >
         <FormWrapper
           wrappedComponentRef={(inst: any) => (formRef.current = inst)}
           onSubmit={loginSubmit}
