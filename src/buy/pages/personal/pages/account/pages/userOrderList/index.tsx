@@ -74,10 +74,10 @@ export function UserOrderList(props: any) {
         <div className="empty">
           <h2>No order</h2>
           <Button>
-            <RouterLink to={"/buy"}>Buy a device</RouterLink>
+            <RouterLink to={"/buy-phone"}>Buy a device</RouterLink>
           </Button>
           <Button>
-            <RouterLink to={"/sell"}>Sell a device</RouterLink>
+            <RouterLink to={"/sell-phone"}>Sell a device</RouterLink>
           </Button>
         </div>
       );
