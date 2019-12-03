@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./index.less";
 import Svg from "../../../../components/svg";
 import { ajax, BUY_ORDER_LASTEST } from "../../../../api/api";
+import { InnerDivImage } from "../../../detail/components/innerDivImage";
 
 export function NewBuyNotice(props: any): any {
   const [chooseData, setChooseData] = useState({
@@ -76,22 +77,18 @@ export function NewBuyNotice(props: any): any {
     intervalInit();
   }, []);
   return chooseData && chooseData.customer ? (
-    <div className="buy-home-notice-wrapper">
-      <div
-        style={{
-          backgroundImage: `url(${chooseData.productPicM})`,
-          backgroundSize: "cover"
-        }}
-        className={"buy-home-notice-left-img"}
-      />
-      <div className={"buy-home-notice-right-wrapper"}>
-        <div className={"buy-home-notice-right-title"}>
-          {chooseData.customer} placed an order for {chooseData.productName}
-        </div>
-        <div className={"buy-home-notice-right-desc"}>
-          <Svg />
-          <span className={"time"}>{chooseData.orderTime}</span>
-        </div>
+    <div className="notice-container">
+      <div className="comp-new-buy-notice">
+        <InnerDivImage imgUrl={chooseData.productPicM} />
+        <section>
+          <h1>
+            {chooseData.customer} placed an order for {chooseData.productName}
+          </h1>
+          <div className="date-container">
+            <Svg />
+            <span>{chooseData.orderTime}</span>
+          </div>
+        </section>
       </div>
     </div>
   ) : (
