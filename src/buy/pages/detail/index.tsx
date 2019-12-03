@@ -48,8 +48,7 @@ import { FiveCountDown } from "./components/fiveCountdown";
 import { FivePrice } from "./components/fivePrice";
 import { FiveCalcPrice } from "./components/fiveCalcPrice";
 // @ts-ignore
-import ImgsViewer from "react-images-viewer";
-// import WxImageViewer from "react-wx-images-viewer";
+import WxImageViewer from "react-wx-images-viewer";
 
 function Swiper(props: any) {
   const { buyProductImgPc, buyProductImgM, buyProductVideo } = props;
@@ -79,31 +78,7 @@ function Swiper(props: any) {
               <VideoComponent className="innerdiv" src={buyProductVideo} />
             );
           }
-          return (
-            <>
-              <ImgsViewer
-                onClose={() => {
-                  setShowImgModal(false);
-                }}
-                isOpen={showImageModal}
-                onClickPrev={() => {
-                  setCurrentImageIndex(current => {
-                    return --current;
-                  });
-                }}
-                onClickNext={() => {
-                  setCurrentImageIndex(current => {
-                    return ++current;
-                  });
-                }}
-                imgs={buyProductImgPc.map((item: string) => ({
-                  src: item
-                }))}
-                currImg={currentImageIndex}
-              />
-              <Carousel className="swiper-mb">{dom}</Carousel>
-            </>
-          );
+          return <Carousel className="swiper-mb">{dom}</Carousel>;
         })()}
         ComponentPc={(() => {
           let dom = buyProductImgPc.map((item: string, index: number) => {
@@ -480,6 +455,7 @@ export default function ProductDetail(props: any) {
   if (buyProductId) {
     return (
       <div className="product-detail-page">
+        <WxImageViewer onClose={() => {}} urls={buyProductImgPc} index={1} />
         <Swiper
           buyProductVideo={buyProductVideo}
           buyProductImgPc={buyProductImgPc}

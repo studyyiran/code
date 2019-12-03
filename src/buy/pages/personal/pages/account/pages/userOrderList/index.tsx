@@ -24,7 +24,6 @@ export function UserOrderList(props: any) {
 
   function renderList() {
     if (userOrderList && userOrderList.length) {
-      console.log(userOrderList);
       return userOrderList.map(item => {
         const { groupOrderNo, createdDt, suborderList } = item;
         return (
@@ -70,7 +69,7 @@ export function UserOrderList(props: any) {
         );
       });
     } else {
-      return null;
+      return <div></div>;
     }
   }
   return <div className="user-order-list">{renderList()}</div>;
