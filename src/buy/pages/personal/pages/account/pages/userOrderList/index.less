@@ -2,6 +2,21 @@
 
 @p1: {
   .user-order-list {
+    .empty {
+      border: 1px solid @color-gray;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-radius: 4px;
+      padding: 40 * @px 0 100 * @px;
+      > * {
+        margin-bottom: 40 * @px;
+      }
+      h2 {
+        font-size: 18 * @f;
+      }
+    }
     .user-order-item {
       border: 1px solid @color-border;
       margin-bottom: 47 * @px;
