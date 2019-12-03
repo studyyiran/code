@@ -78,20 +78,7 @@ function Swiper(props: any) {
               <VideoComponent className="innerdiv" src={buyProductVideo} />
             );
           }
-          return (
-            <>
-              {showImageModal ? (
-                <WxImageViewer
-                  onClose={() => {
-                    setShowImgModal(false);
-                  }}
-                  urls={buyProductImgPc}
-                  index={currentImageIndex}
-                />
-              ) : null}
-              <Carousel className="swiper-mb">{dom}</Carousel>
-            </>
-          );
+          return <Carousel className="swiper-mb">{dom}</Carousel>;
         })()}
         ComponentPc={(() => {
           let dom = buyProductImgPc.map((item: string, index: number) => {
@@ -468,6 +455,7 @@ export default function ProductDetail(props: any) {
   if (buyProductId) {
     return (
       <div className="product-detail-page">
+        <WxImageViewer onClose={() => {}} urls={buyProductImgPc} index={1} />
         <Swiper
           buyProductVideo={buyProductVideo}
           buyProductImgPc={buyProductImgPc}
