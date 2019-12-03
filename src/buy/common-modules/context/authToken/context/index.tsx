@@ -390,6 +390,7 @@ function useGetAction(
     forgetPasswordEmail: promisify(async function(data: any) {
       const res = actionsWithCatchAndLoading({
         dispatch,
+        needError: false,
         loadingDispatchName: storeAuthReducerTypes.setLoadingObjectStatus,
         loadingObjectKey: "forgetPasswordEmail",
         promiseFunc: () => {
