@@ -13,7 +13,6 @@ export function LoginButton(props: any) {
     storeAuthContextValue
   } = storeAuthContext as IStoreAuthContext;
   const { tokenInfo } = storeAuthContextValue;
-  console.log(tokenInfo);
   if (tokenInfo && tokenInfo.token) {
     return <a onClick={userLogout}>Log Out</a>;
   } else {
