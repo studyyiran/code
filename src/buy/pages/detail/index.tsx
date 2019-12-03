@@ -49,12 +49,19 @@ import { FivePrice } from "./components/fivePrice";
 import { FiveCalcPrice } from "./components/fiveCalcPrice";
 // @ts-ignore
 import WxImageViewer from "react-wx-images-viewer";
+import { ModalView } from "../../components/ModalView";
 
 function Swiper(props: any) {
-  const { buyProductImgPc, buyProductImgM, buyProductVideo } = props;
+  const {
+    buyProductImgPc,
+    buyProductImgM,
+    buyProductVideo,
+    setCurrentImageIndex,
+    setShowImgModal,
+    currentImageIndex,
+    showImageModal
+  } = props;
   const maxNumber = 3;
-  const [showImageModal, setShowImgModal] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   return (
     <div className="swiper">
       <RenderByCondition
@@ -451,12 +458,28 @@ export default function ProductDetail(props: any) {
       </ul>
     );
   }
+  const [showImageModal, setShowImgModal] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
   const productImg = useGetProductImg(productDetail);
   if (buyProductId) {
     return (
       <div className="product-detail-page">
-        <WxImageViewer onClose={() => {}} urls={buyProductImgPc} index={1} />
+        <ModalView visible={showImageModal}>
+          <WxImageViewer
+            zIndex={9999}
+            urls={buyProductImgPc}
+            index={currentImageIndex}
+            onClose={() => {
+              setShowImgModal(false);
+            }}
+          />
+        </ModalView>
         <Swiper
+          showImageModal={showImageModal}
+          setShowImgModal={setShowImgModal}
+          currentImageIndex={currentImageIndex}
+          setCurrentImageIndex={setCurrentImageIndex}
           buyProductVideo={buyProductVideo}
           buyProductImgPc={buyProductImgPc}
           buyProductImgM={buyProductImgM}
