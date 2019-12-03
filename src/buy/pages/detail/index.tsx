@@ -56,19 +56,53 @@ function Swiper(props: any) {
     <div className="swiper">
       <RenderByCondition
         ComponentMb={(() => {
-          let dom = buyProductImgM.map((item: string, index: number) => {
-            return (
-              <InnerDivImage imgUrl={item} key={index} dataIndex={index} />
-            );
-          });
+          let dom = (showImageModal ? buyProductImgPc : buyProductImgM).map(
+            (item: string, index: number) => {
+              return (
+                <InnerDivImage
+                  imgUrl={item}
+                  key={index}
+                  dataIndex={index}
+                  onClick={(e: any) => {
+                    debugger;
+                    setCurrentImageIndex(index);
+                    setShowImgModal(true);
+                  }}
+                />
+              );
+            }
+          );
 
           if (buyProductVideo) {
             dom.unshift(
               <VideoComponent className="innerdiv" src={buyProductVideo} />
             );
           }
-
-          return <Carousel className="swiper-mb">{dom}</Carousel>;
+          return (
+            <>
+              <Carousel className="swiper-mb">{dom}</Carousel>
+              {isServer() ? null : (
+                <ModalGateway>
+                  {showImageModal ? (
+                    <Modal
+                      onClose={() => {
+                        setShowImgModal(false);
+                      }}
+                    >
+                      <TestCarousel
+                        currentIndex={Number(currentImageIndex)}
+                        views={buyProductImgPc.map((item: any) => ({
+                          src: item
+                        }))}
+                      >
+                        {dom}
+                      </TestCarousel>
+                    </Modal>
+                  ) : null}
+                </ModalGateway>
+              )}
+            </>
+          );
         })()}
         ComponentPc={(() => {
           let dom = buyProductImgPc.map((item: string, index: number) => {
@@ -768,10 +802,7 @@ function ProductInfo(props: any) {
         <span className="condition">Condition {buyLevel}</span>
       </div>
       {/*暂时强制更新 为了解决首次不正常渲染的问题*/}
-      <img
-        className="check-icon"
-        src={require("./res/uptrade-check.svg")}
-      />
+      <img className="check-icon" src={require("./res/uptrade-check.svg")} />
     </section>
   );
 }
