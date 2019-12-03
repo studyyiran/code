@@ -2,6 +2,8 @@ import React, { useContext, useEffect } from "react";
 import "./index.less";
 import { AccountInfoContext, IAccountInfoContext } from "../../../../context";
 import * as moment from "moment-timezone";
+import RouterLink from "../../../../../../common-modules/components/routerLink";
+import { InnerDivImage } from "../../../../../detail/components/innerDivImage";
 
 export function UserOrderList() {
   const accountInfoContext = useContext(AccountInfoContext);
@@ -43,18 +45,18 @@ export function UserOrderList() {
                   const { img, productName, status } = orderInfo;
                   return (
                     <li className="sub-order-item">
-                      <div className="img-container">
-                        <img src={img} />
-                      </div>
+                      <InnerDivImage imgUrl={img} />
                       <div className="content-container">
                         <h3>{productName}</h3>
                         <h3>{status}</h3>
-                        <h3>price???</h3>
                       </div>
                     </li>
                   );
                 })}
             </ul>
+            <div className="link-container">
+              <RouterLink to={"/check-order"}>Check order details</RouterLink>
+            </div>
           </div>
         );
       });

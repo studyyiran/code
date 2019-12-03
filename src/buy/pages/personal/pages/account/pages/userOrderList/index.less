@@ -7,24 +7,34 @@
       > *:not(:last-child) {
         border-bottom: 1px solid @color-border;
       }
+      @padding-vertical: 32 * @px;
       > header {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        padding: @padding-vertical * @px;
       }
       > .sub-order-list {
         > .sub-order-item {
+          padding: @padding-vertical 40 * @px;
           display: flex;
-          .img-container {
-            flex: 0 0 300 * @px;
-            min-width: 0;
-            > img {
-              width: 100%;
-            }
+          .innerdiv {
+            @size: 120 * @px;
+            .innerdiv-imgsize(@size);
+            margin-right: 100 * @px;
           }
           .content-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex: 1;
           }
         }
+      }
+      .link-container {
+        padding: @padding-vertical 0;
+        text-align: center;
+        color: @color-blue-liner-use;
       }
     }
   }
