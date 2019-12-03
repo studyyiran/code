@@ -32,7 +32,7 @@ import { rsaPassWord } from "../../../common/utils/user-util";
 export interface IOrderList {
   createdDt: string;
   groupOrderNo: string;
-  subOrderList: {
+  suborderList: {
     img: string;
     productName: string;
     status: string;
@@ -111,6 +111,12 @@ function useGetAction(
         promiseFunc: () => {
           return userOrderList();
         }
+      });
+      res.then((value: any) => {
+        dispatch({
+          type: "setUserOrderList",
+          value: value
+        });
       });
       return res;
     }),

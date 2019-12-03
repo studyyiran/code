@@ -22,7 +22,7 @@ export function UserOrderList() {
     if (userOrderList && userOrderList.length) {
       console.log(userOrderList);
       return userOrderList.map(item => {
-        const { groupOrderNo, createdDt, subOrderList } = item;
+        const { groupOrderNo, createdDt, suborderList } = item;
         return (
           <div>
             <header>
@@ -37,19 +37,21 @@ export function UserOrderList() {
               </span>
             </header>
             <ul>
-              {subOrderList.map(orderInfo => {
-                const { img, productName, status } = orderInfo;
-                return (
-                  <div>
-                    <img src={img} />
+              {suborderList &&
+                suborderList.length &&
+                suborderList.map(orderInfo => {
+                  const { img, productName, status } = orderInfo;
+                  return (
                     <div>
-                      <h3>{productName}</h3>
-                      <h3>{status}</h3>
-                      <h3>price???</h3>
+                      <img src={img} />
+                      <div>
+                        <h3>{productName}</h3>
+                        <h3>{status}</h3>
+                        <h3>price???</h3>
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
             </ul>
           </div>
         );
