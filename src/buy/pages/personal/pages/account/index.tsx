@@ -13,6 +13,9 @@ import { getLocationUrl } from "../../../../common/utils/util";
 import Svg from "../../../../components/svg";
 import { Message } from "../../../../components/message";
 import { UserOrderList } from "./pages/userOrderList";
+import { ITag } from "../../../../../containers/blog/interface/blog.interface";
+import { Tabs } from "../../../../../components/tabs";
+const { TabPane } = Tabs as any;
 
 export default function AccountPage() {
   const storeTestNameContext = useContext(StoreAuthContext);
@@ -64,38 +67,44 @@ export default function AccountPage() {
     Message.success(`Your ${name} updated successfully`);
   }
 
+  function tabChangeHandler() {}
+
   return (
     <div className="account-page">
       <h1>Account overview</h1>
-      <UserOrderList />
+
       <div className="main">
         <div className="tips">{currentStatusToContent(currentStatus)}</div>
-        <div className="tabbar">
-          <span>Setting</span>
-        </div>
-        <div className="form-part">
-          <UpdateFormLayout
-            userInfo={userInfo}
-            title="Edit Profile"
-            successHandler={successHandler.bind({}, "profile")}
-          >
-            <NameAndEmail />
-          </UpdateFormLayout>
-          <UpdateFormLayout
-            userInfo={userInfo}
-            title="Password Setting"
-            successHandler={successHandler.bind({}, "password")}
-          >
-            <PasswordUpdateForm />
-          </UpdateFormLayout>
-          <UpdateFormLayout
-            userInfo={userInfo}
-            title="Address Details"
-            successHandler={successHandler.bind({}, "address")}
-          >
-            <AddressFormUpdate />
-          </UpdateFormLayout>
-        </div>
+        <Tabs className="tabs-container">
+          <TabPane key="Setting" tab="Setting">
+            <div className="form-part">
+              <UpdateFormLayout
+                userInfo={userInfo}
+                title="Edit Profile"
+                successHandler={successHandler.bind({}, "profile")}
+              >
+                <NameAndEmail />
+              </UpdateFormLayout>
+              <UpdateFormLayout
+                userInfo={userInfo}
+                title="Password Setting"
+                successHandler={successHandler.bind({}, "password")}
+              >
+                <PasswordUpdateForm />
+              </UpdateFormLayout>
+              <UpdateFormLayout
+                userInfo={userInfo}
+                title="Address Details"
+                successHandler={successHandler.bind({}, "address")}
+              >
+                <AddressFormUpdate />
+              </UpdateFormLayout>
+            </div>
+          </TabPane>
+          <TabPane key="Orders" tab="Orders">
+            <UserOrderList />
+          </TabPane>
+        </Tabs>
       </div>
     </div>
   );
