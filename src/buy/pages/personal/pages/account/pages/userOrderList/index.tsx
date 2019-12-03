@@ -6,7 +6,8 @@ import RouterLink from "../../../../../../common-modules/components/routerLink";
 import { InnerDivImage } from "../../../../../detail/components/innerDivImage";
 import Svg from "../../../../../../components/svg";
 
-export function UserOrderList() {
+export function UserOrderList(props: any) {
+  const { userInfo } = props;
   const accountInfoContext = useContext(AccountInfoContext);
   const {
     accountInfoContextValue,
@@ -56,7 +57,14 @@ export function UserOrderList() {
                 })}
             </ul>
             <div className="link-container">
-              <RouterLink to={"/check-order"}>Check order details<Svg icon={"arrow-right"}/></RouterLink>
+              <RouterLink
+                to={`/check-order?orderId=${groupOrderNo}&email=${
+                  userInfo ? userInfo.email : ""
+                }`}
+              >
+                Check order details
+                <Svg icon={"arrow-right"} />
+              </RouterLink>
             </div>
           </div>
         );

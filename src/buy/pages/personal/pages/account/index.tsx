@@ -102,7 +102,7 @@ export default function AccountPage() {
             </div>
           </TabPane>
           <TabPane key="Orders" tab="Orders">
-            <UserOrderList />
+            <UserOrderList userInfo={userInfo} />
           </TabPane>
         </Tabs>
       </div>
