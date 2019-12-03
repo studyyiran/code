@@ -78,7 +78,7 @@ Tabs.TabPane = props => {
       aria-selected={isSelect ? "true" : "false"}
       onClick={onChange}
     >
-      {children}
+      <span>{children}</span>
     </div>
   );
 };

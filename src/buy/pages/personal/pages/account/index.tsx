@@ -87,7 +87,7 @@ export default function AccountPage() {
               </UpdateFormLayout>
               <UpdateFormLayout
                 userInfo={userInfo}
-                title="Password Setting"
+                title="Password Settings"
                 successHandler={successHandler.bind({}, "password")}
               >
                 <PasswordUpdateForm />

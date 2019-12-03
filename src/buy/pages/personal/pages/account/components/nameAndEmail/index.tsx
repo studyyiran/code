@@ -61,7 +61,7 @@ export default function NameAndEmail(props: any) {
       renderFormEle: () => <Input disabled={!isEdit} value={lastName} />
     },
     {
-      label: "Email",
+      label: "Email Address",
       renderFormEle: () => <Input disabled={!isEdit} value={email} />
     },
     {
@@ -83,7 +83,7 @@ export default function NameAndEmail(props: any) {
       renderFormEle: () => <Input disabled={!isEdit} />
     },
     {
-      label: "Email",
+      label: "Email Address",
       id: "email",
       validateTrigger: "onBlur",
       validateFirst: true,

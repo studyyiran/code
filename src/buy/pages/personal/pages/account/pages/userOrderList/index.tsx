@@ -28,8 +28,8 @@ export function UserOrderList() {
         return (
           <div className="user-order-item">
             <header>
-              <span>Order #{groupOrderNo}</span>
-              <span>
+              <span className="ordername">Order # {groupOrderNo}</span>
+              <span className="date">
                 {moment
                   .tz(createdDt, "America/Chicago")
                   .format("LLLL")
