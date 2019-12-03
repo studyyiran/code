@@ -77,16 +77,13 @@ const footerInfo = [
     arr: [
       {
         Component: () => {
-          return (
-            <LoginWrapper
-              renderNotLogin={() => (
-                <RouterLink to={getLocationUrl("login")}>My Account</RouterLink>
-              )}
-              renderWhenHaveLogin={() => (
-                <RouterLink to={"/account/management"}>My Account</RouterLink>
-              )}
-            />
-          );
+          // 为什么 如果用JSX的形式去解析,永远得不到null?有什么办法判断null吗?
+          let dom = LoginWrapper({
+            renderWhenHaveLogin: () => (
+              <RouterLink to={"/account/management"}>My Account</RouterLink>
+            )
+          });
+          return dom;
         }
       },
       {
