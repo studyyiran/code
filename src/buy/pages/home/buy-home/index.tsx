@@ -50,7 +50,7 @@ class Home extends React.Component<any, any> {
             <h1>
               Buy Used Phones.
               <br />
-              Real Phones.
+              Real Photos.
               <br />
               Fully Inspected.
             </h1>
