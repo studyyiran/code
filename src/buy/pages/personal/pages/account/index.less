@@ -2,6 +2,22 @@
 
 @p1: {
   .account-page {
+    .yr-tabs-tab {
+      .pc({margin-bottom: 50 * @px;});
+      .mb({margin-bottom: 30 * @px;});
+      > span {
+        border-bottom: 2px solid;
+        border-color: transparent;
+        padding-bottom: 6 * @px;
+      }
+    }
+    .yr-tabs-bar .yr-tabs-tab[aria-selected="true"] {
+      color: inherit;
+      > span {
+        border-color: rgba(4, 14, 63, 1);
+        padding-bottom: 6 * @px;
+      }
+    }
     h1 {
       font-size: 32 * @px;
       text-align: center;
@@ -10,11 +26,11 @@
       border-bottom: 1px solid @color-border;
     }
     .main {
-      padding: 10 * @px 20 * @px;
+      padding: 20 * @px;
       .setpage(1168 * @px);
       .pc({padding-bottom: 80 * @px;});
 
-      .pc({padding-top: 32 * @px;});
+      .pc({padding-top: 70 * @px;});
       .tabbar {
         display: flex;
         align-items: center;
