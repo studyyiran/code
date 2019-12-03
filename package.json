@@ -76,6 +76,7 @@
     "react-router": "^5.1.2",
     "react-router-config": "^5.1.1",
     "react-router-dom": "^5.1.2",
+    "react-wx-images-viewer": "^1.0.6",
     "redux": "^4.0.4",
     "resolve": "1.6.0",
     "sitemap": "^2.2.0",

@@ -47,6 +47,9 @@ import { RenderByIsFive } from "../../components/RenderByIsFive";
 import { FiveCountDown } from "./components/fiveCountdown";
 import { FivePrice } from "./components/fivePrice";
 import { FiveCalcPrice } from "./components/fiveCalcPrice";
+// @ts-ignore
+import WxImageViewer from "react-wx-images-viewer";
+
 function Swiper(props: any) {
   const { buyProductImgPc, buyProductImgM, buyProductVideo } = props;
   const maxNumber = 3;
@@ -56,21 +59,19 @@ function Swiper(props: any) {
     <div className="swiper">
       <RenderByCondition
         ComponentMb={(() => {
-          let dom = (showImageModal ? buyProductImgPc : buyProductImgM).map(
-            (item: string, index: number) => {
-              return (
-                <InnerDivImage
-                  imgUrl={item}
-                  key={index}
-                  dataIndex={index}
-                  onClick={(e: any) => {
-                    setCurrentImageIndex(index);
-                    setShowImgModal(true);
-                  }}
-                />
-              );
-            }
-          );
+          let dom = buyProductImgM.map((item: string, index: number) => {
+            return (
+              <InnerDivImage
+                imgUrl={item}
+                key={index}
+                dataIndex={index}
+                onClick={(e: any) => {
+                  setCurrentImageIndex(index);
+                  setShowImgModal(true);
+                }}
+              />
+            );
+          });
 
           if (buyProductVideo) {
             dom.unshift(
@@ -79,27 +80,16 @@ function Swiper(props: any) {
           }
           return (
             <>
+              {showImageModal ? (
+                <WxImageViewer
+                  onClose={() => {
+                    setShowImgModal(false);
+                  }}
+                  urls={buyProductImgPc}
+                  index={currentImageIndex}
+                />
+              ) : null}
               <Carousel className="swiper-mb">{dom}</Carousel>
-              {isServer() ? null : (
-                <ModalGateway>
-                  {showImageModal ? (
-                    <Modal
-                      onClose={() => {
-                        setShowImgModal(false);
-                      }}
-                    >
-                      <TestCarousel
-                        currentIndex={Number(currentImageIndex)}
-                        views={buyProductImgPc.map((item: any) => ({
-                          src: item
-                        }))}
-                      >
-                        {dom}
-                      </TestCarousel>
-                    </Modal>
-                  ) : null}
-                </ModalGateway>
-              )}
             </>
           );
         })()}
