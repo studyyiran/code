@@ -176,6 +176,9 @@ export function getLocationUrl(type: string) {
     case "buyhome": {
       return "/buy";
     }
+    case "home": {
+      return "/";
+    }
     default:
       return "";
   }

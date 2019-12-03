@@ -64,7 +64,6 @@ function Swiper(props: any) {
                   key={index}
                   dataIndex={index}
                   onClick={(e: any) => {
-                    debugger;
                     setCurrentImageIndex(index);
                     setShowImgModal(true);
                   }}

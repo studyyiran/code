@@ -353,6 +353,7 @@ function useGetAction(
           const res = await userLogin({ email: authInfo.email, password });
           if (res) {
             const { token, time } = res;
+            Message.success("Succeed to log in.");
             dispatch({
               type: storeAuthReducerTypes.setToken,
               value: res
@@ -363,7 +364,6 @@ function useGetAction(
           promiseStatus.current.reject(e);
         }
       }
-      Message.success("Succeed to log in.");
       dispatch({
         type: storeAuthReducerTypes.setLoadingObjectStatus,
         value: {

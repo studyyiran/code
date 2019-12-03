@@ -12,6 +12,7 @@ import Button from "../../../../components/button";
 import { locationHref } from "../../../../common/utils/routerHistory";
 import {
   callBackWhenPassAllFunc,
+  getLocationUrl,
   getUrlAllParams,
   safeEqual
 } from "../../../../common/utils/util";
@@ -99,7 +100,7 @@ export default function PersonalLogin() {
     userLogin(values)
       .then((res: string) => {
         // 点击登录成功后进行跳转
-        locationHref("/account/management");
+        locationHref(getLocationUrl("home"));
       })
       .catch((e: any) => {
         const { form } = formRef.current.props;

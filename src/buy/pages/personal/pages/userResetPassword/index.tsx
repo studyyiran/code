@@ -104,7 +104,7 @@ export default function UserResetPassword(props: any) {
           email: params.uptradeemail,
           password: values.password
         }).then(() => {
-          locationHref("/account/management");
+          locationHref(getLocationUrl("home"));
         });
       } else {
         locationHref(getLocationUrl("login"));
