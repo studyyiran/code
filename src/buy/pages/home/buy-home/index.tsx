@@ -132,9 +132,7 @@ class Home extends React.Component<any, any> {
         <Experience />
         <BuyConfidence isMob={false} />
         <BuyHowItWorks />
-        <div className={"experience-notice-wrapper"}>
-          <NewBuyNotice />
-        </div>
+        <NewBuyNotice />
       </article>
     );
   }
