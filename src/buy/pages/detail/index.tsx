@@ -48,7 +48,8 @@ import { FiveCountDown } from "./components/fiveCountdown";
 import { FivePrice } from "./components/fivePrice";
 import { FiveCalcPrice } from "./components/fiveCalcPrice";
 // @ts-ignore
-import WxImageViewer from "react-wx-images-viewer";
+import ImgsViewer from "react-images-viewer";
+// import WxImageViewer from "react-wx-images-viewer";
 
 function Swiper(props: any) {
   const { buyProductImgPc, buyProductImgM, buyProductVideo } = props;
@@ -80,15 +81,26 @@ function Swiper(props: any) {
           }
           return (
             <>
-              {showImageModal ? (
-                <WxImageViewer
-                  onClose={() => {
-                    setShowImgModal(false);
-                  }}
-                  urls={buyProductImgPc}
-                  index={currentImageIndex}
-                />
-              ) : null}
+              <ImgsViewer
+                onClose={() => {
+                  setShowImgModal(false);
+                }}
+                isOpen={showImageModal}
+                onClickPrev={() => {
+                  setCurrentImageIndex(current => {
+                    return --current;
+                  });
+                }}
+                onClickNext={() => {
+                  setCurrentImageIndex(current => {
+                    return ++current;
+                  });
+                }}
+                imgs={buyProductImgPc.map((item: string) => ({
+                  src: item
+                }))}
+                currImg={currentImageIndex}
+              />
               <Carousel className="swiper-mb">{dom}</Carousel>
             </>
           );
