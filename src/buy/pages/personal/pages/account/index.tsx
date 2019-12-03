@@ -76,7 +76,7 @@ export default function AccountPage() {
       <div className="main">
         <div className="tips">{currentStatusToContent(currentStatus)}</div>
         <Tabs className="tabs-container" defaultActiveKey="Orders">
-          <TabPane key="Setting" tab="Setting">
+          <TabPane key="Settings" tab="Settings">
             <div className="form-part">
               <UpdateFormLayout
                 userInfo={userInfo}
