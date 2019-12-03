@@ -2,6 +2,31 @@
 
 @p1: {
   .user-order-list {
+    .user-order-item {
+      border: 1px solid @color-border;
+      > *:not(:last-child) {
+        border-bottom: 1px solid @color-border;
+      }
+      > header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      > .sub-order-list {
+        > .sub-order-item {
+          display: flex;
+          .img-container {
+            flex: 0 0 300 * @px;
+            min-width: 0;
+            > img {
+              width: 100%;
+            }
+          }
+          .content-container {
+          }
+        }
+      }
+    }
   }
 };
 

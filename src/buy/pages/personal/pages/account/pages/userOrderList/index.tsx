@@ -24,7 +24,7 @@ export function UserOrderList() {
       return userOrderList.map(item => {
         const { groupOrderNo, createdDt, suborderList } = item;
         return (
-          <div>
+          <div className="user-order-item">
             <header>
               <span>Order #{groupOrderNo}</span>
               <span>
@@ -36,20 +36,22 @@ export function UserOrderList() {
                   .join(",")}
               </span>
             </header>
-            <ul>
+            <ul className="sub-order-list">
               {suborderList &&
                 suborderList.length &&
                 suborderList.map(orderInfo => {
                   const { img, productName, status } = orderInfo;
                   return (
-                    <div>
-                      <img src={img} />
-                      <div>
+                    <li className="sub-order-item">
+                      <div className="img-container">
+                        <img src={img} />
+                      </div>
+                      <div className="content-container">
                         <h3>{productName}</h3>
                         <h3>{status}</h3>
                         <h3>price???</h3>
                       </div>
-                    </div>
+                    </li>
                   );
                 })}
             </ul>
