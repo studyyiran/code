@@ -9,15 +9,16 @@
         border-bottom: 1px solid @color-border;
       }
       @padding-vertical: 32 * @px;
-      @padding-horizon: 32 * @px;
+      @padding-horizon: 40 * @px;
+      @big-font: 18 * @f;
+      @normal-font: 16 * @f;
       > header {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: @padding-vertical * @px 40 * @px;
+        padding: @padding-vertical @padding-horizon;
         .ordername {
-          font-size: 18 * @px;
-          .mb({font-size: 16 * @px;});
+          font-size: @big-font;
           font-weight: @boldWeight;
         }
         .date {
@@ -26,7 +27,7 @@
       }
       > .sub-order-list {
         > .sub-order-item {
-          padding: @padding-vertical 40 * @px;
+          padding: @padding-vertical @padding-horizon;
           display: flex;
 
           .innerdiv {
@@ -39,7 +40,10 @@
             align-items: center;
             justify-content: space-between;
             flex: 1;
-            .pc({font-size: 16 * @px;});
+            > h3 {
+              font-size: @normal-font;
+              font-weight: normal;
+            }
           }
         }
       }
@@ -47,6 +51,66 @@
         padding: @padding-vertical 0;
         text-align: center;
         color: @color-blue-liner-use;
+        font-size: @big-font;
+      }
+    }
+  }
+
+  .ismobile {
+    .user-order-list {
+      .user-order-item {
+        margin-bottom: 24 * @px;
+        @padding-vertical: 23 * @px;
+        @padding-horizon: 15 * @px;
+        @big-font: 16 * @px;
+        @normal-font: 14 * @px;
+        > header {
+          display: flex;
+          align-items: flex-start;
+          justify-content: center;
+          flex-direction: column;
+          padding: @padding-vertical @padding-horizon;
+          .ordername {
+            ont-size: @big-font;
+            .mb({font-size: 16 * @px;});
+            font-weight: @boldWeight;
+          }
+          .date {
+            color: rgba(128, 128, 128, 1);
+          }
+        }
+        > .sub-order-list {
+          > .sub-order-item {
+            padding: @padding-vertical @padding-horizon;
+            display: flex;
+
+            .innerdiv {
+              @size: 120 * @px;
+              .innerdiv-imgsize(@size);
+              margin-right: 16 * @px;
+            }
+            .content-container {
+              display: flex;
+              align-items: flex-start;
+              justify-content: flex-start;
+              flex-direction: column;
+              flex: 1;
+
+              > h3 {
+                font-size: @normal-font;
+              }
+              > h3:first-child {
+                font-size: @big-font;
+                margin-bottom: 10 * @px;
+              }
+            }
+          }
+        }
+        .link-container {
+          padding: @padding-vertical 0;
+          text-align: center;
+          color: @color-blue-liner-use;
+        }
       }
     }
   }
