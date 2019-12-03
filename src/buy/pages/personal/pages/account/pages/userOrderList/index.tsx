@@ -4,6 +4,7 @@ import { AccountInfoContext, IAccountInfoContext } from "../../../../context";
 import * as moment from "moment-timezone";
 import RouterLink from "../../../../../../common-modules/components/routerLink";
 import { InnerDivImage } from "../../../../../detail/components/innerDivImage";
+import Svg from "../../../../../../components/svg";
 
 export function UserOrderList() {
   const accountInfoContext = useContext(AccountInfoContext);
@@ -55,7 +56,7 @@ export function UserOrderList() {
                 })}
             </ul>
             <div className="link-container">
-              <RouterLink to={"/check-order"}>Check order details</RouterLink>
+              <RouterLink to={"/check-order"}>Check order details<Svg icon={"arrow-right"}/></RouterLink>
             </div>
           </div>
         );
