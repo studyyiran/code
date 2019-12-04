@@ -4,8 +4,8 @@ import { Base64 } from "js-base64";
 import { MessageType } from "antd/lib/message";
 import createBrowserHistory from "history/createBrowserHistory";
 import { IRequestRes, IOpts } from "utils/request.interface";
-import {globalStore} from "../buy/common/store";
-import {constValue} from "../buy/common/constValue";
+import { globalStore } from "../buy/common/store";
+import { constValue } from "../buy/common/constValue";
 
 // 基础路径
 const basePath: string = "/up-trade-it/api";
@@ -47,7 +47,10 @@ Axios.interceptors.response.use(
 
 const Request = <T>(opts: IOpts, code?: number[]): Promise<T> => {
   // 代理名
-  let defaultProxyName: string = process.env.REACT_APP_SERVER_ENV === "DEV" ? "/up-api" : "https://classic.uptradeit.com/up-api"
+  let defaultProxyName: string =
+    process.env.REACT_APP_SERVER_ENV === "DEV"
+      ? "/up-api"
+      : "https://classic.uptradeit.com/up-api";
   if (opts.isMock) {
     defaultProxyName = "/mock";
   }
@@ -78,7 +81,13 @@ const Request = <T>(opts: IOpts, code?: number[]): Promise<T> => {
     hide = message.loading("loading...", 0);
   }
 
-  if (globalStore) {
+  const needAuthArr = ["auth", "group_order/create"];
+  if (
+    globalStore &&
+    needAuthArr.find((item: string) => {
+      return !!opts && !!opts.url && opts.url.indexOf(item) !== -1;
+    })
+  ) {
     const state = globalStore.getState();
     const authToken = state.token;
     // 11-21修改.默认主动设置

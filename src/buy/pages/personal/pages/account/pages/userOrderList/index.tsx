@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./index.less";
 import { AccountInfoContext, IAccountInfoContext } from "../../../../context";
 import * as moment from "moment-timezone";
@@ -15,6 +15,7 @@ export function UserOrderList(props: any) {
     getUserOrderList
   } = accountInfoContext as IAccountInfoContext;
   const { userOrderList } = accountInfoContextValue;
+  const [currentShowLength, setCurrentShowLength] = useState(1);
   useEffect(() => {
     // 首次渲染可能会没有token
     window.setTimeout(() => {
@@ -71,7 +72,7 @@ export function UserOrderList(props: any) {
 
   function renderList() {
     if (userOrderList && userOrderList.length) {
-      return userOrderList.map(item => {
+      let arr = userOrderList.map(item => {
         const { groupOrderNo, createdDt, suborderList, userEmail } = item;
         console.log(moment.tz(createdDt, "America/Chicago").format("LL"));
         return (
@@ -109,6 +110,22 @@ export function UserOrderList(props: any) {
           </div>
         );
       });
+      // 如果还有更多的内容
+      if (userOrderList.length > currentShowLength) {
+        arr = arr.slice(0, currentShowLength);
+        arr = arr.concat([
+          <div
+            className="load-more"
+            key="more"
+            onClick={() => {
+              setCurrentShowLength(length => length + 10);
+            }}
+          >
+            Load More
+          </div>
+        ]);
+      }
+      return arr;
     } else if (userOrderList) {
       return (
         <div className="empty">
