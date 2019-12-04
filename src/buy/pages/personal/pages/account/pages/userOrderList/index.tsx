@@ -114,14 +114,15 @@ export function UserOrderList(props: any) {
       if (userOrderList.length > currentShowLength) {
         arr = arr.slice(0, currentShowLength);
         arr = arr.concat([
-          <div
-            className="load-more"
-            key="more"
-            onClick={() => {
-              setCurrentShowLength(length => length + 10);
-            }}
-          >
-            Load More
+          <div key="more" className="load-more-container">
+            <span
+              className="load-more"
+              onClick={() => {
+                setCurrentShowLength(length => length + 10);
+              }}
+            >
+              Load More
+            </span>
           </div>
         ]);
       }

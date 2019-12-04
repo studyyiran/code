@@ -2,15 +2,18 @@
 
 @p1: {
   .user-order-list {
-    .load-more {
-      display: block;
-      font-size: 18 * @f;
-      font-weight: @boldWeight;
-      width: 180 * @px;
-      margin: 50 * @px auto;
-      padding-bottom: 5px;
-      text-align: center;
-      border-bottom: 1px solid @color-blue-liner-use;
+    .load-more-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .load-more {
+        font-size: 18 * @f;
+        font-weight: @boldWeight;
+        margin: 30 * @px auto;
+        padding: 0 10 * @px 5px;
+        text-align: center;
+        border-bottom: 2px solid @color-blue-liner-use;
+      }
     }
     .empty {
       border: 1px solid @color-gray;
