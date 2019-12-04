@@ -13,7 +13,8 @@ import { locationHref } from "../../../common/utils/routerHistory";
 import { safeEqual } from "../../../common/utils/util";
 import "./index.less";
 
-export function LoginPop() {
+export function LoginPop(props: { isBuySide?: boolean }) {
+  const { isBuySide = true } = props;
   const formRef: any = useRef(null);
   const storeAuthContext = useContext(StoreAuthContext);
   const [showLogin, setShowLogin] = useState(false);
@@ -116,6 +117,7 @@ export function LoginPop() {
         )}
       />
       <Modal
+        isBuySide={isBuySide}
         className="login-form-modal"
         width={"85%"}
         visible={showLogin}
