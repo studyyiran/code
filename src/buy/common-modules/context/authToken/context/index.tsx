@@ -292,10 +292,19 @@ function useGetAction(
         token
       });
     }),
-    userEmailChange: promisify(async function(token: string) {
-      return userEmailChange({
-        token
+    userEmailChange: promisify(async function(data: any) {
+      const res = actionsWithCatchAndLoading({
+        dispatch,
+        loadingDispatchName: storeAuthReducerTypes.setLoadingObjectStatus,
+        loadingObjectKey: "userEmailChange",
+        promiseFunc: () => {
+          return userEmailChange({
+            ...data,
+            password: rsaPassWord(data.password)
+          });
+        }
       });
+      return res;
     }),
     userActiveEmailResend: promisify(async function(token: string) {
       const res = actionsWithCatchAndLoading({
