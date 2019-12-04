@@ -113,19 +113,24 @@ export default function PersonalLogin() {
   function onSubmitHandler(values: any) {
     const targetStatus = isResetEmail();
     let promiseObj;
+    const loginSuccess = (res: string) => {
+      // 点击登录成功后进行跳转
+      locationHref(getLocationUrl("home"));
+    };
     if (targetStatus) {
       promiseObj = userEmailChange({
         token: authtoken,
         ...values
       });
-      promiseObj.then(() => {
-        setCurrentStatus(targetStatus);
-      });
+      promiseObj
+        .then(() => {
+          setCurrentStatus(targetStatus);
+          // 触发自动登录
+          return userLogin(values);
+        })
+        .then(loginSuccess);
     } else {
-      promiseObj = userLogin(values).then((res: string) => {
-        // 点击登录成功后进行跳转
-        locationHref(getLocationUrl("home"));
-      });
+      promiseObj = userLogin(values).then(loginSuccess);
     }
     promiseObj.catch((e: any) => {
       const { form } = formRef.current.props;
