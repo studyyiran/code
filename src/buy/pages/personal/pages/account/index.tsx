@@ -24,7 +24,8 @@ export default function AccountPage() {
 
   useEffect(() => {
     if (tokenInfo && tokenInfo.token === "") {
-      locationHref(getLocationUrl("login"));
+      // 为了修改邮箱后想回到首页,所以统一修改成返回首页
+      locationHref(getLocationUrl("home"));
     }
   }, [tokenInfo]);
 

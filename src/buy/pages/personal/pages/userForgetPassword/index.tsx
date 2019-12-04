@@ -58,7 +58,7 @@ export default function UserForgetPassword() {
           maskClosable: true,
           cancelText: "Got it",
           onCancel: () => {
-            locationHref(getLocationUrl("buyhome"));
+            locationHref(getLocationUrl("home"));
           },
           children: (
             <div className="content">
