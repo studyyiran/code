@@ -80,6 +80,7 @@ export default function PersonalLogin() {
       id: "email",
       rules: [
         {
+          required: true,
           type: "email",
           message: tipsContent.emailMistake
         }
@@ -91,6 +92,7 @@ export default function PersonalLogin() {
       id: "password",
       rules: [
         {
+          required: true,
           message: tipsContent.errorPassword
         }
       ],
@@ -164,6 +166,7 @@ export default function PersonalLogin() {
           <h1>Log In</h1>
           <div className="form-wrapper-component">
             <FormWrapper
+              hideRequiredMark={true}
               wrappedComponentRef={(inst: any) => (formRef.current = inst)}
               formConfig={formConfig}
               onSubmit={onSubmitHandler}

@@ -10,7 +10,7 @@ interface IFormConfig {
 }
 
 class FormWrapperComponent extends React.Component<any, any> {
-  render () {
+  render() {
     const { form, formConfig, onSubmit, setValueJson } = this.props;
     const { getFieldDecorator, validateFields, setFields } = form;
 
@@ -34,9 +34,21 @@ class FormWrapperComponent extends React.Component<any, any> {
       } else if (renderFormEle) {
         return <Form.Item label={label}>{renderFormEle()}</Form.Item>;
       }
-      return null
+      return null;
     });
-    return <Form onSubmit={onSubmitHandler} layout={"vertical"}>{inner}</Form>;
+    return (
+      <Form
+        onSubmit={onSubmitHandler}
+        layout={"vertical"}
+        hideRequiredMark={
+          this.props && this.props.hideRequiredMark
+            ? this.props.hideRequiredMark
+            : false
+        }
+      >
+        {inner}
+      </Form>
+    );
   }
 }
 
