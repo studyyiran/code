@@ -31,6 +31,49 @@ export default function PersonalLogin() {
     setCurrentStatus
   } = storeAuthContext as IStoreAuthContext;
   const { isLoading } = storeAuthContextValue;
+  const urlParams = getUrlAllParams() || {};
+  const { domaintype, authtoken, uptradeemail } = urlParams;
+
+  function isResetEmail() {
+    if (domaintype && domaintype === "WEBSITE_USER_CHANGE_EMAIL") {
+      return domaintype;
+    } else {
+      return null;
+    }
+  }
+  useEffect(() => {
+    callBackWhenPassAllFunc([], () => {
+      // 如果有domaintype 需要做一些额外的请求.
+      if (domaintype) {
+        // 当成功的时候
+        const success = (type: string) => {
+          formRef.current.props.form.setFields({
+            email: {
+              value: uptradeemail
+            }
+          });
+          setCurrentStatus(type);
+        };
+
+        switch (domaintype) {
+          case "WEBSITE_USER_ACTIVE":
+            // 激活用户请求
+            userActive(authtoken).then(success.bind({}, domaintype));
+            break;
+          case "WEBSITE_USER_CHANGE_EMAIL":
+            // 激活用户手动设置邮箱
+            formRef.current.props.form.setFields({
+              email: {
+                value: uptradeemail
+              }
+            });
+            // userEmailChange(authtoken).then(success.bind({}, domaintype));
+            break;
+        }
+      }
+    });
+  }, []);
+
   const formConfig = [
     {
       label: "Email",
@@ -41,7 +84,7 @@ export default function PersonalLogin() {
           message: tipsContent.emailMistake
         }
       ],
-      renderFormEle: () => <Input />
+      renderFormEle: () => <Input disabled={isResetEmail()} />
     },
     {
       label: "Password",
@@ -67,64 +110,46 @@ export default function PersonalLogin() {
     }
   ];
 
-  useEffect(() => {
-    callBackWhenPassAllFunc([], () => {
-      const params = getUrlAllParams();
-      if (params) {
-        const { domaintype, authtoken, uptradeemail } = params;
-        // 当成功的时候
-        const success = (type: string) => {
-          formRef.current.props.form.setFields({
-            email: {
-              value: uptradeemail
-            }
-          });
-          setCurrentStatus(type);
-        };
-
-        switch (domaintype) {
-          case "WEBSITE_USER_ACTIVE":
-            // 激活用户请求
-            userActive(authtoken).then(success.bind({}, domaintype));
-            break;
-          case "WEBSITE_USER_CHANGE_EMAIL":
-            // 激活用户请求
-            userEmailChange(authtoken).then(success.bind({}, domaintype));
-            break;
-        }
-      }
-    });
-  }, []);
-
   function onSubmitHandler(values: any) {
-    userLogin(values)
-      .then((res: string) => {
+    const targetStatus = isResetEmail();
+    let promiseObj;
+    if (targetStatus) {
+      promiseObj = userEmailChange({
+        token: authtoken,
+        ...values
+      });
+      promiseObj.then(() => {
+        setCurrentStatus(targetStatus);
+      });
+    } else {
+      promiseObj = userLogin(values).then((res: string) => {
         // 点击登录成功后进行跳转
         locationHref(getLocationUrl("home"));
-      })
-      .catch((e: any) => {
-        const { form } = formRef.current.props;
-        let error = {};
-        if (e && e.code) {
-          if (safeEqual(e.code, 20006)) {
-            error = new Error(tipsContent.unverifiedEmail);
-            form.setFields({
-              email: {
-                value: values && values.email,
-                errors: [error]
-              }
-            });
-            return;
-          }
-        }
-        error = new Error(tipsContent.errorPassword);
-        form.setFields({
-          password: {
-            value: values && values.password,
-            errors: [error]
-          }
-        });
       });
+    }
+    promiseObj.catch((e: any) => {
+      const { form } = formRef.current.props;
+      let error = {};
+      if (e && e.code) {
+        if (safeEqual(e.code, 20006)) {
+          error = new Error(tipsContent.unverifiedEmail);
+          form.setFields({
+            email: {
+              value: values && values.email,
+              errors: [error]
+            }
+          });
+          return;
+        }
+      }
+      error = new Error(tipsContent.errorPassword);
+      form.setFields({
+        password: {
+          value: values && values.password,
+          errors: [error]
+        }
+      });
+    });
   }
 
   return (
