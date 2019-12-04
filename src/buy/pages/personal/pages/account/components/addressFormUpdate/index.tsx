@@ -15,7 +15,10 @@ const { RenderButton } = UpdateFormLayout as any;
 
 export default function AddressFormUpdate(props: any) {
   const orderInfoContext = useContext(OrderInfoContext);
-  const { zipCodeToAddressInfo } = orderInfoContext as IOrderInfoContext;
+  const {
+    zipCodeToAddressInfo,
+    validaddress
+  } = orderInfoContext as IOrderInfoContext;
   const accountInfoContext = useContext(AccountInfoContext);
   const storeAuthContext = useContext(StoreAuthContext);
   const { storeAuthContextValue } = storeAuthContext as IStoreAuthContext;
@@ -57,11 +60,26 @@ export default function AddressFormUpdate(props: any) {
       label: "Street",
       id: "street",
       initialValue: userInfoForm.street,
+      validateTrigger: "onBlur",
       rules: [
         {
           required: true,
           pattern: /\w+/,
           message: "Please enter a valid address."
+        },
+        {
+          validator: (rule: any, value: any, callback: any) => {
+            if (formRef.current.props.form.getFieldsValue) {
+              const a = formRef.current.props.form.getFieldsValue();
+              validaddress({ userInfo: a })
+                .then(() => {
+                  callback();
+                })
+                .catch(() => {
+                  callback("The address could not be found.");
+                });
+            }
+          }
         }
       ],
       renderFormEle: () => <Input disabled={!isEdit} />
@@ -173,7 +191,7 @@ export default function AddressFormUpdate(props: any) {
     },
     {
       renderFormEle: () => (
-        <RenderButton isLoading={isLoading && isLoading.userEditPassword} />
+        <RenderButton isLoading={isLoading && isLoading.userEditAddress} />
       )
     }
   ];
