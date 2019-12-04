@@ -28,7 +28,7 @@ import {
 } from "../server";
 import { Message } from "../../../components/message";
 import { rsaPassWord } from "../../../common/utils/user-util";
-
+import moment from "moment-timezone";
 export interface IOrderList {
   createdDt: string;
   groupOrderNo: string;
@@ -110,7 +110,12 @@ function useGetAction(
         loadingObjectKey: "userOrderList",
         needError: false,
         promiseFunc: () => {
-          return userOrderList();
+          return userOrderList().then(res => {
+            res.sort((a: any, b: any) =>
+              moment(a.createDt).isBefore(moment(b.createDt)) ? 1 : -1
+            );
+            return res;
+          });
         }
       });
       res.then((value: any) => {
