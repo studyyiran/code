@@ -32,6 +32,7 @@ import { rsaPassWord } from "../../../common/utils/user-util";
 export interface IOrderList {
   createdDt: string;
   groupOrderNo: string;
+  email: string;
   suborderList: {
     img: string;
     productName: string;
@@ -61,7 +62,7 @@ export interface IAccountInfoContext
 export function AccountInfoContextProvider(props: any) {
   const initState: IContextState = {
     isLoading: {},
-    userOrderList: []
+    userOrderList: undefined as any
   };
   const [state, dispatch] = useReducer(
     useReducerMiddleware(reducer),

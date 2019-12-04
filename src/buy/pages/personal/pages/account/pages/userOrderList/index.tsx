@@ -15,29 +15,71 @@ export function UserOrderList(props: any) {
     getUserOrderList
   } = accountInfoContext as IAccountInfoContext;
   const { userOrderList } = accountInfoContextValue;
-  console.log(userOrderList);
   useEffect(() => {
     // 首次渲染可能会没有token
     window.setTimeout(() => {
       getUserOrderList();
     }, 100);
   }, []);
-  console.log(userOrderList);
+
+  function keyToView(key: string) {
+    const arr = [
+      {
+        backendKeyA: "TO_BE_SHIPPED",
+        backendKeyB: "To Be Shipped",
+        frontendKey: "Order Placed"
+      },
+      {
+        backendKeyA: "TO_BE_RECEIVED",
+        backendKeyB: "To Be Delivered",
+        frontendKey: "Package Sent"
+      },
+      {
+        backendKeyA: "TO_BE_COMFIRMED",
+        backendKeyB: "To Be Confirmed",
+        frontendKey: "Package Delivered"
+      },
+      {
+        backendKeyA: "TO_BE_RETURNED",
+        backendKeyB: "To Be Returned",
+        frontendKey: "Return Requested"
+      },
+      {
+        backendKeyA: "TO_BE_PLATFORM_RECEIVED",
+        backendKeyB: "To Be Received",
+        frontendKey: "To Be Received"
+      },
+      {
+        backendKeyA: "RETURN_FAILED",
+        backendKeyB: "Transaction Succeed",
+        frontendKey: "Return Failed"
+      },
+      {
+        backendKeyA: "TRANSACTION_FAILED",
+        backendKeyB: "Transaction Failed",
+        frontendKey: "Transaction Failed"
+      },
+      {
+        backendKeyA: "TRANSACTION_SUCCEED",
+        backendKeyB: "Transaction Success",
+        frontendKey: "Transaction Success"
+      }
+    ];
+    const findTarget = arr.find(item => item.backendKeyA === key);
+    return findTarget ? findTarget.frontendKey : key;
+  }
+
   function renderList() {
     if (userOrderList && userOrderList.length) {
       return userOrderList.map(item => {
-        const { groupOrderNo, createdDt, suborderList } = item;
+        const { groupOrderNo, createdDt, suborderList, email } = item;
+        console.log(moment.tz(createdDt, "America/Chicago").format("LL"));
         return (
           <div className="user-order-item">
             <header>
               <span className="ordername">Order # {groupOrderNo}</span>
               <span className="date">
-                {moment
-                  .tz(createdDt, "America/Chicago")
-                  .format("LLLL")
-                  .split(",")
-                  .slice(0, 2)
-                  .join(",")}
+                {moment.tz(createdDt, "America/Chicago").format("LL")}
               </span>
             </header>
             <ul className="sub-order-list">
@@ -50,7 +92,7 @@ export function UserOrderList(props: any) {
                       <InnerDivImage imgUrl={img} />
                       <div className="content-container">
                         <h3>{productName}</h3>
-                        <h3>{status}</h3>
+                        <h3>{keyToView(status)}</h3>
                       </div>
                     </li>
                   );
@@ -58,9 +100,7 @@ export function UserOrderList(props: any) {
             </ul>
             <div className="link-container">
               <RouterLink
-                to={`/check-order?orderId=${groupOrderNo}&email=${
-                  userInfo ? userInfo.email : ""
-                }`}
+                to={`/check-order?orderId=${groupOrderNo}&email=${email}`}
               >
                 Check order details
                 <Svg icon={"arrow-right"} />
