@@ -153,10 +153,11 @@ export function StoreAuthContextProvider(props: any) {
           "=" +
           escape(token) +
           ";expires=" +
-          exp.toUTCString();
+          exp.toUTCString() +
+          "; path=/;";
       } else if (!token) {
         // 清空cookie
-        document.cookie = `${constValue.AUTHKEY}=; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+        document.cookie = `${constValue.AUTHKEY}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;`;
       }
     }
   }
