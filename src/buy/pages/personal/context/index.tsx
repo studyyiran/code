@@ -32,7 +32,7 @@ import { rsaPassWord } from "../../../common/utils/user-util";
 export interface IOrderList {
   createdDt: string;
   groupOrderNo: string;
-  email: string;
+  userEmail: string;
   suborderList: {
     img: string;
     productName: string;

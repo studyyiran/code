@@ -72,7 +72,7 @@ export function UserOrderList(props: any) {
   function renderList() {
     if (userOrderList && userOrderList.length) {
       return userOrderList.map(item => {
-        const { groupOrderNo, createdDt, suborderList, email } = item;
+        const { groupOrderNo, createdDt, suborderList, userEmail } = item;
         console.log(moment.tz(createdDt, "America/Chicago").format("LL"));
         return (
           <div className="user-order-item">
@@ -100,7 +100,7 @@ export function UserOrderList(props: any) {
             </ul>
             <div className="link-container">
               <RouterLink
-                to={`/check-order?orderId=${groupOrderNo}&email=${email}`}
+                to={`/check-order?orderId=${groupOrderNo}&email=${userEmail}`}
               >
                 Check order details
                 <Svg icon={"arrow-right"} />

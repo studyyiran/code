@@ -47,6 +47,17 @@ export default function PhoneProductCard(props: any) {
   const [lineOne, lineTwo] = getDescArr(buyProductBQV, buyProductName);
   // const productImg = useGetProductImg(props);
   const productImg = props ? props.buyProductImgM : "";
+
+  function renderTagBySoldOutStatus(status: string) {
+    if (status === staticContentConfig.SOLDOUT) {
+      return <span data-status={status} className="status-tag">Sold</span>;
+    } else if (status === staticContentConfig.INTRANSACTION) {
+      return <span data-status={status} className="status-tag">Sale Pending</span>;
+    } else {
+      return null;
+    }
+  }
+
   return (
     <section
       data-disabled={isSoldOut(buyProductStatus) ? "true" : "false"}
@@ -57,9 +68,7 @@ export default function PhoneProductCard(props: any) {
         }
       }}
     >
-      {isSoldOut(buyProductStatus) ? (
-        <img src={require("./res/sold.svg")} />
-      ) : null}
+      {renderTagBySoldOutStatus(buyProductStatus)}
       {isSoldOut(buyProductStatus) ? (
         <InnerDivImage imgUrl={productImg}>
           <div className="modal"></div>
