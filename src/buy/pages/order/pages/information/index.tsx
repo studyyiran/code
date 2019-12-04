@@ -11,6 +11,7 @@ import {
   IStoreAuthContext,
   StoreAuthContext
 } from "../../../../common-modules/context/authToken/context";
+import { LoginPop } from "../../../../common-modules/components/LoginPop";
 
 function UserInformationWrapper(props: any) {
   const orderInfoContext = useContext(OrderInfoContext);
@@ -22,7 +23,7 @@ function UserInformationWrapper(props: any) {
   } = orderInfoContext as IOrderInfoContext;
   const { userInfo } = orderInfoContextValue;
   const { storeAuthContextValue } = accountInfoContext as IStoreAuthContext;
-  const {userInfoForm} = storeAuthContextValue
+  const { userInfoForm } = storeAuthContextValue;
   return (
     <PureForm
       {...props}
@@ -281,6 +282,7 @@ function PureForm(props: any) {
       {!props.hideTitle ? (
         <h2 className="order-common-less-title">Shipping Address</h2>
       ) : null}
+      <LoginPop />
       <div className="container">{infomationHTML}</div>
       {renderButton ? renderButton(handleNext, props) : null}
     </div>

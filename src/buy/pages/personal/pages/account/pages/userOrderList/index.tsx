@@ -22,7 +22,7 @@ export function UserOrderList(props: any) {
       getUserOrderList();
     }, 100);
   }, []);
-
+  console.log(userOrderList);
   function renderList() {
     if (userOrderList && userOrderList.length) {
       return userOrderList.map(item => {
@@ -82,7 +82,7 @@ export function UserOrderList(props: any) {
         </div>
       );
     } else {
-      return null
+      return null;
     }
   }
   return <div className="user-order-list">{renderList()}</div>;
