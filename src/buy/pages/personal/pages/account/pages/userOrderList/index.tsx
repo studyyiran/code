@@ -22,7 +22,7 @@ export function UserOrderList(props: any) {
       getUserOrderList();
     }, 100);
   }, []);
-
+  console.log(userOrderList);
   function renderList() {
     if (userOrderList && userOrderList.length) {
       return userOrderList.map(item => {
@@ -74,15 +74,15 @@ export function UserOrderList(props: any) {
         <div className="empty">
           <h2>No order</h2>
           <Button>
-            <RouterLink to={"/buy"}>Buy a device</RouterLink>
+            <RouterLink to={"/buy-phone"}>Buy a device</RouterLink>
           </Button>
           <Button>
-            <RouterLink to={"/sell"}>Sell a device</RouterLink>
+            <RouterLink to={"/sell-phone"}>Sell a device</RouterLink>
           </Button>
         </div>
       );
     } else {
-      return null
+      return null;
     }
   }
   return <div className="user-order-list">{renderList()}</div>;

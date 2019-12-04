@@ -17,7 +17,7 @@ export function LoginButton(props: any) {
     return <a onClick={userLogout}>Log Out</a>;
   } else {
     return (
-      <RouterLink to={getLocationUrl("login")}>Log In/Sign Up</RouterLink>
+      <RouterLink to={getLocationUrl("login")}>Log In / Sign Up</RouterLink>
     );
   }
 }

@@ -73,7 +73,7 @@ export default function PasswordUpdateForm(props: any) {
               callback();
             } else {
               callback(
-                `Password is too short(minimum is ${minLength} characters)`
+                `Password is too short ( minimum is ${minLength} characters )`
               );
             }
           }
