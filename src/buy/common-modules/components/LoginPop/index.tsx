@@ -90,20 +90,27 @@ export function LoginPop() {
     <>
       <LoginWrapper
         renderNotLogin={({ url, createUrl }: any) => (
-          <div className="login-pop">
-            <h2 className="title">Express checkout</h2>
-            <div className="content-container">
-              <button
-                className="common-button"
-                onClick={() => {
-                  setShowLogin(true);
-                }}
-              >
-                Log In
-              </button>
-              <a target="_blank" href={createUrl}>
-                Create an account
-              </a>
+          <div className="login-pop-container">
+            <div className="login-pop">
+              <h2 className="title">Express checkout</h2>
+              <div className="content-container">
+                <button
+                  className="common-button"
+                  onClick={() => {
+                    setShowLogin(true);
+                  }}
+                >
+                  Log In
+                </button>
+                <a target="_blank" href={createUrl}>
+                  Create an account
+                </a>
+              </div>
+            </div>
+            <div className="fenge-line-container">
+              <span className="span-line" />
+              <span className="or">OR</span>
+              <span className="span-line" />
             </div>
           </div>
         )}

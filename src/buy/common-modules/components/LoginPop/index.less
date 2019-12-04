@@ -1,6 +1,49 @@
 @import (reference) "~buy/common/styles/index.less";
 
 @p1: {
+  .login-pop-container {
+    .login-pop {
+      margin-top: 40 * @px;
+      text-align: center;
+      border: 1px solid @color-border;
+      border-radius: 4px;
+      padding-bottom: 24 * @px;
+      .mb({padding-bottom: 0;});
+      > .title {
+        position: relative;
+        display: inline-block;
+        top: -10px;
+        background: @white;
+        padding: 0 10 * @px;
+        font-size: 14 * @f;
+      }
+      > .content-container {
+        padding: 0 16 * @px;
+        .pc({grid-template-columns: 1fr 1fr; grid-column-gap: 20 * @px;});
+        .mb({grid-template-rows: 1fr 1fr; grid-row-gap: 0 * @px;});
+        display: grid;
+        align-items: center;
+        > a {
+          color: @color-blue-liner-use;
+        }
+      }
+    }
+    .fenge-line-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 20 * @px auto 30 * @px;
+      > .span-line {
+        height: 1px;
+        background: @color-gray;
+        flex: 1;
+      }
+      > .or {
+        margin: 0 10 * @px;
+      }
+    }
+  }
   .login-form-modal {
     max-width: 700 * @px;
     .yr-modal-header {
@@ -16,29 +59,6 @@
     }
     .ant-form-item {
       margin-bottom: 15 * @px;
-    }
-  }
-  .login-pop {
-    text-align: center;
-    border: 1px solid @color-border;
-    padding-bottom: 24 * @px;
-    .mb({padding-bottom: 0;});
-    > .title {
-      position: relative;
-      display: inline-block;
-      top: -15px;
-      background: @white;
-      padding: 0 10 * @px;
-    }
-    > .content-container {
-      padding: 0 16 * @px;
-      .pc({grid-template-columns: 1fr 1fr; grid-column-gap: 20 * @px;});
-      .mb({grid-template-rows: 1fr 1fr; grid-row-gap: 0 * @px;});
-      display: grid;
-      align-items: center;
-      > a {
-        color: @color-blue-liner-use;
-      }
     }
   }
 };

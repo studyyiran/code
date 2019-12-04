@@ -38,7 +38,9 @@ function UserInformationWrapper(props: any) {
           });
         });
       }}
-    />
+    >
+      <LoginPop />
+    </PureForm>
   );
 }
 
@@ -282,7 +284,7 @@ function PureForm(props: any) {
       {!props.hideTitle ? (
         <h2 className="order-common-less-title">Shipping Address</h2>
       ) : null}
-      <LoginPop />
+      {props.children}
       <div className="container">{infomationHTML}</div>
       {renderButton ? renderButton(handleNext, props) : null}
     </div>
