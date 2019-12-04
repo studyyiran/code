@@ -11,11 +11,14 @@
     line-height: 100%;
     flex: 1;
     text-align: center;
+    > span {
+      cursor: pointer;
+    }
   }
-  .yr-tabs-tab[aria-selected=true] {
+  .yr-tabs-tab[aria-selected="true"] {
     color: red;
   }
-  .yr-tabs-tab[aria-disabled=true] {
+  .yr-tabs-tab[aria-disabled="true"] {
     display: none;
   }
 }
