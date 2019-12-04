@@ -246,6 +246,7 @@ export default class Modal extends React.Component<any, any> {
               <button className={`${prefixCls}-close`} onClick={this.onClose}>
                 <span className={`${prefixCls}-close-x`}>
                   <Svg icon="wrong" />
+                  <Svg icon="wrong" needSellSide={true} />
                 </span>
               </button>
             )}
