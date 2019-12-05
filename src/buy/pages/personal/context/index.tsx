@@ -112,9 +112,7 @@ function useGetAction(
         promiseFunc: () => {
           return userOrderList().then(res => {
             res.sort((a: any, b: any) => {
-              return moment(a.createdDt).isBefore(moment(b.createdDt), "day")
-                ? 1
-                : -1;
+              return moment(a.createdDt).isBefore(moment(b.createdDt)) ? 1 : -1;
             });
             return res;
           });
