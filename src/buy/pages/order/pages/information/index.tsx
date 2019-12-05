@@ -27,7 +27,8 @@ function UserInformationWrapper(props: any) {
   return (
     <PureForm
       {...props}
-      propsInfo={Object.assign(userInfoForm, userInfo)}
+      // propsInfo={Object.assign(userInfoForm, userInfo)}
+      propsInfo={{...userInfoForm, ...userInfo}}
       submitHandler={(result: any) => {
         // 开始验证地址 // 返回promise
         return checkAddress(result).then(() => {
