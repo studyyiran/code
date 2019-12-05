@@ -27,6 +27,7 @@ function UserInformationWrapper(props: any) {
   return (
     <PureForm
       {...props}
+      // 这个问题能引申出很多问题.我们交给表单的数据源的安全,是否能够保证?你用dispatch,能否解决数据不被意外变动的问题呢?需要去制作demo来考证,直接修改store数据的影响.我其实并不敢相信他居然能修改成功.
       // propsInfo={Object.assign(userInfoForm, userInfo)}
       propsInfo={{...userInfoForm, ...userInfo}}
       submitHandler={(result: any) => {
