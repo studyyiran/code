@@ -246,12 +246,12 @@ export function OrderList(props: any) {
                 </Button>
               </div>
             ) : null}
-            {/*{refund ? (*/}
-            {/*  <div className="have-refund">*/}
-            {/*    <h3>Refund Issued {currencyTrans(refund)}</h3>*/}
-            {/*    <Svg />*/}
-            {/*  </div>*/}
-            {/*) : null}*/}
+            {refund && subOrderStatus !== "TRANSACTION_FAILED" ? (
+              <div className="have-refund">
+                <h3>Refund Issued {currencyTrans(refund)}</h3>
+                <Svg />
+              </div>
+            ) : null}
           </div>
         )
       };
@@ -267,7 +267,7 @@ export function OrderList(props: any) {
   }
   return (
     <div className="order-information-page">
-      <HeaderTitle title={"Check My Order111"} />
+      <HeaderTitle title={"Check My Order"} />
       {checkOrderDetail && checkOrderDetail.groupOrderNo ? (
         <h2>Order Number - {checkOrderDetail.groupOrderNo}</h2>
       ) : null}
