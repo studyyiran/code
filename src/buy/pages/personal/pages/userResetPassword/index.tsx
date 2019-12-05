@@ -124,10 +124,10 @@ export default function UserResetPassword(props: any) {
                 formConfig={formConfig}
                 onSubmit={onSubmitHandler}
               />
-              <p className="more-action">
-                <span>Already have an account? </span>
-                <RouterLink to={getLocationUrl("login")}>Log in</RouterLink>
-              </p>
+              {/*<p className="more-action">*/}
+              {/*  <span>Already have an account? </span>*/}
+              {/*  <RouterLink to={getLocationUrl("login")}>Log in</RouterLink>*/}
+              {/*</p>*/}
             </div>
           </div>
           <RenderByCondition
