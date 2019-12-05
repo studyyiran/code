@@ -4,9 +4,28 @@ import { getTestAjaxResultMock } from "./mock";
 /**
  * 首页相关
  * */
-export const currentUserInfoUrl = "/authorized/auth/website/current/user/info";
+export const userEditProfileUrl = "/authorized/auth/website/user/edit/profile";
+export const userEditPasswordUrl =
+  "/authorized/auth/website/user/edit/password";
+export const userEditAddressUrl = "/authorized/auth/website/user/edit/address";
+export const userOrderListUrl = "/authorized/auth/user/order/list";
 
-export async function currentUserInfo() {
-  const res: any = await ajax.get(currentUserInfoUrl);
+export async function userEditProfile(data: any) {
+  const res: any = await ajax.put(userEditProfileUrl, data);
+  return res;
+}
+
+export async function userEditPassword(data: any) {
+  const res: any = await ajax.put(userEditPasswordUrl, data);
+  return res;
+}
+
+export async function userEditAddress(data: any) {
+  const res: any = await ajax.put(userEditAddressUrl, data);
+  return res;
+}
+
+export async function userOrderList() {
+  const res: any = await ajax.get(userOrderListUrl);
   return res;
 }

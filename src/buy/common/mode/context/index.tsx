@@ -6,11 +6,12 @@ import React, {
   useEffect
 } from "react";
 import { IReducerAction } from "buy/common/interface/index.interface";
-import { getTestAjaxResult } from "../server";
 import { callBackWhenPassAllFunc, promisify } from "buy/common/utils/util";
 import useReducerMiddleware from "../../../common/useHook/useReducerMiddleware";
 import { IContextValue } from "../../type";
 import { useIsCurrentPage } from "../../useHook";
+import { getTestAjaxResult } from "../server";
+
 export const StoreTestNameContext = createContext({});
 
 // store name

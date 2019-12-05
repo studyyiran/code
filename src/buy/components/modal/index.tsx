@@ -31,12 +31,13 @@ export default class Modal extends React.Component<any, any> {
     maskClosable: false,
     closable: true,
     footer: "default",
-    title: "提示",
-    okText: "确认",
-    cancelText: "取消",
+    title: "Tips",
+    okText: "Yes",
+    cancelText: "No",
     centered: false,
     needDefaultScroll: false,
-    reverseButton: false
+    reverseButton: false,
+    isBuySide: true // 用于判断当前的环境
   };
   public confirm: any;
   private bodyStyle: string | null;
@@ -245,7 +246,11 @@ export default class Modal extends React.Component<any, any> {
             {closable && (
               <button className={`${prefixCls}-close`} onClick={this.onClose}>
                 <span className={`${prefixCls}-close-x`}>
-                  <Svg icon="wrong" />
+                  {this.props.isBuySide ? (
+                    <Svg icon="wrong" />
+                  ) : (
+                    <Svg icon="wrong" isBuySide={this.props.isBuySide} />
+                  )}
                 </span>
               </button>
             )}

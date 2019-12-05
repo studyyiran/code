@@ -1,4 +1,10 @@
-import getSellPath, {getProductListPath} from "../utils/util";
+import getSellPath, {
+  getLocationUrl,
+  getProductListPath
+} from "../../common/utils/util";
+import { LoginButton, LoginWrapper } from "../components/loginButton";
+import RouterLink from "../components/routerLink";
+import React from "react";
 
 const footerInfo = [
   {
@@ -70,8 +76,22 @@ const footerInfo = [
     className: "",
     arr: [
       {
+        Component: () => {
+          // 为什么 如果用JSX的形式去解析,永远得不到null?有什么办法判断null吗?
+          let dom = LoginWrapper({
+            renderWhenHaveLogin: () => (
+              <RouterLink to={"/account/management"}>My Account</RouterLink>
+            )
+          });
+          return dom;
+        }
+      },
+      {
         subTitle: "Check My Order",
         href: "/check-order"
+      },
+      {
+        Component: LoginButton
       }
     ]
   }

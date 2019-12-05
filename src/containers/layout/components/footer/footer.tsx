@@ -1,98 +1,17 @@
 import * as React from "react";
 import { useContext } from "react";
-import classnames from "classnames";
 import "./footer.less";
-import { Col, Collapse, Form, message } from "antd";
-// import commonStore from 'store/common'
-import config from "../../../../config";
+import { Collapse, Form, message } from "antd";
 import { RenderByCondition } from "./RenderByCondition";
 import {
   ISelectModelContext,
   SelectModelContext
 } from "pages/sell/selectModelProcess/context";
 import RouterLink from "components/routerLink";
-import getSellPath from "utils/util";
+import footerInfo from "../../../../buy/common-modules/config/footerLinks.config";
+import FooterComponent from "../../../../buy/common-modules/components/footer";
 
 const { Panel } = Collapse;
-
-export const footerInfo = [
-  {
-    title: "Buy",
-    className: "",
-    arr: [
-      {
-        isBuy: true,
-        subTitle: "Buy Home",
-        href: "/buy"
-      },
-      {
-        isBuy: true, //用于判定是哪一个端的跳转
-        subTitle: "Buy Now",
-        href: "/buy-phone"
-      }
-    ]
-  },
-  {
-    title: "Sell",
-    className: "",
-    arr: [
-      {
-        subTitle: "Sell Home",
-        href: "/sell"
-      },
-      {
-        subTitle: "How To Sell",
-        href: "/how-to-sell-my-home"
-      },
-      {
-        subTitle: "Sell Now",
-        href: getSellPath()
-      }
-    ]
-  },
-  {
-    title: "Resources",
-    className: "",
-    arr: [
-      {
-        subTitle: "Contact Us",
-        href: "/contact"
-      },
-      {
-        subTitle: "Blog",
-        href: "/blog"
-      },
-      {
-        subTitle: "FAQs",
-        href: "/faq"
-      },
-      {
-        subTitle: "Return and Exchange Policy",
-        href: "/return-policy"
-      }
-    ]
-  },
-  {
-    title: "About Us",
-    className: "",
-    arr: [
-      {
-        subTitle: "Who We Are",
-        href: "/who-we-are"
-      }
-    ]
-  },
-  {
-    title: "Account",
-    className: "",
-    arr: [
-      {
-        subTitle: "Check My Order",
-        href: "/check-order"
-      }
-    ]
-  }
-];
 
 interface IFooterState {
   email: string;
@@ -104,17 +23,7 @@ export default class Footer extends React.Component<{}, IFooterState> {
   };
   public render() {
     function RenderFunc(props: any) {
-      return props.arr.map(({ subTitle, href, isBuy }: any) => {
-        return (
-          <li key={subTitle}>
-            <RouterLink to={href} isBuy={isBuy}>
-              <span style={{ cursor: "pointer" }} onClick={clickUrlHandler}>
-                {subTitle}
-              </span>
-            </RouterLink>
-          </li>
-        );
-      });
+      return <FooterComponent arr={props.arr} />
     }
     return (
       <footer className="comp-footer">
@@ -184,30 +93,12 @@ function clickUrlHandler() {
 
 export function MbFooter(props: any): any {
   const { onClickHandler } = props;
-  return footerInfo.map(({ className, title, arr }: any) => {
+  return footerInfo.map(({ title, arr }: any) => {
     return (
       <ul className="item" key={title}>
         <Collapse expandIconPosition="right">
           <Panel header={<h2>{title}</h2>} key={title}>
-            {arr.map(({ subTitle, href, isBuy }: any) => {
-              return (
-                <li
-                  key={subTitle}
-                  onClick={() => {
-                    if (onClickHandler) {
-                      onClickHandler();
-                    }
-                    if (clickUrlHandler) {
-                      clickUrlHandler();
-                    }
-                  }}
-                >
-                  <RouterLink to={href} isBuy={isBuy}>
-                    <span style={{ cursor: "pointer" }}>{subTitle}</span>
-                  </RouterLink>
-                </li>
-              );
-            })}
+            <FooterComponent arr={arr} onClickHandler={onClickHandler} />
           </Panel>
         </Collapse>
       </ul>

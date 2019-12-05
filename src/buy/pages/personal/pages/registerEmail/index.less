@@ -1,0 +1,44 @@
+@import (reference) "~buy/common/styles/index.less";
+
+@p1: {
+  .user-register {
+    .content-container {
+      padding: 20 * @px;
+      .button-container {
+        margin-top: 40 * @px;
+        >*:first-child {
+          margin-bottom: 20 *@px;
+        }
+      }
+    }
+    p.result {
+      //font-size: 24 * @px;
+      margin: 30 * @px auto;
+      white-space: pre-line;
+      word-wrap: break-word;
+    }
+    p.content {
+      white-space: pre-line;
+      word-wrap: break-word;
+      a {
+        color: @color-blue-liner-use;
+        text-decoration: underline;
+      }
+    }
+    .disabled-status {
+      color: @color-blue-liner-use;
+    }
+    .ant-form {
+      > :last-child {
+        margin-top: 30 * @px;
+      }
+    }
+    //button {
+    //  a {
+    //display: initial;
+    //}
+    //}
+  }
+};
+
+.hello(@p1);

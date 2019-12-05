@@ -3,10 +3,10 @@ import { createStore } from "redux";
 function reducer(state: any, action: any) {
   const { type, value } = action;
   switch (type) {
-    case "clearToken":
+    case "reduxSetToken":
       return {
-        token: "",
-        ...state
+        ...state,
+        token: value
       };
       break;
     default:

@@ -1,58 +1,60 @@
 @import (reference) "~buy/common/styles/index.less";
 
-@bg-white: #f5f7f9;
-
 @world: {
-
-  .buy-home-notice-wrapper {
-    padding: 15*@px 20*@px 20*@px 20*@px;
+  .notice-container {
+    @width: 347 * @px;
+    position: fixed;
+    z-index: 20;
+    bottom: 10 * @px;
+    left: calc(50vw - @width / 2);
     display: flex;
     align-items: center;
-    background: rgba(255, 255, 255, 1);
-    box-shadow: 0px 5px 17px 0px rgba(0, 0, 0, 0.07);
-    border-radius: 50*@px;
-
-    .buy-home-notice-left-img {
-      display: block;
-      width: 64*@px;
-      height: 64*@px;
-      margin-right: 20*@px;
-      border-radius: 50%;
-    }
-
-    .buy-home-notice-right-wrapper {
-      flex: 1;
-      color: rgba(0, 0, 0, 1);
-      width: 230*@px;
-
-      .buy-home-notice-right-title {
-        font-size: 14*@px;
-        font-weight: bolder;
-        padding-right: 10*@px;
+    justify-content: center;
+    .comp-new-buy-notice {
+      width: @width;
+      background: rgba(255, 255, 255, 1);
+      border-radius: 50 * @px;
+      display: flex;
+      align-items: center;
+      padding: 15 * @px 0 20 * @px 21 * @px;
+      box-shadow: 0 * @px 1 * @px 10 * @px 0 * @px rgba(0, 0, 0, 0.07);
+      .innerdiv {
+        border-radius: 50%;
       }
-
-      .buy-home-notice-right-desc {
-        margin-top: 9*@px;
-
-        svg {
-          vertical-align: middle;
-          background: #1ab4e7;
-          border-radius: 50%;
-          color: #fff;
-          height: 24*@px;
-          width: 24*@px;
+      div:first-child {
+        @size: 64 * @px;
+        .innerdiv-imgsize(@size);
+        margin-right: 10 * @px;
+      }
+      
+      > section:nth-child(2) {
+        > h1 {
+          //.one-line-precess();
+          width: 230 * @px;
+          height: 50 * @px;
+          .font(16 * @px, 500, #222222);
         }
-
-        .time {
-          margin-left: 15*@px;
-          font-size: 12*@px;
-          font-weight: 500;
-          color: rgba(126, 131, 150, 1);
+        > .location {
+          .font(16 * @px, 500, #444444);
+        }
+        > .date-container {
+          display: flex;
+          align-items: center;
+          svg {
+            flex: 0 0 24 * @px;
+            height: 24 * @px;
+            background: #1ab4e7;
+            border-radius: 50%;
+            color: white;
+            margin-right: 10 * @px;
+          }
+          span {
+            .font(12 * @px, 500, rgba(126, 131, 150, 1));
+          }
         }
       }
     }
-  }
-  .ismobile #root {
   }
 };
+
 .hello(@world);

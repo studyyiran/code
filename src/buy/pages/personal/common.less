@@ -1,0 +1,60 @@
+@import (reference) "~buy/common/styles/index.less";
+
+@p: {
+  body {
+    .yr-modal-mask {
+      .yr-modal {
+        max-width:700 * @px;
+      }
+    }
+  }
+  // 组件公用样式重写
+  .buttons-container {
+    margin-top: 24 * @px;
+  }
+  // 公用样式抽象
+  .user-page {
+    padding: 100 * @px 0;
+    .ant-form-item {
+      margin-bottom: 14 *@px;
+      color:rgba(0, 0, 0, 1);
+    }
+    .mb({padding: 0;});
+    .pc-common-card {
+      .pc({
+        border-radius: 5px;
+        overflow: hidden;
+        display: flex;
+        justify-content: space-between;
+        .setpage(982 * @px);
+        .common-card();
+      });
+      > img {
+        @width: 456 * @px;
+        flex-basis: @width;
+        min-width: @width;
+        max-width: @width;
+      }
+    }
+    .more-action {
+      text-align: center;
+      a {
+        color: @color-blue-liner-use;
+      }
+    }
+    .form-left-part {
+      padding-top: 30 * @px;
+      flex: 1;
+      h1 {
+        text-align: center;
+        .mb({padding-bottom: 30*@px;});
+      }
+    }
+  }
+  .form-wrapper-component {
+    .mb({border-top: 1px solid @color-border;});
+    padding: 30 * @px;
+  }
+};
+
+.hello(@p);

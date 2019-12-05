@@ -1,0 +1,29 @@
+@import (reference) "~buy/common/styles/index.less";
+
+@p1: {
+  .yr-modal-mask {
+    .reset-email-modal {
+      .yr-modal-content {
+        padding: 30 *@px 20 *@px 10 *@px;
+        //padding-top: 10 *@px;
+        //padding-bottom: 0 *@px;
+      }
+      .yr-modal-title {
+        font-size: 24px;
+        text-align: center;
+      }
+      .yr-modal-header {
+        .pc({margin-bottom: 20*@px;});
+
+      }
+      .content {
+        p:first-child {
+          margin-bottom: 10 * @px;
+        }
+      }
+    }
+  }
+
+};
+
+.hello(@p1);

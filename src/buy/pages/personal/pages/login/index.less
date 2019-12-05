@@ -1,8 +1,19 @@
 @import (reference) "~buy/common/styles/index.less";
 
 @p1: {
-  .login-page {
-    background: yellow;
+  .user-login {
+    .forget-button {
+      position: relative;
+      top: -15 * @px;
+      &:not(:hover) {
+        color: @color-gray;
+      }
+    }
+    .more-action {
+      > span {
+        display: block;
+      }
+    }
   }
 };
 

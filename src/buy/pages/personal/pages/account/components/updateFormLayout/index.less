@@ -1,0 +1,50 @@
+@import (reference) "~buy/common/styles/index.less";
+
+@p1: {
+  .update-form-layout {
+    border: 1px solid @color-border;
+    border-radius: 2px;
+    padding: 10 * @px;
+    .pc({padding: 32 * @px;});
+    &:not(:last-child) {
+      border-bottom: none;
+    }
+    .disabled-status {
+      color: @color-blue-liner-use;
+    }
+    .update-button-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-column-gap: 24*@px;
+      .mb({
+        grid-template-columns: 1fr;
+        grid-column-gap: 0;
+        grid-row-gap: 14 *@px;
+      })
+    }
+    h2 {
+      font-size: 18 * @px;
+      margin-bottom: 16 * @px;
+    }
+    .pc({
+      .ant-form {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-column-gap: 24 *@px;
+        > *:last-child {
+          grid-column-start: 1;
+          grid-column-end: 3;
+          button {
+            max-width: initial;
+          }
+        }
+      }
+    });
+
+    .ant-form-item {
+      margin-bottom: 10 * @px;
+    }
+  }
+};
+
+.hello(@p1);

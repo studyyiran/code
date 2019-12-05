@@ -1,11 +1,12 @@
 /*
 当url变化的时候,返回给我们监听的ual
  */
-import { useParams, useRouteMatch } from "react-router-dom";
+import { useRouteMatch } from "react-router-dom";
+import {UseGetParams} from "../../common-modules/commonUseHook";
 
 export function useWhenUrlChange(paramKey: string) {
   try {
-    const params: any = useParams();
+    const params: any = UseGetParams();
     return params[paramKey];
   } catch (e) {
     console.error(e);

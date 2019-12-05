@@ -6,8 +6,13 @@ import React, {
   useRef
 } from "react";
 import { IReducerAction } from "buy/common/interface/index.interface";
-import { getBuyProductList, getSellProductList } from "../server";
-import { promisify } from "buy/common/utils/util";
+import {
+  getBuyProductList,
+  getSellBrand,
+  getSellProductList,
+  getBuyBrand
+} from "../server";
+import { callBackWhenPassAllFunc, promisify } from "buy/common/utils/util";
 import { IContextValue } from "../../../common/type";
 import useReducerMiddleware from "../../../common/useHook/useReducerMiddleware";
 import { useGetOriginData } from "../../../common/useHook/useGetOriginData";
@@ -44,9 +49,37 @@ export function OurHomeContextProvider(props: any) {
   );
   const action: IOurHomeActions = useGetAction(state, dispatch);
   // 监听变化
-  // useEffect(() => {
-  //   action.getOurHome();
-  // }, [action.getOurHome]);
+  useEffect(() => {
+    callBackWhenPassAllFunc(
+      [() => !state.sellListTitle || !state.sellListTitle.length],
+      () => {
+        action.getSellTitleList().then((res: any) => {
+          if (res && res[0] && res[0].seqNo && res[0].brandId) {
+            action.getSellProductList({
+              seq: res[0].seqNo,
+              brandId: res[0].brandId
+            });
+          }
+        });
+      }
+    );
+  }, []);
+
+  useEffect(() => {
+    callBackWhenPassAllFunc(
+      [() => !state.buyListTitle || !state.buyListTitle.length],
+      () => {
+        action.getBuyTitleList().then((res: any) => {
+          if (res && res[0] && res[0].seqNo && res[0].brandId) {
+            action.getBuyProductList({
+              seq: res[0].seqNo,
+              brandId: res[0].brandId
+            });
+          }
+        });
+      }
+    );
+  }, []);
 
   const propsValue: IOurHomeContext = {
     useClientRepair,
@@ -59,8 +92,10 @@ export function OurHomeContextProvider(props: any) {
 
 // @actions
 export interface IOurHomeActions {
-  getBuyProductList: () => void;
-  getSellProductList: () => void;
+  getBuyProductList: (data: any) => void;
+  getSellProductList: (data: any) => void;
+  getSellTitleList: () => any;
+  getBuyTitleList: () => any;
 }
 
 // useCreateActions
@@ -74,6 +109,22 @@ function useGetAction(
     promiseStatus.current = {};
   }
   const actions: IOurHomeActions = {
+    getBuyTitleList: promisify(async function(data: any) {
+      const res: any = await getBuyBrand();
+      dispatch({
+        type: ourHomeReducerTypes.setBuyListTitle,
+        value: res
+      });
+      return res;
+    }),
+    getSellTitleList: promisify(async function(data: any) {
+      const res: any = await getSellBrand();
+      dispatch({
+        type: ourHomeReducerTypes.setSellListTitle,
+        value: res
+      });
+      return res;
+    }),
     getBuyProductList: promisify(async function(data: any) {
       const res: any = await getBuyProductList(data);
       dispatch({
@@ -97,7 +148,9 @@ function useGetAction(
 // action types
 export const ourHomeReducerTypes = {
   setBuyProductList: "setBuyProductList",
-  setSellProductList: "setSellProductList"
+  setSellProductList: "setSellProductList",
+  setSellListTitle: "setSellListTitle",
+  setBuyListTitle: "setBuyListTitle"
 };
 
 // reducer
@@ -105,6 +158,36 @@ function reducer(state: IContextState, action: IReducerAction) {
   const { type, value } = action;
   let newState = { ...state };
   switch (type) {
+    case ourHomeReducerTypes.setBuyListTitle: {
+      newState = {
+        ...newState,
+        buyListTitle: (value || []).map(
+          ({ brandId, brandDisplayName, seqNo }: any) => {
+            return {
+              seqNo,
+              id: brandId,
+              displayName: brandDisplayName
+            };
+          }
+        )
+      };
+      break;
+    }
+    case ourHomeReducerTypes.setSellListTitle: {
+      newState = {
+        ...newState,
+        sellListTitle: (value || []).map(
+          ({ brandId, brandDisplayName, seqNo }: any) => {
+            return {
+              seqNo,
+              id: brandId,
+              displayName: brandDisplayName
+            };
+          }
+        )
+      };
+      break;
+    }
     case ourHomeReducerTypes.setBuyProductList: {
       newState = {
         ...newState,

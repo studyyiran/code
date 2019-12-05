@@ -8,7 +8,12 @@ import { IProductInfo } from "store/interface/user.interface";
 import yourPhoneStore from "containers/aboutphone/store/yourphone.store";
 import ButtonGroup from "../../components/buttonGroup";
 import classnames from "classnames";
-
+import { useContext } from "react";
+import {
+  IStoreAuthContext,
+  StoreAuthContext
+} from "../../../../../buy/common-modules/context/authToken/context";
+import { LoginPop } from "../../../../../buy/common-modules/components/LoginPop";
 // create form value 变化时候判断 按钮是否能高亮
 const onValuesChange = (props: any, changedValues: any, allValues: any) => {
   let disabled = false;
@@ -28,6 +33,17 @@ const onValuesChange = (props: any, changedValues: any, allValues: any) => {
   yourPhoneStore.isAddressValuesAndDisabled = disabled;
 };
 
+export default Form.create<IShippingProps>({ onValuesChange: onValuesChange })(
+  InformationWrapper
+);
+
+function InformationWrapper(props: any) {
+  const storeAuthContext = useContext(StoreAuthContext);
+  const { storeAuthContextValue } = storeAuthContext as IStoreAuthContext;
+  const { userInfoForm } = storeAuthContextValue;
+  return <Information {...props} userInfoForm={userInfoForm} />;
+}
+
 @inject("yourphone", "user", "common")
 @observer
 class Information extends React.Component<IShippingProps, IShippingState> {
@@ -37,13 +53,32 @@ class Information extends React.Component<IShippingProps, IShippingState> {
     isLoadingZipCode: true
   };
 
-  public componentDidMount() {
-    // 判断是否页面需要必备数据，分TBD的情况
-    // if (!shippingPageValidate()) {
-    //   this.props.history.push("/sell/yourphone/brand");
-    //   return;
-    // }
-
+  public mergeFormData() {
+    const { userInfoForm } = this.props as any;
+    const { addressInfo } = this.props.yourphone;
+    console.log("start");
+    console.log(addressInfo);
+    if (addressInfo && userInfoForm) {
+      Object.keys(addressInfo).forEach((key: string) => {
+        switch (key) {
+          case "addressLine":
+            addressInfo.addressLine =
+              addressInfo.addressLine || userInfoForm.street;
+            break;
+          case "mobile":
+            addressInfo.mobile = addressInfo.mobile || userInfoForm.userPhone;
+            break;
+          case "addressLineOptional":
+            addressInfo.addressLineOptional =
+              addressInfo.addressLineOptional || userInfoForm.apartment;
+            break;
+          default:
+            addressInfo[key] = addressInfo[key] || userInfoForm[key];
+        }
+        // 额外新增.因为以前的数据模型 email并不在其中.在另外一个字段中
+        addressInfo.userEmail = userInfoForm.userEmail;
+      });
+    }
     // didmount 的时候校验是否填了字段
     const { getFieldsValue } = this.props.form;
     // cache填充是异步的
@@ -54,6 +89,22 @@ class Information extends React.Component<IShippingProps, IShippingState> {
 
     if (typeof this.props.onRef === "function") {
       this.props.onRef!(this);
+    }
+  }
+
+  public componentDidMount() {
+    this.mergeFormData();
+  }
+
+  public componentDidUpdate(prevProps: any) {
+    const { userInfoForm } = this.props as any;
+    if (
+      userInfoForm &&
+      (!prevProps ||
+        !prevProps.userInfoForm ||
+        userInfoForm.firstName !== prevProps.userInfoForm.firstName)
+    ) {
+      this.mergeFormData();
     }
   }
 
@@ -124,7 +175,8 @@ class Information extends React.Component<IShippingProps, IShippingState> {
                       message: "Please enter a valid email."
                     }
                   ],
-                  initialValue: this.props.user.preOrder.userEmail,
+                  initialValue:
+                    this.props.user.preOrder.userEmail || addressInfo.userEmail,
                   validateTrigger: "onBlur"
                 })(<Input />)}
               </Form.Item>
@@ -285,6 +337,7 @@ class Information extends React.Component<IShippingProps, IShippingState> {
     );
     return (
       <div className={"page-infomation-container"}>
+        <LoginPop isBuySide={false} />
         <h2>Information</h2>
         <div className="container">{infomationHTML}</div>
         <ButtonGroup
@@ -419,6 +472,3 @@ class Information extends React.Component<IShippingProps, IShippingState> {
     // }
   };
 }
-export default Form.create<IShippingProps>({ onValuesChange: onValuesChange })(
-  Information
-);

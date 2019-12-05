@@ -1,6 +1,6 @@
 import * as React from "react";
 import "./index.less";
-import RouterLink from "../../../../components/routerLink";
+import RouterLink from "../../../../common-modules/components/routerLink";
 import {useState} from "react";
 import {getProductListPath} from "../../../../common/utils/util";
 

@@ -29,7 +29,7 @@ import { protectPrice } from "../../common/config/staticConst";
 import { locationHref } from "../../common/utils/routerHistory";
 import VideoComponent from "../../components/video";
 import EditorResolver from "./components/editorResolver";
-import RouterLink from "../../components/routerLink";
+import RouterLink from "../../common-modules/components/routerLink";
 import PayCardImages from "./components/payCardImages";
 import { getDescArr, useGetProductImg } from "./util";
 import { TipsAllPass, TipsProtection } from "./context/staticData";
@@ -47,18 +47,36 @@ import { RenderByIsFive } from "../../components/RenderByIsFive";
 import { FiveCountDown } from "./components/fiveCountdown";
 import { FivePrice } from "./components/fivePrice";
 import { FiveCalcPrice } from "./components/fiveCalcPrice";
+// @ts-ignore
+import WxImageViewer from "react-wx-images-viewer";
+import { ModalView } from "../../components/ModalView";
+
 function Swiper(props: any) {
-  const { buyProductImgPc, buyProductImgM, buyProductVideo } = props;
+  const {
+    buyProductImgPc,
+    buyProductImgM,
+    buyProductVideo,
+    setCurrentImageIndex,
+    setShowImgModal,
+    currentImageIndex,
+    showImageModal
+  } = props;
   const maxNumber = 3;
-  const [showImageModal, setShowImgModal] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   return (
     <div className="swiper">
       <RenderByCondition
         ComponentMb={(() => {
           let dom = buyProductImgM.map((item: string, index: number) => {
             return (
-              <InnerDivImage imgUrl={item} key={index} dataIndex={index} />
+              <InnerDivImage
+                imgUrl={item}
+                key={index}
+                dataIndex={index}
+                onClick={(e: any) => {
+                  setCurrentImageIndex(index);
+                  setShowImgModal(true);
+                }}
+              />
             );
           });
 
@@ -67,7 +85,6 @@ function Swiper(props: any) {
               <VideoComponent className="innerdiv" src={buyProductVideo} />
             );
           }
-
           return <Carousel className="swiper-mb">{dom}</Carousel>;
         })()}
         ComponentPc={(() => {
@@ -441,11 +458,28 @@ export default function ProductDetail(props: any) {
       </ul>
     );
   }
+  const [showImageModal, setShowImgModal] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
   const productImg = useGetProductImg(productDetail);
   if (buyProductId) {
     return (
       <div className="product-detail-page">
+        <ModalView visible={showImageModal}>
+          <WxImageViewer
+            zIndex={9999}
+            urls={buyProductImgPc}
+            index={currentImageIndex}
+            onClose={() => {
+              setShowImgModal(false);
+            }}
+          />
+        </ModalView>
         <Swiper
+          showImageModal={showImageModal}
+          setShowImgModal={setShowImgModal}
+          currentImageIndex={currentImageIndex}
+          setCurrentImageIndex={setCurrentImageIndex}
           buyProductVideo={buyProductVideo}
           buyProductImgPc={buyProductImgPc}
           buyProductImgM={buyProductImgM}
@@ -615,7 +649,7 @@ function StartBuyButton(props: any) {
   return (
     <Button disabled={buyProductStatus === "INTRANSACTION"} onClick={onClick}>
       {buyProductStatus === "INTRANSACTION"
-        ? "SOLD OUT"
+        ? "Sale Pending"
         : "Start Your Purchase"}
     </Button>
   );
@@ -768,10 +802,7 @@ function ProductInfo(props: any) {
         <span className="condition">Condition {buyLevel}</span>
       </div>
       {/*暂时强制更新 为了解决首次不正常渲染的问题*/}
-      <img
-        className="check-icon"
-        src={require("./res/uptrade-check.svg")}
-      />
+      <img className="check-icon" src={require("./res/uptrade-check.svg")} />
     </section>
   );
 }

@@ -169,7 +169,7 @@ class CheckOrderNo extends React.Component<any, any> {
           const checkOrderBuyUrl = "/buy/checkorder/order";
           window.location.href = checkOrderBuyUrl;
         } else {
-          this.props.history.push(nextUrl);
+          this.props.history.replace(nextUrl);
         }
       } else {
         this.setState({

@@ -2,7 +2,7 @@ import { locationHref } from "./routerHistory";
 import { matchPath } from "react-router-dom";
 import { routerConfig } from "../../share/routerConfig";
 import { constValue } from "../constValue";
-
+import { Message } from "../../components/message";
 export const staticContentConfig = {
   priceUnit: "$",
   perMonth: "/mo",
@@ -168,6 +168,22 @@ export function getProductListPath() {
   return "/buy-phone";
 }
 
+export function getLocationUrl(type: string) {
+  switch (type) {
+    case "login": {
+      return "/account/login";
+    }
+    case "buyhome": {
+      return "/buy";
+    }
+    case "home": {
+      return "/";
+    }
+    default:
+      return "";
+  }
+}
+
 //用于sell跳转以及buy的spa路由跳转
 export const sellPageGoTo = function(url: any, isBuy?: boolean) {
   locationHref(url);
@@ -197,6 +213,66 @@ export async function callBackWhenPassAllFunc(arr: any[], callBack: any) {
   if (result1 && result2) {
     callBack();
   }
+}
+
+export function getUrlAllParams() {
+  if (!isServer()) {
+    let url = decodeURI(window.location.href);
+    let res = {} as any;
+    let url_data = url.split("?").length > 1 ? url.split("?")[1] : null;
+    if (!url_data) return null;
+    let params_arr = url_data.split("&");
+    params_arr.forEach(function(item) {
+      let key = item.split("=")[0];
+      let value = item.split("=")[1];
+      res[key] = decodeURIComponent(value);
+    });
+    return res;
+  } else {
+    return null;
+  }
+}
+
+export function actionsWithCatchAndLoading({
+  dispatch,
+  loadingDispatchName,
+  loadingObjectKey,
+  promiseFunc,
+  needError = true
+}: {
+  dispatch: any;
+  loadingDispatchName: string;
+  loadingObjectKey: string;
+  promiseFunc: any;
+  needError?: any;
+}) {
+  let dispatchJson: any = {};
+  dispatchJson[loadingObjectKey] = true;
+  dispatch({
+    type: loadingDispatchName,
+    value: dispatchJson
+  });
+  const res = promiseFunc();
+  res.catch((e: any) => {
+    if (needError) {
+      Message.error(e);
+    }
+
+    dispatchJson[loadingObjectKey] = false;
+    dispatch({
+      type: loadingDispatchName,
+      value: dispatchJson
+    });
+  });
+  res.then(() => {
+    dispatchJson[loadingObjectKey] = false;
+    dispatch({
+      type: loadingDispatchName,
+      value: dispatchJson
+    });
+  });
+
+  return res;
 }
 
 let lastTimeRef = 0;

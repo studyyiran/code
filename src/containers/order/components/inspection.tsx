@@ -72,6 +72,7 @@ export default function InspectionWrapper(props: any) {
     />
   );
 }
+
 class Inspection extends React.Component<any, any> {
   constructor(props: any) {
     super(props);

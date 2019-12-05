@@ -1,4 +1,6 @@
 /// <reference path="../node_modules/@types/webpack-env/index.d.ts" />
+import {isServer} from "./utils/util";
+
 declare var module: __WebpackModuleApi.Module
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
@@ -8,6 +10,13 @@ import App from './App';
 import './styles/index.less';
 // import './iconfont/iconfont';
 import Raven from 'raven-js';
+
+/*
+环境变量 用于区分 路由组件跳转
+ */
+if (!isServer()) {
+  (window as any).LOCATIONENV = 'sell'
+}
 
 if (process.env.REACT_APP_SERVER_ENV === 'PUB') {
   Raven.config('https://af75361018b342bba487e7a637e713cf@sentry.aijihui.net/41').install();

@@ -6,7 +6,7 @@ import { HomeCardDataList } from "./components/homeCardDataList";
 import { Rate } from "antd";
 import SearchProduct from "../../components/SearchProduct";
 import { locationHref } from "../../common/utils/routerHistory";
-import RouterLink from "../../components/routerLink";
+import RouterLink from "../../common-modules/components/routerLink";
 import { brands, buyCardInfo, sellCardInfo } from "./components/constant";
 import { getProductListPath, sellPageGoTo } from "../../common/utils/util";
 import { useContext } from "react";

@@ -7,19 +7,29 @@ import {
   OrderInfoContext,
   orderInfoReducerTypes
 } from "../../context";
+import {
+  IStoreAuthContext,
+  StoreAuthContext
+} from "../../../../common-modules/context/authToken/context";
+import { LoginPop } from "../../../../common-modules/components/LoginPop";
 
 function UserInformationWrapper(props: any) {
   const orderInfoContext = useContext(OrderInfoContext);
+  const accountInfoContext = useContext(StoreAuthContext);
   const {
     orderInfoContextValue,
     orderInfoContextDispatch,
     checkAddress
   } = orderInfoContext as IOrderInfoContext;
   const { userInfo } = orderInfoContextValue;
+  const { storeAuthContextValue } = accountInfoContext as IStoreAuthContext;
+  const { userInfoForm } = storeAuthContextValue;
   return (
     <PureForm
       {...props}
-      propsInfo={userInfo}
+      // 这个问题能引申出很多问题.我们交给表单的数据源的安全,是否能够保证?你用dispatch,能否解决数据不被意外变动的问题呢?需要去制作demo来考证,直接修改store数据的影响.我其实并不敢相信他居然能修改成功.
+      // propsInfo={Object.assign(userInfoForm, userInfo)}
+      propsInfo={{...userInfoForm, ...userInfo}}
       submitHandler={(result: any) => {
         // 开始验证地址 // 返回promise
         return checkAddress(result).then(() => {
@@ -30,7 +40,9 @@ function UserInformationWrapper(props: any) {
           });
         });
       }}
-    />
+    >
+      <LoginPop />
+    </PureForm>
   );
 }
 
@@ -101,20 +113,7 @@ function PureForm(props: any) {
     if (!/(\d{5,5})|(0\d{4,4})/.test(value)) {
       return;
     }
-    const addressInfo = await zipCodeToAddressInfo(value);
-    if (addressInfo.state && addressInfo.city) {
-      setFieldsValue({ state: addressInfo.state });
-      setFieldsValue({ city: addressInfo.city });
-    } else {
-      setFieldsValue({ state: "" });
-      setFieldsValue({ city: "" });
-      setFields({
-        zipCode: {
-          value: value,
-          errors: [new Error("Please enter a valid zipCode")]
-        }
-      });
-    }
+    await zipCodeToAddressInfo(value, form);
   }
 
   const infomationHTML = (
@@ -287,6 +286,7 @@ function PureForm(props: any) {
       {!props.hideTitle ? (
         <h2 className="order-common-less-title">Shipping Address</h2>
       ) : null}
+      {props.children}
       <div className="container">{infomationHTML}</div>
       {renderButton ? renderButton(handleNext, props) : null}
     </div>

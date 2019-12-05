@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./index.less";
 import VideoComponent from "components/video";
-import RouterLink from "components/routerLink";
 import {
   ISelectModelContext,
   SelectModelContext
@@ -11,21 +10,23 @@ import { Tabs } from "components/tabs";
 const { TabPane } = Tabs as any;
 // subOrders[0].shippingInfo.sendInfo[0].lableCode
 import { getFromSession } from "utils/util";
+import { LoginWrapper } from "../../../../../buy/common-modules/components/loginButton";
+import RouterLink from "../../../../../buy/common-modules/components/routerLink";
 
 const videoConfig = [
   {
     key: "0",
     id: "Apple",
     url: "/how-to-factory-reset-iphone",
-    resUrl:
-      "https://ahs-uptrade.oss-cn-hangzhou.aliyuncs.com/test/iPhone%20Reset.gif"
+    resUrl: "https://www.youtube.com/embed/IPX45rB0aT0"
+    // resUrl: "https://ahs-uptrade.oss-cn-hangzhou.aliyuncs.com/test/iPhone%20Reset.gif"
   },
   {
     key: "1",
     id: "Android",
     url: "/how-to-factory-reset-android-phone",
-    resUrl:
-      "https://ahs-uptrade.oss-cn-hangzhou.aliyuncs.com/test/Android%20Reset.gif"
+    resUrl: "https://www.youtube.com/embed/V2zxRSs9FSs"
+    // resUrl: "https://ahs-uptrade.oss-cn-hangzhou.aliyuncs.com/test/Android%20Reset.gif"
   }
 ];
 
@@ -40,6 +41,22 @@ export default function(props: any) {
     }
   }, []);
   const {} = props;
+
+  function YoutubeIframe(props: any) {
+    const { src } = props;
+    const heightValue = (456 * 315) / 560;
+    return (
+      <iframe
+        width="100%"
+        height={heightValue}
+        src={src}
+        frameBorder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+      />
+    );
+  }
+
   if (orderInfo) {
     const { needBox, shipDeadLine, groupOrderNo, lableCode } = orderInfo;
     return (
@@ -64,10 +81,7 @@ export default function(props: any) {
                 return <TabPane key={key} tab={id} />;
               })}
             </Tabs>
-            <img
-              className="video-container"
-              src={videoConfig[currentTab].resUrl}
-            />
+            <YoutubeIframe src={videoConfig[currentTab].resUrl} />
           </section>
           <button className="common-button button-centered">
             <RouterLink
@@ -99,8 +113,8 @@ export default function(props: any) {
                 href={`${
                   process.env.REACT_APP_SERVER_ENV === "PUB"
                     ? "https://api-gateway.uptradeit.com"
-                    : process.env.REACT_APP_SERVER_ENV === "QA" ?
-                    "http://qa-gateway-801477214.us-east-2.elb.amazonaws.com"
+                    : process.env.REACT_APP_SERVER_ENV === "QA"
+                    ? "http://qa-gateway-801477214.us-east-2.elb.amazonaws.com"
                     : "http://demo-gateway-1613913116.us-east-2.elb.amazonaws.com"
                 }/api/shippo/downloadlabel?shippolablecode=${encodeURIComponent(
                   lableCode
@@ -111,7 +125,10 @@ export default function(props: any) {
             </button>
             <section className="video">
               <h3>How to Ship</h3>
-              <img src="https://d3c745jesl5pj3.cloudfront.net/statics/email/howtoship.gif"/>
+              <YoutubeIframe
+                src={"https://www.youtube.com/embed/PWsIB9G-BkM"}
+              />
+              {/*<img src="https://d3c745jesl5pj3.cloudfront.net/statics/email/howtoship.gif" />*/}
               {/*<VideoComponent />*/}
             </section>
           </div>
@@ -125,6 +142,18 @@ export default function(props: any) {
             Go back home
           </a>
         </button>
+        <LoginWrapper
+          renderNotLogin={({ url, createUrl }: any) => (
+            <div>
+              <div className={"or"}>OR</div>
+              <div className={"button-wrapper button-centered"}>
+                <button className="common-button">
+                  <RouterLink to={createUrl}>Create an account</RouterLink>
+                </button>
+              </div>
+            </div>
+          )}
+        />
       </div>
     );
   } else {

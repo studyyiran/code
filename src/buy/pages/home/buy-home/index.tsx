@@ -4,7 +4,7 @@ import { RenderByCondition } from "buy/components/RenderByCondition";
 import { HomeCardDataList } from "../components/homeCardDataList";
 import SearchProduct from "../../../components/SearchProduct";
 import { locationHref } from "../../../common/utils/routerHistory";
-import RouterLink from "../../../components/routerLink";
+import RouterLink from "../../../common-modules/components/routerLink";
 import { buyCardInfo } from "../components/constant";
 import Experience from "../components/experience";
 import BuyConfidence from "../components/buy-confidence";
@@ -50,7 +50,7 @@ class Home extends React.Component<any, any> {
             <h1>
               Buy Used Phones.
               <br />
-              Real Phones.
+              Real Photos.
               <br />
               Fully Inspected.
             </h1>
@@ -132,9 +132,7 @@ class Home extends React.Component<any, any> {
         <Experience />
         <BuyConfidence isMob={false} />
         <BuyHowItWorks />
-        <div className={"experience-notice-wrapper"}>
-          <NewBuyNotice />
-        </div>
+        <NewBuyNotice />
       </article>
     );
   }

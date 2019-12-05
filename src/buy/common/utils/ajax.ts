@@ -1,5 +1,7 @@
 import Axios from "axios";
 import { globalStore } from "../store";
+import { constValue } from "../constValue";
+import { safeEqual } from "./util";
 interface IAjax {
   get: (url: string, data?: any) => void;
   post: (url: string, data?: any) => void;
@@ -85,6 +87,17 @@ ajax.get = function(url, data) {
 };
 
 ajax.fetch = function(config) {
+  // 暂时插入处理函数
+  if (globalStore) {
+    const state = globalStore.getState();
+    const authToken = state.token;
+    // 11-21修改.默认主动设置
+    if (authToken) {
+      config.headers = {};
+      config.headers[constValue.AUTHKEY] = authToken;
+    }
+  }
+
   return new Promise((resolve, reject) => {
     Axios(config)
       .then(res => {
@@ -94,6 +107,7 @@ ajax.fetch = function(config) {
           if (Number(code) === 200 || success || Number(code) === 0) {
             resolve(res.data.data);
           } else {
+            // 业务性报错
             rejectError(config, reject, {
               code: code,
               resultMessage: resultMessage
@@ -102,15 +116,25 @@ ajax.fetch = function(config) {
         }
       })
       .catch(e => {
-        // 处理404
-        const { code } = e;
-        if (code === 403) {
-          globalStore.dispatch({
-            type: "clearToken"
-          });
+        if (e) {
+          const { response } = e;
+          if (response) {
+            // 处理403
+            const { data, status } = response;
+            if (safeEqual(status, 403)) {
+              if (safeEqual(data.code, 403)) {
+                globalStore.dispatch({
+                  type: "reduxSetToken",
+                  value: null
+                });
+              }
+            }
+            // 这块为什么主动扔出去?
+            // 这块应该加一个全局报错.
+            rejectError(config, reject, {});
+            // catch 404 500异常
+          }
         }
-        // catch 404 500异常
-        rejectError(config, reject, {});
       });
   });
 };

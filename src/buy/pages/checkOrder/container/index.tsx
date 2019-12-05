@@ -22,7 +22,7 @@ import {
   storeCheckOrderReducerTypes
 } from "../context";
 import Button from "../../../components/button";
-import RouterLink from "../../../components/routerLink";
+import RouterLink from "../../../common-modules/components/routerLink";
 import Svg from "../../../components/svg";
 import {
   callBackWhenPassAllFunc,
@@ -208,7 +208,7 @@ export function OrderList(props: any) {
             {reactNodeConfig.returnButton ? (
               <Button
                 isLoading={isLoading && isLoading.serverRequestReturn}
-                className="button-centered disabled-status"
+                className="button-centered disabled-status button-with-hover"
                 onClick={serverRequestReturn}
               >
                 Request Return
@@ -246,12 +246,12 @@ export function OrderList(props: any) {
                 </Button>
               </div>
             ) : null}
-            {refund && subOrderStatus !== "TRANSACTION_FAILED" ? (
-              <div className="have-refund">
-                <h3>Refund Issued {currencyTrans(refund)}</h3>
-                <Svg />
-              </div>
-            ) : null}
+            {/*{refund ? (*/}
+            {/*  <div className="have-refund">*/}
+            {/*    <h3>Refund Issued {currencyTrans(refund)}</h3>*/}
+            {/*    <Svg />*/}
+            {/*  </div>*/}
+            {/*) : null}*/}
           </div>
         )
       };
@@ -267,7 +267,7 @@ export function OrderList(props: any) {
   }
   return (
     <div className="order-information-page">
-      <HeaderTitle title={"Check My Order"} />
+      <HeaderTitle title={"Check My Order111"} />
       {checkOrderDetail && checkOrderDetail.groupOrderNo ? (
         <h2>Order Number - {checkOrderDetail.groupOrderNo}</h2>
       ) : null}
@@ -281,7 +281,7 @@ export function OrderList(props: any) {
       {needCancelButton ? (
         <Button
           isLoading={isLoading && isLoading.serverRequestReturn}
-          className="button-centered disabled-status button-container"
+          className="button-centered disabled-status button-container button-with-hover"
           onClick={serverCancelOrder}
         >
           Cancel Order
