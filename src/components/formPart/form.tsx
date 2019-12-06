@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, message } from "antd";
+import { Form, Input, message, Row, Col } from "antd";
 const { Item } = Form;
 
 function FormPart(props: any) {
@@ -26,24 +26,39 @@ function FormPart(props: any) {
   return (
     <div className="form-part-container">
       <Form onSubmit={handlerFormPost}>
-        {props
-          .renderformConfig(props)
-          .map(({ title, index, type, render, id, rules, required }: any) => {
-            return (
-              <Item label={title} key={id}>
-                {getFieldDecorator(id, {
-                  rules: rules
-                    ? rules
-                    : [
-                        {
-                          required: required,
-                          message: "Please input"
-                        }
-                      ]
-                })(render ? render() : <Input />)}
-              </Item>
-            );
-          })}
+        <Row gutter={props.gutter ? props.gutter : 0}>
+          {props
+            .renderformConfig(props)
+            .map(
+              ({
+                title,
+                index,
+                type,
+                render,
+                id,
+                rules,
+                required,
+                sm = 24
+              }: any) => {
+                return (
+                  <Col sm={sm} xs={24}>
+                    <Item label={title} key={id}>
+                      {getFieldDecorator(id, {
+                        rules: rules
+                          ? rules
+                          : [
+                              {
+                                required: required,
+                                message: "Please input"
+                              }
+                            ]
+                      })(render ? render() : <Input />)}
+                    </Item>
+                  </Col>
+                );
+              }
+            )}
+        </Row>
         <button className="common-button button-centered">
           {props.buttonContent ? props.buttonContent : "Next"}
         </button>

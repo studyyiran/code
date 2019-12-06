@@ -5,6 +5,42 @@
 .page-contact-container {
   @img-width: 452px;
   @help-info-margin: 40px;
+  @margin-width-gap: 30px;
+  > .bg-2 > .common-card.with-contact {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-around;
+    padding-left: 30px;
+    padding-right: 30px;
+    > section {
+      max-width: 100%;
+      margin: 0;
+      h3 {
+        margin-bottom: 2px;
+        font-size: 16px;
+      }
+      p {
+        white-space: nowrap;
+        font-size: 14px;
+      }
+      &:first-child {
+        margin-right: @margin-width-gap;
+        flex: 1;
+      }
+      &:last-child {
+        margin-top: 55px;
+      }
+    }
+  }
+  ul.contact-info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: @margin-width-gap;
+    grid-row-gap: 50px;
+    
+    //align-content: stretch;
+  }
   > .bg-3 {
     background: #f5f7f9;
   }
@@ -70,6 +106,25 @@
 .ismobile #root {
   @help-info-margin: 24px auto 50px;
   .page-contact-container {
+    .with-contact {
+      flex-direction: column;
+      align-items: stretch;
+      > section {
+        margin: 0;
+        
+        &:first-child {
+          padding: 30px 0 10px;
+        }
+        &:nth-child(2) {
+          padding: 10px 0 30px;
+        }
+      }
+      .contact-info {
+        grid-template-rows: 1fr;
+        grid-template-columns: 1fr;
+        grid-row-gap: 20px;
+      }
+    }
     li.help-info {
       display: block;
       //text-align: center;
