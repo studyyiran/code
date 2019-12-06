@@ -93,7 +93,7 @@ export function UserOrderList(props: any) {
       },
       {
         backendKeyA: "TRANSACTION_SUCCEED",
-        frontendSell: "Transaction Success",
+        frontendSell: "Device Sold",
         frontendKey: "Transaction Success"
       }
     ];
