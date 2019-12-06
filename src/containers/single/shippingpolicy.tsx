@@ -159,14 +159,12 @@ export default class Broken extends React.Component<ICommonProps> {
         <p>
           For all customer service enquiries, please email us at:
           <br />
-          <a href={"http://uptradeit.com/contact"}>
+          <a className="alinktag" href={"http://uptradeit.com/contact"}>
             http://uptradeit.com/contact
           </a>
           <br />
           support@uptradeit.com
         </p>
-        <hr />
-        <p>Effective as of February 20, 2019</p>
       </div>
     );
   }
