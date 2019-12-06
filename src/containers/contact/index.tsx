@@ -18,8 +18,8 @@ interface IStaticContent {
 }
 
 const staticContent: IStaticContent = {
-  title: "Contact us?",
-  desc: "",
+  title: "Need help? We have the answers",
+  desc: "Please submit your information and well get back to you cheers!",
   formTitle: "Send us a message"
 };
 
@@ -159,14 +159,14 @@ const renderformConfig = (props: any) => {
         {
           required: true,
           type: "email",
-          message: "The input is not valid E-mail!"
+          message: "Please input a valid email"
         }
       ]
     },
     {
       id: "message",
       title: "Message",
-      rules: [{ required: true, message: "The input is not valid E-mail!" }],
+      rules: [{ required: true, message: "Please input" }],
       render: () => {
         return <TextArea maxLength={500} />;
       }
