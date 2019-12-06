@@ -110,6 +110,15 @@ export default [
   },
   {
     component: Loadable({
+      loader: () => import('../containers/single/shippingpolicy'),
+      loading: () => null,
+      modules: ['../containers/single/privacypolicy'],
+      webpack: () => [require.resolveWeak('../containers/single/shippingpolicy') as number],
+    }),
+    path: '/shipping-policy',
+  },
+  {
+    component: Loadable({
       loader: () => import('../containers/single/terms'),
       loading: () => null,
       modules: ['../containers/single/terms'],

@@ -23,51 +23,90 @@ export function UserOrderList(props: any) {
     }, 100);
   }, []);
 
-  function keyToView(key: string) {
+  function keyToView(key: string, order?: any) {
+    /*
+    TO_BE_SHIPPED(1, "Order Placed"),
+    TO_BE_RECEIVED(2, "Package Sent"),
+    TO_BE_INSPECTED(3, "Package Received"),
+    DIFFERENCE_INSPECTED(4, "Difference Inspected"),
+    TO_BE_RETURNED(5, "Return Requested"),
+    TRANSACTION_FAILED(6, "Transaction Failed"),
+    LISTED_FOR_SALE(7, "Listed for Sale"),
+    TRANSACTION_SUCCEED(8, "Device Sold"),
+    TO_BE_LISTED(9, "Inspection Completed"),
+     */
     const arr = [
       {
+        backendKeyA: "TO_BE_INSPECTED",
+        frontendSell: "Package Received",
+        frontendKey: "Package Received"
+      },
+      {
+        backendKeyA: "DIFFERENCE_INSPECTED",
+        frontendSell: "Difference Inspected",
+        frontendKey: "Difference Inspected"
+      },
+      {
+        backendKeyA: "LISTED_FOR_SALE",
+        frontendSell: "Listed For Sale",
+        frontendKey: "Listed For Sale"
+      },
+      {
+        backendKeyA: "TO_BE_LISTED",
+        frontendSell: "Inspection Completed",
+        frontendKey: "Inspection Completed"
+      },
+      {
         backendKeyA: "TO_BE_SHIPPED",
-        backendKeyB: "To Be Shipped",
+        frontendSell: "Order Placed",
         frontendKey: "Order Placed"
       },
       {
         backendKeyA: "TO_BE_RECEIVED",
-        backendKeyB: "To Be Delivered",
+        frontendSell: "Package Sent",
         frontendKey: "Package Sent"
       },
       {
         backendKeyA: "TO_BE_COMFIRMED",
-        backendKeyB: "To Be Confirmed",
+        frontendSell: "Package Delivered",
         frontendKey: "Package Delivered"
       },
       {
         backendKeyA: "TO_BE_RETURNED",
-        backendKeyB: "To Be Returned",
+        frontendSell: "Return Requested",
         frontendKey: "Return Requested"
       },
       {
         backendKeyA: "TO_BE_PLATFORM_RECEIVED",
-        backendKeyB: "To Be Received",
+        frontendSell: "To Be Received",
         frontendKey: "To Be Received"
       },
       {
         backendKeyA: "RETURN_FAILED",
-        backendKeyB: "Transaction Succeed",
+        frontendSell: "Return Failed",
         frontendKey: "Return Failed"
       },
       {
         backendKeyA: "TRANSACTION_FAILED",
-        backendKeyB: "Transaction Failed",
+        frontendSell: "Transaction Failed",
         frontendKey: "Transaction Failed"
       },
       {
         backendKeyA: "TRANSACTION_SUCCEED",
-        backendKeyB: "Transaction Success",
+        frontendSell: "Device Sold",
         frontendKey: "Transaction Success"
       }
     ];
     const findTarget = arr.find(item => item.backendKeyA === key);
-    return findTarget ? findTarget.frontendKey : key;
+    if (findTarget) {
+      if (order && order.indexOf("HS") !== -1) {
+        return findTarget.frontendSell;
+      } else {
+        return findTarget.frontendKey;
+      }
+    } else {
+      return key;
+    }
   }
 
   function renderList() {
@@ -93,7 +132,7 @@ export function UserOrderList(props: any) {
                       <InnerDivImage imgUrl={img} />
                       <div className="content-container">
                         <h3>{productName}</h3>
-                        <h3>{keyToView(status)}</h3>
+                        <h3>{keyToView(status, groupOrderNo)}</h3>
                       </div>
                     </li>
                   );

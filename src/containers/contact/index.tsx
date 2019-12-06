@@ -18,10 +18,47 @@ interface IStaticContent {
 }
 
 const staticContent: IStaticContent = {
+  // title: "Need help? We have the answers",
+  // desc: "Please submit your information and well get back to you cheers!",
   title: "Contact us?",
   desc: "",
   formTitle: "Send us a message"
 };
+
+const helpInfo = [
+  {
+    title: "We are located at",
+    desc: (
+      <>
+        UP Trade Technologies
+        <br />
+        550 S Watters Rd Suite 276
+        <br />
+        Allen, TX 75013
+      </>
+    )
+  },
+  {
+    title: "Hours",
+    desc: (
+      <>
+        M-F: 9am to 5pm
+        <br />
+        Saturday: CLOSED
+        <br />
+        Sunday: CLOSED
+      </>
+    )
+  },
+  {
+    title: "Direct ",
+    desc: "972.833.0136"
+  },
+  {
+    title: "Email us",
+    desc: "support@uptradeit.com"
+  }
+];
 
 export default function(props: any) {
   const selectModelContext = useContext(SelectModelContext);
@@ -61,6 +98,7 @@ export default function(props: any) {
       }
     });
   }
+
   return (
     <div className="page-contact-container contact-common-css">
       <div className="bg-container bg-1">
@@ -70,19 +108,39 @@ export default function(props: any) {
         </section>
       </div>
       <div className="bg-container bg-2">
-        <div className="common-card">
+        <div className="common-card with-contact">
           <section>
             <h2>{staticContent.formTitle}</h2>
             <FormPartWrapper
+              gutter={12}
               history={props.history}
               buttonContent="Submit"
               renderformConfig={renderformConfig}
               onPostHandler={handlerFormPost}
             />
           </section>
+          <section>
+            <RenderContactInfo list={helpInfo} />
+          </section>
         </div>
       </div>
     </div>
+  );
+}
+
+function RenderContactInfo(props: any) {
+  const { list } = props;
+  return (
+    <ul className="contact-info">
+      {list.map(({ title, desc }: any) => {
+        return (
+          <li key={title}>
+            <h3>{title}</h3>
+            <p>{desc}</p>
+          </li>
+        );
+      })}
+    </ul>
   );
 }
 
@@ -91,24 +149,26 @@ const renderformConfig = (props: any) => {
     {
       id: "fullName",
       title: "Full Name",
-      required: true
+      required: true,
+      sm: 12
     },
     {
       id: "email",
-      title: "Contact Email",
+      title: "Email",
       required: true,
+      sm: 12,
       rules: [
         {
           required: true,
           type: "email",
-          message: "The input is not valid E-mail!"
+          message: "Please input a valid email"
         }
       ]
     },
     {
       id: "message",
       title: "Message",
-      rules: [{ required: true, message: "The input is not valid E-mail!" }],
+      rules: [{ required: true, message: "Please input" }],
       render: () => {
         return <TextArea maxLength={500} />;
       }
