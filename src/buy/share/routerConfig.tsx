@@ -78,7 +78,7 @@ export const routerConfig = [
     getInitialProps: ourHomeSsrRule
   },
   {
-    path: getLocationUrl('login'),
+    path: getLocationUrl("login"),
     title: "Log in | UpTradeit.com",
     exact: true,
     Component: PersonalLogin
@@ -105,14 +105,14 @@ export const routerConfig = [
     path: "/account/forget-password",
     title: "Forget Password | UpTradeit.com",
     exact: true,
-    Component: UserForgetPassword,
+    Component: UserForgetPassword
   },
   {
     path: "/account/reset-password/:token",
     title: "Reset Password | UpTradeit.com",
     exact: true,
     Component: UserResetPassword
-  },
+  }
   // {
   //   title: "404 | UpTradeit.com",
   //   Component: () => <div>404</div>

@@ -58,6 +58,10 @@ const footerInfo = [
       {
         subTitle: "Return and Exchange Policy",
         href: "/return-policy"
+      },
+      {
+        subTitle: "Shipping Policy",
+        href: "/shipping-policy"
       }
     ]
   },
