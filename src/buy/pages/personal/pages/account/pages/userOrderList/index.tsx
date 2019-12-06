@@ -24,7 +24,38 @@ export function UserOrderList(props: any) {
   }, []);
 
   function keyToView(key: string) {
+    /*
+    TO_BE_SHIPPED(1, "Order Placed"),
+    TO_BE_RECEIVED(2, "Package Sent"),
+    TO_BE_INSPECTED(3, "Package Received"),
+    DIFFERENCE_INSPECTED(4, "Difference Inspected"),
+    TO_BE_RETURNED(5, "Return Requested"),
+    TRANSACTION_FAILED(6, "Transaction Failed"),
+    LISTED_FOR_SALE(7, "Listed for Sale"),
+    TRANSACTION_SUCCEED(8, "Device Sold"),
+    TO_BE_LISTED(9, "Inspection Completed"),
+     */
     const arr = [
+      {
+        backendKeyA: "TO_BE_INSPECTED",
+        backendKeyB: "Package Received",
+        frontendKey: "Package Received"
+      },
+      {
+        backendKeyA: "DIFFERENCE_INSPECTED",
+        backendKeyB: "Difference Inspected",
+        frontendKey: "Difference Inspected"
+      },
+      {
+        backendKeyA: "LISTED_FOR_SALE",
+        backendKeyB: "Listed For Sale",
+        frontendKey: "Listed For Sale"
+      },
+      {
+        backendKeyA: "TO_BE_LISTED",
+        backendKeyB: "Inspection Completed",
+        frontendKey: "Inspection Completed"
+      },
       {
         backendKeyA: "TO_BE_SHIPPED",
         backendKeyB: "To Be Shipped",
