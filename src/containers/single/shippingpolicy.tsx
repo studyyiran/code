@@ -1,76 +1,173 @@
-import * as React from 'react';
-import "./blog.less"
-import "./terms.less"
-import { inject, observer } from 'mobx-react';
-import { ICommonProps } from 'store/interface/common.interface';
-@inject('common')
+import * as React from "react";
+import "./blog.less";
+import "./terms.less";
+import { inject, observer } from "mobx-react";
+import { ICommonProps } from "store/interface/common.interface";
+@inject("common")
 @observer
 export default class Broken extends React.Component<ICommonProps> {
   public render() {
     const staticOffice = this.props.common.staticOffice;
     return (
       <div className="page-privacy-policy-container">
-        <h1>Privacy Policy</h1>
-        <p>Protecting your private information is our priority. This Statement of Privacy applies to uptradeit.com and UP Trade Technologies, Incorporated and governs data collection and usage. For the purposes of this Privacy Policy, unless otherwise noted, all references to UP Trade Technologies, Incorporated include uptradeit.com and UP Trade. The UP Trade website is a UP Trade sells, buys or donate certain electronic devices such as mobile phones. site. By using the UP Trade website, you consent to the data practices described in this statement.</p>
-        <h2>Collection of your Personal Information</h2>
-        <p>In order to better provide you with products and services offered on our Site, UP Trade may collect personally identifiable information, such as your:</p>
-        <ul>
-          <li>First and Last Name</li>
-          <li>Mailing Address</li>
-          <li>E-mail Address</li>
-          <li>Phone Number</li>
-        </ul>
-        <p>If you purchase UP Trade's products and services, we collect billing and credit card information. This information is used to complete the purchase transaction.</p>
-        <p>Please keep in mind that if you directly disclose personally identifiable information or personally sensitive data through UP Trade's public message boards, this information may be collected and used by others.</p>
-        <p>We do not collect any personal information about you unless you voluntarily provide it to us. However, you may be required to provide certain personal information to us when you elect to use certain products or services available on the Site. These may include: (a) registering for an account on our Site; (b) entering a sweepstakes or contest sponsored by us or one of our partners; (c) signing up for special offers from selected third parties; (d) sending us an email message; (e) submitting your credit card or other payment information when ordering and purchasing products and services on our Site. To wit, we will use your information for, but not limited to, communicating with you in relation to services and/or products you have requested from us. We also may gather additional personal or non-personal information in the future.</p>
-        <h2>Use of your Personal Information</h2>
-        <p>UP Trade collects and uses your personal information to operate its website(s) and deliver the services you have requested.</p>
-        <p>UP Trade may also use your personally identifiable information to inform you of other products or services available from UP Trade and its affiliates.</p>
-        <h2>Sharing Information with Third Parties</h2>
-        <p>UP Trade does not sell, rent or lease its customer lists to third parties.</p>
-        <p>UP Trade may share data with trusted partners to help perform statistical analysis, send you email or postal mail, provide customer support, or arrange for deliveries. All such third parties are prohibited from using your personal information except to provide these services to UP Trade, and they are required to maintain the confidentiality of your information.</p>
-        <p>UP Trade may disclose your personal information, without notice, if required to do so by law or in the good faith belief that such action is necessary to: (a) conform to the edicts of the law or comply with legal process served on UP Trade or the site; (b) protect and defend the rights or property of UP Trade; and/or (c) act under exigent circumstances to protect the personal safety of users of UP Trade, or the public.</p>
-        <h2>Tracking User Behavior</h2>
-        <p>UP Trade may keep track of the websites and pages our users visit within UP Trade, in order to determine what UP Trade services are the most popular. This data is used to deliver customized content and advertising within UP Trade to customers whose behavior indicates that they are interested in a particular subject area.</p>
-        <p>UP Trade may use advanced third-party web analytics tools to track and analyze user behavior.</p>
-        <h2>Automatically Collected Information</h2>
-        <p>Information about your computer hardware and software may be automatically collected by UP Trade. This information can include: your IP address, browser type, domain names, access times and referring website addresses. This information is used for the operation of the service, to maintain quality of the service, and to provide general statistics regarding use of the UP Trade website.</p>
-        <h2>Use of Cookies</h2>
-        <p>The UP Trade website may use "cookies" to help you personalize your online experience. A cookie is a text file that is placed on your hard disk by a web page server. Cookies cannot be used to run programs or deliver viruses to your computer. Cookies are uniquely assigned to you, and can only be read by a web server in the domain that issued the cookie to you.</p>
-        <p>One of the primary purposes of cookies is to provide a convenience feature to save you time. The purpose of a cookie is to tell the Web server that you have returned to a specific page. For example, if you personalize UP Trade pages, or register with UP Trade site or services, a cookie helps UP Trade to recall your specific information on subsequent visits. This simplifies the process of recording your personal information, such as billing addresses, shipping addresses, and so on. When you return to the same UP Trade website, the information you previously provided can be retrieved, so you can easily use the UP Trade features that you customized.</p>
-        <p>You have the ability to accept or decline cookies. Most Web browsers automatically accept cookies, but you can usually modify your browser setting to decline cookies if you prefer. If you choose to decline cookies, you may not be able to fully experience the interactive features of the UP Trade services or websites you visit.</p>
-        <h2>Links</h2>
-        <p>This website contains links to other sites. Please be aware that we are not responsible for the content or privacy practices of such other sites. We encourage our users to be aware when they leave our site and to read the privacy statements of any other site that collects personally identifiable information.</p>
-        <h2>Security of your Personal Information</h2>
-        <p>UP Trade secures your personal information from unauthorized access, use, or disclosure. UP Trade uses the following methods for this purpose:</p>
-        <ul>
-          <li>SSL Protocol</li>
-        </ul>
-        <p>When personal information (such as a credit card number) is transmitted to other websites, it is protected through the use of encryption, such as the Secure Sockets Layer (SSL) protocol.</p>
-        <p>We strive to take appropriate security measures to protect against unauthorized access to or alteration of your personal information. Unfortunately, no data transmission over the Internet or any wireless network can be guaranteed to be 100% secure. As a result, while we strive to protect your personal information, you acknowledge that: (a) there are security and privacy limitations inherent to the Internet which are beyond our control; and (b) security, integrity, and privacy of any and all information and data exchanged between you and us through this Site cannot be guaranteed.</p>
-        <h2>Children Under Thirteen</h2>
-        <p>UP Trade does not knowingly collect personally identifiable information from children under the age of thirteen. If you are under the age of thirteen, you must ask your parent or guardian for permission to use this website.</p>
-        <h2>E-mail Communications</h2>
-        <p>From time to time, UP Trade may contact you via email for the purpose of providing announcements, promotional offers, alerts, confirmations, surveys, and/or other general communication. In order to improve our Services, we may receive a notification when you open an email from UP Trade or click on a link therein.</p>
-        <p>If you would like to stop receiving marketing or promotional communications via email from UP Trade, you may opt out of such communications by clicking on the UNSUBSCRIBE button..</p>
-        <h2>Changes to this Statement</h2>
-        <p>UP Trade reserves the right to change this Privacy Policy from time to time. We will notify you about significant changes in the way we treat personal information by sending a notice to the primary email address specified in your account, by placing a prominent notice on our site, and/or by updating any privacy information on this page. Your continued use of the Site and/or Services available through this Site after such modifications will constitute your: (a) acknowledgment of the modified Privacy Policy; and (b) agreement to abide and be bound by that Policy.</p>
-        <h2>Contact Information</h2>
-        <p>UP Trade welcomes your questions or comments regarding this Statement of Privacy. If you believe that UP Trade has not adhered to this Statement, please contact UP Trade at:</p>
-        {
-          staticOffice && <p>
-            UP Trade Technologies, Incorporated<br />
-            {staticOffice.street}<br />
-            {staticOffice.city}, {staticOffice.state} {staticOffice.zipCode}<br />
-          </p>
-        }
+        <h1>Shipping Policy</h1>
         <p>
-          Email Address:<br />
+          UP Trade Technologies Incorporated ("we" and "us") is the operator of
+          (https://uptradeit.com) ("Website"). By placing an order through this
+          Website you will be agreeing to the terms below. These are provided to
+          ensure both parties are aware of and agree upon this arrangement to
+          mutually protect and set expectations on our service.
+        </p>
+        <h2>General</h2>
+        <p>
+          Subject to stock availability. We try to maintain accurate stock
+          counts on our website but from time-to-time there may be a stock
+          discrepancy and we will not be able to fulfill all your items at time
+          of purchase. In this instance, we will fulfill the available products
+          to you, and contact you about whether you would prefer to await
+          restocking of the backordered item or if you would prefer for us to
+          process a refund.
+        </p>
+        <h2>Shipping Costs</h2>
+        <p>
+          Shipping costs are calculated during checkout based on weight,
+          dimensions and destination of the items in the order. Payment for
+          shipping will be collected with the purchase. This price will be the
+          final price for shipping cost to the customer.
+        </p>
+        <h2 className='h2-sub-title'>Returns</h2>
+        <h2>Return Due To Change Of Mind</h2>
+        <p>
+          UP Trade Technologies Incorporated will happily accept returns due to
+          change of mind as long as a request to return is received by us within
+          30 days of receipt of item and are returned to us in original
+          packaging, unused and in resellable condition.
+        </p>
+        <h2>Warranty Returns</h2>
+        <p>
+          UP Trade Technologies Incorporated will happily honor any valid
+          warranty claims, provided a claim is submitted within 90 days of
+          receipt of items. Customers will be required to pre-pay the return
+          shipping, however we will reimburse you upon successful warranty
+          claim. Upon return receipt of items for warranty claim, you can expect
+          UP Trade Technologies Incorporated to process your warranty claim
+          within 7 days. Once warranty claim is confirmed, you will receive the
+          choice of:
+        </p>
+        <ul>
+          <li>refund to your payment method</li>
+          <li>a refund in store credit</li>
+          <li>a replacement item sent to you (if stock is available)</li>
+        </ul>
+        <h2 className='h2-sub-title'>Delivery Terms</h2>
+        <h2>Transit Time </h2>
+        <p>
+          We provide shipping within the Contiguous United States (48). Domestic
+          shipments are typically in transit for 2 - 8 days.
+        </p>
+        <h2>Dispatch Time</h2>
+        <p>
+          Orders are usually dispatched within 2 business days of payment of
+          order Our warehouse operates on Monday - Thursday during standard
+          business hours, except on national holidays at which time the
+          warehouse will be closed. In these instances, we take steps to ensure
+          shipment delays will be kept to a minimum.
+        </p>
+        <h2>Change Of Delivery Address</h2>
+        <p>
+          For change of delivery address requests, we are able to change the
+          address at any time before the order has been dispatched.
+        </p>
+        <h2>P.O. Box Shipping</h2>
+        <p>
+          UP Trade Technologies Incorporated will ship to P.O. box addresses
+          using postal services only. We are unable to offer couriers services
+          to these locations.
+        </p>
+        <h2>Military Address Shipping</h2>
+        <p>
+          We are able to ship to military addresses using USPS. We are unable to
+          offer this service using courier services.
+        </p>
+        <h2>Items Out Of Stock</h2>
+        <p>
+          If an item is out of stock, we will cancel and refund the out-of-stock
+          items and dispatch the rest of the order.
+        </p>
+        <h2>Delivery Time Exceeded</h2>
+        <p>
+          If delivery time has exceeded the forecasted time, please contact us
+          so that we can conduct an investigation
+        </p>
+        <h2>Tracking Notifications</h2>
+        <p>
+          Upon dispatch, customers will receive a tracking link from which they
+          will be able to follow the progress of their shipment based on the
+          latest updates made available by the shipping provider.
+        </p>
+        <h2>Parcels Damaged In Transit</h2>
+        <p>
+          If you find a parcel is damaged in-transit, if possible, please reject
+          the parcel from the courier and get in touch with our customer
+          service. If the parcel has been delivered without you being present,
+          please contact customer service with next steps.
+        </p>
+        <h2 className='h2-sub-title'>Duties & Taxes</h2>
+        <h2>Sales Tax</h2>
+        <p>
+          Sales tax has already been applied to the price of the goods as
+          displayed on the website
+        </p>
+        <h2>Cancellations</h2>
+        <p>
+          If you change your mind before you have received your order, we are
+          able to accept cancellations at any time before the order has been
+          dispatched. If an order has already been dispatched, please refer to
+          our refund policy.
+        </p>
+        <h2>Insurance</h2>
+        <p>
+          Parcels are insured for loss and damage up to the value as stated by
+          the courier.
+        </p>
+        <h2>Process for parcel damaged in-transit</h2>
+        <p>
+          We will process a refund or replacement as soon as the courier has
+          completed their investigation into the claim.
+        </p>
+        <h2>Process for parcel lost in-transit</h2>
+        <p>
+          We will process a refund or replacement as soon as the courier has
+          conducted an investigation and deemed the parcel lost.
+        </p>
+        <h2>Customer service</h2>
+        <p>
+          UP Trade welcomes your questions or comments regarding this Statement
+          of Privacy. If you believe that UP Trade has not adhered to this
+          Statement, please contact UP Trade at:
+        </p>
+        {staticOffice && (
+          <p>
+            UP Trade Technologies, Incorporated
+            <br />
+            {staticOffice.street}
+            <br />
+            {staticOffice.city}, {staticOffice.state} {staticOffice.zipCode}
+            <br />
+          </p>
+        )}
+        <p>
+          For all customer service enquiries, please email us at:
+          <br />
+          <a href={"http://uptradeit.com/contact"}>
+            http://uptradeit.com/contact
+          </a>
+          <br />
           support@uptradeit.com
         </p>
         <hr />
         <p>Effective as of February 20, 2019</p>
       </div>
-    )
+    );
   }
 }
