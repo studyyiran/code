@@ -142,21 +142,6 @@ export default class Broken extends React.Component<ICommonProps> {
         </p>
         <h2>Customer service</h2>
         <p>
-          UP Trade welcomes your questions or comments regarding this Statement
-          of Privacy. If you believe that UP Trade has not adhered to this
-          Statement, please contact UP Trade at:
-        </p>
-        {staticOffice && (
-          <p>
-            UP Trade Technologies, Incorporated
-            <br />
-            {staticOffice.street}
-            <br />
-            {staticOffice.city}, {staticOffice.state} {staticOffice.zipCode}
-            <br />
-          </p>
-        )}
-        <p>
           For all customer service enquiries, please email us at:
           <br />
           <a className="alinktag" href={"http://uptradeit.com/contact"}>
