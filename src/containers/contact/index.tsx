@@ -18,8 +18,10 @@ interface IStaticContent {
 }
 
 const staticContent: IStaticContent = {
-  title: "Need help? We have the answers",
-  desc: "Please submit your information and well get back to you cheers!",
+  // title: "Need help? We have the answers",
+  // desc: "Please submit your information and well get back to you cheers!",
+  title: "Contact us?",
+  desc: "",
   formTitle: "Send us a message"
 };
 
