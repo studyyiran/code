@@ -115,7 +115,6 @@ function RenderOrderInfo(props: { orderInfo: IBuyOrderInfo }) {
               productDisplayName,
               buyLevel
             } = productInfo;
-            console.log(productInfo);
             const bpvArr = bpvDispalyName.split(",");
             return (
               <li key={index}>
@@ -124,8 +123,8 @@ function RenderOrderInfo(props: { orderInfo: IBuyOrderInfo }) {
                   <h3>
                     {productDisplayName} {bpvArr.slice(0, 2).join(" ")}
                   </h3>
-                  <span>{bpvArr.slice(2).join(" ")}</span>
-                  <span>Condition {buyLevel}</span>
+                  <span className="color-line">{bpvArr.slice(2).join(" ")}</span>
+                  <span className="condition">Condition {buyLevel}</span>
                 </div>
               </li>
             );
