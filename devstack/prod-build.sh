@@ -2,7 +2,7 @@
 
 APP_WORKSPACE="$(pwd)"
 S3_PATH=s3://prod-uptradeit-website/sell-website/build
-LAST_VERSION=${S3_PATH}-v0.11.3
+LAST_VERSION=${S3_PATH}-v0.11.4
 
 echo "APP_WORKSPACE: ${APP_WORKSPACE}, S3_PATH: ${S3_PATH}, LAST_VERSION: ${LAST_VERSION}"
 
