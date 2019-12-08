@@ -8,6 +8,7 @@ export default function PayProtectionPage() {
   const [orderInfo, setOrderInfo] = useState({});
   // 获取url参数
   const urlParams = getUrlAllParams();
+  console.log(urlParams);
   const { token, email, order } = urlParams || ({} as any);
 
   function finishPayHandler(id: any) {
@@ -26,8 +27,8 @@ export default function PayProtectionPage() {
     if (token && email && order) {
       payProtectionServer
         .tokenToUrl({
-          order: order,
-          email: email
+          groupOrderNo: order,
+          userEmail: email
         })
         .then(res => {
           setOrderInfo(res);
@@ -36,6 +37,7 @@ export default function PayProtectionPage() {
   }, [token, order, email]);
 
   const payInfo = useMemo(() => {
+    console.log("orderInfo");
     console.log(orderInfo);
     return {
       payInfo: {},

@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import { locationHref } from "../../../../common/utils/routerHistory";
 import { constValue } from "../../../../common/constValue";
 import LoadingMask from "../../../productList/components/loading";
+import {isServer} from "../../../../common/utils/util";
 
 interface IPayPalButton {
   id: string;
@@ -23,15 +24,39 @@ interface IPayPalButton {
 export function PayPaylButton(props: IPayPalButton) {
   const { id = "paypal-button-id", finishPayCallBack, amount, payInfo } = props;
   const [showLoadingMask, setShowLoadingMask] = useState(false);
+  const timeRef = useRef();
 
   useEffect(() => {
-    if (amount && payInfo) {
-      paypalPay(amount, payInfo);
+    // 只有有价格才是有效的
+    if (!isServer()) {
+      if (amount && payInfo) {
+        if (timeRef && timeRef.current) {
+          window.clearTimeout(timeRef.current);
+        }
+        (timeRef.current as any) = window.setTimeout(() => {
+          // 每次触发更新操作的时候.清空
+          const dom: any = document.querySelector(
+            `#${id}`
+          );
+          if (dom) {
+            dom.innerHTML = "";
+          }
+          paypalPay(amount, payInfo);
+        }, 400);
+        return () => {
+          if (timeRef.current) {
+            window.clearTimeout(timeRef.current);
+          }
+        };
+      }
     }
+    return () => {};
   }, [amount, payInfo]);
+  
 
   function paypalPay(amount: any, info: any) {
     console.log("start paypalPay");
+    console.log(amount);
     console.log(info);
     // @ts-ignore
     paypal
@@ -102,7 +127,7 @@ export function PayPaylButton(props: IPayPalButton) {
           });
         }
       })
-      .render(id);
+      .render(`#${id}`);
   }
 
   return (
