@@ -1,8 +1,39 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import "./index.less";
-import { getUrlAllParams } from "../../common/utils/util";
+import { currencyTrans, getUrlAllParams } from "../../common/utils/util";
 import { payProtectionServer } from "./server";
 import { PayPaylButton } from "./components/paypalButton";
+import { InnerDivImage } from "../detail/components/innerDivImage";
+
+interface IBuyOrderInfo {
+  autoConfirmDeadLine: string;
+  groupOrderNo: string;
+  orderCreateDate: string;
+  userInfo: {
+    apartment: string;
+    city: string;
+    country: string;
+    firstName: string;
+    fullUserName: string;
+    lastName: string;
+    state: string;
+    street: string;
+    userEmail: string;
+    userPhone: string;
+    zipCode: string;
+  };
+  subOrders: {
+    productInfo: {
+      bpvDispalyName: string;
+      buyLevel: string;
+      buyProductImgPc: string;
+      productDisplayName: string;
+    };
+    protection: number;
+  }[];
+}
+{
+}
 
 export default function PayProtectionPage() {
   const [orderInfo, setOrderInfo] = useState({});
@@ -46,8 +77,60 @@ export default function PayProtectionPage() {
   }, [orderInfo]);
 
   const id = "paypal-button-protection";
+
+  function renderOrderInfo(orderInfo: IBuyOrderInfo) {
+    console.log(orderInfo);
+    function caclTotalProtection(subOrders: IBuyOrderInfo["subOrders"]) {
+      let total = 0;
+      subOrders.forEach(a => {
+        if (a.protection) {
+          total = total + Number(a.protection);
+        }
+      });
+      return total;
+    }
+    if (orderInfo && orderInfo.groupOrderNo) {
+      return (
+        <div>
+          <h2>Order {orderInfo.groupOrderNo}</h2>
+          {orderInfo.subOrders.map(subOrderInfo => {
+            const { productInfo } = subOrderInfo;
+            const {
+              buyProductImgPc,
+              bpvDispalyName,
+              productDisplayName,
+              buyLevel
+            } = productInfo;
+            console.log(productInfo);
+            const bpvArr = bpvDispalyName.split(",");
+            return (
+              <li>
+                <InnerDivImage imgUrl={buyProductImgPc} />
+                <div>
+                  <h3>
+                    {productDisplayName} {bpvArr.slice(0, 2).join(" ")}
+                  </h3>
+                  <span>{bpvArr.slice(2).join(" ")}</span>
+                  <span>Condition {buyLevel}</span>
+                </div>
+              </li>
+            );
+          })}
+          <div>
+            <span>Protection</span>
+            <span>
+              {currencyTrans(caclTotalProtection(orderInfo.subOrders))}
+            </span>
+          </div>
+        </div>
+      );
+    } else {
+      return null;
+    }
+  }
   return (
     <div className="test-page">
+      {renderOrderInfo(orderInfo as any)}
       <PayPaylButton
         id={id}
         finishPayCallBack={finishPayHandler}
