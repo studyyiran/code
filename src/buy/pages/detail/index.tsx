@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import "./index.less";
 import { Affix, Carousel, Checkbox } from "antd";
 // @ts-ignore
@@ -794,6 +794,10 @@ function CheckBoxProtection(props: any) {
 function ProductInfo(props: any) {
   const { productDisplayName, buyLevel, buyProductBQV } = props;
   const [lineOne, lineTwo] = getDescArr(buyProductBQV, productDisplayName);
+  const cacheKey = useMemo(() => {
+    console.log('make key')
+    return Date.now();
+  }, []);
   return (
     <section className="product-info">
       <div className="info-part">
@@ -802,7 +806,11 @@ function ProductInfo(props: any) {
         <span className="condition">Condition {buyLevel}</span>
       </div>
       {/*暂时强制更新 为了解决首次不正常渲染的问题*/}
-      <img className="check-icon" src={require("./res/uptrade-check.svg")} />
+      <img
+        key={cacheKey}
+        className="check-icon"
+        src={require("./res/uptrade-check.svg")}
+      />
     </section>
   );
 }
