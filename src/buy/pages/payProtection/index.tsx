@@ -36,7 +36,7 @@ interface IBuyOrderInfo {
 }
 
 export default function PayProtectionPage() {
-  const [orderInfo, setOrderInfo] = useState({});
+  const [orderInfo, setOrderInfo] = useState({} as IBuyOrderInfo["subOrders"]);
   // 获取url参数
   const urlParams = getUrlAllParams();
   console.log(urlParams);
@@ -68,10 +68,17 @@ export default function PayProtectionPage() {
   }, [token, order, email]);
 
   const payInfo = useMemo(() => {
-    return {
-      payInfo: {},
-      amount: caclTotalProtection((orderInfo as any).subOrders)
-    };
+    if (orderInfo && (orderInfo as any).groupOrderNo) {
+      return {
+        payInfo: {},
+        amount: caclTotalProtection((orderInfo as any).subOrders)
+      };
+    } else {
+      return {
+        payInfo: {},
+        amount: 0
+      };
+    }
   }, [orderInfo]);
 
   const id = "paypal-button-protection";
@@ -123,7 +130,9 @@ function RenderOrderInfo(props: { orderInfo: IBuyOrderInfo }) {
                   <h3>
                     {productDisplayName} {bpvArr.slice(0, 2).join(" ")}
                   </h3>
-                  <span className="color-line">{bpvArr.slice(2).join(" ")}</span>
+                  <span className="color-line">
+                    {bpvArr.slice(2).join(" ")}
+                  </span>
                   <span className="condition">Condition {buyLevel}</span>
                 </div>
               </li>
