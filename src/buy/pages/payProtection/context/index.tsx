@@ -1,79 +1,80 @@
 import React, { createContext, useReducer, useCallback } from "react";
 import { IReducerAction } from "buy/common/interface/index.interface";
 import useReducerMiddleware from "../../../common/useHook/useReducerMiddleware";
-import { getTestAjaxResult } from "../server";
+import { payProtectionServer } from "../server";
+import { IPostData } from "./interface";
 
-export const StoreTestNameContext = createContext({});
+export const PayProtectionContext = createContext({});
 
 // store name
-export const StoreTestName = "StoreTestName";
+export const PayProtectionName = "PayProtection";
 // store state
-interface IStoreTestNameState {
+interface IPayProtectionState {
   testValue: number;
 }
 
 // interface
-export interface IStoreTestNameContext extends IStoreTestNameActions {
-  storeTestNameContextValue: IStoreTestNameState;
-  storeTestNameContextDispatch: (action: IReducerAction) => void;
+export interface IPayProtectionContext extends IPayProtectionActions {
+  payProtectionContextValue: IPayProtectionState;
+  payProtectionContextDispatch: (action: IReducerAction) => void;
 }
 
 // store provider
-export function StoreTestNameContextProvider(props: any) {
-  const initState: IStoreTestNameState = {
+export function PayProtectionContextProvider(props: any) {
+  const initState: IPayProtectionState = {
     testValue: 101
   };
   const [state, dispatch] = useReducer(
     useReducerMiddleware(reducer),
     initState
   );
-  const action: IStoreTestNameActions = useGetAction(state, dispatch);
+  const action: IPayProtectionActions = useGetAction(state, dispatch);
 
-  const propsValue: IStoreTestNameContext = {
+  const propsValue: IPayProtectionContext = {
     ...action,
-    storeTestNameContextValue: state,
-    storeTestNameContextDispatch: dispatch
+    payProtectionContextValue: state,
+    payProtectionContextDispatch: dispatch
   };
-  return <StoreTestNameContext.Provider value={propsValue} {...props} />;
+  return <PayProtectionContext.Provider value={propsValue} {...props} />;
 }
 
 // @actions
-export interface IStoreTestNameActions {
-  getTestAjaxValue: () => any;
+export interface IPayProtectionActions {
+  tokenToUrl: (data: IPostData) => any;
 }
 
 // useCreateActions
 function useGetAction(
-  state: IStoreTestNameState,
+  state: IPayProtectionState,
   dispatch: (action: IReducerAction) => void
-): IStoreTestNameActions {
+): IPayProtectionActions {
   // 获取类
-  const getTestAjaxValue: IStoreTestNameActions["getTestAjaxValue"] = useCallback(
-    async function() {
-      const res = await getTestAjaxResult();
+  const tokenToUrl: IPayProtectionActions["tokenToUrl"] = useCallback(
+    async function(data) {
+      const res = await payProtectionServer.tokenToUrl(data);
       dispatch({
-        type: storeTestNameReducerTypes.setTestValue,
+        type: payProtectionReducerTypes.setTestValue,
         value: res
       });
     },
     [dispatch]
   );
   return {
-    getTestAjaxValue
+    tokenToUrl
   };
 }
 
 // action types
-export const storeTestNameReducerTypes = {
+export const payProtectionReducerTypes = {
   setTestValue: "setTestValue"
 };
 
 // reducer
-function reducer(state: IStoreTestNameState, action: IReducerAction) {
+function reducer(state: IPayProtectionState, action: IReducerAction) {
   const { type, value } = action;
   let newState = { ...state };
   switch (type) {
-    case storeTestNameReducerTypes.setTestValue: {
+    case payProtectionReducerTypes.setTestValue: {
       newState = {
         ...newState,
         testValue: value
