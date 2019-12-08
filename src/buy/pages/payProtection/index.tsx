@@ -1,27 +1,56 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import "./index.less";
-import { IPayProtectionContext, PayProtectionContext } from "./context";
 import { getUrlAllParams } from "../../common/utils/util";
 import { payProtectionServer } from "./server";
+import { PayPaylButton } from "./components/paypalButton";
 
 export default function Name() {
-  const payProtectionContext = useContext(PayProtectionContext);
-  const {
-    payProtectionContextValue,
-    tokenToUrl
-  } = payProtectionContext as IPayProtectionContext;
+  const [orderInfo, setOrderInfo] = useState({});
   // 获取url参数
   const urlParams = getUrlAllParams();
-  const { token, email, order } = getUrlAllParams();
+  const { token, email, order } = urlParams;
+
+  function finishPayHandler(id: any) {
+    console.log(id);
+    // createOrder({
+    //   payInfo: {
+    //     paymentType: "PAYPAL",
+    //     creditCardInfo: {},
+    //     paypalOrderId: id
+    //   },
+    //   invoiceSameAddr: invoiceSameAddr
+    // });
+  }
 
   useEffect(() => {
-    if (token) {
-      payProtectionServer.tokenToUrl({
-        order: "123",
-        email: "345"
-      });
+    if (token && email && order) {
+      payProtectionServer
+        .tokenToUrl({
+          order: order,
+          email: email
+        })
+        .then(res => {
+          setOrderInfo(res);
+        });
     }
-  }, []);
-  const { orderInfo } = payProtectionContextValue;
-  return <div className="test-page">{testValue}</div>;
+  }, [token, order, email]);
+
+  const payInfo = useMemo(() => {
+    console.log(orderInfo);
+    return {
+      payInfo: {},
+      amount: 123
+    };
+  }, [orderInfo]);
+
+  const id = "paypal-button-protection";
+  return (
+    <div className="test-page">
+      <PayPaylButton
+        id={id}
+        finishPayCallBack={finishPayHandler}
+        {...payInfo}
+      />
+    </div>
+  );
 }
