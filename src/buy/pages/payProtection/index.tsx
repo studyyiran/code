@@ -78,22 +78,36 @@ export default function PayProtectionPage() {
 
   const id = "paypal-button-protection";
 
-  function renderOrderInfo(orderInfo: IBuyOrderInfo) {
-    console.log(orderInfo);
-    function caclTotalProtection(subOrders: IBuyOrderInfo["subOrders"]) {
-      let total = 0;
-      subOrders.forEach(a => {
-        if (a.protection) {
-          total = total + Number(a.protection);
-        }
-      });
-      return total;
-    }
-    if (orderInfo && orderInfo.groupOrderNo) {
-      return (
-        <div>
-          <h2>Order {orderInfo.groupOrderNo}</h2>
-          {orderInfo.subOrders.map(subOrderInfo => {
+  return (
+    <div className="pay-protection-page">
+      <RenderOrderInfo orderInfo={orderInfo as any} />
+      <PayPaylButton
+        id={id}
+        finishPayCallBack={finishPayHandler}
+        {...payInfo}
+      />
+    </div>
+  );
+}
+
+function RenderOrderInfo(props: { orderInfo: IBuyOrderInfo }) {
+  const { orderInfo } = props;
+  console.log(orderInfo);
+  function caclTotalProtection(subOrders: IBuyOrderInfo["subOrders"]) {
+    let total = 0;
+    subOrders.forEach(a => {
+      if (a.protection) {
+        total = total + Number(a.protection);
+      }
+    });
+    return total;
+  }
+  if (orderInfo && orderInfo.groupOrderNo) {
+    return (
+      <div className="order-detail">
+        <h2>Order {orderInfo.groupOrderNo}</h2>
+        <ul>
+          {orderInfo.subOrders.map((subOrderInfo, index) => {
             const { productInfo } = subOrderInfo;
             const {
               buyProductImgPc,
@@ -104,9 +118,9 @@ export default function PayProtectionPage() {
             console.log(productInfo);
             const bpvArr = bpvDispalyName.split(",");
             return (
-              <li>
+              <li key={index}>
                 <InnerDivImage imgUrl={buyProductImgPc} />
-                <div>
+                <div className="content-container">
                   <h3>
                     {productDisplayName} {bpvArr.slice(0, 2).join(" ")}
                   </h3>
@@ -116,26 +130,14 @@ export default function PayProtectionPage() {
               </li>
             );
           })}
-          <div>
-            <span>Protection</span>
-            <span>
-              {currencyTrans(caclTotalProtection(orderInfo.subOrders))}
-            </span>
-          </div>
+        </ul>
+        <div className="protection-price">
+          <span>Protection</span>
+          <span>{currencyTrans(caclTotalProtection(orderInfo.subOrders))}</span>
         </div>
-      );
-    } else {
-      return null;
-    }
+      </div>
+    );
+  } else {
+    return null;
   }
-  return (
-    <div className="test-page">
-      {renderOrderInfo(orderInfo as any)}
-      <PayPaylButton
-        id={id}
-        finishPayCallBack={finishPayHandler}
-        {...payInfo}
-      />
-    </div>
-  );
 }
