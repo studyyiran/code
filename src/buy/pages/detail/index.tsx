@@ -792,12 +792,16 @@ function CheckBoxProtection(props: any) {
 }
 
 function ProductInfo(props: any) {
+  const [currentKey, setCurrentKey] = useState(0);
+  useEffect(() => {
+    if (!isServer()) {
+      window.setTimeout(() => {
+        setCurrentKey(Date.now());
+      });
+    }
+  }, []);
   const { productDisplayName, buyLevel, buyProductBQV } = props;
   const [lineOne, lineTwo] = getDescArr(buyProductBQV, productDisplayName);
-  const cacheKey = useMemo(() => {
-    console.log('make key')
-    return Date.now();
-  }, []);
   return (
     <section className="product-info">
       <div className="info-part">
@@ -807,7 +811,7 @@ function ProductInfo(props: any) {
       </div>
       {/*暂时强制更新 为了解决首次不正常渲染的问题*/}
       <img
-        key={cacheKey}
+        key={currentKey}
         className="check-icon"
         src={require("./res/uptrade-check.svg")}
       />
