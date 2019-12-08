@@ -68,11 +68,9 @@ export default function PayProtectionPage() {
   }, [token, order, email]);
 
   const payInfo = useMemo(() => {
-    console.log("orderInfo");
-    console.log(orderInfo);
     return {
       payInfo: {},
-      amount: 123
+      amount: caclTotalProtection((orderInfo as any).subOrders)
     };
   }, [orderInfo]);
 
@@ -90,18 +88,20 @@ export default function PayProtectionPage() {
   );
 }
 
+function caclTotalProtection(subOrders: IBuyOrderInfo["subOrders"]) {
+  let total = 0;
+  subOrders.forEach(a => {
+    if (a.protection) {
+      total = total + Number(a.protection);
+    }
+  });
+  return total;
+}
+
 function RenderOrderInfo(props: { orderInfo: IBuyOrderInfo }) {
   const { orderInfo } = props;
   console.log(orderInfo);
-  function caclTotalProtection(subOrders: IBuyOrderInfo["subOrders"]) {
-    let total = 0;
-    subOrders.forEach(a => {
-      if (a.protection) {
-        total = total + Number(a.protection);
-      }
-    });
-    return total;
-  }
+
   if (orderInfo && orderInfo.groupOrderNo) {
     return (
       <div className="order-detail">
