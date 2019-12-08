@@ -115,8 +115,8 @@ export const routerConfig = [
     Component: UserResetPassword
   },
   {
-    path: "/pay-protection",
-    title: "UpTradeit.com",
+    path: "/protection/payment",
+    title: "Protection payment  | UpTradeit.com",
     exact: true,
     Component: PayProtectionPage
   }

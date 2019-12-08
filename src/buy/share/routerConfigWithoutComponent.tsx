@@ -55,7 +55,7 @@ export const routerConfigWithoutComponent = [
     exact: true,
   },
   {
-    path: "/pay-protection",
+    path: "/protection/payment",
     exact: true,
   },
 ];
