@@ -107,7 +107,7 @@ export function PayPaylButton(props: IPayPalButton) {
 
   return (
     <div className="paypal-button-container">
-      <div id={id} />;
+      <div id={id} />
       <LoadingMask visible={showLoadingMask} />
     </div>
   );

@@ -4,11 +4,11 @@ import { getUrlAllParams } from "../../common/utils/util";
 import { payProtectionServer } from "./server";
 import { PayPaylButton } from "./components/paypalButton";
 
-export default function Name() {
+export default function PayProtectionPage() {
   const [orderInfo, setOrderInfo] = useState({});
   // 获取url参数
   const urlParams = getUrlAllParams();
-  const { token, email, order } = urlParams;
+  const { token, email, order } = urlParams || ({} as any);
 
   function finishPayHandler(id: any) {
     console.log(id);

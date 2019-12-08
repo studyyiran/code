@@ -54,4 +54,8 @@ export const routerConfigWithoutComponent = [
     path: "/account/reset-password/:token",
     exact: true,
   },
+  {
+    path: "/pay-protection",
+    exact: true,
+  },
 ];
