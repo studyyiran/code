@@ -649,7 +649,7 @@ function StartBuyButton(props: any) {
   return (
     <Button disabled={buyProductStatus === "INTRANSACTION"} onClick={onClick}>
       {buyProductStatus === "INTRANSACTION"
-        ? "Sale Pending"
+        ? "Sold"
         : "Start Your Purchase"}
     </Button>
   );

@@ -49,13 +49,30 @@ export default function PhoneProductCard(props: any) {
   const productImg = props ? props.buyProductImgM : "";
 
   function renderTagBySoldOutStatus(status: string) {
-    if (status === staticContentConfig.SOLDOUT) {
-      return <span data-status={status} className="status-tag">Sold</span>;
-    } else if (status === staticContentConfig.INTRANSACTION) {
-      return <span data-status={status} className="status-tag">Sale Pending</span>;
+    if (isSoldOut(status)) {
+      return (
+        <span data-status={status} className="status-tag">
+          Sold
+        </span>
+      );
     } else {
       return null;
     }
+    // if (status === staticContentConfig.SOLDOUT) {
+    //   return (
+    //     <span data-status={status} className="status-tag">
+    //       Sold
+    //     </span>
+    //   );
+    // } else if (status === staticContentConfig.INTRANSACTION) {
+    //   return (
+    //     <span data-status={status} className="status-tag">
+    //       Sale Pending
+    //     </span>
+    //   );
+    // } else {
+    //   return null;
+    // }
   }
 
   return (

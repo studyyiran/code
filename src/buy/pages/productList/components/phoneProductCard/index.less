@@ -23,23 +23,25 @@
       position: absolute;
       left: 0;
       top: 0;
-      width: 130 * @px;
+      width: 100 * @px;
       height: 24 * @px;
       line-height: 24 * @px;
       font-size: 12 * @px;
       text-align: center;
       z-index: 1;
       .mb(
-        {width: 82 * @px; height: 20 * @px; line-height: 20 * @px; font-size: 8 *
+        {width: 68 * @px; height: 20 * @px; line-height: 20 * @px; font-size: 8 *
           @px;}
       );
-      &[data-status="SOLDOUT"] {
-        background: #ff0048;
-        color: @white;
-      }
-      &[data-status="INTRANSACTION"] {
-        background: #ffe419;
-      }
+      background: #ff0048;
+      color: @white;
+      //&[data-status="SOLDOUT"] {
+      //  background: #ff0048;
+      //  color: @white;
+      //}
+      //&[data-status="INTRANSACTION"] {
+      //  background: #ffe419;
+      //}
     }
     > div.content-container {
       display: flex;
