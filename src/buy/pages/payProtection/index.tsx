@@ -55,16 +55,15 @@ export default function PayProtectionPage() {
   }
 
   useEffect(() => {
-    if (token && email && order) {
-      payProtectionServer
-        .tokenToUrl({
-          groupOrderNo: order,
-          userEmail: email
-        })
-        .then(res => {
+    if (token) {
+      payProtectionServer.tokenToUrl({ token }).then(res => {
+        if (res) {
           setOrderInfo(res);
-        });
-    }
+        } else {
+          // 如果没有 就应该跳出?
+        }
+      });
+    } 
   }, [token, order, email]);
 
   const payInfo = useMemo(() => {
@@ -114,7 +113,7 @@ function RenderOrderInfo(props: { orderInfo: IBuyOrderInfo }) {
       <div className="order-detail">
         <h2>Order {orderInfo.groupOrderNo}</h2>
         <ul>
-          {orderInfo.subOrders.map((subOrderInfo, index) => {
+          {orderInfo.subOrders.filter((item: any, index: any) => {return index < 1}).map((subOrderInfo, index) => {
             const { productInfo } = subOrderInfo;
             const {
               buyProductImgPc,

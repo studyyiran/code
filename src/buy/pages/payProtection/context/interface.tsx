@@ -1,4 +1,5 @@
 export interface IPostData {
-  groupOrderNo: string,
-  userEmail: string,
+  groupOrderNo?: string,
+  userEmail?: string,
+  token: string,
 }
