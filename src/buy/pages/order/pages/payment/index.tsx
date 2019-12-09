@@ -159,6 +159,14 @@ function PaymentInner(props: any) {
     // @ts-ignore
     paypal
       .Buttons({
+        onClick: function() {
+          console.log('hehe')
+          setShowLoadingMask(true);
+        },
+        onCancel: function () {
+          console.log('onCancel')
+          setShowLoadingMask(false);
+        },
         createOrder: function(data: any, actions: any) {
           // This function sets up the details of the transaction, including the amount and line item details.
           const {
