@@ -5,7 +5,7 @@ import { payProtectionServer } from "./server";
 import { PayPaylButton } from "./components/paypalButton";
 import { InnerDivImage } from "../detail/components/innerDivImage";
 import { locationHref } from "../../common/utils/routerHistory";
-import {Message} from "../../components/message";
+import { Message } from "../../components/message";
 
 interface IBuyOrderInfo {
   autoConfirmDeadLine: string;
@@ -46,12 +46,15 @@ export default function PayProtectionPage() {
 
   function finishPayHandler(id: any) {
     console.log(id);
-    payProtectionServer.orderPayProtection({
-      paypalOrderId: id,
-      token
-    }).then(() => {
-      Message.success('Succeed to pay for the monthly protection.')
-    });
+    payProtectionServer
+      .orderPayProtection({
+        paypalOrderId: id,
+        token
+      })
+      .then(() => {
+        Message.success("Succeed to pay for the monthly protection.");
+        locationHref("/");
+      });
   }
 
   useEffect(() => {
