@@ -4,6 +4,8 @@ import { currencyTrans, getUrlAllParams } from "../../common/utils/util";
 import { payProtectionServer } from "./server";
 import { PayPaylButton } from "./components/paypalButton";
 import { InnerDivImage } from "../detail/components/innerDivImage";
+import { locationHref } from "../../common/utils/routerHistory";
+import {Message} from "../../components/message";
 
 interface IBuyOrderInfo {
   autoConfirmDeadLine: string;
@@ -47,18 +49,24 @@ export default function PayProtectionPage() {
     payProtectionServer.orderPayProtection({
       paypalOrderId: id,
       token
+    }).then(() => {
+      Message.success('Succeed to pay for the monthly protection.')
     });
   }
 
   useEffect(() => {
     if (token) {
-      payProtectionServer.tokenToUrl({ token }).then(res => {
-        if (res) {
-          setOrderInfo(res);
-        } else {
+      payProtectionServer
+        .tokenToUrl({ token })
+        .then(res => {
+          if (res) {
+            setOrderInfo(res);
+          }
+        })
+        .catch(e => {
+          locationHref("/");
           // 如果没有 就应该跳出?
-        }
-      });
+        });
     }
   }, [token, order, email]);
 
