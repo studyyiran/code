@@ -1,10 +1,11 @@
 import ajax from "../../../common/utils/ajax";
-import { IPostData } from "../context/interface";
+import { IPostData, IProtectionOrder } from "../context/interface";
 
 /**
  * 首页相关
  * */
 export const TOKEN_TO_ORDER_URL = "/buy/order/checkfororder";
+export const PAY_PROTECTION_URL = "/buy/order/payprotection";
 
 async function tokenToUrl(data: IPostData) {
   const res: any = await ajax.post(TOKEN_TO_ORDER_URL, data);
@@ -17,6 +18,12 @@ async function tokenToUrl(data: IPostData) {
   return res;
 }
 
+async function orderPayProtection(data: IProtectionOrder) {
+  const res: any = await ajax.post(PAY_PROTECTION_URL, data);
+  return res;
+}
+
 export const payProtectionServer = {
-  tokenToUrl
+  tokenToUrl,
+  orderPayProtection: orderPayProtection
 };

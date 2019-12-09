@@ -44,14 +44,10 @@ export default function PayProtectionPage() {
 
   function finishPayHandler(id: any) {
     console.log(id);
-    // createOrder({
-    //   payInfo: {
-    //     paymentType: "PAYPAL",
-    //     creditCardInfo: {},
-    //     paypalOrderId: id
-    //   },
-    //   invoiceSameAddr: invoiceSameAddr
-    // });
+    payProtectionServer.orderPayProtection({
+      paypalOrderId: id,
+      token
+    });
   }
 
   useEffect(() => {
@@ -63,7 +59,7 @@ export default function PayProtectionPage() {
           // 如果没有 就应该跳出?
         }
       });
-    } 
+    }
   }, [token, order, email]);
 
   const payInfo = useMemo(() => {
@@ -113,30 +109,34 @@ function RenderOrderInfo(props: { orderInfo: IBuyOrderInfo }) {
       <div className="order-detail">
         <h2>Order {orderInfo.groupOrderNo}</h2>
         <ul>
-          {orderInfo.subOrders.filter((item: any, index: any) => {return index < 1}).map((subOrderInfo, index) => {
-            const { productInfo } = subOrderInfo;
-            const {
-              buyProductImgPc,
-              bpvDispalyName,
-              productDisplayName,
-              buyLevel
-            } = productInfo;
-            const bpvArr = bpvDispalyName.split(",");
-            return (
-              <li key={index}>
-                <InnerDivImage imgUrl={buyProductImgPc} />
-                <div className="content-container">
-                  <h3>
-                    {productDisplayName} {bpvArr.slice(0, 2).join(" ")}
-                  </h3>
-                  <span className="color-line">
-                    {bpvArr.slice(2).join(" ")}
-                  </span>
-                  <span className="condition">Condition {buyLevel}</span>
-                </div>
-              </li>
-            );
-          })}
+          {orderInfo.subOrders
+            .filter((item: any, index: any) => {
+              return index < 1;
+            })
+            .map((subOrderInfo, index) => {
+              const { productInfo } = subOrderInfo;
+              const {
+                buyProductImgPc,
+                bpvDispalyName,
+                productDisplayName,
+                buyLevel
+              } = productInfo;
+              const bpvArr = bpvDispalyName.split(",");
+              return (
+                <li key={index}>
+                  <InnerDivImage imgUrl={buyProductImgPc} />
+                  <div className="content-container">
+                    <h3>
+                      {productDisplayName} {bpvArr.slice(0, 2).join(" ")}
+                    </h3>
+                    <span className="color-line">
+                      {bpvArr.slice(2).join(" ")}
+                    </span>
+                    <span className="condition">Condition {buyLevel}</span>
+                  </div>
+                </li>
+              );
+            })}
         </ul>
         <div className="protection-price">
           <span>Protection</span>

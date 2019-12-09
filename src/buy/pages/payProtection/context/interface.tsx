@@ -3,3 +3,8 @@ export interface IPostData {
   userEmail?: string,
   token: string,
 }
+
+export interface IProtectionOrder {
+  paypalOrderId: string,
+  token: string,
+}
