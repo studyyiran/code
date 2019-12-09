@@ -61,6 +61,17 @@ export function PayPaylButton(props: IPayPalButton) {
     // @ts-ignore
     paypal
       .Buttons({
+        onInit: function() {
+          console.log('haha')
+        },
+        onClick: function() {
+          console.log('hehe')
+          setShowLoadingMask(true);
+        },
+        onCancel: function () {
+          console.log('onCancel')
+          setShowLoadingMask(false);
+        },
         createOrder: function(data: any, actions: any) {
           // This function sets up the details of the transaction, including the amount and line item details.
           const {
@@ -117,7 +128,6 @@ export function PayPaylButton(props: IPayPalButton) {
             // This function shows a transaction success message to your buyer.
             // startLoading
             try {
-              setShowLoadingMask(true);
               // 开启全屏loading
               finishPayCallBack && finishPayCallBack(details.id);
             } catch (e) {
