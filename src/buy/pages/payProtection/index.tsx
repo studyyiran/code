@@ -36,7 +36,7 @@ interface IBuyOrderInfo {
 }
 
 export default function PayProtectionPage() {
-  const [orderInfo, setOrderInfo] = useState({} as IBuyOrderInfo["subOrders"]);
+  const [orderInfo, setOrderInfo] = useState({} as IBuyOrderInfo);
   // 获取url参数
   const urlParams = getUrlAllParams();
   console.log(urlParams);
@@ -63,9 +63,9 @@ export default function PayProtectionPage() {
   }, [token, order, email]);
 
   const payInfo = useMemo(() => {
-    if (orderInfo && (orderInfo as any).groupOrderNo) {
+    if (orderInfo && orderInfo.groupOrderNo) {
       return {
-        payInfo: {},
+        payInfo: orderInfo.userInfo,
         amount: caclTotalProtection((orderInfo as any).subOrders)
       };
     } else {
