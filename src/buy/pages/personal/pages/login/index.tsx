@@ -19,9 +19,11 @@ import {
 import RouterLink from "../../../../common-modules/components/routerLink";
 import { RenderByCondition } from "../../../../components/RenderByCondition";
 import { tipsContent } from "../../../../common/constValue";
+import Modal from "../../../../components/modal";
 
 export default function PersonalLogin() {
   const formRef: any = useRef(null);
+  const formPopRef: any = useRef(null);
   const storeAuthContext = useContext(StoreAuthContext);
   const {
     userLogin,
@@ -67,6 +69,41 @@ export default function PersonalLogin() {
                 value: uptradeemail
               }
             });
+            const formConfig = [
+              {
+                label: "Password",
+                id: "password",
+                rules: [
+                  {
+                    required: true,
+                    message: tipsContent.errorPassword
+                  }
+                ],
+                renderFormEle: () => <Input.Password />
+              },
+              {
+                renderFormEle: () => (
+                  <Button isLoading={isLoading && isLoading.login}>
+                    Log in
+                  </Button>
+                )
+              }
+            ];
+            (Modal as any).confirm({
+              title: "Log In to Activate New Email",
+              footer: null,
+              closable: false,
+              children: (
+                <FormWrapper
+                  hideRequiredMark={true}
+                  wrappedComponentRef={(inst: any) =>
+                    (formPopRef.current = inst)
+                  }
+                  formConfig={formConfig}
+                  onSubmit={onSubmitHandler}
+                />
+              )
+            });
             // userEmailChange(authtoken).then(success.bind({}, domaintype));
             break;
         }
@@ -85,7 +122,7 @@ export default function PersonalLogin() {
           message: tipsContent.emailMistake
         }
       ],
-      renderFormEle: () => <Input disabled={isResetEmail()} />
+      renderFormEle: () => <Input />
     },
     {
       label: "Password",
@@ -117,11 +154,14 @@ export default function PersonalLogin() {
     let promiseObj;
     const loginSuccess = (res: string) => {
       // 点击登录成功后进行跳转
-      locationHref(getLocationUrl("home"));
+      debugger
+      const nextUrl = targetStatus ? "/account/management" : getLocationUrl("home");
+      locationHref(nextUrl);
     };
     if (targetStatus) {
       promiseObj = userEmailChange({
         token: authtoken,
+        email: uptradeemail,
         ...values
       });
       promiseObj
@@ -135,7 +175,10 @@ export default function PersonalLogin() {
       promiseObj = userLogin(values).then(loginSuccess);
     }
     promiseObj.catch((e: any) => {
-      const { form } = formRef.current.props;
+      // 根据当前的进入的情境,来修改
+      const form = targetStatus
+        ? formPopRef.current.props.form
+        : formRef.current.props.form;
       let error = {};
       if (e && e.code) {
         if (safeEqual(e.code, 20006)) {
