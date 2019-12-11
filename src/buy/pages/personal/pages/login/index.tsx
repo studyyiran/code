@@ -19,9 +19,12 @@ import {
 import RouterLink from "../../../../common-modules/components/routerLink";
 import { RenderByCondition } from "../../../../components/RenderByCondition";
 import { tipsContent } from "../../../../common/constValue";
+import Modal from "../../../../components/modal";
 
 export default function PersonalLogin() {
+  const [showResetEmailModal, setShowResetEmailModal] = useState(false);
   const formRef: any = useRef(null);
+  const formPopRef: any = useRef(null);
   const storeAuthContext = useContext(StoreAuthContext);
   const {
     userLogin,
@@ -67,6 +70,8 @@ export default function PersonalLogin() {
                 value: uptradeemail
               }
             });
+            setShowResetEmailModal(true);
+
             // userEmailChange(authtoken).then(success.bind({}, domaintype));
             break;
         }
@@ -85,7 +90,7 @@ export default function PersonalLogin() {
           message: tipsContent.emailMistake
         }
       ],
-      renderFormEle: () => <Input disabled={isResetEmail()} />
+      renderFormEle: () => <Input />
     },
     {
       label: "Password",
@@ -117,25 +122,35 @@ export default function PersonalLogin() {
     let promiseObj;
     const loginSuccess = (res: string) => {
       // 点击登录成功后进行跳转
-      locationHref(getLocationUrl("home"));
+      const nextUrl = targetStatus
+        ? "/account/management"
+        : getLocationUrl("home");
+      locationHref(nextUrl);
     };
     if (targetStatus) {
       promiseObj = userEmailChange({
         token: authtoken,
+        email: uptradeemail,
         ...values
       });
       promiseObj
         .then(() => {
           setCurrentStatus(targetStatus);
           // 触发自动登录
-          return userLogin(values);
+          return userLogin({
+            email: uptradeemail,
+            ...values
+          });
         })
         .then(loginSuccess);
     } else {
       promiseObj = userLogin(values).then(loginSuccess);
     }
     promiseObj.catch((e: any) => {
-      const { form } = formRef.current.props;
+      // 根据当前的进入的情境,来修改
+      const form = targetStatus
+        ? formPopRef.current.props.form
+        : formRef.current.props.form;
       let error = {};
       if (e && e.code) {
         if (safeEqual(e.code, 20006)) {
@@ -149,7 +164,9 @@ export default function PersonalLogin() {
           return;
         }
       }
-      error = new Error(tipsContent.errorPassword);
+      error = new Error(
+        targetStatus ? "Wrong password" : tipsContent.errorPassword
+      );
       form.setFields({
         password: {
           value: values && values.password,
@@ -182,6 +199,55 @@ export default function PersonalLogin() {
           ComponentPc={<img src={require("../../res/bg.jpg")} />}
         />
       </div>
+      <Hehe
+        visible={showResetEmailModal}
+        formPopRef={formPopRef}
+        onSubmitHandler={onSubmitHandler}
+        isLoading={isLoading}
+      />
     </div>
+  );
+}
+
+function Hehe(props: any) {
+  const { visible, formPopRef, onSubmitHandler, isLoading } = props;
+  const formConfig = [
+    {
+      label: "Password",
+      id: "password",
+      rules: [
+        {
+          required: true,
+          message: "Wrong password"
+        }
+      ],
+      renderFormEle: () => <Input.Password />
+    },
+    {
+      renderFormEle: () => (
+        <Button isLoading={isLoading && isLoading.userEmailChange}>
+          Log in
+        </Button>
+      )
+    }
+  ];
+  return (
+    <Modal
+      visible={visible}
+      className={"reset-email-modal-login"}
+      title={null}
+      footer={null}
+      closable={false}
+    >
+      <div>
+        <h3>Log In to Activate New Email</h3>
+        <FormWrapper
+          hideRequiredMark={true}
+          wrappedComponentRef={(inst: any) => (formPopRef.current = inst)}
+          formConfig={formConfig}
+          onSubmit={onSubmitHandler}
+        />
+      </div>
+    </Modal>
   );
 }

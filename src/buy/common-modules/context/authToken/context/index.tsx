@@ -295,6 +295,7 @@ function useGetAction(
     }),
     userEmailChange: promisify(async function(data: any) {
       const res = actionsWithCatchAndLoading({
+        needError: false,
         dispatch,
         loadingDispatchName: storeAuthReducerTypes.setLoadingObjectStatus,
         loadingObjectKey: "userEmailChange",

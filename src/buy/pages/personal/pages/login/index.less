@@ -1,6 +1,29 @@
 @import (reference) "~buy/common/styles/index.less";
 
 @p1: {
+  body .yr-modal-mask .yr-modal.reset-email-modal-login {
+    max-width: 85%;
+    width: 600 * @px;
+    .yr-modal-content {
+      padding: 20 * @px 0 1px;
+      h3 {
+        text-align: center;
+        border-bottom: 1px solid @color-gray;
+        padding-bottom: 30*@px;
+        font-size: 20 *@f;
+      }
+      form {
+        padding: 20 *@px 25 *@px 0;
+      }
+      .common-button {
+        width: 100%;
+        max-width: 100%;
+      }
+      label.ant-form-item-required {
+        font-weight: @boldWeight;
+      }
+    }
+  }
   .user-login {
     .forget-button {
       position: relative;

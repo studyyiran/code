@@ -7,7 +7,7 @@ import UptradeProtect from "../pages/statics/uptrade-protect";
 import UptradePolicy from "../pages/statics/policy";
 import Home from "../pages/home";
 import React from "react";
-import {getLocationUrl, getProductListPath} from "../common/utils/util";
+import { getLocationUrl, getProductListPath } from "../common/utils/util";
 import { detailSsrRule } from "../pages/detail/ssr";
 import { ourHomeSsrRule } from "../pages/home/ssr";
 import BuyCheckOrder from "../pages/checkOrder/routers";
@@ -18,6 +18,7 @@ import UserRegister from "../pages/personal/pages/register";
 import UserRegisterEmail from "../pages/personal/pages/registerEmail";
 import UserForgetPassword from "../pages/personal/pages/userForgetPassword";
 import UserResetPassword from "../pages/personal/pages/userResetPassword";
+import PayProtectionPage from "../pages/payProtection";
 
 export const routerConfig = [
   {
@@ -112,6 +113,12 @@ export const routerConfig = [
     title: "Reset Password | UpTradeit.com",
     exact: true,
     Component: UserResetPassword
+  },
+  {
+    path: "/protection/payment",
+    title: "Protection payment  | UpTradeit.com",
+    exact: true,
+    Component: PayProtectionPage
   }
   // {
   //   title: "404 | UpTradeit.com",
