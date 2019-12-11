@@ -15,6 +15,7 @@ import { Message } from "../../../../components/message";
 import { UserOrderList } from "./pages/userOrderList";
 import { ITag } from "../../../../../containers/blog/interface/blog.interface";
 import { Tabs } from "../../../../../components/tabs";
+import { tipsContent } from "../../../../common/constValue";
 const { TabPane } = Tabs as any;
 
 export default function AccountPage() {
@@ -47,7 +48,7 @@ export default function AccountPage() {
         //
         return (
           <p>
-            Your profile updated successfully
+            {tipsContent.emailUpdateSuccess}
             <Svg />
           </p>
         );
