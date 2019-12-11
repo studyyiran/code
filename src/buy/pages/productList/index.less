@@ -73,7 +73,7 @@
         //justify-items: center;
         .mb({grid-template-columns: 1fr;});
         > .phone-product-card {
-          > .innerdiv {
+          .innerdiv {
             @columnWidth: 278 * @px;
             .innerdiv-imgsize(@columnWidth);
           }
@@ -97,7 +97,7 @@
           //flex-direction: column;
           grid-row-gap: 0;
           > .phone-product-card {
-            > .innerdiv {
+            .innerdiv {
               .innerdiv-imgsize(100vw);
             }
             border-bottom: none;
@@ -114,7 +114,7 @@
             &:not(:first-child) {
               display: flex;
               align-items: center;
-              > .innerdiv {
+              .innerdiv {
                 .innerdiv-imgsize(160 * @px);
                 border-right: 1px solid @color-border;
                 flex: 0 0 160 * @px;

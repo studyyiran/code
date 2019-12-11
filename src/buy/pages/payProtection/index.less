@@ -1,0 +1,73 @@
+@import (reference) "~buy/common/styles/index.less";
+
+@p1: {
+  .pay-protection-page {
+    .setpage(700 * @px);
+    padding-top: 50 * @px;
+    padding-bottom: 50 * @px;
+    .order-detail {
+      .fontBig() {
+        font-size: 18 * @f;
+        font-weight: @boldWeight;
+      }
+      > h2 {
+        .fontBig();
+      }
+      margin-bottom: 50 * @px;
+      > * {
+        padding: 30 * @px;
+        border: 1px solid @color-gray;
+        &:not(:last-child) {
+          border-bottom: none;
+        }
+      }
+      ul {
+        li {
+          display: flex;
+          justify-content: space-between;
+          .innerdiv {
+            .innerdiv-imgsize(120 * @px);
+          }
+          .content-container {
+            margin-left: 20 * @px;
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            .color-line {
+              color: @color-gray-deeper;
+            }
+            .condition {
+              color: green;
+            }
+            > h3 {
+              .fontBig();
+            }
+          }
+        }
+      }
+      .protection-price {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .fontBig();
+      }
+    }
+  }
+  .ismobile {
+    .pay-protection-page {
+      .setpage(90%);
+      padding-top: 30 * @px;
+      .order-detail {
+        > * {
+          padding: 10 * @px;
+          border: 1px solid @color-gray;
+          &:not(:last-child) {
+            border-bottom: none;
+          }
+        }
+      }
+    }
+  }
+};
+
+.hello(@p1);
