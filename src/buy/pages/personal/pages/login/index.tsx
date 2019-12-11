@@ -218,7 +218,7 @@ function Hehe(props: any) {
       rules: [
         {
           required: true,
-          message: tipsContent.errorPassword
+          message: "Wrong password"
         }
       ],
       renderFormEle: () => <Input.Password />
