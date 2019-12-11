@@ -164,7 +164,9 @@ export default function PersonalLogin() {
           return;
         }
       }
-      error = new Error(tipsContent.errorPassword);
+      error = new Error(
+        targetStatus ? "Wrong password" : tipsContent.errorPassword
+      );
       form.setFields({
         password: {
           value: values && values.password,
