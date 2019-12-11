@@ -2,6 +2,22 @@
 
 @p2: {
   .phone-product-card {
+    .img-scale-container {
+      width: 278 * @px;
+      height: 278 * @px;
+      overflow: hidden;
+      .innerdiv {
+        transition: transform 0.3s;
+        //background-size: 130% auto !important;
+        //background-size: auto 100%  !important;
+        //background-repeat: no-repeat;
+        transform: scale(1);
+        &:hover {
+          transform: scale(1.1);
+          //background-size: auto 120%  !important;
+        }
+      }
+    }
     .five-wrapper {
       display: flex;
       flex-wrap: wrap;

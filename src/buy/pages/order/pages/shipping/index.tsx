@@ -52,7 +52,7 @@ export default function Shipping(props: any) {
       <h2 className="order-common-less-title">Shipping method</h2>
       <div className="checkbox-container-group">
         {expressInfo.map((item: any) => {
-          const { rateId, token, totalFee, name } = item;
+          const { token, totalFee, name } = item;
           return (
             <div className="checkbox-container">
               <Checkbox

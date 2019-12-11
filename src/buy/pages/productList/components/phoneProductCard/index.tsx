@@ -18,6 +18,7 @@ import {
 import { RenderByIsFive } from "../../../../components/RenderByIsFive";
 import { FivePrice } from "../../../detail/components/fivePrice";
 import { FiveCountDown } from "../../../detail/components/fiveCountdown";
+import { RenderByCondition } from "../../../../components/RenderByCondition";
 
 function isSoldOut(status: string) {
   return (
@@ -74,7 +75,14 @@ export default function PhoneProductCard(props: any) {
           <div className="modal"></div>
         </InnerDivImage>
       ) : (
-        <InnerDivImage imgUrl={productImg} />
+        <RenderByCondition
+          ComponentMb={<InnerDivImage imgUrl={productImg} />}
+          ComponentPc={
+            <div className="img-scale-container">
+              <InnerDivImage imgUrl={productImg} />
+            </div>
+          }
+        />
       )}
 
       <div className="content-container">
