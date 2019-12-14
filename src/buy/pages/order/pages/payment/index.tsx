@@ -35,6 +35,7 @@ function PaymentInner(props: any) {
   } = orderInfoContext as IOrderInfoContext;
 
   const [showLoadingMask, setShowLoadingMask] = useState(false);
+  const [inputChangeStatus, setInputChangeStatus] = useState(false);
 
   // 计算总价
   const { calcTotalPrice, totalProductPrice } = useGetTotalPrice();
@@ -161,13 +162,14 @@ function PaymentInner(props: any) {
       .Buttons({
         onClick: function(a: any) {
           console.log("hehe");
+          setInputChangeStatus(true);
           if (a && a.fundingSource === "paypal") {
-            setShowLoadingMask(true);
+            setInputChangeStatus(true);
           }
         },
         onCancel: function() {
           console.log("onCancel");
-          setShowLoadingMask(false);
+          setInputChangeStatus(false);
         },
         createOrder: function(data: any, actions: any) {
           // This function sets up the details of the transaction, including the amount and line item details.
@@ -373,10 +375,12 @@ function PaymentInner(props: any) {
             <Checkbox
               checked={invoiceSameAddr === true}
               onChange={() => {
-                orderInfoContextDispatch({
-                  type: orderInfoReducerTypes.setInvoiceSameAddr,
-                  value: true
-                });
+                if (!inputChangeStatus) {
+                  orderInfoContextDispatch({
+                    type: orderInfoReducerTypes.setInvoiceSameAddr,
+                    value: true
+                  });
+                }
               }}
             >
               <span>Same as shipping address</span>
@@ -386,10 +390,12 @@ function PaymentInner(props: any) {
             <Checkbox
               checked={invoiceSameAddr === false}
               onChange={() => {
-                orderInfoContextDispatch({
-                  type: orderInfoReducerTypes.setInvoiceSameAddr,
-                  value: false
-                });
+                if (!inputChangeStatus) {
+                  orderInfoContextDispatch({
+                    type: orderInfoReducerTypes.setInvoiceSameAddr,
+                    value: false
+                  });
+                }
               }}
             >
               <span>Use a different billing address</span>
