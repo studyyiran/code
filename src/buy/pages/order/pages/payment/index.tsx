@@ -373,6 +373,7 @@ function PaymentInner(props: any) {
         <div className="checkbox-container-group">
           <div className="checkbox-container">
             <Checkbox
+              disabled={inputChangeStatus}
               checked={invoiceSameAddr === true}
               onChange={() => {
                 if (!inputChangeStatus) {
@@ -388,6 +389,7 @@ function PaymentInner(props: any) {
           </div>
           <div className="checkbox-container">
             <Checkbox
+              disabled={inputChangeStatus}
               checked={invoiceSameAddr === false}
               onChange={() => {
                 if (!inputChangeStatus) {
