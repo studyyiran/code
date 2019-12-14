@@ -2,6 +2,19 @@
 
 @p: {
   .payment-page {
+    //.ant-checkbox-checked .ant-checkbox-inner {
+    //  background: transparent;
+    //  border: transparent;
+    //}
+    //.ant-checkbox-checked {
+    //  background: @color-blue-liner-use;
+    //  border-color: @color-blue-liner-use;
+    //}
+    .ant-checkbox-checked.ant-checkbox-disabled {
+      .ant-checkbox-inner {
+        background: #f5f5f5 !important;
+      }
+    }
     .placeholder {
       height: 30 * @px;
     }
