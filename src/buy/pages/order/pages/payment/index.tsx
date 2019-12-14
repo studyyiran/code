@@ -159,12 +159,14 @@ function PaymentInner(props: any) {
     // @ts-ignore
     paypal
       .Buttons({
-        onClick: function() {
-          console.log('hehe')
-          setShowLoadingMask(true);
+        onClick: function(a: any) {
+          console.log("hehe");
+          if (a && a.fundingSource === "paypal") {
+            setShowLoadingMask(true);
+          }
         },
-        onCancel: function () {
-          console.log('onCancel')
+        onCancel: function() {
+          console.log("onCancel");
           setShowLoadingMask(false);
         },
         createOrder: function(data: any, actions: any) {
