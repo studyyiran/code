@@ -191,7 +191,9 @@ function useGetAction(
       const { filterBQVS, filterProductId, brandId } = answer;
       // 这块将brandId进行一下再处理 查找额外
       // 这块性能会有问题
-      const brandInfo: any = await serverProductList.productIdToBrandId(filterProductId);
+      const brandInfo: any = await serverProductList.productIdToBrandId(
+        filterProductId
+      );
       if (brandInfo) {
         brandInfo.forEach((newBrand: any) => {
           if (
@@ -505,7 +507,9 @@ function useGetAction(
     },
     getDropDownInfo: promisify(async function(searchString: string) {
       // 1 拉去一组接口。拉去基本属性
-      const dropDownInfo: any = await serverProductList.getDropDownInfo(searchString.split(" "));
+      const dropDownInfo: any = await serverProductList.getDropDownInfo(
+        searchString.split(" ")
+      );
       return dropDownInfo;
     }),
     setSearchInfo: function(info) {
@@ -573,7 +577,7 @@ function useGetAction(
       }
     }),
     // 获取机型列表
-    getModelList: promisify(async function(pn: any) {
+    getModelList: useCallback(async function(pn: any) {
       // const res = await getOrderDetail(a, b);
       const res: any = await serverProductList.getModelList(pn);
       dispatch({
@@ -585,7 +589,7 @@ function useGetAction(
           };
         })
       });
-    }),
+    }, []),
     // 获取brand列表
     getManufactureList: promisify(async function(pn: any) {
       const res: any = await serverProductList.getManufactureList(pn);
@@ -615,7 +619,6 @@ function useGetAction(
   actions.replaceSEOUrl = useCallback(actions.replaceSEOUrl, [
     state.currentFilterSelect
   ]);
-  actions.getModelList = useCallback(actions.getModelList, []);
   actions.getManufactureList = useCallback(actions.getManufactureList, []);
   actions.resetPageNumber = useCallback(actions.resetPageNumber, []);
   return actions;
