@@ -7,12 +7,7 @@ getInitialProps是一个异步方法.
 传入参数(页面url信息)
  */
 
-import {
-  getBaseAttr,
-  getProductList,
-  stringToUserSelect,
-  getManufactureList
-} from "./server";
+import { serverProductList } from "./server";
 import {
   ATTROF,
   productListReducerActionTypes,
@@ -108,7 +103,7 @@ export const productListSsrRule = async (url: string) => {
     );
   }
   // 发起请求，获取参数
-  const userSelectData: any = await stringToUserSelect(json);
+  const userSelectData: any = await serverProductList.stringToUserSelect(json);
   if (userSelectData) {
     const { brandIds, productIds, skuAttrIds } = userSelectData;
     addIntoSelect(brandIds, (id: any) => ({ id: `Manufacture-${id}` }));
@@ -122,7 +117,7 @@ export const productListSsrRule = async (url: string) => {
       return { id: `Model-${id}` };
     });
     // 调用接口获取attr列表.进行匹配
-    const baseAttrRes: any = await getBaseAttr();
+    const baseAttrRes: any = await serverProductList.getBaseAttr();
     if (baseAttrRes && baseAttrRes.length) {
       store.storeData.staticFilterList = baseAttrRes;
       baseAttrRes.forEach((item: any, index: number) => {
@@ -145,10 +140,10 @@ export const productListSsrRule = async (url: string) => {
     pageNum: 1,
     pageSize: 20
   };
-  const productList = await getProductList(userSelectInfo);
+  const productList = await serverProductList.getProductList(userSelectInfo);
   store.storeData.productList = productList;
 
-  const manufactureList: any = await getManufactureList();
+  const manufactureList: any = await serverProductList.getManufactureList();
   if (manufactureList && manufactureList.length) {
     store.storeData.manufactureList = (manufactureList || []).map(
       ({ brandId, brandDisplayName }: any) => {

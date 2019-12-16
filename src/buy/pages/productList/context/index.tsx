@@ -1,13 +1,6 @@
 import React, { createContext, useEffect, useCallback, useRef } from "react";
 import { IReducerAction } from "buy/common/interface/index.interface";
-import {
-  getModelList,
-  getProductList,
-  getBaseAttr,
-  getManufactureList,
-  getDropDownInfo,
-  productIdToBrandId
-} from "../server";
+import { serverProductList } from "../server";
 import {
   callBackWhenPassAllFunc,
   getProductListPath,
@@ -18,9 +11,9 @@ import { IStaticFilterItem, filterListConfig } from "./staticData";
 import { useGetOriginData } from "../../../common/useHook/useGetOriginData";
 import useReducerMiddleware from "../../../common/useHook/useReducerMiddleware";
 import { locationHref } from "../../../common/utils/routerHistory";
-import {useIsCurrentPage} from "../../../common/useHook";
-import {dataReport} from "../../../common/dataReport";
-import {reducerLog} from "../../../common/hoc";
+import { useIsCurrentPage } from "../../../common/useHook";
+import { dataReport } from "../../../common/dataReport";
+import { reducerLog } from "../../../common/hoc";
 export const ATTROF = "attrOf";
 export const ProductListContext = createContext({});
 export const StoreProductList = "StoreProductList";
@@ -111,10 +104,6 @@ function useGetAction(
   state: IContextState,
   dispatch: (action: IReducerAction) => void
 ): IContextActions {
-  const lastType = useRef();
-  if (!lastType.current) {
-    lastType.current = {} as any;
-  }
   function getAnswers() {
     interface IAnswer {
       productId?: string;
@@ -201,15 +190,8 @@ function useGetAction(
       // 需要查找的内容
       const { filterBQVS, filterProductId, brandId } = answer;
       // 这块将brandId进行一下再处理 查找额外
-      if (
-        lastType &&
-        lastType.current &&
-        ((lastType.current as any) === "Model" ||
-          (lastType.current as any) === "Manufacture")
-      ) {
-      }
       // 这块性能会有问题
-      const brandInfo: any = await productIdToBrandId(filterProductId);
+      const brandInfo: any = await serverProductList.productIdToBrandId(filterProductId);
       if (brandInfo) {
         brandInfo.forEach((newBrand: any) => {
           if (
@@ -375,7 +357,6 @@ function useGetAction(
     },
     setUserSelectFilter: promisify(async function({ id, type }: any) {
       let setValue;
-      (lastType.current as any) = type;
       if (id === "all") {
         setValue = state.currentFilterSelect.filter(({ id }) => {
           if (id.indexOf(type) !== -1) {
@@ -524,7 +505,7 @@ function useGetAction(
     },
     getDropDownInfo: promisify(async function(searchString: string) {
       // 1 拉去一组接口。拉去基本属性
-      const dropDownInfo: any = await getDropDownInfo(searchString.split(" "));
+      const dropDownInfo: any = await serverProductList.getDropDownInfo(searchString.split(" "));
       return dropDownInfo;
     }),
     setSearchInfo: function(info) {
@@ -536,7 +517,7 @@ function useGetAction(
     },
     getStaticFilterList: promisify(async function(a: any, b: any) {
       // 1 拉去一组接口。拉去基本属性
-      const baseAttrRes: any = await getBaseAttr();
+      const baseAttrRes: any = await serverProductList.getBaseAttr();
       // 2 格式化
       // let staticFilterList: IStaticFilterItem[] = Object.keys(baseAttrRes).map(
       //   (key: string) => baseAttrRes[key]
@@ -553,19 +534,21 @@ function useGetAction(
         type: productListReducerActionTypes.setPendingStatus,
         value: true
       });
-      const resList = await getProductList(answer);
-      const {productKey, filterBQVS} : any = answer
-      const result = filterBQVS.map(({bpName} : any) => {
-        return bpName
-      }).join(", ")
+      const resList = await serverProductList.getProductList(answer);
+      const { productKey, filterBQVS }: any = answer;
+      const result = filterBQVS
+        .map(({ bpName }: any) => {
+          return bpName;
+        })
+        .join(", ");
       try {
         dataReport({
           event: "buyerSearch",
           searchterm: productKey ? productKey.join(", ") : "",
           network: result
         });
-      } catch(e) {
-        console.error(e)
+      } catch (e) {
+        console.error(e);
       }
       // 发起
       dispatch({
@@ -592,7 +575,7 @@ function useGetAction(
     // 获取机型列表
     getModelList: promisify(async function(pn: any) {
       // const res = await getOrderDetail(a, b);
-      const res: any = await getModelList(pn);
+      const res: any = await serverProductList.getModelList(pn);
       dispatch({
         type: productListReducerActionTypes.setModelList,
         value: (res || []).map(({ productDisplayName, productId }: any) => {
@@ -605,7 +588,7 @@ function useGetAction(
     }),
     // 获取brand列表
     getManufactureList: promisify(async function(pn: any) {
-      const res: any = await getManufactureList(pn);
+      const res: any = await serverProductList.getManufactureList(pn);
       if (res && res.length) {
         dispatch({
           type: productListReducerActionTypes.setManufactureList,
