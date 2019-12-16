@@ -576,20 +576,7 @@ function useGetAction(
         });
       }
     }),
-    // 获取机型列表
-    getModelList: useCallback(async function(pn: any) {
-      // const res = await getOrderDetail(a, b);
-      const res: any = await serverProductList.getModelList(pn);
-      dispatch({
-        type: productListReducerActionTypes.setModelList,
-        value: (res || []).map(({ productDisplayName, productId }: any) => {
-          return {
-            id: productId,
-            displayName: productDisplayName
-          };
-        })
-      });
-    }, []),
+
     // 获取brand列表
     getManufactureList: promisify(async function(pn: any) {
       const res: any = await serverProductList.getManufactureList(pn);
@@ -621,6 +608,20 @@ function useGetAction(
   ]);
   actions.getManufactureList = useCallback(actions.getManufactureList, []);
   actions.resetPageNumber = useCallback(actions.resetPageNumber, []);
+  // 获取机型列表
+  const getModelList = useCallback(async function(pn: any) {
+    // const res = await getOrderDetail(a, b);
+    const res: any = await serverProductList.getModelList(pn);
+    dispatch({
+      type: productListReducerActionTypes.setModelList,
+      value: (res || []).map(({ productDisplayName, productId }: any) => {
+        return {
+          id: productId,
+          displayName: productDisplayName
+        };
+      })
+    });
+  }, [])
   return actions;
 }
 
