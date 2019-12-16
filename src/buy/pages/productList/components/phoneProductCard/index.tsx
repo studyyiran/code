@@ -29,7 +29,6 @@ function isSoldOut(status: string) {
 }
 
 export default function PhoneProductCard(props: any) {
-  const productDetailContext = useContext(ProductDetailContext);
   const {
     buyProductImgPc,
     buyProductName,

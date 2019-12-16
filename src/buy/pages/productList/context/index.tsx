@@ -20,6 +20,7 @@ import useReducerMiddleware from "../../../common/useHook/useReducerMiddleware";
 import { locationHref } from "../../../common/utils/routerHistory";
 import {useIsCurrentPage} from "../../../common/useHook";
 import {dataReport} from "../../../common/dataReport";
+import {reducerLog} from "../../../common/hoc";
 export const ATTROF = "attrOf";
 export const ProductListContext = createContext({});
 export const StoreProductList = "StoreProductList";
@@ -53,7 +54,7 @@ export function ProductListContextProvider(props: any) {
     searchInfo: {} as any
   };
   const [state, dispatch, useHehe] = useGetOriginData(
-    useReducerMiddleware(reducer),
+    useReducerMiddleware(reducerLog, reducer),
     initState,
     StoreProductList
   );
