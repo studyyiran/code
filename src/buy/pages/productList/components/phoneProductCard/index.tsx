@@ -19,6 +19,7 @@ import { RenderByIsFive } from "../../../../components/RenderByIsFive";
 import { FivePrice } from "../../../detail/components/fivePrice";
 import { FiveCountDown } from "../../../detail/components/fiveCountdown";
 import { RenderByCondition } from "../../../../components/RenderByCondition";
+import RouterLink from "../../../../common-modules/components/routerLink";
 
 function isSoldOut(status: string) {
   return (
@@ -29,11 +30,6 @@ function isSoldOut(status: string) {
 
 export default function PhoneProductCard(props: any) {
   const productDetailContext = useContext(ProductDetailContext);
-  const globalSettingContext = useContext(GlobalSettingContext);
-  const {
-    globalSettingContextValue
-  } = globalSettingContext as IGlobalSettingContext;
-  const { blackHappyHour } = globalSettingContextValue;
   const {
     buyProductImgPc,
     buyProductName,
@@ -77,14 +73,10 @@ export default function PhoneProductCard(props: any) {
   }
 
   return (
-    <section
-      data-disabled={isSoldOut(buyProductStatus) ? "true" : "false"}
+    <RouterLink
+      to={`/detail/${buyProductId}`}
       className="phone-product-card"
-      onClick={() => {
-        if (!isSoldOut(buyProductStatus)) {
-          locationHref(`/detail/${buyProductId}`);
-        }
-      }}
+      data-disabled={isSoldOut(buyProductStatus) ? "true" : "false"}
     >
       {renderTagBySoldOutStatus(buyProductStatus)}
       {isSoldOut(buyProductStatus) ? (
@@ -101,7 +93,6 @@ export default function PhoneProductCard(props: any) {
           }
         />
       )}
-
       <div className="content-container">
         {lineOne ? <h2>{lineOne}</h2> : null}
         {lineTwo ? <span className="attr">{lineTwo}</span> : null}
@@ -119,6 +110,6 @@ export default function PhoneProductCard(props: any) {
           }
         />
       </div>
-    </section>
+    </RouterLink>
   );
 }
