@@ -12,15 +12,15 @@ export default function useGetTotalPrice(
 } {
   const orderInfoContext = useContext(OrderInfoContext);
   const { orderInfoContextValue } = orderInfoContext as IOrderInfoContext;
-  const { subOrders, phoneDetailList, taxInfo, userExpress, expressInfo } =
+  const { subOrders, taxInfo, userExpress, expressInfo } =
     orderInfoContextValue || props;
   function totalProductPrice() {
     let total = 0;
-    phoneDetailList.forEach((item: any) => {
-      if (item && item.buyPrice) {
-        total = NP.plus(total, Number(item.buyPrice));
-      }
-    });
+    // phoneDetailList.forEach((item: any) => {
+    //   if (item && item.buyPrice) {
+    //     total = NP.plus(total, Number(item.buyPrice));
+    //   }
+    // });
     return total;
   }
   function totalProtections() {

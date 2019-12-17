@@ -50,7 +50,6 @@ export interface IUserInfo {
 export interface IOrderInfoState {
   subOrders: userPhoneOrder[];
   pendingStatus: any; // 页面支付状态
-  phoneDetailList: IProductDetail[];
   // 这个应该是返回值的信息
   checkOrderInfo: {
     orderList: {
@@ -92,7 +91,6 @@ export function OrderInfoContextProvider(props: any) {
   const initState: IOrderInfoState = {
     subOrders: [],
     pendingStatus: false,
-    phoneDetailList: [],
     taxInfo: {},
     userExpress: "",
     expressInfo: [],
@@ -306,33 +304,33 @@ function useGetAction(
                       affiliation: "Up Trade",
                       revenue: calcTotalPrice()
                     },
-                    products: state.subOrders.map((item: any) => {
-                      const { productId, needProtection } = item;
-                      const subOrderInfo: any = state.phoneDetailList.find(
-                        item => {
-                          return (
-                            String(item.buyProductId) === String(productId)
-                          );
-                        }
-                      );
-                      return {
-                        sku: String(productId),
-                        name: subOrderInfo
-                          ? subOrderInfo.productDisplayName
-                          : "",
-                        price: subOrderInfo
-                          ? Number(Number(subOrderInfo.buyPrice).toFixed(2))
-                          : -1,
-                        brand: subOrderInfo
-                          ? subOrderInfo.brandDisplayName
-                          : "",
-                        quantity: 1,
-                        dimension1: true, //buyer
-                        dimension2: false, //seller
-                        dimension3: state.userExpress, //update this USPS Parcel Select or USPS Priority
-                        dimension4: needProtection ? "yes" : "no" // if they select UpTrade Protect which is our $5/month insurance plan
-                      };
-                    })
+                    // products: state.subOrders.map((item: any) => {
+                    //   const { productId, needProtection } = item;
+                    //   const subOrderInfo: any = state.phoneDetailList.find(
+                    //     item => {
+                    //       return (
+                    //         String(item.buyProductId) === String(productId)
+                    //       );
+                    //     }
+                    //   );
+                    //   return {
+                    //     sku: String(productId),
+                    //     name: subOrderInfo
+                    //       ? subOrderInfo.productDisplayName
+                    //       : "",
+                    //     price: subOrderInfo
+                    //       ? Number(Number(subOrderInfo.buyPrice).toFixed(2))
+                    //       : -1,
+                    //     brand: subOrderInfo
+                    //       ? subOrderInfo.brandDisplayName
+                    //       : "",
+                    //     quantity: 1,
+                    //     dimension1: true, //buyer
+                    //     dimension2: false, //seller
+                    //     dimension3: state.userExpress, //update this USPS Parcel Select or USPS Priority
+                    //     dimension4: needProtection ? "yes" : "no" // if they select UpTrade Protect which is our $5/month insurance plan
+                    //   };
+                    // })
                   }
                 }
               });
@@ -595,13 +593,13 @@ function reducer(state: IOrderInfoState, action: IReducerAction) {
       };
       break;
     }
-    case orderInfoReducerTypes.setPhoneDetailList: {
-      newState = {
-        ...newState,
-        phoneDetailList: value
-      };
-      break;
-    }
+    // case orderInfoReducerTypes.setPhoneDetailList: {
+    //   newState = {
+    //     ...newState,
+    //     phoneDetailList: value
+    //   };
+    //   break;
+    // }
     default:
       newState = { ...newState };
   }

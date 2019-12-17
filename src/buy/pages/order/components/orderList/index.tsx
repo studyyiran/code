@@ -17,7 +17,7 @@ export default function OrderList(props: any) {
     orderInfoContextValue,
     orderInfoContextDispatch
   } = orderInfoContext as IOrderInfoContext;
-  const { subOrders, phoneDetailList, taxInfo } = orderInfoContextValue;
+  const { subOrders, taxInfo } = orderInfoContextValue;
   const {
     totalProductPrice,
     totalProtections,
@@ -42,47 +42,47 @@ export default function OrderList(props: any) {
           ComponentPc={
             <div className="padding-layout title">
               <h3>Your products</h3>
-              <span>
-                {phoneDetailList.length} item
-                {phoneDetailList.length > 1 ? "s" : ""}
-              </span>
+              {/*<span>*/}
+              {/*  {phoneDetailList.length} item*/}
+              {/*  {phoneDetailList.length > 1 ? "s" : ""}*/}
+              {/*</span>*/}
             </div>
           }
         />
         <div className="padding-layout">
-          {phoneDetailList.map(item1 => {
-            const subOrderInfo: any = subOrders.find(item2 => {
-              return String(item1.buyProductId) === String(item2.productId);
-            });
-            // 当没有subOrders数组的时候  应该跳出
-            if (subOrderInfo) {
-              return (
-                <PhoneInfo
-                  key={subOrderInfo.productId}
-                  needProtection={subOrderInfo.needProtection}
-                  {...item1}
-                  subOrderInfo={subOrderInfo}
-                  // setNeedProtection={(value: boolean) => {
-                  //   orderInfoContextDispatch({
-                  //     type: orderInfoReducerTypes.setSubOrders,
-                  //     value: (item: userPhoneOrder) => {
-                  //       if (String(item.productId) === String(item.productId)) {
-                  //         return {
-                  //           productId: item.productId,
-                  //           needProtection: value
-                  //         };
-                  //       } else {
-                  //         return item;
-                  //       }
-                  //     }
-                  //   });
-                  // }}
-                />
-              );
-            } else {
-              return null;
-            }
-          })}
+          {/*{phoneDetailList.map(item1 => {*/}
+          {/*  const subOrderInfo: any = subOrders.find(item2 => {*/}
+          {/*    return String(item1.buyProductId) === String(item2.productId);*/}
+          {/*  });*/}
+          {/*  // 当没有subOrders数组的时候  应该跳出*/}
+          {/*  if (subOrderInfo) {*/}
+          {/*    return (*/}
+          {/*      <PhoneInfo*/}
+          {/*        key={subOrderInfo.productId}*/}
+          {/*        needProtection={subOrderInfo.needProtection}*/}
+          {/*        {...item1}*/}
+          {/*        subOrderInfo={subOrderInfo}*/}
+          {/*        // setNeedProtection={(value: boolean) => {*/}
+          {/*        //   orderInfoContextDispatch({*/}
+          {/*        //     type: orderInfoReducerTypes.setSubOrders,*/}
+          {/*        //     value: (item: userPhoneOrder) => {*/}
+          {/*        //       if (String(item.productId) === String(item.productId)) {*/}
+          {/*        //         return {*/}
+          {/*        //           productId: item.productId,*/}
+          {/*        //           needProtection: value*/}
+          {/*        //         };*/}
+          {/*        //       } else {*/}
+          {/*        //         return item;*/}
+          {/*        //       }*/}
+          {/*        //     }*/}
+          {/*        //   });*/}
+          {/*        // }}*/}
+          {/*      />*/}
+          {/*    );*/}
+          {/*  } else {*/}
+          {/*    return null;*/}
+          {/*  }*/}
+          {/*})}*/}
         </div>
         <div className="padding-layout price-detail">
           <ul>
