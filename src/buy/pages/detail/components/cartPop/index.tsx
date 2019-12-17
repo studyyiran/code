@@ -19,26 +19,6 @@ interface ICartPop {
   productDetail: IProductDetail;
 }
 
-interface IAddToCard {
-  cartChangeCallBack: (haveAddIntoCart: boolean) => any;
-}
-
-function AddToCart(props: IAddToCard) {
-  const { cartChangeCallBack } = props;
-  const [haveAdd, setHaveAdd] = useState(false);
-
-  function cartChangeHandler() {
-    const next = !haveAdd;
-    cartChangeCallBack(next);
-    setHaveAdd(next);
-  }
-  return (
-    <div onClick={cartChangeHandler}>
-      {haveAdd ? <span>Remove</span> : <span>Add to card</span>}
-    </div>
-  );
-}
-
 export function CartPop(props: ICartPop) {
   const { showModal, setShowModal, productDetail } = props;
   const [needProtection, setNeedProtection] = useState(false);
@@ -66,6 +46,7 @@ export function CartPop(props: ICartPop) {
           <h2>Phone protection</h2>
           <div>{protectPrice}</div>
           <AddToCart
+            value={needProtection}
             cartChangeCallBack={value => {
               setNeedProtection(value);
             }}
@@ -176,3 +157,32 @@ function CheckOutButton(props: any) {
 //     return null;
 //   }
 // }
+
+interface IAddToCard {
+  cartChangeCallBack: (haveAddIntoCart: boolean) => any;
+  value?: boolean;
+}
+
+function AddToCart(props: IAddToCard) {
+  const { cartChangeCallBack, value } = props;
+  const [haveAdd, setHaveAdd] = useState(false);
+
+  function getState() {
+    if (value !== undefined) {
+      return value;
+    } else {
+      return haveAdd;
+    }
+  }
+
+  function cartChangeHandler() {
+    const next = !getState();
+    cartChangeCallBack(next);
+    setHaveAdd(next);
+  }
+  return (
+    <div onClick={cartChangeHandler}>
+      {getState() ? <span>Remove</span> : <span>Add to card</span>}
+    </div>
+  );
+}
