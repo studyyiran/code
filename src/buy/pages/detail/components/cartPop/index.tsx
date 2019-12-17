@@ -19,9 +19,20 @@ interface ICartPop {
   productDetail: IProductDetail;
 }
 
+function WithTitle(props: { title: string; children: any }) {
+  const { title, children } = props;
+  return (
+    <div>
+      <h2>{title}</h2>
+      {children}
+    </div>
+  );
+}
+
 export function CartPop(props: ICartPop) {
   const { showModal, setShowModal, productDetail } = props;
   const [needProtection, setNeedProtection] = useState(false);
+  const [productList, setProductList] = useState([]);
   return (
     <MyModal
       needDefaultScroll={true}
@@ -42,8 +53,7 @@ export function CartPop(props: ICartPop) {
           }}
           isPeiJian={true}
         />
-        <div>
-          <h2>Phone protection</h2>
+        <WithTitle title="Phone protection">
           <div>{protectPrice}</div>
           <AddToCart
             value={needProtection}
@@ -51,7 +61,23 @@ export function CartPop(props: ICartPop) {
               setNeedProtection(value);
             }}
           />
-        </div>
+        </WithTitle>
+        <WithTitle title="Recommended accessories">
+          <PhoneInfo
+            {...productDetail}
+            needProtection={needProtection}
+            setNeedProtection={(value: any) => {
+              setNeedProtection(value);
+            }}
+            isPeiJian={true}
+          />
+          <AddToCart
+            value={needProtection}
+            cartChangeCallBack={value => {
+              setNeedProtection(value);
+            }}
+          />
+        </WithTitle>
         {/*<ul className="price-list">*/}
         {/*  <li>*/}
         {/*    <label>Subtotal: </label>*/}
