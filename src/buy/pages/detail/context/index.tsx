@@ -12,35 +12,11 @@ import { useGetOriginData } from "../../../common/useHook/useGetOriginData";
 import { IContextValue } from "../../../common/type";
 import { locationHref } from "../../../common/utils/routerHistory";
 import {useIsCurrentPage} from "../../../common/useHook";
+import {IProductDetail} from "./interface";
 
 export const ProductDetailContext = createContext({});
 export const StoreDetail = "StoreDetail";
-export interface IProductDetail {
-  brandDisplayName: any; // 品牌名
-  buyProductStatus: string; // 状态明
-  buyProductImgPc: any;
-  buyProductImgM: any;
-  buyProductVideo: string;
-  buyProductHistoryPdf: string; // pdf文件
-  productDescription: string; // 富文本
-  buyProductBQV: any; // attr描述
-  skuId: any; 
-  productDisplayName: string;
-  buyProductDate: string;
-  buyProductId: string;
-  productId: string;
-  buyProductBatteryLife: string;
-  bpvDisplayName: string;
-  buyProductCode: string; // productId
-  buyLevel: string; // 商品等级
-  buyPrice: string; // 销售价格签
-  skuPrice: string; // 商品价格
-  buyProductRemark: string; // 注释
-  backGroundCheck: {
-    content: string;
-    title: string;
-  }[]; // 新增用于描述checkList
-}
+
 // state
 interface IContextState {
   productDetail: IProductDetail;

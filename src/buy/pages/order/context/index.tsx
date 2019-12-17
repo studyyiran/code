@@ -51,6 +51,7 @@ export interface IOrderInfoState {
   subOrders: userPhoneOrder[];
   pendingStatus: any; // 页面支付状态
   phoneDetailList: IProductDetail[];
+  // 这个应该是返回值的信息
   checkOrderInfo: {
     orderList: {
       productInfo: IProductDetail;
