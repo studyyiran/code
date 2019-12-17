@@ -20,11 +20,11 @@ import {
   saveToCache
 } from "buy/common/utils/util";
 import { getProductDetail } from "../../detail/server";
-import { IProductDetail } from "../../detail/context";
 import { Message } from "../../../components/message";
 import { reducerLog } from "../../../common/hoc";
 import { dataReport } from "../../../common/dataReport";
 import useGetTotalPrice from "../components/orderLayout/useHook";
+import {IProductDetail} from "../../detail/context/interface";
 
 export const OrderInfoContext = createContext({});
 const storeName = "OrderInfo";
