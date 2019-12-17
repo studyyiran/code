@@ -7,10 +7,7 @@ import React, {
 import { IReducerAction } from "buy/common/interface/index.interface";
 import { getProductDetail, getSimiliar } from "../server";
 import { backgroundCheckList } from "./staticData";
-import {
-  callBackWhenPassAllFunc,
-  safeEqual
-} from "buy/common/utils/util";
+import { callBackWhenPassAllFunc, safeEqual } from "buy/common/utils/util";
 import { useGetOriginData } from "../../../common/useHook/useGetOriginData";
 import { IContextValue } from "../../../common/type";
 import { locationHref } from "../../../common/utils/routerHistory";
@@ -51,15 +48,14 @@ export function ProductDetailContextProvider(props: any) {
     callBackWhenPassAllFunc(
       [
         () => state.productId,
-        () => isPage,
         () => {
           if (
-            !state.productDetail ||
-            !safeEqual(state.productDetail.buyProductId, state.productId)
+            state.productDetail &&
+            safeEqual(state.productDetail.buyProductId, state.productId)
           ) {
-            return true;
-          } else {
             return false;
+          } else {
+            return true;
           }
         }
       ],
@@ -93,9 +89,9 @@ export interface IProductDetailContext extends IContextActions, IContextValue {
 
 // @actions
 interface IContextActions {
-  getProductDetail: () => void;
+  getProductDetail: (id: string) => void;
   setProductId: (id: string | null) => any;
-  getSimiliarPhoneList: () => any;
+  getSimiliarPhoneList: (id: string) => any;
 }
 
 // useCreateActions
@@ -104,51 +100,53 @@ function useGetAction(
   dispatch: (action: IReducerAction) => void
 ): IContextActions {
   const actions: IContextActions = {
-    getProductDetail: useCallback(async function() {
-      function redirect() {
-        locationHref("/buy-phone");
-      }
-      try {
-        const res: IProductDetail = await getProductDetail(state.productId);
-        if (!res) {
+    getProductDetail: useCallback(
+      async function(productId) {
+        function redirect() {
+          locationHref("/buy-phone");
+        }
+        try {
+          const res: IProductDetail = await getProductDetail(productId);
+          if (!res) {
+            redirect();
+          }
+          if (res) {
+            dispatch({
+              type: storeDetailActionTypes.setProductDetail,
+              value: res
+            });
+          }
+        } catch (e) {
+          console.error(e);
           redirect();
         }
-        if (res) {
-          dispatch({
-            type: storeDetailActionTypes.setProductDetail,
-            value: res
-          });
-        }
-      } catch (e) {
-        console.error(e);
-        redirect();
-      }
-    }, []),
-    getSimiliarPhoneList: useCallback(async function() {
-      const res: any = await getSimiliar({
-        buyProductId: state.productId,
-        pageNum: 1,
-        pageSize: 4
-      });
-      dispatch({
-        type: storeDetailActionTypes.setSimiliarPhoneList,
-        value: res
-      });
-    }, []),
-    setProductId: useCallback(async function(id) {
-      dispatch({
-        type: storeDetailActionTypes.setProductId,
-        value: id
-      });
-    }, [])
+      },
+      [dispatch]
+    ),
+    getSimiliarPhoneList: useCallback(
+      async function(productId) {
+        const res: any = await getSimiliar({
+          buyProductId: productId,
+          pageNum: 1,
+          pageSize: 4
+        });
+        dispatch({
+          type: storeDetailActionTypes.setSimiliarPhoneList,
+          value: res
+        });
+      },
+      [dispatch]
+    ),
+    setProductId: useCallback(
+      async function(id) {
+        dispatch({
+          type: storeDetailActionTypes.setProductId,
+          value: id
+        });
+      },
+      [dispatch]
+    )
   };
-  actions.getSimiliarPhoneList = useCallback(actions.getSimiliarPhoneList, [
-    state.productId
-  ]);
-  actions.getProductDetail = useCallback(actions.getProductDetail, [
-    state.productId
-  ]);
-  actions.setProductId = useCallback(actions.setProductId, []);
   return actions;
 }
 
