@@ -33,7 +33,7 @@ function WithTitle(props: { title: string; children: any }) {
 }
 
 interface IOtherProduct {
-  id: string;
+  productId: string;
 }
 
 export function CartPop(props: ICartPop) {
@@ -136,14 +136,14 @@ function CheckOutButton(props: {
       onClick={() => {
         const otherProductInfo = otherProductList.map(item => {
           return {
-            id: item.id,
+            productId: item.productId,
             needProtection: false
           };
         });
         // 1 他会xx
         orderInfoContextDispatch({
           type: orderInfoReducerTypes.addSubOrder,
-          value: [{ id: productId, needProtection }].concat(otherProductInfo)
+          value: [{ productId, needProtection }].concat(otherProductInfo)
         });
         if (props.onClick) {
           props.onClick();

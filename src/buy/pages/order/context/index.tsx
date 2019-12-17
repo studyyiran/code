@@ -587,6 +587,7 @@ function reducer(state: IOrderInfoState, action: IReducerAction) {
       break;
     }
     case orderInfoReducerTypes.addSubOrder: {
+      debugger
       newState = {
         ...newState,
         subOrders: value
