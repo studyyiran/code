@@ -22,7 +22,7 @@ interface IContextState {
   productDetail: IProductDetail;
   productId: string;
   similiarPhoneList: any[];
-  partsInfo: any[];
+  partsInfo: IProductDetail[];
 }
 
 // @provider
