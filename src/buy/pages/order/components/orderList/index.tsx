@@ -10,8 +10,17 @@ import "./index.less";
 import { currencyTrans } from "../../../../common/utils/util";
 import { RenderByCondition } from "../../../../components/RenderByCondition";
 import useGetTotalPrice from "../orderLayout/useHook";
+import {
+  IProductDetailContext,
+  ProductDetailContext
+} from "../../../detail/context";
 
 export default function OrderList(props: any) {
+  const productDetailContext = useContext(ProductDetailContext);
+  const {
+    productDetailContextValue
+  } = productDetailContext as IProductDetailContext;
+  const { productDetail } = productDetailContextValue;
   const orderInfoContext = useContext(OrderInfoContext);
   const {
     orderInfoContextValue,
@@ -42,47 +51,44 @@ export default function OrderList(props: any) {
           ComponentPc={
             <div className="padding-layout title">
               <h3>Your products</h3>
-              {/*<span>*/}
-              {/*  {phoneDetailList.length} item*/}
-              {/*  {phoneDetailList.length > 1 ? "s" : ""}*/}
-              {/*</span>*/}
+              <span>
+                {subOrders.length} item
+                {subOrders.length > 1 ? "s" : ""}
+              </span>
             </div>
           }
         />
         <div className="padding-layout">
-          {/*{phoneDetailList.map(item1 => {*/}
-          {/*  const subOrderInfo: any = subOrders.find(item2 => {*/}
-          {/*    return String(item1.buyProductId) === String(item2.productId);*/}
-          {/*  });*/}
-          {/*  // 当没有subOrders数组的时候  应该跳出*/}
-          {/*  if (subOrderInfo) {*/}
-          {/*    return (*/}
-          {/*      <PhoneInfo*/}
-          {/*        key={subOrderInfo.productId}*/}
-          {/*        needProtection={subOrderInfo.needProtection}*/}
-          {/*        {...item1}*/}
-          {/*        subOrderInfo={subOrderInfo}*/}
-          {/*        // setNeedProtection={(value: boolean) => {*/}
-          {/*        //   orderInfoContextDispatch({*/}
-          {/*        //     type: orderInfoReducerTypes.setSubOrders,*/}
-          {/*        //     value: (item: userPhoneOrder) => {*/}
-          {/*        //       if (String(item.productId) === String(item.productId)) {*/}
-          {/*        //         return {*/}
-          {/*        //           productId: item.productId,*/}
-          {/*        //           needProtection: value*/}
-          {/*        //         };*/}
-          {/*        //       } else {*/}
-          {/*        //         return item;*/}
-          {/*        //       }*/}
-          {/*        //     }*/}
-          {/*        //   });*/}
-          {/*        // }}*/}
-          {/*      />*/}
-          {/*    );*/}
-          {/*  } else {*/}
-          {/*    return null;*/}
-          {/*  }*/}
-          {/*})}*/}
+          {subOrders.map(subOrdersItem => {
+            if (subOrdersItem.productType === "PRODUCT") {
+              // 这是商品
+              // @ts-ignore
+              return (<PhoneInfo
+                  key={productDetail.buyProductId}
+                  {...productDetail}
+                  // setNeedProtection={(value: boolean) => {
+                  //   orderInfoContextDispatch({
+                  //     type: orderInfoReducerTypes.setSubOrders,
+                  //     value: (item: userPhoneOrder) => {
+                  //       if (String(item.productId) === String(item.productId)) {
+                  //         return {
+                  //           productId: item.productId,
+                  //           needProtection: value
+                  //         };
+                  //       } else {
+                  //         return item;
+                  //       }
+                  //     }
+                  //   });
+                  // }}
+                />
+              );
+            } else if (subOrdersItem.productType === "ACCESSORY") {
+              return <div>{subOrdersItem.productId}</div>;
+            } else {
+              return null;
+            }
+          })}
         </div>
         <div className="padding-layout price-detail">
           <ul>
