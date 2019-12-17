@@ -57,3 +57,11 @@ export async function getProductDetailByToken(token: string) {
   });
   return detailFormat(res);
 }
+
+export async function getPartsBySkuId(token: string) {
+  // 当get 被catch的时候 await后续的流程都会终止掉.
+  const res = await ajax.post(`/buy/product/detail/preview`, {
+    token: token
+  });
+  return res;
+}

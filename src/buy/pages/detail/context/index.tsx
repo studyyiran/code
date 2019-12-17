@@ -5,7 +5,7 @@ import React, {
   useCallback
 } from "react";
 import { IReducerAction } from "buy/common/interface/index.interface";
-import { getProductDetail, getSimiliar } from "../server";
+import { getProductDetail, getSimiliar, getPartsBySkuId } from "../server";
 import { backgroundCheckList } from "./staticData";
 import { callBackWhenPassAllFunc, safeEqual } from "buy/common/utils/util";
 import { useGetOriginData } from "../../../common/useHook/useGetOriginData";
@@ -22,6 +22,7 @@ interface IContextState {
   productDetail: IProductDetail;
   productId: string;
   similiarPhoneList: any[];
+  partsInfo: any[];
 }
 
 // @provider
@@ -29,7 +30,8 @@ export function ProductDetailContextProvider(props: any) {
   const initState: IContextState = {
     productDetail: {} as any,
     productId: "",
-    similiarPhoneList: []
+    similiarPhoneList: [],
+    partsInfo: []
   };
   const [state, dispatch, useClientRepair] = useGetOriginData(
     reducer,
@@ -59,7 +61,9 @@ export function ProductDetailContextProvider(props: any) {
           }
         }
       ],
-      getProductDetail
+      () => {
+        getProductDetail(state.productId);
+      }
     );
   }, [getProductDetail, state.productDetail, state.productId]);
 
@@ -67,11 +71,20 @@ export function ProductDetailContextProvider(props: any) {
     // 条件:
     // id有值
     // 并且在当前页面.
-    callBackWhenPassAllFunc(
-      [() => state.productId, () => isPage],
-      getSimiliarPhoneList
+    callBackWhenPassAllFunc([() => state.productId, () => isPage], () =>
+      getSimiliarPhoneList(state.productId)
     );
   }, [getSimiliarPhoneList, isPage, state.productId]);
+
+  useEffect(() => {
+    // 当他有值的时候
+    callBackWhenPassAllFunc(
+      [() => state && state.productDetail && state.productDetail.skuId],
+      () => {
+        getPartsBySkuId(state.productDetail.skuId);
+      }
+    );
+  }, [getPartsBySkuId, state.productDetail.skuId]);
 
   const propsValue: IProductDetailContext = {
     useClientRepair,
@@ -90,8 +103,9 @@ export interface IProductDetailContext extends IContextActions, IContextValue {
 // @actions
 interface IContextActions {
   getProductDetail: (id: string) => void;
-  setProductId: (id: string | null) => any;
   getSimiliarPhoneList: (id: string) => any;
+  getPartsBySkuId: (id: string) => any;
+  setProductId: (id: string | null) => any;
 }
 
 // useCreateActions
@@ -137,6 +151,16 @@ function useGetAction(
       },
       [dispatch]
     ),
+    getPartsBySkuId: useCallback(
+      async function(skuId) {
+        const res: any = await getPartsBySkuId(skuId);
+        dispatch({
+          type: storeDetailActionTypes.setPartsInfo,
+          value: res
+        });
+      },
+      [dispatch]
+    ),
     setProductId: useCallback(
       async function(id) {
         dispatch({
@@ -154,7 +178,8 @@ function useGetAction(
 export const storeDetailActionTypes = {
   setProductDetail: "setProductDetail",
   setProductId: "setProductId",
-  setSimiliarPhoneList: "setSimiliarPhoneList"
+  setSimiliarPhoneList: "setSimiliarPhoneList",
+  setPartsInfo: "setPartsInfo"
 };
 
 // reducer
@@ -162,6 +187,13 @@ function reducer(state: IContextState, action: IReducerAction) {
   const { type, value } = action;
   let newState = { ...state };
   switch (type) {
+    case storeDetailActionTypes.setPartsInfo: {
+      newState = {
+        ...newState,
+        partsInfo: value
+      };
+      break;
+    }
     case storeDetailActionTypes.setSimiliarPhoneList: {
       newState = {
         ...newState,
