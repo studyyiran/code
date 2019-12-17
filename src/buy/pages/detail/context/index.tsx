@@ -62,7 +62,7 @@ export function ProductDetailContextProvider(props: any) {
         }
       ],
       () => {
-        getProductDetail(state.productId);
+        action.getProductDetail(state.productId);
       }
     );
   }, [getProductDetail, state.productDetail, state.productId]);
@@ -72,7 +72,7 @@ export function ProductDetailContextProvider(props: any) {
     // id有值
     // 并且在当前页面.
     callBackWhenPassAllFunc([() => state.productId, () => isPage], () =>
-      getSimiliarPhoneList(state.productId)
+      action.getSimiliarPhoneList(state.productId)
     );
   }, [getSimiliarPhoneList, isPage, state.productId]);
 
@@ -81,7 +81,7 @@ export function ProductDetailContextProvider(props: any) {
     callBackWhenPassAllFunc(
       [() => state && state.productDetail && state.productDetail.skuId],
       () => {
-        getPartsBySkuId(state.productDetail.skuId);
+        action.getPartsBySkuId(state.productDetail.skuId);
       }
     );
   }, [getPartsBySkuId, state.productDetail.skuId]);

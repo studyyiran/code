@@ -59,7 +59,9 @@ export async function getProductDetailByToken(token: string) {
 }
 
 export async function getPartsBySkuId(skuId: string) {
-  return productListMock.map(item => detailFormat(item));
+  return productListMock
+    .map(item => detailFormat(item))
+    .map(item => ({ ...item, productType: "ACCESSORY" }));
   // 当get 被catch的时候 await后续的流程都会终止掉.
   // const res = await ajax.post(`/buy/product/detail/preview`, {
   //   token: token
