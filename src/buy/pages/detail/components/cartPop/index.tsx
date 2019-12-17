@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PhoneInfo from "../phoneInfo";
 import { currencyTrans } from "../../../../common/utils/util";
 import { dataReport } from "../../../../common/dataReport";
@@ -11,12 +11,32 @@ import {
 } from "../../../order/context";
 import { locationHref } from "../../../../common/utils/routerHistory";
 import { IProductDetail } from "../../context/interface";
-import {protectPrice} from "../../../../common/config/staticConst";
+import { protectPrice } from "../../../../common/config/staticConst";
 
 interface ICartPop {
   showModal: boolean;
   setShowModal: any;
   productDetail: IProductDetail;
+}
+
+interface IAddToCard {
+  cartChangeCallBack: (haveAddIntoCart: boolean) => any;
+}
+
+function AddToCart(props: IAddToCard) {
+  const { cartChangeCallBack } = props;
+  const [haveAdd, setHaveAdd] = useState(false);
+
+  function cartChangeHandler() {
+    const next = !haveAdd;
+    cartChangeCallBack(next);
+    setHaveAdd(next);
+  }
+  return (
+    <div onClick={cartChangeHandler}>
+      {haveAdd ? <span>Remove</span> : <span>Add to card</span>}
+    </div>
+  );
 }
 
 export function CartPop(props: ICartPop) {
@@ -42,49 +62,58 @@ export function CartPop(props: ICartPop) {
           }}
           isPeiJian={true}
         />
-        <ul className="price-list">
+        <div>
+          <h2>Phone protection</h2>
+          <div>{protectPrice}</div>
+          <AddToCart
+            cartChangeCallBack={value => {
+              setNeedProtection(value);
+            }}
+          />
+        </div>
+        {/*<ul className="price-list">*/}
+        {/*  <li>*/}
+        {/*    <label>Subtotal: </label>*/}
+        {/*    <span>{currencyTrans(buyPrice)}</span>*/}
+        {/*  </li>*/}
+        {needProtection ? (
           <li>
-            <label>Subtotal: </label>
-            <span>{currencyTrans(buyPrice)}</span>
+            <label>Protection: </label>
+            <span>{currencyTrans(protectPrice)}</span>
           </li>
-          {needProtection ? (
-            <li>
-              <label>Protection: </label>
-              <span>{currencyTrans(protectPrice)}</span>
-            </li>
-          ) : null}
-          <li className="protect">
-            <label>Total:</label>
-            <span>
-              {currencyTrans(
-                needProtection ? buyPrice + protectPrice : buyPrice
-              )}
-            </span>
-          </li>
-        </ul>
-        <CheckOutButton
-          productId={productId}
-          needProtection={needProtection}
-          isPeiJian={true}
-          onClick={() => {
-            setShowModal(false);
-            dataReport({
-              event: "EEcheckout",
-              ecommerce: {
-                currencyCode: "USD",
-                add: {
-                  products: [
-                    {
-                      sku: String(skuId),
-                      name: productDisplayName,
-                      price: Number(buyPrice)
-                    }
-                  ]
-                }
-              }
-            });
-          }}
-        />
+        ) : null}
+        {/*  <li className="protect">*/}
+        {/*    <label>Total:</label>*/}
+        {/*    <span>*/}
+        {/*      {currencyTrans(*/}
+        {/*        needProtection ? buyPrice + protectPrice : buyPrice*/}
+        {/*      )}*/}
+        {/*    </span>*/}
+        {/*  </li>*/}
+        {/*</ul>*/}
+        {/*<CheckOutButton*/}
+        {/*  productId={productId}*/}
+        {/*  needProtection={needProtection}*/}
+        {/*  isPeiJian={true}*/}
+        {/*  onClick={() => {*/}
+        {/*    setShowModal(false);*/}
+        {/*    dataReport({*/}
+        {/*      event: "EEcheckout",*/}
+        {/*      ecommerce: {*/}
+        {/*        currencyCode: "USD",*/}
+        {/*        add: {*/}
+        {/*          products: [*/}
+        {/*            {*/}
+        {/*              sku: String(skuId),*/}
+        {/*              name: productDisplayName,*/}
+        {/*              price: Number(buyPrice)*/}
+        {/*            }*/}
+        {/*          ]*/}
+        {/*        }*/}
+        {/*      }*/}
+        {/*    });*/}
+        {/*  }}*/}
+        {/*/>*/}
         <PayCardImages />
       </div>
     </MyModal>
