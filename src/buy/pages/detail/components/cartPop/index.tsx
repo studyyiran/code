@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import PhoneInfo from "../phoneInfo";
+import PhoneInfo, { ProductInfoCard } from "../phoneInfo";
 import { currencyTrans } from "../../../../common/utils/util";
 import { dataReport } from "../../../../common/dataReport";
 import PayCardImages from "../payCardImages";
@@ -11,7 +11,10 @@ import {
 } from "../../../order/context";
 import { locationHref } from "../../../../common/utils/routerHistory";
 import { IProductDetail } from "../../context/interface";
-import { protectPrice } from "../../../../common/config/staticConst";
+import {
+  protectionInfo,
+  protectPrice
+} from "../../../../common/config/staticConst";
 
 interface ICartPop {
   showModal: boolean;
@@ -33,6 +36,7 @@ export function CartPop(props: ICartPop) {
   const { showModal, setShowModal, productDetail } = props;
   const [needProtection, setNeedProtection] = useState(false);
   const [productList, setProductList] = useState([]);
+
   return (
     <MyModal
       needDefaultScroll={true}
@@ -45,6 +49,7 @@ export function CartPop(props: ICartPop) {
       footer={null}
     >
       <div>
+        {/*机子*/}
         <PhoneInfo
           {...productDetail}
           needProtection={needProtection}
@@ -53,31 +58,14 @@ export function CartPop(props: ICartPop) {
           }}
           isPeiJian={true}
         />
-        <WithTitle title="Phone protection">
-          <div>{protectPrice}</div>
-          <AddToCart
-            value={needProtection}
-            cartChangeCallBack={value => {
-              setNeedProtection(value);
-            }}
-          />
-        </WithTitle>
-        <WithTitle title="Recommended accessories">
-          <PhoneInfo
-            {...productDetail}
-            needProtection={needProtection}
-            setNeedProtection={(value: any) => {
-              setNeedProtection(value);
-            }}
-            isPeiJian={true}
-          />
-          <AddToCart
-            value={needProtection}
-            cartChangeCallBack={value => {
-              setNeedProtection(value);
-            }}
-          />
-        </WithTitle>
+        {/*保险*/}
+        <RenderProtection
+          needProtection={needProtection}
+          setNeedProtection={setNeedProtection}
+        />
+        {/*其他子商品*/}
+        <RenderOtherProduct />
+        {/*价格计算*/}
         {/*<ul className="price-list">*/}
         {/*  <li>*/}
         {/*    <label>Subtotal: </label>*/}
@@ -104,21 +92,21 @@ export function CartPop(props: ICartPop) {
         {/*  isPeiJian={true}*/}
         {/*  onClick={() => {*/}
         {/*    setShowModal(false);*/}
-        {/*    dataReport({*/}
-        {/*      event: "EEcheckout",*/}
-        {/*      ecommerce: {*/}
-        {/*        currencyCode: "USD",*/}
-        {/*        add: {*/}
-        {/*          products: [*/}
-        {/*            {*/}
-        {/*              sku: String(skuId),*/}
-        {/*              name: productDisplayName,*/}
-        {/*              price: Number(buyPrice)*/}
-        {/*            }*/}
-        {/*          ]*/}
-        {/*        }*/}
-        {/*      }*/}
-        {/*    });*/}
+        {/*    // dataReport({*/}
+        {/*    //   event: "EEcheckout",*/}
+        {/*    //   ecommerce: {*/}
+        {/*    //     currencyCode: "USD",*/}
+        {/*    //     add: {*/}
+        {/*    //       products: [*/}
+        {/*    //         {*/}
+        {/*    //           sku: String(skuId),*/}
+        {/*    //           name: productDisplayName,*/}
+        {/*    //           price: Number(buyPrice)*/}
+        {/*    //         }*/}
+        {/*    //       ]*/}
+        {/*    //     }*/}
+        {/*    //   }*/}
+        {/*    // });*/}
         {/*  }}*/}
         {/*/>*/}
         <PayCardImages />
@@ -210,5 +198,47 @@ function AddToCart(props: IAddToCard) {
     <div onClick={cartChangeHandler}>
       {getState() ? <span>Remove</span> : <span>Add to card</span>}
     </div>
+  );
+}
+
+function RenderProtection(props: {
+  needProtection: boolean;
+  setNeedProtection: any;
+}) {
+  const { needProtection, setNeedProtection } = props;
+  return (
+    <WithTitle title="Phone protection">
+      {/*<div>{protectPrice}</div>*/}
+      <ProductInfoCard
+        productName={"90 Days"}
+        productImage={protectionInfo.img}
+        price={protectPrice}
+      >
+        {protectionInfo.content}
+        <div>
+          <a>Learn more</a>
+          <AddToCart
+            value={needProtection}
+            cartChangeCallBack={value => {
+              setNeedProtection(value);
+            }}
+          />
+        </div>
+      </ProductInfoCard>
+    </WithTitle>
+  );
+}
+
+function RenderOtherProduct() {
+  return (
+    <WithTitle title="Recommended accessories">
+      商品list
+      {/*<AddToCart*/}
+      {/*  value={needProtection}*/}
+      {/*  cartChangeCallBack={value => {*/}
+      {/*    setNeedProtection(value);*/}
+      {/*  }}*/}
+      {/*/>*/}
+    </WithTitle>
   );
 }

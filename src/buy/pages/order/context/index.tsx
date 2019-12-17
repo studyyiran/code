@@ -591,14 +591,7 @@ function reducer(state: IOrderInfoState, action: IReducerAction) {
     case orderInfoReducerTypes.addSubOrder: {
       newState = {
         ...newState,
-        subOrders: [value]
-      };
-      break;
-    }
-    case orderInfoReducerTypes.setSubOrders: {
-      newState = {
-        ...newState,
-        subOrders: newState.subOrders.map(value)
+        subOrders: value
       };
       break;
     }

@@ -62,21 +62,21 @@ export default function OrderList(props: any) {
                   needProtection={subOrderInfo.needProtection}
                   {...item1}
                   subOrderInfo={subOrderInfo}
-                  setNeedProtection={(value: boolean) => {
-                    orderInfoContextDispatch({
-                      type: orderInfoReducerTypes.setSubOrders,
-                      value: (item: userPhoneOrder) => {
-                        if (String(item.productId) === String(item.productId)) {
-                          return {
-                            productId: item.productId,
-                            needProtection: value
-                          };
-                        } else {
-                          return item;
-                        }
-                      }
-                    });
-                  }}
+                  // setNeedProtection={(value: boolean) => {
+                  //   orderInfoContextDispatch({
+                  //     type: orderInfoReducerTypes.setSubOrders,
+                  //     value: (item: userPhoneOrder) => {
+                  //       if (String(item.productId) === String(item.productId)) {
+                  //         return {
+                  //           productId: item.productId,
+                  //           needProtection: value
+                  //         };
+                  //       } else {
+                  //         return item;
+                  //       }
+                  //     }
+                  //   });
+                  // }}
                 />
               );
             } else {
