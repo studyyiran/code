@@ -93,7 +93,7 @@ export function CartPop(props: ICartPop) {
         {/*  </li>*/}
         {/*</ul>*/}
         <CheckOutButton
-          productId={productDetail.productId}
+          buyProductId={productDetail.buyProductId}
           otherProductList={otherProductList}
           needProtection={needProtection}
           onClick={() => {
@@ -122,12 +122,12 @@ export function CartPop(props: ICartPop) {
 }
 
 function CheckOutButton(props: {
-  productId: string;
+  buyProductId: string;
   needProtection: boolean;
   otherProductList: IOtherProduct[];
   onClick: any;
 }) {
-  const { productId, needProtection, otherProductList } = props;
+  const { buyProductId, needProtection, otherProductList } = props;
   const orderInfoContext = useContext(OrderInfoContext);
   const { orderInfoContextDispatch } = orderInfoContext as IOrderInfoContext;
   return (
@@ -137,13 +137,20 @@ function CheckOutButton(props: {
         const otherProductInfo = otherProductList.map(item => {
           return {
             productId: item.productId,
-            needProtection: false
+            needProtection: false,
+            productType: "ACCESSORY"
           };
         });
         // 1 他会xx
         orderInfoContextDispatch({
           type: orderInfoReducerTypes.addSubOrder,
-          value: [{ productId, needProtection }].concat(otherProductInfo)
+          value: [
+            {
+              productId: buyProductId,
+              needProtection,
+              productType: "PRODUCT"
+            }
+          ].concat(otherProductInfo)
         });
         if (props.onClick) {
           props.onClick();

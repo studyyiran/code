@@ -9,7 +9,7 @@ import { OurHomeContextProvider } from "../pages/home/context";
 import { StoreCheckOrderContextProvider } from "../pages/checkOrder/context";
 import { TotalOrderInfoProvider } from "../pages/checkOrder/container/context";
 import { StoreAuthContextProvider } from "../common-modules/context/authToken/context";
-import {AccountInfoContextProvider} from "../pages/personal/context";
+import { AccountInfoContextProvider } from "../pages/personal/context";
 
 export function RenderWithOriginData(props: any) {
   return (
@@ -25,13 +25,13 @@ export function RenderWithOriginData(props: any) {
             <TotalOrderInfoProvider>
               <StoreCheckOrderContextProvider>
                 <OurHomeContextProvider>
-                  <OrderInfoContextProvider>
-                    <ProductDetailContextProvider>
+                  <ProductDetailContextProvider>
+                    <OrderInfoContextProvider>
                       <ProductListContextProvider>
                         {props.children}
                       </ProductListContextProvider>
-                    </ProductDetailContextProvider>
-                  </OrderInfoContextProvider>
+                    </OrderInfoContextProvider>
+                  </ProductDetailContextProvider>
                 </OurHomeContextProvider>
               </StoreCheckOrderContextProvider>
             </TotalOrderInfoProvider>

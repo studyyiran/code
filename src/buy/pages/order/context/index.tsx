@@ -3,7 +3,8 @@ import React, {
   useReducer,
   useEffect,
   useCallback,
-  useRef
+  useRef,
+  useContext
 } from "react";
 import { IReducerAction } from "buy/common/interface/index.interface";
 import {
@@ -24,13 +25,18 @@ import { Message } from "../../../components/message";
 import { reducerLog } from "../../../common/hoc";
 import { dataReport } from "../../../common/dataReport";
 import useGetTotalPrice from "../components/orderLayout/useHook";
-import {IProductDetail} from "../../detail/context/interface";
+import { IProductDetail } from "../../detail/context/interface";
+import {
+  IProductDetailContext,
+  ProductDetailContext
+} from "../../detail/context";
 
 export const OrderInfoContext = createContext({});
 const storeName = "OrderInfo";
 export interface userPhoneOrder {
   productId: string;
   needProtection: boolean;
+  productType: "PRODUCT" | "ACCESSORY";
 }
 
 export interface IUserInfo {
@@ -88,6 +94,8 @@ export interface IOrderInfoState {
 
 // @provider
 export function OrderInfoContextProvider(props: any) {
+  const productDetailContext = useContext(ProductDetailContext);
+  const { setProductId } = productDetailContext as IProductDetailContext;
   const initState: IOrderInfoState = {
     subOrders: [],
     pendingStatus: false,
@@ -115,11 +123,6 @@ export function OrderInfoContextProvider(props: any) {
     action.orderIdToCheckOrderInfo();
   }, [action.orderIdToCheckOrderInfo]);
 
-  // 监听变化
-  useEffect(() => {
-    action.getDetailByProductList();
-  }, [action.getDetailByProductList]);
-
   useEffect(() => {
     action.getOrderTax();
   }, [action.getOrderTax]);
@@ -133,6 +136,18 @@ export function OrderInfoContextProvider(props: any) {
   useEffect(() => {
     action.startOrder();
   }, [action.startOrder]);
+
+  // 当有值的时候,去设定当前的值,从而间接拉取数据
+  useEffect(() => {
+    const target = state.subOrders.find(item => {
+      return item && item.productType === "PRODUCT";
+    });
+    if (target) {
+      console.log("!!!!!!!");
+      console.log(state.subOrders);
+      setProductId(target.productId);
+    }
+  }, [state.subOrders]);
 
   const propsValue: IOrderInfoContext = {
     ...action,
@@ -150,7 +165,6 @@ export interface IOrderInfoContext extends IContextActions {
 
 // @actions
 interface IContextActions {
-  getDetailByProductList: () => void;
   getOrderTax: () => void;
   getExpress: () => void;
   createOrder: (info: any) => any;
@@ -303,7 +317,7 @@ function useGetAction(
                       id: res,
                       affiliation: "Up Trade",
                       revenue: calcTotalPrice()
-                    },
+                    }
                     // products: state.subOrders.map((item: any) => {
                     //   const { productId, needProtection } = item;
                     //   const subOrderInfo: any = state.phoneDetailList.find(
@@ -405,18 +419,18 @@ function useGetAction(
         return "Please enter a valid zipCode";
       }
     }),
-    getDetailByProductList: promisify(async function() {
-      // 这行是什么意思? 为什么这边是这样拉的? 订单结束后是否会有影响?
-      const detailArr = await Promise.all(
-        state.subOrders.map(({ productId }) => {
-          return getProductDetail(productId);
-        })
-      );
-      dispatch({
-        type: orderInfoReducerTypes.setPhoneDetailList,
-        value: detailArr
-      });
-    }),
+    // getDetailByProductList: promisify(async function() {
+    //   // 这行是什么意思? 为什么这边是这样拉的? 订单结束后是否会有影响?
+    //   const detailArr = await Promise.all(
+    //     state.subOrders.map(({ productId }) => {
+    //       return getProductDetail(productId);
+    //     })
+    //   );
+    //   dispatch({
+    //     type: orderInfoReducerTypes.setPhoneDetailList,
+    //     value: detailArr
+    //   });
+    // }),
     getOrderTax: promisify(async function() {
       if (state.userInfo.state && state.subOrders && state.subOrders.length) {
         const taxInfo = await getOrderTax({
@@ -447,9 +461,6 @@ function useGetAction(
     state.userInfo,
     state.subOrders
   ]);
-  actions.getDetailByProductList = useCallback(actions.getDetailByProductList, [
-    state.subOrders
-  ]);
   actions.getOrderTax = useCallback(actions.getOrderTax, [
     state.subOrders,
     state.userInfo
@@ -466,7 +477,6 @@ function useGetAction(
 
 // action types
 export const orderInfoReducerTypes = {
-  setPhoneDetailList: "setPhoneDetailList",
   addSubOrder: "addSubOrder",
   setOrderTaxInfo: "setOrderTaxInfo",
   setExpressInfo: "setExpressInfo",
@@ -587,7 +597,6 @@ function reducer(state: IOrderInfoState, action: IReducerAction) {
       break;
     }
     case orderInfoReducerTypes.addSubOrder: {
-      debugger
       newState = {
         ...newState,
         subOrders: value
