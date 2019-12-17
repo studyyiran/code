@@ -7,12 +7,15 @@ import React, {
 import { IReducerAction } from "buy/common/interface/index.interface";
 import { getProductDetail, getSimiliar } from "../server";
 import { backgroundCheckList } from "./staticData";
-import {callBackWhenPassAllFunc, promisify, safeEqual} from "buy/common/utils/util";
+import {
+  callBackWhenPassAllFunc,
+  safeEqual
+} from "buy/common/utils/util";
 import { useGetOriginData } from "../../../common/useHook/useGetOriginData";
 import { IContextValue } from "../../../common/type";
 import { locationHref } from "../../../common/utils/routerHistory";
-import {useIsCurrentPage} from "../../../common/useHook";
-import {IProductDetail} from "./interface";
+import { useIsCurrentPage } from "../../../common/useHook";
+import { IProductDetail } from "./interface";
 
 export const ProductDetailContext = createContext({});
 export const StoreDetail = "StoreDetail";
@@ -36,7 +39,7 @@ export function ProductDetailContextProvider(props: any) {
     initState,
     StoreDetail
   );
-  const action: IContextActions = useGetAction(state, dispatch);
+  const action = useGetAction(state, dispatch);
   const { getProductDetail, getSimiliarPhoneList } = action;
 
   const isPage = useIsCurrentPage("/detail");
@@ -101,7 +104,7 @@ function useGetAction(
   dispatch: (action: IReducerAction) => void
 ): IContextActions {
   const actions: IContextActions = {
-    getProductDetail: promisify(async function() {
+    getProductDetail: useCallback(async function() {
       function redirect() {
         locationHref("/buy-phone");
       }
@@ -120,8 +123,8 @@ function useGetAction(
         console.error(e);
         redirect();
       }
-    }),
-    getSimiliarPhoneList: promisify(async function() {
+    }, []),
+    getSimiliarPhoneList: useCallback(async function() {
       const res: any = await getSimiliar({
         buyProductId: state.productId,
         pageNum: 1,
@@ -131,13 +134,13 @@ function useGetAction(
         type: storeDetailActionTypes.setSimiliarPhoneList,
         value: res
       });
-    }),
-    setProductId: promisify(async function(id: string) {
+    }, []),
+    setProductId: useCallback(async function(id) {
       dispatch({
         type: storeDetailActionTypes.setProductId,
         value: id
       });
-    })
+    }, [])
   };
   actions.getSimiliarPhoneList = useCallback(actions.getSimiliarPhoneList, [
     state.productId
