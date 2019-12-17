@@ -32,10 +32,16 @@ function WithTitle(props: { title: string; children: any }) {
   );
 }
 
+interface IOtherProduct {
+  id: string;
+}
+
 export function CartPop(props: ICartPop) {
   const { showModal, setShowModal, productDetail } = props;
   const [needProtection, setNeedProtection] = useState(false);
-  const [productList, setProductList] = useState([]);
+  const [otherProductList, setOtherProductList] = useState(
+    [] as IOtherProduct[]
+  );
 
   return (
     <MyModal
@@ -86,51 +92,58 @@ export function CartPop(props: ICartPop) {
         {/*    </span>*/}
         {/*  </li>*/}
         {/*</ul>*/}
-        {/*<CheckOutButton*/}
-        {/*  productId={productId}*/}
-        {/*  needProtection={needProtection}*/}
-        {/*  isPeiJian={true}*/}
-        {/*  onClick={() => {*/}
-        {/*    setShowModal(false);*/}
-        {/*    // dataReport({*/}
-        {/*    //   event: "EEcheckout",*/}
-        {/*    //   ecommerce: {*/}
-        {/*    //     currencyCode: "USD",*/}
-        {/*    //     add: {*/}
-        {/*    //       products: [*/}
-        {/*    //         {*/}
-        {/*    //           sku: String(skuId),*/}
-        {/*    //           name: productDisplayName,*/}
-        {/*    //           price: Number(buyPrice)*/}
-        {/*    //         }*/}
-        {/*    //       ]*/}
-        {/*    //     }*/}
-        {/*    //   }*/}
-        {/*    // });*/}
-        {/*  }}*/}
-        {/*/>*/}
-        <PayCardImages />
+        <CheckOutButton
+          productId={productDetail.productId}
+          otherProductList={otherProductList}
+          needProtection={needProtection}
+          onClick={() => {
+            setShowModal(false);
+            // dataReport({
+            //   event: "EEcheckout",
+            //   ecommerce: {
+            //     currencyCode: "USD",
+            //     add: {
+            //       products: [
+            //         {
+            //           sku: String(skuId),
+            //           name: productDisplayName,
+            //           price: Number(buyPrice)
+            //         }
+            //       ]
+            //     }
+            //   }
+            // });
+          }}
+        />
+        {/*<PayCardImages />*/}
       </div>
     </MyModal>
   );
 }
 
-function CheckOutButton(props: any) {
-  const { productId, isPeiJian, needProtection } = props;
+function CheckOutButton(props: {
+  productId: string;
+  needProtection: boolean;
+  otherProductList: IOtherProduct[];
+  onClick: any;
+}) {
+  const { productId, needProtection, otherProductList } = props;
   const orderInfoContext = useContext(OrderInfoContext);
   const { orderInfoContextDispatch } = orderInfoContext as IOrderInfoContext;
   return (
     <button
       className="common-button"
       onClick={() => {
+        const otherProductInfo = otherProductList.map(item => {
+          return {
+            id: item.id,
+            needProtection: false
+          };
+        });
         // 1 他会xx
         orderInfoContextDispatch({
           type: orderInfoReducerTypes.addSubOrder,
-          value: {
-            productId,
-            isPeiJian,
-            needProtection
-          }
+          value: [{ id: productId, needProtection }].concat(otherProductInfo)
         });
         if (props.onClick) {
           props.onClick();
@@ -145,32 +158,6 @@ function CheckOutButton(props: any) {
     </button>
   );
 }
-
-// function CheckBoxProtection(props: any) {
-//   if (props && props.needProtectionState) {
-//     const [needProtection, setNeedProtection] = props.needProtectionState;
-//     return (
-//       <div className="checkbox-protection">
-//         <Checkbox
-//           checked={needProtection}
-//           onChange={() => {
-//             setNeedProtection((current: any) => {
-//               return !current;
-//             });
-//           }}
-//         >
-//           <span>
-//             Add UpTrade Protection for {currencyTrans(protectPrice)}
-//             {staticContentConfig.perMonth}
-//           </span>
-//         </Checkbox>
-//         <TipsIcon>{TipsProtection}</TipsIcon>
-//       </div>
-//     );
-//   } else {
-//     return null;
-//   }
-// }
 
 interface IAddToCard {
   cartChangeCallBack: (haveAddIntoCart: boolean) => any;
@@ -242,3 +229,29 @@ function RenderOtherProduct() {
     </WithTitle>
   );
 }
+
+// function CheckBoxProtection(props: any) {
+//   if (props && props.needProtectionState) {
+//     const [needProtection, setNeedProtection] = props.needProtectionState;
+//     return (
+//       <div className="checkbox-protection">
+//         <Checkbox
+//           checked={needProtection}
+//           onChange={() => {
+//             setNeedProtection((current: any) => {
+//               return !current;
+//             });
+//           }}
+//         >
+//           <span>
+//             Add UpTrade Protection for {currencyTrans(protectPrice)}
+//             {staticContentConfig.perMonth}
+//           </span>
+//         </Checkbox>
+//         <TipsIcon>{TipsProtection}</TipsIcon>
+//       </div>
+//     );
+//   } else {
+//     return null;
+//   }
+// }

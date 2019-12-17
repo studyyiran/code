@@ -15,15 +15,15 @@ import { InnerDivImage } from "../innerDivImage";
 他可以显示三种 机子 配件 甚至还有保险的渲染
  */
 export default function PhoneInfo(props: {
-  productDisplayName: string,
-  buyProductBQV: string,
-  buyPrice: any,
-  bpvDisplayName: string,
-  buyLevel: string,
-  isPeiJian?: boolean,
-  subOrderInfo?: any,
-  needProtection: boolean,
-  setNeedProtection: any,
+  productDisplayName: string;
+  buyProductBQV: string;
+  buyPrice: any;
+  bpvDisplayName: string;
+  buyLevel: string;
+  needProtection: boolean;
+  isPeiJian?: boolean;
+  subOrderInfo?: any;
+  setNeedProtection?: any;
 }) {
   const {
     productDisplayName,
@@ -33,44 +33,39 @@ export default function PhoneInfo(props: {
     buyLevel,
     isPeiJian,
     needProtection,
-    setNeedProtection,
+    setNeedProtection
   } = props;
   const [lineOne, lineTwo] = getDescArr(buyProductBQV, productDisplayName);
   const productImg = useGetProductImg(props);
   return (
+    <ProductInfoCard
+      productImage={productImg}
+      productName={lineOne}
+      price={buyPrice}
+    >
+      <li className="bpv-name">{lineTwo}</li>
+      <li className="bpv-name">{bpvDisplayName}</li>
+      <li className="level">Condition {buyLevel}</li>
+    </ProductInfoCard>
+  );
+}
+
+export function ProductInfoCard(props: {
+  productName: string;
+  productImage: string;
+  price: number;
+  children: any;
+}) {
+  const { productName, productImage, price, children } = props;
+  return (
     <div className="phone-info">
-      <InnerDivImage imgUrl={productImg} lazyload={false} />
+      <InnerDivImage imgUrl={productImage} lazyload={false} />
       <ul className="info-list">
         <li className="price-container">
-          <h3>{lineOne}</h3>
-          <span>{currencyTrans(buyPrice)}</span>
+          <h3>{productName}</h3>
+          <span>{currencyTrans(price)}</span>
         </li>
-        <li className="bpv-name">{lineTwo}</li>
-        <li className="bpv-name">{bpvDisplayName}</li>
-        <li className="level">Condition {buyLevel}</li>
-        {/*{setNeedProtection ? (*/}
-        {/*  <li className="checkbox-protection">*/}
-        {/*    <div>*/}
-        {/*      <div className="icon-container">*/}
-        {/*        <Checkbox*/}
-        {/*          checked={needProtection}*/}
-        {/*          onChange={e => {*/}
-        {/*            setNeedProtection(e.target.checked);*/}
-        {/*          }}*/}
-        {/*        >*/}
-        {/*          <span>Add UpTrade Protection</span>*/}
-        {/*        </Checkbox>*/}
-        {/*        <div>*/}
-        {/*          <TipsIcon>{TipsProtection}</TipsIcon>*/}
-        {/*        </div>*/}
-        {/*      </div>*/}
-        {/*      <span className="strong">*/}
-        {/*        {currencyTrans(protectPrice)}*/}
-        {/*        {staticContentConfig.perMonth}*/}
-        {/*      </span>*/}
-        {/*    </div>*/}
-        {/*  </li>*/}
-        {/*) : null}*/}
+        {children}
       </ul>
     </div>
   );
