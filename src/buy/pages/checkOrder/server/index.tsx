@@ -26,7 +26,7 @@ export function serverCancelOrder(data: IOrderParam) {
   return ajax.post(CANCEL_ORDER, data);
 }
 
-export function serverApplyReturn(data: IOrderParam) {
+export function serverApplyReturn(data: any) {
   return ajax.post(APPLY_RETURN, data);
 }
 

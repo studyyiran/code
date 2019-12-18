@@ -166,7 +166,7 @@ export function OrderList(props: any) {
             className="button-centered common-button"
             isLoading={isLoading && isLoading.serverRequestReturn}
             onClick={() => {
-              serverRequestReturn().then(() => {
+              serverRequestReturn(productList).then(() => {
                 setReturnModal(false);
               });
             }}

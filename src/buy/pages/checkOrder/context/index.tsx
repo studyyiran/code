@@ -12,7 +12,11 @@ import {
   serverApplyReturn,
   serverCancelOrder
 } from "../server";
-import {callBackWhenPassAllFunc, promisify, safeEqual} from "buy/common/utils/util";
+import {
+  callBackWhenPassAllFunc,
+  promisify,
+  safeEqual
+} from "buy/common/utils/util";
 import { IContextValue } from "../../../common/type";
 import useReducerMiddleware from "../../../common/useHook/useReducerMiddleware";
 import { Message } from "../../../components/message";
@@ -99,7 +103,7 @@ export interface IStoreCheckOrderActions {
   reloadOrderFromCache: () => any;
   getTranshipping: () => void;
   updateCheckForOrder: () => void;
-  serverRequestReturn: () => any;
+  serverRequestReturn: (subOrderNos: string[]) => any;
   serverCancelOrder: () => any;
 }
 
@@ -141,7 +145,7 @@ function useGetAction(
         });
       }
     }),
-    serverRequestReturn: promisify(async function() {
+    serverRequestReturn: promisify(async function(subOrderNos: string[]) {
       const info = getLoginInfo(state.checkOrderDetail);
       if (info) {
         try {
@@ -152,7 +156,7 @@ function useGetAction(
             }
           });
           // 拉取
-          await serverApplyReturn(info);
+          await serverApplyReturn({ ...info, subOrderNos });
           // 刷新
           await actions.updateCheckForOrder();
         } catch (e) {
@@ -213,9 +217,9 @@ function useGetAction(
     updateCheckForOrder: promisify(async function() {
       if (getLoginInfo(state.checkOrderDetail)) {
         // 从数据中获取
-        actions.getCheckOrderDetail(getLoginInfo(
-          state.checkOrderDetail
-        ) as any);
+        actions.getCheckOrderDetail(
+          getLoginInfo(state.checkOrderDetail) as any
+        );
       } else {
         // 从缓存中获取
         actions.reloadOrderFromCache();
