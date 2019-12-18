@@ -19,18 +19,12 @@ export default function PhoneInfo(props: {
   buyProductBQV: string;
   buyPrice: any;
   bpvDisplayName: string;
-  buyLevel: string;
-  needProtection?: boolean;
-  isPeiJian?: boolean;
-  setNeedProtection?: any; }) {const {
+  buyLevel: string; }) {const {
     productDisplayName,
     buyProductBQV,
     buyPrice,
     bpvDisplayName,
     buyLevel,
-    isPeiJian,
-    needProtection,
-    setNeedProtection
   } = props;
   const [lineOne, lineTwo] = getDescArr(buyProductBQV, productDisplayName);
   const productImg = useGetProductImg(props);

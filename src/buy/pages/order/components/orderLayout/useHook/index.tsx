@@ -50,11 +50,12 @@ export default function useGetTotalPrice(
   }
   function totalProtections() {
     let total = 0;
-    subOrders.forEach(({ needProtection }) => {
-      if (needProtection) {
-        total = NP.plus(total, Number(protectPrice));
-      }
+    const result = subOrders.some(({ needProtection }) => {
+      return needProtection;
     });
+    if (result) {
+      total = NP.plus(total, Number(protectPrice));
+    }
     return total;
   }
   function calcTotalPrice() {

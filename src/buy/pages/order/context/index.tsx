@@ -246,7 +246,7 @@ function useGetAction(
         // 1 发起请求
         const expressInfo = getExpress({
           addressInfo: userInfo,
-          productIds: state.subOrders.map(item => item.productId)
+          productInfos: state.subOrders
         });
         // TODO 这行有重复
         expressInfo.then((res: any) => {
@@ -436,7 +436,7 @@ function useGetAction(
       if (state.userInfo.state && state.subOrders && state.subOrders.length) {
         const taxInfo = await getOrderTax({
           state: state.userInfo.state,
-          productIds: state.subOrders.map(item => item.productId)
+          productInfos: state.subOrders
         });
         dispatch({
           type: orderInfoReducerTypes.setOrderTaxInfo,
@@ -448,7 +448,7 @@ function useGetAction(
       if (state.subOrders.length && state.userInfo) {
         const expressInfo = await getExpress({
           addressInfo: state.userInfo,
-          productIds: state.subOrders.map(item => item.productId)
+          productInfos: state.subOrders
         });
         // TODO express need check
         dispatch({

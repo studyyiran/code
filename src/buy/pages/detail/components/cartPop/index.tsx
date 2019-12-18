@@ -16,7 +16,7 @@ import {
   protectPrice
 } from "../../../../common/config/staticConst";
 import { useGetProductImg } from "../../util";
-import {constProductType} from "../../../../common/constValue";
+import { constProductType } from "../../../../common/constValue";
 
 interface ICartPop {
   showModal: boolean;
@@ -64,13 +64,7 @@ export function CartPop(props: ICartPop) {
     >
       <div>
         {/*机子*/}
-        <PhoneInfo
-          {...productDetail}
-          needProtection={needProtection}
-          setNeedProtection={(value: any) => {
-            setNeedProtection(value);
-          }}
-        />
+        <PhoneInfo {...productDetail} />
         {/*保险*/}
         <RenderProtection
           needProtection={needProtection}
