@@ -27,7 +27,8 @@ import Svg from "../../../components/svg";
 import {
   callBackWhenPassAllFunc,
   currencyTrans,
-  getLocationUrl
+  getLocationUrl,
+  safeEqual
 } from "../../../common/utils/util";
 import { getRootApi } from "../../../api/api";
 import { locationHref } from "../../../common/utils/routerHistory";
@@ -108,13 +109,34 @@ export function OrderList(props: any) {
   }
 
   function ReturnModal() {
-    const [productList, setProductList] = useState([]);
-    function onChangeHandler() {}
+    const [productList, setProductList] = useState([] as any[]);
+    function onChangeHandler(value?: any, e?: any) {
+      const checked = e.target.checked;
+      if (value) {
+        // 如果新增
+        setProductList(list => {
+          if (checked) {
+            return list.concat([value as any]);
+          } else {
+            return list.filter(item => {
+              return !safeEqual(item, value);
+            });
+          }
+        });
+      } else {
+      }
+    }
     const list = (checkOrderDetail.subOrders || []).map(order => {
       const { subOrderNo, productInfo, productType } = order;
       if (productType === constProductType.PRODUCT) {
+        if (productList && !productList.length) {
+          setProductList([subOrderNo]);
+        }
         return (
-          <WithInput checked={true} onChange={onChangeHandler}>
+          <WithInput
+            checked={productList.some(item => safeEqual(item, subOrderNo))}
+            onChange={onChangeHandler.bind({}, "")}
+          >
             <PhoneInfo {...productInfo} />
           </WithInput>
         );
