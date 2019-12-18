@@ -51,7 +51,7 @@ export function FilterList() {
               list={optionArr}
               render={({ id, displayName }: any) => {
                 if (tag && tag.indexOf("ISCOLOR") !== -1) {
-                  return <span className="circle" style={{ background: id }} />;
+                  return <span title={displayName} className="circle" style={{ background: id }} />;
                 } else {
                   return displayName;
                 }
