@@ -67,21 +67,6 @@ export default function OrderList(props: any) {
               return (<PhoneInfo
                   key={productDetail.buyProductId}
                   {...productDetail}
-                  // setNeedProtection={(value: boolean) => {
-                  //   orderInfoContextDispatch({
-                  //     type: orderInfoReducerTypes.setSubOrders,
-                  //     value: (item: userPhoneOrder) => {
-                  //       if (String(item.productId) === String(item.productId)) {
-                  //         return {
-                  //           productId: item.productId,
-                  //           needProtection: value
-                  //         };
-                  //       } else {
-                  //         return item;
-                  //       }
-                  //     }
-                  //   });
-                  // }}
                 />
               );
             } else if (subOrdersItem.productType === constProductType.ACCESSORY) {

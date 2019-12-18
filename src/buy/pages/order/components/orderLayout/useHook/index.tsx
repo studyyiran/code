@@ -2,6 +2,11 @@ import { useContext } from "react";
 import { IOrderInfoContext, OrderInfoContext } from "../../../context";
 import { protectPrice } from "../../../../../common/config/staticConst";
 import NP from "number-precision";
+import { constProductType } from "../../../../../common/constValue";
+import {
+  IProductDetailContext,
+  ProductDetailContext
+} from "../../../../detail/context";
 export default function useGetTotalPrice(
   props?: any
 ): {
@@ -10,17 +15,37 @@ export default function useGetTotalPrice(
   calcTotalPrice: () => number;
   getShippingPrice: () => number;
 } {
+  // 获取物品价格信息
+  const productDetailContext = useContext(ProductDetailContext);
+  const {
+    productDetailContextValue
+  } = productDetailContext as IProductDetailContext;
+  const { productDetail, partsInfo } = productDetailContextValue;
+
   const orderInfoContext = useContext(OrderInfoContext);
   const { orderInfoContextValue } = orderInfoContext as IOrderInfoContext;
   const { subOrders, taxInfo, userExpress, expressInfo } =
     orderInfoContextValue || props;
   function totalProductPrice() {
     let total = 0;
-    // phoneDetailList.forEach((item: any) => {
-    //   if (item && item.buyPrice) {
-    //     total = NP.plus(total, Number(item.buyPrice));
-    //   }
-    // });
+    // 首先计算手机.
+    subOrders.forEach(item => {
+      const { productType, productId } = item;
+      if (productType !== constProductType.PRODUCT) {
+        // 从detail中获取值
+        if (productDetail) {
+          total = total + Number(productDetail.buyPrice);
+        }
+      } else if (productType) {
+        if (partsInfo) {
+          total =
+            total +
+            partsInfo
+              .map(({ buyPrice }) => buyPrice)
+              .reduce((count, b) => count + Number(b), 0);
+        }
+      }
+    });
     return total;
   }
   function totalProtections() {
