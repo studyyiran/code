@@ -153,17 +153,26 @@ export function OrderList(props: any) {
         visible={returnModal}
         width={"70%"}
         title={null}
-        footer={"single"}
-        maskClosable={false}
-        cancelText="Continue"
+        footer={null}
         onCancel={() => {
-          serverRequestReturn();
           setReturnModal(false);
         }}
+        maskClosable={false}
       >
         <div className="custom-content">
           <h2>Please select the items you would like to return</h2>
           {list}
+          <Button
+            className="button-centered common-button"
+            isLoading={isLoading && isLoading.serverRequestReturn}
+            onClick={() => {
+              serverRequestReturn().then(() => {
+                setReturnModal(false);
+              });
+            }}
+          >
+            Continue
+          </Button>
         </div>
       </Modal>
     );
@@ -364,7 +373,7 @@ export function OrderList(props: any) {
       </div>
       {needCancelButton ? (
         <Button
-          isLoading={isLoading && isLoading.serverRequestReturn}
+          isLoading={isLoading && isLoading.serverCancelOrder}
           className="button-centered disabled-status button-container button-with-hover"
           onClick={serverCancelOrder}
         >
@@ -373,7 +382,6 @@ export function OrderList(props: any) {
       ) : null}
       {needReturnButton ? (
         <Button
-          isLoading={isLoading && isLoading.serverRequestReturn}
           className="button-centered disabled-status button-container button-with-hover"
           onClick={serverRequestReturnHandler}
         >

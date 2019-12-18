@@ -99,7 +99,7 @@ export interface IStoreCheckOrderActions {
   reloadOrderFromCache: () => any;
   getTranshipping: () => void;
   updateCheckForOrder: () => void;
-  serverRequestReturn: () => void;
+  serverRequestReturn: () => any;
   serverCancelOrder: () => any;
 }
 
@@ -121,7 +121,7 @@ function useGetAction(
           dispatch({
             type: storeCheckOrderReducerTypes.setLoadingObjectStatus,
             value: {
-              serverRequestReturn: true
+              serverCancelOrder: true
             }
           });
           // 拉取
@@ -136,7 +136,7 @@ function useGetAction(
         dispatch({
           type: storeCheckOrderReducerTypes.setLoadingObjectStatus,
           value: {
-            serverRequestReturn: false
+            serverCancelOrder: false
           }
         });
       }
