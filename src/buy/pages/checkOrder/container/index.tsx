@@ -32,6 +32,10 @@ import {
 import { getRootApi } from "../../../api/api";
 import { locationHref } from "../../../common/utils/routerHistory";
 import Modal from "../../../components/modal";
+import PhoneInfo from "../../detail/components/phoneInfo";
+import { constProductType } from "../../../common/constValue";
+import { nameToContent } from "../../order/util";
+import { Checkbox } from "antd";
 
 export function OrderList(props: any) {
   const informationKey = "informaion";
@@ -88,14 +92,44 @@ export function OrderList(props: any) {
     return subOrder.subOrderNo === currentSubOrderNo;
   });
 
+  function WithInput(props: {
+    checked: boolean;
+    onChange: () => any;
+    children: any;
+  }) {
+    const { checked, onChange, children } = props;
+    return (
+      <div>
+        <Checkbox checked={checked} onChange={onChange}>
+          {children}
+        </Checkbox>
+      </div>
+    );
+  }
+
   function ReturnModal() {
-    const [productList, setProductList] = useState([])
+    const [productList, setProductList] = useState([]);
+    function onChangeHandler() {}
+    const list = (checkOrderDetail.subOrders || []).map(order => {
+      const { subOrderNo, productInfo, productType } = order;
+      if (productType === constProductType.PRODUCT) {
+        return (
+          <WithInput checked={true} onChange={onChangeHandler}>
+            <PhoneInfo {...productInfo} />
+          </WithInput>
+        );
+      } else if (productType) {
+        return <PhoneInfo {...productInfo} />;
+      } else {
+        return null;
+      }
+    });
+
     return (
       <Modal
         className="check-order-return-modal"
         visible={returnModal}
         width={"70%"}
-        closable={false}
         title={null}
         footer={"single"}
         maskClosable={false}
@@ -107,6 +141,7 @@ export function OrderList(props: any) {
       >
         <div className="custom-content">
           <h2>Please select the items you would like to return</h2>
+          {list}
         </div>
       </Modal>
     );
