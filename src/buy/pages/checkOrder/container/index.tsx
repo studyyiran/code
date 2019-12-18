@@ -37,6 +37,7 @@ import PhoneInfo from "../../detail/components/phoneInfo";
 import { constProductType } from "../../../common/constValue";
 import { nameToContent } from "../../order/util";
 import { Checkbox } from "antd";
+import {PartsProductCard} from "../../detail/components/partsProductCard";
 
 export function OrderList(props: any) {
   const informationKey = "informaion";
@@ -141,7 +142,7 @@ export function OrderList(props: any) {
           </WithInput>
         );
       } else if (productType) {
-        return <PhoneInfo {...productInfo} />;
+        return <PartsProductCard {...productInfo} />;
       } else {
         return null;
       }
