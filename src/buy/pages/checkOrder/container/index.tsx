@@ -37,7 +37,8 @@ import PhoneInfo from "../../detail/components/phoneInfo";
 import { constProductType } from "../../../common/constValue";
 import { nameToContent } from "../../order/util";
 import { Checkbox } from "antd";
-import {PartsProductCard} from "../../detail/components/partsProductCard";
+import { PartsProductCard } from "../../detail/components/partsProductCard";
+import OrderPartsInfo from "../components/orderPartsInfo/machineInfo";
 
 export function OrderList(props: any) {
   const informationKey = "informaion";
@@ -218,7 +219,8 @@ export function OrderList(props: any) {
         subOrderStatusDisplayName,
         productInfo,
         returnShippoLabelCode,
-        refund
+        refund,
+        productType
       } = order;
       let subOrderStatus = order.subOrderStatus;
       let orderStatusHistories = order.orderStatusHistories;
@@ -292,18 +294,28 @@ export function OrderList(props: any) {
           ? progressInfo.dataList[progressInfo.currentIndex].name
           : "";
       }
-
+      console.log(productInfo);
       return {
         header: `${needShowName}-${displayStatus}`,
         key: subOrderNo,
         children: (
           <div>
-            <MachineInfo
-              key={subOrderNo}
-              guaranteedPrice={order.subTotal}
-              productInfo={productInfo}
-              {...order}
-            />
+            {productType === constProductType.PRODUCT ? (
+              <MachineInfo
+                key={subOrderNo}
+                guaranteedPrice={order.subTotal}
+                productInfo={productInfo}
+                {...order}
+              />
+            ) : (
+              <OrderPartsInfo
+                key={subOrderNo}
+                guaranteedPrice={order.subTotal}
+                productInfo={productInfo}
+                {...order}
+              />
+            )}
+
             <ProgressBar data={progressInfo} />
             {reactNodeConfig.showDeliverStatus ? (
               <DeliverSatus {...order} />
