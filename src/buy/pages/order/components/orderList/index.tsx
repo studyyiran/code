@@ -17,6 +17,7 @@ import {
   protectPrice
 } from "../../../../common/config/staticConst";
 import { getDescArr, useGetProductImg } from "../../../detail/util";
+import { PartsProductCard } from "../../../detail/components/partsProductCard";
 
 export default function OrderList(props: any) {
   const productDetailContext = useContext(ProductDetailContext);
@@ -71,19 +72,7 @@ export default function OrderList(props: any) {
                   safeEqual(item.buyProductId, subOrdersItem.productId)
                 );
                 if (partsInfo && target) {
-                  const [lineOne, lineTwo] = getDescArr(
-                    target.buyProductBQV,
-                    target.productDisplayName
-                  );
-                  return (
-                    <ProductInfoCard
-                      productName={lineOne}
-                      productImage={useGetProductImg(target)}
-                      price={protectPrice}
-                    >
-                      <p className="bpv-name">{lineTwo}</p>
-                    </ProductInfoCard>
-                  );
+                  return <PartsProductCard productInfo={target} />;
                 } else {
                   return null;
                 }

@@ -15,7 +15,6 @@ import {
   protectionInfo,
   protectPrice
 } from "../../../../common/config/staticConst";
-import { getDescArr, useGetProductImg } from "../../util";
 import { constProductType } from "../../../../common/constValue";
 import "./index.less";
 import { PartsProductCard } from "../partsProductCard";

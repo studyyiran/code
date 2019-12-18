@@ -1,10 +1,10 @@
-import {IProductDetail} from "../../context/interface";
-import {getDescArr, useGetProductImg} from "../../util";
-import {ProductInfoCard} from "../phoneInfo";
+import { IProductDetail } from "../../context/interface";
+import { getDescArr, useGetProductImg } from "../../util";
+import { ProductInfoCard } from "../phoneInfo";
 import React from "react";
 
 export function PartsProductCard(props: {
-  children: any;
+  children?: any;
   productInfo: IProductDetail;
 }) {
   const { children, productInfo } = props;

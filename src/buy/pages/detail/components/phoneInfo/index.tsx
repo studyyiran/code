@@ -1,14 +1,9 @@
 import {
   currencyTrans,
-  staticContentConfig
 } from "../../../../common/utils/util";
 import React from "react";
-import { Checkbox } from "antd";
-import TipsIcon from "../../../../components/tipsIcon";
-import { protectPrice } from "../../../../common/config/staticConst";
 import "./index.less";
 import { getDescArr, useGetProductImg } from "../../util";
-import { TipsProtection } from "../../context/staticData";
 import { InnerDivImage } from "../innerDivImage";
 /*
 这是显示商品价格信息的组件。
