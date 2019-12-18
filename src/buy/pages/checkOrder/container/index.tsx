@@ -26,14 +26,17 @@ import RouterLink from "../../../common-modules/components/routerLink";
 import Svg from "../../../components/svg";
 import {
   callBackWhenPassAllFunc,
-  currencyTrans
+  currencyTrans,
+  getLocationUrl
 } from "../../../common/utils/util";
 import { getRootApi } from "../../../api/api";
 import { locationHref } from "../../../common/utils/routerHistory";
+import Modal from "../../../components/modal";
 
 export function OrderList(props: any) {
   const informationKey = "informaion";
   const [currentPageKey, setCurrentPageKey] = useState("");
+  const [returnModal, setReturnModal] = useState(false);
   // 监听
   const totalOrderInfoContext = useContext(StoreCheckOrderContext);
   // 获取
@@ -44,6 +47,10 @@ export function OrderList(props: any) {
     storeCheckOrderContextValue,
     serverCancelOrder
   } = totalOrderInfoContext as IStoreCheckOrderContext;
+
+  function serverRequestReturnHandler() {
+    setReturnModal(true);
+  }
 
   // 获取
   const {
@@ -80,6 +87,30 @@ export function OrderList(props: any) {
   const currentModel = (checkOrderDetail.subOrders || []).find(subOrder => {
     return subOrder.subOrderNo === currentSubOrderNo;
   });
+
+  function ReturnModal() {
+    const [productList, setProductList] = useState([])
+    return (
+      <Modal
+        className="check-order-return-modal"
+        visible={returnModal}
+        width={"70%"}
+        closable={false}
+        title={null}
+        footer={"single"}
+        maskClosable={false}
+        cancelText="Continue"
+        onCancel={() => {
+          serverRequestReturn();
+          setReturnModal(false);
+        }}
+      >
+        <div className="custom-content">
+          <h2>Please select the items you would like to return</h2>
+        </div>
+      </Modal>
+    );
+  }
 
   // 方法
   function selectHandler(key: string) {
@@ -172,7 +203,7 @@ export function OrderList(props: any) {
       TRANSACTION_FAILED(7, "Transaction Failed", "Transaction Failed"),
       TRANSACTION_SUCCEED(8, "Transaction Success", "Transaction Success")
        */
-      subOrderStatus = "TO_BE_COMFIRMED"
+      subOrderStatus = "TO_BE_COMFIRMED";
       const reactNodeConfig = statusToRenderConfig(subOrderStatus);
       if (reactNodeConfig.cancelButton) {
         needCancelButton = true;
@@ -287,11 +318,12 @@ export function OrderList(props: any) {
         <Button
           isLoading={isLoading && isLoading.serverRequestReturn}
           className="button-centered disabled-status button-container button-with-hover"
-          onClick={serverRequestReturn}
+          onClick={serverRequestReturnHandler}
         >
           Request Return
         </Button>
       ) : null}
+      <ReturnModal />
     </div>
   );
   // 渲染

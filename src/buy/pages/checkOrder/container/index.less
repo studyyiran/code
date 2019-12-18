@@ -1,5 +1,13 @@
 @import (reference) "~buy/common/styles/index.less";
 @world: {
+  .check-order-return-modal {
+    .custom-content {
+      h2 {
+        font-size: 18 * @f;
+        text-align: center;
+      }
+    }
+  }
   .order-information-page {
     .page-padding();
     padding-bottom: 158 * @px;
@@ -71,7 +79,7 @@
   }
 
   .ismobile {
-    .order-information-page { 
+    .order-information-page {
       .page-padding();
       padding-bottom: 158 * @px;
       .header-title {
