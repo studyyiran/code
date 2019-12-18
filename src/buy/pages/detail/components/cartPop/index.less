@@ -1,0 +1,29 @@
+@import (reference) "~buy/common/styles/index.less";
+
+@p1: {
+  .last-line-flex-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    > a {
+      @color: blue;
+      color: @color !important;
+      font-size: 14 * @f;
+
+      text-decoration: underline;
+      text-decoration-color: @color;
+    }
+  }
+  .add-to-cart-button {
+    font-size: 14 * @f;
+    .canclick();
+    &[data-status="true"] {
+      color: red;
+    }
+    color: @color-blue-liner-use;
+    font-weight: @mediumWeight;
+  }
+};
+
+.hello(@p1);

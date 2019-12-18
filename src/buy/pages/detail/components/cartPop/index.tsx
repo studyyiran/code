@@ -17,6 +17,7 @@ import {
 } from "../../../../common/config/staticConst";
 import { useGetProductImg } from "../../util";
 import { constProductType } from "../../../../common/constValue";
+import "./index.less";
 
 interface ICartPop {
   showModal: boolean;
@@ -196,7 +197,11 @@ function AddToCart(props: IAddToCard) {
     setHaveAdd(next);
   }
   return (
-    <div onClick={cartChangeHandler}>
+    <div
+      className="add-to-cart-button"
+      data-status={getState()}
+      onClick={cartChangeHandler}
+    >
       {getState() ? <span>Remove</span> : <span>Add to card</span>}
     </div>
   );
@@ -216,7 +221,7 @@ function RenderProtection(props: {
         price={protectPrice}
       >
         {protectionInfo.content}
-        <div>
+        <div className="last-line-flex-container">
           <a>Learn more</a>
           <AddToCart
             value={needProtection}
