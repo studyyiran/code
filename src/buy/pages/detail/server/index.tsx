@@ -1,7 +1,7 @@
 import { productListMock, similiarMock } from "./mock";
 import ajax from "../../../common/utils/ajax";
 import { backgroundCheckList } from "../context/staticData";
-import {constProductType} from "../../../common/constValue";
+import { constProductType } from "../../../common/constValue";
 
 function detailFormat(res: any) {
   if (res) {
@@ -58,8 +58,10 @@ export async function getProductDetailByToken(token: string) {
   });
   return detailFormat(res);
 }
-
+const skureleatedUrl = "/product/skureleated/list";
 export async function getPartsBySkuId(skuId: string) {
+  const res = await ajax.get(skureleatedUrl, { skuId });
+  return res;
   return productListMock
     .map(item => detailFormat(item))
     .map(item => ({ ...item, productType: constProductType.ACCESSORY }));
