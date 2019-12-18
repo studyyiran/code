@@ -32,17 +32,17 @@ export default function useGetTotalPrice(
     subOrders.forEach(item => {
       const { productType, productId } = item;
       if (productType !== constProductType.PRODUCT) {
-        // 从detail中获取值
-        if (productDetail) {
-          total = total + Number(productDetail.buyPrice);
-        }
-      } else if (productType) {
         if (partsInfo) {
           total =
             total +
             partsInfo
               .map(({ buyPrice }) => buyPrice)
               .reduce((count, b) => count + Number(b), 0);
+        }
+      } else if (productType) {
+        // 从detail中获取值
+        if (productDetail) {
+          total = total + Number(productDetail.buyPrice);
         }
       }
     });
