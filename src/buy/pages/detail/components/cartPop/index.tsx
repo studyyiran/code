@@ -18,6 +18,7 @@ import {
 import { constProductType } from "../../../../common/constValue";
 import "./index.less";
 import { PartsProductCard } from "../partsProductCard";
+import RouterLink from "../../../../common-modules/components/routerLink";
 
 interface ICartPop {
   showModal: boolean;
@@ -222,7 +223,7 @@ function RenderProtection(props: {
       >
         {protectionInfo.content}
         <div className="last-line-flex-container">
-          <a>Learn more</a>
+          <RouterLink to={"/uptrade/protect"}>Learn more</RouterLink>
           <AddToCart
             value={needProtection}
             cartChangeCallBack={value => {
