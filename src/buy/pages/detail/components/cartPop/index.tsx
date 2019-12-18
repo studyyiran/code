@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import PhoneInfo, { ProductInfoCard } from "../phoneInfo";
-import { currencyTrans } from "../../../../common/utils/util";
+import { currencyTrans, safeEqual } from "../../../../common/utils/util";
 import { dataReport } from "../../../../common/dataReport";
 import PayCardImages from "../payCardImages";
 import MyModal from "../../../../components/modal";
@@ -15,11 +15,13 @@ import {
   protectionInfo,
   protectPrice
 } from "../../../../common/config/staticConst";
+import { useGetProductImg } from "../../util";
 
 interface ICartPop {
   showModal: boolean;
   setShowModal: any;
   productDetail: IProductDetail;
+  partsInfo: IProductDetail[];
 }
 
 function WithTitle(props: { title: string; children: any }) {
@@ -34,15 +36,16 @@ function WithTitle(props: { title: string; children: any }) {
 
 interface IOtherProduct {
   productId: string;
+  productType?: string;
+  buyPrice: string;
 }
 
 export function CartPop(props: ICartPop) {
-  const { showModal, setShowModal, productDetail } = props;
+  const { showModal, setShowModal, productDetail, partsInfo } = props;
   const [needProtection, setNeedProtection] = useState(false);
   const [otherProductList, setOtherProductList] = useState(
     [] as IOtherProduct[]
   );
-
   return (
     <MyModal
       needDefaultScroll={true}
@@ -70,7 +73,11 @@ export function CartPop(props: ICartPop) {
           setNeedProtection={setNeedProtection}
         />
         {/*其他子商品*/}
-        <RenderOtherProduct />
+        <RenderOtherProduct
+          otherProductList={otherProductList}
+          setOtherProductList={setOtherProductList}
+          partsInfo={partsInfo}
+        />
         {/*价格计算*/}
         {/*<ul className="price-list">*/}
         {/*  <li>*/}
@@ -134,11 +141,12 @@ function CheckOutButton(props: {
     <button
       className="common-button"
       onClick={() => {
+        // 进行other的数据组织
         const otherProductInfo = otherProductList.map(item => {
           return {
             productId: item.productId,
             needProtection: false,
-            productType: "ACCESSORY"
+            productType: item.productType as string
           };
         });
         // 1 他会xx
@@ -223,18 +231,50 @@ function RenderProtection(props: {
   );
 }
 
-function RenderOtherProduct() {
-  return (
-    <WithTitle title="Recommended accessories">
-      商品list
-      {/*<AddToCart*/}
-      {/*  value={needProtection}*/}
-      {/*  cartChangeCallBack={value => {*/}
-      {/*    setNeedProtection(value);*/}
-      {/*  }}*/}
-      {/*/>*/}
-    </WithTitle>
-  );
+function RenderOtherProduct(props: {
+  partsInfo: IProductDetail[];
+  otherProductList: IOtherProduct[];
+  setOtherProductList: any;
+}) {
+  const { partsInfo, otherProductList, setOtherProductList } = props;
+  const dom = partsInfo.map(item => {
+    const { productDisplayName, buyProductId, productType, buyPrice } = item;
+    const productImg = useGetProductImg(item);
+    console.log(otherProductList);
+    return (
+      <ProductInfoCard
+        productName={productDisplayName}
+        productImage={productImg}
+        price={protectPrice}
+      >
+        {"如果有描述的话"}
+        <AddToCart
+          value={otherProductList.some(item =>
+            safeEqual(item.productId, buyProductId)
+          )}
+          cartChangeCallBack={value => {
+            setOtherProductList((arr: IOtherProduct[]) => {
+              // 根据选中状态来操作列表
+              if (value) {
+                return arr.concat([
+                  {
+                    productId: buyProductId,
+                    productType,
+                    buyPrice
+                  }
+                ]);
+              } else {
+                return arr.filter(item =>
+                  !safeEqual(item.productId, buyProductId)
+                );
+              }
+            });
+          }}
+        />
+      </ProductInfoCard>
+    );
+  });
+  return <WithTitle title="Recommended accessories">{dom}</WithTitle>;
 }
 
 // function CheckBoxProtection(props: any) {

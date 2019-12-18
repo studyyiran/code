@@ -152,11 +152,10 @@ export default function ProductDetail(props: any) {
   const {
     productDetail,
     similiarPhoneList,
-    productId
+    partsInfo
   } = productDetailContextValue;
   // 执行ssr
   useClientRepair(detailSsrRule);
-
   const {
     buyProductRemark,
     backGroundCheck,
@@ -560,6 +559,7 @@ export default function ProductDetail(props: any) {
           showModal={showModal}
           setShowModal={setShowModal}
           productDetail={productDetail}
+          partsInfo={partsInfo}
         />
       </div>
     );

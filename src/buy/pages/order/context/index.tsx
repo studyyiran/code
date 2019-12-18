@@ -36,7 +36,7 @@ const storeName = "OrderInfo";
 export interface userPhoneOrder {
   productId: string;
   needProtection: boolean;
-  productType: "PRODUCT" | "ACCESSORY";
+  productType: string;
 }
 
 export interface IUserInfo {
