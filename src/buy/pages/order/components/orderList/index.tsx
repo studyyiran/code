@@ -5,23 +5,30 @@ import {
   orderInfoReducerTypes,
   userPhoneOrder
 } from "../../context";
-import PhoneInfo from "../../../detail/components/phoneInfo";
+import PhoneInfo, {
+  ProductInfoCard
+} from "../../../detail/components/phoneInfo";
 import "./index.less";
-import { currencyTrans } from "../../../../common/utils/util";
+import { currencyTrans, safeEqual } from "../../../../common/utils/util";
 import { RenderByCondition } from "../../../../components/RenderByCondition";
 import useGetTotalPrice from "../orderLayout/useHook";
 import {
   IProductDetailContext,
   ProductDetailContext
 } from "../../../detail/context";
-import {constProductType} from "../../../../common/constValue";
+import { constProductType } from "../../../../common/constValue";
+import {
+  protectionInfo,
+  protectPrice
+} from "../../../../common/config/staticConst";
+import { useGetProductImg } from "../../../detail/util";
 
 export default function OrderList(props: any) {
   const productDetailContext = useContext(ProductDetailContext);
   const {
     productDetailContextValue
   } = productDetailContext as IProductDetailContext;
-  const { productDetail } = productDetailContextValue;
+  const { productDetail, partsInfo } = productDetailContextValue;
   const orderInfoContext = useContext(OrderInfoContext);
   const {
     orderInfoContextValue,
@@ -64,13 +71,31 @@ export default function OrderList(props: any) {
             if (subOrdersItem.productType === constProductType.PRODUCT) {
               // 这是商品
               // @ts-ignore
-              return (<PhoneInfo
+              return (
+                <PhoneInfo
                   key={productDetail.buyProductId}
                   {...productDetail}
                 />
               );
-            } else if (subOrdersItem.productType === constProductType.ACCESSORY) {
-              return <div>{subOrdersItem.productId}</div>;
+            } else if (
+              subOrdersItem.productType === constProductType.ACCESSORY
+            ) {
+              const target = partsInfo.find(item =>
+                safeEqual(item.buyProductId, subOrdersItem.productId)
+              );
+              if (partsInfo && target) {
+                return (
+                  <ProductInfoCard
+                    productName={target.productDisplayName}
+                    productImage={useGetProductImg(target)}
+                    price={protectPrice}
+                  >
+                    <div>商品描述</div>
+                  </ProductInfoCard>
+                );
+              } else {
+                return null;
+              }
             } else {
               return null;
             }

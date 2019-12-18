@@ -20,12 +20,9 @@ export default function PhoneInfo(props: {
   buyPrice: any;
   bpvDisplayName: string;
   buyLevel: string;
-  needProtection: boolean;
+  needProtection?: boolean;
   isPeiJian?: boolean;
-  subOrderInfo?: any;
-  setNeedProtection?: any;
-}) {
-  const {
+  setNeedProtection?: any; }) {const {
     productDisplayName,
     buyProductBQV,
     buyPrice,
