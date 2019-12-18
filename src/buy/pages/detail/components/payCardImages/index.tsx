@@ -6,8 +6,9 @@ export default function PayCardImages() {
       <img src={require("./res/visa.svg")} />
       <img src={require("./res/masterCard.svg")} />
       <img src={require("./res/americanExpress.svg")} />
+      <img src={require("./res/paypal.svg")} />
       <span>and more...</span>
-      {/*<img src={require("./res/paypal.svg")} />*/}
+      
     </div>
   );
 }

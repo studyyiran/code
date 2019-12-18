@@ -18,6 +18,7 @@ import {
 import { getDescArr, useGetProductImg } from "../../util";
 import { constProductType } from "../../../../common/constValue";
 import "./index.less";
+import { PartsProductCard } from "../partsProductCard";
 
 interface ICartPop {
   showModal: boolean;
@@ -242,22 +243,9 @@ function RenderOtherProduct(props: {
 }) {
   const { partsInfo, otherProductList, setOtherProductList } = props;
   const dom = partsInfo.map(item => {
-    const {
-      productDisplayName,
-      buyProductId,
-      productType,
-      buyPrice,
-      buyProductBQV
-    } = item;
-    const productImg = useGetProductImg(item);
-    const [lineOne, lineTwo] = getDescArr(buyProductBQV, productDisplayName);
+    const { buyProductId, productType, buyPrice } = item;
     return (
-      <ProductInfoCard
-        productName={lineOne}
-        productImage={productImg}
-        price={Number(buyPrice)}
-      >
-        {lineTwo ? <p className="bpv-name">{lineTwo}</p> : null}
+      <PartsProductCard productInfo={item}>
         <div className="last-line-flex-container peijian">
           <AddToCart
             value={otherProductList.some(item =>
@@ -283,10 +271,14 @@ function RenderOtherProduct(props: {
             }}
           />
         </div>
-      </ProductInfoCard>
+      </PartsProductCard>
     );
   });
-  return <WithTitle title="Recommended accessories">{dom}</WithTitle>;
+  if (dom && dom.length) {
+    return <WithTitle title="Recommended accessories">{dom}</WithTitle>;
+  } else {
+    return null;
+  }
 }
 
 // function CheckBoxProtection(props: any) {

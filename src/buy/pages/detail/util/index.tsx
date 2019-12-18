@@ -29,7 +29,8 @@ export function getDescArr(info: any, displayName: any) {
   }
   return [
     `${displayName} ${firstLine.join("")}`,
-    [...secondLine, ...thirdLine].join(" ")
+    [...secondLine, ...thirdLine].join(" "),
+    firstLine.join(" ")
   ];
 }
 
