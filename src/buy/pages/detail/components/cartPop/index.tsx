@@ -46,6 +46,10 @@ export function CartPop(props: ICartPop) {
   const [otherProductList, setOtherProductList] = useState(
     [] as IOtherProduct[]
   );
+  const { buyProductId, buyPrice } = productDetail;
+  const otherProductSubTotal = otherProductList
+    .map(({ buyPrice }) => Number(buyPrice))
+    .reduce((count: number, a: number) => count + a, 0);
   return (
     <MyModal
       needDefaultScroll={true}
@@ -65,7 +69,6 @@ export function CartPop(props: ICartPop) {
           setNeedProtection={(value: any) => {
             setNeedProtection(value);
           }}
-          isPeiJian={true}
         />
         {/*保险*/}
         <RenderProtection
@@ -79,28 +82,29 @@ export function CartPop(props: ICartPop) {
           partsInfo={partsInfo}
         />
         {/*价格计算*/}
-        {/*<ul className="price-list">*/}
-        {/*  <li>*/}
-        {/*    <label>Subtotal: </label>*/}
-        {/*    <span>{currencyTrans(buyPrice)}</span>*/}
-        {/*  </li>*/}
-        {needProtection ? (
+        <ul className="price-list">
           <li>
-            <label>Protection: </label>
-            <span>{currencyTrans(protectPrice)}</span>
+            <label>Subtotal: </label>
+            <span>{currencyTrans(buyPrice + otherProductSubTotal)}</span>
           </li>
-        ) : null}
-        {/*  <li className="protect">*/}
-        {/*    <label>Total:</label>*/}
-        {/*    <span>*/}
-        {/*      {currencyTrans(*/}
-        {/*        needProtection ? buyPrice + protectPrice : buyPrice*/}
-        {/*      )}*/}
-        {/*    </span>*/}
-        {/*  </li>*/}
-        {/*</ul>*/}
+          {needProtection ? (
+            <li>
+              <label>Protection: </label>
+              <span>{currencyTrans(protectPrice)}</span>
+            </li>
+          ) : null}
+          <li className="protect">
+            <label>Total:</label>
+            <span>
+              {currencyTrans(
+                otherProductSubTotal +
+                  (needProtection ? buyPrice + protectPrice : buyPrice)
+              )}
+            </span>
+          </li>
+        </ul>
         <CheckOutButton
-          buyProductId={productDetail.buyProductId}
+          buyProductId={buyProductId}
           otherProductList={otherProductList}
           needProtection={needProtection}
           onClick={() => {
@@ -122,7 +126,7 @@ export function CartPop(props: ICartPop) {
             // });
           }}
         />
-        {/*<PayCardImages />*/}
+        <PayCardImages />
       </div>
     </MyModal>
   );
@@ -213,7 +217,7 @@ function RenderProtection(props: {
       {/*<div>{protectPrice}</div>*/}
       <ProductInfoCard
         productName={"90 Days"}
-        productImage={protectionInfo.img}
+        productImage={require("./res/protection_img.png")}
         price={protectPrice}
       >
         {protectionInfo.content}
@@ -264,8 +268,8 @@ function RenderOtherProduct(props: {
                   }
                 ]);
               } else {
-                return arr.filter(item =>
-                  !safeEqual(item.productId, buyProductId)
+                return arr.filter(
+                  item => !safeEqual(item.productId, buyProductId)
                 );
               }
             });
