@@ -99,7 +99,7 @@ export function OrderList(props: any) {
   }) {
     const { checked, onChange, children } = props;
     return (
-      <div>
+      <div className="with-input-container">
         <Checkbox checked={checked} onChange={onChange}>
           {children}
         </Checkbox>

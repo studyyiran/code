@@ -1,6 +1,20 @@
 @import (reference) "~buy/common/styles/index.less";
 @world: {
   .check-order-return-modal {
+    .with-input-container {
+      > label {
+        .ant-checkbox:first-child {
+          margin-right: 30*@px;
+        }
+        > span:last-child {
+          flex: 1;
+          .phone-info {
+            border-bottom: none;
+            margin: 0;
+          }
+        }
+      }
+    }
     .custom-content {
       h2 {
         font-size: 18 * @f;
