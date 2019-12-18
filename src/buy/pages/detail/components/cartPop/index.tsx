@@ -203,7 +203,7 @@ function AddToCart(props: IAddToCard) {
       data-status={getState()}
       onClick={cartChangeHandler}
     >
-      {getState() ? <span>Remove</span> : <span>Add to card</span>}
+      {getState() ? <span>Remove</span> : <span>Add to cart</span>}
     </div>
   );
 }
