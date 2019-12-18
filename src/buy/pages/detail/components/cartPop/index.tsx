@@ -29,7 +29,7 @@ interface ICartPop {
 function WithTitle(props: { title: string; children: any }) {
   const { title, children } = props;
   return (
-    <div>
+    <div className="with-title-container">
       <h2>{title}</h2>
       {children}
     </div>
@@ -216,7 +216,7 @@ function RenderProtection(props: {
     <WithTitle title="Phone protection">
       {/*<div>{protectPrice}</div>*/}
       <ProductInfoCard
-        productName={"90 Days"}
+        productName={protectionInfo.title}
         productImage={require("./res/protection_img.png")}
         price={protectPrice}
       >
