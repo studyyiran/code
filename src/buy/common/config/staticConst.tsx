@@ -1,6 +1,6 @@
 import React from "react";
 
-export const protectPrice = 5;
+export const protectPrice = 15;
 
 export const protectionInfo = {
   title: '90 Days UpTrade Protect',

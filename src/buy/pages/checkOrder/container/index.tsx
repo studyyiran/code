@@ -111,6 +111,7 @@ export function OrderList(props: any) {
     }
   ];
   let needCancelButton = false;
+  let needReturnButton = false;
   // part2
   list = list.concat(
     (checkOrderDetail.subOrders || []).map(order => {
@@ -171,9 +172,13 @@ export function OrderList(props: any) {
       TRANSACTION_FAILED(7, "Transaction Failed", "Transaction Failed"),
       TRANSACTION_SUCCEED(8, "Transaction Success", "Transaction Success")
        */
+      subOrderStatus = "TO_BE_COMFIRMED"
       const reactNodeConfig = statusToRenderConfig(subOrderStatus);
       if (reactNodeConfig.cancelButton) {
         needCancelButton = true;
+      }
+      if (reactNodeConfig.returnButton) {
+        needReturnButton = true;
       }
 
       const needShowName = productInfo.productDisplayName;
@@ -204,15 +209,6 @@ export function OrderList(props: any) {
             <ProgressBar data={progressInfo} />
             {reactNodeConfig.showDeliverStatus ? (
               <DeliverSatus {...order} />
-            ) : null}
-            {reactNodeConfig.returnButton ? (
-              <Button
-                isLoading={isLoading && isLoading.serverRequestReturn}
-                className="button-centered disabled-status button-with-hover"
-                onClick={serverRequestReturn}
-              >
-                Request Return
-              </Button>
             ) : null}
             {reactNodeConfig.printLabelbutton ? (
               <div className="return-label-tips">
@@ -285,6 +281,15 @@ export function OrderList(props: any) {
           onClick={serverCancelOrder}
         >
           Cancel Order
+        </Button>
+      ) : null}
+      {needReturnButton ? (
+        <Button
+          isLoading={isLoading && isLoading.serverRequestReturn}
+          className="button-centered disabled-status button-container button-with-hover"
+          onClick={serverRequestReturn}
+        >
+          Request Return
         </Button>
       ) : null}
     </div>
