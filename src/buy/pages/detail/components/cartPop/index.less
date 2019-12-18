@@ -2,15 +2,19 @@
 
 @p1: {
   .cart-modal {
+    @title-size: 18 * @f !important;
+
+    .phone-info {
+      border-bottom: none;
+    }
     .yr-modal-title {
-      height: initial;
-      line-height: 1.2;
+      font-size: @title-size;
     }
     .last-line-flex-container {
+      margin-top: 10 * @px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-
       > a {
         @color: blue;
         color: @color !important;
@@ -19,6 +23,9 @@
         text-decoration: underline;
         text-decoration-color: @color;
       }
+    }
+    .peijian {
+      justify-content: flex-end;
     }
     .add-to-cart-button {
       font-size: 14 * @f;
@@ -33,9 +40,18 @@
       h2 {
         display: inline-block;
         //border-bottom: 1px solid black;
-        font-size: 24 * @px;
+        font-size: @title-size;
         //height: 32 * @px;
         text-decoration: underline;
+      }
+    }
+  }
+  .ismobile {
+    .cart-modal {
+      .common-button {
+        height: 50 * @px !important;
+        line-height: 50 * @px !important;
+        margin: 15 *@px auto;
       }
     }
   }

@@ -15,7 +15,7 @@ import {
   protectionInfo,
   protectPrice
 } from "../../../../common/config/staticConst";
-import { useGetProductImg } from "../../util";
+import { getDescArr, useGetProductImg } from "../../util";
 import { constProductType } from "../../../../common/constValue";
 import "./index.less";
 
@@ -242,39 +242,47 @@ function RenderOtherProduct(props: {
 }) {
   const { partsInfo, otherProductList, setOtherProductList } = props;
   const dom = partsInfo.map(item => {
-    const { productDisplayName, buyProductId, productType, buyPrice } = item;
+    const {
+      productDisplayName,
+      buyProductId,
+      productType,
+      buyPrice,
+      buyProductBQV
+    } = item;
     const productImg = useGetProductImg(item);
-    console.log(otherProductList);
+    const [lineOne, lineTwo] = getDescArr(buyProductBQV, productDisplayName);
     return (
       <ProductInfoCard
-        productName={productDisplayName}
+        productName={lineOne}
         productImage={productImg}
-        price={protectPrice}
+        price={Number(buyPrice)}
       >
-        {"如果有描述的话"}
-        <AddToCart
-          value={otherProductList.some(item =>
-            safeEqual(item.productId, buyProductId)
-          )}
-          cartChangeCallBack={value => {
-            setOtherProductList((arr: IOtherProduct[]) => {
-              // 根据选中状态来操作列表
-              if (value) {
-                return arr.concat([
-                  {
-                    productId: buyProductId,
-                    productType,
-                    buyPrice
-                  }
-                ]);
-              } else {
-                return arr.filter(
-                  item => !safeEqual(item.productId, buyProductId)
-                );
-              }
-            });
-          }}
-        />
+        {lineTwo ? <p className="bpv-name">{lineTwo}</p> : null}
+        <div className="last-line-flex-container peijian">
+          <AddToCart
+            value={otherProductList.some(item =>
+              safeEqual(item.productId, buyProductId)
+            )}
+            cartChangeCallBack={value => {
+              setOtherProductList((arr: IOtherProduct[]) => {
+                // 根据选中状态来操作列表
+                if (value) {
+                  return arr.concat([
+                    {
+                      productId: buyProductId,
+                      productType,
+                      buyPrice
+                    }
+                  ]);
+                } else {
+                  return arr.filter(
+                    item => !safeEqual(item.productId, buyProductId)
+                  );
+                }
+              });
+            }}
+          />
+        </div>
       </ProductInfoCard>
     );
   });
