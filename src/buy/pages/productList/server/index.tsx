@@ -7,7 +7,7 @@ import {
 import ajax from "../../../common/utils/ajax";
 
 export async function getBaseAttr() {
-  const res = await ajax.get("/buy/product/basicQuality");
+  const res = await ajax.get("/buy/product/basicQuality?categoryId=1");
   return res;
   // return getBaseAttrMock();
 }
