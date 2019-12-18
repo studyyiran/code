@@ -14,6 +14,7 @@ import {
   IProductDetailContext,
   ProductDetailContext
 } from "../../../detail/context";
+import {constProductType} from "../../../../common/constValue";
 
 export default function OrderList(props: any) {
   const productDetailContext = useContext(ProductDetailContext);
@@ -60,7 +61,7 @@ export default function OrderList(props: any) {
         />
         <div className="padding-layout">
           {subOrders.map(subOrdersItem => {
-            if (subOrdersItem.productType === "PRODUCT") {
+            if (subOrdersItem.productType === constProductType.PRODUCT) {
               // 这是商品
               // @ts-ignore
               return (<PhoneInfo
@@ -83,7 +84,7 @@ export default function OrderList(props: any) {
                   // }}
                 />
               );
-            } else if (subOrdersItem.productType === "ACCESSORY") {
+            } else if (subOrdersItem.productType === constProductType.ACCESSORY) {
               return <div>{subOrdersItem.productId}</div>;
             } else {
               return null;

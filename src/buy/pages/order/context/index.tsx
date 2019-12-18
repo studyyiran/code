@@ -30,6 +30,7 @@ import {
   IProductDetailContext,
   ProductDetailContext
 } from "../../detail/context";
+import {constProductType} from "../../../common/constValue";
 
 export const OrderInfoContext = createContext({});
 const storeName = "OrderInfo";
@@ -140,7 +141,7 @@ export function OrderInfoContextProvider(props: any) {
   // 当有值的时候,去设定当前的值,从而间接拉取数据
   useEffect(() => {
     const target = state.subOrders.find(item => {
-      return item && item.productType === "PRODUCT";
+      return item && item.productType === constProductType.PRODUCT;
     });
     if (target) {
       console.log("!!!!!!!");

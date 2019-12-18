@@ -16,6 +16,7 @@ import {
   protectPrice
 } from "../../../../common/config/staticConst";
 import { useGetProductImg } from "../../util";
+import {constProductType} from "../../../../common/constValue";
 
 interface ICartPop {
   showModal: boolean;
@@ -160,7 +161,7 @@ function CheckOutButton(props: {
             {
               productId: buyProductId,
               needProtection,
-              productType: "PRODUCT"
+              productType: constProductType.PRODUCT
             }
           ].concat(otherProductInfo)
         });
