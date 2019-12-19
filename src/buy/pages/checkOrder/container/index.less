@@ -1,7 +1,14 @@
 @import (reference) "~buy/common/styles/index.less";
 @world: {
   .check-order-return-modal {
+    h2:first-child+.with-input-container {
+      input,label {
+        cursor: initial !important;
+      }
+      
+    }
     .with-input-container {
+
       > label {
         .ant-checkbox:first-child {
           margin-right: 30*@px;
@@ -22,6 +29,8 @@
       }
     }
   }
+  
+  
   .order-information-page {
     .page-padding();
     padding-bottom: 158 * @px;

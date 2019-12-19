@@ -69,6 +69,7 @@ export function CartPop(props: ICartPop) {
         <PhoneInfo {...productDetail} />
         {/*保险*/}
         <RenderProtection
+          setShowModal={setShowModal}
           needProtection={needProtection}
           setNeedProtection={setNeedProtection}
         />
@@ -211,8 +212,9 @@ function AddToCart(props: IAddToCard) {
 function RenderProtection(props: {
   needProtection: boolean;
   setNeedProtection: any;
+  setShowModal: any;
 }) {
-  const { needProtection, setNeedProtection } = props;
+  const { needProtection, setNeedProtection, setShowModal } = props;
   return (
     <WithTitle title="Phone protection">
       {/*<div>{protectPrice}</div>*/}
@@ -223,7 +225,15 @@ function RenderProtection(props: {
       >
         {protectionInfo.content}
         <div className="last-line-flex-container">
-          <RouterLink to={"/uptrade/protect"}>Learn more</RouterLink>
+          <RouterLink
+            to={"/uptrade/protect"}
+            onClick={() => {
+              // 这块在跳转的时候 写死一个关闭行为 强行修改潜在的bug
+              setShowModal(false);
+            }}
+          >
+            Learn more
+          </RouterLink>
           <AddToCart
             value={needProtection}
             cartChangeCallBack={value => {
