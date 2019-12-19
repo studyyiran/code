@@ -1,57 +1,121 @@
 @import (reference) "~buy/common/styles/index.less";
 
 @p1: {
-  .cart-modal {
-    @title-size: 18 * @f !important;
-
-    .phone-info {
-      border-bottom: none;
-    }
-    .yr-modal-title {
-      font-size: @title-size;
-    }
-    .last-line-flex-container {
-      margin-top: 10 * @px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      > a {
-        @color: #375a7d;
-        color: @color !important;
-        font-size: 14 * @f;
-
-        text-decoration: underline;
-        text-decoration-color: @color;
+  .yr-modal-mask {
+    .yr-modal.cart-modal {
+      top: 50 * @px;
+      max-width: 700 * @px;
+      .yr-modal-header {
+        border-bottom: 1px solid @color-border;
+        padding-bottom: 15 * @px;
+        .yr-modal-title {
+          .font(24 * @px, @boldWeight, rgba(0, 0, 0, 1));
+        }
       }
-    }
-    .peijian {
-      justify-content: flex-end;
-    }
-    .add-to-cart-button {
-      font-size: 14 * @f;
-      .canclick();
-      &[data-status="true"] {
-        color: red;
+      .yr-modal-content {
+        padding: 30 * @px;
       }
-      color: @color-blue-liner-use;
-      font-weight: @mediumWeight;
-    }
-    .with-title-container {
-      h2 {
-        display: inline-block;
-        //border-bottom: 1px solid black;
+      .price-list {
+        padding: 15 * @px 0;
+        border-bottom: 1px solid @color-border;
+        border-top: 1px solid @color-border;
+        font-size: 16 * @f;
+        .set-grid-column(100 * @px 100 * @px);
+        .protect {
+          font-weight: @boldWeight;
+        }
+      }
+      .common-button {
+        max-width: 100%;
+        margin: 25 * @px 0;
+        height: 64 * @px;
+      }
+
+      @title-size: 16 * @f !important;
+      max-height: 90vh;
+      .yr-modal-content {
+        padding-top: 5px * @px;
+        padding-bottom: 0;
+      }
+      .phone-info {
+        border-bottom: none;
+        margin-bottom: 10 * @px;
+      }
+      .yr-modal-title {
         font-size: @title-size;
-        //height: 32 * @px;
-        text-decoration: underline;
+      }
+      .last-line-flex-container {
+        margin-top: 10 * @px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        > a {
+          @color: #375a7d;
+          color: @color !important;
+          font-size: 14 * @f;
+
+          text-decoration: underline;
+          text-decoration-color: @color;
+        }
+      }
+      .peijian {
+        justify-content: flex-end;
+      }
+      .add-to-cart-button {
+        font-size: 14 * @f;
+        .canclick();
+        &[data-status="true"] {
+          color: red;
+        }
+        color: @color-blue-liner-use;
+        font-weight: @mediumWeight;
+      }
+      .with-title-container {
+        h2 {
+          display: inline-block;
+          //border-bottom: 1px solid black;
+          font-size: @title-size;
+          //height: 32 * @px;
+          text-decoration: underline;
+        }
       }
     }
   }
   .ismobile {
-    .cart-modal {
-      .common-button {
-        height: 50 * @px !important;
-        line-height: 50 * @px !important;
-        margin: 15 *@px auto;
+    .yr-modal-mask {
+      .yr-modal.cart-modal {
+        .yr-modal-header {
+          padding-bottom: 0 * @px;
+        }
+        .yr-modal-content {
+          padding: 0 15 * @px;
+        }
+        .phone-info {
+          padding: 5 * @px 0;
+          &:first-child {
+            flex-direction: column;
+            align-items: center;
+            padding: 0 0;
+            .innerdiv {
+              .innerdiv-imgsize(180 * @px);
+              margin: 10 * @px 0;
+            }
+            .info-list {
+              width: 100%;
+            }
+          }
+          .innerdiv {
+            .innerdiv-imgsize(40 * @px);
+          }
+        }
+        ul.price-list {
+          padding: 10 * @px 0;
+        }
+        .common-button {
+          height: 50 * @px !important;
+          line-height: 50 * @px !important;
+          margin: 10 * @px auto;
+        }
       }
     }
   }
