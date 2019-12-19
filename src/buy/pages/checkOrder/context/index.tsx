@@ -156,7 +156,7 @@ function useGetAction(
             }
           });
           // 拉取
-          await serverApplyReturn({ ...info, subOrderNos });
+          await serverApplyReturn({ userEmail: info.userEmail, subOrderNos });
           // 刷新
           await actions.updateCheckForOrder();
         } catch (e) {
