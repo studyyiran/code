@@ -129,21 +129,33 @@ export function OrderList(props: any) {
       }
     }
     const list = (checkOrderDetail.subOrders || []).map(order => {
+      function isChecked() {
+        return productList.some(item => safeEqual(item, subOrderNo))
+      }
       const { subOrderNo, productInfo, productType } = order;
       if (productType === constProductType.PRODUCT) {
+        // 手机商品
         if (productList && !productList.length) {
           setProductList([subOrderNo]);
         }
+        // 传递subOrderNo为了可以绑定点击id,不传递是因为需求不允许变更
         return (
           <WithInput
-            checked={productList.some(item => safeEqual(item, subOrderNo))}
+            checked={isChecked()}
             onChange={onChangeHandler.bind({}, "")}
           >
             <PhoneInfo {...productInfo} />
           </WithInput>
         );
-      } else if (productType) {
-        return <PartsProductCard {...productInfo} />;
+      } else if (productType && productInfo) {
+        return (
+          <WithInput
+            checked={isChecked()}
+            onChange={onChangeHandler.bind({}, subOrderNo)}
+          >
+            <PartsProductCard productInfo={productInfo} />
+          </WithInput>
+        );
       } else {
         return null;
       }

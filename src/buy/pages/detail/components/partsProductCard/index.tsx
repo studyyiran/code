@@ -9,14 +9,14 @@ export function PartsProductCard(props: {
 }) {
   const { children, productInfo } = props;
   const {
-    buyProductBQV = [],
+    buyProductBQV,
     productDisplayName,
     buyPrice,
     buyProductId
   } = productInfo;
   const productImg = useGetProductImg(productInfo);
   let [lineOne, lineTwo, lineAttr] = getDescArr(
-    buyProductBQV || {},
+    buyProductBQV,
     productDisplayName
   );
   lineAttr = lineAttr || (productInfo as any).bpvDispalyName;
