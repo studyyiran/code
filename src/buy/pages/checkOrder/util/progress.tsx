@@ -189,7 +189,6 @@ export function statusToRenderConfig(currentStatus: string) {
   let config = {
     cancelButton: false,
     showDeliverStatus: false,
-    returnButton: false,
     printLabelbutton: false,
     returnTips: false,
     showReturnPrice: false
@@ -205,7 +204,6 @@ export function statusToRenderConfig(currentStatus: string) {
       break;
     }
     case "TO_BE_COMFIRMED": {
-      config.returnButton = true;
       config.showDeliverStatus = true;
       break;
     }
@@ -213,7 +211,6 @@ export function statusToRenderConfig(currentStatus: string) {
     case "TO_BE_RETURNED": {
     }
     case "TO_BE_PLATFORM_RECEIVED": {
-      config.printLabelbutton = true;
       config.returnTips = true;
       break;
     }

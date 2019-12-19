@@ -130,7 +130,7 @@ export function OrderList(props: any) {
     }
     const list = (checkOrderDetail.subOrders || []).map(order => {
       function isChecked() {
-        return productList.some(item => safeEqual(item, subOrderNo))
+        return productList.some(item => safeEqual(item, subOrderNo));
       }
       const { subOrderNo, productInfo, productType } = order;
       if (productType === constProductType.PRODUCT) {
@@ -222,7 +222,17 @@ export function OrderList(props: any) {
     }
   ];
   let needCancelButton = false;
-  let needReturnButton = false;
+  // 当且仅当 全部为状态时 才显示单一按钮
+  let needReturnButton = checkOrderDetail.subOrders && (checkOrderDetail.subOrders || []).every(order => {
+    return order && order.subOrderStatus && order.subOrderStatus === "TO_BE_COMFIRMED";
+  });
+  // 先去检查状态  只要有,就显示按钮
+  let printLabelInfo = (checkOrderDetail.subOrders || []).find(order => {
+    return order && order.subOrderStatus && (order.subOrderStatus === "TO_BE_RETURNED" || order.subOrderStatus === "TO_BE_PLATFORM_RECEIVED");
+  });
+  let printLabelCode = printLabelInfo
+    ? printLabelInfo.returnShippoLabelCode
+    : "";
   // part2
   list = list.concat(
     (checkOrderDetail.subOrders || []).map(order => {
@@ -289,9 +299,6 @@ export function OrderList(props: any) {
       if (reactNodeConfig.cancelButton) {
         needCancelButton = true;
       }
-      if (reactNodeConfig.returnButton) {
-        needReturnButton = true;
-      }
 
       const needShowName = productInfo.productDisplayName;
       const progressInfo = getProgressType({
@@ -352,16 +359,6 @@ export function OrderList(props: any) {
                     </p>
                   </li>
                 </ul>
-                <Button className="button-centered">
-                  <RouterLink
-                    target="_blank"
-                    to={getRootApi(
-                      `/api/buy/shippo/downloadlabel?shippolablecode=${returnShippoLabelCode}`
-                    )}
-                  >
-                    Print Label
-                  </RouterLink>
-                </Button>
               </div>
             ) : null}
             {refund && subOrderStatus !== "TRANSACTION_FAILED" ? (
@@ -411,6 +408,18 @@ export function OrderList(props: any) {
           onClick={serverRequestReturnHandler}
         >
           Request Return
+        </Button>
+      ) : null}
+      {printLabelCode ? (
+        <Button className="button-centered button-container">
+          <RouterLink
+            target="_blank"
+            to={getRootApi(
+              `/api/buy/shippo/downloadlabel?shippolablecode=${printLabelCode}`
+            )}
+          >
+            Print Label
+          </RouterLink>
         </Button>
       ) : null}
       <ReturnModal />
