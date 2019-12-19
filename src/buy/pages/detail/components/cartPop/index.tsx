@@ -107,21 +107,44 @@ export function CartPop(props: ICartPop) {
           needProtection={needProtection}
           onClick={() => {
             setShowModal(false);
-            dataReport({
-              event: "EEcheckout",
-              ecommerce: {
-                currencyCode: "USD",
-                add: {
-                  products: [
-                    {
-                      sku: String(skuId),
-                      name: productDisplayName,
-                      price: Number(buyPrice)
-                    }
-                  ]
+            try {
+              dataReport({
+                event: "EEcheckout",
+                ecommerce: {
+                  currencyCode: "USD",
+                  add: {
+                    products: [
+                      {
+                        sku: String(skuId),
+                        name: productDisplayName,
+                        price: Number(buyPrice)
+                      }
+                    ].concat(
+                      otherProductList.map(item => {
+                        const target = partsInfo.find(item2 =>
+                          safeEqual(item2.buyProductId, item.productId)
+                        );
+                        if (target) {
+                          return {
+                            sku: String(target.skuId),
+                            name: target.productDisplayName,
+                            price: Number(target.buyPrice)
+                          };
+                        } else {
+                          return {
+                            sku: String(item.productId),
+                            name: item.productId,
+                            price: Number(item.buyPrice)
+                          };
+                        }
+                      })
+                    )
+                  }
                 }
-              }
-            });
+              });
+            } catch (e) {
+              console.error(e);
+            }
           }}
         />
         <PayCardImages />

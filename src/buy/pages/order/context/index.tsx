@@ -179,6 +179,9 @@ function useGetAction(
   state: IOrderInfoState,
   dispatch: (action: IReducerAction) => void
 ): IContextActions {
+  const productDetailContext = useContext(ProductDetailContext);
+  const { productDetailContextValue } = productDetailContext as IProductDetailContext;
+  const {productDetail, partsInfo} = productDetailContextValue
   // 新增promise ref
   const promiseStatus: any = useRef();
   if (!promiseStatus.current) {
@@ -308,9 +311,6 @@ function useGetAction(
         orderResult
           .then(res => {
             try {
-              const productDetailContext = useContext(ProductDetailContext);
-              const { productDetailContextValue } = productDetailContext as IProductDetailContext;
-              const {productDetail, partsInfo} = productDetailContextValue
               dataReport({
                 event: "buyerTransaction",
                 ecommerce: {
