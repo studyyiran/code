@@ -7,6 +7,5 @@ export const protectionInfo = {
   content: <>
     <li>-Extended hardware warranty</li>
     <li>-Accidental damage coverage</li>
-    <li>-Cancel any time</li>
   </>
 }
