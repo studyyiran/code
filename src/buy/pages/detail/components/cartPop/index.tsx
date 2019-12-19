@@ -49,7 +49,7 @@ export function CartPop(props: ICartPop) {
   const [otherProductList, setOtherProductList] = useState(
     [] as IOtherProduct[]
   );
-  const { buyProductId, buyPrice } = productDetail;
+  const { buyProductId, buyPrice, productDisplayName, skuId } = productDetail;
   const otherProductSubTotal = otherProductList
     .map(({ buyPrice }) => Number(buyPrice))
     .reduce((count: number, a: number) => count + a, 0);
@@ -107,21 +107,21 @@ export function CartPop(props: ICartPop) {
           needProtection={needProtection}
           onClick={() => {
             setShowModal(false);
-            // dataReport({
-            //   event: "EEcheckout",
-            //   ecommerce: {
-            //     currencyCode: "USD",
-            //     add: {
-            //       products: [
-            //         {
-            //           sku: String(skuId),
-            //           name: productDisplayName,
-            //           price: Number(buyPrice)
-            //         }
-            //       ]
-            //     }
-            //   }
-            // });
+            dataReport({
+              event: "EEcheckout",
+              ecommerce: {
+                currencyCode: "USD",
+                add: {
+                  products: [
+                    {
+                      sku: String(skuId),
+                      name: productDisplayName,
+                      price: Number(buyPrice)
+                    }
+                  ]
+                }
+              }
+            });
           }}
         />
         <PayCardImages />

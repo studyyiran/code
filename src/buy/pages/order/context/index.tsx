@@ -17,7 +17,7 @@ import {
 } from "../server";
 import {
   getFromCacheStore,
-  promisify,
+  promisify, safeEqual,
   saveToCache
 } from "buy/common/utils/util";
 import { getProductDetail } from "../../detail/server";
@@ -308,6 +308,9 @@ function useGetAction(
         orderResult
           .then(res => {
             try {
+              const productDetailContext = useContext(ProductDetailContext);
+              const { productDetailContextValue } = productDetailContext as IProductDetailContext;
+              const {productDetail, partsInfo} = productDetailContextValue
               dataReport({
                 event: "buyerTransaction",
                 ecommerce: {
@@ -316,34 +319,33 @@ function useGetAction(
                       id: res,
                       affiliation: "Up Trade",
                       revenue: calcTotalPrice()
-                    }
-                    // products: state.subOrders.map((item: any) => {
-                    //   const { productId, needProtection } = item;
-                    //   const subOrderInfo: any = state.phoneDetailList.find(
-                    //     item => {
-                    //       return (
-                    //         String(item.buyProductId) === String(productId)
-                    //       );
-                    //     }
-                    //   );
-                    //   return {
-                    //     sku: String(productId),
-                    //     name: subOrderInfo
-                    //       ? subOrderInfo.productDisplayName
-                    //       : "",
-                    //     price: subOrderInfo
-                    //       ? Number(Number(subOrderInfo.buyPrice).toFixed(2))
-                    //       : -1,
-                    //     brand: subOrderInfo
-                    //       ? subOrderInfo.brandDisplayName
-                    //       : "",
-                    //     quantity: 1,
-                    //     dimension1: true, //buyer
-                    //     dimension2: false, //seller
-                    //     dimension3: state.userExpress, //update this USPS Parcel Select or USPS Priority
-                    //     dimension4: needProtection ? "yes" : "no" // if they select UpTrade Protect which is our $5/month insurance plan
-                    //   };
-                    // })
+                    },
+                    products: state.subOrders.map((item) => {
+                      const { productId, needProtection, productType } = item;
+                      let subOrderInfo
+                      if (productType === constProductType.PRODUCT) {
+                        subOrderInfo = productDetail
+                      } else if (productType) {
+                        subOrderInfo = partsInfo.find((item) => safeEqual(item.buyProductId, productId))
+                      }
+                      return {
+                        sku: String(productId),
+                        name: subOrderInfo
+                          ? subOrderInfo.productDisplayName
+                          : "",
+                        price: subOrderInfo
+                          ? Number(Number(subOrderInfo.buyPrice).toFixed(2))
+                          : -1,
+                        brand: subOrderInfo
+                          ? subOrderInfo.brandDisplayName
+                          : "",
+                        quantity: 1,
+                        dimension1: true, //buyer
+                        dimension2: false, //seller
+                        dimension3: state.userExpress, //update this USPS Parcel Select or USPS Priority
+                        dimension4: needProtection ? "yes" : "no" // if they select UpTrade Protect which is our $5/month insurance plan
+                      };
+                    })
                   }
                 }
               });
