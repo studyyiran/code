@@ -226,6 +226,7 @@ function RenderProtection(props: {
         {protectionInfo.content}
         <div className="last-line-flex-container">
           <RouterLink
+            target={"_blank"}
             to={"/uptrade/protect"}
             onClick={() => {
               // 这块在跳转的时候 写死一个关闭行为 强行修改潜在的bug
