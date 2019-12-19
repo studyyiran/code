@@ -38,12 +38,16 @@
       &[data-iscolor="true"] {
         [data-select="true"] {
           span {
-            border: 1px solid rgba(26, 180, 231, 1);
+            border: 2px solid rgba(26, 180, 231, 1);
+            
           }
         }
         li {
           display: inline-block;
           margin: 0 10 * @px 10 * @px 0;
+          &:first-child {
+            margin-top: 10 *@px;
+          }
         }
       }
       //&[data-rendertype="Storage"] {

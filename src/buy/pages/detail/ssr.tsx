@@ -1,7 +1,8 @@
-import { IProductDetail, StoreDetail } from "./context";
+import { StoreDetail } from "./context";
 import { getProductDetail, getSimiliar } from "./server";
 import { getDescArr } from "./util";
 import { ISsrFileStore } from "../../common/interface/index.interface";
+import {IProductDetail} from "./context/interface";
 
 export const detailSsrRule = async (url: string) => {
   const ssrRes: ISsrFileStore = {

@@ -2,8 +2,6 @@ import React, { useContext } from "react";
 import {
   IOrderInfoContext,
   OrderInfoContext,
-  orderInfoReducerTypes,
-  userPhoneOrder
 } from "../../context";
 import PhoneInfo from "../../../detail/components/phoneInfo";
 import "./index.less";

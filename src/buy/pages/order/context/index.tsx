@@ -3,7 +3,8 @@ import React, {
   useReducer,
   useEffect,
   useCallback,
-  useRef
+  useRef,
+  useContext
 } from "react";
 import { IReducerAction } from "buy/common/interface/index.interface";
 import {
@@ -16,21 +17,27 @@ import {
 } from "../server";
 import {
   getFromCacheStore,
-  promisify,
+  promisify, safeEqual,
   saveToCache
 } from "buy/common/utils/util";
 import { getProductDetail } from "../../detail/server";
-import { IProductDetail } from "../../detail/context";
 import { Message } from "../../../components/message";
 import { reducerLog } from "../../../common/hoc";
 import { dataReport } from "../../../common/dataReport";
 import useGetTotalPrice from "../components/orderLayout/useHook";
+import { IProductDetail } from "../../detail/context/interface";
+import {
+  IProductDetailContext,
+  ProductDetailContext
+} from "../../detail/context";
+import {constProductType} from "../../../common/constValue";
 
 export const OrderInfoContext = createContext({});
 const storeName = "OrderInfo";
 export interface userPhoneOrder {
   productId: string;
   needProtection: boolean;
+  productType: string;
 }
 
 export interface IUserInfo {
@@ -50,7 +57,7 @@ export interface IUserInfo {
 export interface IOrderInfoState {
   subOrders: userPhoneOrder[];
   pendingStatus: any; // 页面支付状态
-  phoneDetailList: IProductDetail[];
+  // 这个应该是返回值的信息
   checkOrderInfo: {
     orderList: {
       productInfo: IProductDetail;
@@ -88,10 +95,11 @@ export interface IOrderInfoState {
 
 // @provider
 export function OrderInfoContextProvider(props: any) {
+  const productDetailContext = useContext(ProductDetailContext);
+  const { setProductId } = productDetailContext as IProductDetailContext;
   const initState: IOrderInfoState = {
     subOrders: [],
     pendingStatus: false,
-    phoneDetailList: [],
     taxInfo: {},
     userExpress: "",
     expressInfo: [],
@@ -116,11 +124,6 @@ export function OrderInfoContextProvider(props: any) {
     action.orderIdToCheckOrderInfo();
   }, [action.orderIdToCheckOrderInfo]);
 
-  // 监听变化
-  useEffect(() => {
-    action.getDetailByProductList();
-  }, [action.getDetailByProductList]);
-
   useEffect(() => {
     action.getOrderTax();
   }, [action.getOrderTax]);
@@ -134,6 +137,16 @@ export function OrderInfoContextProvider(props: any) {
   useEffect(() => {
     action.startOrder();
   }, [action.startOrder]);
+
+  // 当有值的时候,去设定当前的值,从而间接拉取数据
+  useEffect(() => {
+    const target = state.subOrders.find(item => {
+      return item && item.productType === constProductType.PRODUCT;
+    });
+    if (target) {
+      setProductId(target.productId);
+    }
+  }, [state.subOrders]);
 
   const propsValue: IOrderInfoContext = {
     ...action,
@@ -151,7 +164,6 @@ export interface IOrderInfoContext extends IContextActions {
 
 // @actions
 interface IContextActions {
-  getDetailByProductList: () => void;
   getOrderTax: () => void;
   getExpress: () => void;
   createOrder: (info: any) => any;
@@ -232,7 +244,7 @@ function useGetAction(
         // 1 发起请求
         const expressInfo = getExpress({
           addressInfo: userInfo,
-          productIds: state.subOrders.map(item => item.productId)
+          productInfos: state.subOrders
         });
         // TODO 这行有重复
         expressInfo.then((res: any) => {
@@ -296,6 +308,9 @@ function useGetAction(
         orderResult
           .then(res => {
             try {
+              const productDetailContext = useContext(ProductDetailContext);
+              const { productDetailContextValue } = productDetailContext as IProductDetailContext;
+              const {productDetail, partsInfo} = productDetailContextValue
               dataReport({
                 event: "buyerTransaction",
                 ecommerce: {
@@ -305,15 +320,14 @@ function useGetAction(
                       affiliation: "Up Trade",
                       revenue: calcTotalPrice()
                     },
-                    products: state.subOrders.map((item: any) => {
-                      const { productId, needProtection } = item;
-                      const subOrderInfo: any = state.phoneDetailList.find(
-                        item => {
-                          return (
-                            String(item.buyProductId) === String(productId)
-                          );
-                        }
-                      );
+                    products: state.subOrders.map((item) => {
+                      const { productId, needProtection, productType } = item;
+                      let subOrderInfo
+                      if (productType === constProductType.PRODUCT) {
+                        subOrderInfo = productDetail
+                      } else if (productType) {
+                        subOrderInfo = partsInfo.find((item) => safeEqual(item.buyProductId, productId))
+                      }
                       return {
                         sku: String(productId),
                         name: subOrderInfo
@@ -406,23 +420,23 @@ function useGetAction(
         return "Please enter a valid zipCode";
       }
     }),
-    getDetailByProductList: promisify(async function() {
-      // 这行是什么意思? 为什么这边是这样拉的? 订单结束后是否会有影响?
-      const detailArr = await Promise.all(
-        state.subOrders.map(({ productId }) => {
-          return getProductDetail(productId);
-        })
-      );
-      dispatch({
-        type: orderInfoReducerTypes.setPhoneDetailList,
-        value: detailArr
-      });
-    }),
+    // getDetailByProductList: promisify(async function() {
+    //   // 这行是什么意思? 为什么这边是这样拉的? 订单结束后是否会有影响?
+    //   const detailArr = await Promise.all(
+    //     state.subOrders.map(({ productId }) => {
+    //       return getProductDetail(productId);
+    //     })
+    //   );
+    //   dispatch({
+    //     type: orderInfoReducerTypes.setPhoneDetailList,
+    //     value: detailArr
+    //   });
+    // }),
     getOrderTax: promisify(async function() {
       if (state.userInfo.state && state.subOrders && state.subOrders.length) {
         const taxInfo = await getOrderTax({
           state: state.userInfo.state,
-          productIds: state.subOrders.map(item => item.productId)
+          productInfos: state.subOrders
         });
         dispatch({
           type: orderInfoReducerTypes.setOrderTaxInfo,
@@ -434,7 +448,7 @@ function useGetAction(
       if (state.subOrders.length && state.userInfo) {
         const expressInfo = await getExpress({
           addressInfo: state.userInfo,
-          productIds: state.subOrders.map(item => item.productId)
+          productInfos: state.subOrders
         });
         // TODO express need check
         dispatch({
@@ -446,9 +460,6 @@ function useGetAction(
   };
   actions.getExpress = useCallback(actions.getExpress, [
     state.userInfo,
-    state.subOrders
-  ]);
-  actions.getDetailByProductList = useCallback(actions.getDetailByProductList, [
     state.subOrders
   ]);
   actions.getOrderTax = useCallback(actions.getOrderTax, [
@@ -467,7 +478,6 @@ function useGetAction(
 
 // action types
 export const orderInfoReducerTypes = {
-  setPhoneDetailList: "setPhoneDetailList",
   addSubOrder: "addSubOrder",
   setOrderTaxInfo: "setOrderTaxInfo",
   setExpressInfo: "setExpressInfo",
@@ -590,24 +600,17 @@ function reducer(state: IOrderInfoState, action: IReducerAction) {
     case orderInfoReducerTypes.addSubOrder: {
       newState = {
         ...newState,
-        subOrders: [value]
+        subOrders: value
       };
       break;
     }
-    case orderInfoReducerTypes.setSubOrders: {
-      newState = {
-        ...newState,
-        subOrders: newState.subOrders.map(value)
-      };
-      break;
-    }
-    case orderInfoReducerTypes.setPhoneDetailList: {
-      newState = {
-        ...newState,
-        phoneDetailList: value
-      };
-      break;
-    }
+    // case orderInfoReducerTypes.setPhoneDetailList: {
+    //   newState = {
+    //     ...newState,
+    //     phoneDetailList: value
+    //   };
+    //   break;
+    // }
     default:
       newState = { ...newState };
   }

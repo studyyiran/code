@@ -6,6 +6,11 @@ export const constValue = {
   paypalButtonId: "paypal-button-container"
 };
 
+export const constProductType = {
+  "ACCESSORY": "ACCESSORY",
+  "PRODUCT": "PRODUCT",
+}
+
 export const tipsContent = {
   emailMistake: "Please enter a valid email address.",// 格式错误的邮箱
   errorPassword: "Mismatched email and password.",// 密码和用户名不一致

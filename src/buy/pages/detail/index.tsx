@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./index.less";
-import { Affix, Carousel, Checkbox } from "antd";
+import { Affix, Carousel } from "antd";
 // @ts-ignore
 import TestCarousel, { Modal, ModalGateway } from "react-images";
 import { IProductDetailContext, ProductDetailContext } from "./context";
@@ -12,25 +12,14 @@ import getSellPath, {
   getProductListPath,
   isServer,
   safeEqual,
-  staticContentConfig,
   urlRmSpaceAndToLower
 } from "../../common/utils/util";
 import { RenderByCondition } from "../../components/RenderByCondition";
 import CommonCollapse from "../../components/commonCollapse";
-import MyModal from "../../components/modal";
 import PhoneProductCard from "../productList/components/phoneProductCard";
-import PhoneInfo from "./components/phoneInfo";
-import {
-  IOrderInfoContext,
-  OrderInfoContext,
-  orderInfoReducerTypes
-} from "../order/context";
-import { protectPrice } from "../../common/config/staticConst";
 import { locationHref } from "../../common/utils/routerHistory";
 import VideoComponent from "../../components/video";
 import EditorResolver from "./components/editorResolver";
-import RouterLink from "../../common-modules/components/routerLink";
-import PayCardImages from "./components/payCardImages";
 import { getDescArr, useGetProductImg } from "./util";
 import { TipsAllPass, TipsProtection } from "./context/staticData";
 import { InnerDivImage } from "./components/innerDivImage";
@@ -50,6 +39,7 @@ import { FiveCalcPrice } from "./components/fiveCalcPrice";
 // @ts-ignore
 import WxImageViewer from "react-wx-images-viewer";
 import { ModalView } from "../../components/ModalView";
+import { CartPop } from "./components/cartPop";
 
 function Swiper(props: any) {
   const {
@@ -149,7 +139,6 @@ function Swiper(props: any) {
 
 export default function ProductDetail(props: any) {
   const [showModal, setShowModal] = useState(false);
-  const [needProtection, setNeedProtection] = useState(false);
   const productDetailContext = useContext(ProductDetailContext);
   const {
     setProductId,
@@ -163,11 +152,10 @@ export default function ProductDetail(props: any) {
   const {
     productDetail,
     similiarPhoneList,
-    productId
+    partsInfo
   } = productDetailContextValue;
   // 执行ssr
   useClientRepair(detailSsrRule);
-
   const {
     buyProductRemark,
     backGroundCheck,
@@ -368,10 +356,6 @@ export default function ProductDetail(props: any) {
                   </div>
                 }
               />
-
-              <CheckBoxProtection
-                needProtectionState={[needProtection, setNeedProtection]}
-              />
               <StartBuyButton
                 onClick={() => {
                   dataReport({
@@ -517,9 +501,6 @@ export default function ProductDetail(props: any) {
             ComponentMb={
               <Affix offsetBottom={0}>
                 <div className="mb-buy-card">
-                  <CheckBoxProtection
-                    needProtectionState={[needProtection, setNeedProtection]}
-                  />
                   <StartBuyButton
                     onClick={() => setShowModal(true)}
                     buyProductStatus={buyProductStatus}
@@ -574,69 +555,12 @@ export default function ProductDetail(props: any) {
             />
           </section>
         </div>
-        <MyModal
-          needDefaultScroll={true}
-          className="cart-modal"
-          visible={showModal}
-          maskClosable={false}
-          title="Your cart"
-          width={"90%"}
-          onCancel={() => setShowModal(false)}
-          footer={null}
-        >
-          <div>
-            <PhoneInfo
-              {...productDetail}
-              needProtection={needProtection}
-              setNeedProtection={(value: any) => {
-                setNeedProtection(value);
-              }}
-            />
-            <ul className="price-list">
-              <li>
-                <label>Subtotal: </label>
-                <span>{currencyTrans(buyPrice)}</span>
-              </li>
-              {needProtection ? (
-                <li>
-                  <label>Protection: </label>
-                  <span>{currencyTrans(protectPrice)}</span>
-                </li>
-              ) : null}
-              <li className="protect">
-                <label>Total:</label>
-                <span>
-                  {currencyTrans(
-                    needProtection ? buyPrice + protectPrice : buyPrice
-                  )}
-                </span>
-              </li>
-            </ul>
-            <CheckOutButton
-              productId={productId}
-              needProtection={needProtection}
-              onClick={() => {
-                setShowModal(false);
-                dataReport({
-                  event: "EEcheckout",
-                  ecommerce: {
-                    currencyCode: "USD",
-                    add: {
-                      products: [
-                        {
-                          sku: String(skuId),
-                          name: productDisplayName,
-                          price: Number(buyPrice)
-                        }
-                      ]
-                    }
-                  }
-                });
-              }}
-            />
-            <PayCardImages />
-          </div>
-        </MyModal>
+        <CartPop
+          showModal={showModal}
+          setShowModal={setShowModal}
+          productDetail={productDetail}
+          partsInfo={partsInfo}
+        />
       </div>
     );
   } else {
@@ -648,40 +572,8 @@ function StartBuyButton(props: any) {
   const { onClick, buyProductStatus } = props;
   return (
     <Button disabled={buyProductStatus === "INTRANSACTION"} onClick={onClick}>
-      {buyProductStatus === "INTRANSACTION"
-        ? "Sold"
-        : "Start Your Purchase"}
+      {buyProductStatus === "INTRANSACTION" ? "Sold" : "Start Your Purchase"}
     </Button>
-  );
-}
-
-function CheckOutButton(props: any) {
-  const { productId, needProtection } = props;
-  const orderInfoContext = useContext(OrderInfoContext);
-  const { orderInfoContextDispatch } = orderInfoContext as IOrderInfoContext;
-  return (
-    <button
-      className="common-button"
-      onClick={() => {
-        // 1 他会xx
-        orderInfoContextDispatch({
-          type: orderInfoReducerTypes.addSubOrder,
-          value: {
-            productId,
-            needProtection
-          }
-        });
-        if (props.onClick) {
-          props.onClick();
-        }
-        // 2 短暂delay
-        window.setTimeout(() => {
-          locationHref("/buy/info");
-        }, 100);
-      }}
-    >
-      Checkout
-    </button>
   );
 }
 
@@ -763,32 +655,6 @@ function RenderTradeIn(props: any) {
       ) : null}
     </section>
   );
-}
-
-function CheckBoxProtection(props: any) {
-  if (props && props.needProtectionState) {
-    const [needProtection, setNeedProtection] = props.needProtectionState;
-    return (
-      <div className="checkbox-protection">
-        <Checkbox
-          checked={needProtection}
-          onChange={() => {
-            setNeedProtection((current: any) => {
-              return !current;
-            });
-          }}
-        >
-          <span>
-            Add UpTrade Protection for {currencyTrans(protectPrice)}
-            {staticContentConfig.perMonth}
-          </span>
-        </Checkbox>
-        <TipsIcon>{TipsProtection}</TipsIcon>
-      </div>
-    );
-  } else {
-    return null;
-  }
 }
 
 function ProductInfo(props: any) {

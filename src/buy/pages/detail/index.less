@@ -1,52 +1,6 @@
 @import (reference) "~buy/common/styles/index.less";
 
 @p: {
-  // 弹框
-  .yr-modal.cart-modal {
-    top: 50 * @px;
-    max-width:700 * @px;
-    .phone-info {
-      .mb({flex-direction: column;align-items: center;});
-      .innerdiv {
-        .mb({.innerdiv-imgsize(180 * @px) ;margin: 10 * @px 0;});
-      }
-      .mb({padding: 0 * @px 0;});
-      .info-list {
-        .mb({width: 100%;});
-      }
-    }
-    ul.price-list {
-      .mb({padding-left: 0;padding-right: 0;});
-    }
-    .yr-modal-header {
-      border-bottom: 1px solid @color-border;
-      padding-bottom: 15 * @px;
-      .mb({padding-bottom: 10 * @px;});
-      .yr-modal-title {
-        .font(24 * @px, @boldWeight, rgba(0, 0, 0, 1));
-      }
-    }
-    .yr-modal-content {
-      padding: 30 * @px;
-      .mb({padding: 15 * @px;});
-    }
-    .price-list {
-      padding: 15 * @px 0;
-      .mb({padding: 10 * @px;});
-      border-bottom: 1px solid @color-border;
-      font-size: 16 * @f;
-      .set-grid-column(100 * @px 100 * @px);
-      .protect {
-        font-weight: @boldWeight;
-      }
-    }
-    .common-button {
-      max-width: 100%;
-      margin: 25 * @px 0;
-      .mb({margin: 10 * @px 0});
-      height: 64 * @px;
-    }
-  }
   .product-detail-page {
     .fixtag {
       display: flex;

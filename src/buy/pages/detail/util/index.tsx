@@ -6,7 +6,7 @@ export function getDescArr(info: any, displayName: any) {
   const firstLine: any[] = [];
   const secondLine: any[] = [];
   const thirdLine: any[] = [];
-  if (typeof info === "string") {
+  if (info && typeof info === "string") {
     try {
       info = JSON.parse(info);
     } catch (e) {
@@ -29,7 +29,8 @@ export function getDescArr(info: any, displayName: any) {
   }
   return [
     `${displayName} ${firstLine.join("")}`,
-    [...secondLine, ...thirdLine].join(" ")
+    [...secondLine, ...thirdLine].join(" "),
+    firstLine.join(" ")
   ];
 }
 

@@ -7,7 +7,7 @@ import {
 import ajax from "../../../common/utils/ajax";
 
 export async function getBaseAttr() {
-  const res = await ajax.get("/buy/product/basicQuality");
+  const res = await ajax.get("/buy/product/basicQuality?categoryId=1");
   return res;
   // return getBaseAttrMock();
 }
@@ -36,7 +36,7 @@ export async function getModelList(pn: any) {
 }
 
 export async function getManufactureList(pn?: any) {
-  const res = await ajax.get(`/buy/product/brand`);
+  const res = await ajax.get(`/buy/product/brand?id=1`);
   return res;
   // return getManufactureListMock().map((item: any) => {
   //   return { ...item, displayName: `pn is ${pn}${item.displayName}` };

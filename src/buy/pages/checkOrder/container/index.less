@@ -1,5 +1,38 @@
 @import (reference) "~buy/common/styles/index.less";
 @world: {
+  .check-order-return-modal {
+    h2:first-child+.with-input-container {
+      input,label {
+        cursor: initial !important;
+      }
+      
+    }
+    .with-input-container {
+
+      > label {
+        .ant-checkbox:first-child {
+          margin-right: 30*@px;
+        }
+        > span:last-child {
+          flex: 1;
+          .phone-info {
+            border-bottom: none;
+            margin: 0;
+          }
+        }
+      }
+    }
+    .custom-content {
+      h2 {
+        font-size: 18 * @f;
+        text-align: center;
+        max-width: 90%;
+        margin: auto;
+      }
+    }
+  }
+  
+  
   .order-information-page {
     .page-padding();
     padding-bottom: 158 * @px;
@@ -71,7 +104,33 @@
   }
 
   .ismobile {
-    .order-information-page { 
+    .check-order-return-modal {
+      h2 {
+        margin-bottom: 10 *@px;
+      }
+      .info-list {
+        font-size: 14 *@px;
+        .price-container {
+          align-items: flex-start;
+          > * {
+            font-size: 14 *@px;
+          }
+        }
+      }
+
+      .ant-checkbox:first-child {
+        margin-right: 10*@px !important;
+      }
+      .innerdiv {
+        .innerdiv-imgsize(60 * @px);
+      }
+      .common-button {
+        height: 50 *@px !important;
+        line-height: 50 *@px !important;
+        margin: 10 *@px auto;
+      }
+    }
+    .order-information-page {
       .page-padding();
       padding-bottom: 158 * @px;
       .header-title {
