@@ -315,7 +315,7 @@ export function OrderList(props: any) {
       }
       console.log(productInfo);
       return {
-        header: `${needShowName}-${displayStatus}`,
+        header: `${needShowName} - ${displayStatus}`,
         key: subOrderNo,
         children: (
           <div>
