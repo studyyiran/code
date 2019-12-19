@@ -144,8 +144,6 @@ export function OrderInfoContextProvider(props: any) {
       return item && item.productType === constProductType.PRODUCT;
     });
     if (target) {
-      console.log("!!!!!!!");
-      console.log(state.subOrders);
       setProductId(target.productId);
     }
   }, [state.subOrders]);

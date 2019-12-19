@@ -3,6 +3,9 @@ import { getDescArr, useGetProductImg } from "../../util";
 import { ProductInfoCard } from "../phoneInfo";
 import React from "react";
 
+/*
+这是用来描述配件的纯组件
+ */
 export function PartsProductCard(props: {
   children?: any;
   productInfo: IProductDetail;

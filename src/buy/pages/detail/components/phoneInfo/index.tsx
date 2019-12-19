@@ -7,8 +7,7 @@ import { getDescArr, useGetProductImg } from "../../util";
 import { InnerDivImage } from "../innerDivImage";
 /*
 这是显示商品价格信息的组件。
-他可以显示三种 机子 配件 甚至还有保险的渲染
- */
+*/
 export default function PhoneInfo(props: {
   productDisplayName: string;
   buyProductBQV: string;
@@ -36,6 +35,7 @@ export default function PhoneInfo(props: {
   );
 }
 
+// 这是一个纯组件.可以用来渲染配件和保险
 export function ProductInfoCard(props: {
   productName: string;
   productImage: string;

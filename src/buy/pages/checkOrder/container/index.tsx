@@ -95,6 +95,7 @@ export function OrderList(props: any) {
     return subOrder.subOrderNo === currentSubOrderNo;
   });
 
+  // 这块应该剥离
   function WithInput(props: {
     checked: boolean;
     onChange: () => any;
@@ -313,7 +314,6 @@ export function OrderList(props: any) {
           ? progressInfo.dataList[progressInfo.currentIndex].name
           : "";
       }
-      console.log(productInfo);
       return {
         header: `${needShowName} - ${displayStatus}`,
         key: subOrderNo,
