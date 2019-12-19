@@ -195,6 +195,7 @@ function AddToCart(props: IAddToCard) {
 
   function cartChangeHandler() {
     const next = !getState();
+    (document as any).querySelector(".cart-modal").scroll(0, 1000);
     cartChangeCallBack(next);
     setHaveAdd(next);
   }
