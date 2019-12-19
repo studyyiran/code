@@ -7,6 +7,7 @@ import {
   IProductDetailContext,
   ProductDetailContext
 } from "../../../../detail/context";
+import { safeEqual } from "../../../../../common/utils/util";
 export default function useGetTotalPrice(
   props?: any
 ): {
@@ -28,21 +29,23 @@ export default function useGetTotalPrice(
     orderInfoContextValue || props;
   function totalProductPrice() {
     let total = 0;
-    // 首先计算手机.
+
     subOrders.forEach(item => {
       const { productType, productId } = item;
-      if (productType !== constProductType.PRODUCT) {
-        if (partsInfo) {
-          total =
-            total +
-            partsInfo
-              .map(({ buyPrice }) => buyPrice)
-              .reduce((count, b) => count + Number(b), 0);
+      if (productType === constProductType.PRODUCT) {
+        // 首先计算手机.// 从detail中获取值
+        if (productDetail && productDetail.buyPrice) {
+          total = total + Number(productDetail.buyPrice);
         }
       } else if (productType) {
-        // 从detail中获取值
-        if (productDetail) {
-          total = total + Number(productDetail.buyPrice);
+        // 计算配件
+        if (partsInfo) {
+          const targetInfo = partsInfo.find(item =>
+            safeEqual(item.buyProductId, productId)
+          );
+          if (targetInfo && targetInfo.buyPrice) {
+            total += Number(targetInfo.buyPrice);
+          }
         }
       }
     });

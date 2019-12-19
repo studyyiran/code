@@ -9,16 +9,17 @@ export function PartsProductCard(props: {
 }) {
   const { children, productInfo } = props;
   const {
-    buyProductBQV,
+    buyProductBQV = [],
     productDisplayName,
     buyPrice,
     buyProductId
   } = productInfo;
   const productImg = useGetProductImg(productInfo);
-  const [lineOne, lineTwo, lineAttr] = getDescArr(
-    buyProductBQV,
+  let [lineOne, lineTwo, lineAttr] = getDescArr(
+    buyProductBQV || {},
     productDisplayName
   );
+  lineAttr = lineAttr || (productInfo as any).bpvDispalyName;
   return (
     <ProductInfoCard
       key={buyProductId}
@@ -26,7 +27,7 @@ export function PartsProductCard(props: {
       productImage={productImg}
       price={Number(buyPrice)}
     >
-      {lineAttr ? <p className="bpv-name">{lineAttr}</p> : null}
+      {/*{lineAttr ? <p className="bpv-name">{lineAttr}</p> : null}*/}
       {children}
     </ProductInfoCard>
   );
