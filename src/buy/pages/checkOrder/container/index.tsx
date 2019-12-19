@@ -165,7 +165,7 @@ export function OrderList(props: any) {
       <Modal
         className="check-order-return-modal"
         visible={returnModal}
-        width={"70%"}
+        width={"90%"}
         title={null}
         footer={null}
         onCancel={() => {
