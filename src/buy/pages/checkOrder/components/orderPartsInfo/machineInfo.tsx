@@ -1,6 +1,9 @@
 import * as React from "react";
 import "./machineInfo.less";
-import { currencyTrans, staticContentConfig } from "../../../../common/utils/util";
+import {
+  currencyTrans,
+  staticContentConfig
+} from "../../../../common/utils/util";
 import RouterLink from "../../../../common-modules/components/routerLink";
 
 export default function OrderPartsInfo(props: any) {
@@ -8,7 +11,6 @@ export default function OrderPartsInfo(props: any) {
   const {
     productDisplayName,
     buyPrice,
-    buyProductId,
     bpvDispalyName
   } = productInfo;
   function calcTotal() {
@@ -29,11 +31,10 @@ export default function OrderPartsInfo(props: any) {
       <ul className="information-list">
         <li>
           <span>Model</span>
-          <span>{productDisplayName}</span>
-        </li>
-        <li>
-          <span>Attr</span>
-          <span>{bpvDispalyName}</span>
+          <span>
+            {productDisplayName}
+            {/*- {bpvDispalyName.split(',').join(' ')}*/}
+          </span>
         </li>
       </ul>
       <p className="total">
