@@ -3,8 +3,17 @@
 @p1: {
   .yr-modal-mask {
     .yr-modal.cart-modal {
+      @title-size: 15 * @f !important;
       top: 50 * @px;
       max-width: 700 * @px;
+      .price-container {
+        > * {
+          font-size: 14 *@f;
+        }
+      }
+      .bpv-name,.level {
+        font-size: 12 *@f;
+      }
       .yr-modal-header {
         border-bottom: 1px solid @color-border;
         padding-bottom: 15 * @px;
@@ -16,7 +25,7 @@
         padding: 30 * @px;
       }
       .price-list {
-        padding: 15 * @px 0;
+        padding: 10 * @px 0 0;
         border-bottom: 1px solid @color-border;
         border-top: 1px solid @color-border;
         font-size: 16 * @f;
@@ -31,7 +40,7 @@
         height: 64 * @px;
       }
 
-      @title-size: 16 * @f !important;
+      
       max-height: 90vh;
       .yr-modal-content {
         padding-top: 5px * @px;
@@ -40,6 +49,7 @@
       .phone-info {
         border-bottom: none;
         margin-bottom: 10 * @px;
+        font-size: 12 * @f;
       }
       .yr-modal-title {
         font-size: @title-size;
@@ -105,7 +115,8 @@
             }
           }
           .innerdiv {
-            .innerdiv-imgsize(40 * @px);
+            margin-right: 10 *@px;
+            .innerdiv-imgsize(60 * @px);
           }
         }
         ul.price-list {
