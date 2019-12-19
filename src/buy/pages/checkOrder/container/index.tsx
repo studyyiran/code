@@ -284,7 +284,7 @@ export function OrderList(props: any) {
       TRANSACTION_FAILED(7, "Transaction Failed", "Transaction Failed"),
       TRANSACTION_SUCCEED(8, "Transaction Success", "Transaction Success")
        */
-      subOrderStatus = "TO_BE_COMFIRMED";
+      // subOrderStatus = "TO_BE_COMFIRMED";
       const reactNodeConfig = statusToRenderConfig(subOrderStatus);
       if (reactNodeConfig.cancelButton) {
         needCancelButton = true;
