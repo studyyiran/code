@@ -96,7 +96,7 @@ export interface IOrderInfoState {
 // @provider
 export function OrderInfoContextProvider(props: any) {
   const productDetailContext = useContext(ProductDetailContext);
-  const { setProductId } = productDetailContext as IProductDetailContext;
+  const { getProductDetail } = productDetailContext as IProductDetailContext;
   const initState: IOrderInfoState = {
     subOrders: [],
     pendingStatus: false,
@@ -138,13 +138,13 @@ export function OrderInfoContextProvider(props: any) {
     action.startOrder();
   }, [action.startOrder]);
 
-  // 当有值的时候,去设定当前的值,从而间接拉取数据
+  // 当有值的时候 去拉取值
   useEffect(() => {
     const target = state.subOrders.find(item => {
       return item && item.productType === constProductType.PRODUCT;
     });
     if (target) {
-      setProductId(target.productId);
+      getProductDetail(target.productId);
     }
   }, [state.subOrders]);
 

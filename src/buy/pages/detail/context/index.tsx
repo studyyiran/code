@@ -20,7 +20,6 @@ export const StoreDetail = "StoreDetail";
 // state
 interface IContextState {
   productDetail: IProductDetail;
-  productId: string;
   similiarPhoneList: any[];
   partsInfo: IProductDetail[];
 }
@@ -29,7 +28,6 @@ interface IContextState {
 export function ProductDetailContextProvider(props: any) {
   const initState: IContextState = {
     productDetail: {} as any,
-    productId: "",
     similiarPhoneList: [],
     partsInfo: []
   };
@@ -39,19 +37,7 @@ export function ProductDetailContextProvider(props: any) {
     StoreDetail
   );
   const action = useGetAction(state, dispatch);
-  const { getProductDetail, getSimiliarPhoneList } = action;
-
-  const isPage = useIsCurrentPage("/detail");
-
-  useEffect(() => {
-    // 条件:
-    // id有值
-    // 并且在当前页面.
-    callBackWhenPassAllFunc([() => state.productId, () => isPage], () =>
-      action.getSimiliarPhoneList(state.productId)
-    );
-  }, [getSimiliarPhoneList, isPage, state.productId]);
-
+  
   useEffect(() => {
     // 当他有值的时候
     callBackWhenPassAllFunc(

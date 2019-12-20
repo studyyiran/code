@@ -144,7 +144,8 @@ export default function ProductDetail(props: any) {
     productDetailContextValue,
     useClientRepair,
     getProductDetail,
-    resetProductInfo
+    resetProductInfo,
+    getSimiliarPhoneList,
   } = productDetailContext as IProductDetailContext;
 
   const {
@@ -176,6 +177,7 @@ export default function ProductDetail(props: any) {
 
   useEffect(() => {
     getProductDetail(id);
+    getSimiliarPhoneList(id);
     return () => {
       resetProductInfo();
     };
