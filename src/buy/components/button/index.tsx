@@ -5,6 +5,7 @@ export default function Button(props: {
   isLoading?: boolean;
   className?: string;
   disabled?: boolean;
+  style?: any;
   onClick?: () => any;
   children: any;
 }) {
