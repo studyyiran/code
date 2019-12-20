@@ -146,9 +146,6 @@ export default function ProductDetail(props: any) {
     useClientRepair
   } = productDetailContext as IProductDetailContext;
 
-  const productListContext = useContext(ProductListContext);
-  const { setSearchInfo } = productListContext as IProductListContext;
-
   const {
     productDetail,
     similiarPhoneList,
@@ -163,7 +160,6 @@ export default function ProductDetail(props: any) {
     buyPrice,
     skuPrice,
     buyProductCode,
-    bpvDisplayName,
     buyProductId,
     buyProductImgPc,
     buyProductImgM,
@@ -500,8 +496,8 @@ export default function ProductDetail(props: any) {
           <RenderByCondition
             ComponentMb={
               <Affix offsetBottom={0}>
-                <div className="mb-buy-card">
-                  <StartBuyButton
+                <div className="mb-buy-card"><StartBuyButton
+                    showModal={showModal}
                     onClick={() => setShowModal(true)}
                     buyProductStatus={buyProductStatus}
                   />
@@ -575,6 +571,7 @@ function StartBuyButton(props: any) {
       {buyProductStatus === "INTRANSACTION" ? "Sold" : "Start Your Purchase"}
     </Button>
   );
+
 }
 
 function RenderTradeIn(props: any) {
