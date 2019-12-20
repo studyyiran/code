@@ -141,9 +141,10 @@ export default function ProductDetail(props: any) {
   const [showModal, setShowModal] = useState(false);
   const productDetailContext = useContext(ProductDetailContext);
   const {
-    setProductId,
     productDetailContextValue,
-    useClientRepair
+    useClientRepair,
+    getProductDetail,
+    resetProductInfo
   } = productDetailContext as IProductDetailContext;
 
   const {
@@ -174,22 +175,11 @@ export default function ProductDetail(props: any) {
   const isPage = useIsCurrentPage("/detail");
 
   useEffect(() => {
-    // 1.id 有值
-    // 2.正确的页面
-    callBackWhenPassAllFunc([() => id, () => isPage], () => {
-      if (true) {
-        // 调用常规的接口
-        setProductId(id);
-      }
-    });
-  }, [id, isPage, setProductId]);
-
-  useEffect(() => {
+    getProductDetail(id);
     return () => {
-      // 离开的时候清空
-      setProductId(null);
+      resetProductInfo();
     };
-  }, [setProductId]);
+  }, [id]);
 
   useEffect(() => {
     // 只有有商品属性 并且有页面id的时候.并且相等.才进行上报操作
@@ -560,7 +550,7 @@ export default function ProductDetail(props: any) {
       </div>
     );
   } else {
-    return null;
+    return <div>Loading</div>;
   }
 }
 

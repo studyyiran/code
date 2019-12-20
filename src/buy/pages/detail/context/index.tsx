@@ -42,30 +42,6 @@ export function ProductDetailContextProvider(props: any) {
   const { getProductDetail, getSimiliarPhoneList } = action;
 
   const isPage = useIsCurrentPage("/detail");
-  useEffect(() => {
-    // 条件:
-    // id有值
-    // 并且在当前页面
-    // 并且和xx不一样
-    callBackWhenPassAllFunc(
-      [
-        () => state.productId,
-        () => {
-          if (
-            state.productDetail &&
-            safeEqual(state.productDetail.buyProductId, state.productId)
-          ) {
-            return false;
-          } else {
-            return true;
-          }
-        }
-      ],
-      () => {
-        action.getProductDetail(state.productId);
-      }
-    );
-  }, [getProductDetail, state.productDetail, state.productId]);
 
   useEffect(() => {
     // 条件:
@@ -105,7 +81,7 @@ interface IContextActions {
   getProductDetail: (id: string) => void;
   getSimiliarPhoneList: (id: string) => any;
   getPartsBySkuId: (id: string) => any;
-  setProductId: (id: string | null) => any;
+  resetProductInfo: () => any;
 }
 
 // useCreateActions
@@ -114,6 +90,12 @@ function useGetAction(
   dispatch: (action: IReducerAction) => void
 ): IContextActions {
   const actions: IContextActions = {
+    resetProductInfo: useCallback(() => {
+      dispatch({
+        type: storeDetailActionTypes.setProductDetail,
+        value: {}
+      });
+    }, []),
     getProductDetail: useCallback(
       async function(productId) {
         function redirect() {
@@ -161,15 +143,6 @@ function useGetAction(
       },
       [dispatch]
     ),
-    setProductId: useCallback(
-      async function(id) {
-        dispatch({
-          type: storeDetailActionTypes.setProductId,
-          value: id
-        });
-      },
-      [dispatch]
-    )
   };
   return actions;
 }
@@ -177,7 +150,6 @@ function useGetAction(
 // action types
 export const storeDetailActionTypes = {
   setProductDetail: "setProductDetail",
-  setProductId: "setProductId",
   setSimiliarPhoneList: "setSimiliarPhoneList",
   setPartsInfo: "setPartsInfo"
 };
@@ -205,13 +177,6 @@ function reducer(state: IContextState, action: IReducerAction) {
       newState = {
         ...newState,
         productDetail: value
-      };
-      break;
-    }
-    case storeDetailActionTypes.setProductId: {
-      newState = {
-        ...newState,
-        productId: value
       };
       break;
     }
