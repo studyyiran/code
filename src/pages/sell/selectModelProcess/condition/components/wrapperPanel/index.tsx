@@ -38,6 +38,7 @@ export interface IWrapperPanel {
   continueNextStep: () => void;
   status: string;
   isContinue?: boolean;
+  isSaveEditStatus?: boolean;
   onSetShowKey?: (value: any) => void;
 }
 
@@ -52,6 +53,7 @@ export function WrapperPanel(props: IWrapperPanel) {
     isContinue,
     continueNextStep,
     onUserInputHandler,
+    isSaveEditStatus,
     onSetShowKey
   } = props;
   const { id: questionId, title, subQuestionArr } = questionInfo;
@@ -67,7 +69,11 @@ export function WrapperPanel(props: IWrapperPanel) {
         );
       case "done":
         return (
-          <span className="tag canclick" data-type={"done"}>
+          <span
+            className="tag canclick"
+            data-type={"done"}
+            aria-disabled={isSaveEditStatus}
+          >
             Edit
           </span>
         );

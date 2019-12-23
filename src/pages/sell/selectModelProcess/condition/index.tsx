@@ -290,6 +290,11 @@ export function ConditionForm(props: IConditionForm) {
   }, [phoneConditionStaticAnswer]);
   // console.log("editKey!!!!");
   // console.log(editKey);
+
+  function isSaveEditStatus() {
+    return Boolean(editKey && editKey.length);
+  }
+
   return (
     <div className="page-condition">
       {renderLeftPic()}
@@ -305,6 +310,7 @@ export function ConditionForm(props: IConditionForm) {
             }: any) => {
               return (
                 <WrapperPanel
+                  isSaveEditStatus={isSaveEditStatus()}
                   {...otherProps}
                   onSetShowKey={setShowKey}
                   isContinue={true}
@@ -333,6 +339,7 @@ export function ConditionForm(props: IConditionForm) {
             );
             return (
               <WrapperPanel
+                isSaveEditStatus={isSaveEditStatus()}
                 onSetShowKey={setShowKey}
                 isContinue={!isNoContinue(question, phoneConditionAnswer)}
                 continueNextStep={nextStep}
@@ -350,7 +357,7 @@ export function ConditionForm(props: IConditionForm) {
             );
           })}
         </Collapse>
-        {maxActiveKey === lastQuestionKey && (!editKey || !editKey.length) ? (
+        {maxActiveKey === lastQuestionKey && !isSaveEditStatus() ? (
           <button
             onClick={() => {
               // canPost if enter here
