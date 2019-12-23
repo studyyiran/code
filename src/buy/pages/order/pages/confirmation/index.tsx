@@ -59,9 +59,9 @@ export default function Confirmation(props: any) {
             handler();
           }}
         >
-        <button className="common-button continue-shopping">
-          Continue shopping
-        </button>
+          <button className="common-button continue-shopping">
+            Continue shopping
+          </button>
         </Link>
         <LoginWrapper
           renderNotLogin={({ url, createUrl }: any) => (
@@ -71,7 +71,12 @@ export default function Confirmation(props: any) {
           )}
         />
         <div className={"or"}>OR</div>
-        <button className="common-button">Sell your old phone</button>
+        <button
+          onClick={() => sellPageGoTo("/sell-phone")}
+          className="common-button"
+        >
+          Sell your old phone
+        </button>
       </div>
       <PostDataImg />
     </div>
