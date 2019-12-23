@@ -14,6 +14,7 @@ interface IRenderByType {
   onUserInputHandler: (action: any) => void;
   questionDesc?: any[];
   isShowTips?: any;
+  isEdit: boolean;
   onSetShowKey?: (value: any) => void;
 }
 
@@ -26,6 +27,7 @@ export function RenderByType(props: IRenderByType) {
     onUserInputHandler,
     questionDesc,
     isShowTips,
+    isEdit,
     onSetShowKey
   } = props;
   const dom = [];
@@ -33,6 +35,7 @@ export function RenderByType(props: IRenderByType) {
     case "default":
       dom.push(
         <SingleSelect
+          isEdit={isEdit}
           options={questionDesc || []}
           key={subQuestionId}
           onChange={answer => {

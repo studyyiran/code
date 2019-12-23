@@ -103,6 +103,7 @@ export function WrapperPanel(props: IWrapperPanel) {
       key={questionId}
     >
       <RenderQuestions
+        isEdit={status === "edit" || status === "doing"}
         answerInfo={answerInfo}
         subQuestionArr={subQuestionArr}
         onUserInputHandler={onUserInputHandler}
@@ -137,6 +138,7 @@ interface IRenderQuestions {
   questionId: string;
   onUserInputHandler: (action: any) => void;
   onSetShowKey?: (value: any) => void;
+  isEdit: boolean;
 }
 
 function RenderQuestions(props: IRenderQuestions) {
@@ -145,7 +147,8 @@ function RenderQuestions(props: IRenderQuestions) {
     answerInfo,
     questionId,
     onUserInputHandler,
-    onSetShowKey
+    onSetShowKey,
+    isEdit
   } = props;
   let canRenderNext = true;
   const dom: any[] = [];
@@ -189,6 +192,7 @@ function RenderQuestions(props: IRenderQuestions) {
             </div>
 
             <RenderByType
+              isEdit={isEdit}
               isShowTips={isShowTips}
               questionDesc={questionDesc}
               type={type}
