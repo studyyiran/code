@@ -36,31 +36,26 @@
         font-size: 16 * @px;
         color: rgba(0, 0, 0, 1);
       }
-
+      @marginValue: 17 * @px;
       .create-account {
-        margin-top: 17 * @px !important;
+        margin-top: @marginValue;
       }
 
-      .button-wrapper {
-        margin-top: 24 * @px;
-        text-align: center;
-
-        button {
-          width: 100%;
-        }
+      .continue-shopping {
+        margin: @marginValue auto;
       }
       .sell-your-order-phone {
-        //font-size: 18 *@f;
+        display: block;
       }
       .sell-your-order-phone,
       .or {
-        margin-top: 17 * @px;
+        margin-bottom: @marginValue;
+        font-weight: @mediumWeight;
         font-size: 18 * @f;
         color: rgba(26, 180, 231, 1);
         text-align: center;
       }
     }
-
     .order-summary-wrapper {
       flex: 1;
     }
@@ -85,20 +80,18 @@
           margin-top: 17 * @px;
           font-size: 14 * @px;
         }
+      }
+      @marginValue: 10 * @px;
+      .create-account {
+        margin-top: @marginValue;
+      }
 
-        .button-wrapper {
-          margin-top: 17 * @px;
-          text-align: center;
-          font-size: 18 * @px;
-
-          button {
-            width: 100%;
-          }
-        }
-
-        .continue-shopping {
-          margin-top: 35 * @px;
-        }
+      .continue-shopping {
+        margin: @marginValue auto;
+      }
+      .sell-your-order-phone,
+      .or {
+        margin-bottom: @marginValue;
       }
     }
   }

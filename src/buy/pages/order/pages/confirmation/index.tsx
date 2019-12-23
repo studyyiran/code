@@ -59,34 +59,26 @@ export default function Confirmation(props: any) {
             handler();
           }}
         >
-          <div className={"button-wrapper"}>
-            <button className="common-button continue-shopping">
-              Continue shopping
-            </button>
-          </div>
+          <button className="common-button continue-shopping">
+            Continue shopping
+          </button>
         </Link>
-
-        <div
-          className={"sell-your-order-phone canclick"}
-          onClick={() => sellPageGoTo("/sell-phone")}
-        >
-          Sell your old phone >
-        </div>
-
         <LoginWrapper
           renderNotLogin={({ url, createUrl }: any) => (
-            <div>
-              <div className={"or"}>OR</div>
-              <div className={"button-wrapper create-account"}>
-                <button className="common-button">
-                  <RouterLink to={createUrl}>Create an account</RouterLink>
-                </button>
-              </div>
-              <PostDataImg />
-            </div>
+            <RouterLink className={"sell-your-order-phone"} to={createUrl}>
+              Create an account >
+            </RouterLink>
           )}
         />
+        <div className={"or"}>OR</div>
+        <button
+          onClick={() => sellPageGoTo("/sell-phone")}
+          className="common-button"
+        >
+          Sell your old phone
+        </button>
       </div>
+      <PostDataImg />
     </div>
   );
 }
