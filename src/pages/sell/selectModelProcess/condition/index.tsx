@@ -288,7 +288,8 @@ export function ConditionForm(props: IConditionForm) {
       });
     }
   }, [phoneConditionStaticAnswer]);
-
+  // console.log("editKey!!!!");
+  // console.log(editKey);
   return (
     <div className="page-condition">
       {renderLeftPic()}
@@ -349,7 +350,7 @@ export function ConditionForm(props: IConditionForm) {
             );
           })}
         </Collapse>
-        {maxActiveKey === lastQuestionKey ? (
+        {maxActiveKey === lastQuestionKey && (!editKey || !editKey.length) ? (
           <button
             onClick={() => {
               // canPost if enter here
