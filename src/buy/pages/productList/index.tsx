@@ -15,7 +15,7 @@ import Modal from "../../components/modal";
 import AdLine from "./components/adLine";
 import LoadingMask from "./components/loading";
 import { productListSsrRule } from "./ssr";
-import {callBackWhenPassAllFunc} from "../../common/utils/util";
+import { callBackWhenPassAllFunc } from "../../common/utils/util";
 import { safeEqual } from "../../common/utils/util";
 export default function ProductList(props: any) {
   const productListContext = useContext(ProductListContext);
@@ -42,7 +42,7 @@ export default function ProductList(props: any) {
       [() => !staticFilterList || !staticFilterList.length],
       getStaticFilterList
     );
-  }, []);
+  }, [getStaticFilterList, staticFilterList]);
 
   useEffect(() => {
     // 在当前页面 没有值
@@ -50,7 +50,7 @@ export default function ProductList(props: any) {
       [() => !manufactureList || !manufactureList.length],
       getManufactureList
     );
-  }, [getManufactureList]);
+  }, [getManufactureList, manufactureList]);
 
   function renderList() {
     if (productList && productList.length) {
