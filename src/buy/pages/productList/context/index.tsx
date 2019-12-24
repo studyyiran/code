@@ -160,7 +160,7 @@ function reducer(state: IStoreProductListState, action: IReducerAction) {
     case productListReducerActionTypes.setProductList: {
       newState = {
         ...newState,
-        productList: value
+        productList: value(newState.productList)
       };
       break;
     }

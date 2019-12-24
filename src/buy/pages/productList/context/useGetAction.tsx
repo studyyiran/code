@@ -511,23 +511,19 @@ export function useStoreProductListAction(
         type: productListReducerActionTypes.setHaveMore,
         value: resCount
       });
-      dispatch({
-        type: productListReducerActionTypes.setProductList,
-        value: resList
-      });
-      // if (state.pageNumber.pn !== 1) {
-      //   dispatch({
-      //     type: productListReducerActionTypes.setProductList,
-      //     value: [...state.productList, ...resList]
-      //   });
-      // } else {
-      //   dispatch({
-      //     type: productListReducerActionTypes.setProductList,
-      //     value: resList
-      //   });
-      // }
+      if (state.pageNumber.pn !== 1) {
+        dispatch({
+          type: productListReducerActionTypes.setProductList,
+          value: (preProductList: any[]) => [...preProductList, ...resList]
+        });
+      } else {
+        dispatch({
+          type: productListReducerActionTypes.setProductList,
+          value: () => resList
+        });
+      }
     },
-    [dispatch, getAnswers]
+    [dispatch, getAnswers, state.pageNumber.pn]
   );
 
   // 获取brand列表
