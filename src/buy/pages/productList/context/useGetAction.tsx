@@ -18,7 +18,11 @@ interface ISomeDataList {
   staticFilterList: any[];
 }
 
-export function getAnswers(info: ISomeDataList, filterSelect: any) {
+export function getAnswers(
+  info: ISomeDataList,
+  filterSelect: any,
+  extraInfo = {}
+) {
   // 这块为什么需要单独再声明?
   const answer: IAnswer = {
     buyLevel: [], //
@@ -27,7 +31,8 @@ export function getAnswers(info: ISomeDataList, filterSelect: any) {
     brandId: [], //
     price: [], //
     pageSize: 20,
-    pageNum: 1
+    pageNum: 1,
+    ...extraInfo
   };
   filterSelect.map(({ id: typeAddId }: any) => {
     const [type] = typeAddId.split("-");

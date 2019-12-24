@@ -140,8 +140,13 @@ export const productListSsrRule = async (url: string) => {
   }
   const { modelList, staticFilterList } = store.storeData;
   const test = getAnswers(
-    { modelList, manufactureList: store.storeData.manufactureList, staticFilterList },
-    store.storeData.currentFilterSelect
+    {
+      modelList,
+      manufactureList: store.storeData.manufactureList,
+      staticFilterList
+    },
+    store.storeData.currentFilterSelect,
+    { pageSize: 100 }
   );
   const productList = await serverProductList.getProductList(test);
   store.storeData.productList = productList;
