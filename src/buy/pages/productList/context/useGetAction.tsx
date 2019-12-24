@@ -363,7 +363,7 @@ export function useStoreProductListAction(
       // brand
       function arrToString(arr: any[], empty: string) {
         if (arr && arr.length) {
-          return arr.join(",");
+          return arr.sort().join(",");
         } else {
           return empty;
         }
