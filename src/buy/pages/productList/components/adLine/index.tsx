@@ -9,7 +9,7 @@ export default function AdLine(props: any) {
   switch (String(line)) {
     case "0":
       dom = (
-        <>
+        <div className="ad-line">
           <div>
             <h3>Questions?</h3>
             <p>We’ve got answers</p>
@@ -19,12 +19,12 @@ export default function AdLine(props: any) {
           {/*  ComponentMb={<a className="big">972-833.0136</a>}*/}
           {/*  ComponentPc={<a className="big">Get Help</a>}*/}
           {/*/>*/}
-        </>
+        </div>
       );
       break;
     case "1":
       dom = (
-        <>
+        <div className="ad-line">
           <h3>Buy with confidence</h3>
           <RenderByCondition
             ComponentMb={null}
@@ -35,12 +35,12 @@ export default function AdLine(props: any) {
               </ul>
             }
           />
-        </>
+        </div>
       );
       break;
     case "2":
       dom = (
-        <>
+        <div className="ad-line">
           <h3>Protect your phone</h3>
           <RenderByCondition
             ComponentMb={null}
@@ -48,19 +48,19 @@ export default function AdLine(props: any) {
               <p>Affordable device & screen damage protection plans</p>
             }
           />
-        </>
+        </div>
       );
       break;
     case "3":
       dom = (
-        <>
+        <div className="ad-line">
           <h3>“Fast, professional, great price.”</h3>
           <p className="name">-Craig Black</p>
-        </>
+        </div>
       );
       break;
     default:
       return null;
   }
-  return <div className="ad-line">{dom}</div>;
+  return dom;
 }
