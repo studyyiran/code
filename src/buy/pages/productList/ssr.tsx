@@ -8,10 +8,7 @@ getInitialProps是一个异步方法.
  */
 
 import { serverProductList } from "./server";
-import {
-  ATTROF,
-  StoreProductList
-} from "./context";
+import { ATTROF, StoreProductList } from "./context";
 import { getProductListPath } from "../../common/utils/util";
 import { ISsrFileStore } from "../../common/interface/index.interface";
 import { getAnswers } from "./context/useGetAction";
@@ -142,9 +139,11 @@ export const productListSsrRule = async (url: string) => {
     );
   }
   const { modelList, staticFilterList } = store.storeData;
-  const productList = await serverProductList.getProductList(
-    getAnswers({ modelList, manufactureList, staticFilterList }, {})
+  const test = getAnswers(
+    { modelList, manufactureList: store.storeData.manufactureList, staticFilterList },
+    store.storeData.currentFilterSelect
   );
+  const productList = await serverProductList.getProductList(test);
   store.storeData.productList = productList;
 
   ssrRes.storeList.push(store);

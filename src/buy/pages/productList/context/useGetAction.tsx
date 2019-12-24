@@ -27,7 +27,7 @@ export function getAnswers(info: ISomeDataList, filterSelect: any) {
     brandId: [], //
     price: [], //
     pageSize: 20,
-    pageNum: 20
+    pageNum: 1
   };
   filterSelect.map(({ id: typeAddId }: any) => {
     const [type] = typeAddId.split("-");
