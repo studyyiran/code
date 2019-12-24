@@ -4,6 +4,7 @@ import { FilterItem } from "../filterItem";
 import { ProductListContext, IProductListContext } from "../../context";
 import CommonCollapse from "../../../../components/commonCollapse";
 import { getFilterList } from "../../context/useGetAction";
+import { isServer } from "../../../../common/utils/util";
 
 export function FilterList() {
   const productListContext = useContext(ProductListContext);
@@ -32,7 +33,7 @@ export function FilterList() {
         const { title, optionArr, allTitle, type, tag } = item;
         return (
           <CommonCollapse
-            isActiveKey={index < 2}
+            isActiveKey={isServer() ? true : index < 2}
             key={title}
             header={title ? title.toUpperCase() : ""}
           >
