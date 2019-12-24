@@ -71,14 +71,11 @@ export interface IStoreProductListActions {
   getProductList: () => void;
   getModelList: (pn: any) => void;
   getManufactureList: (pn: any) => any;
-  getFilterList: () => IStaticFilterItem[];
   setUserSelectFilter: (info: { type: string; id: string }) => void;
   willReplaceSEOUrl: (info: { type: string; id: string }) => string; // 获取seo连接
   willGetUserSelectFilter: (info: { type: string; id: string }) => any; // 一个返回next的纯函数
-  getAnswers: (next?: any) => any; // 获取当前的  或者根据传入预测下一个
   setSearchInfo: (info: any) => any;
   getDropDownInfo: (string: string) => any;
-  findInfoById: (id: string) => any;
 }
 
 // action types

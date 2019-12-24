@@ -7,7 +7,6 @@ export interface IStaticFilterItem {
   optionArr: any[];
   tips?: any;
   tag?: any;
-  clickMoreHandler?: any;
 }
 
 export const filterListConfig: IStaticFilterItem[] = [
@@ -17,7 +16,6 @@ export const filterListConfig: IStaticFilterItem[] = [
     title: "MANUFACTURER",
     allTitle: "All Makes",
     optionArr: [],
-    clickMoreHandler: null
   },
   {
     type: "Model",
@@ -25,7 +23,6 @@ export const filterListConfig: IStaticFilterItem[] = [
     title: "MODEL",
     allTitle: "All Models",
     optionArr: [],
-    clickMoreHandler: null
   },
   {
     type: "Price",
