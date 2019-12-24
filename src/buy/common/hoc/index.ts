@@ -1,6 +1,6 @@
 export function reducerLog(reducer: any) {
   const newReducer = (state: any, action: any) => {
-    console.warn(`reducer ========= ${action.type} ${action.value} ========`);
+    console.warn(`!!reducer${action.type} ${action.value}!!`);
 
     const result = reducer(state, action);
     try {

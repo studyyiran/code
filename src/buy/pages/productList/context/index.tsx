@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useCallback, useRef } from "react";
+import React, { createContext, useEffect} from "react";
 import { IReducerAction } from "buy/common/interface/index.interface";
 import {
   callBackWhenPassAllFunc,
@@ -55,12 +55,7 @@ export function ProductListContextProvider(props: any) {
   const isCurrentPage = useIsCurrentPage(getProductListPath());
 
   const { getProductList, replaceSEOUrl } = action;
-
-  // 当属性变化的时候,进行调用
-  useEffect(() => {
-    callBackWhenPassAllFunc([() => isCurrentPage], getProductList);
-  }, [isCurrentPage, getProductList]);
-
+  
   // 当属性变化的时候,进行调用
   // useEffect(() => {
   //   callBackWhenPassAllFunc([() => isCurrentPage], replaceSEOUrl);

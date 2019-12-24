@@ -26,7 +26,8 @@ export default function ProductList(props: any) {
     productListContextValue,
     getStaticFilterList,
     useHehe,
-    getManufactureList
+    getManufactureList,
+    getProductList
   } = productListContext as IProductListContext;
   const {
     productList,
@@ -51,6 +52,11 @@ export default function ProductList(props: any) {
       getManufactureList
     );
   }, [getManufactureList, manufactureList]);
+
+  // 只要仅在当前页面调用 就应该放在当前页面.
+  useEffect(() => {
+    getProductList();
+  }, [getProductList]);
 
   function renderList() {
     if (productList && productList.length) {
