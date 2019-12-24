@@ -12,6 +12,259 @@ import {
   productListReducerActionTypes
 } from "./index";
 
+interface ISomeDataList {
+  manufactureList: any[];
+  modelList: any[];
+  staticFilterList: any[];
+}
+
+export function getAnswers(info: ISomeDataList, filterSelect: any) {
+  // 这块为什么需要单独再声明?
+  const answer: IAnswer = {
+    buyLevel: [], //
+    filterBQVS: [], //
+    filterProductId: [], //
+    brandId: [], //
+    price: [], //
+    pageSize: 20,
+    pageNum: 20
+  };
+  filterSelect.map(({ id: typeAddId }: any) => {
+    const [type] = typeAddId.split("-");
+    const [typeItem, infoItem] = findInfoById(typeAddId, info);
+    switch (type) {
+      case "Manufacture":
+        if (infoItem && infoItem.id) {
+          answer.brandId.push(infoItem.id);
+        }
+
+        break;
+      case "attrOf3":
+        // TODO hardcode
+        answer.filterBQVS.push({
+          bpId: typeItem.bpId,
+          bpName: typeItem.title,
+          list: [{ bpvId: "", bpvName: infoItem.id }]
+        });
+        break;
+      case "Model": {
+        answer.filterProductId.push(infoItem.id);
+        break;
+      }
+      case "Condition": {
+        answer.buyLevel.push(infoItem.value);
+        break;
+      }
+      case "Price": {
+        answer.price.push({
+          lowPrice: infoItem.value[0],
+          highPrice: infoItem.value[1]
+        });
+        break;
+      }
+      default:
+        // 无法识别
+        answer.filterBQVS.push({
+          bpId: typeItem.bpId,
+          bpName: typeItem.title,
+          list: [{ bpvId: infoItem.id, bpvName: infoItem.displayName }]
+        });
+    }
+  });
+  const linshi: any = {};
+  answer.filterBQVS.forEach((item: any) => {
+    const { bpId } = item;
+    if (!linshi[bpId]) {
+      linshi[bpId] = item;
+    } else {
+      linshi[bpId].list = linshi[bpId].list.concat(item.list);
+    }
+  });
+  (answer as any).filterBQVS = Object.keys(linshi).map(key => {
+    return linshi[key];
+  });
+  return answer;
+}
+
+// 根据id 获取描述信息
+export function findInfoById(typeAndId: string, data: ISomeDataList) {
+  const [type, id] = typeAndId.split("-");
+  let typeInfo;
+  let itemInfo;
+  const list = getFilterList(data);
+  if (list && list.length) {
+    typeInfo = list.find(({ type: filterType, optionArr }) => {
+      if (String(type) === String(filterType)) {
+        return optionArr.find((target: any) => {
+          const { id: filterOptionId } = target;
+          if (String(filterOptionId) === String(id)) {
+            itemInfo = target;
+            return true;
+          } else {
+            return false;
+          }
+        });
+      } else {
+        return false;
+      }
+    });
+  }
+  return [typeInfo as any, itemInfo as any];
+}
+
+// 获取排序的列表(整个静态数据,baseAttr,model)
+export function getFilterList({
+  manufactureList,
+  modelList,
+  staticFilterList
+}: ISomeDataList): IStaticFilterItem[] {
+  // 2)静态接口已经拉取
+  function getHahaList() {
+    if (staticFilterList && staticFilterList.length) {
+      // 进行pre-render赋值
+      const preRender = (title: string, callback: any) => {
+        const afterRes: IStaticFilterItem = {} as any;
+        if (staticFilterList && staticFilterList.length) {
+          const findAttr = staticFilterList.find(({ bpDisplayName }: any) => {
+            return String(bpDisplayName).indexOf(title) !== -1;
+          });
+
+          if (findAttr) {
+            afterRes.type = `${ATTROF}${findAttr.bpId}`;
+            afterRes.tag = findAttr.tag;
+            afterRes.title = findAttr.bpDisplayName;
+            afterRes.bpId = findAttr.bpId;
+            afterRes.allTitle = `All ${findAttr.bpDisplayName}s`;
+            // 先用来判定,再用来赋值.
+            afterRes.optionArr = findAttr.bqvList
+              .filter((e: any) => e)
+              .map(callback);
+          }
+        }
+        return afterRes;
+      };
+      const preRenderList = staticFilterList.map(
+        ({ tag, bpDisplayName }: any) => {
+          if (tag.indexOf("ISCOLOR") !== -1) {
+            return preRender(
+              bpDisplayName,
+              ({ bpvId, bpvDisplayName, colorDisplayName }: any) => ({
+                id: bpvDisplayName,
+                displayName: colorDisplayName
+              })
+            );
+          } else {
+            return preRender(
+              bpDisplayName,
+              ({ bpvId, bpvDisplayName }: any) => ({
+                id: bpvId,
+                displayName: bpvDisplayName
+              })
+            );
+          }
+        }
+      );
+      // 1 找出quick
+      const quickFilterItemIndex = preRenderList.findIndex(item => {
+        if (item && item.tag) {
+          return item.tag.indexOf("QUICKFILTERBUY") !== -1;
+        } else {
+          return false;
+        }
+      });
+      let otherItem = preRenderList;
+      let quickItem;
+      if (quickFilterItemIndex !== -1) {
+        otherItem = [
+          ...preRenderList.slice(0, quickFilterItemIndex),
+          ...preRenderList.slice(quickFilterItemIndex + 1)
+        ];
+        quickItem = [preRenderList[quickFilterItemIndex]];
+      }
+      return [otherItem, quickItem];
+    } else {
+      return [] as any;
+    }
+  }
+
+  let list = [] as any[];
+
+  // 动态拉取数据的
+  let getMoreList: IStaticFilterItem[] = filterListConfig.map(item => {
+    const { type } = item;
+    let afterRes: IStaticFilterItem = { ...item };
+    switch (type) {
+      case "Model":
+        afterRes = {
+          ...item,
+          optionArr: modelList
+        };
+        break;
+      case "Manufacture":
+        afterRes = {
+          ...item,
+          optionArr: manufactureList
+        };
+        break;
+      default:
+        afterRes = item;
+    }
+    return afterRes;
+  });
+  list = list.concat(getMoreList);
+
+  // 动态拉取静态数据的
+  const [otherItem, quickItem] = getHahaList();
+  if (quickItem) {
+    list = [...quickItem, ...list];
+  }
+  if (otherItem) {
+    // 从倒数第二个插入
+    const sliceLength = list.length - 2;
+    const headerPart = list.slice(0, sliceLength);
+    const tailPart = list.slice(sliceLength);
+    list = [...headerPart, ...otherItem, ...tailPart];
+  }
+  // staticFilterList = staticFilterList.concat(staticFilterList);
+  // 3）其他动态接口
+  return list;
+}
+
+// 纯函数.获取nextFilter预测值
+export function willGetUserSelectFilter(
+  { id, type }: any,
+  currentFilterSelect: any
+) {
+  let setValue;
+  if (id === "all") {
+    setValue = currentFilterSelect.filter(({ id }: any) => {
+      if (id.indexOf(type) !== -1) {
+        // 现有输入中有这个类别，就筛掉
+        return false;
+      } else {
+        return true;
+      }
+    });
+  } else {
+    const value = `${type}-${id}`;
+    let arr = currentFilterSelect;
+    const targetIndex = arr.findIndex(({ id }: any) => {
+      return id === value;
+    });
+    if (targetIndex !== -1) {
+      arr = [...arr.slice(0, targetIndex), ...arr.slice(targetIndex + 1)];
+    } else {
+      arr = arr.concat([{ id: value }]);
+    }
+    setValue = arr;
+  }
+  return setValue;
+}
+
+/*
+__________________________________
+ */
+
 export function useStoreProductListAction(
   state: IStoreProductListState,
   dispatch: (action: IReducerAction) => void
@@ -33,272 +286,26 @@ export function useStoreProductListAction(
     },
     [dispatch]
   );
-  // 获取排序的列表(整个静态数据,baseAttr,model)
-  const getFilterList = useCallback(() => {
-    // 2)静态接口已经拉取
-    function getHahaList() {
-      if (state.staticFilterList && state.staticFilterList.length) {
-        // 进行pre-render赋值
-        const preRender = (title: string, callback: any) => {
-          const afterRes: IStaticFilterItem = {} as any;
-          if (state.staticFilterList && state.staticFilterList.length) {
-            const findAttr = state.staticFilterList.find(
-              ({ bpDisplayName }: any) => {
-                return String(bpDisplayName).indexOf(title) !== -1;
-              }
-            );
 
-            if (findAttr) {
-              afterRes.type = `${ATTROF}${findAttr.bpId}`;
-              afterRes.tag = findAttr.tag;
-              afterRes.title = findAttr.bpDisplayName;
-              afterRes.bpId = findAttr.bpId;
-              afterRes.allTitle = `All ${findAttr.bpDisplayName}s`;
-              // 先用来判定,再用来赋值.
-              afterRes.optionArr = findAttr.bqvList
-                .filter((e: any) => e)
-                .map(callback);
-            }
-          }
-          return afterRes;
-        };
-        const preRenderList = state.staticFilterList.map(
-          ({ tag, bpDisplayName }) => {
-            if (tag.indexOf("ISCOLOR") !== -1) {
-              return preRender(
-                bpDisplayName,
-                ({ bpvId, bpvDisplayName, colorDisplayName }: any) => ({
-                  id: bpvDisplayName,
-                  displayName: colorDisplayName
-                })
-              );
-            } else {
-              return preRender(
-                bpDisplayName,
-                ({ bpvId, bpvDisplayName }: any) => ({
-                  id: bpvId,
-                  displayName: bpvDisplayName
-                })
-              );
-            }
-          }
-        );
-        // 1 找出quick
-        const quickFilterItemIndex = preRenderList.findIndex(item => {
-          if (item && item.tag) {
-            return item.tag.indexOf("QUICKFILTERBUY") !== -1;
-          } else {
-            return false;
-          }
-        });
-        let otherItem = preRenderList;
-        let quickItem;
-        if (quickFilterItemIndex !== -1) {
-          otherItem = [
-            ...preRenderList.slice(0, quickFilterItemIndex),
-            ...preRenderList.slice(quickFilterItemIndex + 1)
-          ];
-          quickItem = [preRenderList[quickFilterItemIndex]];
-        }
-        return [otherItem, quickItem];
-      } else {
-        return [] as any;
-      }
-    }
-
-    let list = [] as any[];
-
-    // 动态拉取数据的
-    let getMoreList: IStaticFilterItem[] = filterListConfig.map(item => {
-      const { type } = item;
-      let afterRes: IStaticFilterItem = { ...item };
-      switch (type) {
-        case "Model":
-          afterRes = {
-            ...item,
-            optionArr: state.modelList,
-            clickMoreHandler: getModelList
-          };
-          break;
-        case "Manufacture":
-          afterRes = {
-            ...item,
-            optionArr: state.manufactureList
-          };
-          break;
-        default:
-          afterRes = item;
-      }
-      return afterRes;
-    });
-    list = list.concat(getMoreList);
-
-    // 动态拉取静态数据的
-    const [otherItem, quickItem] = getHahaList();
-    if (quickItem) {
-      list = [...quickItem, ...list];
-    }
-    if (otherItem) {
-      // 从倒数第二个插入
-      const sliceLength = list.length - 2;
-      const headerPart = list.slice(0, sliceLength);
-      const tailPart = list.slice(sliceLength);
-      list = [...headerPart, ...otherItem, ...tailPart];
-    }
-    // staticFilterList = staticFilterList.concat(state.staticFilterList);
-    // 3）其他动态接口
-    return list;
-  }, [
-    getModelList,
-    state.manufactureList,
-    state.modelList,
-    state.staticFilterList
-  ]);
-
-  const findInfoById = useCallback(
-    typeAndId => {
-      const [type, id] = typeAndId.split("-");
-      let typeInfo;
-      let itemInfo;
-      const list = getFilterList();
-      if (list && list.length) {
-        typeInfo = list.find(({ type: filterType, optionArr }) => {
-          if (String(type) === String(filterType)) {
-            return optionArr.find((target: any) => {
-              const { id: filterOptionId } = target;
-              if (String(filterOptionId) === String(id)) {
-                itemInfo = target;
-                return true;
-              } else {
-                return false;
-              }
-            });
-          } else {
-            return false;
-          }
-        });
-      }
-      return [typeInfo, itemInfo];
-    },
-    [getFilterList]
-  );
-
-  const getAnswers = useCallback(
-    function getAnswers(nextFilterSelect?: any) {
-      // 这块为什么需要单独再声明?
-      const answer: IAnswer = {
-        productId: state.searchInfo.productId,
-        productKey: state.searchInfo.productKey,
-        buyLevel: [], //
-        filterBQVS: [], //
-        filterProductId: [], //
-        brandId: [], //
-        price: [], //
-        pageNum: state.pageNumber.pn, //?
-        pageSize: 20
-      };
-      const filterSelect = nextFilterSelect || state.currentFilterSelect || [];
-      filterSelect.map(({ id: typeAddId }: any) => {
-        const [type] = typeAddId.split("-");
-        const [typeItem, infoItem] = findInfoById(typeAddId);
-        switch (type) {
-          case "Manufacture":
-            answer.brandId.push(infoItem.id);
-            break;
-          case "attrOf3":
-            // TODO hardcode
-            answer.filterBQVS.push({
-              bpId: typeItem.bpId,
-              bpName: typeItem.title,
-              list: [{ bpvId: "", bpvName: infoItem.id }]
-            });
-            break;
-          case "Model": {
-            answer.filterProductId.push(infoItem.id);
-            break;
-          }
-          case "Condition": {
-            answer.buyLevel.push(infoItem.value);
-            break;
-          }
-          case "Price": {
-            answer.price.push({
-              lowPrice: infoItem.value[0],
-              highPrice: infoItem.value[1]
-            });
-            break;
-          }
-          default:
-            // 无法识别
-            answer.filterBQVS.push({
-              bpId: typeItem.bpId,
-              bpName: typeItem.title,
-              list: [{ bpvId: infoItem.id, bpvName: infoItem.displayName }]
-            });
-        }
-      });
-      const linshi: any = {};
-      answer.filterBQVS.forEach((item: any) => {
-        const { bpId } = item;
-        if (!linshi[bpId]) {
-          linshi[bpId] = item;
-        } else {
-          linshi[bpId].list = linshi[bpId].list.concat(item.list);
-        }
-      });
-      (answer as any).filterBQVS = Object.keys(linshi).map(key => {
-        return linshi[key];
-      });
-      return answer;
-    },
-    [
-      findInfoById,
-      state.currentFilterSelect,
-      state.pageNumber.pn,
-      state.searchInfo.productId,
-      state.searchInfo.productKey
-    ]
-  );
-  
   const resetPageNumber = useCallback(() => {
-    dispatch({ type: productListReducerActionTypes.setPageNumber, value: 1 });
+    dispatch({
+      type: productListReducerActionTypes.setPageNumber,
+      value: 1
+    });
   }, [dispatch]);
-
-  // 纯函数.获取nextFilter预测值
-  const willGetUserSelectFilter = useCallback(
-    function({ id, type }: any) {
-      let setValue;
-      if (id === "all") {
-        setValue = state.currentFilterSelect.filter(({ id }) => {
-          if (id.indexOf(type) !== -1) {
-            // 现有输入中有这个类别，就筛掉
-            return false;
-          } else {
-            return true;
-          }
-        });
-      } else {
-        const value = `${type}-${id}`;
-        let arr = state.currentFilterSelect;
-        const targetIndex = arr.findIndex(({ id }: any) => {
-          return id === value;
-        });
-        if (targetIndex !== -1) {
-          arr = [...arr.slice(0, targetIndex), ...arr.slice(targetIndex + 1)];
-        } else {
-          arr = arr.concat([{ id: value }]);
-        }
-        setValue = arr;
-      }
-      return setValue;
-    },
-    [state.currentFilterSelect]
-  );
 
   // 机型,属性值,等.
   const willReplaceSEOUrl = useCallback(
     function(info) {
-      const answer = getAnswers(willGetUserSelectFilter(info));
+      const dataOfStatic = {
+        modelList: state.modelList,
+        manufactureList: state.manufactureList,
+        staticFilterList: state.staticFilterList
+      };
+      const answer = getAnswers(
+        dataOfStatic,
+        willGetUserSelectFilter(info, state.currentFilterSelect)
+      );
       // 需要查找的内容
       const { filterBQVS, filterProductId, brandId } = answer;
       // 这块将brandId进行一下再处理 查找额外
@@ -378,7 +385,10 @@ export function useStoreProductListAction(
       add(splitOne, () => {
         return arrToString(
           brandId.map((id: any) => {
-            const [typeItem, infoItem] = findInfoById(`Manufacture-${id}`);
+            const [typeItem, infoItem] = findInfoById(
+              `Manufacture-${id}`,
+              dataOfStatic
+            );
             return infoItem ? infoItem.displayName : "";
           }),
           "allManufacturer"
@@ -388,7 +398,10 @@ export function useStoreProductListAction(
       add(splitOne, () => {
         return arrToString(
           filterProductId.map((id: any) => {
-            const [typeItem, infoItem] = findInfoById(`Model-${id}`);
+            const [typeItem, infoItem] = findInfoById(
+              `Model-${id}`,
+              dataOfStatic
+            );
             return infoItem ? infoItem.displayName : "";
           }),
           "allModel"
@@ -412,7 +425,8 @@ export function useStoreProductListAction(
                   const getName: any = findInfoById(
                     `${ATTROF}${findTarget.bpId}-${
                       staticFilter.tag === "ISCOLOR" ? bpvName : bpvId
-                    }`
+                    }`,
+                    dataOfStatic
                   );
                   return getName[1] ? getName[1].displayName : "";
                 });
@@ -439,10 +453,10 @@ export function useStoreProductListAction(
       // }
       return result;
     },
-    [findInfoById, getAnswers, state.staticFilterList, willGetUserSelectFilter]
+    [state.manufactureList, state.modelList, state.staticFilterList]
   );
 
-  // 
+  //
   const setUserSelectFilter = useCallback(
     async function({ id, type }: any) {
       let setValue;
@@ -512,13 +526,25 @@ export function useStoreProductListAction(
 
   const getProductList = useCallback(
     async function() {
-      const answer = getAnswers();
+      const answer = getAnswers(
+        {
+          modelList: state.modelList,
+          manufactureList: state.manufactureList,
+          staticFilterList: state.staticFilterList
+        },
+        state.currentFilterSelect
+      );
       // 发起
       dispatch({
         type: productListReducerActionTypes.setPendingStatus,
         value: true
       });
-      const resList = await serverProductList.getProductList(answer);
+      const resList = await serverProductList.getProductList({
+        productId: state.searchInfo.productId,
+        productKey: state.searchInfo.productKey,
+        pageNum: state.pageNumber.pn,
+        ...answer
+      });
       const { productKey, filterBQVS }: any = answer;
       const result = filterBQVS
         .map(({ bpName }: any) => {
@@ -555,7 +581,16 @@ export function useStoreProductListAction(
         });
       }
     },
-    [dispatch, getAnswers, state.pageNumber.pn]
+    [
+      dispatch,
+      state.currentFilterSelect,
+      state.manufactureList,
+      state.modelList,
+      state.pageNumber.pn,
+      state.searchInfo.productId,
+      state.searchInfo.productKey,
+      state.staticFilterList
+    ]
   );
 
   // 获取brand列表
@@ -580,18 +615,14 @@ export function useStoreProductListAction(
     [dispatch]
   );
   return {
-    getAnswers,
     getStaticFilterList,
     resetPageNumber,
     willReplaceSEOUrl,
     getProductList,
     getModelList,
     getManufactureList,
-    getFilterList,
     setUserSelectFilter,
     setSearchInfo,
-    getDropDownInfo,
-    willGetUserSelectFilter,
-    findInfoById
+    getDropDownInfo
   };
 }

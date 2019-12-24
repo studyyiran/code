@@ -10,11 +10,11 @@ getInitialProps是一个异步方法.
 import { serverProductList } from "./server";
 import {
   ATTROF,
-  productListReducerActionTypes,
   StoreProductList
 } from "./context";
 import { getProductListPath } from "../../common/utils/util";
 import { ISsrFileStore } from "../../common/interface/index.interface";
+import { getAnswers } from "./context/useGetAction";
 
 export const productListSsrRule = async (url: string) => {
   const ssrRes: ISsrFileStore = {
@@ -130,19 +130,6 @@ export const productListSsrRule = async (url: string) => {
       });
     }
   }
-  const userSelectInfo = {
-    productKey: [],
-    buyLevel: [],
-    filterBQVS: [], //
-    filterProductId: [], //
-    brandId: [], //
-    price: [],
-    pageNum: 1,
-    pageSize: 20
-  };
-  const productList = await serverProductList.getProductList(userSelectInfo);
-  store.storeData.productList = productList;
-
   const manufactureList: any = await serverProductList.getManufactureList();
   if (manufactureList && manufactureList.length) {
     store.storeData.manufactureList = (manufactureList || []).map(
@@ -154,6 +141,12 @@ export const productListSsrRule = async (url: string) => {
       }
     );
   }
+  const { modelList, staticFilterList } = store.storeData;
+  const productList = await serverProductList.getProductList(
+    getAnswers({ modelList, manufactureList, staticFilterList }, {})
+  );
+  store.storeData.productList = productList;
+
   ssrRes.storeList.push(store);
   return ssrRes;
 };
