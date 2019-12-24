@@ -1,14 +1,9 @@
-import React, { createContext, useEffect} from "react";
+import React, { createContext } from "react";
 import { IReducerAction } from "buy/common/interface/index.interface";
-import {
-  callBackWhenPassAllFunc,
-  getProductListPath,
-  safeEqual
-} from "buy/common/utils/util";
+import { safeEqual } from "buy/common/utils/util";
 import { IStaticFilterItem } from "./staticData";
 import { useGetOriginData } from "../../../common/useHook/useGetOriginData";
 import useReducerMiddleware from "../../../common/useHook/useReducerMiddleware";
-import { useIsCurrentPage } from "../../../common/useHook";
 import { reducerLog } from "../../../common/hoc";
 import { useStoreProductListAction } from "./useGetAction";
 export const ATTROF = "attrOf";
@@ -52,14 +47,6 @@ export function ProductListContextProvider(props: any) {
     state,
     dispatch
   );
-  const isCurrentPage = useIsCurrentPage(getProductListPath());
-
-  const { getProductList, replaceSEOUrl } = action;
-  
-  // 当属性变化的时候,进行调用
-  // useEffect(() => {
-  //   callBackWhenPassAllFunc([() => isCurrentPage], replaceSEOUrl);
-  // }, [isCurrentPage, replaceSEOUrl]);
 
   const propsValue: IProductListContext = {
     useHehe,
@@ -79,15 +66,16 @@ export interface IProductListContext extends IStoreProductListActions {
 
 // @actions
 export interface IStoreProductListActions {
-  getAnswers: () => any;
   getStaticFilterList: () => any;
   resetPageNumber: () => any;
-  replaceSEOUrl: () => void;
   getProductList: () => void;
   getModelList: (pn: any) => void;
   getManufactureList: (pn: any) => any;
   getFilterList: () => IStaticFilterItem[];
   setUserSelectFilter: (info: { type: string; id: string }) => void;
+  willReplaceSEOUrl: (info: { type: string; id: string }) => string; // 获取seo连接
+  willGetUserSelectFilter: (info: { type: string; id: string }) => any; // 一个返回next的纯函数
+  getAnswers: (next?: any) => any; // 获取当前的  或者根据传入预测下一个
   setSearchInfo: (info: any) => any;
   getDropDownInfo: (string: string) => any;
   findInfoById: (id: string) => any;

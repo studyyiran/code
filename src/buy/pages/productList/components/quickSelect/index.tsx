@@ -8,7 +8,8 @@ export function QuickSelect(props: any) {
   const {
     productListContextValue,
     setUserSelectFilter,
-    getFilterList
+    getFilterList,
+    willReplaceSEOUrl
   } = productListContext as IProductListContext;
   const { currentFilterSelect, staticFilterList } = productListContextValue;
   const quickFilterTarget =
@@ -19,6 +20,12 @@ export function QuickSelect(props: any) {
   return (
     <div className="quick-select">
       <FilterItem
+        seoUrl={(id: string) =>
+          willReplaceSEOUrl({
+            type: quickFilterTarget.type,
+            id
+          })
+        }
         list={quickFilterList}
         onSelectOption={(id: string) => {
           setUserSelectFilter({

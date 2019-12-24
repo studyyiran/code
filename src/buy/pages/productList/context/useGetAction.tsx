@@ -1,11 +1,9 @@
-// useCreateActions
 import { IReducerAction } from "../../../common/interface/index.interface";
 import { useCallback } from "react";
 import { serverProductList } from "../server";
 import { filterListConfig, IStaticFilterItem } from "./staticData";
 import { IAnswer } from "./interface";
 import { getProductListPath, safeEqual } from "../../../common/utils/util";
-import { locationHref } from "../../../common/utils/routerHistory";
 import { dataReport } from "../../../common/dataReport";
 import {
   ATTROF,
@@ -186,7 +184,8 @@ export function useStoreProductListAction(
   );
 
   const getAnswers = useCallback(
-    function getAnswers() {
+    function getAnswers(nextFilterSelect?: any) {
+      // 这块为什么需要单独再声明?
       const answer: IAnswer = {
         productId: state.searchInfo.productId,
         productKey: state.searchInfo.productKey,
@@ -198,7 +197,8 @@ export function useStoreProductListAction(
         pageNum: state.pageNumber.pn, //?
         pageSize: 20
       };
-      (state.currentFilterSelect || []).map(({ id: typeAddId }) => {
+      const filterSelect = nextFilterSelect || state.currentFilterSelect || [];
+      filterSelect.map(({ id: typeAddId }: any) => {
         const [type] = typeAddId.split("-");
         const [typeItem, infoItem] = findInfoById(typeAddId);
         switch (type) {
@@ -259,24 +259,54 @@ export function useStoreProductListAction(
       state.searchInfo.productKey
     ]
   );
-
-  /*
-  start
-   */
+  
   const resetPageNumber = useCallback(() => {
     dispatch({ type: productListReducerActionTypes.setPageNumber, value: 1 });
   }, [dispatch]);
+
+  // 纯函数.获取nextFilter预测值
+  const willGetUserSelectFilter = useCallback(
+    function({ id, type }: any) {
+      let setValue;
+      if (id === "all") {
+        setValue = state.currentFilterSelect.filter(({ id }) => {
+          if (id.indexOf(type) !== -1) {
+            // 现有输入中有这个类别，就筛掉
+            return false;
+          } else {
+            return true;
+          }
+        });
+      } else {
+        const value = `${type}-${id}`;
+        let arr = state.currentFilterSelect;
+        const targetIndex = arr.findIndex(({ id }: any) => {
+          return id === value;
+        });
+        if (targetIndex !== -1) {
+          arr = [...arr.slice(0, targetIndex), ...arr.slice(targetIndex + 1)];
+        } else {
+          arr = arr.concat([{ id: value }]);
+        }
+        setValue = arr;
+      }
+      return setValue;
+    },
+    [state.currentFilterSelect]
+  );
+
   // 机型,属性值,等.
-  const replaceSEOUrl = useCallback(
-    async function() {
-      const answer = getAnswers();
+  const willReplaceSEOUrl = useCallback(
+    function(info) {
+      const answer = getAnswers(willGetUserSelectFilter(info));
       // 需要查找的内容
       const { filterBQVS, filterProductId, brandId } = answer;
       // 这块将brandId进行一下再处理 查找额外
       // 这块性能会有问题
-      const brandInfo: any = await serverProductList.productIdToBrandId(
-        filterProductId
-      );
+      // const brandInfo: any = await serverProductList.productIdToBrandId(
+      //   filterProductId
+      // );
+      const brandInfo: any = null;
       if (brandInfo) {
         brandInfo.forEach((newBrand: any) => {
           if (
@@ -404,13 +434,15 @@ export function useStoreProductListAction(
           .split(splitTwo)
           .join("-")
           .toLowerCase();
-      if (window.location.href.indexOf(getProductListPath()) !== -1) {
-        locationHref(result, "replace");
-      }
+      // if (window.location.href.indexOf(getProductListPath()) !== -1) {
+      //   locationHref(result, "replace");
+      // }
       return result;
     },
-    [findInfoById, getAnswers, state.staticFilterList]
+    [findInfoById, getAnswers, state.staticFilterList, willGetUserSelectFilter]
   );
+
+  // 
   const setUserSelectFilter = useCallback(
     async function({ id, type }: any) {
       let setValue;
@@ -551,7 +583,7 @@ export function useStoreProductListAction(
     getAnswers,
     getStaticFilterList,
     resetPageNumber,
-    replaceSEOUrl,
+    willReplaceSEOUrl,
     getProductList,
     getModelList,
     getManufactureList,
@@ -559,6 +591,7 @@ export function useStoreProductListAction(
     setUserSelectFilter,
     setSearchInfo,
     getDropDownInfo,
+    willGetUserSelectFilter,
     findInfoById
   };
 }

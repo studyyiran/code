@@ -9,7 +9,8 @@ export function FilterList() {
   const {
     productListContextValue,
     getFilterList,
-    setUserSelectFilter
+    setUserSelectFilter,
+    willReplaceSEOUrl
   } = productListContext as IProductListContext;
   const { currentFilterSelect } = productListContextValue;
   const filterList = getFilterList();
@@ -41,6 +42,12 @@ export function FilterList() {
               )}
               key={title}
               allTitle={allTitle}
+              seoUrl={(id: string) =>
+                willReplaceSEOUrl({
+                  type,
+                  id
+                })
+              }
               onSelectOption={(id: string) => {
                 setUserSelectFilter({
                   type,
@@ -51,7 +58,13 @@ export function FilterList() {
               list={optionArr}
               render={({ id, displayName }: any) => {
                 if (tag && tag.indexOf("ISCOLOR") !== -1) {
-                  return <span title={displayName} className="circle" style={{ background: id }} />;
+                  return (
+                    <span
+                      title={displayName}
+                      className="circle"
+                      style={{ background: id }}
+                    />
+                  );
                 } else {
                   return displayName;
                 }
