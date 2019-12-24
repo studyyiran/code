@@ -435,7 +435,7 @@ function useGetAction(
     getOrderTax: promisify(async function() {
       if (state.userInfo.state && state.subOrders && state.subOrders.length) {
         const taxInfo = await getOrderTax({
-          state: state.userInfo.state,
+          zipCode: state.userInfo.zipCode,
           productInfos: state.subOrders
         });
         dispatch({
