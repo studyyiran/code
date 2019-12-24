@@ -38,7 +38,7 @@ export function ProductListContextProvider(props: any) {
     staticFilterList: [],
     searchInfo: {} as any
   };
-  const [state, dispatch, useHehe] = useGetOriginData(
+  const [state, dispatch, useClientRepair] = useGetOriginData(
     useReducerMiddleware(reducerLog, reducer),
     initState,
     StoreProductList
@@ -49,7 +49,7 @@ export function ProductListContextProvider(props: any) {
   );
 
   const propsValue: IProductListContext = {
-    useHehe,
+    useClientRepair,
     ...action,
     productListContextValue: state,
     productListContextDispatch: dispatch
@@ -59,7 +59,7 @@ export function ProductListContextProvider(props: any) {
 
 // interface
 export interface IProductListContext extends IStoreProductListActions {
-  useHehe: any;
+  useClientRepair: any;
   productListContextValue: IStoreProductListState;
   productListContextDispatch: (action: IReducerAction) => void;
 }

@@ -26,7 +26,7 @@ const ProductList = React.memo(function ProductList() {
   const {
     productListContextValue,
     getStaticFilterList,
-    useHehe,
+    useClientRepair,
     getManufactureList,
     getProductList
   } = productListContext as IProductListContext;
@@ -36,7 +36,7 @@ const ProductList = React.memo(function ProductList() {
     manufactureList,
     staticFilterList
   } = productListContextValue;
-  useHehe(productListSsrRule);
+  useClientRepair(productListSsrRule);
 
   useEffect(() => {
     // 在当前页面 没有值
