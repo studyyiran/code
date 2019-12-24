@@ -453,7 +453,12 @@ export function useStoreProductListAction(
       // }
       return result;
     },
-    [state.manufactureList, state.modelList, state.staticFilterList]
+    [
+      state.currentFilterSelect,
+      state.manufactureList,
+      state.modelList,
+      state.staticFilterList
+    ]
   );
 
   //
