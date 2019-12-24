@@ -3,30 +3,33 @@ import "./index.less";
 import { FilterItem } from "../filterItem";
 import { ProductListContext, IProductListContext } from "../../context";
 import CommonCollapse from "../../../../components/commonCollapse";
+import { getFilterList } from "../../context/useGetAction";
 
 export function FilterList() {
   const productListContext = useContext(ProductListContext);
   const {
     productListContextValue,
-    getFilterList,
     setUserSelectFilter,
-    willReplaceSEOUrl
+    willReplaceSEOUrl,
+    getModelList
   } = productListContext as IProductListContext;
-  const { currentFilterSelect } = productListContextValue;
-  const filterList = getFilterList();
+  const {
+    currentFilterSelect,
+    manufactureList,
+    modelList,
+    staticFilterList
+  } = productListContextValue;
+  const filterList = getFilterList({
+    manufactureList,
+    modelList,
+    staticFilterList
+  });
   return (
     <div className="filter-list">
       {/*<SearchProduct />*/}
       {/*<h2>Filters</h2>*/}
       {filterList.map((item, index) => {
-        const {
-          title,
-          clickMoreHandler,
-          optionArr,
-          allTitle,
-          type,
-          tag
-        } = item;
+        const { title, optionArr, allTitle, type, tag } = item;
         return (
           <CommonCollapse
             isActiveKey={index < 2}
@@ -54,7 +57,7 @@ export function FilterList() {
                   id
                 });
               }}
-              clickMoreHandler={clickMoreHandler ? clickMoreHandler : null}
+              clickMoreHandler={false ? getModelList : undefined}
               list={optionArr}
               render={({ id, displayName }: any) => {
                 if (tag && tag.indexOf("ISCOLOR") !== -1) {
