@@ -57,7 +57,7 @@ export function FilterList() {
                   id
                 });
               }}
-              clickMoreHandler={false ? getModelList : undefined}
+              clickMoreHandler={type === "Model" ? getModelList : undefined}
               list={optionArr}
               render={({ id, displayName }: any) => {
                 if (tag && tag.indexOf("ISCOLOR") !== -1) {
