@@ -4,17 +4,8 @@ import {
 } from "../../../../common/utils/util";
 import React, { useContext } from "react";
 import "./index.less";
-import {
-  IProductDetailContext,
-  ProductDetailContext
-} from "../../../../pages/detail/context";
-import { getDescArr, useGetProductImg } from "../../../../pages/detail/util";
+import { getDescArr } from "../../../../pages/detail/util";
 import { InnerDivImage } from "../../../../pages/detail/components/innerDivImage";
-import { locationHref } from "../../../../common/utils/routerHistory";
-import {
-  GlobalSettingContext,
-  IGlobalSettingContext
-} from "../../../../context";
 import { RenderByIsFive } from "../../../../components/RenderByIsFive";
 import { FivePrice } from "../../../detail/components/fivePrice";
 import { FiveCountDown } from "../../../detail/components/fiveCountdown";

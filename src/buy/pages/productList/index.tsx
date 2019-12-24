@@ -17,7 +17,8 @@ import LoadingMask from "./components/loading";
 import { productListSsrRule } from "./ssr";
 import { callBackWhenPassAllFunc } from "../../common/utils/util";
 import { safeEqual } from "../../common/utils/util";
-export default function ProductList(props: any) {
+
+const ProductList = React.memo(function ProductList() {
   const productListContext = useContext(ProductListContext);
 
   const [showModal, setShowModal] = useState(false);
@@ -67,9 +68,7 @@ export default function ProductList(props: any) {
           renderArr.push(<AdLine line={count} />);
           count++;
         }
-        renderArr.push(
-          <PhoneProductCard {...productInfo} history={props.history} />
-        );
+        renderArr.push(<PhoneProductCard {...productInfo} />);
       });
       return renderArr;
     } else {
@@ -199,8 +198,10 @@ export default function ProductList(props: any) {
       </div>
     </div>
   );
-}
-
+}, () => {
+  return true
+});
+export default ProductList;
 function RenderFooter() {
   const productListContext = useContext(ProductListContext);
   const {
