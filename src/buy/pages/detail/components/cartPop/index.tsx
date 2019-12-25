@@ -39,8 +39,10 @@ export function CartPop(props: ICartPop) {
     .reduce((count: number, a: number) => count + a, 0);
 
   useEffect(() => {
-    setShowModal(initStateStep);
-  }, [setShowModal]);
+    if (!showModal) {
+      setStep(initStateStep);
+    }
+  }, [showModal]);
 
   function renderByStep() {
     if (step === 1) {
