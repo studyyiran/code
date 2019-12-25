@@ -435,12 +435,6 @@ export default function ProductDetail(props: any) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const productImg = useGetProductImg(productDetail);
-  return (
-    <div className="product-detail-page">
-      <LoadingMask visible={true} />
-      <div className="loading-mask-min-height"></div>
-    </div>
-  );
   if (buyProductId) {
     return (
       <div className="product-detail-page">
