@@ -179,11 +179,11 @@ const ProductList = React.memo(
           <SearchProduct onClickSubmit={onClickSubmitHandler} />
           <QuickSelect />
           <RenderByCondition
+            key={timeKey}
             ComponentMb={
               <div className="filter-part-mb">
                 <div className="img-container">
                   <img
-                    key={timeKey}
                     src={require("./res/mb-filter.png")}
                     onClick={() => {
                       setShowModal(true);
