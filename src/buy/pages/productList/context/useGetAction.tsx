@@ -281,13 +281,15 @@ export function useStoreProductListAction(
       const res: any = await serverProductList.getModelList(pn);
       dispatch({
         type: productListReducerActionTypes.setModelList,
-        value: (res || []).map(({ productDisplayName, productId, brandId }: any) => {
-          return {
-            id: productId,
-            displayName: productDisplayName,
-            brandId
-          };
-        })
+        value: (res || []).map(
+          ({ productDisplayName, productId, brandId }: any) => {
+            return {
+              id: productId,
+              displayName: productDisplayName,
+              brandId
+            };
+          }
+        )
       });
     },
     [dispatch]
@@ -316,11 +318,22 @@ export function useStoreProductListAction(
       const { filterBQVS, filterProductId, brandId } = answer;
       // console.log(filterProductId)
       state.modelList.forEach(item => {
-        filterProductId.forEach((productId) => {
-          if (item && item.brandId && item.id && safeEqual(item.id, productId)) {
-            brandId.push(item.brandId);
+        filterProductId.forEach(productId => {
+          if (
+            item &&
+            item.brandId &&
+            item.id &&
+            safeEqual(item.id, productId)
+          ) {
+            if (
+              !brandId.find(currentBrandId =>
+                safeEqual(currentBrandId, productId)
+              )
+            ) {
+              brandId.push(item.brandId);
+            }
           }
-        })
+        });
       });
 
       // 先找出最大的index

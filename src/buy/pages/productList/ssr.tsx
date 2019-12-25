@@ -146,7 +146,7 @@ export const productListSsrRule = async (url: string) => {
       staticFilterList
     },
     store.storeData.currentFilterSelect,
-    { pageSize: 100 }
+    { pageSize: 1000 }
   );
   const productList = await serverProductList.getProductList(test);
   store.storeData.productList = productList;
