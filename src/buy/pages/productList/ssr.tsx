@@ -8,7 +8,10 @@ getInitialProps是一个异步方法.
  */
 
 import { serverProductList } from "./server";
-import { ATTROF, StoreProductList } from "./context";
+import {
+  ATTROF,
+  StoreProductList
+} from "./context";
 import { getProductListPath } from "../../common/utils/util";
 import { ISsrFileStore } from "../../common/interface/index.interface";
 import { getAnswers } from "./context/useGetAction";
@@ -106,13 +109,24 @@ export const productListSsrRule = async (url: string) => {
     addIntoSelect(brandIds, (id: any) => ({ id: `Manufacture-${id}` }));
     addIntoSelect(productIds, (productInfo: any) => {
       const { id, name } = productInfo;
-      // 顺带着 回补数据
+      // 顺带着 回补数据(这个回补不用考虑brand.因为这个url必带brand)
       store.storeData.modelList.push({
         id: id,
         displayName: name
       });
       return { id: `Model-${id}` };
     });
+
+    // 为了 ssr 设置下model值.(这块因为考虑ssr效果,所以强行做一下.)
+    const res: any = await serverProductList.getModelList(2);
+    (res || []).forEach(({ productDisplayName, productId, brandId }: any) => {
+      store.storeData.modelList.push({
+        id: productId,
+        displayName: productDisplayName,
+        brandId
+      });
+    });
+
     // 调用接口获取attr列表.进行匹配
     const baseAttrRes: any = await serverProductList.getBaseAttr();
     if (baseAttrRes && baseAttrRes.length) {
@@ -139,6 +153,8 @@ export const productListSsrRule = async (url: string) => {
     );
   }
   const { modelList, staticFilterList } = store.storeData;
+  // 目前线上商品数为500 我个人建议取70%就可以.
+  const maxValue = 500
   const test = getAnswers(
     {
       modelList,
@@ -146,7 +162,7 @@ export const productListSsrRule = async (url: string) => {
       staticFilterList
     },
     store.storeData.currentFilterSelect,
-    { pageSize: 1000 }
+    { pageSize: maxValue }
   );
   const productList = await serverProductList.getProductList(test);
   store.storeData.productList = productList;

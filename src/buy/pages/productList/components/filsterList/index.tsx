@@ -33,7 +33,7 @@ export function FilterList() {
         const { title, optionArr, allTitle, type, tag } = item;
         return (
           <CommonCollapse
-            isActiveKey={isServer() ? index < 4 : index < 2}
+            isActiveKey={isServer() ? index < 3 : index < 2}
             key={title}
             header={title ? title.toUpperCase() : ""}
           >
