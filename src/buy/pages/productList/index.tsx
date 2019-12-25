@@ -66,10 +66,10 @@ const ProductList = React.memo(
         let count = 0;
         productList.forEach((productInfo, index) => {
           if (index % 4 === 0 && index && count < 4) {
-            renderArr.push(<AdLine line={count} />);
+            renderArr.push(<AdLine line={count} key={'ad' + index} />);
             count++;
           }
-          renderArr.push(<PhoneProductCard {...productInfo} />);
+          renderArr.push(<PhoneProductCard key={'phone' + index} {...productInfo} />);
         });
         return renderArr;
       } else {
