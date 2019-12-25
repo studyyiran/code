@@ -552,7 +552,8 @@ export default function ProductDetail(props: any) {
       </div>
     );
   } else {
-    return <div>Loading</div>;
+    return null;
+    // return <div>Loading</div>;
   }
 }
 
