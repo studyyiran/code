@@ -153,8 +153,9 @@ export const productListSsrRule = async (url: string) => {
     );
   }
   const { modelList, staticFilterList } = store.storeData;
-  // 目前线上商品数为500 我个人建议取70%就可以.
-  const maxValue = 500
+  // 目前线上商品数为500 其中苹果在售140条 苹果机型420条
+  // .因此我个人建议取70%就可以  或者200条就足够了. 实际上160条 apple + 运营商 就可以拉出全部机型(甚至包括全部的sold out机型)
+  const maxValue = 200
   const test = getAnswers(
     {
       modelList,

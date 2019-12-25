@@ -555,10 +555,10 @@ export function useStoreProductListAction(
         value: true
       });
       const resList = await serverProductList.getProductList({
+        ...answer,
         productId: state.searchInfo.productId,
         productKey: state.searchInfo.productKey,
         pageNum: state.pageNumber.pn,
-        ...answer
       });
       const { productKey, filterBQVS }: any = answer;
       const result = filterBQVS
