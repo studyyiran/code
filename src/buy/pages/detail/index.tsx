@@ -40,6 +40,7 @@ import { FiveCalcPrice } from "./components/fiveCalcPrice";
 import WxImageViewer from "react-wx-images-viewer";
 import { ModalView } from "../../components/ModalView";
 import { CartPop } from "./components/cartPop";
+import LoadingMask from "../productList/components/loading";
 
 function Swiper(props: any) {
   const {
@@ -145,7 +146,7 @@ export default function ProductDetail(props: any) {
     useClientRepair,
     getProductDetail,
     resetProductInfo,
-    getSimiliarPhoneList,
+    getSimiliarPhoneList
   } = productDetailContext as IProductDetailContext;
 
   const {
@@ -181,7 +182,7 @@ export default function ProductDetail(props: any) {
     return () => {
       resetProductInfo();
     };
-  }, [id]);
+  }, [getProductDetail, getSimiliarPhoneList, id, resetProductInfo]);
 
   useEffect(() => {
     // 只有有商品属性 并且有页面id的时候.并且相等.才进行上报操作
@@ -434,6 +435,12 @@ export default function ProductDetail(props: any) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const productImg = useGetProductImg(productDetail);
+  return (
+    <div className="product-detail-page">
+      <LoadingMask visible={true} />
+      <div className="loading-mask-min-height"></div>
+    </div>
+  );
   if (buyProductId) {
     return (
       <div className="product-detail-page">
@@ -488,7 +495,8 @@ export default function ProductDetail(props: any) {
           <RenderByCondition
             ComponentMb={
               <Affix offsetBottom={0}>
-                <div className="mb-buy-card"><StartBuyButton
+                <div className="mb-buy-card">
+                  <StartBuyButton
                     showModal={showModal}
                     onClick={() => setShowModal(true)}
                     buyProductStatus={buyProductStatus}
@@ -552,8 +560,12 @@ export default function ProductDetail(props: any) {
       </div>
     );
   } else {
-    return null;
-    // return <div>Loading</div>;
+    return (
+      <div className="product-detail-page">
+        <LoadingMask visible={true} />
+        <div className="loading-mask-min-height"></div>
+      </div>
+    );
   }
 }
 
@@ -564,7 +576,6 @@ function StartBuyButton(props: any) {
       {buyProductStatus === "INTRANSACTION" ? "Sold" : "Start Your Purchase"}
     </Button>
   );
-
 }
 
 function RenderTradeIn(props: any) {
