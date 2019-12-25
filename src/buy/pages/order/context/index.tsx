@@ -20,9 +20,7 @@ import {
   promisify, safeEqual,
   saveToCache
 } from "buy/common/utils/util";
-import { getProductDetail } from "../../detail/server";
 import { Message } from "../../../components/message";
-import { reducerLog } from "../../../common/hoc";
 import { dataReport } from "../../../common/dataReport";
 import useGetTotalPrice from "../components/orderLayout/useHook";
 import { IProductDetail } from "../../detail/context/interface";
@@ -95,8 +93,6 @@ export interface IOrderInfoState {
 
 // @provider
 export function OrderInfoContextProvider(props: any) {
-  const productDetailContext = useContext(ProductDetailContext);
-  const { getProductDetail } = productDetailContext as IProductDetailContext;
   const initState: IOrderInfoState = {
     subOrders: [],
     pendingStatus: false,
@@ -140,13 +136,8 @@ export function OrderInfoContextProvider(props: any) {
 
   // 当有值的时候 去拉取值
   useEffect(() => {
-    const target = state.subOrders.find(item => {
-      return item && item.productType === constProductType.PRODUCT;
-    });
-    if (target) {
-      getProductDetail(target.productId);
-    }
-  }, [state.subOrders]);
+    action.getInfoByOrderDetailId()
+  }, [action.getInfoByOrderDetailId]);
 
   const propsValue: IOrderInfoContext = {
     ...action,
@@ -172,6 +163,7 @@ interface IContextActions {
   checkAddress: (info: any) => any;
   orderIdToCheckOrderInfo: () => any;
   validaddress: (data: any) => any;
+  getInfoByOrderDetailId: () => any;// 用于在subOrder中拉取获取手机商品信息
 }
 
 // useCreateActions
@@ -180,7 +172,7 @@ function useGetAction(
   dispatch: (action: IReducerAction) => void
 ): IContextActions {
   const productDetailContext = useContext(ProductDetailContext);
-  const { productDetailContextValue } = productDetailContext as IProductDetailContext;
+  const { productDetailContextValue, getProductDetail } = productDetailContext as IProductDetailContext;
   const {productDetail, partsInfo} = productDetailContextValue
   // 新增promise ref
   const promiseStatus: any = useRef();
@@ -190,6 +182,14 @@ function useGetAction(
   // 数据上报计算
   const { calcTotalPrice, getShippingPrice } = useGetTotalPrice(state);
   const actions: IContextActions = {
+    getInfoByOrderDetailId: useCallback(() => {
+      const target = state.subOrders.find(item => {
+        return item && item.productType === constProductType.PRODUCT;
+      });
+      if (target) {
+        getProductDetail(target.productId);
+      }
+    }, [state.subOrders]),
     validaddress: promisify(async function(data: any) {
       return validaddress(data);
     }),
