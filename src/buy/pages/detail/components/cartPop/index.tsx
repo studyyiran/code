@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PhoneInfo from "../phoneInfo";
 import { currencyTrans, safeEqual } from "../../../../common/utils/util";
 import { dataReport } from "../../../../common/dataReport";
@@ -31,11 +31,16 @@ export function CartPop(props: ICartPop) {
   const [otherProductList, setOtherProductList] = useState(
     [] as IOtherProduct[]
   );
-  const [step, setStep] = useState(1);
+  const initStateStep = 1;
+  const [step, setStep] = useState(initStateStep);
   const { buyProductId, buyPrice, productDisplayName, skuId } = productDetail;
   const otherProductSubTotal = otherProductList
     .map(({ buyPrice }) => Number(buyPrice))
     .reduce((count: number, a: number) => count + a, 0);
+
+  useEffect(() => {
+    setShowModal(initStateStep);
+  }, [setShowModal]);
 
   function renderByStep() {
     if (step === 1) {
@@ -177,7 +182,7 @@ export function CartPop(props: ICartPop) {
       className="cart-modal"
       visible={showModal}
       maskClosable={false}
-      title="Your cart"
+      title={step === 1 ? "Dont't forget your essentials" : "Your cart"}
       width={"90%"}
       onCancel={() => setShowModal(false)}
       footer={null}
