@@ -281,10 +281,11 @@ export function useStoreProductListAction(
       const res: any = await serverProductList.getModelList(pn);
       dispatch({
         type: productListReducerActionTypes.setModelList,
-        value: (res || []).map(({ productDisplayName, productId }: any) => {
+        value: (res || []).map(({ productDisplayName, productId, brandId }: any) => {
           return {
             id: productId,
-            displayName: productDisplayName
+            displayName: productDisplayName,
+            brandId
           };
         })
       });
@@ -313,23 +314,14 @@ export function useStoreProductListAction(
       );
       // 需要查找的内容
       const { filterBQVS, filterProductId, brandId } = answer;
-      // 这块将brandId进行一下再处理 查找额外
-      // 这块性能会有问题
-      // const brandInfo: any = await serverProductList.productIdToBrandId(
-      //   filterProductId
-      // );
-      const brandInfo: any = null;
-      if (brandInfo) {
-        brandInfo.forEach((newBrand: any) => {
-          if (
-            !brandId.find((currentBrandId: any) =>
-              safeEqual(currentBrandId, newBrand.brandId)
-            )
-          ) {
-            brandId.push(newBrand.brandId);
+      // console.log(filterProductId)
+      state.modelList.forEach(item => {
+        filterProductId.forEach((productId) => {
+          if (item && item.brandId && item.id && safeEqual(item.id, productId)) {
+            brandId.push(item.brandId);
           }
-        });
-      }
+        })
+      });
 
       // 先找出最大的index
       let maxIndex = "";
