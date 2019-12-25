@@ -72,7 +72,7 @@ function PaymentInformationWrapper(props: any) {
 
 function PureForm(props: any) {
   const orderInfoContext = useContext(OrderInfoContext);
-  const { zipCodeToAddressInfo } = orderInfoContext as IOrderInfoContext;
+  const { zipCodeToAddressInfo, getOrderTax } = orderInfoContext as IOrderInfoContext;
   const { propsInfo, form, renderButton, hideEmail, submitHandler } = props;
   const {
     getFieldDecorator,
@@ -113,6 +113,9 @@ function PureForm(props: any) {
     if (!/(\d{5,5})|(0\d{4,4})/.test(value)) {
       return;
     }
+    // if (value) {
+    //   getOrderTax(value)
+    // }
     await zipCodeToAddressInfo(value, form);
   }
 

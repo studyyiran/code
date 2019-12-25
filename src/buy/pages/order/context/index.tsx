@@ -155,7 +155,7 @@ export interface IOrderInfoContext extends IContextActions {
 
 // @actions
 interface IContextActions {
-  getOrderTax: () => void;
+  getOrderTax: (zipCode?: string) => void;// 可以从外部实时传入zipCode进行运算
   getExpress: () => void;
   createOrder: (info: any) => any;
   startOrder: () => any;
@@ -432,10 +432,10 @@ function useGetAction(
     //     value: detailArr
     //   });
     // }),
-    getOrderTax: promisify(async function() {
-      if (state.userInfo.state && state.subOrders && state.subOrders.length) {
+    getOrderTax: useCallback( async function(zipCode) {
+      if (state.subOrders && state.subOrders.length && (zipCode || state.userInfo.zipCode)) {
         const taxInfo = await getOrderTax({
-          zipCode: state.userInfo.zipCode,
+          zipCode: zipCode || state.userInfo.zipCode,
           productInfos: state.subOrders
         });
         dispatch({
@@ -443,7 +443,7 @@ function useGetAction(
           value: taxInfo
         });
       }
-    }),
+    }, [state.subOrders, state.userInfo]),
     getExpress: promisify(async function() {
       if (state.subOrders.length && state.userInfo) {
         const expressInfo = await getExpress({
@@ -461,10 +461,6 @@ function useGetAction(
   actions.getExpress = useCallback(actions.getExpress, [
     state.userInfo,
     state.subOrders
-  ]);
-  actions.getOrderTax = useCallback(actions.getOrderTax, [
-    state.subOrders,
-    state.userInfo
   ]);
   actions.createOrder = useCallback(actions.createOrder, []);
   actions.orderIdToCheckOrderInfo = useCallback(
@@ -488,7 +484,6 @@ export const orderInfoReducerTypes = {
   setPayInfo: "setPayInfo",
   resetPayInfo: "resetPayInfo",
   setPendingStatus: "setPendingStatus",
-  setSubOrders: "setSubOrders",
   setCheckOrderInfo: "setCheckOrderInfo",
   setOrderInfo: "setOrderInfo"
 };
