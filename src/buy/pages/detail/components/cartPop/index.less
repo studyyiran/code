@@ -8,11 +8,12 @@
       max-width: 700 * @px;
       .price-container {
         > * {
-          font-size: 14 *@f;
+          font-size: 14 * @f;
         }
       }
-      .bpv-name,.level {
-        font-size: 12 *@f;
+      .bpv-name,
+      .level {
+        font-size: 12 * @f;
       }
       .yr-modal-header {
         border-bottom: 1px solid @color-border;
@@ -34,13 +35,18 @@
           font-weight: @boldWeight;
         }
       }
+      .goback {
+        .canclick();
+        display: block;
+        color: @color-blue-liner-use;
+        text-align: center;
+      }
       .common-button {
         max-width: 100%;
         margin: 25 * @px 0;
         height: 64 * @px;
       }
 
-      
       max-height: 90vh;
       .yr-modal-content {
         padding-top: 5px * @px;
@@ -96,16 +102,15 @@
       .yr-modal.cart-modal {
         max-height: 97vh;
         height: 97vh;
-        top: 15 *@px;
+        top: 15 * @px;
         .yr-modal-header {
           padding-bottom: 0 * @px;
         }
         .yr-modal-content {
-          padding: 0 15 * @px 50 *@px;
+          padding: 0 15 * @px 50 * @px;
         }
-        .phone-info {
-          padding: 5 * @px 0;
-          &:first-child {
+        .step2 {
+          .phone-info:first-child {
             flex-direction: column;
             align-items: center;
             padding: 0 0;
@@ -117,8 +122,12 @@
               width: 100%;
             }
           }
+        }
+        .phone-info {
+          padding: 5 * @px 0;
+
           .innerdiv {
-            margin-right: 10 *@px;
+            margin-right: 10 * @px;
             .innerdiv-imgsize(60 * @px);
           }
         }
@@ -128,7 +137,7 @@
         .common-button {
           height: 50 * @px !important;
           line-height: 50 * @px !important;
-          margin: 10 * @px auto 2 *@px;
+          margin: 10 * @px auto 10 * @px;
         }
       }
     }

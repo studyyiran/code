@@ -40,7 +40,7 @@ export function CartPop(props: ICartPop) {
   function renderByStep() {
     if (step === 1) {
       return (
-        <div>
+        <div className="step1">
           {/*保险*/}
           <RenderProtection
             needAddButton={true}
@@ -69,7 +69,7 @@ export function CartPop(props: ICartPop) {
       );
     } else if (step === 2) {
       return (
-        <div>
+        <div className="step2">
           {/*机子*/}
           <PhoneInfo {...productDetail} />
           {/*保险*/}
@@ -158,12 +158,13 @@ export function CartPop(props: ICartPop) {
               }
             }}
           />
-          <PayCardImages />
-          <a
+          <span
+            className="goback"
             onClick={() => {
               setStep(1);
             }}
-          >{`< Go back`}</a>
+          >{`< Go back`}</span>
+          <PayCardImages />
         </div>
       );
     } else {
