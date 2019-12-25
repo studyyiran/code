@@ -124,8 +124,9 @@ const ProductList = React.memo(
     const timeKey = useMemo(() => {
       return Date.now();
     }, []);
+    
     return (
-      <div className="product-list-page">
+      <div className="product-list-page" key={timeKey}>
         <LoadingMask visible={pendingStatus} />
         {/*<RenderByCondition*/}
         {/*  ComponentServer={*/}
@@ -179,7 +180,6 @@ const ProductList = React.memo(
           <SearchProduct onClickSubmit={onClickSubmitHandler} />
           <QuickSelect />
           <RenderByCondition
-            key={timeKey}
             ComponentMb={
               <div className="filter-part-mb">
                 <div className="img-container">
