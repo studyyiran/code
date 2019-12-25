@@ -124,6 +124,7 @@ export function getDeliverInfos(trackingInfo: any) {
 export function getInfo({
   userInfo,
   paymentInfo,
+  payment,
   groupOrderNo,
   orderCreateDate
 }: any) {
@@ -154,6 +155,7 @@ export function getInfo({
   return {
     shippingAddress,
     telAndEmail,
+    payment,
     paymentMethod,
     orderNumber: groupOrderNo || "",
     orderDate: moment
