@@ -277,8 +277,10 @@ export function useStoreProductListAction(
   // 获取机型列表
   const getModelList = useCallback(
     async function(pn: any) {
-      // const res = await getOrderDetail(a, b);
+      // 封装请求
       const res: any = await serverProductList.getModelList(pn);
+      // 封装赋值
+      // 其实在未来,数据filter也应该剥离出来.提高复用.
       dispatch({
         type: productListReducerActionTypes.setModelList,
         value: (res || []).map(
@@ -295,6 +297,7 @@ export function useStoreProductListAction(
     [dispatch]
   );
 
+  // 重置
   const resetPageNumber = useCallback(() => {
     dispatch({
       type: productListReducerActionTypes.setPageNumber,
@@ -302,7 +305,7 @@ export function useStoreProductListAction(
     });
   }, [dispatch]);
 
-  // 机型,属性值,等.
+  // a标签获取下一次的点击链接render结果
   const willReplaceSEOUrl = useCallback(
     function(info) {
       const dataOfStatic = {

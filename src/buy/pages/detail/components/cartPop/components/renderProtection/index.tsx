@@ -35,7 +35,7 @@ export function RenderProtection(props: {
               to={"/uptrade/protect"}
               onClick={() => {
                 // 这块在跳转的时候 写死一个关闭行为 强行修改潜在的bug
-                setShowModal(false);
+                // setShowModal(false);
               }}
             >
               Learn more

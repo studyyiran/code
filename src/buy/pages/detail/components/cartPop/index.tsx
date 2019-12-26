@@ -184,7 +184,7 @@ export function CartPop(props: ICartPop) {
       className="cart-modal"
       visible={showModal}
       maskClosable={false}
-      title={step === 1 ? "Dont't forget your essentials" : "Your cart"}
+      title={step === 1 ? "Don't forget your essentials" : "Your cart"}
       width={"90%"}
       onCancel={() => setShowModal(false)}
       footer={null}

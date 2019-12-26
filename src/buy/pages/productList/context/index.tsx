@@ -1,7 +1,6 @@
 import React, { createContext } from "react";
 import { IReducerAction } from "buy/common/interface/index.interface";
 import { safeEqual } from "buy/common/utils/util";
-import { IStaticFilterItem } from "./staticData";
 import { useGetOriginData } from "../../../common/useHook/useGetOriginData";
 import useReducerMiddleware from "../../../common/useHook/useReducerMiddleware";
 import { reducerLog } from "../../../common/hoc";
