@@ -2,14 +2,15 @@ import React, {
   createContext,
   useReducer,
   useCallback,
+  useRef,
   useEffect
 } from "react";
 import { IReducerAction } from "buy/common/interface/index.interface";
-import { callBackWhenPassAllFunc } from "buy/common/utils/util";
+import { callBackWhenPassAllFunc, promisify } from "buy/common/utils/util";
 import useReducerMiddleware from "../../../common/useHook/useReducerMiddleware";
 import { IContextValue } from "../../type";
 import { useIsCurrentPage } from "../../useHook";
-import { storeTestNameServer } from "../server";
+import { getTestAjaxResult } from "../server";
 
 export const StoreTestNameContext = createContext({});
 
@@ -65,20 +66,22 @@ function useGetAction(
   state: IStoreTestNameState,
   dispatch: (action: IReducerAction) => void
 ): IStoreTestNameActions {
-  // 获取类
-  const getTestAjaxValue: IStoreTestNameActions["getTestAjaxValue"] = useCallback(
-    async function() {
-      const res = await storeTestNameServer.getTestAjaxResult();
+  // 新增promise ref
+  const promiseStatus: any = useRef();
+  if (!promiseStatus.current) {
+    promiseStatus.current = {};
+  }
+  const actions: IStoreTestNameActions = {
+    getTestAjaxValue: promisify(async function() {
+      const res = await getTestAjaxResult();
       dispatch({
         type: storeTestNameReducerTypes.setTestValue,
         value: res
       });
-    },
-    [dispatch]
-  );
-  return {
-    getTestAjaxValue
+    })
   };
+  actions.getTestAjaxValue = useCallback(actions.getTestAjaxValue, []);
+  return actions;
 }
 
 // action types

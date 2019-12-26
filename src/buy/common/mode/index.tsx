@@ -2,7 +2,7 @@ import React, {useContext, useEffect} from "react";
 import "./index.less";
 import { IStoreTestNameContext, StoreTestNameContext } from "./context";
 
-export default function Name() {
+export function Name() {
   const storeTestNameContext = useContext(StoreTestNameContext);
   const {
     storeTestNameContextValue,

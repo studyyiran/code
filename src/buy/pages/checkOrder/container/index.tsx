@@ -142,6 +142,7 @@ export function OrderList(props: any) {
         // 传递subOrderNo为了可以绑定点击id,不传递是因为需求不允许变更
         return (
           <WithInput
+            key={subOrderNo}
             checked={isChecked()}
             onChange={onChangeHandler.bind({}, "")}
           >

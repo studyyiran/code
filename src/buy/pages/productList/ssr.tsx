@@ -7,19 +7,14 @@ getInitialProps是一个异步方法.
 传入参数(页面url信息)
  */
 
-import {
-  getBaseAttr,
-  getProductList,
-  stringToUserSelect,
-  getManufactureList
-} from "./server";
+import { serverProductList } from "./server";
 import {
   ATTROF,
-  productListReducerActionTypes,
   StoreProductList
 } from "./context";
 import { getProductListPath } from "../../common/utils/util";
 import { ISsrFileStore } from "../../common/interface/index.interface";
+import { getAnswers } from "./context/useGetAction";
 
 export const productListSsrRule = async (url: string) => {
   const ssrRes: ISsrFileStore = {
@@ -108,21 +103,35 @@ export const productListSsrRule = async (url: string) => {
     );
   }
   // 发起请求，获取参数
-  const userSelectData: any = await stringToUserSelect(json);
+  const userSelectData: any = await serverProductList.stringToUserSelect(json);
   if (userSelectData) {
     const { brandIds, productIds, skuAttrIds } = userSelectData;
     addIntoSelect(brandIds, (id: any) => ({ id: `Manufacture-${id}` }));
     addIntoSelect(productIds, (productInfo: any) => {
       const { id, name } = productInfo;
-      // 顺带着 回补数据
+      // 顺带着 回补数据(这个回补不用考虑brand.因为这个url必带brand)
       store.storeData.modelList.push({
         id: id,
         displayName: name
       });
       return { id: `Model-${id}` };
     });
+
+    // 为了 ssr 设置下model值.(这块因为考虑ssr效果,所以强行做一下.)
+    const res: any = await serverProductList.getModelList(1);
+    (res || []).forEach(({ productDisplayName, productId, brandId }: any) => {
+      const isRepeat = store.storeData.modelList.find((item) => item.id === productId)
+      if (!isRepeat) {
+        store.storeData.modelList.push({
+          id: productId,
+          displayName: productDisplayName,
+          brandId
+        });
+      }
+    });
+
     // 调用接口获取attr列表.进行匹配
-    const baseAttrRes: any = await getBaseAttr();
+    const baseAttrRes: any = await serverProductList.getBaseAttr();
     if (baseAttrRes && baseAttrRes.length) {
       store.storeData.staticFilterList = baseAttrRes;
       baseAttrRes.forEach((item: any, index: number) => {
@@ -135,20 +144,7 @@ export const productListSsrRule = async (url: string) => {
       });
     }
   }
-  const userSelectInfo = {
-    productKey: [],
-    buyLevel: [],
-    filterBQVS: [], //
-    filterProductId: [], //
-    brandId: [], //
-    price: [],
-    pageNum: 1,
-    pageSize: 20
-  };
-  const productList = await getProductList(userSelectInfo);
-  store.storeData.productList = productList;
-
-  const manufactureList: any = await getManufactureList();
+  const manufactureList: any = await serverProductList.getManufactureList();
   if (manufactureList && manufactureList.length) {
     store.storeData.manufactureList = (manufactureList || []).map(
       ({ brandId, brandDisplayName }: any) => {
@@ -159,6 +155,25 @@ export const productListSsrRule = async (url: string) => {
       }
     );
   }
+  const { modelList, staticFilterList } = store.storeData;
+  // 目前线上商品数为500 其中苹果在售140条 苹果机型420条
+  // .因此我个人建议取70%就可以  或者200条就足够了. 实际上160条 apple + 运营商 就可以拉出全部机型(甚至包括全部的sold out机型)
+  // 后续我其实可以进一步优化,  杜绝掉 ,的能力,这样就能更加精准,更加满足需求.
+  // 我们有8个运营商 6个品牌商  8个内存 18种颜色 若干个热销机型(6-11个).
+  // 如果杜绝掉逗号,那么也就4000种可能.
+  const maxValue = 200
+  const test = getAnswers(
+    {
+      modelList,
+      manufactureList: store.storeData.manufactureList,
+      staticFilterList
+    },
+    store.storeData.currentFilterSelect,
+    { pageSize: maxValue }
+  );
+  const productList = await serverProductList.getProductList(test);
+  store.storeData.productList = productList;
+
   ssrRes.storeList.push(store);
   return ssrRes;
 };

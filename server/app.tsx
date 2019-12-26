@@ -6,7 +6,7 @@ import Axios from "axios";
 import * as React from "react";
 import ReactDOMServer from "react-dom/server";
 import { matchRoutes, renderRoutes } from "react-router-config";
-import { StaticRouter, Switch, matchPath } from "react-router-dom";
+import { StaticRouter, Switch, matchPath, Route } from "react-router-dom";
 import { Provider } from "mobx-react";
 import Loadable from "react-loadable";
 
@@ -276,13 +276,17 @@ const gotoBuy = async (ctx: any, next: any, buyCurrentRouter: any) => {
       html = ReactDOMServer.renderToString(
         <StaticRouter location={ctx.path}>
           <RenderWithOriginData originData={originData}>
-            <div className="layout">
-              <Header />
-              <main>
-                <Component />
-              </main>
-              <Footer />
-            </div>
+            <Switch>
+              <Route>
+                <div className="layout">
+                  <Header />
+                  <main>
+                    <Component />
+                  </main>
+                  <Footer />
+                </div>
+              </Route>
+            </Switch>
           </RenderWithOriginData>
         </StaticRouter>
       );
@@ -314,11 +318,11 @@ Router.get("*", async (ctx: any, next: any) => {
     return;
   }
   // 匹配buy端路由，如果匹配的上并且组件存在，直接跳转buy端，否则跳转sell端
-  console.log(ctx.path)
+  console.log(ctx.path);
   const current = routerConfig.find((route: any) => {
     return !!matchPath(ctx.path, route);
   });
-  console.log(current)
+  console.log(current);
   if (current && current.Component) {
     console.log("buy page");
     return await gotoBuy(ctx, next, current);

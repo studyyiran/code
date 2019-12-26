@@ -7,11 +7,10 @@ import ButtonGroup from "./components/buttonGroup";
 import { locationHref } from "../../common/utils/routerHistory";
 import { routerConfig } from "./routerConfig";
 import { IOrderInfoContext, OrderInfoContext } from "./context";
-import hocDocumentTitle from "../../components/documentTitle";
 
 export default function OrderRouter(props: any) {
   const orderInfoContext = useContext(OrderInfoContext);
-  const { orderInfoContextValue } = orderInfoContext as IOrderInfoContext;
+  const { orderInfoContextValue, getInfoByOrderDetailId, getOrderTax, getExpress } = orderInfoContext as IOrderInfoContext;
   const { subOrders, pendingStatus } = orderInfoContextValue;
   const { path, url } = props.match;
   function handleNext(currentPath: string) {
@@ -20,6 +19,10 @@ export default function OrderRouter(props: any) {
     });
     if (findTarget !== routerConfig.length - 1) {
       const nextRelativePath = routerConfig[findTarget + 1].relativePath;
+      // 触发一个主动的更新.
+      getInfoByOrderDetailId();
+      getOrderTax();
+      getExpress();
       locationHref(`${path}/${nextRelativePath}`);
       return null;
     } else {

@@ -121,6 +121,7 @@ export default function SearchProduct(props: any) {
       ComponentPc={
         <div className="search-product-container">
           <AutoComplete
+            defaultActiveFirstOption={false}
             className="certain-category-search"
             size="large"
             style={{ width: "100%" }}

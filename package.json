@@ -20,6 +20,17 @@
     "@types/react-router": "^5.1.2",
     "@types/react-router-config": "^5.0.1",
     "@types/react-router-dom": "^5.1.0",
+    "@typescript-eslint/eslint-plugin": "^2.3.1",
+    "@typescript-eslint/parser": "^2.3.1",
+    "babel-eslint": "10.0.3",
+    "eslint": "^6.1.0",
+    "eslint-config-react-app": "^5.0.2",
+    "eslint-loader": "3.0.3",
+    "eslint-plugin-flowtype": "3.13.0",
+    "eslint-plugin-import": "2.18.2",
+    "eslint-plugin-jsx-a11y": "6.2.3",
+    "eslint-plugin-react": "7.14.3",
+    "eslint-plugin-react-hooks": "^1.6.1",
     "antd": "3.21.4",
     "app-root-path": "^2.1.0",
     "autoprefixer": "7.1.6",
@@ -99,6 +110,9 @@
     "webpack-manifest-plugin": "1.3.2",
     "whatwg-fetch": "2.0.3"
   },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
   "scripts": {
     "start": "cross-env REACT_APP_SERVER_ENV=DEV node scripts/start.js",
     "startbuy": "cross-env REACT_APP_SERVER_ENV=DEV node scripts/startbuy.js",
@@ -121,6 +135,9 @@
     "ssr:prod": "cross-env REACT_APP_SERVER_ENV=PUB yarn run all:build"
   },
   "devDependencies": {
+    "eslint-config-prettier": "^6.3.0",
+    "eslint-config-react": "^1.1.7",
+    "eslint-plugin-prettier": "^3.1.1",
     "@babel/plugin-transform-exponentiation-operator": "^7.1.0",
     "@types/axios": "^0.14.0",
     "@types/classnames": "^2.2.6",
@@ -132,14 +149,8 @@
     "@types/swiper": "^4.2.3",
     "@types/webpack": "^4.4.13",
     "@types/webpack-env": "^1.13.4",
-    "@typescript-eslint/eslint-plugin": "^2.0.0",
-    "@typescript-eslint/parser": "^2.0.0",
     "classnames": "^2.2.6",
     "cross-env": "^5.2.0",
-    "eslint": "^6.2.2",
-    "eslint-config-prettier": "^6.0.0",
-    "eslint-plugin-prettier": "^3.1.0",
-    "eslint-plugin-react": "^7.14.3",
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
     "prettier": "^1.18.2",

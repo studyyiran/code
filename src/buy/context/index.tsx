@@ -60,23 +60,26 @@ export function GlobalSettingContextProvider(props: any) {
   }, []);
 
   useEffect(() => {
-    const info = {
-      time: state.blackHappyHour,
-      minInterval: -1000,
-      runCallBack: (times: any) => {
-        dispatch({
-          type: reducerActionTypes.setBlackHappyCountDown,
-          value: times
-        });
-      },
-      finishCallBack: action.resetFiveAct
-    };
-    // @ts-ignore
-    const timer = new myTimer(info as any);
-    timer.start();
-    return () => {
-      timer.stop();
-    };
+    if (state.blackHappyHour > 0) {
+      const info = {
+        time: state.blackHappyHour,
+        minInterval: -1000,
+        runCallBack: (times: any) => {
+          dispatch({
+            type: reducerActionTypes.setBlackHappyCountDown,
+            value: times
+          });
+        },
+        finishCallBack: action.resetFiveAct
+      };
+      // @ts-ignore
+      const timer = new myTimer(info as any);
+      timer.start();
+      return () => {
+        timer.stop();
+      };
+    }
+    return () => {};
   }, [state.blackHappyHour]);
 
   const propsValue: IGlobalSettingContext = {

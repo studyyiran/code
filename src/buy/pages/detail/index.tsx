@@ -40,6 +40,7 @@ import { FiveCalcPrice } from "./components/fiveCalcPrice";
 import WxImageViewer from "react-wx-images-viewer";
 import { ModalView } from "../../components/ModalView";
 import { CartPop } from "./components/cartPop";
+import LoadingMask from "../productList/components/loading";
 
 function Swiper(props: any) {
   const {
@@ -141,9 +142,11 @@ export default function ProductDetail(props: any) {
   const [showModal, setShowModal] = useState(false);
   const productDetailContext = useContext(ProductDetailContext);
   const {
-    setProductId,
     productDetailContextValue,
-    useClientRepair
+    useClientRepair,
+    getProductDetail,
+    resetProductInfo,
+    getSimiliarPhoneList
   } = productDetailContext as IProductDetailContext;
 
   const {
@@ -174,22 +177,12 @@ export default function ProductDetail(props: any) {
   const isPage = useIsCurrentPage("/detail");
 
   useEffect(() => {
-    // 1.id 有值
-    // 2.正确的页面
-    callBackWhenPassAllFunc([() => id, () => isPage], () => {
-      if (true) {
-        // 调用常规的接口
-        setProductId(id);
-      }
-    });
-  }, [id, isPage, setProductId]);
-
-  useEffect(() => {
+    getProductDetail(id);
+    getSimiliarPhoneList(id);
     return () => {
-      // 离开的时候清空
-      setProductId(null);
+      resetProductInfo();
     };
-  }, [setProductId]);
+  }, [getProductDetail, getSimiliarPhoneList, id, resetProductInfo]);
 
   useEffect(() => {
     // 只有有商品属性 并且有页面id的时候.并且相等.才进行上报操作
@@ -496,11 +489,14 @@ export default function ProductDetail(props: any) {
           <RenderByCondition
             ComponentMb={
               <Affix offsetBottom={0}>
-                <div className="mb-buy-card"><StartBuyButton
-                    showModal={showModal}
-                    onClick={() => setShowModal(true)}
-                    buyProductStatus={buyProductStatus}
-                  />
+                <div className="mb-buy-card">
+                  {showModal ? null : (
+                    <StartBuyButton
+                      showModal={showModal}
+                      onClick={() => setShowModal(true)}
+                      buyProductStatus={buyProductStatus}
+                    />
+                  )}
                 </div>
               </Affix>
             }
@@ -560,7 +556,12 @@ export default function ProductDetail(props: any) {
       </div>
     );
   } else {
-    return null;
+    return (
+      <div className="product-detail-page">
+        <LoadingMask visible={true} />
+        <div className="loading-mask-min-height"></div>
+      </div>
+    );
   }
 }
 
@@ -571,7 +572,6 @@ function StartBuyButton(props: any) {
       {buyProductStatus === "INTRANSACTION" ? "Sold" : "Start Your Purchase"}
     </Button>
   );
-
 }
 
 function RenderTradeIn(props: any) {

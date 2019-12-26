@@ -113,6 +113,10 @@ function PureForm(props: any) {
     if (!/(\d{5,5})|(0\d{4,4})/.test(value)) {
       return;
     }
+    // 这个如果需要 可以放开 进行主动检查更新
+    // if (value) {
+    //   getOrderTax(value)
+    // }
     await zipCodeToAddressInfo(value, form);
   }
 

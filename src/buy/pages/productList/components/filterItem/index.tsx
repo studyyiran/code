@@ -6,6 +6,7 @@ renderProps
  */
 import React, { useEffect, useState } from "react";
 import "./index.less";
+import RouterLink from "../../../../common-modules/components/routerLink";
 
 interface Interface {
   list: any[];
@@ -14,6 +15,7 @@ interface Interface {
   allTitle?: string;
   type?: string;
   tag?: string;
+  seoUrl: (id: any) => string;
   clickMoreHandler?: (pn: any) => void;
   currentSelectArr: string[];
 }
@@ -27,6 +29,7 @@ export function FilterItem(props: Interface) {
     render,
     onSelectOption,
     type,
+    seoUrl,
     currentSelectArr
   } = props;
   const nextPageHandler = usePn(clickMoreHandler);
@@ -57,7 +60,7 @@ export function FilterItem(props: Interface) {
               })
             }
           >
-            {allTitle}
+            <RouterLink to={seoUrl("all")}>{allTitle}</RouterLink>
           </li>
         ) : null}
         {(list || []).map((itemInfo: any) => {
@@ -79,7 +82,11 @@ export function FilterItem(props: Interface) {
                 })
               }
             >
-              <div>{render(itemInfo)}</div>
+              <div>
+                <RouterLink to={seoUrl(itemInfo.id)}>
+                  {render(itemInfo)}
+                </RouterLink>
+              </div>
             </li>
           );
         })}
@@ -103,7 +110,7 @@ function usePn(pnChangeCallBack?: (pn: any) => void) {
   }
   useEffect(() => {
     pnChangeCallBack && pnChangeCallBack(pn);
-  }, [pn]);
+  }, [pn, pnChangeCallBack]);
   if (pnChangeCallBack) {
     return addPn;
   } else {

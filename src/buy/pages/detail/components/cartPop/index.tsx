@@ -1,24 +1,17 @@
-import React, { useContext, useEffect, useState } from "react";
-import PhoneInfo, { ProductInfoCard } from "../phoneInfo";
+import React, { useEffect, useState } from "react";
+import PhoneInfo from "../phoneInfo";
 import { currencyTrans, safeEqual } from "../../../../common/utils/util";
 import { dataReport } from "../../../../common/dataReport";
 import PayCardImages from "../payCardImages";
 import MyModal from "../../../../components/modal";
-import {
-  IOrderInfoContext,
-  OrderInfoContext,
-  orderInfoReducerTypes
-} from "../../../order/context";
-import { locationHref } from "../../../../common/utils/routerHistory";
+
 import { IProductDetail } from "../../context/interface";
-import {
-  protectionInfo,
-  protectPrice
-} from "../../../../common/config/staticConst";
-import { constProductType } from "../../../../common/constValue";
+import { protectPrice } from "../../../../common/config/staticConst";
 import "./index.less";
-import { PartsProductCard } from "../partsProductCard";
-import RouterLink from "../../../../common-modules/components/routerLink";
+import { RenderProtection } from "./components/renderProtection";
+import { RenderOtherProduct } from "./components/renderOtherProtection";
+import { CheckOutButton } from "./components/checkoutButton";
+import { RenderByCondition } from "../../../../components/RenderByCondition";
 
 interface ICartPop {
   showModal: boolean;
@@ -27,17 +20,7 @@ interface ICartPop {
   partsInfo: IProductDetail[];
 }
 
-function WithTitle(props: { title: string; children: any }) {
-  const { title, children } = props;
-  return (
-    <div className="with-title-container">
-      <h2>{title}</h2>
-      {children}
-    </div>
-  );
-}
-
-interface IOtherProduct {
+export interface IOtherProduct {
   productId: string;
   productType?: string;
   buyPrice: string;
@@ -49,271 +32,185 @@ export function CartPop(props: ICartPop) {
   const [otherProductList, setOtherProductList] = useState(
     [] as IOtherProduct[]
   );
+  const initStateStep = 1;
+  const [step, setStep] = useState(initStateStep);
   const { buyProductId, buyPrice, productDisplayName, skuId } = productDetail;
   const otherProductSubTotal = otherProductList
     .map(({ buyPrice }) => Number(buyPrice))
     .reduce((count: number, a: number) => count + a, 0);
-  return (
-    <MyModal
-      needDefaultScroll={true}
-      className="cart-modal"
-      visible={showModal}
-      maskClosable={false}
-      title="Your cart"
-      width={"90%"}
-      onCancel={() => setShowModal(false)}
-      footer={null}
-    >
-      <div>
-        {/*机子*/}
-        <PhoneInfo {...productDetail} />
-        {/*保险*/}
-        <RenderProtection
-          setShowModal={setShowModal}
-          needProtection={needProtection}
-          setNeedProtection={setNeedProtection}
-        />
-        {/*其他子商品*/}
-        <RenderOtherProduct
-          otherProductList={otherProductList}
-          setOtherProductList={setOtherProductList}
-          partsInfo={partsInfo}
-        />
-        {/*价格计算*/}
-        <ul className="price-list">
-          <li>
-            <label>Subtotal: </label>
-            <span>{currencyTrans(buyPrice + otherProductSubTotal)}</span>
-          </li>
-          {needProtection ? (
-            <li>
-              <label>Protection: </label>
-              <span>{currencyTrans(protectPrice)}</span>
-            </li>
-          ) : null}
-          <li className="protect">
-            <label>Total:</label>
-            <span>
-              {currencyTrans(
-                otherProductSubTotal +
-                  (needProtection ? buyPrice + protectPrice : buyPrice)
-              )}
-            </span>
-          </li>
-        </ul>
-        <CheckOutButton
-          buyProductId={buyProductId}
-          otherProductList={otherProductList}
-          needProtection={needProtection}
-          onClick={() => {
-            setShowModal(false);
-            try {
-              dataReport({
-                event: "EEcheckout",
-                ecommerce: {
-                  currencyCode: "USD",
-                  add: {
-                    products: [
-                      {
-                        sku: String(skuId),
-                        name: productDisplayName,
-                        price: Number(buyPrice)
-                      }
-                    ].concat(
-                      otherProductList.map(item => {
-                        const target = partsInfo.find(item2 =>
-                          safeEqual(item2.buyProductId, item.productId)
-                        );
-                        if (target) {
-                          return {
-                            sku: String(target.skuId),
-                            name: target.productDisplayName,
-                            price: Number(target.buyPrice)
-                          };
-                        } else {
-                          return {
-                            sku: String(item.productId),
-                            name: item.productId,
-                            price: Number(item.buyPrice)
-                          };
-                        }
-                      })
-                    )
-                  }
-                }
-              });
-            } catch (e) {
-              console.error(e);
-            }
-          }}
-        />
-        <PayCardImages />
-      </div>
-    </MyModal>
-  );
-}
 
-function CheckOutButton(props: {
-  buyProductId: string;
-  needProtection: boolean;
-  otherProductList: IOtherProduct[];
-  onClick: any;
-}) {
-  const { buyProductId, needProtection, otherProductList } = props;
-  const orderInfoContext = useContext(OrderInfoContext);
-  const { orderInfoContextDispatch } = orderInfoContext as IOrderInfoContext;
-  return (
-    <button
-      className="common-button"
-      onClick={() => {
-        // 进行other的数据组织
-        const otherProductInfo = otherProductList.map(item => {
-          return {
-            productId: item.productId,
-            needProtection: false,
-            productType: item.productType as string
-          };
-        });
-        // 1 他会xx
-        orderInfoContextDispatch({
-          type: orderInfoReducerTypes.addSubOrder,
-          value: [
-            {
-              productId: buyProductId,
-              needProtection,
-              productType: constProductType.PRODUCT
-            }
-          ].concat(otherProductInfo)
-        });
-        if (props.onClick) {
-          props.onClick();
-        }
-        // 2 短暂delay
-        window.setTimeout(() => {
-          locationHref("/buy/info");
-        }, 100);
-      }}
-    >
-      Checkout
-    </button>
-  );
-}
-
-interface IAddToCard {
-  cartChangeCallBack: (haveAddIntoCart: boolean) => any;
-  value?: boolean;
-}
-
-function AddToCart(props: IAddToCard) {
-  const { cartChangeCallBack, value } = props;
-  const [haveAdd, setHaveAdd] = useState(false);
-
-  function getState() {
-    if (value !== undefined) {
-      return value;
-    } else {
-      return haveAdd;
+  useEffect(() => {
+    if (!showModal) {
+      setStep(initStateStep);
     }
-  }
+  }, [showModal]);
 
-  function cartChangeHandler() {
-    const next = !getState();
-    (document as any).querySelector(".cart-modal").scroll(0, 1000);
-    cartChangeCallBack(next);
-    setHaveAdd(next);
-  }
-  return (
-    <div
-      className="add-to-cart-button"
-      data-status={getState()}
-      onClick={cartChangeHandler}
-    >
-      {getState() ? <span>Remove</span> : <span>Add to cart</span>}
-    </div>
-  );
-}
-
-function RenderProtection(props: {
-  needProtection: boolean;
-  setNeedProtection: any;
-  setShowModal: any;
-}) {
-  const { needProtection, setNeedProtection, setShowModal } = props;
-  return (
-    <WithTitle title="Phone protection">
-      {/*<div>{protectPrice}</div>*/}
-      <ProductInfoCard
-        productName={protectionInfo.title}
-        productImage={require("./res/protection_img.png")}
-        price={protectPrice}
-      >
-        {protectionInfo.content}
-        <div className="last-line-flex-container">
-          <RouterLink
-            target={"_blank"}
-            to={"/uptrade/protect"}
+  function renderByStep() {
+    if (step === 1) {
+      return (
+        <div className="step1">
+          {/*保险*/}
+          <RenderProtection
+            needAddButton={true}
+            needTitle={false}
+            setShowModal={setShowModal}
+            needProtection={needProtection}
+            setNeedProtection={setNeedProtection}
+          />
+          {/*其他子商品*/}
+          <RenderOtherProduct
+            otherProductList={otherProductList}
+            setOtherProductList={setOtherProductList}
+            partsInfo={partsInfo}
+            needTitle={false}
+            needAddButton={true}
+          />
+          <button
+            className="common-button"
             onClick={() => {
-              // 这块在跳转的时候 写死一个关闭行为 强行修改潜在的bug
-              setShowModal(false);
+              setStep(2);
             }}
           >
-            Learn more
-          </RouterLink>
-          <AddToCart
-            value={needProtection}
-            cartChangeCallBack={value => {
-              setNeedProtection(value);
-            }}
-          />
+            Continue
+          </button>
         </div>
-      </ProductInfoCard>
-    </WithTitle>
-  );
-}
-
-function RenderOtherProduct(props: {
-  partsInfo: IProductDetail[];
-  otherProductList: IOtherProduct[];
-  setOtherProductList: any;
-}) {
-  const { partsInfo, otherProductList, setOtherProductList } = props;
-  const dom = partsInfo.map(item => {
-    const { buyProductId, productType, buyPrice } = item;
-    return (
-      <PartsProductCard productInfo={item}>
-        <div className="last-line-flex-container peijian">
-          <AddToCart
-            value={otherProductList.some(item =>
-              safeEqual(item.productId, buyProductId)
-            )}
-            cartChangeCallBack={value => {
-              setOtherProductList((arr: IOtherProduct[]) => {
-                // 根据选中状态来操作列表
-                if (value) {
-                  return arr.concat([
-                    {
-                      productId: buyProductId,
-                      productType,
-                      buyPrice
+      );
+    } else if (step === 2) {
+      return (
+        <div className="step2">
+          {/*机子*/}
+          <PhoneInfo {...productDetail} />
+          {/*保险*/}
+          {needProtection ? (
+            <RenderProtection
+              needTitle={true}
+              needAddButton={false}
+              setShowModal={setShowModal}
+              needProtection={needProtection}
+              setNeedProtection={setNeedProtection}
+            />
+          ) : null}
+          {/*其他子商品*/}
+          <RenderOtherProduct
+            otherProductList={otherProductList}
+            setOtherProductList={setOtherProductList}
+            partsInfo={partsInfo}
+            needTitle={true}
+            needAddButton={false}
+          />
+          {/*价格计算*/}
+          <ul className="price-list">
+            <li>
+              <label>Subtotal: </label>
+              <span>{currencyTrans(buyPrice + otherProductSubTotal)}</span>
+            </li>
+            {needProtection ? (
+              <li>
+                <label>Protection: </label>
+                <span>{currencyTrans(protectPrice)}</span>
+              </li>
+            ) : null}
+            <li className="protect">
+              <label>Total:</label>
+              <span>
+                {currencyTrans(
+                  otherProductSubTotal +
+                    (needProtection ? buyPrice + protectPrice : buyPrice)
+                )}
+              </span>
+            </li>
+          </ul>
+          <CheckOutButton
+            buyProductId={buyProductId}
+            otherProductList={otherProductList}
+            needProtection={needProtection}
+            onClick={() => {
+              setShowModal(false);
+              try {
+                dataReport({
+                  event: "EEcheckout",
+                  ecommerce: {
+                    currencyCode: "USD",
+                    add: {
+                      products: [
+                        {
+                          sku: String(skuId),
+                          name: productDisplayName,
+                          price: Number(buyPrice)
+                        }
+                      ].concat(
+                        otherProductList.map(item => {
+                          const target = partsInfo.find(item2 =>
+                            safeEqual(item2.buyProductId, item.productId)
+                          );
+                          if (target) {
+                            return {
+                              sku: String(target.skuId),
+                              name: target.productDisplayName,
+                              price: Number(target.buyPrice)
+                            };
+                          } else {
+                            return {
+                              sku: String(item.productId),
+                              name: item.productId,
+                              price: Number(item.buyPrice)
+                            };
+                          }
+                        })
+                      )
                     }
-                  ]);
-                } else {
-                  return arr.filter(
-                    item => !safeEqual(item.productId, buyProductId)
-                  );
-                }
-              });
+                  }
+                });
+              } catch (e) {
+                console.error(e);
+              }
             }}
           />
+          <span
+            className="goback"
+            onClick={() => {
+              setStep(1);
+            }}
+          >{`< Go back`}</span>
+          <PayCardImages />
         </div>
-      </PartsProductCard>
-    );
-  });
-  if (dom && dom.length) {
-    return <WithTitle title="Recommended accessories">{dom}</WithTitle>;
-  } else {
-    return null;
+      );
+    } else {
+      return null;
+    }
   }
+  return (
+    <RenderByCondition
+      ComponentMb={
+        <MyModal
+          needDefaultScroll={true}
+          className={`cart-modal cart-modal-mb-modal ${step === 1 ? 'step1-modal' : 'step2-modal'}`}
+          visible={showModal}
+          maskClosable={false}
+          title={step === 1 ? "Don't forget your essentials" : "Your cart"}
+          width={"90%"}
+          onCancel={() => setShowModal(false)}
+          footer={null}
+        >
+          {renderByStep()}
+        </MyModal>
+      }
+      ComponentPc={
+        <MyModal
+          needDefaultScroll={true}
+          className="cart-modal cart-modal-pc-modal"
+          visible={showModal}
+          maskClosable={false}
+          title={step === 1 ? "Don't forget your essentials" : "Your cart"}
+          width={"90%"}
+          onCancel={() => setShowModal(false)}
+          footer={null}
+        >
+          {renderByStep()}
+        </MyModal>
+      }
+    />
+  );
 }
 
 // function CheckBoxProtection(props: any) {
