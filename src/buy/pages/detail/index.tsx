@@ -1,4 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState
+} from "react";
 import "./index.less";
 import { Affix, Carousel } from "antd";
 // @ts-ignore
@@ -236,7 +242,7 @@ export default function ProductDetail(props: any) {
     }
   }, [id, productDetail]);
 
-  function viewAllClickHandler() {
+  const viewAllClickHandler = useCallback(() => {
     window.location.href = urlRmSpaceAndToLower(
       getProductListPath() +
         "/" +
@@ -244,7 +250,7 @@ export default function ProductDetail(props: any) {
         "/" +
         productDisplayName
     );
-  }
+  }, [productDetail.brandDisplayName, productDisplayName]);
 
   function renderHeaderPart() {
     return (
@@ -435,6 +441,50 @@ export default function ProductDetail(props: any) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const productImg = useGetProductImg(productDetail);
+
+  const testUseMemoDom = useMemo(() => {
+    console.log("render");
+    return (
+      <section className="similar">
+        <header>
+          <h2>Similar Phones</h2>
+          <a>
+            <span className={"view-all-text"} onClick={viewAllClickHandler}>
+              VIEW ALL
+            </span>
+          </a>
+        </header>
+        <RenderByCondition
+          ComponentMb={
+            <Carousel className="mb-carousel">
+              {similiarPhoneList.map((item, index) => {
+                return (
+                  <PhoneProductCard
+                    key={index}
+                    {...item}
+                    history={props.history}
+                  />
+                );
+              })}
+            </Carousel>
+          }
+          ComponentPc={
+            <div className="list">
+              {similiarPhoneList.map((item, index) => {
+                return (
+                  <PhoneProductCard
+                    key={index}
+                    {...item}
+                    history={props.history}
+                  />
+                );
+              })}
+            </div>
+          }
+        />
+      </section>
+    );
+  }, [props.history, similiarPhoneList, viewAllClickHandler]);
   if (buyProductId) {
     return (
       <div className="product-detail-page">
@@ -508,44 +558,7 @@ export default function ProductDetail(props: any) {
             buyPrice={buyPrice}
             productDisplayName={productDisplayName}
           />
-          <section className="similar">
-            <header>
-              <h2>Similar Phones</h2>
-              <a>
-                <span className={"view-all-text"} onClick={viewAllClickHandler}>
-                  VIEW ALL
-                </span>
-              </a>
-            </header>
-            <RenderByCondition
-              ComponentMb={
-                <Carousel className="mb-carousel">
-                  {similiarPhoneList.map((item, index) => {
-                    return (
-                      <PhoneProductCard
-                        key={index}
-                        {...item}
-                        history={props.history}
-                      />
-                    );
-                  })}
-                </Carousel>
-              }
-              ComponentPc={
-                <div className="list">
-                  {similiarPhoneList.map((item, index) => {
-                    return (
-                      <PhoneProductCard
-                        key={index}
-                        {...item}
-                        history={props.history}
-                      />
-                    );
-                  })}
-                </div>
-              }
-            />
-          </section>
+          {testUseMemoDom}
         </div>
         <CartPop
           showModal={showModal}
