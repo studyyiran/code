@@ -106,17 +106,6 @@ const ProductList = React.memo(
       }
     }
 
-    // 强行渲染 解决bug
-    const [timeKey, setTimeKey] = useState(0);
-
-    useEffect(() => {
-      if (!isServer()) {
-        window.setTimeout(() => {
-          setTimeKey(1);
-        }, 100);
-      }
-    }, []);
-
     return (
       <div className="product-list-page">
         <LoadingMask visible={pendingStatus} />
@@ -191,7 +180,7 @@ const ProductList = React.memo(
             ComponentPc={<FilterCardPart />}
           />
           <section className="product-list-container">
-            <RenderList productList={productList} key={timeKey} />
+            <RenderList productList={productList} />
           </section>
           <RenderFooter />
         </div>
