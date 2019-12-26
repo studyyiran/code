@@ -490,11 +490,13 @@ export default function ProductDetail(props: any) {
             ComponentMb={
               <Affix offsetBottom={0}>
                 <div className="mb-buy-card">
-                  <StartBuyButton
-                    showModal={showModal}
-                    onClick={() => setShowModal(true)}
-                    buyProductStatus={buyProductStatus}
-                  />
+                  {showModal ? null : (
+                    <StartBuyButton
+                      showModal={showModal}
+                      onClick={() => setShowModal(true)}
+                      buyProductStatus={buyProductStatus}
+                    />
+                  )}
                 </div>
               </Affix>
             }

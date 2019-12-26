@@ -11,6 +11,7 @@ import "./index.less";
 import { RenderProtection } from "./components/renderProtection";
 import { RenderOtherProduct } from "./components/renderOtherProtection";
 import { CheckOutButton } from "./components/checkoutButton";
+import { RenderByCondition } from "../../../../components/RenderByCondition";
 
 interface ICartPop {
   showModal: boolean;
@@ -179,18 +180,37 @@ export function CartPop(props: ICartPop) {
     }
   }
   return (
-    <MyModal
-      needDefaultScroll={true}
-      className="cart-modal"
-      visible={showModal}
-      maskClosable={false}
-      title={step === 1 ? "Don't forget your essentials" : "Your cart"}
-      width={"90%"}
-      onCancel={() => setShowModal(false)}
-      footer={null}
-    >
-      {renderByStep()}
-    </MyModal>
+    <RenderByCondition
+      ComponentMb={
+        <MyModal
+          needDefaultScroll={true}
+          centered={true}
+          className="cart-modal cart-modal-mb-modal"
+          visible={showModal}
+          maskClosable={false}
+          title={step === 1 ? "Don't forget your essentials" : "Your cart"}
+          width={"90%"}
+          onCancel={() => setShowModal(false)}
+          footer={null}
+        >
+          {renderByStep()}
+        </MyModal>
+      }
+      ComponentPc={
+        <MyModal
+          needDefaultScroll={true}
+          className="cart-modal cart-modal-pc-modal"
+          visible={showModal}
+          maskClosable={false}
+          title={step === 1 ? "Don't forget your essentials" : "Your cart"}
+          width={"90%"}
+          onCancel={() => setShowModal(false)}
+          footer={null}
+        >
+          {renderByStep()}
+        </MyModal>
+      }
+    />
   );
 }
 

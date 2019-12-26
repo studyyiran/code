@@ -4,7 +4,9 @@
   .yr-modal-mask {
     .yr-modal.cart-modal {
       @title-size: 15 * @f !important;
-      top: 50 * @px;
+      .mb({top: -2vh;max-height: 85vh;});
+      .pc({top: 50 * @px;});
+      
       max-width: 700 * @px;
       .price-container {
         > * {
@@ -36,10 +38,12 @@
         }
       }
       .goback {
+        font-size: 18*@f;
         .canclick();
         display: block;
         color: @color-blue-liner-use;
         text-align: center;
+        margin-bottom: 5 *@px;
       }
       .common-button {
         max-width: 100%;
@@ -47,7 +51,7 @@
         height: 64 * @px;
       }
 
-      max-height: 90vh;
+      
       //.yr-modal-content {
       //  padding-top: 5px * @px;
       //  padding-bottom: 0;
@@ -100,8 +104,8 @@
   .ismobile {
     .yr-modal-mask {
       .yr-modal.cart-modal {
-        max-height: 97vh;
-        height: 97vh;
+        //max-height: 97vh;
+        //height: 97vh;
         .yr-modal-header {
           padding-bottom: 0 * @px;
         }
@@ -113,9 +117,10 @@
             flex-direction: column;
             align-items: center;
             padding: 0 0;
+            margin: auto;
             .innerdiv {
               .innerdiv-imgsize(180 * @px);
-              margin: 10 * @px 0;
+              margin: auto;
             }
             .info-list {
               width: 100%;
