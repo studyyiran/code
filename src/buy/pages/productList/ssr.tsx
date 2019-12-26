@@ -120,11 +120,14 @@ export const productListSsrRule = async (url: string) => {
     // 为了 ssr 设置下model值.(这块因为考虑ssr效果,所以强行做一下.)
     const res: any = await serverProductList.getModelList(1);
     (res || []).forEach(({ productDisplayName, productId, brandId }: any) => {
-      store.storeData.modelList.push({
-        id: productId,
-        displayName: productDisplayName,
-        brandId
-      });
+      const isRepeat = store.storeData.modelList.find((item) => item.id === productId)
+      if (!isRepeat) {
+        store.storeData.modelList.push({
+          id: productId,
+          displayName: productDisplayName,
+          brandId
+        });
+      }
     });
 
     // 调用接口获取attr列表.进行匹配

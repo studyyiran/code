@@ -1,7 +1,6 @@
 import React from "react";
 import "./index.less";
 import { RenderByCondition } from "../../../../components/RenderByCondition";
-import { sellPageGoTo } from "../../../../common/utils/util";
 import { locationHref } from "../../../../common/utils/routerHistory";
 export default function AdLine(props: any) {
   const { line } = props;
