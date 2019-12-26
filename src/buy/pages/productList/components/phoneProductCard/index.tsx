@@ -64,6 +64,11 @@ export default function PhoneProductCard(props: any) {
 
   return (
     <RouterLink
+      onClick={(e: any) => {
+        if (isSoldOut(buyProductStatus)) {
+          e.preventDefault();
+        }
+      }}
       to={`/detail/${buyProductId}`}
       className="phone-product-card"
       data-disabled={isSoldOut(buyProductStatus) ? "true" : "false"}
