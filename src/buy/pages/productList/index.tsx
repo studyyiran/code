@@ -62,16 +62,15 @@ const ProductList = React.memo(
 
     function renderList() {
       if (productList && productList.length) {
-        const renderArr: any[] = [];
         let count = 0;
-        productList.forEach((productInfo, index) => {
+        return productList.map((productInfo, index) => {
           if (index % 4 === 0 && index && count < 4) {
-            renderArr.push(<AdLine line={count} key={'ad' + index} />);
             count++;
+            console.log(count - 1)
+            return <AdLine line={count - 1} key={'ad' + index} />
           }
-          renderArr.push(<PhoneProductCard key={'phone' + index} {...productInfo} />);
+          return<PhoneProductCard key={'phone' + index} {...productInfo} />
         });
-        return renderArr;
       } else {
         return null;
       }
