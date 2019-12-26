@@ -15,7 +15,7 @@ import Modal from "../../components/modal";
 import AdLine from "./components/adLine";
 import LoadingMask from "./components/loading";
 import { productListSsrRule } from "./ssr";
-import { callBackWhenPassAllFunc } from "../../common/utils/util";
+import { callBackWhenPassAllFunc, isServer } from "../../common/utils/util";
 import { safeEqual } from "../../common/utils/util";
 
 const ProductList = React.memo(
@@ -105,12 +105,20 @@ const ProductList = React.memo(
         console.error(e);
       }
     }
-    const timeKey = useMemo(() => {
-      return Date.now();
+
+    // 强行渲染 解决bug
+    const [timeKey, setTimeKey] = useState(0);
+
+    useEffect(() => {
+      if (!isServer()) {
+        window.setTimeout(() => {
+          setTimeKey(1);
+        }, 100);
+      }
     }, []);
 
     return (
-      <div className="product-list-page" key={timeKey}>
+      <div className="product-list-page">
         <LoadingMask visible={pendingStatus} />
         {/*<RenderByCondition*/}
         {/*  ComponentServer={*/}
@@ -183,7 +191,7 @@ const ProductList = React.memo(
             ComponentPc={<FilterCardPart />}
           />
           <section className="product-list-container">
-            <RenderList productList={productList} />
+            <RenderList productList={productList} key={timeKey} />
           </section>
           <RenderFooter />
         </div>
@@ -231,15 +239,18 @@ function RenderFooter() {
 function RenderList(props: { productList: any[] }): any {
   const { productList } = props;
   if (productList && productList.length) {
+    const renderArr: any[] = [];
     let count = 0;
-    return productList.map((productInfo, index) => {
+    productList.forEach((productInfo, index) => {
       if (index % 4 === 0 && index && count < 4) {
+        renderArr.push(<AdLine line={count} key={"ad" + index} />);
         count++;
-        console.log(count - 1);
-        return <AdLine line={count - 1} />;
       }
-      return <PhoneProductCard key={"phone" + index} {...productInfo} />;
+      renderArr.push(
+        <PhoneProductCard key={"phone" + index} {...productInfo} />
+      );
     });
+    return renderArr;
   } else {
     return null;
   }
