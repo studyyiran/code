@@ -4,8 +4,17 @@
   .yr-modal-mask {
     .yr-modal.cart-modal {
       @title-size: 15 * @f !important;
-      .mb({top: -2vh;max-height: 85vh;});
-      .pc({top: 50 * @px;});
+      &.cart-modal-pc-modal {
+        top: 150 * @px;
+      }
+      &.cart-modal-mb-modal {
+        &.step1-modal {
+          top: 10vh;
+        }
+        &.step2-modal {
+          top: 5vh;max-height: 85vh;
+        }
+      }
       
       max-width: 700 * @px;
       .price-container {

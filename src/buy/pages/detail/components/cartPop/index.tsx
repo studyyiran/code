@@ -184,8 +184,7 @@ export function CartPop(props: ICartPop) {
       ComponentMb={
         <MyModal
           needDefaultScroll={true}
-          centered={true}
-          className="cart-modal cart-modal-mb-modal"
+          className={`cart-modal cart-modal-mb-modal ${step === 1 ? 'step1-modal' : 'step2-modal'}`}
           visible={showModal}
           maskClosable={false}
           title={step === 1 ? "Don't forget your essentials" : "Your cart"}
