@@ -60,21 +60,6 @@ const ProductList = React.memo(
       getProductList();
     }, [getProductList]);
 
-    function renderList() {
-      if (productList && productList.length) {
-        let count = 0;
-        return productList.map((productInfo, index) => {
-          if (index % 4 === 0 && index && count < 4) {
-            count++;
-            console.log(count - 1)
-            return <AdLine line={count - 1} key={'ad' + index} />
-          }
-          return<PhoneProductCard key={'phone' + index} {...productInfo} />
-        });
-      } else {
-        return null;
-      }
-    }
     function onClickSubmitHandler(searchValues: any) {
       try {
         if (productListContextValue.currentFilterSelect) {
@@ -123,7 +108,7 @@ const ProductList = React.memo(
     const timeKey = useMemo(() => {
       return Date.now();
     }, []);
-    
+
     return (
       <div className="product-list-page" key={timeKey}>
         <LoadingMask visible={pendingStatus} />
@@ -197,7 +182,9 @@ const ProductList = React.memo(
             }
             ComponentPc={<FilterCardPart />}
           />
-          <section className="product-list-container">{renderList()}</section>
+          <section className="product-list-container">
+            <RenderList productList={productList} />
+          </section>
           <RenderFooter />
         </div>
       </div>
@@ -238,5 +225,22 @@ function RenderFooter() {
     } else {
       return <div className="no-more-data tips-button">No more data</div>;
     }
+  }
+}
+
+function RenderList(props: { productList: any[] }): any {
+  const { productList } = props;
+  if (productList && productList.length) {
+    let count = 0;
+    return productList.map((productInfo, index) => {
+      if (index % 4 === 0 && index && count < 4) {
+        count++;
+        console.log(count - 1);
+        return <AdLine line={count - 1} />;
+      }
+      return <PhoneProductCard key={"phone" + index} {...productInfo} />;
+    });
+  } else {
+    return null;
   }
 }
