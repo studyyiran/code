@@ -72,7 +72,12 @@ export function currencyTrans(value: any, whenFree?: any) {
   if (whenFree && Number(fixValue) === 0) {
     return whenFree;
   } else {
-    return fixValue ? constValue.priceUnit + transNumber(fixValue) : fixValue;
+    if (!isServer()) {
+      return fixValue ? constValue.priceUnit + transNumber(fixValue) : fixValue;
+    } else {
+      return fixValue ? constValue.priceUnit + ' ' + transNumber(fixValue) : fixValue;
+    }
+    
   }
 }
 
