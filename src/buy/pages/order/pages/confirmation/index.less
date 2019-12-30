@@ -36,33 +36,43 @@
         font-size: 16 * @px;
         color: rgba(0, 0, 0, 1);
       }
-      @marginValue: 17 * @px;
-      .create-account {
-        margin-top: @marginValue;
-      }
-
-      .continue-shopping {
-        margin: @marginValue auto;
-      }
+      
       .sell-your-order-phone {
         display: block;
       }
       .sell-your-order-phone,
       .or {
-        margin-bottom: @marginValue;
         font-weight: @mediumWeight;
         font-size: 18 * @f;
         color: rgba(26, 180, 231, 1);
         text-align: center;
       }
+      @marginValue: 17 * @px;
+      .hehehe(@marginValue);
     }
     .order-summary-wrapper {
       flex: 1;
     }
   }
 
+  .hehehe(@marginValue) {
+    .create-account {
+      margin-top: @marginValue;
+    }
+
+    .continue-shopping {
+      margin: @marginValue auto;
+    }
+
+    .sell-your-order-phone,.or {
+      margin-bottom: @marginValue;
+    }
+  }
+
   #ismobile {
     .order-confirmation-wrapper {
+      @marginValue: 10 * @px;
+      .hehehe(@marginValue);
       .confirmation-wrapper {
         width: 100%;
         margin-right: 0;
@@ -81,18 +91,7 @@
           font-size: 14 * @px;
         }
       }
-      @marginValue: 10 * @px;
-      .create-account {
-        margin-top: @marginValue;
-      }
-
-      .continue-shopping {
-        margin: @marginValue auto;
-      }
-      .sell-your-order-phone,
-      .or {
-        margin-bottom: @marginValue;
-      }
+     
     }
   }
 };
