@@ -10,10 +10,10 @@ import { nameToContent } from "../util";
 export const expressOptionConfig: { tokenId: string; title: string }[] = [
   {
     tokenId: "usps_parcel_select",
-    title: "USPS Parcel Select 2-8 days"
+    title: "USPS Parcel 3 - 6 Business Days."
   },
   {
     tokenId: "usps_priority",
-    title: "USPS Priority 1-3 days"
+    title: "USPS Priority 2 - 4 Business Days."
   }
 ];

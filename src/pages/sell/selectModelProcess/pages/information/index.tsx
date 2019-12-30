@@ -337,7 +337,7 @@ class Information extends React.Component<IShippingProps, IShippingState> {
     );
     return (
       <div className={"page-infomation-container"}>
-        <LoginPop isBuySide={false} />
+        {/*<LoginPop isBuySide={false} />*/}
         <h2>Information</h2>
         <div className="container">{infomationHTML}</div>
         <ButtonGroup
