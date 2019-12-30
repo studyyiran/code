@@ -2,6 +2,30 @@
 
 @p: {
   .product-detail-page {
+    /*
+    相对模块性的
+    
+     */
+    .sub-title {
+      .pc({
+        @size: 24 * @px;
+        font-size: @size;
+        background: green;
+      });
+      .mb({
+        @size: 20 * @px;
+        font-size: @size;
+      });
+      //font-size: @size;
+    }
+    
+    
+    .ant-collapse-header {
+      h3 {
+        .sub-title();
+      }
+    }
+    
     .loading-mask-min-height {
       //min-height: 100vh;
     }
@@ -323,112 +347,6 @@
         .view-all-text {
           color: #2ba8d8;
           font-weight: bolder;
-        }
-      }
-    }
-    // 组件
-    .product-info {
-      position: relative;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      > .info-part {
-        > * {
-          display: block;
-        }
-        > h2 {
-          white-space: nowrap;
-          .font(24 * @f, @boldWeight, rgba(34, 34, 34, 1));
-          .mb({font-size: 18 * @px;});
-        }
-        > .attr {
-          .font(16 * @f, @normalWeight, rgba(34, 34, 34, 1));
-          .mb({font-size: 14 * @px;});
-        }
-        > .condition {
-          .font(16 * @f, @normalWeight, rgba(59, 186, 0, 1));
-          .mb({font-size: 14 * @px;});
-        }
-      }
-      > .check-icon {
-        @iconWidth: 63 * @f;
-        .pc({@iconWidth: 83 * @f;flex: 0 0 @iconWidth; height: @iconWidth;});
-        flex: 0 0 @iconWidth;
-        height: @iconWidth;
-        margin-left: 30 * @px;
-      }
-    }
-    .trade-in {
-      padding: 0 10 * @px;
-      padding-top: 78 * @px;
-      .mb({padding-top: 30 * @px;});
-      .setpage(700 * @px);
-      > h2 {
-        .font(32 * @px, @boldWeight, rgba(0, 0, 0, 1));
-        .mb({font-size: 24 * @px;});
-        margin-bottom: 25 * @px;
-        .mb({margin-bottom: 7 * @px});
-      }
-      > p {
-        .font(18 * @px, @normalWeight, rgba(34, 34, 34, 1));
-        .mb({font-size: 16 * @px;});
-        margin-bottom: 24 * @px;
-      }
-      .title {
-        span {
-          .font(18 * @px, @mediumWeight, rgba(0, 0, 0, 1));
-        }
-      }
-      > .input-container {
-        display: flex;
-        margin-bottom: 56 * @px;
-        .mb({margin-bottom: 16 * @px;});
-        > input {
-          .mb({min-width: 0 * @px;});
-          display: inline-block;
-          height: 56 * @px;
-          padding: 0 10px;
-          min-width: 331 * @px;
-          border: 1px solid @color-border;
-          border-radius: 4px;
-          margin-right: 32 * @px;
-        }
-      }
-      .result-container {
-        display: flex;
-        justify-content: space-between;
-        .mb({flex-direction: column;});
-        .innerdiv {
-          @imgSize: 333 * @px;
-          .innerdiv-imgsize(@imgSize);
-          max-width: 100%;
-        }
-        ul.common-card {
-          flex: 0 0 320 * @px;
-          margin-left: 30 * @px;
-          grid-template-columns: 100%;
-          .mb({flex: 0;});
-          .mb({margin-left: 0;});
-          padding: 45 * @px 16 * @px;
-          .mb({padding: 20 * @px 10 * @px});
-          .set-grid-column(3fr 1fr);
-          > li {
-            font-size: 18 * @px;
-            margin: 0;
-            > span {
-              display: flex;
-              align-items: center;
-            }
-            > span:last-child {
-              justify-content: flex-end;
-            }
-          }
-          > li:nth-child(2) {
-            border-bottom: 1px solid @color-border;
-          }
-          > li:nth-child(3) {
-            .font(20 * @px, @boldWeight, rgba(0, 0, 0, 1));
-          }
         }
       }
     }

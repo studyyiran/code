@@ -156,7 +156,6 @@ export function HeaderProductPart(props: {
           </div>
         }
       />
-      s
     </>
   );
 }
@@ -175,7 +174,7 @@ function ProductInfo(props: any) {
   return (
     <section className="product-info">
       <div className="info-part">
-        <h2>{lineOne ? ` ${lineOne}` : ""}</h2>
+        <h2 className="sub-title">{lineOne ? ` ${lineOne}` : ""}</h2>
         <span className="attr">{lineTwo ? lineTwo : ""}</span>
         <span className="condition">Condition {buyLevel}</span>
       </div>

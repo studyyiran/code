@@ -302,8 +302,6 @@ export default function ProductDetail(props: any) {
   const [showImageModal, setShowImgModal] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  const productImg = useGetProductImg(productDetail);
-
   const testUseMemoDom = useMemo(() => {
     console.log("render");
     return (

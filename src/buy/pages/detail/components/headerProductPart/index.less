@@ -1,0 +1,40 @@
+@import (reference) "~buy/common/styles/index.less";
+
+@p1: {
+  .product-info {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    > .info-part {
+      > * {
+        display: block;
+      }
+      > h2 {
+        white-space: nowrap;
+        font-weight: @boldWeight;
+        color: rgba(34, 34, 34, 1);
+        .mb({font-size: 18 * @px;});
+      }
+      > .attr {
+        .font(16 * @f, @normalWeight, rgba(34, 34, 34, 1));
+        .mb({font-size: 14 * @px;});
+      }
+      > .condition {
+        .font(16 * @f, @normalWeight, rgba(59, 186, 0, 1));
+        .mb({font-size: 14 * @px;});
+      }
+    }
+    > .check-icon {
+      @iconWidth: 63 * @f;
+      .pc({@iconWidth: 83 * @f;flex: 0 0 @iconWidth; height: @iconWidth;});
+      flex: 0 0 @iconWidth;
+      height: @iconWidth;
+      margin-left: 30 * @px;
+    }
+  }
+};
+
+.hello(@p1);
+
+
