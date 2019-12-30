@@ -41,7 +41,7 @@ function UserInformationWrapper(props: any) {
         });
       }}
     >
-      <LoginPop />
+      {/*<LoginPop />*/}
     </PureForm>
   );
 }
