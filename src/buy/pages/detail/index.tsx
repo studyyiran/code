@@ -12,9 +12,7 @@ import TestCarousel, { Modal, ModalGateway } from "react-images";
 import { IProductDetailContext, ProductDetailContext } from "./context";
 import Svg from "../../components/svg";
 import TipsIcon from "../../components/tipsIcon";
-import getSellPath, {
-  callBackWhenPassAllFunc,
-  currencyTrans,
+import {
   getProductListPath,
   isServer,
   safeEqual,
@@ -23,30 +21,22 @@ import getSellPath, {
 import { RenderByCondition } from "../../components/RenderByCondition";
 import CommonCollapse from "../../components/commonCollapse";
 import PhoneProductCard from "../productList/components/phoneProductCard";
-import { locationHref } from "../../common/utils/routerHistory";
 import VideoComponent from "../../components/video";
 import EditorResolver from "./components/editorResolver";
-import { getDescArr, useGetProductImg } from "./util";
-import { TipsAllPass, TipsProtection } from "./context/staticData";
+import { useGetProductImg } from "./util";
+import { TipsAllPass } from "./context/staticData";
 import { InnerDivImage } from "./components/innerDivImage";
 import { detailSsrRule } from "./ssr";
-import {
-  IProductListContext,
-  ProductListContext
-} from "../productList/context";
+
 import { dataReport } from "../../common/dataReport";
-import Button from "../../components/button";
-import { useIsCurrentPage, useWhenUrlChange } from "../../common/useHook";
+import { useWhenUrlChange } from "../../common/useHook";
 import { constValue } from "../../common/constValue";
-import { RenderByIsFive } from "../../components/RenderByIsFive";
-import { FiveCountDown } from "./components/fiveCountdown";
-import { FivePrice } from "./components/fivePrice";
-import { FiveCalcPrice } from "./components/fiveCalcPrice";
 // @ts-ignore
 import WxImageViewer from "react-wx-images-viewer";
 import { ModalView } from "../../components/ModalView";
-import { CartPop } from "./components/cartPop";
 import LoadingMask from "../productList/components/loading";
+import {HeaderProductPart} from "./components/headerProductPart";
+import {StartBuyButton} from "./components/startBuyButton";
 
 function Swiper(props: any) {
   const {
@@ -180,7 +170,6 @@ export default function ProductDetail(props: any) {
   } = productDetail;
   // 依赖 采用基于依赖的写法,这行代码写在哪里就一点都不重要了.因为页面和刷新只不过是一种依赖条件而已.
   const id = useWhenUrlChange("productId");
-  const isPage = useIsCurrentPage("/detail");
 
   useEffect(() => {
     getProductDetail(id);
@@ -251,133 +240,6 @@ export default function ProductDetail(props: any) {
         productDisplayName
     );
   }, [productDetail.brandDisplayName, productDisplayName]);
-
-  function renderHeaderPart() {
-    return (
-      <RenderByCondition
-        ComponentMb={
-          <div className="price-part-mb">
-            <div className="top">
-              <ProductInfo {...productDetail} />
-            </div>
-            <RenderByIsFive
-              renderFive={(blackHappyCountDown: any[]) => {
-                return (
-                  <>
-                    <div>
-                      <div className="sku-price">
-                        <label>Retail</label>
-                        <span>{currencyTrans(skuPrice)}</span>
-                      </div>
-                      <div className="price-and-button">
-                        <div className="price">
-                          <span className="buy-price">
-                            <FivePrice price={buyPrice} />
-                            <FiveCalcPrice
-                              buyPrice={buyPrice}
-                              skuPrice={skuPrice}
-                            />
-                          </span>
-                          <FiveCountDown timeArr={blackHappyCountDown} />
-                        </div>
-                      </div>
-                      <span className="product-id">
-                        <span>Product ID {buyProductCode}</span>
-                      </span>
-                    </div>
-                  </>
-                );
-              }}
-              ComponentNormal={
-                <div className="bottom">
-                  <div className="price">
-                    <span className="buy-price">{currencyTrans(buyPrice)}</span>
-                    {skuPrice ? (
-                      <div className="sku-price">
-                        <label>Retail</label>
-                        <span>{currencyTrans(skuPrice)}</span>
-                      </div>
-                    ) : null}
-                  </div>
-                  <span className="product-id">
-                    <span>Product ID {buyProductCode}</span>
-                  </span>
-                </div>
-              }
-            />
-          </div>
-        }
-        ComponentPc={
-          <div className="price-part-pc">
-            <div className="left">
-              <ProductInfo {...productDetail} />
-              <span>Product ID {buyProductCode}</span>
-            </div>
-            <div className="right">
-              <RenderByIsFive
-                renderFive={(blackHappyCountDown: any[]) => {
-                  return (
-                    <>
-                      <div className="sku-price">
-                        <label>Retail</label>
-                        <span>{currencyTrans(skuPrice)}</span>
-                      </div>
-                      <div className="price-and-button">
-                        <div className="price">
-                          <span className="buy-price">
-                            <FivePrice price={buyPrice} />
-                            <FiveCalcPrice
-                              buyPrice={buyPrice}
-                              skuPrice={skuPrice}
-                            />
-                          </span>
-                          <FiveCountDown timeArr={blackHappyCountDown} />
-                        </div>
-                      </div>
-                    </>
-                  );
-                }}
-                ComponentNormal={
-                  <div className="price-and-button">
-                    <div className="price">
-                      <span className="buy-price">
-                        {currencyTrans(buyPrice)}
-                      </span>
-                      <div className="sku-price">
-                        <label>Retail</label>
-                        <span>{currencyTrans(skuPrice)}</span>
-                      </div>
-                    </div>
-                  </div>
-                }
-              />
-              <StartBuyButton
-                onClick={() => {
-                  dataReport({
-                    event: "EEaddToCart",
-                    ecommerce: {
-                      currencyCode: "USD",
-                      add: {
-                        products: [
-                          {
-                            sku: String(skuId),
-                            name: productDisplayName,
-                            price: Number(buyPrice)
-                          }
-                        ]
-                      }
-                    }
-                  });
-                  setShowModal(true);
-                }}
-                buyProductStatus={buyProductStatus}
-              />
-            </div>
-          </div>
-        }
-      />
-    );
-  }
 
   function renderReport() {
     return (
@@ -508,7 +370,14 @@ export default function ProductDetail(props: any) {
           buyProductImgM={buyProductImgM}
         />
         <div className="page">
-          <div className="header-part">{renderHeaderPart()}</div>
+          <div className="header-part">
+            <HeaderProductPart
+              showModal={showModal}
+              setShowModal={setShowModal}
+              productDetail={productDetail}
+              partsInfo={partsInfo}
+            />
+          </div>
           <CommonCollapse header="Inspection Report" isActiveKey={true}>
             {renderReport()}
           </CommonCollapse>
@@ -552,20 +421,8 @@ export default function ProductDetail(props: any) {
             }
             ComponentPc={null}
           />
-
-          <RenderTradeIn
-            phoneImg={productImg}
-            buyPrice={buyPrice}
-            productDisplayName={productDisplayName}
-          />
           {testUseMemoDom}
         </div>
-        <CartPop
-          showModal={showModal}
-          setShowModal={setShowModal}
-          productDetail={productDetail}
-          partsInfo={partsInfo}
-        />
       </div>
     );
   } else {
@@ -576,121 +433,4 @@ export default function ProductDetail(props: any) {
       </div>
     );
   }
-}
-
-function StartBuyButton(props: any) {
-  const { onClick, buyProductStatus } = props;
-  return (
-    <Button disabled={buyProductStatus === "INTRANSACTION"} onClick={onClick}>
-      {buyProductStatus === "INTRANSACTION" ? "Sold" : "Start Your Purchase"}
-    </Button>
-  );
-}
-
-function RenderTradeIn(props: any) {
-  const { buyPrice, productDisplayName, phoneImg } = props;
-  const [currentPrice, setCurrentPrice] = useState("");
-  const [showResult, setShowResult] = useState("");
-  var reg = new RegExp("^[0-9]*$");
-  function checkNumber(e: any) {
-    const content = e.target.value;
-    if (reg.test(content)) {
-      setCurrentPrice(content);
-    }
-  }
-  return (
-    <section className="trade-in">
-      <h2>Save more with a trade-in</h2>
-      <p>
-        Calculate your out of pocket cost if you were to trade-in your old
-        phone.
-      </p>
-      <div className="title">
-        <span>Net trade-in</span>
-        <TipsIcon>
-          <p>
-            UpTrade can help you sell your old phone. See{" "}
-            <a
-              onClick={() => locationHref(getSellPath())}
-              style={{
-                color: "rgba(26, 180, 231, 1)",
-                textDecoration: "underline"
-              }}
-            >
-              how much your phone is worth
-            </a>
-            &nbsp;to get started.
-          </p>
-        </TipsIcon>
-      </div>
-      <div className="input-container">
-        <input
-          placeholder="i.e $500"
-          value={currentPrice}
-          onChange={checkNumber}
-        />
-        <button
-          className="common-button"
-          onClick={() => {
-            setShowResult(currentPrice);
-          }}
-        >
-          Calculate
-        </button>
-      </div>
-      {showResult ? (
-        <div className="result-container">
-          <InnerDivImage imgUrl={phoneImg} />
-          <ul className="common-card">
-            <li>
-              <span>{productDisplayName}</span>
-              <span>{currencyTrans(buyPrice)}</span>
-            </li>
-            <li>
-              <span>Net trade-in</span>
-              <span>-{currencyTrans(showResult)}</span>
-            </li>
-            <li>
-              <span>Out of pocket cash</span>
-              <span>
-                {currencyTrans(
-                  Number(buyPrice) - Number(showResult) > 0
-                    ? Number(buyPrice) - Number(showResult)
-                    : 0
-                )}
-              </span>
-            </li>
-          </ul>
-        </div>
-      ) : null}
-    </section>
-  );
-}
-
-function ProductInfo(props: any) {
-  const [currentKey, setCurrentKey] = useState(0);
-  useEffect(() => {
-    if (!isServer()) {
-      window.setTimeout(() => {
-        setCurrentKey(Date.now());
-      });
-    }
-  }, []);
-  const { productDisplayName, buyLevel, buyProductBQV } = props;
-  const [lineOne, lineTwo] = getDescArr(buyProductBQV, productDisplayName);
-  return (
-    <section className="product-info">
-      <div className="info-part">
-        <h2>{lineOne ? ` ${lineOne}` : ""}</h2>
-        <span className="attr">{lineTwo ? lineTwo : ""}</span>
-        <span className="condition">Condition {buyLevel}</span>
-      </div>
-      {/*暂时强制更新 为了解决首次不正常渲染的问题*/}
-      <img
-        key={currentKey}
-        className="check-icon"
-        src={require("./res/uptrade-check.svg")}
-      />
-    </section>
-  );
 }
