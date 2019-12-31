@@ -3,7 +3,6 @@ import React, {
   useReducer,
   useEffect,
   useCallback,
-  useRef,
   useContext
 } from "react";
 import { IReducerAction } from "buy/common/interface/index.interface";
@@ -106,6 +105,7 @@ export function OrderInfoContextProvider(props: any) {
     orderInfo: "",
     checkOrderInfo: {} as any,
     payInfo: {
+      paypalOrderId: "",
       paymentType: "",
       creditCardInfo: {} as any,
       lastNumber: ""
@@ -496,6 +496,7 @@ function reducer(state: IOrderInfoState, action: IReducerAction) {
     // resetPayInfo
     case orderInfoReducerTypes.resetPayInfo: {
       let lastNumber = "";
+      // 设置信用卡lastNumber
       if (
         newState.payInfo &&
         newState.payInfo.creditCardInfo &&
@@ -505,11 +506,15 @@ function reducer(state: IOrderInfoState, action: IReducerAction) {
           newState.payInfo.creditCardInfo.cardNo.length - 4
         );
       }
+      // 清空paypal信息 信用卡信息
       newState = {
         ...newState,
+        orderInfo: [], // 清空
+        userInfo: {} as any, // 清空
         subOrders: [], // 制空
         payInfo: {
           paymentType: "",
+          paypalOrderId: "",
           creditCardInfo: {} as any,
           lastNumber: lastNumber
         }
