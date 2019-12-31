@@ -1,24 +1,26 @@
 import React from "react";
-import {locationHref} from "../../../common/utils/routerHistory";
+import { locationHref } from "../../../common/utils/routerHistory";
 
 export interface IBackgroundCheckList {
   title: string;
-  content: string;
+  content?: string;
+  img?: string;
 }
 
 export const backgroundCheckList: IBackgroundCheckList[] = [
   {
     title: "Manufacture Date: ",
-    content: ""
+    content: "",
+    img: '1.png',
   },
   {
     title: "Battery Health: ",
     content: ""
   },
   {
-    title: "Battery Health: ",
-    content: ""
-  },
+    title: "Phone recognizes a charger",
+    img: "1.png"
+  }
 ];
 
 export const TipsAllPass = (
@@ -59,7 +61,13 @@ export const TipsAllPass = (
 
 export const TipsProtection = (
   <p>
-    <a onClick={() => locationHref("/uptrade/protect")} style={{ color: "rgba(26, 180, 231, 1)",textDecoration: "underline"}}>UpTrade Protect</a> gives you the ultimate protection.
+    <a
+      onClick={() => locationHref("/uptrade/protect")}
+      style={{ color: "rgba(26, 180, 231, 1)", textDecoration: "underline" }}
+    >
+      UpTrade Protect
+    </a>{" "}
+    gives you the ultimate protection.
     <br />
     -Extended hardware warranty
     <br />

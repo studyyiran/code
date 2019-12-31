@@ -1,6 +1,7 @@
 import EditorResolver from "../editorResolver";
 import React from "react";
 import Svg from "../../../../components/svg";
+import { IBackgroundCheckList } from "../../context/staticData";
 
 export function InspectionReport(props: {
   productDescription: any;
@@ -138,16 +139,20 @@ function PhoneBackgroundHistory() {
   );
 }
 
-function FullyFunctionalPart({ backGroundCheck }: { backGroundCheck: any[] }) {
+function FullyFunctionalPart({
+  backGroundCheck
+}: {
+  backGroundCheck: IBackgroundCheckList[];
+}) {
   return (
     <ul>
-      {backGroundCheck.map(({ content, title }, index) => {
-        if (content) {
+      {backGroundCheck.map(({ content, title, img }, index) => {
+        if (title && content !== "") {
           return (
             <li className="bg-check" key={index}>
+              {img ? <img src={require(`./res/${img}`)} /> : null}
               <label>{title}</label>
-              <span>{content}</span>
-              {index > 1 ? <Svg /> : null}
+              {content ? <span>{content}</span> : null}
             </li>
           );
         } else {
