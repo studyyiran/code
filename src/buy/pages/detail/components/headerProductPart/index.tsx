@@ -1,15 +1,15 @@
-import {IProductDetail} from "../../context/interface";
-import {CartPop} from "../cartPop";
-import {RenderByCondition} from "../../../../components/RenderByCondition";
-import {RenderByIsFive} from "../../../../components/RenderByIsFive";
-import {currencyTrans, isServer} from "../../../../common/utils/util";
-import {FivePrice} from "../fivePrice";
-import {FiveCalcPrice} from "../fiveCalcPrice";
-import {FiveCountDown} from "../fiveCountdown";
-import {dataReport} from "../../../../common/dataReport";
-import React, {useEffect, useState} from "react";
-import {getDescArr} from "../../util";
-import {StartBuyButton} from "../startBuyButton";
+import { IProductDetail } from "../../context/interface";
+import { CartPop } from "../cartPop";
+import { RenderByCondition } from "../../../../components/RenderByCondition";
+import { RenderByIsFive } from "../../../../components/RenderByIsFive";
+import { currencyTrans, isServer } from "../../../../common/utils/util";
+import { FivePrice } from "../fivePrice";
+import { FiveCalcPrice } from "../fiveCalcPrice";
+import { FiveCountDown } from "../fiveCountdown";
+import { dataReport } from "../../../../common/dataReport";
+import React, { useEffect, useState } from "react";
+import { getDescArr } from "../../util";
+import { StartBuyButton } from "../startBuyButton";
 
 export function HeaderProductPart(props: {
   productDetail: IProductDetail;
@@ -27,7 +27,7 @@ export function HeaderProductPart(props: {
     skuId
   } = productDetail;
   return (
-    <>
+    <div className="header-part">
       <CartPop
         showModal={showModal}
         setShowModal={setShowModal}
@@ -156,7 +156,7 @@ export function HeaderProductPart(props: {
           </div>
         }
       />
-    </>
+    </div>
   );
 }
 

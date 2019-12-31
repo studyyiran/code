@@ -16,29 +16,9 @@ export const backgroundCheckList: IBackgroundCheckList[] = [
     content: ""
   },
   {
-    title: "Lost & Stolen - ",
-    content: "Clear"
+    title: "Battery Health: ",
+    content: ""
   },
-  {
-    title: "Fully Reset - ",
-    content: "Clear"
-  },
-  {
-    title: "No Spamware - ",
-    content: "Clear"
-  },
-  {
-    title: "Blacklisted - ",
-    content: "Clear"
-  },
-  {
-    title: "Fully Sanitized - ",
-    content: "Clear"
-  },
-  {
-    title: "Financed - ",
-    content: "Clear"
-  }
 ];
 
 export const TipsAllPass = (
