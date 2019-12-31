@@ -29,7 +29,7 @@ import {
   ProductDetailContext
 } from "../../detail/context";
 import { constProductType } from "../../../common/constValue";
-import {soldOutTips} from "../../detail/components/soldOutTips";
+import { soldOutTips } from "../../detail/components/soldOutTips";
 
 export const OrderInfoContext = createContext({});
 const storeName = "OrderInfo";
@@ -366,8 +366,7 @@ function useGetAction(
               console.log(e);
               if (e && safeEqual(10011, e.code)) {
                 // 报错弹框
-                soldOutTips({})
-                Message.error(e.resultMessage);
+                soldOutTips(productDetail);
               }
             })
             .then(() => {

@@ -9,7 +9,7 @@ import { routerConfig } from "./routerConfig";
 import { IOrderInfoContext, OrderInfoContext } from "./context";
 import { getProductListPath } from "../../common/utils/util";
 import { IProductDetailContext, ProductDetailContext } from "../detail/context";
-import {soldOutTips} from "../detail/components/soldOutTips";
+import { soldOutTips } from "../detail/components/soldOutTips";
 
 export default function OrderRouter(props: any) {
   const orderInfoContext = useContext(OrderInfoContext);
@@ -46,12 +46,16 @@ export default function OrderRouter(props: any) {
       };
     }
     // 商品已经销售掉了
-    if (productDetail && productDetail.buyProductStatus && productDetail.buyProductStatus === "INTRANSACTION") {
+    if (
+      productDetail &&
+      productDetail.buyProductStatus &&
+      productDetail.buyProductStatus === "INTRANSACTION"
+    ) {
       // 弹框
-      soldOutTips(productDetail)
+      soldOutTips(productDetail);
     }
     return () => {};
-  }, [path, props.location, subOrders, url]);
+  }, [path, productDetail, props.location, subOrders, url]);
 
   function handleNext(currentPath: string) {
     const findTarget = routerConfig.findIndex(({ relativePath }) => {
