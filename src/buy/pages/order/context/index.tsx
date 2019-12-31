@@ -214,8 +214,7 @@ function useGetAction(
             console.error(e);
           }
           // checkOrderInfo.orderList.productInfo.buyProductBQV = ;
-          // 这些回补是临时修复
-          // 设置信用卡信息
+          // 这些回补是临时修复 为了在最后的页面渲染一些关键信息.
           dispatch({
             type: orderInfoReducerTypes.setPayInfo,
             value: {
@@ -509,8 +508,9 @@ function reducer(state: IOrderInfoState, action: IReducerAction) {
       // 清空paypal信息 信用卡信息
       newState = {
         ...newState,
+        userExpress: "",
         // orderInfo: [], // 不能清空
-        userInfo: {} as any, // 清空
+        // userInfo: {} as any, // 不能清空 因为后续渲染还需要这个
         subOrders: [], // 制空
         payInfo: {
           paymentType: "",
