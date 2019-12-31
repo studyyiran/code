@@ -8,9 +8,16 @@ import { locationHref } from "../../common/utils/routerHistory";
 import { routerConfig } from "./routerConfig";
 import { IOrderInfoContext, OrderInfoContext } from "./context";
 import { getProductListPath } from "../../common/utils/util";
+import { IProductDetailContext, ProductDetailContext } from "../detail/context";
+import {soldOutTips} from "../detail/components/soldOutTips";
 
 export default function OrderRouter(props: any) {
   const orderInfoContext = useContext(OrderInfoContext);
+  const productDetailContext = useContext(ProductDetailContext);
+  const {
+    productDetailContextValue
+  } = productDetailContext as IProductDetailContext;
+  const { productDetail } = productDetailContextValue;
   const {
     orderInfoContextValue,
     getInfoByOrderDetailId,
@@ -20,6 +27,7 @@ export default function OrderRouter(props: any) {
   const { subOrders, pendingStatus } = orderInfoContextValue;
   const { path, url } = props.match;
 
+  // 没有suborder 出弹框
   useEffect(() => {
     if (
       props.location &&
@@ -28,6 +36,7 @@ export default function OrderRouter(props: any) {
     ) {
       return () => {};
     }
+    // 购物车为空.
     if (!subOrders || !subOrders.length) {
       const timerRef = window.setTimeout(() => {
         locationHref(getProductListPath());
@@ -36,8 +45,14 @@ export default function OrderRouter(props: any) {
         window.clearInterval(timerRef);
       };
     }
+    // 商品已经销售掉了
+    if (productDetail && productDetail.buyProductStatus && productDetail.buyProductStatus === "INTRANSACTION") {
+      // 弹框
+      soldOutTips(productDetail)
+    }
     return () => {};
   }, [path, props.location, subOrders, url]);
+
   function handleNext(currentPath: string) {
     const findTarget = routerConfig.findIndex(({ relativePath }) => {
       return relativePath === currentPath;

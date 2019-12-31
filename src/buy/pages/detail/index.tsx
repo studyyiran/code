@@ -26,7 +26,7 @@ import PhoneProductCard from "../productList/components/phoneProductCard";
 import { locationHref } from "../../common/utils/routerHistory";
 import VideoComponent from "../../components/video";
 import EditorResolver from "./components/editorResolver";
-import { getDescArr, useGetProductImg } from "./util";
+import { getDescArr, useGetProductImg, viewAllClickHandler } from "./util";
 import { TipsAllPass, TipsProtection } from "./context/staticData";
 import { InnerDivImage } from "./components/innerDivImage";
 import { detailSsrRule } from "./ssr";
@@ -242,16 +242,6 @@ export default function ProductDetail(props: any) {
     }
   }, [id, productDetail]);
 
-  const viewAllClickHandler = useCallback(() => {
-    window.location.href = urlRmSpaceAndToLower(
-      getProductListPath() +
-        "/" +
-        productDetail.brandDisplayName +
-        "/" +
-        productDisplayName
-    );
-  }, [productDetail.brandDisplayName, productDisplayName]);
-
   function renderHeaderPart() {
     return (
       <RenderByCondition
@@ -449,7 +439,10 @@ export default function ProductDetail(props: any) {
         <header>
           <h2>Similar Phones</h2>
           <a>
-            <span className={"view-all-text"} onClick={viewAllClickHandler}>
+            <span
+              className={"view-all-text"}
+              onClick={viewAllClickHandler.bind({}, productDetail)}
+            >
               VIEW ALL
             </span>
           </a>
@@ -484,7 +477,7 @@ export default function ProductDetail(props: any) {
         />
       </section>
     );
-  }, [props.history, similiarPhoneList, viewAllClickHandler]);
+  }, [productDetail, props.history, similiarPhoneList]);
   if (buyProductId) {
     return (
       <div className="product-detail-page">
