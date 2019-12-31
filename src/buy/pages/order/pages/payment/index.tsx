@@ -1,19 +1,16 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import "./index.less";
-import { Checkbox, Form, Input, Row, Col } from "antd";
+import { Checkbox, Form } from "antd";
 import { PaymentInformation } from "../information";
 import {
   IOrderInfoContext,
   OrderInfoContext,
   orderInfoReducerTypes
 } from "../../context";
-import PayCardImages from "../../../../pages/detail/components/payCardImages";
-import Svg from "../../../../components/svg";
 import useGetTotalPrice from "../../components/orderLayout/useHook";
 import { constValue } from "../../../../common/constValue";
 import {
   afterMinTimeCall,
-  callBackWhenPassAllFunc,
   isServer
 } from "../../../../common/utils/util";
 import { locationHref } from "../../../../common/utils/routerHistory";
@@ -31,7 +28,7 @@ function PaymentInner(props: any) {
     orderInfoContextDispatch,
     orderInfoContextValue,
     validaddress,
-    createOrder
+    startOrder
   } = orderInfoContext as IOrderInfoContext;
 
   const [showLoadingMask, setShowLoadingMask] = useState(false);
@@ -40,13 +37,7 @@ function PaymentInner(props: any) {
   // 计算总价
   const { calcTotalPrice, totalProductPrice } = useGetTotalPrice();
 
-  const {
-    invoiceSameAddr,
-    payInfo,
-    userInfo,
-    invoiceInfo
-  } = orderInfoContextValue;
-  const { getFieldDecorator, validateFields } = props.form;
+  const { invoiceSameAddr, userInfo, invoiceInfo } = orderInfoContextValue;
 
   function isOkInfo() {
     if (invoiceSameAddr) {
@@ -72,8 +63,6 @@ function PaymentInner(props: any) {
       );
     }
   }
-
-  function RenderFakeButton() {}
 
   const totalPrice = calcTotalPrice();
   const productPrice = totalProductPrice();
@@ -231,13 +220,9 @@ function PaymentInner(props: any) {
             try {
               setShowLoadingMask(true);
               // 开启全屏loading
-              await createOrder({
-                payInfo: {
-                  paymentType: "PAYPAL",
-                  creditCardInfo: {},
-                  paypalOrderId: details.id
-                },
-                invoiceSameAddr: invoiceSameAddr
+              await startOrder({
+                paymentType: "PAYPAL",
+                paypalOrderId: details.id
               });
               locationHref("/buy/confirmation");
             } catch (e) {
@@ -250,34 +235,13 @@ function PaymentInner(props: any) {
       .render("#paypal-button-container");
   }
 
-  function handleNext() {
-    let result;
-    // 检测card表单
-    validateFields((err: any, values: any) => {
-      if (!err) {
-        // 解耦提交和拉取请求
-        result = createOrder({
-          payInfo: {
-            paymentType: "CREDIT_CARD",
-            creditCardInfo: values
-          },
-          invoiceSameAddr: invoiceSameAddr
-        });
-      } else {
-        result = false;
-      }
-    });
-    // 返回
-    return result;
-  }
-
-  function getCreditValue(key: string) {
-    return payInfo &&
-      payInfo.creditCardInfo &&
-      (payInfo.creditCardInfo as any)[key]
-      ? (payInfo.creditCardInfo as any)[key]
-      : "";
-  }
+  // function getCreditValue(key: string) {
+  //   return payInfo &&
+  //     payInfo.creditCardInfo &&
+  //     (payInfo.creditCardInfo as any)[key]
+  //     ? (payInfo.creditCardInfo as any)[key]
+  //     : "";
+  // }
 
   return (
     <div className="payment-page">
@@ -467,17 +431,6 @@ function PaymentInner(props: any) {
                 value: allValues
               });
             }}
-            // renderButton={(informationHandleNext: any) => {
-            //   return props.renderButton(() => {
-            //     // 检测表单
-            //     if (informationHandleNext()) {
-            //       // 设置开始提交
-            //       return handleNext();
-            //     } else {
-            //       return false;
-            //     }
-            //   });
-            // }}
             renderButton={(informationHandleNext: any, formInnerProps: any) => {
               if (isOkInfo()) {
                 return null;
