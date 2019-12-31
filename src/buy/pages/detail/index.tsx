@@ -214,7 +214,8 @@ export default function ProductDetail(props: any) {
           />
           <InspectionReport
             productDescription={productDescription}
-            buyProductHistoryPdf={buyProductHistoryPdf}
+            buyProductRemark={buyProductRemark}
+            backGroundCheck={backGroundCheck}
           />
           {renderMobileStartButton()}
           <ReviewPart />

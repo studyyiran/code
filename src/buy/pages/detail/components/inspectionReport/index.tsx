@@ -1,21 +1,26 @@
 import EditorResolver from "../editorResolver";
 import React from "react";
-import TipsIcon from "../../../../components/tipsIcon";
-import { TipsAllPass } from "../../context/staticData";
 import Svg from "../../../../components/svg";
 
 export function InspectionReport(props: {
   productDescription: any;
-  buyProductHistoryPdf: any;
+  buyProductHistoryPdf?: any;
+  backGroundCheck: any;
+  buyProductRemark: any;
 }) {
-  const { productDescription, buyProductRemark, buyProductHistoryPdf } = props;
+  const {
+    productDescription,
+    buyProductRemark,
+    buyProductHistoryPdf,
+    backGroundCheck
+  } = props;
   return (
     <div className="inspection-report">
       <h2>Inspection Report</h2>
       <InspectPersonInfo buyProductRemark={buyProductRemark} />
       <ul>
         <WithTitle title={"Fully Functional"}>
-          <FullyFunctionalPart />
+          <FullyFunctionalPart backGroundCheck={backGroundCheck} />
         </WithTitle>
         <WithTitle title={"Phone History"}>
           <PhoneBackgroundHistory />
