@@ -11,16 +11,73 @@ export const backgroundCheckList: IBackgroundCheckList[] = [
   {
     title: "Manufacture Date: ",
     content: "",
-    img: '1.png',
+    img: '13.png',
   },
   {
     title: "Battery Health: ",
-    content: ""
+    content: "",
+    img: '1.png',
   },
   {
     title: "Phone recognizes a charger",
-    img: "1.png"
-  }
+    img: "2.png"
+  },
+  {
+    title: "Vibration mechanism functional",
+    img: "3.png"
+  },
+  {
+    title: "Screen is bright",
+    img: "4.png"
+  },
+  {
+    title: "Speakers work",
+    img: "5.png"
+  },
+  {
+    title: "Fingerprint/Face ID is functional",
+    img: "6.png"
+  },
+  {
+    title: "Phone recognizes cellular service",
+    img: "7.png"
+  },
+  {
+    title: "Microphone is functional",
+    img: "8.png"
+  },
+  {
+    title: "Proximity sensor works",
+    img: "9.png"
+  },
+  {
+    title: "Touchscreen works in all areas",
+    img: "10.png"
+  },
+  {
+    title: "Front camera is functional",
+    img: "11.png"
+  },
+  {
+    title: "Wi-Fi is functional",
+    img: "12.png"
+  },
+  {
+    title: "Passes CheckMD report",
+    img: "13.png"
+  },
+  {
+    title: "Rear camera is functional",
+    img: "14.png"
+  },
+  {
+    title: "Home button is functional",
+    img: "15.png"
+  },
+  {
+    title: "Previous internet accounts removed",
+    img: "16.png"
+  },
 ];
 
 export const TipsAllPass = (
