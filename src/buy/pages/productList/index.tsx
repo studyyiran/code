@@ -106,26 +106,8 @@ const ProductList = React.memo(
       }
     }
 
-    return (
-      <div className="product-list-page">
-        <LoadingMask visible={pendingStatus} />
-        {/*<RenderByCondition*/}
-        {/*  ComponentServer={*/}
-        {/*    <ul>*/}
-        {/*      <a href={"/buy-phone/Apple"}>Apple</a>*/}
-        {/*      <a href={"/buy-phone/apple/iphone8plus"}>iphone8plus</a>*/}
-        {/*      <a href={"/buy-phone/samsung"} style={{ display: "none" }}>*/}
-        {/*        samsung*/}
-        {/*      </a>*/}
-        {/*      <a*/}
-        {/*        href={"/buy-phone/samsung/galaxys10plus"}*/}
-        {/*        style={{ visibility: "hidden" }}*/}
-        {/*      >*/}
-        {/*        galaxys10plus*/}
-        {/*      </a>*/}
-        {/*    </ul>*/}
-        {/*  }*/}
-        {/*/>*/}
+    function renderFilterByCondition() {
+      return (
         <RenderByCondition
           ComponentMb={
             <Modal
@@ -150,35 +132,48 @@ const ProductList = React.memo(
           }
           ComponentPc={<FilterList />}
         />
+      );
+    }
+
+    function renderFilterCard() {
+      return (
+        <RenderByCondition
+          ComponentMb={
+            <div className="filter-part-mb">
+              <div className="img-container">
+                <img
+                  src={require("./res/mb-filter.png")}
+                  onClick={() => {
+                    setShowModal(true);
+                    setTimeout(() => {
+                      setShowModal2(true);
+                    }, 50);
+                  }}
+                />
+              </div>
+              <FilterCardPart />
+            </div>
+          }
+          ComponentPc={<FilterCardPart />}
+        />
+      );
+    }
+
+    return (
+      <div className="product-list-page">
+        <LoadingMask visible={pendingStatus} />
+        {renderFilterByCondition()}
         <div className="list-part">
           <section className="title-part">
             <h1>Buy Used Phones</h1>
             <p>
               Buy used refurbished phones. Fully inspected, certified, data
-              cleaned, and sanitized by UpTrade.{" "}
+              cleaned, and sanitized by UpTrade.
             </p>
           </section>
           <SearchProduct onClickSubmit={onClickSubmitHandler} />
           <QuickSelect />
-          <RenderByCondition
-            ComponentMb={
-              <div className="filter-part-mb">
-                <div className="img-container">
-                  <img
-                    src={require("./res/mb-filter.png")}
-                    onClick={() => {
-                      setShowModal(true);
-                      setTimeout(() => {
-                        setShowModal2(true);
-                      }, 50);
-                    }}
-                  />
-                </div>
-                <FilterCardPart />
-              </div>
-            }
-            ComponentPc={<FilterCardPart />}
-          />
+          {renderFilterCard()}
           <section className="product-list-container">
             <RenderList productList={productList} />
           </section>
