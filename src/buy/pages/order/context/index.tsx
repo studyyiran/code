@@ -509,7 +509,7 @@ function reducer(state: IOrderInfoState, action: IReducerAction) {
       // 清空paypal信息 信用卡信息
       newState = {
         ...newState,
-        orderInfo: [], // 清空
+        // orderInfo: [], // 不能清空
         userInfo: {} as any, // 清空
         subOrders: [], // 制空
         payInfo: {
