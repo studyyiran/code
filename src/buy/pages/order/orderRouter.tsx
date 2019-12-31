@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 import OrderLayout from "./components/orderLayout";
 // 业务模块级less
@@ -7,12 +7,30 @@ import ButtonGroup from "./components/buttonGroup";
 import { locationHref } from "../../common/utils/routerHistory";
 import { routerConfig } from "./routerConfig";
 import { IOrderInfoContext, OrderInfoContext } from "./context";
+import { getProductListPath } from "../../common/utils/util";
 
 export default function OrderRouter(props: any) {
   const orderInfoContext = useContext(OrderInfoContext);
-  const { orderInfoContextValue, getInfoByOrderDetailId, getOrderTax, getExpress } = orderInfoContext as IOrderInfoContext;
+  const {
+    orderInfoContextValue,
+    getInfoByOrderDetailId,
+    getOrderTax,
+    getExpress
+  } = orderInfoContext as IOrderInfoContext;
   const { subOrders, pendingStatus } = orderInfoContextValue;
   const { path, url } = props.match;
+
+  useEffect(() => {
+    if (!subOrders || !subOrders.length) {
+      const timerRef = window.setTimeout(() => {
+        locationHref(getProductListPath());
+      }, 100);
+      return () => {
+        window.clearInterval(timerRef);
+      };
+    }
+    return () => {};
+  }, [path, subOrders, url]);
   function handleNext(currentPath: string) {
     const findTarget = routerConfig.findIndex(({ relativePath }) => {
       return relativePath === currentPath;

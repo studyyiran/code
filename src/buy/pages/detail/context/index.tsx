@@ -1,17 +1,14 @@
 import React, {
   createContext,
-  useReducer,
   useEffect,
   useCallback
 } from "react";
 import { IReducerAction } from "buy/common/interface/index.interface";
 import { getProductDetail, getSimiliar, getPartsBySkuId } from "../server";
-import { backgroundCheckList } from "./staticData";
-import { callBackWhenPassAllFunc, safeEqual } from "buy/common/utils/util";
+import {callBackWhenPassAllFunc, getProductListPath, safeEqual} from "buy/common/utils/util";
 import { useGetOriginData } from "../../../common/useHook/useGetOriginData";
 import { IContextValue } from "../../../common/type";
 import { locationHref } from "../../../common/utils/routerHistory";
-import { useIsCurrentPage } from "../../../common/useHook";
 import { IProductDetail } from "./interface";
 
 export const ProductDetailContext = createContext({});
@@ -85,7 +82,7 @@ function useGetAction(
     getProductDetail: useCallback(
       async function(productId) {
         function redirect() {
-          locationHref("/buy-phone");
+          locationHref(getProductListPath());
         }
         try {
           const res: IProductDetail = await getProductDetail(productId);
