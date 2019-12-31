@@ -1,7 +1,26 @@
 @import (reference) "~buy/common/styles/index.less";
 
 @p1: {
-  .sold-out-tips {
+  .sold-out-tips-modal {
+    .sold-out-tips {
+      text-align: center;
+      h2 {
+        font-size: 20 * @f;
+      }
+      .button-container {
+        margin-top: 60 * @px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        .or {
+          margin-top: 4 *@px;
+        }
+        > a:last-child {
+          color: @color-blue-liner-use;
+          font-size: 18 *@f;
+        }
+      }
+    }
   }
 };
 
