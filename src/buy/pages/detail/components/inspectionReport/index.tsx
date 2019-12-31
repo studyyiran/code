@@ -48,7 +48,6 @@ function InspectPersonInfo({ buyProductRemark }: { buyProductRemark: any }) {
   return (
     <div>
       <div>
-        <img src={require("./res/inspection-notes.svg")} />
         <div>
           <h3 className="title-style">Inspected by</h3>
           <span>Hamza Shaikh</span>
@@ -141,28 +140,20 @@ function PhoneBackgroundHistory() {
 
 function FullyFunctionalPart({ backGroundCheck }: { backGroundCheck: any[] }) {
   return (
-    <li>
-      <header>
-        <img src={require("./res/background-check.svg")} />
-        <h3>Background Check</h3>
-      </header>
-      <div>
-        <ul>
-          {backGroundCheck.map(({ content, title }, index) => {
-            if (content) {
-              return (
-                <li className="bg-check" key={index}>
-                  <label>{title}</label>
-                  <span>{content}</span>
-                  {index > 1 ? <Svg /> : null}
-                </li>
-              );
-            } else {
-              return null;
-            }
-          })}
-        </ul>
-      </div>
-    </li>
+    <ul>
+      {backGroundCheck.map(({ content, title }, index) => {
+        if (content) {
+          return (
+            <li className="bg-check" key={index}>
+              <label>{title}</label>
+              <span>{content}</span>
+              {index > 1 ? <Svg /> : null}
+            </li>
+          );
+        } else {
+          return null;
+        }
+      })}
+    </ul>
   );
 }
