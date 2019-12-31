@@ -1,6 +1,10 @@
 import { GlobalSettingContext, IGlobalSettingContext } from "../../../context";
 import { useContext } from "react";
-import { RenderByCondition } from "../../../components/RenderByCondition";
+import {
+  getProductListPath,
+  urlRmSpaceAndToLower
+} from "../../../common/utils/util";
+import { IProductDetail } from "../context/interface";
 
 export function getDescArr(info: any, displayName: any) {
   const firstLine: any[] = [];
@@ -51,4 +55,14 @@ export function useGetProductImg(data: any) {
     imgList = (imgList as string).split(",");
   }
   return imgList && imgList.length ? imgList[0] : "";
+}
+
+export function viewAllClickHandler(productDetail: IProductDetail) {
+  window.location.href = urlRmSpaceAndToLower(
+    getProductListPath() +
+      "/" +
+      productDetail.brandDisplayName +
+      "/" +
+      productDetail.productDisplayName
+  );
 }
