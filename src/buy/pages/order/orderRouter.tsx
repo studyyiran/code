@@ -21,6 +21,13 @@ export default function OrderRouter(props: any) {
   const { path, url } = props.match;
 
   useEffect(() => {
+    if (
+      props.location &&
+      props.location.pathname &&
+      props.location.pathname.includes("/buy/confirmation")
+    ) {
+      return () => {};
+    }
     if (!subOrders || !subOrders.length) {
       const timerRef = window.setTimeout(() => {
         locationHref(getProductListPath());
@@ -30,7 +37,7 @@ export default function OrderRouter(props: any) {
       };
     }
     return () => {};
-  }, [path, subOrders, url]);
+  }, [path, props.location, subOrders, url]);
   function handleNext(currentPath: string) {
     const findTarget = routerConfig.findIndex(({ relativePath }) => {
       return relativePath === currentPath;
