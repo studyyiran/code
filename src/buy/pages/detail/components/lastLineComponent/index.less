@@ -6,11 +6,14 @@
 
     .when-pc {
       @marginSize: -35 * @px;
-      .pc({margin-left: @marginSize; margin-right: @marginSize;});
+      //.pc({margin-left: @marginSize; margin-right: @marginSize;});
       display: flex;
       align-items: center;
       justify-content: space-around;
       > .item {
+        img {
+          margin-right: 30 * @px;
+        }
         .content {
           h3 {
           }
@@ -34,6 +37,9 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
+        img {
+          margin-bottom: 12 * @px;
+        }
         .content {
           text-align: center;
         }

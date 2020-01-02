@@ -4,6 +4,7 @@
   .detail-top-swiper {
     position: relative;
     .actual-tag {
+      .canclick();
       z-index: 9998;
       padding: 11 * @px;
       color: white;
@@ -28,6 +29,15 @@
       .innerdiv {
         .innerdiv-imgsize(100vw);
       }
+    }
+    .pc-total-count {
+      position: absolute;
+      bottom: 10 * @px;
+      right: 10 * @px;
+      display: block;
+      .canclick();
+      background: white;
+      padding: 4 * @px 10 * @px;
     }
     .swiper-pc {
       display: flex;

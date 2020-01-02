@@ -22,6 +22,10 @@ export function TopSwiper(props: any) {
   } = props;
 
   const maxNumber = 3;
+  function onOpenModal(e: any, index = 0) {
+    setCurrentImageIndex(index);
+    setShowImgModal(true);
+  }
   return (
     <>
       <ModalView visible={showImageModal}>
@@ -35,30 +39,10 @@ export function TopSwiper(props: any) {
         />
       </ModalView>
       <div className="detail-top-swiper">
-        <div className="actual-tag">Actual Phone</div>
+        <div className="actual-tag" onClick={onOpenModal}>
+          Actual Phone
+        </div>
         <RenderByCondition
-          ComponentMb={(() => {
-            let dom = buyProductImgM.map((item: string, index: number) => {
-              return (
-                <InnerDivImage
-                  imgUrl={item}
-                  key={index}
-                  dataIndex={index}
-                  onClick={(e: any) => {
-                    setCurrentImageIndex(index);
-                    setShowImgModal(true);
-                  }}
-                />
-              );
-            });
-
-            if (buyProductVideo) {
-              dom.unshift(
-                <VideoComponent className="innerdiv" src={buyProductVideo} />
-              );
-            }
-            return <Carousel className="swiper-mb mb-carousel">{dom}</Carousel>;
-          })()}
           ComponentPc={(() => {
             let dom = buyProductImgPc.map((item: string, index: number) => {
               return (
@@ -75,6 +59,12 @@ export function TopSwiper(props: any) {
             });
             return (
               <div>
+                {dom.length > 2 ? (
+                  <div
+                    className="pc-total-count"
+                    onClick={onOpenModal}
+                  >{`See More (${dom.length}) `}</div>
+                ) : null}
                 <div
                   className="swiper-pc"
                   onClick={(e: any) => {
@@ -84,8 +74,7 @@ export function TopSwiper(props: any) {
                       e.target.dataset &&
                       e.target.dataset.index
                     ) {
-                      setCurrentImageIndex(e.target.dataset.index);
-                      setShowImgModal(true);
+                      onOpenModal(e, e.target.dataset.index);
                     }
                   }}
                 >
@@ -113,6 +102,28 @@ export function TopSwiper(props: any) {
                 )}
               </div>
             );
+          })()}
+          ComponentMb={(() => {
+            let dom = buyProductImgM.map((item: string, index: number) => {
+              return (
+                <InnerDivImage
+                  imgUrl={item}
+                  key={index}
+                  dataIndex={index}
+                  onClick={(e: any) => {
+                    setCurrentImageIndex(index);
+                    setShowImgModal(true);
+                  }}
+                />
+              );
+            });
+
+            if (buyProductVideo) {
+              dom.unshift(
+                <VideoComponent className="innerdiv" src={buyProductVideo} />
+              );
+            }
+            return <Carousel className="swiper-mb mb-carousel">{dom}</Carousel>;
           })()}
         />
       </div>

@@ -11,6 +11,7 @@
       font-size: 16 * @px;
       margin-top: 4 * @px;
     }
+    @imgSize: 78;
     .Inspect-person-info {
       display: flex;
       .mb({flex-direction: column;});
@@ -21,9 +22,9 @@
       .first {
         .pc({margin-right: 20 * @px;});
         img {
-          width: 88 * @px;
-          height: 88 * @px;
-          margin-right: 30 * @px;
+          width: @imgSize * @f;
+          height: @imgSize * @f;
+          margin-right: 30 * @f;
         }
         .name-part {
           display: inline-block;
@@ -35,7 +36,7 @@
     .item-list {
       border-top: 1px solid @color-gray;
       padding-top: 15 * @px;
-      .pc({margin-left: 120 * @px;});
+      .pc({margin-left: (@imgSize + 30) * @f;});
       section {
         h2.sub-title-size {
           margin-bottom: 8 * @px;

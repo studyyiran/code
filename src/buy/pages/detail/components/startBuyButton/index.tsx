@@ -17,7 +17,7 @@ export function StartBuyButton(props: {
       </Button>
       <span className="or">OR</span>
       <a className="link" onClick={viewAllClickHandler.bind({}, productDetail)}>
-        Find similar phones
+        Find Similar Phones
       </a>
     </div>
   );

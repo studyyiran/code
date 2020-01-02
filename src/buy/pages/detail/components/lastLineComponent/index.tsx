@@ -7,13 +7,13 @@ import { RenderByCondition } from "../../../../components/RenderByCondition";
 export function LastLineComponent() {
   const arr = [
     {
-      img: require("./res/free-shipping.svg"),
-      title: "Fast Shipping",
+      img: require("./res/certified.svg"),
+      title: "UpTrade Certified",
       content: "Quality, fully functional, used refurbished phones"
     },
     {
       img: require("./res/return.svg"),
-      title: `${constValue.REFUNDTIME} Days Return`,
+      title: `${constValue.REFUNDTIME} Day Free Returns `,
       content: "Return for any reason or no reason at all "
     },
     {
