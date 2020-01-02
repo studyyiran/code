@@ -11,6 +11,12 @@
       grid-template-columns: repeat(4, 1fr);
       justify-content: space-around;
       > .item {
+        &:nth-child(3) {
+          justify-self: end;
+        }
+        &:nth-child(4) {
+          justify-self: end;
+        }
         img {
           margin-right: 30 * @px;
         }
