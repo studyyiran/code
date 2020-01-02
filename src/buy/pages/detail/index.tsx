@@ -24,7 +24,7 @@ import { TopSwiper } from "./components/TopSwiper";
 import { MoreInfo } from "./components/moreInfo";
 import { viewAllClickHandler } from "./util";
 import { ReviewListPart } from "./components/revirePart";
-import {LastLineComponent} from "./components/lastLineComponent";
+import { LastLineComponent } from "./components/lastLineComponent";
 
 export default function ProductDetail(props: any) {
   const [showModal, setShowModal] = useState(false);
@@ -143,7 +143,7 @@ export default function ProductDetail(props: any) {
         </header>
         <RenderByCondition
           ComponentMb={
-            <Carousel className="mb-carousel">
+            <Carousel className="mb-carousel" dots={false}>
               {similiarPhoneList.map((item, index) => {
                 return (
                   <PhoneProductCard
@@ -234,5 +234,3 @@ export default function ProductDetail(props: any) {
     );
   }
 }
-
-

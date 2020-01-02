@@ -170,12 +170,31 @@ export function HeaderProductPart(props: {
 function ProductInfo(props: any) {
   const { productDisplayName, buyLevel, buyProductBQV } = props;
   const [lineOne, lineTwo] = getDescArr(buyProductBQV, productDisplayName);
+  function type2BgColor(type: string) {
+    switch (type) {
+      case "NEW":
+        return "rgba(109, 210, 48, 1)";
+      case "BEST":
+        return "rgba(109, 210, 48, 1)";
+      case "BETTER":
+        return "rgba(109, 210, 48, 1)";
+      case "GOOD":
+        return "rgba(109, 210, 48, 1)";
+      case "FAIR":
+        return "rgba(109, 210, 48, 1)";
+      default:
+        return "rgba(109, 210, 48, 1)";
+    }
+  }
   return (
     <section className="product-info">
       <div className="info-part">
         <h2 className="sub-title">{lineOne ? ` ${lineOne}` : ""}</h2>
         <span className="attr">{lineTwo ? lineTwo : ""}</span>
-        <span className="condition">Condition {buyLevel}</span>
+        <span className="condition">
+          Condition{" "}
+          <span style={{ background: type2BgColor(buyLevel) }}>{buyLevel}</span>
+        </span>
       </div>
     </section>
   );

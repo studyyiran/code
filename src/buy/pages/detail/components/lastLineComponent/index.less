@@ -7,8 +7,8 @@
     .when-pc {
       @marginSize: -35 * @px;
       //.pc({margin-left: @marginSize; margin-right: @marginSize;});
-      display: flex;
-      align-items: center;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
       justify-content: space-around;
       > .item {
         img {
