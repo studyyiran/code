@@ -17,7 +17,7 @@ export function InspectionReport(props: {
   } = props;
   return (
     <div className="inspection-report">
-      <h2>Inspection Report</h2>
+      <h2 className="sub-title-size">Inspection Report</h2>
       <InspectPersonInfo buyProductRemark={buyProductRemark} />
       <ul>
         <WithTitle title={"Fully Functional"}>
@@ -39,7 +39,7 @@ export function InspectionReport(props: {
 function WithTitle({ title, children }: { title: string; children: any }) {
   return (
     <li>
-      <h2>{title}</h2>
+      <h2 className="sub-title-size">{title}</h2>
       {children}
     </li>
   );
