@@ -24,6 +24,7 @@ import { TopSwiper } from "./components/TopSwiper";
 import { MoreInfo } from "./components/moreInfo";
 import { viewAllClickHandler } from "./util";
 import { ReviewListPart } from "./components/revirePart";
+import {LastLineComponent} from "./components/lastLineComponent";
 
 export default function ProductDetail(props: any) {
   const [showModal, setShowModal] = useState(false);
@@ -232,25 +233,4 @@ export default function ProductDetail(props: any) {
   }
 }
 
-function LastLineComponent() {
-  return (
-    <ul className="common-card icons-card">
-      <li>
-        <img src={require("./res/free-shipping.svg")} />
-        <h3>Fast Shipping</h3>
-      </li>
-      <li>
-        <img src={require("./res/return.svg")} />
-        <h3>{constValue.REFUNDTIME} Days Return</h3>
-      </li>
-      <li>
-        <img src={require("./res/secure-payment.svg")} />
-        <h3>Secure Payment</h3>
-      </li>
-      <li>
-        <img src={require("./res/customer-support.svg")} />
-        <h3>Customer Support</h3>
-      </li>
-    </ul>
-  );
-}
+

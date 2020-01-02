@@ -1,0 +1,28 @@
+@import (reference) "~buy/common/styles/index.less";
+
+@p1: {
+  .icons-card {
+    margin-top: 80 * @px;
+    .mb({margin-top: 32 * @px;});
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 37 * @px 25 * @px;
+    .mb({padding: 15 * @px 10 * @px 0;});
+    > li {
+      display: flex;
+      align-items: center;
+    }
+  }
+  .ismobile {
+    .icons-card {
+      flex-direction: column;
+      > li {
+        flex-direction: column;
+        margin-bottom: 30 * @px;
+      }
+    }
+  }
+};
+
+.hello(@p1);
