@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 import OrderLayout from "./components/orderLayout";
 // 业务模块级less
@@ -7,12 +7,56 @@ import ButtonGroup from "./components/buttonGroup";
 import { locationHref } from "../../common/utils/routerHistory";
 import { routerConfig } from "./routerConfig";
 import { IOrderInfoContext, OrderInfoContext } from "./context";
+import { getProductListPath } from "../../common/utils/util";
+import { IProductDetailContext, ProductDetailContext } from "../detail/context";
+import { soldOutTips } from "../detail/components/soldOutTips";
 
 export default function OrderRouter(props: any) {
   const orderInfoContext = useContext(OrderInfoContext);
-  const { orderInfoContextValue, getInfoByOrderDetailId, getOrderTax, getExpress } = orderInfoContext as IOrderInfoContext;
+  const productDetailContext = useContext(ProductDetailContext);
+  const {
+    productDetailContextValue
+  } = productDetailContext as IProductDetailContext;
+  const { productDetail } = productDetailContextValue;
+  const {
+    orderInfoContextValue,
+    getInfoByOrderDetailId,
+    getOrderTax,
+    getExpress
+  } = orderInfoContext as IOrderInfoContext;
   const { subOrders, pendingStatus } = orderInfoContextValue;
   const { path, url } = props.match;
+
+  // 没有suborder 出弹框
+  useEffect(() => {
+    if (
+      props.location &&
+      props.location.pathname &&
+      props.location.pathname.includes("/buy/confirmation")
+    ) {
+      return () => {};
+    }
+    // 购物车为空.
+    if (!subOrders || !subOrders.length) {
+      const timerRef = window.setTimeout(() => {
+        locationHref(getProductListPath());
+      }, 100);
+      return () => {
+        window.clearInterval(timerRef);
+      };
+    }
+    // 商品已经销售掉了
+    if (
+      productDetail &&
+      productDetail.buyProductStatus &&
+      productDetail.buyProductStatus === "INTRANSACTION"
+    ) {
+      // 弹框
+      soldOutTips(productDetail);
+    }
+    return () => {};
+  }, [path, productDetail, props.location, subOrders, url]);
+
   function handleNext(currentPath: string) {
     const findTarget = routerConfig.findIndex(({ relativePath }) => {
       return relativePath === currentPath;

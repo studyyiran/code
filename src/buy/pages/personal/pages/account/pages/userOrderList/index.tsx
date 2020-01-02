@@ -6,6 +6,7 @@ import RouterLink from "../../../../../../common-modules/components/routerLink";
 import { InnerDivImage } from "../../../../../detail/components/innerDivImage";
 import Svg from "../../../../../../components/svg";
 import Button from "../../../../../../components/button";
+import {getProductListPath} from "../../../../../../common/utils/util";
 
 export function UserOrderList(props: any) {
   const { userInfo } = props;
@@ -171,7 +172,7 @@ export function UserOrderList(props: any) {
         <div className="empty">
           <h2>No order</h2>
           <Button>
-            <RouterLink to={"/buy-phone"}>Buy a device</RouterLink>
+            <RouterLink to={getProductListPath()}>Buy a device</RouterLink>
           </Button>
           <Button>
             <RouterLink to={"/sell-phone"}>Sell a device</RouterLink>
