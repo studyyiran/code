@@ -47,7 +47,7 @@ function WithTitle({ title, children }: { title: string; children: any }) {
   return (
     <section>
       <h2 className="sub-title-size">{title}</h2>
-      <div>{children}</div>
+      {children}
     </section>
   );
 }

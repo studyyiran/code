@@ -6,7 +6,7 @@
       padding-bottom: 10 * @px;
       border-bottom: 1px solid @color-gray;
     }
-    
+
     .title-style {
       font-size: 16 * @px;
       margin-top: 4 * @px;
@@ -16,7 +16,7 @@
       .mb({flex-direction: column;});
       padding-top: 15 * @px;
       > * {
-        padding-bottom: 17 *@px;
+        padding-bottom: 17 * @px;
       }
       .first {
         .pc({margin-right: 20 * @px;});
@@ -33,15 +33,39 @@
       }
     }
     .item-list {
-      margin-left: 50 * @px;
+      border-top: 1px solid @color-gray;
+      padding-top: 15 * @px;
+      .pc({margin-left: 120 * @px;});
+      section {
+        h2.sub-title-size {
+          margin-bottom: 8 * @px;
+        }
+        margin-bottom: 20 * @px;
+      }
     }
   }
   .phone-background-history {
     .pc({display: grid; grid-template-columns: repeat(3, 1fr) ;});
   }
   .fully-functional-part {
+    margin-left: -5 * @px;
     .pc({display: grid; grid-template-columns: repeat(3, 1fr) ;});
     ul {
+    }
+    .bg-check {
+      margin-bottom: 8 * @px;
+      > * {
+        vertical-align: middle;
+      }
+      label {
+        display: inline-block;
+      }
+      img {
+        width: 24 * @px;
+        height: 24 * @px;
+        margin-right: 8 * @px;
+        display: inline-block;
+      }
     }
   }
 };
