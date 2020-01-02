@@ -43,19 +43,10 @@
       }
     }
 
-    .sub-title-size {
-      .pc({@size: 24 * @px; font-size: @size;});
-      .mb({@size: 20 * @px; font-size: @size;});
-      //font-size: @size;
-    }
-
-    .sub-title {
-      .sub-title-size();
-    }
-
     .ant-collapse-header {
       h3 {
-        .sub-title();
+        .pc({@size: 24 * @px; font-size: @size;});
+        .mb({@size: 20 * @px; font-size: @size;});
       }
     }
 
@@ -103,9 +94,10 @@
         .mb({.font(14 * @px, @boldWeight, rgba(0, 0, 0, 1)) ;});
       }
     }
+
     @imageWidth: 440 * @px;
-    .page {
-      margin-top: 15 * @px;
+    .product-detail {
+      //margin-top: 15 * @px;
       .mb({@imageWidth: 100vw;});
       //页面结构
 

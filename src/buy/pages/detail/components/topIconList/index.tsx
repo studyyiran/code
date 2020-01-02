@@ -1,4 +1,5 @@
 import React from "react";
+import './index.less'
 
 export function TopIconList() {
   const config = [
@@ -19,10 +20,10 @@ export function TopIconList() {
     <ul className="top-icon-list">
       {config.map(({ title, icon }, index) => {
         return (
-          <div key={index}>
+          <li key={index} data-index={index}>
             <img src={icon} />
-            <span>{title}</span>
-          </div>
+            <span className="title">{title}</span>
+          </li>
         );
       })}
     </ul>

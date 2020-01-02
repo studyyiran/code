@@ -202,7 +202,7 @@ export default function ProductDetail(props: any) {
           buyProductImgPc={buyProductImgPc}
           buyProductImgM={buyProductImgM}
         />
-        <div className="page">
+        <div className="product-detail">
           <HeaderProductPart
             showModal={showModal}
             setShowModal={setShowModal}

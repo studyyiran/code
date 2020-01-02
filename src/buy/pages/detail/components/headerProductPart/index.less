@@ -2,14 +2,20 @@
 
 @p1: {
   .header-part {
+    font-size: 16 * @f;
     .product-info {
       position: relative;
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
       > .info-part {
+        .sub-title {
+          .pc({@size: 24 * @px; font-size: @size;});
+          .mb({@size: 20 * @px; font-size: @size;});
+        }
         > * {
           display: block;
+          margin-bottom: 4 * @px;
         }
         > h2 {
           white-space: nowrap;
@@ -18,12 +24,11 @@
           .mb({font-size: 18 * @px;});
         }
         > .attr {
+          .mb({margin-top: 9 * @px;});
           .font(16 * @f, @normalWeight, rgba(34, 34, 34, 1));
-          .mb({font-size: 14 * @px;});
         }
         > .condition {
           .font(16 * @f, @normalWeight, rgba(59, 186, 0, 1));
-          .mb({font-size: 14 * @px;});
         }
       }
       > .check-icon {
@@ -48,10 +53,15 @@
       }
     }
     margin-bottom: 24 * @px;
+    .product-id {
+      color: rgba(55, 90, 125, 1);
+    }
     .left {
-      .product-id {
-        color: rgba(55, 90, 125, 1);
-      }
+    }
+    .sku-price {
+      display: inline-block;
+      font-size: 12 * @f;
+      color: rgba(136, 136, 136, 1);
     }
     .price-part-pc {
       display: flex;
@@ -59,17 +69,14 @@
       align-items: flex-start;
 
       .sku-price {
-        font-size: 12 * @f;
-        display: inline-block;
-        color: rgba(136, 136, 136, 1);
         > span:last-child {
-          margin-left: 10 * @px;
+          margin-left: 2 * @px;
           text-decoration: line-through;
         }
       }
       .right {
         .price-and-button {
-          margin-bottom: 15 * @px;
+          margin-bottom: 6 * @px;
           .price {
             > * {
               vertical-align: baseline;
@@ -79,7 +86,7 @@
             }
             margin-right: 32 * @px;
             .buy-price {
-              margin-right: 20 * @px;
+              margin-right: 5 * @px;
               .font(24 * @f, @boldWeight, rgba(34, 34, 34, 1));
             }
             .act-timer {
@@ -100,26 +107,18 @@
       }
       .product-id {
         > * {
-          .font(12 * @f, @boldWeight, rgba(136, 136, 136, 1));
           vertical-align: text-bottom;
         }
       }
       /*移动端*/
-      .price-and-button {
-        .price {
-          display: flex;
-          align-items: flex-start;
-          justify-content: space-between;
-        }
-      }
       .bottom {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-end;
         .price {
           .buy-price {
-            .font(18 * @f, @boldWeight, rgba(34, 34, 34, 1));
+            .font(20 * @f, @boldWeight, rgba(34, 34, 34, 1));
             margin-right: 8 * @px;
+          }
+          .sku-price {
+            font-size: 14 * @px;
           }
         }
       }

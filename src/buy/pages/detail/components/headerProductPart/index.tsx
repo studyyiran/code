@@ -136,7 +136,7 @@ export function HeaderProductPart(props: {
                         </div>
                       </div>
                       <span className="product-id">
-                        <span>Product ID {buyProductCode}</span>
+                        Product ID {buyProductCode}
                       </span>
                     </div>
                   </>
@@ -154,7 +154,7 @@ export function HeaderProductPart(props: {
                     ) : null}
                   </div>
                   <span className="product-id">
-                    <span>Product ID {buyProductCode}</span>
+                    Product ID {buyProductCode}
                   </span>
                 </div>
               }
