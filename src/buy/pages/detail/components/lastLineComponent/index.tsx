@@ -1,6 +1,8 @@
 import { constValue } from "../../../../common/constValue";
 import React from "react";
 import "./index.less";
+import { Carousel } from "antd";
+import { RenderByCondition } from "../../../../components/RenderByCondition";
 
 export function LastLineComponent() {
   const arr = [
@@ -26,18 +28,39 @@ export function LastLineComponent() {
     }
   ];
   return (
-    <ul className="icons-card">
-      {arr.map(({ img, title, content }) => {
-        return (
-          <li>
-            <img src={img} />
-            <div>
-              <h3>{title}</h3>
-              <p>{content}</p>
-            </div>
-          </li>
-        );
-      })}
-    </ul>
+    <RenderByCondition
+      ComponentPc={
+        <Carousel className="mb-carousel">
+          <ul className="icons-card">
+            {arr.map(({ img, title, content }) => {
+              return (
+                <li>
+                  <img src={img} />
+                  <div>
+                    <h3>{title}</h3>
+                    <p>{content}</p>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </Carousel>
+      }
+      ComponentMb={
+        <Carousel className="mb-carousel">
+          {arr.map(({ img, title, content }) => {
+            return (
+              <li>
+                <img src={img} />
+                <div>
+                  <h3>{title}</h3>
+                  <p>{content}</p>
+                </div>
+              </li>
+            );
+          })}
+        </Carousel>
+      }
+    />
   );
 }
