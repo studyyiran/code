@@ -3,23 +3,40 @@
 @p1: {
   .icons-card {
     margin-top: 80 * @px;
-    .mb({margin-top: 32 * @px;});
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    padding: 37 * @px 25 * @px;
-    .mb({padding: 15 * @px 10 * @px 0;});
-    > li {
+
+    .when-pc {
+      @marginSize: -35 * @px;
+      .pc({margin-left: @marginSize; margin-right: @marginSize;});
       display: flex;
       align-items: center;
+      justify-content: space-around;
+      > .item {
+        .content {
+          h3 {
+          }
+          p {
+            font-size: 13 * @f;
+          }
+        }
+        display: flex;
+        align-items: center;
+      }
     }
   }
   .ismobile {
     .icons-card {
-      flex-direction: column;
-      > li {
-        flex-direction: column;
+      margin-top: 60 * @px;
+      h3 {
+        color: rgba(0, 0, 0, 1) !important;
+      }
+      .item {
         margin-bottom: 30 * @px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        .content {
+          text-align: center;
+        }
       }
     }
   }

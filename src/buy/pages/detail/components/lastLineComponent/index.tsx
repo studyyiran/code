@@ -27,40 +27,38 @@ export function LastLineComponent() {
       content: "Contact us by chat, mail, phone"
     }
   ];
+
   return (
-    <RenderByCondition
-      ComponentPc={
-        <Carousel className="mb-carousel">
-          <ul className="icons-card">
-            {arr.map(({ img, title, content }) => {
-              return (
-                <li>
-                  <img src={img} />
-                  <div>
-                    <h3>{title}</h3>
-                    <p>{content}</p>
-                  </div>
-                </li>
-              );
+    <div className="icons-card">
+      <RenderByCondition
+        ComponentPc={
+          <div className="when-pc">
+            {arr.map((item: any) => {
+              return <Haha {...item} />;
             })}
-          </ul>
-        </Carousel>
-      }
-      ComponentMb={
-        <Carousel className="mb-carousel">
-          {arr.map(({ img, title, content }) => {
-            return (
-              <li>
-                <img src={img} />
-                <div>
-                  <h3>{title}</h3>
-                  <p>{content}</p>
-                </div>
-              </li>
-            );
-          })}
-        </Carousel>
-      }
-    />
+          </div>
+        }
+        ComponentMb={
+          <Carousel className="mb-carousel">
+            {arr.map((item: any) => {
+              return <Haha {...item} />;
+            })}
+          </Carousel>
+        }
+      />
+    </div>
+  );
+}
+
+function Haha(props: any): any {
+  const { img, title, content } = props;
+  return (
+    <div className="item">
+      <img src={img} />
+      <div className="content">
+        <h3>{title}</h3>
+        <p>{content}</p>
+      </div>
+    </div>
   );
 }
