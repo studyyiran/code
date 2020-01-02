@@ -12,7 +12,8 @@ import {
   createOrder,
   zipCodeToAddressInfo,
   orderIdToCheckOrderInfo,
-  validaddress
+  validaddress,
+  orderProcessRecord
 } from "../server";
 import {
   getFromCacheStore,
@@ -164,6 +165,7 @@ interface IContextActions {
   checkAddress: (info: any) => any;
   orderIdToCheckOrderInfo: () => any;
   validaddress: (data: any) => any;
+  orderProcessRecord: (payInfo?: IOrderInfoState["payInfo"]) => any;
   getInfoByOrderDetailId: () => any; // 用于在subOrder中拉取获取手机商品信息
 }
 
@@ -285,11 +287,32 @@ function useGetAction(
         return Promise.reject("param error");
       }
     }),
+    orderProcessRecord: useCallback(async payInfo => {
+      orderProcessRecord(
+        {
+          userInfo: state.userInfo,
+          payInfo: payInfo,
+          invoiceSameAddr: state.invoiceSameAddr,
+          shippoRateInfo: {
+            rateId: state.expressInfo.find(item => {
+              return String(item.token) === state.userExpress;
+            })
+              ? (state.expressInfo.find(item => {
+                  return String(item.token) === state.userExpress;
+                }) as any).rateId
+              : ""
+          },
+          invoiceInfo: state.invoiceInfo,
+          subOrders: state.subOrders
+        },
+        Boolean(payInfo && payInfo.paypalOrderId)
+      );
+    }, []),
     startOrder: useCallback(
       async function(payInfo) {
         // 临时trigger检验变量.这块需要系统封装好.
         if (payInfo) {
-          const orderResult = createOrder({
+          const obj = {
             userInfo: state.userInfo,
             payInfo: payInfo,
             invoiceSameAddr: state.invoiceSameAddr,
@@ -304,7 +327,9 @@ function useGetAction(
             },
             invoiceInfo: state.invoiceInfo,
             subOrders: state.subOrders
-          });
+          };
+          actions.orderProcessRecord(payInfo);
+          const orderResult = createOrder(obj);
           orderResult
             .then(res => {
               try {

@@ -19,7 +19,8 @@ function UserInformationWrapper(props: any) {
   const {
     orderInfoContextValue,
     orderInfoContextDispatch,
-    checkAddress
+    checkAddress,
+    orderProcessRecord
   } = orderInfoContext as IOrderInfoContext;
   const { userInfo } = orderInfoContextValue;
   const { storeAuthContextValue } = accountInfoContext as IStoreAuthContext;
@@ -34,6 +35,7 @@ function UserInformationWrapper(props: any) {
         // 开始验证地址 // 返回promise
         return checkAddress(result).then(() => {
           // 地址通过后,才提交最终的结果
+          orderProcessRecord();
           orderInfoContextDispatch({
             type: orderInfoReducerTypes.setUserInfo,
             value: result
