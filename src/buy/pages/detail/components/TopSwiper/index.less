@@ -1,0 +1,43 @@
+@import (reference) "~buy/common/styles/index.less";
+
+@p1: {
+  .detail-top-swiper {
+    @imageWidth: 440 * @px;
+    .setpage(3 * @imageWidth);
+    .swiper-mb {
+      height: 100vw;
+      width: 100vw;
+      .innerdiv {
+        .innerdiv-imgsize(100vw);
+      }
+    }
+    .swiper-pc {
+      display: flex;
+      justify-content: center;
+      border-bottom: 1px solid @color-border;
+      margin-bottom: 40 * @px;
+      //padding: 10 * @px 0;
+      height: @imageWidth;
+      .innerdiv {
+        .canclick();
+        .innerdiv-imgsize(@imageWidth);
+      }
+    }
+    .ant-carousel .slick-slide {
+      text-align: center;
+      //height: 160px;
+      //line-height: 160px;
+      background: #364d79;
+      overflow: hidden;
+    }
+
+    .ant-carousel .slick-slide h3 {
+      color: #fff;
+    }
+  }
+};
+
+.hello(@p1);
+
+
+

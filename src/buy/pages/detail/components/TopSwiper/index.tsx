@@ -1,14 +1,15 @@
-import React, {useState} from "react";
-import {ModalView} from "../../../../components/ModalView";
-import {RenderByCondition} from "../../../../components/RenderByCondition";
-import {InnerDivImage} from "../innerDivImage";
+import React, { useState } from "react";
+import { ModalView } from "../../../../components/ModalView";
+import { RenderByCondition } from "../../../../components/RenderByCondition";
+import { InnerDivImage } from "../innerDivImage";
 import VideoComponent from "../../../../components/video";
-import {Carousel} from "antd";
-import {isServer} from "../../../../common/utils/util";
+import { Carousel } from "antd";
+import { isServer } from "../../../../common/utils/util";
 // @ts-ignore
 import TestCarousel, { Modal, ModalGateway } from "react-images";
 // @ts-ignore
 import WxImageViewer from "react-wx-images-viewer";
+import "./index.less";
 
 export function TopSwiper(props: any) {
   const [showImageModal, setShowImgModal] = useState(false);
@@ -33,7 +34,7 @@ export function TopSwiper(props: any) {
           }}
         />
       </ModalView>
-      <div className="swiper">
+      <div className="detail-top-swiper">
         <RenderByCondition
           ComponentMb={(() => {
             let dom = buyProductImgM.map((item: string, index: number) => {
@@ -55,7 +56,7 @@ export function TopSwiper(props: any) {
                 <VideoComponent className="innerdiv" src={buyProductVideo} />
               );
             }
-            return <Carousel className="swiper-mb">{dom}</Carousel>;
+            return <Carousel className="swiper-mb mb-carousel">{dom}</Carousel>;
           })()}
           ComponentPc={(() => {
             let dom = buyProductImgPc.map((item: string, index: number) => {

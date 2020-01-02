@@ -6,29 +6,59 @@
     相对模块性的
     
      */
+    .mb-carousel {
+      // 重置
+      & .slick-dots.slick-dots-bottom {
+        > li {
+          border-radius: 50%;
+          overflow: hidden;
+          width: 8 * @px;
+          height: 8 * @px;
+          display: inline-block;
+          background: rgba(233, 233, 233, 1);
+          margin: 0 4 * @px;
+          > * {
+            width: 100%;
+            height: 100%;
+          }
+        }
+        button {
+          background: rgba(233, 233, 233, 1);
+        }
+        .slick-active {
+          button {
+            background: rgba(26, 180, 231, 1);
+          }
+        }
+      }
+      & .slick-slide {
+        overflow: hidden;
+      }
+
+      & .slick-slide h3 {
+        color: #fff;
+      }
+      .innerdiv {
+        .innerdiv-imgsize(calc(100vw - 2 * 0.53rem));
+      }
+    }
+
     .sub-title-size {
-      .pc({
-        @size: 24 * @px;
-        font-size: @size;
-      });
-      .mb({
-        @size: 20 * @px;
-        font-size: @size;
-      });
+      .pc({@size: 24 * @px; font-size: @size;});
+      .mb({@size: 20 * @px; font-size: @size;});
       //font-size: @size;
     }
-    
+
     .sub-title {
       .sub-title-size();
     }
-    
-    
+
     .ant-collapse-header {
       h3 {
         .sub-title();
       }
     }
-    
+
     .loading-mask-min-height {
       //min-height: 100vh;
     }
@@ -74,50 +104,6 @@
       }
     }
     @imageWidth: 440 * @px;
-    .swiper {
-      .setpage(3 * @imageWidth);
-      .swiper-mb {
-        height: 100vw;
-        width: 100vw;
-        .innerdiv {
-          .innerdiv-imgsize(100vw);
-        }
-      }
-      .swiper-pc {
-        display: flex;
-        justify-content: center;
-        border-bottom: 1px solid @color-border;
-        margin-bottom: 40 * @px;
-        //padding: 10 * @px 0;
-        height: @imageWidth;
-        .innerdiv {
-          .canclick();
-          .innerdiv-imgsize(@imageWidth);
-        }
-      }
-      // 重置
-      .ant-carousel .slick-dots-bottom {
-        button {
-          background: black;
-        }
-        .slick-active {
-          button {
-            background: gray;
-          }
-        }
-      }
-      .ant-carousel .slick-slide {
-        text-align: center;
-        //height: 160px;
-        //line-height: 160px;
-        background: #364d79;
-        overflow: hidden;
-      }
-
-      .ant-carousel .slick-slide h3 {
-        color: #fff;
-      }
-    }
     .page {
       margin-top: 15 * @px;
       .mb({@imageWidth: 100vw;});
@@ -131,7 +117,7 @@
       .common-collapse {
         margin-bottom: 21 * @px;
       }
-      
+
       .report {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -226,29 +212,6 @@
               .innerdiv-imgsize(@widthSize);
             }
             //min-width: 280 *@px;
-          }
-        }
-        .mb-carousel {
-          // 重置
-          & .slick-dots-bottom {
-            button {
-              background: black;
-            }
-            .slick-active {
-              button {
-                background: gray;
-              }
-            }
-          }
-          & .slick-slide {
-            overflow: hidden;
-          }
-
-          & .slick-slide h3 {
-            color: #fff;
-          }
-          .innerdiv {
-            .innerdiv-imgsize(calc(100vw - 2 * 0.53rem));
           }
         }
 

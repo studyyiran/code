@@ -1,6 +1,6 @@
 import React from "react";
 import "./index.less";
-import { Rate } from "antd";
+import { Carousel, Rate } from "antd";
 import { IReview } from "../../context/interface";
 
 export function ReviewListPart({ reviewList }: { reviewList: IReview[] }) {
@@ -14,12 +14,14 @@ export function ReviewListPart({ reviewList }: { reviewList: IReview[] }) {
             <span>Baesd on {reviewList.length} reviews</span>
           </div>
         </header>
-        {reviewList
-          .sort((a, b) => Number(b.rating) - Number(a.rating))
-          .slice(0, 3)
-          .map(item => {
-            return <ReviewPart item={item} key={item.store_review_id} />;
-          })}
+        <Carousel className="mb-carousel">
+          {reviewList
+            .sort((a, b) => Number(b.rating) - Number(a.rating))
+            .slice(0, 3)
+            .map(item => {
+              return <ReviewPart item={item} key={item.store_review_id} />;
+            })}
+        </Carousel>
       </div>
     );
   } else {
