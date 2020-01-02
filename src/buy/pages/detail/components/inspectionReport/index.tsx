@@ -144,7 +144,8 @@ function PhoneBackgroundHistory(): any {
             {item.map(({ content, title }: any) => {
               if (content) {
                 return (
-                  <li className="bg-check" key={title}>
+                  <li key={title}>
+                    <img src={require("./res/correct.png")} />
                     <label>{title}</label>
                     <span>{content}</span>
                   </li>

@@ -46,24 +46,32 @@
   }
   .phone-background-history {
     .pc({display: grid; grid-template-columns: repeat(3, 1fr) ;});
+    > ul {
+      > li {
+        .icon-with-title();
+      }
+    }
+  }
+  .icon-with-title {
+    margin-left: -5 * @px;
+    margin-bottom: 8 * @px;
+    > * {
+      vertical-align: middle;
+    }
+    img {
+      width: 24 * @px;
+      height: 24 * @px;
+      margin-right: 8 * @px;
+      display: inline-block;
+    }
   }
   .fully-functional-part {
-    margin-left: -5 * @px;
     .pc({display: grid; grid-template-columns: repeat(3, 1fr) ;});
     ul {
     }
     .bg-check {
-      margin-bottom: 8 * @px;
-      > * {
-        vertical-align: middle;
-      }
+      .icon-with-title();
       label {
-        display: inline-block;
-      }
-      img {
-        width: 24 * @px;
-        height: 24 * @px;
-        margin-right: 8 * @px;
         display: inline-block;
       }
     }
