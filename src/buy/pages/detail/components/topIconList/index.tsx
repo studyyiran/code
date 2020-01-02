@@ -16,7 +16,7 @@ export function TopIconList() {
     }
   ];
   return (
-    <ul>
+    <ul className="top-icon-list">
       {config.map(({ title, icon }, index) => {
         return (
           <div key={index}>
