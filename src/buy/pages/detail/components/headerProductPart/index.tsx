@@ -103,6 +103,7 @@ export function HeaderProductPart(props: {
                     setShowModal(true);
                   }}
                   buyProductStatus={buyProductStatus}
+                  productDetail={productDetail}
                 />
               </div>
             </div>

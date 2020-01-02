@@ -21,7 +21,8 @@ import { HeaderProductPart } from "./components/headerProductPart";
 import { StartBuyButton } from "./components/startBuyButton";
 import { InspectionReport } from "./components/inspectionReport";
 import { TopSwiper } from "./components/TopSwiper";
-import {MoreInfo} from "./components/moreInfo";
+import { MoreInfo } from "./components/moreInfo";
+import { viewAllClickHandler } from "./util";
 
 export default function ProductDetail(props: any) {
   const [showModal, setShowModal] = useState(false);
@@ -115,16 +116,6 @@ export default function ProductDetail(props: any) {
     }
   }, [id, productDetail]);
 
-  const viewAllClickHandler = useCallback(() => {
-    window.location.href = urlRmSpaceAndToLower(
-      getProductListPath() +
-        "/" +
-        productDetail.brandDisplayName +
-        "/" +
-        productDisplayName
-    );
-  }, [productDetail.brandDisplayName, productDisplayName]);
-
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const renderSimilar = () => {
@@ -133,7 +124,10 @@ export default function ProductDetail(props: any) {
         <header>
           <h2>Similar Phones</h2>
           <a>
-            <span className={"view-all-text"} onClick={viewAllClickHandler}>
+            <span
+              className={"view-all-text"}
+              onClick={viewAllClickHandler.bind({}, productDetail)}
+            >
               VIEW ALL
             </span>
           </a>
@@ -178,7 +172,7 @@ export default function ProductDetail(props: any) {
             <div className="mb-buy-card">
               {showModal ? null : (
                 <StartBuyButton
-                  showModal={showModal}
+                  productDetail={productDetail}
                   onClick={() => setShowModal(true)}
                   buyProductStatus={buyProductStatus}
                 />
@@ -242,8 +236,6 @@ function ReviewPart() {
     </div>
   );
 }
-
-
 
 function LastLineComponent() {
   return (
