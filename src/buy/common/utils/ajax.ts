@@ -39,7 +39,7 @@ const getRootApi = function(urlRoot: string) {
       }
       break;
   }
-  // apiRoot = "http://demo-gateway-1613913116.us-east-2.elb.amazonaws.com";
+  apiRoot = "http://demo-gateway-1613913116.us-east-2.elb.amazonaws.com";
   return apiRoot + urlRoot;
 };
 

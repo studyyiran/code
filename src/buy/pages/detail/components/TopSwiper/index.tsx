@@ -35,6 +35,7 @@ export function TopSwiper(props: any) {
         />
       </ModalView>
       <div className="detail-top-swiper">
+        <div className="actual-tag">Actual Phone</div>
         <RenderByCondition
           ComponentMb={(() => {
             let dom = buyProductImgM.map((item: string, index: number) => {
