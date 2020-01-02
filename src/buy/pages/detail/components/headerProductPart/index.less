@@ -10,6 +10,7 @@
       align-items: flex-start;
       > .info-part {
         .sub-title {
+          .font(24 * @f, @boldWeight, rgba(0, 0, 0, 1));
         }
         > * {
           display: block;
@@ -23,10 +24,11 @@
         }
         > .attr {
           .mb({margin-top: 9 * @px;});
-          .font(16 * @f, @normalWeight, rgba(34, 34, 34, 1));
+          .font(16 * @f, @boldWeight, rgba(0, 0, 0, 1));
         }
         > .condition {
-          .font(16 * @f, @normalWeight, rgba(59, 186, 0, 1));
+          font-size: 16 * @f;
+          font-weight: @boldWeight;
         }
       }
       > .check-icon {
