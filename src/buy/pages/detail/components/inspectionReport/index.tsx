@@ -4,22 +4,28 @@ import { IBackgroundCheckList } from "../../context/staticData";
 import "./index.less";
 import { RenderByCondition } from "../../../../components/RenderByCondition";
 import { Carousel } from "antd";
+import { IProductDetail } from "../../context/interface";
 export function InspectionReport(props: {
   productDescription: any;
   buyProductHistoryPdf?: any;
   backGroundCheck: any;
   buyProductRemark: any;
+  userInfo?: any;
 }) {
   const {
     productDescription,
     buyProductRemark,
     buyProductHistoryPdf,
-    backGroundCheck
+    backGroundCheck,
+    userInfo
   } = props;
   return (
     <div className="inspection-report">
       <h2 className="sub-title-size">Inspection Report</h2>
-      {/*<InspectPersonInfo buyProductRemark={buyProductRemark} />*/}
+      <InspectPersonInfo
+        buyProductRemark={buyProductRemark}
+        userInfo={userInfo}
+      />
       <div className="item-list">
         <WithTitle title={"Fully Functional"}>
           <FullyFunctionalPart backGroundCheck={backGroundCheck} />
@@ -46,17 +52,24 @@ function WithTitle({ title, children }: { title: string; children: any }) {
   );
 }
 
-function InspectPersonInfo({ buyProductRemark }: { buyProductRemark: any }) {
+function InspectPersonInfo({
+  buyProductRemark,
+  userInfo
+}: {
+  buyProductRemark: any;
+  userInfo: IProductDetail["userInfo"];
+}) {
   return (
     <div className="Inspect-person-info">
-      <div>
-        <div>
+      <div className="first">
+        <img src={userInfo.userImg || require("./res/defaulthead.png")} />
+        <div className="name-part">
           <h3 className="title-style">Inspected by</h3>
-          <span>Hamza Shaikh</span>
+          <span>{userInfo.userName}</span>
         </div>
       </div>
       {buyProductRemark ? (
-        <div>
+        <div className="second">
           <h3 className="title-style">Inspection Notes</h3>
           <p>{buyProductRemark}</p>
         </div>
@@ -172,7 +185,7 @@ function FullyFunctionalPart({
     }),
     3
   );
-  
+
   return (
     <div className="fully-functional-part">
       <RenderByCondition

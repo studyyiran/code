@@ -24,6 +24,11 @@ export interface IProductDetail {
     content: string;
     title: string;
   }[]; // 新增用于描述checkList
+  userInfo: {
+    userId: string;
+    userName: string;
+    userImg: string;
+  }
 }
 
 export interface IReviews {
