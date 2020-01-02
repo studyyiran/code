@@ -1,7 +1,28 @@
 @import (reference) "~buy/common/styles/index.less";
 
 @p1: {
-  .test-page {
+  .more-info-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 40 *@px;
+    grid-row-gap: 40 *@px;
+    .more-info {
+      img {
+        width: 138 * @px;
+        height: 138 * @px;
+        margin-bottom: 30 * @px;
+        .mb({margin-bottom: 23 * @px;});
+      }
+      .sub-title-size {
+        margin-bottom: 16 *@px;
+      }
+    }
+    
+  }
+  .ismobile {
+    .more-info-container {
+      grid-template-columns: 1fr;
+    }
   }
 };
 
