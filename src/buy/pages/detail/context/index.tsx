@@ -14,7 +14,7 @@ import {
 import { useGetOriginData } from "../../../common/useHook/useGetOriginData";
 import { IContextValue } from "../../../common/type";
 import { locationHref } from "../../../common/utils/routerHistory";
-import { IProductDetail } from "./interface";
+import {IProductDetail, IReview} from "./interface";
 
 export const ProductDetailContext = createContext({});
 export const StoreDetail = "StoreDetail";
@@ -23,7 +23,7 @@ export const StoreDetail = "StoreDetail";
 interface IContextState {
   productDetail: IProductDetail;
   similiarPhoneList: any[];
-  reviewList: any[];
+  reviewList: IReview[];
   partsInfo: IProductDetail[];
 }
 
@@ -82,7 +82,6 @@ function useGetAction(
     getReviewScore: useCallback(async () => {
       const res: any = await getReviewScore();
       if (res && res.reviews) {
-        debugger
         dispatch({
           type: storeDetailActionTypes.setReviewList,
           value: res.reviews

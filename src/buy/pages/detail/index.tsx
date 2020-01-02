@@ -23,6 +23,7 @@ import { InspectionReport } from "./components/inspectionReport";
 import { TopSwiper } from "./components/TopSwiper";
 import { MoreInfo } from "./components/moreInfo";
 import { viewAllClickHandler } from "./util";
+import { ReviewListPart } from "./components/revirePart";
 
 export default function ProductDetail(props: any) {
   const [showModal, setShowModal] = useState(false);
@@ -214,7 +215,7 @@ export default function ProductDetail(props: any) {
             backGroundCheck={backGroundCheck}
           />
           {renderMobileStartButton()}
-          <ReviewPart />
+          <ReviewListPart reviewList={reviewList} />
           <MoreInfo />
           {renderSimilar()}
           <LastLineComponent />
@@ -229,18 +230,6 @@ export default function ProductDetail(props: any) {
       </div>
     );
   }
-}
-
-function ReviewPart() {
-  return (
-    <div className="review-part">
-      <header>
-        <h2 className="sub-title">Customer Reviews</h2>
-        <div>1</div>
-      </header>
-      <div>2</div>
-    </div>
-  );
 }
 
 function LastLineComponent() {

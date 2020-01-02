@@ -25,3 +25,26 @@ export interface IProductDetail {
     title: string;
   }[]; // 新增用于描述checkList
 }
+
+export interface IReviews {
+  page: number, // 当前页
+  per_page: number, // x条一分页
+  stats: {
+    average_rating: string, // 评分
+    total_reviews: string, // 总评论数
+  },
+  reviews: IReview[],
+  store: string, // 公司
+  total_pages: number // 总页数
+}
+
+export interface IReview {
+  store_review_id: string, // 5 years ago
+  timeago: string, // 5 years ago
+  comments: string, // 评论
+  rating: string, // 评分
+  reviewer: {
+    first_name: string,
+    last_name: string
+  }
+}
