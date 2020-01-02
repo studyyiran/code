@@ -39,6 +39,7 @@ const getRootApi = function(urlRoot: string) {
       }
       break;
   }
+  // apiRoot = "http://demo-gateway-1613913116.us-east-2.elb.amazonaws.com";
   return apiRoot + urlRoot;
 };
 
@@ -105,9 +106,13 @@ ajax.fetch = function(config) {
         if (res && res.data) {
           const { code, data, success, resultMessage } = res.data;
           if (Number(code) === 200 || success || Number(code) === 0) {
+            // 常规接口
             resolve(res.data.data);
+          } else if (res && res.status && res.status === 200) {
+            // 第三方接口(review)
+            resolve(res.data)
           } else {
-            // 业务性报错
+            // 接口业务性报错
             rejectError(config, reject, {
               code: code,
               resultMessage: resultMessage
