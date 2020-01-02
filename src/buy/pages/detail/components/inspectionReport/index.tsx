@@ -1,8 +1,9 @@
 import EditorResolver from "../editorResolver";
 import React from "react";
-import Svg from "../../../../components/svg";
 import { IBackgroundCheckList } from "../../context/staticData";
-
+import "./index.less";
+import { RenderByCondition } from "../../../../components/RenderByCondition";
+import { Carousel } from "antd";
 export function InspectionReport(props: {
   productDescription: any;
   buyProductHistoryPdf?: any;
@@ -18,8 +19,8 @@ export function InspectionReport(props: {
   return (
     <div className="inspection-report">
       <h2 className="sub-title-size">Inspection Report</h2>
-      <InspectPersonInfo buyProductRemark={buyProductRemark} />
-      <ul>
+      {/*<InspectPersonInfo buyProductRemark={buyProductRemark} />*/}
+      <div className="item-list">
         <WithTitle title={"Fully Functional"}>
           <FullyFunctionalPart backGroundCheck={backGroundCheck} />
         </WithTitle>
@@ -31,23 +32,23 @@ export function InspectionReport(props: {
             <EditorResolver editorContent={productDescription} />
           </WithTitle>
         ) : null}
-      </ul>
+      </div>
     </div>
   );
 }
 
 function WithTitle({ title, children }: { title: string; children: any }) {
   return (
-    <li>
+    <section>
       <h2 className="sub-title-size">{title}</h2>
-      {children}
-    </li>
+      <div>{children}</div>
+    </section>
   );
 }
 
 function InspectPersonInfo({ buyProductRemark }: { buyProductRemark: any }) {
   return (
-    <div>
+    <div className="Inspect-person-info">
       <div>
         <div>
           <h3 className="title-style">Inspected by</h3>
@@ -93,7 +94,7 @@ function InspectPersonInfo({ buyProductRemark }: { buyProductRemark: any }) {
 //   );
 // }
 
-function PhoneBackgroundHistory() {
+function PhoneBackgroundHistory(): any {
   const staticArr = [
     {
       title: "Lost & Stolen - ",
@@ -121,22 +122,43 @@ function PhoneBackgroundHistory() {
       content: "Clear"
     }
   ];
+  const arr = splitByColumn(staticArr, 3);
   return (
-    <ul>
-      {staticArr.map(({ content, title }, index) => {
-        if (content) {
-          return (
-            <li className="bg-check" key={index}>
-              <label>{title}</label>
-              <span>{content}</span>
-            </li>
-          );
-        } else {
-          return null;
-        }
+    <div className="phone-background-history">
+      {arr.map((item, index) => {
+        return (
+          <ul key={index}>
+            {item.map(({ content, title }: any) => {
+              if (content) {
+                return (
+                  <li className="bg-check" key={title}>
+                    <label>{title}</label>
+                    <span>{content}</span>
+                  </li>
+                );
+              } else {
+                return null;
+              }
+            })}
+          </ul>
+        );
       })}
-    </ul>
+    </div>
   );
+}
+
+function splitByColumn(list: any[], column: number) {
+  // 计算大小.
+  let start = 0;
+  let end = 0;
+  let arr = [] as any[];
+  while (column > 0) {
+    end = start + Math.ceil((list.length - start) / column);
+    arr.push(list.slice(start, end));
+    start = end;
+    column--;
+  }
+  return arr;
 }
 
 function FullyFunctionalPart({
@@ -144,21 +166,51 @@ function FullyFunctionalPart({
 }: {
   backGroundCheck: IBackgroundCheckList[];
 }) {
+  const arr = splitByColumn(
+    backGroundCheck.filter(({ title, content }) => {
+      return title && content !== "";
+    }),
+    3
+  );
+
   return (
-    <ul>
-      {backGroundCheck.map(({ content, title, img }, index) => {
-        if (title && content !== "") {
+    <div className="fully-functional-part">
+      <RenderByCondition
+        ComponentPc={arr.map((backGroundItemList, index) => {
           return (
-            <li className="bg-check" key={index}>
-              {img ? <img src={require(`./res/${img}`)} /> : null}
-              <label>{title}</label>
-              {content ? <span>{content}</span> : null}
-            </li>
+            <ul key={index}>
+              {backGroundItemList.map(({ content, title, img }: any) => {
+                return (
+                  <li className="bg-check" key={title}>
+                    {img ? <img src={require(`./res/${img}`)} /> : null}
+                    <label>{title}</label>
+                    {content ? <span>{content}</span> : null}
+                  </li>
+                );
+              })}
+            </ul>
           );
-        } else {
-          return null;
+        })}
+        ComponentMb={
+          <Carousel className="mb-carousel">
+            {arr.map((backGroundItemList, index) => {
+              return (
+                <ul key={index}>
+                  {backGroundItemList.map(({ content, title, img }: any) => {
+                    return (
+                      <li className="bg-check" key={title}>
+                        {img ? <img src={require(`./res/${img}`)} /> : null}
+                        <label>{title}</label>
+                        {content ? <span>{content}</span> : null}
+                      </li>
+                    );
+                  })}
+                </ul>
+              );
+            })}
+          </Carousel>
         }
-      })}
-    </ul>
+      />
+    </div>
   );
 }

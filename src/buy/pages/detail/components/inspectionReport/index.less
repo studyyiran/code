@@ -2,8 +2,24 @@
 
 @p1: {
   .inspection-report {
-    h2 {
-      
+    > h2:first-child {
+      padding-bottom: 10 * @px;
+      border-bottom: 1px solid @color-gray;
+    }
+    .Inspect-person-info {
+      background: red;
+    }
+    .item-list {
+      margin-left: 50 * @px;
+    }
+  }
+  .phone-background-history {
+    .pc({display: grid; grid-template-columns: repeat(3, 1fr) ;});
+  }
+  .fully-functional-part {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    ul {
     }
   }
 };
