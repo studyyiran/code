@@ -8,10 +8,10 @@ export function ReviewListPart({ reviewList }: { reviewList: IReview[] }) {
     return (
       <div className="review-part-list">
         <header>
-          <h2 className="sub-title">Customer Reviews</h2>
-          <div>
+          <h2 className="sub-title-size">Customer Reviews</h2>
+          <div className="total-rate">
             <Rate disabled={true} defaultValue={5} allowHalf />
-            <span>Baesd on {reviewList.length} reviews</span>
+            <span>Based on {reviewList.length} reviews</span>
           </div>
         </header>
         <Carousel className="mb-carousel">
@@ -32,20 +32,16 @@ export function ReviewListPart({ reviewList }: { reviewList: IReview[] }) {
 function ReviewPart({ item }: { item: IReview }) {
   return (
     <div className="review-part-info">
-      <div className="header">
-        <h2>
-          {item.reviewer.first_name} {item.reviewer.last_name}
-        </h2>
-        <div className="rating">
-          <Rate
-            value={Math.ceil(Number(item.rating))}
-            disabled={true}
-            defaultValue={Math.ceil(Number(item.rating))}
-          />
-        </div>
-      </div>
-      <p className="content">{item.comments}</p>
-      <div className="time">{item.timeago}</div>
+      <Rate
+        value={Math.ceil(Number(item.rating))}
+        disabled={true}
+        defaultValue={Math.ceil(Number(item.rating))}
+      />
+      <h2>
+        {item.reviewer.first_name} {item.reviewer.last_name}
+      </h2>
+      <p>{item.comments}</p>
+      <span>{item.timeago}</span>
     </div>
   );
 }

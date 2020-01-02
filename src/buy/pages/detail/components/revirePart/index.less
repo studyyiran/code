@@ -2,12 +2,49 @@
 
 @p1: {
   .review-part-list {
+    padding-top: 13 * @px;
+    margin-bottom: 50 * @px;
+    .ant-rate {
+      font-size: 17 * @px;
+    }
+    header {
+      padding-bottom: 30 * @px;
+      border-bottom: 1px solid @color-gray;
+
+      .total-rate {
+        margin-top: 22 * @px;
+        > * {
+          vertical-align: bottom;
+        }
+        > span:last-child {
+          margin-left: 5 * @px;
+          display: inline-block;
+          color: rgba(109, 114, 120, 1);
+        }
+      }
+    }
+    .review-part-info {
+      padding-top: 30 * @px;
+      > * {
+        margin-bottom: 15 * @px;
+      }
+      .ant-rate {
+        font-size: 14 * @px;
+      }
+      h2 {
+        font-size: 16 * @f;
+      }
+      p {
+        .pc({font-size: 16 * @f;});
+      }
+      span {
+        color: rgba(68, 75, 84, 1);
+      }
+    }
+    .mb({border-top: 1px solid @color-gray;});
+
     .ant-rate-star-full {
       color: #ffcb3f;
-    }
-    .review-part-carousel {
-      .review-part-info {
-      }
     }
   }
 };
