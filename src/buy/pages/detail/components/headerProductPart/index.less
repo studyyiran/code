@@ -48,13 +48,19 @@
       }
     }
     margin-bottom: 24 * @px;
+    .left {
+      .product-id {
+        color: rgba(55, 90, 125, 1);
+      }
+    }
     .price-part-pc {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      .left {
-      }
+
       .sku-price {
+        font-size: 12 * @f;
+        display: inline-block;
         color: rgba(136, 136, 136, 1);
         > span:last-child {
           margin-left: 10 * @px;
@@ -65,11 +71,12 @@
         .price-and-button {
           margin-bottom: 15 * @px;
           .price {
+            > * {
+              vertical-align: baseline;
+            }
             .act-timer {
               flex: 1;
             }
-            display: flex;
-            align-items: flex-start;
             margin-right: 32 * @px;
             .buy-price {
               margin-right: 20 * @px;
@@ -80,9 +87,6 @@
               }
             }
           }
-        }
-        .common-button {
-          margin-top: 22 * @px;
         }
       }
     }
@@ -113,10 +117,6 @@
         justify-content: space-between;
         align-items: flex-end;
         .price {
-          > * {
-            display: inline;
-            vertical-align: middle;
-          }
           .buy-price {
             .font(18 * @f, @boldWeight, rgba(34, 34, 34, 1));
             margin-right: 8 * @px;
@@ -128,5 +128,3 @@
 };
 
 .hello(@p1);
-
-

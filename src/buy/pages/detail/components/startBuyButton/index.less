@@ -1,0 +1,32 @@
+@import (reference) "~buy/common/styles/index.less";
+
+@p1: {
+  .start-pay-button {
+    .common-button {
+      min-width: 328 * @px;
+    }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14 * @f;
+    .or {
+      font-weight: @boldWeight;
+      .pc({margin: 10 * @px auto;});
+    }
+    .link {
+      font-weight: @boldWeight;
+      color: rgba(26, 180, 231, 1);
+    }
+  }
+  .ismobile {
+    .start-pay-button {
+      .common-button {
+        margin-bottom: 5 *@px;
+      }
+      padding-bottom: 10 *@px;
+    }
+  }
+};
+
+.hello(@p1);

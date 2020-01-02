@@ -11,6 +11,7 @@ import React, { useEffect, useState } from "react";
 import { getDescArr } from "../../util";
 import { StartBuyButton } from "../startBuyButton";
 import { TopIconList } from "../topIconList";
+import "./index.less";
 
 export function HeaderProductPart(props: {
   productDetail: IProductDetail;
@@ -42,7 +43,7 @@ export function HeaderProductPart(props: {
             <div className="price-part-pc">
               <div className="left">
                 <ProductInfo {...productDetail} />
-                <span>Product ID {buyProductCode}</span>
+                <span className="product-id">Product ID {buyProductCode}</span>
               </div>
               <div className="right">
                 <RenderByIsFive
