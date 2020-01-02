@@ -10,6 +10,7 @@ import { dataReport } from "../../../../common/dataReport";
 import React, { useEffect, useState } from "react";
 import { getDescArr } from "../../util";
 import { StartBuyButton } from "../startBuyButton";
+import { TopIconList } from "../topIconList";
 
 export function HeaderProductPart(props: {
   productDetail: IProductDetail;
@@ -36,72 +37,75 @@ export function HeaderProductPart(props: {
       />
       <RenderByCondition
         ComponentPc={
-          <div className="price-part-pc">
-            <div className="left">
-              <ProductInfo {...productDetail} />
-              <span>Product ID {buyProductCode}</span>
-            </div>
-            <div className="right">
-              <RenderByIsFive
-                renderFive={(blackHappyCountDown: any[]) => {
-                  return (
-                    <>
-                      <div className="sku-price">
-                        <label>Retail</label>
-                        <span>{currencyTrans(skuPrice)}</span>
-                      </div>
-                      <div className="price-and-button">
-                        <div className="price">
-                          <span className="buy-price">
-                            <FivePrice price={buyPrice} />
-                            <FiveCalcPrice
-                              buyPrice={buyPrice}
-                              skuPrice={skuPrice}
-                            />
-                          </span>
-                          <FiveCountDown timeArr={blackHappyCountDown} />
+          <>
+            <TopIconList />
+            <div className="price-part-pc">
+              <div className="left">
+                <ProductInfo {...productDetail} />
+                <span>Product ID {buyProductCode}</span>
+              </div>
+              <div className="right">
+                <RenderByIsFive
+                  renderFive={(blackHappyCountDown: any[]) => {
+                    return (
+                      <>
+                        <div className="sku-price">
+                          <label>Retail</label>
+                          <span>{currencyTrans(skuPrice)}</span>
+                        </div>
+                        <div className="price-and-button">
+                          <div className="price">
+                            <span className="buy-price">
+                              <FivePrice price={buyPrice} />
+                              <FiveCalcPrice
+                                buyPrice={buyPrice}
+                                skuPrice={skuPrice}
+                              />
+                            </span>
+                            <FiveCountDown timeArr={blackHappyCountDown} />
+                          </div>
+                        </div>
+                      </>
+                    );
+                  }}
+                  ComponentNormal={
+                    <div className="price-and-button">
+                      <div className="price">
+                        <span className="buy-price">
+                          {currencyTrans(buyPrice)}
+                        </span>
+                        <div className="sku-price">
+                          <label>Retail</label>
+                          <span>{currencyTrans(skuPrice)}</span>
                         </div>
                       </div>
-                    </>
-                  );
-                }}
-                ComponentNormal={
-                  <div className="price-and-button">
-                    <div className="price">
-                      <span className="buy-price">
-                        {currencyTrans(buyPrice)}
-                      </span>
-                      <div className="sku-price">
-                        <label>Retail</label>
-                        <span>{currencyTrans(skuPrice)}</span>
-                      </div>
                     </div>
-                  </div>
-                }
-              />
-              <StartBuyButton
-                onClick={() => {
-                  dataReport({
-                    event: "EEaddToCart",
-                    ecommerce: {
-                      currencyCode: "USD",
-                      add: {
-                        products: [
-                          {
-                            sku: String(skuId),
-                            name: productDisplayName,
-                            price: Number(buyPrice)
-                          }
-                        ]
+                  }
+                />
+                <StartBuyButton
+                  onClick={() => {
+                    dataReport({
+                      event: "EEaddToCart",
+                      ecommerce: {
+                        currencyCode: "USD",
+                        add: {
+                          products: [
+                            {
+                              sku: String(skuId),
+                              name: productDisplayName,
+                              price: Number(buyPrice)
+                            }
+                          ]
+                        }
                       }
-                    }
-                  });
-                  setShowModal(true);
-                }}
-                buyProductStatus={buyProductStatus}
-              />
+                    });
+                    setShowModal(true);
+                  }}
+                  buyProductStatus={buyProductStatus}
+                />
+              </div>
             </div>
-          </div>
+          </>
         }
         ComponentMb={
           <div className="price-part-mb">
@@ -153,6 +157,7 @@ export function HeaderProductPart(props: {
                 </div>
               }
             />
+            <TopIconList />
           </div>
         }
       />
