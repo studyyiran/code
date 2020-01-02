@@ -172,7 +172,7 @@ function FullyFunctionalPart({
     }),
     3
   );
-
+  
   return (
     <div className="fully-functional-part">
       <RenderByCondition
