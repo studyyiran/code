@@ -21,6 +21,7 @@ import { HeaderProductPart } from "./components/headerProductPart";
 import { StartBuyButton } from "./components/startBuyButton";
 import { InspectionReport } from "./components/inspectionReport";
 import { TopSwiper } from "./components/TopSwiper";
+import {MoreInfo} from "./components/moreInfo";
 
 export default function ProductDetail(props: any) {
   const [showModal, setShowModal] = useState(false);
@@ -44,17 +45,12 @@ export default function ProductDetail(props: any) {
     buyProductRemark,
     backGroundCheck,
     productDisplayName,
-    buyPrice,
-    skuPrice,
-    buyProductCode,
     buyProductId,
     buyProductImgPc,
     buyProductImgM,
     buyProductVideo,
     productDescription,
-    buyProductHistoryPdf,
-    buyProductStatus,
-    skuId
+    buyProductStatus
   } = productDetail;
   // 依赖 采用基于依赖的写法,这行代码写在哪里就一点都不重要了.因为页面和刷新只不过是一种依赖条件而已.
   const id = useWhenUrlChange("productId");
@@ -247,31 +243,7 @@ function ReviewPart() {
   );
 }
 
-function MoreInfo(): any {
-  const content = [
-    {
-      icon: "",
-      title: "What UpTrade Certified Means",
-      content:
-        "UpTrade Certified is our guarantee that the device listed for sale is like new in quality, fully functional, and not blacklisted. It starts with an industry leading inspection process. The 50+ point inspection checks for and ensures that every hardware and software feature on the phone works. We then sanitize and clean the phone before it is ready to be shipped to you."
-    },
-    {
-      icon: "",
-      title: "Our Story",
-      content:
-        "Our mission is to make today better so that the world will be brighter tomorrow; to build a company where the life of used electronics is extended through the hands of others or recycled to help reduce carbon footprint. We are committed to providing a fast, easy, safe, and trustworthy service for everyone."
-    }
-  ];
-  return content.map(({ icon, title, content }) => {
-    return (
-      <div key={title}>
-        <img src={icon} />
-        <h3 className="sub-title-size">{title}</h3>
-        <p>{content}</p>
-      </div>
-    );
-  });
-}
+
 
 function LastLineComponent() {
   return (

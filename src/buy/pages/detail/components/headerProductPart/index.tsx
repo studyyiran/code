@@ -161,14 +161,6 @@ export function HeaderProductPart(props: {
 }
 
 function ProductInfo(props: any) {
-  const [currentKey, setCurrentKey] = useState(0);
-  useEffect(() => {
-    if (!isServer()) {
-      window.setTimeout(() => {
-        setCurrentKey(Date.now());
-      });
-    }
-  }, []);
   const { productDisplayName, buyLevel, buyProductBQV } = props;
   const [lineOne, lineTwo] = getDescArr(buyProductBQV, productDisplayName);
   return (
@@ -178,12 +170,6 @@ function ProductInfo(props: any) {
         <span className="attr">{lineTwo ? lineTwo : ""}</span>
         <span className="condition">Condition {buyLevel}</span>
       </div>
-      {/*暂时强制更新 为了解决首次不正常渲染的问题*/}
-      <img
-        key={currentKey}
-        className="check-icon"
-        src={require("./res/uptrade-check.svg")}
-      />
     </section>
   );
 }
