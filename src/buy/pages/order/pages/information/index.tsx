@@ -35,7 +35,7 @@ function UserInformationWrapper(props: any) {
         // 开始验证地址 // 返回promise
         return checkAddress(result).then(() => {
           // 地址通过后,才提交最终的结果
-          orderProcessRecord();
+          orderProcessRecord(undefined, result);
           orderInfoContextDispatch({
             type: orderInfoReducerTypes.setUserInfo,
             value: result

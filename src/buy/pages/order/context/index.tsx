@@ -165,7 +165,10 @@ interface IContextActions {
   checkAddress: (info: any) => any;
   orderIdToCheckOrderInfo: () => any;
   validaddress: (data: any) => any;
-  orderProcessRecord: (payInfo?: IOrderInfoState["payInfo"]) => any;
+  orderProcessRecord: (
+    payInfo?: IOrderInfoState["payInfo"],
+    userInfo?: any
+  ) => any;
   getInfoByOrderDetailId: () => any; // 用于在subOrder中拉取获取手机商品信息
 }
 
@@ -290,10 +293,10 @@ function useGetAction(
       [dispatch, state.subOrders]
     ),
     orderProcessRecord: useCallback(
-      async payInfo => {
+      async (payInfo, userInfo) => {
         orderProcessRecord(
           {
-            userInfo: state.userInfo,
+            userInfo: userInfo,
             payInfo: payInfo,
             invoiceSameAddr: state.invoiceSameAddr,
             shippoRateInfo: {
@@ -316,8 +319,7 @@ function useGetAction(
         state.invoiceInfo,
         state.invoiceSameAddr,
         state.subOrders,
-        state.userExpress,
-        state.userInfo
+        state.userExpress
       ]
     ),
     startOrder: useCallback(
@@ -340,7 +342,7 @@ function useGetAction(
             invoiceInfo: state.invoiceInfo,
             subOrders: state.subOrders
           };
-          actions.orderProcessRecord(payInfo);
+          actions.orderProcessRecord(payInfo, state.userInfo);
           const orderResult = createOrder(obj);
           orderResult
             .then(res => {

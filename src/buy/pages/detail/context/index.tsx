@@ -97,11 +97,13 @@ function useGetAction(
     getProductDetail: useCallback(
       async function(productId) {
         function redirect() {
-          locationHref(getProductListPath());
+          if (window.location.href.indexOf("detail-preview") === -1) {
+            locationHref(getProductListPath());
+          }
         }
         try {
           const res: IProductDetail = await getProductDetail(productId);
-          if (!res && window.location.href.indexOf("detail-preview") === -1) {
+          if (!res) {
             redirect();
           }
           if (res) {

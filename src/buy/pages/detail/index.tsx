@@ -147,51 +147,53 @@ export default function ProductDetail(props: any) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const renderSimilar = () => {
-    return (
-      <section className="similar">
-        <header className="title-with-border">
-          <h2 className="sub-title-size-main">
-            Similar Phones
-          </h2>
-          <a>
-            <span
-              className={"view-all-text"}
-              onClick={viewAllClickHandler.bind({}, productDetail)}
-            >
-              VIEW ALL
-            </span>
-          </a>
-        </header>
-        <RenderByCondition
-          ComponentMb={
-            <Carousel className="mb-carousel" dots={true}>
-              {similiarPhoneList.map((item, index) => {
-                return (
-                  <PhoneProductCard
-                    key={index}
-                    {...item}
-                    history={props.history}
-                  />
-                );
-              })}
-            </Carousel>
-          }
-          ComponentPc={
-            <div className="list">
-              {similiarPhoneList.map((item, index) => {
-                return (
-                  <PhoneProductCard
-                    key={index}
-                    {...item}
-                    history={props.history}
-                  />
-                );
-              })}
-            </div>
-          }
-        />
-      </section>
-    );
+    if (similiarPhoneList && similiarPhoneList.length) {
+      return (
+        <section className="similar">
+          <header className="title-with-border">
+            <h2 className="sub-title-size-main">Similar Phones</h2>
+            <a>
+              <span
+                className={"view-all-text"}
+                onClick={viewAllClickHandler.bind({}, productDetail)}
+              >
+                VIEW ALL
+              </span>
+            </a>
+          </header>
+          <RenderByCondition
+            ComponentMb={
+              <Carousel className="mb-carousel" dots={true}>
+                {similiarPhoneList.map((item, index) => {
+                  return (
+                    <PhoneProductCard
+                      key={index}
+                      {...item}
+                      history={props.history}
+                    />
+                  );
+                })}
+              </Carousel>
+            }
+            ComponentPc={
+              <div className="list">
+                {similiarPhoneList.map((item, index) => {
+                  return (
+                    <PhoneProductCard
+                      key={index}
+                      {...item}
+                      history={props.history}
+                    />
+                  );
+                })}
+              </div>
+            }
+          />
+        </section>
+      );
+    } else {
+      return null;
+    }
   };
 
   function renderMobileStartButton() {
