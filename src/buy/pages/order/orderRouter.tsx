@@ -27,6 +27,11 @@ export default function OrderRouter(props: any) {
   const { subOrders, pendingStatus } = orderInfoContextValue;
   const { path, url } = props.match;
 
+  // 当有值的时候 去拉取值
+  useEffect(() => {
+    getInfoByOrderDetailId();
+  }, [getInfoByOrderDetailId]);
+
   // 没有suborder 出弹框
   useEffect(() => {
     if (
