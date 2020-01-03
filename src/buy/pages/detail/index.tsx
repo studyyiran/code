@@ -147,6 +147,7 @@ export default function ProductDetail(props: any) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const renderSimilar = () => {
+    // 哪怕有ts,也不能相信他一定有值.
     if (similiarPhoneList && similiarPhoneList.length) {
       return (
         <section className="similar">
