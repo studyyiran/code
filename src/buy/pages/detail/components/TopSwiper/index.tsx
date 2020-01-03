@@ -59,7 +59,7 @@ export function TopSwiper(props: any) {
             });
             return (
               <div>
-                {dom.length > 2 ? (
+                {dom.length > 3 ? (
                   <div
                     className="pc-total-count"
                     onClick={onOpenModal}
@@ -89,6 +89,17 @@ export function TopSwiper(props: any) {
                         }}
                       >
                         <TestCarousel
+                          styles={{
+                            footer: (base: any) => {
+                              return {
+                                ...base,
+                                backgroud: "red",
+                                // paddingRight: "100px",
+                                // paddingBottom: '100px',
+                                justifyContent: 'flex-start',
+                              };
+                            }
+                          }}
                           currentIndex={Number(currentImageIndex)}
                           views={buyProductImgPc.map((item: any) => ({
                             src: item

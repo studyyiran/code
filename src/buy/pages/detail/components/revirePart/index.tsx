@@ -11,7 +11,7 @@ export function ReviewListPart({ reviewList }: { reviewList: IReview[] }) {
           <h2 className="sub-title-size">Customer Reviews</h2>
           <div className="total-rate">
             <Rate disabled={true} defaultValue={5} allowHalf />
-            <span>Based on {reviewList.length} reviews</span>
+            <span>based on {reviewList.length} reviews</span>
           </div>
         </header>
         <Carousel className="mb-carousel">

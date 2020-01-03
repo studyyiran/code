@@ -168,7 +168,7 @@ export default function ProductDetail(props: any) {
         </header>
         <RenderByCondition
           ComponentMb={
-            <Carousel className="mb-carousel" dots={false}>
+            <Carousel className="mb-carousel" dots={true}>
               {similiarPhoneList.map((item, index) => {
                 return (
                   <PhoneProductCard
