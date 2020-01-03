@@ -136,12 +136,7 @@ export function OrderInfoContextProvider(props: any) {
   useEffect(() => {
     getExpress();
   }, [getExpress]);
-
-  // 当有值的时候 去拉取值
-  useEffect(() => {
-    getInfoByOrderDetailId();
-  }, [getInfoByOrderDetailId]);
-
+  
   const propsValue: IOrderInfoContext = {
     ...action,
     orderInfoContextValue: state,

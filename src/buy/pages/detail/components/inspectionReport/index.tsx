@@ -62,23 +62,27 @@ function InspectPersonInfo({
   userInfo: IProductDetail["userInfo"];
 }) {
   // 就算有if 有的时候 也不好
-  return (
-    <div className="Inspect-person-info">
-      <div className="first">
-        <img src={userInfo.userImg || require("./res/defaulthead.png")} />
-        <div className="name-part">
-          <h3 className="title-style">Inspected by</h3>
-          <span>{userInfo.userName || `UpTrade`}</span>
+  if (userInfo) {
+    return (
+      <div className="Inspect-person-info">
+        <div className="first">
+          <img src={userInfo.userImg || require("./res/defaulthead.png")} />
+          <div className="name-part">
+            <h3 className="title-style">Inspected by</h3>
+            <span>{userInfo.userName || `UpTrade`}</span>
+          </div>
         </div>
+        {buyProductRemark ? (
+          <div className="second">
+            <h3 className="title-style">Inspection Notes</h3>
+            <p>{buyProductRemark}</p>
+          </div>
+        ) : null}
       </div>
-      {buyProductRemark ? (
-        <div className="second">
-          <h3 className="title-style">Inspection Notes</h3>
-          <p>{buyProductRemark}</p>
-        </div>
-      ) : null}
-    </div>
-  );
+    );
+  } else {
+    return null;
+  }
 }
 
 // function renderReport() {
