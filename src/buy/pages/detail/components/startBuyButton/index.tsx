@@ -18,7 +18,7 @@ export function StartBuyButton(props: {
       </Button>
       <span className="or">OR</span>
       <a className="link" onClick={viewAllClickHandler.bind({}, productDetail)}>
-        Find Similar Phones <Svg icon={"arrow-right"} />
+        Find Similar Phones >
       </a>
     </div>
   );
