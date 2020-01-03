@@ -183,6 +183,18 @@ export default function ProductDetail(props: any) {
   const isPage = useIsCurrentPage("/detail");
 
   useEffect(() => {
+    if (productDetail && productDetail.skuId) {
+      const {
+        brandDisplayName,
+        buyProductBQV,
+        productDisplayName
+      } = productDetail;
+      const [lineOne, lineTwo] = getDescArr(buyProductBQV, productDisplayName);
+      document.title = `Buy ${brandDisplayName} ${lineOne} ${lineTwo} | UpTradeit.com`;
+    }
+  }, [productDetail]);
+
+  useEffect(() => {
     getProductDetail(id);
     getSimiliarPhoneList(id);
     return () => {

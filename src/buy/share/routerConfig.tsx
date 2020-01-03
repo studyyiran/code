@@ -37,7 +37,8 @@ export const routerConfig = [
   {
     path: "/detail/:productId",
     exact: true,
-    title: "Buy Used Phones | Sell My Phone | UpTradeit.com",
+    title: "",
+    // title: "Buy Used Phones | Sell My Phone | UpTradeit.com", // 为了测试ssr准确性
     Component: ProductDetail,
     getInitialProps: detailSsrRule
   },
