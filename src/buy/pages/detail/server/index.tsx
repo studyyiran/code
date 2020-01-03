@@ -71,3 +71,14 @@ export async function getPartsBySkuId(skuId: string) {
   // });
   // return res;
 }
+
+const getReviewScoreUrl = `https://api.reviews.io/merchant/reviews`;
+export async function getReviewScore() {
+  const res = await ajax.get(getReviewScoreUrl, {
+    page: 0,
+    per_page: 100,
+    order: "desc",
+    store: "uptradeit-com"
+  });
+  return res;
+}

@@ -1,15 +1,20 @@
-import React, {
-  createContext,
-  useEffect,
-  useCallback
-} from "react";
+import React, { createContext, useEffect, useCallback } from "react";
 import { IReducerAction } from "buy/common/interface/index.interface";
-import { getProductDetail, getSimiliar, getPartsBySkuId } from "../server";
-import {callBackWhenPassAllFunc, getProductListPath, safeEqual} from "buy/common/utils/util";
+import {
+  getProductDetail,
+  getSimiliar,
+  getPartsBySkuId,
+  getReviewScore
+} from "../server";
+import {
+  callBackWhenPassAllFunc,
+  getProductListPath,
+  safeEqual
+} from "buy/common/utils/util";
 import { useGetOriginData } from "../../../common/useHook/useGetOriginData";
 import { IContextValue } from "../../../common/type";
 import { locationHref } from "../../../common/utils/routerHistory";
-import { IProductDetail } from "./interface";
+import { IProductDetail, IReviews } from "./interface";
 
 export const ProductDetailContext = createContext({});
 export const StoreDetail = "StoreDetail";
@@ -18,6 +23,7 @@ export const StoreDetail = "StoreDetail";
 interface IContextState {
   productDetail: IProductDetail;
   similiarPhoneList: any[];
+  reviewListInfo: IReviews;
   partsInfo: IProductDetail[];
 }
 
@@ -26,6 +32,7 @@ export function ProductDetailContextProvider(props: any) {
   const initState: IContextState = {
     productDetail: {} as any,
     similiarPhoneList: [],
+    reviewListInfo: {} as any,
     partsInfo: []
   };
   const [state, dispatch, useClientRepair] = useGetOriginData(
@@ -34,16 +41,14 @@ export function ProductDetailContextProvider(props: any) {
     StoreDetail
   );
   const action = useGetAction(state, dispatch);
-  
+  const { getPartsBySkuId } = action;
+  const { skuId } = state.productDetail;
   useEffect(() => {
     // 当他有值的时候
-    callBackWhenPassAllFunc(
-      [() => state && state.productDetail && state.productDetail.skuId],
-      () => {
-        action.getPartsBySkuId(state.productDetail.skuId);
-      }
-    );
-  }, [getPartsBySkuId, state.productDetail.skuId]);
+    callBackWhenPassAllFunc([() => skuId], () => {
+      getPartsBySkuId(skuId);
+    });
+  }, [getPartsBySkuId, skuId]);
 
   const propsValue: IProductDetailContext = {
     useClientRepair,
@@ -65,6 +70,7 @@ interface IContextActions {
   getSimiliarPhoneList: (id: string) => any;
   getPartsBySkuId: (id: string) => any;
   resetProductInfo: () => any;
+  getReviewScore: () => any;
 }
 
 // useCreateActions
@@ -73,12 +79,21 @@ function useGetAction(
   dispatch: (action: IReducerAction) => void
 ): IContextActions {
   const actions: IContextActions = {
+    getReviewScore: useCallback(async () => {
+      const res: any = await getReviewScore();
+      if (res) {
+        dispatch({
+          type: storeDetailActionTypes.setReviewListInfo,
+          value: res
+        });
+      }
+    }, [dispatch]),
     resetProductInfo: useCallback(() => {
       dispatch({
         type: storeDetailActionTypes.setProductDetail,
         value: {}
       });
-    }, []),
+    }, [dispatch]),
     getProductDetail: useCallback(
       async function(productId) {
         function redirect() {
@@ -86,7 +101,7 @@ function useGetAction(
         }
         try {
           const res: IProductDetail = await getProductDetail(productId);
-          if (!res) {
+          if (!res && window.location.href.indexOf("detail-preview") === -1) {
             redirect();
           }
           if (res) {
@@ -125,7 +140,7 @@ function useGetAction(
         });
       },
       [dispatch]
-    ),
+    )
   };
   return actions;
 }
@@ -134,7 +149,8 @@ function useGetAction(
 export const storeDetailActionTypes = {
   setProductDetail: "setProductDetail",
   setSimiliarPhoneList: "setSimiliarPhoneList",
-  setPartsInfo: "setPartsInfo"
+  setPartsInfo: "setPartsInfo",
+  setReviewListInfo: "setReviewListInfo"
 };
 
 // reducer
@@ -142,6 +158,13 @@ function reducer(state: IContextState, action: IReducerAction) {
   const { type, value } = action;
   let newState = { ...state };
   switch (type) {
+    case storeDetailActionTypes.setReviewListInfo: {
+      newState = {
+        ...newState,
+        reviewListInfo: value
+      };
+      break;
+    }
     case storeDetailActionTypes.setPartsInfo: {
       newState = {
         ...newState,

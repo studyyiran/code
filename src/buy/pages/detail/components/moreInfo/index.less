@@ -1,0 +1,35 @@
+@import (reference) "~buy/common/styles/index.less";
+
+@p1: {
+  .more-info-container {
+    .mb({border-top: 1px solid @color-border;});
+    padding-top: 44 * @px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 40 * @px;
+    grid-row-gap: 40 * @px;
+    .more-info {
+      img {
+        @size: 138 * @px;
+        width: @size;
+        height: @size;
+        .mb({@size: 93 * @px; width: @size; height: @size;});
+        margin-bottom: 30 * @px;
+        .mb({margin-bottom: 23 * @px;});
+      }
+      .h3 {
+        margin-bottom: 16 * @px;
+      }
+      p {
+        .pc({font-size: 16 * @f;});
+      }
+    }
+  }
+  .ismobile {
+    .more-info-container {
+      grid-template-columns: 1fr;
+    }
+  }
+};
+
+.hello(@p1);

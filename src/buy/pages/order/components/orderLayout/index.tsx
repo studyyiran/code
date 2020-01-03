@@ -7,7 +7,6 @@ import Svg from "../../../../components/svg";
 import { routerConfig } from "../../routerConfig";
 import {
   currencyTrans,
-  getProductListPath,
   isServer,
   scrollTop
 } from "../../../../common/utils/util";
@@ -16,7 +15,6 @@ import ChangeUserInput from "../changeUserInput";
 import useGetTotalPrice from "./useHook";
 import Button from "../../../../components/button";
 import ConfirmOrderLayout from "../orderList/confirmPageUse";
-import { locationHref } from "../../../../common/utils/routerHistory";
 
 function isConfirmPage(props: any) {
   return props.relativePath === "confirmation";

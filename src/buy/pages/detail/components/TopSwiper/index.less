@@ -1,0 +1,77 @@
+@import (reference) "~buy/common/styles/index.less";
+
+
+@p1: {
+  .detail-top-swiper {
+    position: relative;
+    .upup {
+      transition: transform 0.3s;
+      transform: scale(1.01);
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+    .actual-tag {
+      .canclick();
+      z-index: 9998;
+      padding: 11 * @px;
+      color: white;
+      font-size: 16 * @px;
+      font-weight: @normalWeight;
+      .mb({padding: 2 * @px 8 * @px;font-size: 11 * @px;});
+      position: absolute;
+      top: 10 * @px;
+      left: 10 * @px;
+      background: linear-gradient(
+        90deg,
+        rgba(26, 180, 231, 1) 0%,
+        rgba(52, 152, 219, 1) 100%
+      );
+      border-radius: 4px;
+    }
+    @imageWidth: 470 * @px;
+    .setpage(3 * @imageWidth);
+    .swiper-mb {
+      height: 100vw;
+      width: 100vw;
+      .innerdiv {
+        .innerdiv-imgsize(100vw);
+      }
+    }
+    .pc-total-count {
+      position: absolute;
+      bottom: 10 * @px;
+      right: 10 * @px;
+      display: block;
+      .canclick();
+      background: white;
+      padding: 4 * @px 10 * @px;
+    }
+    .swiper-pc {
+      display: flex;
+      justify-content: center;
+      overflow: hidden;
+      //margin-bottom: 40 * @px;
+      //padding: 10 * @px 0;
+      height: @imageWidth;
+      .innerdiv {
+        .upup();
+        .canclick();
+        .innerdiv-imgsize(@imageWidth);
+      }
+    }
+    .ant-carousel .slick-slide {
+      text-align: center;
+      //height: 160px;
+      //line-height: 160px;
+      background: #364d79;
+      overflow: hidden;
+    }
+
+    .ant-carousel .slick-slide h3 {
+      color: #fff;
+    }
+  }
+};
+
+.hello(@p1);

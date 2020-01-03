@@ -2,6 +2,74 @@
 
 @p: {
   .product-detail-page {
+    /*
+    样式覆盖的
+     */
+    .react-images__footer {
+      padding-bottom: 100px !important;
+    }
+
+    /*
+    相对模块性的
+    
+     */
+    .mb-carousel {
+      // 重置
+      & .slick-dots.slick-dots-bottom {
+        bottom: -12 * @px;
+        > li,.slick-active {
+          button {
+            width: 8px !important;
+            height: 8px !important;
+            border-radius: 50% !important;
+          }
+          border-radius: 50% !important;
+          overflow: hidden !important;
+          width: 8px !important;
+          height: 8px !important;
+          display: inline-block;
+          background: rgba(233, 233, 233, 1);
+          margin: 0 4 * @f;
+          > * {
+            width: 100%;
+            height: 100%;
+          }
+        }
+        button {
+          background: rgba(233, 233, 233, 1);
+        }
+        .slick-active {
+          button {
+            background: rgba(26, 180, 231, 1);
+          }
+        }
+      }
+      & .slick-slide {
+        overflow: hidden;
+      }
+
+      & .slick-slide h3 {
+        color: #fff;
+      }
+      .innerdiv {
+        .innerdiv-imgsize(calc(100vw - 2 * 0.53rem));
+      }
+    }
+    .title-with-border {
+      padding-bottom: 20 * @px;
+      border-bottom: 1px solid @color-border;
+    }
+    .sub-title-size-main {
+      white-space: nowrap;
+      .pc({@size: 24 * @f; font-size: @size;});
+      .mb({@size: 20 * @px; font-size: @size;});
+      font-weight: @boldWeight;
+    }
+    .sub-title-size {
+      .font(20 * @f, 500, rgba(0, 0, 0, 1));
+      white-space: nowrap;
+    }
+
     .loading-mask-min-height {
       //min-height: 100vh;
     }
@@ -46,53 +114,10 @@
         .mb({.font(14 * @px, @boldWeight, rgba(0, 0, 0, 1)) ;});
       }
     }
-    @imageWidth: 440 * @px;
-    .swiper {
-      .setpage(3 * @imageWidth);
-      .swiper-mb {
-        height: 100vw;
-        width: 100vw;
-        .innerdiv {
-          .innerdiv-imgsize(100vw);
-        }
-      }
-      .swiper-pc {
-        display: flex;
-        justify-content: center;
-        border-bottom: 1px solid @color-border;
-        margin-bottom: 40 * @px;
-        //padding: 10 * @px 0;
-        height: @imageWidth;
-        .innerdiv {
-          .canclick();
-          .innerdiv-imgsize(@imageWidth);
-        }
-      }
-      // 重置
-      .ant-carousel .slick-dots-bottom {
-        button {
-          background: black;
-        }
-        .slick-active {
-          button {
-            background: gray;
-          }
-        }
-      }
-      .ant-carousel .slick-slide {
-        text-align: center;
-        //height: 160px;
-        //line-height: 160px;
-        background: #364d79;
-        overflow: hidden;
-      }
 
-      .ant-carousel .slick-slide h3 {
-        color: #fff;
-      }
-    }
-    .page {
-      margin-top: 15 * @px;
+    @imageWidth: 470 * @px;
+    .product-detail {
+      //margin-top: 15 * @px;
       .mb({@imageWidth: 100vw;});
       //页面结构
 
@@ -104,97 +129,7 @@
       .common-collapse {
         margin-bottom: 21 * @px;
       }
-      .header-part {
-        .act-origin-price,
-        .act-buy-price {
-          font-size: 18 * @px;
-          .pc({font-size: 24 * @f;});
-        }
 
-        .act-timer {
-          margin-left: 10 * @px;
-          img {
-            width: 46 * @px;
-            .mb({width: 36 * @px;});
-          }
-        }
-        margin-bottom: 24 * @px;
-        .price-part-pc {
-          display: flex;
-          justify-content: space-between;
-          align-items: flex-start;
-          .left {
-          }
-          .sku-price {
-            display: inline-block;
-            color: rgba(136, 136, 136, 1);
-            > span:last-child {
-              margin-left: 10 * @px;
-              text-decoration: line-through;
-            }
-          }
-          .right {
-            .price-and-button {
-              margin-bottom: 15 * @px;
-              .price {
-                > * {
-                  vertical-align: baseline;
-                }
-                .act-timer {
-                  flex: 1;
-                }
-                margin-right: 32 * @px;
-                .buy-price {
-                  margin-right: 20 * @px;
-                  .font(24 * @f, @boldWeight, rgba(34, 34, 34, 1));
-                }
-                .act-timer {
-                  .content {
-                  }
-                }
-              }
-            }
-            .common-button {
-              margin-bottom: 22 * @px;
-              padding: 0 30 *@px;
-            }
-          }
-        }
-        .price-part-mb {
-          .sku-price {
-            .font(12 * @f, @boldWeight, rgba(136, 136, 136, 1));
-            > span:last-child {
-              margin-left: 5 * @px;
-              text-decoration: line-through;
-            }
-          }
-          .product-id {
-            > * {
-              .font(12 * @f, @boldWeight, rgba(136, 136, 136, 1));
-              vertical-align: text-bottom;
-            }
-          }
-          /*移动端*/
-          .price-and-button {
-            .price {
-              display: flex;
-              align-items: flex-start;
-              justify-content: space-between;
-            }
-          }
-          .bottom {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            .price {
-              .buy-price {
-                .font(18 * @f, @boldWeight, rgba(34, 34, 34, 1));
-                margin-right: 8 * @px;
-              }
-            }
-          }
-        }
-      }
       .report {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -241,26 +176,10 @@
         background: @white;
         padding: 10 * @px 10 * @px;
         margin-top: 15 * @px;
-        .common-button {
-          margin-top: 5 * @px;
-          margin-bottom: 15 * @px;
-        }
       }
-      .icons-card {
-        margin-top: 80 * @px;
-        .mb({margin-top: 32 * @px;});
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
-        padding: 37 * @px 25 * @px;
-        .mb({padding: 15 * @px 10 * @px 0;});
-        > li {
-          display: flex;
-          align-items: center;
-        }
-      }
+
       .similar {
-        margin-top: 80 * @px;
+        margin-top: 66 * @px;
         .mb({margin-top: 40 * @px;});
         header {
           display: flex;
@@ -269,7 +188,6 @@
           margin-bottom: 46 * @px;
           .mb({margin-bottom: 40 * @px;});
           > h2 {
-            .font(32 * @px, @boldWeight, rgba(0, 0, 0, 1));
             .mb({font-size: 24 * @px;});
           }
           > span {
@@ -295,139 +213,10 @@
             //min-width: 280 *@px;
           }
         }
-        .mb-carousel {
-          // 重置
-          & .slick-dots-bottom {
-            button {
-              background: black;
-            }
-            .slick-active {
-              button {
-                background: gray;
-              }
-            }
-          }
-          & .slick-slide {
-            overflow: hidden;
-          }
-
-          & .slick-slide h3 {
-            color: #fff;
-          }
-          .innerdiv {
-            .innerdiv-imgsize(calc(100vw - 2 * 0.53rem));
-          }
-        }
 
         .view-all-text {
           color: #2ba8d8;
           font-weight: bolder;
-        }
-      }
-    }
-    // 组件
-    .product-info {
-      position: relative;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      > .info-part {
-        > * {
-          display: block;
-        }
-        > h2 {
-          white-space: nowrap;
-          .font(24 * @f, @boldWeight, rgba(34, 34, 34, 1));
-          .mb({font-size: 18 * @px;});
-        }
-        > .attr {
-          .font(16 * @f, @normalWeight, rgba(34, 34, 34, 1));
-          .mb({font-size: 14 * @px;});
-        }
-        > .condition {
-          .font(16 * @f, @normalWeight, rgba(59, 186, 0, 1));
-          .mb({font-size: 14 * @px;});
-        }
-      }
-      > .check-icon {
-        @iconWidth: 63 * @f;
-        .pc({@iconWidth: 83 * @f;flex: 0 0 @iconWidth; height: @iconWidth;});
-        flex: 0 0 @iconWidth;
-        height: @iconWidth;
-        margin-left: 30 * @px;
-      }
-    }
-    .trade-in {
-      padding: 0 10 * @px;
-      padding-top: 78 * @px;
-      .mb({padding-top: 30 * @px;});
-      .setpage(700 * @px);
-      > h2 {
-        .font(32 * @px, @boldWeight, rgba(0, 0, 0, 1));
-        .mb({font-size: 24 * @px;});
-        margin-bottom: 25 * @px;
-        .mb({margin-bottom: 7 * @px});
-      }
-      > p {
-        .font(18 * @px, @normalWeight, rgba(34, 34, 34, 1));
-        .mb({font-size: 16 * @px;});
-        margin-bottom: 24 * @px;
-      }
-      .title {
-        span {
-          .font(18 * @px, @mediumWeight, rgba(0, 0, 0, 1));
-        }
-      }
-      > .input-container {
-        display: flex;
-        margin-bottom: 56 * @px;
-        .mb({margin-bottom: 16 * @px;});
-        > input {
-          .mb({min-width: 0 * @px;});
-          display: inline-block;
-          height: 56 * @px;
-          padding: 0 10px;
-          min-width: 331 * @px;
-          border: 1px solid @color-border;
-          border-radius: 4px;
-          margin-right: 32 * @px;
-        }
-      }
-      .result-container {
-        display: flex;
-        justify-content: space-between;
-        .mb({flex-direction: column;});
-        .innerdiv {
-          @imgSize: 333 * @px;
-          .innerdiv-imgsize(@imgSize);
-          max-width: 100%;
-        }
-        ul.common-card {
-          flex: 0 0 320 * @px;
-          margin-left: 30 * @px;
-          grid-template-columns: 100%;
-          .mb({flex: 0;});
-          .mb({margin-left: 0;});
-          padding: 45 * @px 16 * @px;
-          .mb({padding: 20 * @px 10 * @px});
-          .set-grid-column(3fr 1fr);
-          > li {
-            font-size: 18 * @px;
-            margin: 0;
-            > span {
-              display: flex;
-              align-items: center;
-            }
-            > span:last-child {
-              justify-content: flex-end;
-            }
-          }
-          > li:nth-child(2) {
-            border-bottom: 1px solid @color-border;
-          }
-          > li:nth-child(3) {
-            .font(20 * @px, @boldWeight, rgba(0, 0, 0, 1));
-          }
         }
       }
     }
@@ -442,6 +231,9 @@
 
   #ismobile {
     .product-detail-page {
+      .phone-product-card {
+        border: none !important;
+      }
       .report {
         > li {
           margin-bottom: 21 * @px;
@@ -449,18 +241,17 @@
 
         grid-template-columns: repeat(1, 1fr);
       }
-      .icons-card {
-        flex-direction: column;
-        > li {
-          flex-direction: column;
-          margin-bottom: 30 * @px;
-        }
-      }
+
       .input-container {
         flex-direction: column;
         > input {
           margin: 0 0 16 * @px;
           height: 36 * @px;
+        }
+      }
+      .similar {
+        .ant-carousel .slick-dots-bottom {
+          bottom: 0;
         }
       }
     }

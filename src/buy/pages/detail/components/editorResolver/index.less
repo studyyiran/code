@@ -2,6 +2,15 @@
 
 @world: {
   .uptrade-editor-resolver-wrapper {
+    .common-grid-3() {
+      .pc(
+      {display: grid; grid-template-columns: repeat(3, 1fr) ;}
+      );
+      // 适当控制间距
+      @media (max-width: 1344px) {
+        grid-column-gap: 20 *@px;
+      }
+    }
     table {
       width: 100% !important;
       height: auto !important;
@@ -9,13 +18,15 @@
       text-align: left !important;
       tr {
         height: auto  !important;
+        .common-grid-3();
       }
       td {
+        width: 100% !important;
         border: none !important;
         vertical-align: top;
         height: auto !important;
-        padding-left: 20*@px;
-        padding-right: 20*@px;
+        //padding-left: 20*@px;
+        //padding-right: 20*@px;
       }
     }
 
@@ -35,7 +46,8 @@
         td {
           border: none !important;
           vertical-align: top;
-          padding-left: 20*@px;
+          //padding-left: 20*@px;
+          margin-left: 3 *@px;
           padding-right: 20*@px;
           padding-bottom: 20*@px;
           width: 100% !important;

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="31px" height="33px" viewBox="0 0 31 33" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 54 (76480) - https://sketchapp.com -->
+    <title>Free Return</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Desktop-/-Product-Detail" transform="translate(-681.000000, -2973.000000)" stroke-width="2">
+            <g id="Group-24" transform="translate(377.000000, 2966.000000)">
+                <g id="Group-25" transform="translate(305.000000, 0.000000)">
+                    <g id="Free-Return" transform="translate(0.000000, 8.500000)">
+                        <circle id="Oval" stroke="#000000" stroke-linecap="square" cx="8" cy="27" r="3"></circle>
+                        <circle id="Oval" stroke="#000000" stroke-linecap="square" cx="25" cy="27" r="3"></circle>
+                        <polyline id="Shape" stroke="#000000" stroke-linecap="square" points="24 5 28 5 26 20 6 20 3 0 0 0"></polyline>
+                        <polyline id="Shape" stroke="#1AB4E7" points="18 14 18 5 9 5"></polyline>
+                        <polyline id="Shape" stroke="#1AB4E7" stroke-linecap="square" points="13 9 9 5 13 1"></polyline>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,61 @@
+@import (reference) "~buy/common/styles/index.less";
+
+@p1: {
+  .review-part-list {
+    padding-top: 40 * @px;
+    margin-bottom: 50 * @px;
+    .ant-rate {
+      font-size: 17 * @f;
+    }
+    header {
+      .sub-title-size-main {
+        margin-right: 35 * @px;
+      }
+      display: flex;
+      align-items: baseline;
+      .mb({flex-direction: column});
+      .total-rate {
+        color: rgba(109, 114, 120, 1);
+        .mb({margin: 12 * @px 0;});
+      }
+      .data-from {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        flex: 1;
+        text-align: right;
+        img {
+          display: inline-block;
+          margin-left: 10 * @px;
+          width: 120 * @px;
+          .mb({width: 85 * @px;});
+        }
+      }
+    }
+    .review-part-info {
+      padding-top: 30 * @px;
+      > * {
+        margin-bottom: 15 * @px;
+      }
+      .ant-rate {
+        font-size: 14 * @f;
+      }
+      h2 {
+        font-size: 16 * @f;
+      }
+      p {
+        .pc({font-size: 16 * @f;});
+      }
+      span {
+        color: rgba(68, 75, 84, 1);
+      }
+    }
+    .mb({border-top: 1px solid @color-border;});
+
+    .ant-rate-star-full {
+      color: #ffcb3f;
+    }
+  }
+};
+
+.hello(@p1);
