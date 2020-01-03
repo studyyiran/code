@@ -59,7 +59,7 @@ export function TopSwiper(props: any) {
             });
             return (
               <div>
-                {dom.length > 3 ? (
+                {buyProductImgPc.length > 3 ? (
                   <div
                     className="pc-total-count"
                     onClick={onOpenModal}
