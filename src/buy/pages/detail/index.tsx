@@ -4,9 +4,7 @@ import { Affix, Carousel } from "antd";
 
 import { IProductDetailContext, ProductDetailContext } from "./context";
 import {
-  getProductListPath,
   safeEqual,
-  urlRmSpaceAndToLower
 } from "../../common/utils/util";
 import { RenderByCondition } from "../../components/RenderByCondition";
 import PhoneProductCard from "../productList/components/phoneProductCard";
@@ -45,17 +43,6 @@ export default function ProductDetail(props: any) {
     partsInfo,
     reviewListInfo
   } = productDetailContextValue;
-  useEffect(() => {
-    if (productDetail && productDetail.skuId) {
-      const {
-        brandDisplayName,
-        buyProductBQV,
-        productDisplayName
-      } = productDetail as IProductDetail;
-      const [lineOne, lineTwo] = getDescArr(buyProductBQV, productDisplayName);
-      document.title = `Buy ${brandDisplayName} ${lineOne} ${lineTwo} | UpTradeit.com`;
-    }
-  }, [productDetail]);
 
   // 执行ssr
   useClientRepair(detailSsrRule);

@@ -14,7 +14,7 @@ import {
 import { useGetOriginData } from "../../../common/useHook/useGetOriginData";
 import { IContextValue } from "../../../common/type";
 import { locationHref } from "../../../common/utils/routerHistory";
-import {IProductDetail, IReviews} from "./interface";
+import { IProductDetail, IReviews } from "./interface";
 
 export const ProductDetailContext = createContext({});
 export const StoreDetail = "StoreDetail";
@@ -101,7 +101,7 @@ function useGetAction(
         }
         try {
           const res: IProductDetail = await getProductDetail(productId);
-          if (!res) {
+          if (!res && window.location.href.indexOf("detail-preview") === -1) {
             redirect();
           }
           if (res) {
