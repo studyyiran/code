@@ -17,11 +17,16 @@
       // 重置
       & .slick-dots.slick-dots-bottom {
         bottom: -12 * @px;
-        > li {
-          border-radius: 50%;
-          overflow: hidden;
-          width: 8 * @f;
-          height: 8 * @f;
+        > li,.slick-active {
+          button {
+            width: 8px !important;
+            height: 8px !important;
+            border-radius: 50% !important;
+          }
+          border-radius: 50% !important;
+          overflow: hidden !important;
+          width: 8px !important;
+          height: 8px !important;
           display: inline-block;
           background: rgba(233, 233, 233, 1);
           margin: 0 4 * @f;
