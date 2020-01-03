@@ -1,8 +1,16 @@
 @import (reference) "~buy/common/styles/index.less";
 
+
 @p1: {
   .detail-top-swiper {
     position: relative;
+    .upup {
+      transition: transform 0.3s;
+      transform: scale(1.01);
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
     .actual-tag {
       .canclick();
       z-index: 9998;
@@ -42,10 +50,12 @@
     .swiper-pc {
       display: flex;
       justify-content: center;
+      overflow: hidden;
       //margin-bottom: 40 * @px;
       //padding: 10 * @px 0;
       height: @imageWidth;
       .innerdiv {
+        .upup();
         .canclick();
         .innerdiv-imgsize(@imageWidth);
       }
