@@ -46,8 +46,9 @@ export function TopSwiper(props: any) {
           ComponentPc={(() => {
             let dom = buyProductImgPc.map((item: string, index: number) => {
               return (
-                <InnerDivImage imgUrl={item} key={index} dataIndex={index} />
-              );
+                <div className="inner-div-container" key={index}>
+                  <InnerDivImage imgUrl={item} dataIndex={index} />
+                </div>);
             });
             if (buyProductVideo) {
               dom.unshift(
@@ -96,7 +97,7 @@ export function TopSwiper(props: any) {
                                 backgroud: "red",
                                 // paddingRight: "100px",
                                 // paddingBottom: '100px',
-                                justifyContent: 'flex-start',
+                                justifyContent: "flex-start"
                               };
                             }
                           }}

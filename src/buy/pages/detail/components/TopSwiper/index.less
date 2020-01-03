@@ -1,6 +1,5 @@
 @import (reference) "~buy/common/styles/index.less";
 
-
 @p1: {
   .detail-top-swiper {
     position: relative;
@@ -50,14 +49,19 @@
     .swiper-pc {
       display: flex;
       justify-content: center;
-      overflow: hidden;
+
       //margin-bottom: 40 * @px;
       //padding: 10 * @px 0;
       height: @imageWidth;
-      .innerdiv {
-        .upup();
-        .canclick();
-        .innerdiv-imgsize(@imageWidth);
+      .inner-div-container {
+        overflow: hidden;
+        width: @imageWidth;
+        height: @imageWidth;
+        .innerdiv {
+          .upup();
+          .canclick();
+          .innerdiv-imgsize(@imageWidth);
+        }
       }
     }
     .ant-carousel .slick-slide {
