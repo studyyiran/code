@@ -21,7 +21,9 @@ export function InspectionReport(props: {
   } = props;
   return (
     <div className="inspection-report">
-      <h2 className="sub-title-size-main title-with-border">Inspection Report</h2>
+      <h2 className="sub-title-size-main title-with-border">
+        Inspection Report
+      </h2>
       <InspectPersonInfo
         buyProductRemark={buyProductRemark}
         userInfo={userInfo}
@@ -59,23 +61,27 @@ function InspectPersonInfo({
   buyProductRemark: any;
   userInfo: IProductDetail["userInfo"];
 }) {
-  return (
-    <div className="Inspect-person-info">
-      <div className="first">
-        <img src={userInfo.userImg || require("./res/defaulthead.png")} />
-        <div className="name-part">
-          <h3 className="title-style">Inspected by</h3>
-          <span>{userInfo.userName}</span>
+  if (userInfo && (userInfo.userImg || userInfo.userName)) {
+    return (
+      <div className="Inspect-person-info">
+        <div className="first">
+          <img src={userInfo.userImg || require("./res/defaulthead.png")} />
+          <div className="name-part">
+            <h3 className="title-style">Inspected by</h3>
+            <span>{userInfo.userName}</span>
+          </div>
         </div>
+        {buyProductRemark ? (
+          <div className="second">
+            <h3 className="title-style">Inspection Notes</h3>
+            <p>{buyProductRemark}</p>
+          </div>
+        ) : null}
       </div>
-      {buyProductRemark ? (
-        <div className="second">
-          <h3 className="title-style">Inspection Notes</h3>
-          <p>{buyProductRemark}</p>
-        </div>
-      ) : null}
-    </div>
-  );
+    );
+  } else {
+    return null;
+  }
 }
 
 // function renderReport() {
