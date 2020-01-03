@@ -22,9 +22,10 @@ import { StartBuyButton } from "./components/startBuyButton";
 import { InspectionReport } from "./components/inspectionReport";
 import { TopSwiper } from "./components/TopSwiper";
 import { MoreInfo } from "./components/moreInfo";
-import { viewAllClickHandler } from "./util";
+import { getDescArr, viewAllClickHandler } from "./util";
 import { ReviewListPart } from "./components/revirePart";
 import { LastLineComponent } from "./components/lastLineComponent";
+import { IProductDetail } from "./context/interface";
 
 export default function ProductDetail(props: any) {
   const [showModal, setShowModal] = useState(false);
@@ -44,6 +45,18 @@ export default function ProductDetail(props: any) {
     partsInfo,
     reviewList
   } = productDetailContextValue;
+  useEffect(() => {
+    if (productDetail && productDetail.skuId) {
+      const {
+        brandDisplayName,
+        buyProductBQV,
+        productDisplayName
+      } = productDetail as IProductDetail;
+      const [lineOne, lineTwo] = getDescArr(buyProductBQV, productDisplayName);
+      document.title = `Buy ${brandDisplayName} ${lineOne} ${lineTwo} | UpTradeit.com`;
+    }
+  }, [productDetail]);
+
   // 执行ssr
   useClientRepair(detailSsrRule);
   const {
