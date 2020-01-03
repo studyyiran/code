@@ -8,7 +8,7 @@ export function ReviewListPart({ reviewList }: { reviewList: IReview[] }) {
     return (
       <div className="review-part-list">
         <header>
-          <h2 className="sub-title-size">Customer Reviews</h2>
+          <h2 className="sub-title-size-main">Customer Reviews</h2>
           <div className="total-rate">
             <Rate disabled={true} defaultValue={5} allowHalf />
             <span>based on {reviewList.length} reviews</span>

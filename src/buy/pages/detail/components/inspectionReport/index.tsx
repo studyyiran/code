@@ -21,7 +21,7 @@ export function InspectionReport(props: {
   } = props;
   return (
     <div className="inspection-report">
-      <h2 className="sub-title-size">Inspection Report</h2>
+      <h2 className="sub-title-size-main">Inspection Report</h2>
       <InspectPersonInfo
         buyProductRemark={buyProductRemark}
         userInfo={userInfo}

@@ -9,19 +9,10 @@
       justify-content: space-between;
       align-items: flex-start;
       > .info-part {
-        .sub-title {
-          .font(24 * @f, @boldWeight, rgba(0, 0, 0, 1));
-        }
         > * {
           display: block;
           margin-bottom: 8 * @px;
           .mb({margin-bottom: 4 * @px;});
-        }
-        > h2 {
-          white-space: nowrap;
-          font-weight: @boldWeight;
-          color: rgba(34, 34, 34, 1);
-          .mb({font-size: 18 * @px;});
         }
         > .attr {
           .mb({margin-top: 9 * @px;});
@@ -96,7 +87,6 @@
             margin-right: 32 * @px;
             .buy-price {
               margin-right: 5 * @px;
-              .font(24 * @f, @boldWeight, rgba(34, 34, 34, 1));
             }
             .act-timer {
               .content {
@@ -124,7 +114,6 @@
       .bottom {
         .price {
           .buy-price {
-            .font(20 * @f, @boldWeight, rgba(34, 34, 34, 1));
             margin-right: 8 * @px;
           }
           .sku-price {

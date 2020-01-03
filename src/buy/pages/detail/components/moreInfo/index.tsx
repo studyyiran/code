@@ -33,7 +33,7 @@ export function MoreInfo(): any {
           <div className="more-info" key={title}>
             {/*暂时强制更新 为了解决首次不正常渲染的问题*/}
             <img src={icon} key={currentKey + icon} />
-            <h3 className="sub-title-size">{title}</h3>
+            <h3 className="sub-title-size-main">{title}</h3>
             <p>{content}</p>
           </div>
         );

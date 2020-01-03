@@ -50,9 +50,15 @@
         .innerdiv-imgsize(calc(100vw - 2 * 0.53rem));
       }
     }
-    .sub-title-size {
-      .pc({@size: 24 * @px; font-size: @size;});
+    .sub-title-size-main {
+      white-space: nowrap;
+      .pc({@size: 24 * @f; font-size: @size;});
       .mb({@size: 20 * @px; font-size: @size;});
+      font-weight: @boldWeight;
+    }
+    .sub-title-size {
+      .font(20 * @f, 500, rgba(0, 0, 0, 1));
+      white-space: nowrap;
     }
 
     .loading-mask-min-height {

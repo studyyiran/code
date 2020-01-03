@@ -56,7 +56,7 @@ export function HeaderProductPart(props: {
                         </div>
                         <div className="price-and-button">
                           <div className="price">
-                            <span className="buy-price">
+                            <span className="buy-price sub-title-size-main">
                               <FivePrice price={buyPrice} />
                               <FiveCalcPrice
                                 buyPrice={buyPrice}
@@ -72,7 +72,7 @@ export function HeaderProductPart(props: {
                   ComponentNormal={
                     <div className="price-and-button">
                       <div className="price">
-                        <span className="buy-price">
+                        <span className="buy-price sub-title-size-main">
                           {currencyTrans(buyPrice)}
                         </span>
                         <div className="sku-price">
@@ -125,7 +125,7 @@ export function HeaderProductPart(props: {
                       </div>
                       <div className="price-and-button">
                         <div className="price">
-                          <span className="buy-price">
+                          <span className="buy-price sub-title-size-main">
                             <FivePrice price={buyPrice} />
                             <FiveCalcPrice
                               buyPrice={buyPrice}
@@ -145,7 +145,7 @@ export function HeaderProductPart(props: {
               ComponentNormal={
                 <div className="bottom">
                   <div className="price">
-                    <span className="buy-price">{currencyTrans(buyPrice)}</span>
+                    <span className="buy-price sub-title-size-main">{currencyTrans(buyPrice)}</span>
                     {skuPrice ? (
                       <div className="sku-price">
                         <label>Retail</label>
@@ -189,7 +189,7 @@ function ProductInfo(props: any) {
   return (
     <section className="product-info">
       <div className="info-part">
-        <h2 className="sub-title">{lineOne ? ` ${lineOne}` : ""}</h2>
+        <h2 className="sub-title-size-main">{lineOne ? ` ${lineOne}` : ""}</h2>
         <span className="attr">{lineTwo ? lineTwo : ""}</span>
         <span className="condition">
           Condition{" "}
