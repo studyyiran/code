@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./index.less";
 import { Affix, Carousel } from "antd";
 
@@ -10,7 +10,6 @@ import { detailSsrRule } from "./ssr";
 
 import { dataReport } from "../../common/dataReport";
 import { useWhenUrlChange } from "../../common/useHook";
-import { constValue } from "../../common/constValue";
 
 import LoadingMask from "../productList/components/loading";
 import { HeaderProductPart } from "./components/headerProductPart";
@@ -21,7 +20,6 @@ import { MoreInfo } from "./components/moreInfo";
 import { getDescArr, viewAllClickHandler } from "./util";
 import { ReviewListPart } from "./components/revirePart";
 import { LastLineComponent } from "./components/lastLineComponent";
-import { IProductDetail } from "./context/interface";
 
 export default function ProductDetail(props: any) {
   const [showModal, setShowModal] = useState(false);
