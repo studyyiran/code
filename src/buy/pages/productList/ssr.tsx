@@ -74,7 +74,7 @@ export const productListSsrRule = async (url: string) => {
   };
   // ssrTitle
   // 当有机型的时候
-  const titleTemplete = `Buy used REPLACE | Uptradeit.com`;
+  const titleTemplete = `Buy Used REPLACE | Uptradeit.com`;
   if (json.productName) {
     if (json.skuAttrNames && json.skuAttrNames[0]) {
       ssrRes.ssrConfig.ssrTitle = titleTemplete.replace(
