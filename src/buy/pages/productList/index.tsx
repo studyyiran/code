@@ -1,8 +1,4 @@
-import React, {
-  useContext,
-  useEffect,
-  useState
-} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./index.less";
 import FilterCardPart from "./components/filterCardPart";
 import {
@@ -70,6 +66,7 @@ export default function ProductList(props: any) {
   // 根据选择设置title
   useEffect(() => {
     let url = props.location.pathname;
+
     const splitResult = url.split(getProductListPath());
     url = splitResult && splitResult[1] ? splitResult[1] : "";
     let paramsArr = url.split(/-|\//);
@@ -124,7 +121,7 @@ export default function ProductList(props: any) {
         );
       }
     }
-    if (document.title !== ssrTitle) {
+    if (ssrTitle && document.title !== ssrTitle) {
       document.title = ssrTitle;
     }
   });
