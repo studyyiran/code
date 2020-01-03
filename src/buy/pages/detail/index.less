@@ -55,6 +55,10 @@
         .innerdiv-imgsize(calc(100vw - 2 * 0.53rem));
       }
     }
+    .title-with-border {
+      padding-bottom: 20 * @px;
+      border-bottom: 1px solid @color-border;
+    }
     .sub-title-size-main {
       white-space: nowrap;
       .pc({@size: 24 * @f; font-size: @size;});
@@ -184,7 +188,6 @@
           margin-bottom: 46 * @px;
           .mb({margin-bottom: 40 * @px;});
           > h2 {
-            .font(32 * @px, @boldWeight, rgba(0, 0, 0, 1));
             .mb({font-size: 24 * @px;});
           }
           > span {

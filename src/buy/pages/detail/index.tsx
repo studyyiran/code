@@ -3,9 +3,7 @@ import "./index.less";
 import { Affix, Carousel } from "antd";
 
 import { IProductDetailContext, ProductDetailContext } from "./context";
-import {
-  safeEqual,
-} from "../../common/utils/util";
+import { safeEqual } from "../../common/utils/util";
 import { RenderByCondition } from "../../components/RenderByCondition";
 import PhoneProductCard from "../productList/components/phoneProductCard";
 import { detailSsrRule } from "./ssr";
@@ -141,8 +139,10 @@ export default function ProductDetail(props: any) {
   const renderSimilar = () => {
     return (
       <section className="similar">
-        <header>
-          <h2>Similar Phones</h2>
+        <header className="title-with-border">
+          <h2 className="sub-title-size-main">
+            Similar Phones
+          </h2>
           <a>
             <span
               className={"view-all-text"}

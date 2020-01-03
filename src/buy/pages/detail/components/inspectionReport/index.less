@@ -2,11 +2,6 @@
 
 @p1: {
   .inspection-report {
-    > h2:first-child {
-      padding-bottom: 20 * @px;
-      border-bottom: 1px solid @color-gray;
-    }
-
     .title-style {
       font-size: 16 * @f;
       margin-top: 4 * @px;
@@ -38,7 +33,7 @@
       }
     }
     .item-list {
-      border-top: 1px solid @color-gray;
+      border-top: 1px solid @color-border;
       padding-top: 15 * @px;
       .pc({margin-left: (@imgSize + 30) * @f;});
       section {
