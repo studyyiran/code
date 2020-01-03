@@ -16,7 +16,9 @@ export function ReviewListPart({
           {/*<Rate disabled={true} defaultValue={5} allowHalf />*/}
           <h2 className="sub-title-size-main">Customer Reviews</h2>
           <span className="total-rate">
-            {reviewListInfo.stats ? reviewListInfo.stats.average_rating : ""}
+            {reviewListInfo.stats
+              ? `${reviewListInfo.stats.average_rating} `
+              : ""}
             Rating based on {reviews.length} reviews
           </span>
           <div className="data-from">

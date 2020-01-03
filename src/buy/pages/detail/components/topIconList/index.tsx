@@ -8,11 +8,11 @@ export function TopIconList() {
       icon: require("./res/1.png")
     },
     {
-      title: "Real Photos",
+      title: "Inspected by UpTrade",
       icon: require("./res/2.png")
     },
     {
-      title: "Real Photos",
+      title: "Fully Functional",
       icon: require("./res/3.png")
     }
   ];

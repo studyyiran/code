@@ -16,6 +16,7 @@
     .mb-carousel {
       // 重置
       & .slick-dots.slick-dots-bottom {
+        bottom: -12 * @px;
         > li {
           border-radius: 50%;
           overflow: hidden;
@@ -24,7 +25,6 @@
           display: inline-block;
           background: rgba(233, 233, 233, 1);
           margin: 0 4 * @f;
-          bottom: -22 * @px;
           > * {
             width: 100%;
             height: 100%;
@@ -223,6 +223,9 @@
 
   #ismobile {
     .product-detail-page {
+      .phone-product-card {
+        border: none !important;
+      }
       .report {
         > li {
           margin-bottom: 21 * @px;
@@ -236,6 +239,11 @@
         > input {
           margin: 0 0 16 * @px;
           height: 36 * @px;
+        }
+      }
+      .similar {
+        .ant-carousel .slick-dots-bottom {
+          bottom: 0;
         }
       }
     }
