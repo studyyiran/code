@@ -107,9 +107,16 @@ ajax.fetch = function(config) {
           if (Number(code) === 200 || success || Number(code) === 0) {
             // 常规接口
             resolve(res.data.data);
-          } else if (res && res.status && res.status === 200 && res.data && !res.data.code) {
+          } else if (
+            res &&
+            res.status &&
+            res.status === 200 &&
+            res.data &&
+            !res.data.code
+          ) {
+            console.log(res.data);
             // 第三方接口(review)
-            resolve(res.data)
+            resolve(res.data);
           } else {
             // 接口业务性报错
             rejectError(config, reject, {

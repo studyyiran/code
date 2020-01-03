@@ -11,7 +11,7 @@ export function ReviewListPart({
   const { reviews } = reviewListInfo;
   if (reviews && reviews.length) {
     return (
-      <div className="review-part-list title-with-border">
+      <div className="review-part-list">
         <header className="title-with-border">
           {/*<Rate disabled={true} defaultValue={5} allowHalf />*/}
           <h2 className="sub-title-size-main">Customer Reviews</h2>
