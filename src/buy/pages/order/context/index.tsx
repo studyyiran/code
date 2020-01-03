@@ -240,74 +240,86 @@ function useGetAction(
       },
       [dispatch, state.orderInfo]
     ),
-    checkAddress: promisify(async function(userInfo: any) {
-      if (state.subOrders.length && userInfo) {
-        // 发起
-        dispatch({
-          type: orderInfoReducerTypes.setPendingStatus,
-          value: true
-        });
-        // 1 发起请求
-        const expressInfo = getExpress({
-          addressInfo: userInfo,
-          productInfos: state.subOrders
-        });
-        // TODO 这行有重复
-        expressInfo.then((res: any) => {
+    checkAddress: useCallback(
+      async function(userInfo: any) {
+        if (state.subOrders.length && userInfo) {
+          // 发起
           dispatch({
-            type: orderInfoReducerTypes.setExpressInfo,
-            value: res
+            type: orderInfoReducerTypes.setPendingStatus,
+            value: true
           });
-        });
-        // 3 处理结果
-        expressInfo
-          .catch(res => {
-            console.log(res);
-            if (res) {
-              const { code, resultMessage } = res;
-              if (String(code) === "10007") {
-              }
-              if (resultMessage) {
-                Message.error(resultMessage);
-              }
-            }
-            return res;
-          })
-          .then(res => {
-            // 结束
+          // 1 发起请求
+          const expressInfo = getExpress({
+            addressInfo: userInfo,
+            productInfos: state.subOrders
+          });
+          // TODO 这行有重复
+          expressInfo.then((res: any) => {
             dispatch({
-              type: orderInfoReducerTypes.setPendingStatus,
-              value: false
+              type: orderInfoReducerTypes.setExpressInfo,
+              value: res
             });
-            return Promise.reject(res);
           });
-        // 2 返回结果给外面
-        return expressInfo;
-      } else {
-        return Promise.reject("param error");
-      }
-    }),
-    orderProcessRecord: useCallback(async payInfo => {
-      orderProcessRecord(
-        {
-          userInfo: state.userInfo,
-          payInfo: payInfo,
-          invoiceSameAddr: state.invoiceSameAddr,
-          shippoRateInfo: {
-            rateId: state.expressInfo.find(item => {
-              return String(item.token) === state.userExpress;
+          // 3 处理结果
+          expressInfo
+            .catch(res => {
+              if (res) {
+                const { code, resultMessage } = res;
+                if (String(code) === "10007") {
+                }
+                if (resultMessage) {
+                  Message.error(resultMessage);
+                }
+              }
+              return res;
             })
-              ? (state.expressInfo.find(item => {
-                  return String(item.token) === state.userExpress;
-                }) as any).rateId
-              : ""
+            .then(res => {
+              // 结束
+              dispatch({
+                type: orderInfoReducerTypes.setPendingStatus,
+                value: false
+              });
+              return Promise.reject(res);
+            });
+          // 2 返回结果给外面
+          return expressInfo;
+        } else {
+          return Promise.reject("param error");
+        }
+      },
+      [dispatch, state.subOrders]
+    ),
+    orderProcessRecord: useCallback(
+      async payInfo => {
+        orderProcessRecord(
+          {
+            userInfo: state.userInfo,
+            payInfo: payInfo,
+            invoiceSameAddr: state.invoiceSameAddr,
+            shippoRateInfo: {
+              rateId: state.expressInfo.find(item => {
+                return String(item.token) === state.userExpress;
+              })
+                ? (state.expressInfo.find(item => {
+                    return String(item.token) === state.userExpress;
+                  }) as any).rateId
+                : ""
+            },
+            invoiceInfo: state.invoiceInfo,
+            subOrders: state.subOrders
           },
-          invoiceInfo: state.invoiceInfo,
-          subOrders: state.subOrders
-        },
-        Boolean(payInfo && payInfo.paypalOrderId)
-      );
-    }, []),
+          Boolean(payInfo && payInfo.paypalOrderId)
+        );
+      },
+      [
+        state.expressInfo,
+        state.invoiceInfo,
+        state.invoiceSameAddr,
+        state.subOrders,
+        state.userExpress,
+        state.userInfo
+      ]
+    ),
     startOrder: useCallback(
       async function(payInfo) {
         // 临时trigger检验变量.这块需要系统封装好.
@@ -388,7 +400,6 @@ function useGetAction(
               });
             })
             .catch(e => {
-              console.log(e);
               if (e && safeEqual(10011, e.code)) {
                 // 报错弹框
                 soldOutTips(productDetail);
