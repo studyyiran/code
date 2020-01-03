@@ -173,15 +173,15 @@ function ProductInfo(props: any) {
   function type2BgColor(type: string) {
     switch (type) {
       case "NEW":
-        return "rgba(109, 210, 48, 1)";
+        return "#43c0e3";
       case "BEST":
         return "rgba(109, 210, 48, 1)";
       case "BETTER":
-        return "rgba(109, 210, 48, 1)";
+        return "#e72349";
       case "GOOD":
-        return "rgba(109, 210, 48, 1)";
+        return "#efc31b";
       case "FAIR":
-        return "rgba(109, 210, 48, 1)";
+        return "#888888";
       default:
         return "rgba(109, 210, 48, 1)";
     }

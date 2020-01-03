@@ -63,7 +63,7 @@ export function TopSwiper(props: any) {
                   <div
                     className="pc-total-count"
                     onClick={onOpenModal}
-                  >{`See More (${dom.length}) `}</div>
+                  >{`See More (${buyProductImgPc.length}) `}</div>
                 ) : null}
                 <div
                   className="swiper-pc"
