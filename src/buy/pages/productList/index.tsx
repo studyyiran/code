@@ -97,7 +97,7 @@ export default function ProductList(props: any) {
     };
     // ssrTitle
     // 当有机型的时候
-    const titleTemplete = `Buy used REPLACE | Uptradeit.com`;
+    const titleTemplete = `Buy Used REPLACE | Uptradeit.com`;
     let ssrTitle = "";
     if (json.productName) {
       if (json.skuAttrNames && json.skuAttrNames[0]) {
@@ -121,6 +121,7 @@ export default function ProductList(props: any) {
         );
       }
     }
+    ssrTitle = ssrTitle || 'Buy Used Phones | UpTradeit.com'
     if (ssrTitle && document.title !== ssrTitle) {
       document.title = ssrTitle;
     }
