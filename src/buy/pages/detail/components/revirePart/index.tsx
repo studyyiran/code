@@ -1,21 +1,31 @@
 import React from "react";
 import "./index.less";
 import { Carousel, Rate } from "antd";
-import { IReview } from "../../context/interface";
+import { IReviews, IReview } from "../../context/interface";
 
-export function ReviewListPart({ reviewList }: { reviewList: IReview[] }) {
-  if (reviewList && reviewList.length) {
+export function ReviewListPart({
+  reviewListInfo
+}: {
+  reviewListInfo: IReviews;
+}) {
+  const { reviews } = reviewListInfo;
+  if (reviews && reviews.length) {
     return (
       <div className="review-part-list">
         <header>
+          {/*<Rate disabled={true} defaultValue={5} allowHalf />*/}
           <h2 className="sub-title-size-main">Customer Reviews</h2>
-          <div className="total-rate">
-            <Rate disabled={true} defaultValue={5} allowHalf />
-            <span>based on {reviewList.length} reviews</span>
+          <span className="total-rate">
+            {reviewListInfo.stats ? reviewListInfo.stats.average_rating : ""}
+            Rating based on {reviews.length} reviews
+          </span>
+          <div className="data-from">
+            <span>Data From</span>
+            <img src={require("images/home/reviews_logo.png")} alt="" />
           </div>
         </header>
         <Carousel className="mb-carousel">
-          {reviewList
+          {reviews
             .sort((a, b) => Number(b.rating) - Number(a.rating))
             .slice(0, 3)
             .map(item => {

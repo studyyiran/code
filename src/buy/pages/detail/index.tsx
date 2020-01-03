@@ -43,7 +43,7 @@ export default function ProductDetail(props: any) {
     productDetail,
     similiarPhoneList,
     partsInfo,
-    reviewList
+    reviewListInfo
   } = productDetailContextValue;
   useEffect(() => {
     if (productDetail && productDetail.skuId) {
@@ -73,7 +73,6 @@ export default function ProductDetail(props: any) {
   } = productDetail;
   // 依赖 采用基于依赖的写法,这行代码写在哪里就一点都不重要了.因为页面和刷新只不过是一种依赖条件而已.
   const id = useWhenUrlChange("productId");
-  console.log(reviewList);
   useEffect(() => {
     if (productDetail && productDetail.skuId) {
       const {
@@ -243,7 +242,7 @@ export default function ProductDetail(props: any) {
             backGroundCheck={backGroundCheck}
           />
           {renderMobileStartButton()}
-          <ReviewListPart reviewList={reviewList} />
+          <ReviewListPart reviewListInfo={reviewListInfo} />
           <MoreInfo />
           {renderSimilar()}
           <LastLineComponent />

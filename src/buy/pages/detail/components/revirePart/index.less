@@ -2,24 +2,34 @@
 
 @p1: {
   .review-part-list {
-    padding-top: 13 * @px;
+    padding-top: 40 * @px;
     margin-bottom: 50 * @px;
     .ant-rate {
       font-size: 17 * @f;
     }
     header {
-      padding-bottom: 30 * @px;
+      padding-bottom: 20 * @px;
       border-bottom: 1px solid @color-gray;
-
+      .sub-title-size-main {
+        margin-right: 35 * @px;
+      }
+      display: flex;
+      align-items: baseline;
+      .mb({flex-direction: column});
       .total-rate {
-        margin-top: 22 * @px;
-        > * {
-          vertical-align: bottom;
-        }
-        > span:last-child {
-          margin-left: 5 * @px;
+        color: rgba(109, 114, 120, 1);
+        .mb({margin: 12 * @px 0;});
+      }
+      .data-from {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        flex: 1;
+        text-align: right;
+        img {
           display: inline-block;
-          color: rgba(109, 114, 120, 1);
+          margin-left: 10 * @px;
+          width: 120 * @px;
         }
       }
     }

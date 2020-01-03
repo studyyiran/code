@@ -3,6 +3,7 @@ import React from "react";
 import "./index.less";
 import { viewAllClickHandler } from "../../util";
 import { IProductDetail } from "../../context/interface";
+import Svg from "../../../../components/svg";
 
 export function StartBuyButton(props: {
   onClick?: any;
@@ -17,7 +18,7 @@ export function StartBuyButton(props: {
       </Button>
       <span className="or">OR</span>
       <a className="link" onClick={viewAllClickHandler.bind({}, productDetail)}>
-        Find Similar Phones
+        Find Similar Phones <Svg icon={"arrow-right"} />
       </a>
     </div>
   );

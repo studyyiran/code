@@ -14,7 +14,7 @@ import {
 import { useGetOriginData } from "../../../common/useHook/useGetOriginData";
 import { IContextValue } from "../../../common/type";
 import { locationHref } from "../../../common/utils/routerHistory";
-import {IProductDetail, IReview} from "./interface";
+import {IProductDetail, IReviews} from "./interface";
 
 export const ProductDetailContext = createContext({});
 export const StoreDetail = "StoreDetail";
@@ -23,7 +23,7 @@ export const StoreDetail = "StoreDetail";
 interface IContextState {
   productDetail: IProductDetail;
   similiarPhoneList: any[];
-  reviewList: IReview[];
+  reviewListInfo: IReviews;
   partsInfo: IProductDetail[];
 }
 
@@ -32,7 +32,7 @@ export function ProductDetailContextProvider(props: any) {
   const initState: IContextState = {
     productDetail: {} as any,
     similiarPhoneList: [],
-    reviewList: [],
+    reviewListInfo: {} as any,
     partsInfo: []
   };
   const [state, dispatch, useClientRepair] = useGetOriginData(
@@ -81,10 +81,10 @@ function useGetAction(
   const actions: IContextActions = {
     getReviewScore: useCallback(async () => {
       const res: any = await getReviewScore();
-      if (res && res.reviews) {
+      if (res) {
         dispatch({
-          type: storeDetailActionTypes.setReviewList,
-          value: res.reviews
+          type: storeDetailActionTypes.setReviewListInfo,
+          value: res
         });
       }
     }, [dispatch]),
@@ -150,7 +150,7 @@ export const storeDetailActionTypes = {
   setProductDetail: "setProductDetail",
   setSimiliarPhoneList: "setSimiliarPhoneList",
   setPartsInfo: "setPartsInfo",
-  setReviewList: "setReviewList"
+  setReviewListInfo: "setReviewListInfo"
 };
 
 // reducer
@@ -158,10 +158,10 @@ function reducer(state: IContextState, action: IReducerAction) {
   const { type, value } = action;
   let newState = { ...state };
   switch (type) {
-    case storeDetailActionTypes.setReviewList: {
+    case storeDetailActionTypes.setReviewListInfo: {
       newState = {
         ...newState,
-        reviewList: value
+        reviewListInfo: value
       };
       break;
     }
