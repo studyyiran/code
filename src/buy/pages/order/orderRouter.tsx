@@ -106,8 +106,7 @@ export default function OrderRouter(props: any) {
       } else {
         locationHref("", "back");
       }
-    }
-  }
+    }}
   return (
     <div id="order-common-less">
       <Switch>

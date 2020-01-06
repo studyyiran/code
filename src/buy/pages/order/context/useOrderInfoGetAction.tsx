@@ -101,6 +101,7 @@ export function useOrderInfoGetAction(
         }
         // checkOrderInfo.orderList.productInfo.buyProductBQV = ;
         // 这些回补是临时修复 为了在最后的页面渲染一些关键信息.
+        // 这块有个bug 是会有多余的缓存在这块出现
         dispatch({
           type: orderInfoReducerTypes.setPayInfo,
           value: {
