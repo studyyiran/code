@@ -1,12 +1,7 @@
-import React, {
-  useCallback,
-  useContext
-} from "react";
+import React, { useCallback, useContext } from "react";
 import { IReducerAction } from "buy/common/interface/index.interface";
 import { orderInfoServer } from "../server";
-import {
-  safeEqual,
-} from "buy/common/utils/util";
+import { safeEqual } from "buy/common/utils/util";
 import { Message } from "../../../components/message";
 import { dataReport } from "../../../common/dataReport";
 import useGetTotalPrice from "../components/orderLayout/useHook";
@@ -18,9 +13,24 @@ import { constProductType } from "../../../common/constValue";
 import { soldOutTips } from "../../detail/components/soldOutTips";
 import {
   IOrderInfoState,
-  orderInfoContextActions,
   orderInfoReducerTypes
 } from "./index";
+
+// @actions
+export interface orderInfoContextActions {
+  getOrderTax: (zipCode?: string) => void; // 可以从外部实时传入zipCode进行运算
+  getExpress: () => void;
+  startOrder: (payInfo: IOrderInfoState["payInfo"]) => any; // 1231 这块我还是先写成调用触发,因为用状态触发有风险
+  zipCodeToAddressInfo: (zipCode: string, form: any) => any;
+  checkAddress: (info: any) => any;
+  orderIdToCheckOrderInfo: () => any;
+  validaddress: (data: any) => any;
+  orderProcessRecord: (
+    payInfo?: IOrderInfoState["payInfo"],
+    userInfo?: any
+  ) => any;
+  getInfoByOrderDetailId: () => any; // 用于在subOrder中拉取获取手机商品信息
+}
 
 // useCreateActions
 export function useOrderInfoGetAction(
@@ -47,7 +57,7 @@ export function useOrderInfoGetAction(
 
   const getExpress = useCallback(
     async function() {
-      if (state.subOrders.length && state.userInfo) {
+      if (state.subOrders.length && state.userInfo && state.userInfo.zipCode) {
         const expressInfo = await orderInfoServer.getExpress({
           addressInfo: state.userInfo,
           productInfos: state.subOrders
@@ -65,7 +75,7 @@ export function useOrderInfoGetAction(
   const validaddress = useCallback(async function(data: any) {
     return orderInfoServer.validaddress(data);
   }, []);
-  
+
   // 在最后一个页面,通过order完成渲染
   const orderIdToCheckOrderInfo = useCallback(
     async function() {
@@ -164,7 +174,7 @@ export function useOrderInfoGetAction(
   );
   const orderProcessRecord = useCallback(
     async (payInfo, userInfo) => {
-      orderProcessRecord(
+      orderInfoServer.orderProcessRecord(
         {
           userInfo: userInfo,
           payInfo: payInfo,

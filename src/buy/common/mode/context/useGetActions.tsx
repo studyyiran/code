@@ -4,8 +4,12 @@ import React, {
 } from "react";
 import { IReducerAction } from "buy/common/interface/index.interface";
 import {storeTestNameServer} from "../server";
-import {IStoreTestNameActions, IStoreTestNameState, storeTestNameReducerTypes} from "./index";
+import {IStoreTestNameState, storeTestNameReducerTypes} from "./index";
 
+// @actions
+export interface IStoreTestNameActions {
+  getTestAjaxValue: () => any;
+}
 
 // useCreateActions
 export function useStoreTestNameGetActions (

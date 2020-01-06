@@ -8,7 +8,7 @@ import {
   saveToCache
 } from "buy/common/utils/util";
 import { IProductDetail } from "../../detail/context/interface";
-import {useOrderInfoGetAction} from "./useOrderInfoGetAction";
+import {orderInfoContextActions, useOrderInfoGetAction} from "./useOrderInfoGetAction";
 
 export const OrderInfoContext = createContext({});
 const storeName = "OrderInfo";
@@ -110,23 +110,6 @@ export interface IOrderInfoContext extends orderInfoContextActions {
   orderInfoContextValue: IOrderInfoState;
   orderInfoContextDispatch: (action: IReducerAction) => void;
 }
-
-// @actions
-export interface orderInfoContextActions {
-  getOrderTax: (zipCode?: string) => void; // 可以从外部实时传入zipCode进行运算
-  getExpress: () => void;
-  startOrder: (payInfo: IOrderInfoState["payInfo"]) => any; // 1231 这块我还是先写成调用触发,因为用状态触发有风险
-  zipCodeToAddressInfo: (zipCode: string, form: any) => any;
-  checkAddress: (info: any) => any;
-  orderIdToCheckOrderInfo: () => any;
-  validaddress: (data: any) => any;
-  orderProcessRecord: (
-    payInfo?: IOrderInfoState["payInfo"],
-    userInfo?: any
-  ) => any;
-  getInfoByOrderDetailId: () => any; // 用于在subOrder中拉取获取手机商品信息
-}
-
 
 // action types
 export const orderInfoReducerTypes = {

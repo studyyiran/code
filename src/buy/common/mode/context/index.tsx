@@ -4,11 +4,11 @@ import React, {
   useEffect
 } from "react";
 import { IReducerAction } from "buy/common/interface/index.interface";
-import { callBackWhenPassAllFunc, promisify } from "buy/common/utils/util";
+import { callBackWhenPassAllFunc } from "buy/common/utils/util";
 import useReducerMiddleware from "../../../common/useHook/useReducerMiddleware";
 import { IContextValue } from "../../type";
 import { useIsCurrentPage } from "../../useHook";
-import {useStoreTestNameGetActions} from "./useGetActions";
+import {IStoreTestNameActions, useStoreTestNameGetActions} from "./useGetActions";
 
 export const StoreTestNameContext = createContext({});
 
@@ -54,10 +54,7 @@ export function StoreTestNameContextProvider(props: any) {
   return <StoreTestNameContext.Provider value={propsValue} {...props} />;
 }
 
-// @actions
-export interface IStoreTestNameActions {
-  getTestAjaxValue: () => any;
-}
+
 
 // action types
 export const storeTestNameReducerTypes = {
