@@ -54,19 +54,8 @@ export default function ProductDetail(props: any) {
     userInfo,
     buyProductStatus
   } = productDetail;
-  // 依赖 采用基于依赖的写法,这行代码写在哪里就一点都不重要了.因为页面和刷新只不过是一种依赖条件而已.
+
   const id = useWhenUrlChange("productId");
-  useEffect(() => {
-    if (productDetail && productDetail.skuId) {
-      const {
-        brandDisplayName,
-        buyProductBQV,
-        productDisplayName
-      } = productDetail;
-      const [lineOne, lineTwo] = getDescArr(buyProductBQV, productDisplayName);
-      document.title = `Buy ${brandDisplayName} ${lineOne} ${lineTwo} | UpTradeit.com`;
-    }
-  }, [productDetail]);
 
   useEffect(() => {
     if (productDetail && productDetail.skuId) {
@@ -80,6 +69,7 @@ export default function ProductDetail(props: any) {
     }
   }, [productDetail]);
 
+  // url -> id -> getDetail
   useEffect(() => {
     getProductDetail(id);
     getSimiliarPhoneList(id);
@@ -88,6 +78,7 @@ export default function ProductDetail(props: any) {
     };
   }, [getProductDetail, getSimiliarPhoneList, id, resetProductInfo]);
 
+  // -> review
   useEffect(() => {
     getReviewScore();
   }, [getReviewScore]);

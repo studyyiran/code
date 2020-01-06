@@ -14,20 +14,14 @@ import { LoginWrapper } from "../../../../common-modules/components/loginButton"
 
 export default function Confirmation(props: any) {
   const orderInfoContext = useContext(OrderInfoContext);
-  const { orderInfoContextValue } = orderInfoContext as IOrderInfoContext;
+  const { orderInfoContextValue, orderIdToCheckOrderInfo } = orderInfoContext as IOrderInfoContext;
   const { orderInfo, checkOrderInfo } = orderInfoContextValue;
-  const [orderNo, setOrderNo] = useState("");
   const handler = useResetProductList();
+  
+  // 根据order进行信息拉取
   useEffect(() => {
-    if (
-      props &&
-      props.match &&
-      props.match.params &&
-      props.match.params.orderNo
-    ) {
-      setOrderNo(props.match.params.orderNo);
-    }
-  }, [props.match]);
+    orderIdToCheckOrderInfo();
+  }, [orderIdToCheckOrderInfo]);
   function PostDataImg() {
     if (checkOrderInfo) {
       const { groupOrderNo, total } = checkOrderInfo as any;
