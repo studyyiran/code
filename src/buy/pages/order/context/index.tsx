@@ -1,7 +1,6 @@
 import React, {
   createContext,
   useReducer,
-  useEffect,
 } from "react";
 import { IReducerAction } from "buy/common/interface/index.interface";
 import {
@@ -97,19 +96,6 @@ export function OrderInfoContextProvider(props: any) {
     ...getFromCacheStore(storeName)
   });
   const action: orderInfoContextActions = useOrderInfoGetAction(state, dispatch);
-  const { orderIdToCheckOrderInfo, getOrderTax, getExpress } = action;
-  // 获取
-  useEffect(() => {
-    orderIdToCheckOrderInfo();
-  }, [orderIdToCheckOrderInfo]);
-
-  useEffect(() => {
-    getOrderTax();
-  }, [getOrderTax]);
-
-  useEffect(() => {
-    getExpress();
-  }, [getExpress]);
 
   const propsValue: IOrderInfoContext = {
     ...action,

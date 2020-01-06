@@ -35,6 +35,7 @@ export function useOrderInfoGetAction(
   const { productDetail, partsInfo } = productDetailContextValue;
   // 数据上报计算
   const { calcTotalPrice, getShippingPrice } = useGetTotalPrice(state);
+  // subOrders -> productId -> getProductDetail -> parts
   const getInfoByOrderDetailId = useCallback(() => {
     const target = state.subOrders.find(item => {
       return item && item.productType === constProductType.PRODUCT;
@@ -64,6 +65,8 @@ export function useOrderInfoGetAction(
   const validaddress = useCallback(async function(data: any) {
     return orderInfoServer.validaddress(data);
   }, []);
+  
+  // 在最后一个页面,通过order完成渲染
   const orderIdToCheckOrderInfo = useCallback(
     async function() {
       if (state.orderInfo) {
