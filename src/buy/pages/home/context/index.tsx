@@ -1,7 +1,5 @@
 import React, {
   createContext,
-  useReducer,
-  useEffect,
   useCallback,
   useRef
 } from "react";
@@ -12,7 +10,7 @@ import {
   getSellProductList,
   getBuyBrand
 } from "../server";
-import { callBackWhenPassAllFunc, promisify } from "buy/common/utils/util";
+import { promisify } from "buy/common/utils/util";
 import { IContextValue } from "../../../common/type";
 import useReducerMiddleware from "../../../common/useHook/useReducerMiddleware";
 import { useGetOriginData } from "../../../common/useHook/useGetOriginData";
@@ -48,38 +46,6 @@ export function OurHomeContextProvider(props: any) {
     OurHomeStoreName
   );
   const action: IOurHomeActions = useGetAction(state, dispatch);
-  // 监听变化
-  useEffect(() => {
-    callBackWhenPassAllFunc(
-      [() => !state.sellListTitle || !state.sellListTitle.length],
-      () => {
-        action.getSellTitleList().then((res: any) => {
-          if (res && res[0] && res[0].seqNo && res[0].brandId) {
-            action.getSellProductList({
-              seq: res[0].seqNo,
-              brandId: res[0].brandId
-            });
-          }
-        });
-      }
-    );
-  }, []);
-
-  useEffect(() => {
-    callBackWhenPassAllFunc(
-      [() => !state.buyListTitle || !state.buyListTitle.length],
-      () => {
-        action.getBuyTitleList().then((res: any) => {
-          if (res && res[0] && res[0].seqNo && res[0].brandId) {
-            action.getBuyProductList({
-              seq: res[0].seqNo,
-              brandId: res[0].brandId
-            });
-          }
-        });
-      }
-    );
-  }, []);
 
   const propsValue: IOurHomeContext = {
     useClientRepair,
