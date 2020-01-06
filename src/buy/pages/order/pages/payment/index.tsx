@@ -9,10 +9,7 @@ import {
 } from "../../context";
 import useGetTotalPrice from "../../components/orderLayout/useHook";
 import { constValue } from "../../../../common/constValue";
-import {
-  afterMinTimeCall,
-  isServer
-} from "../../../../common/utils/util";
+import { debounce, isServer } from "../../../../common/utils/util";
 import { locationHref } from "../../../../common/utils/routerHistory";
 import LoadingMask from "../../../productList/components/loading";
 import { Message } from "../../../../components/message";
@@ -424,7 +421,7 @@ function PaymentInner(props: any) {
                   });
                 }
                 // 验证
-                afterMinTimeCall(findTarget.time, checkFunc);
+                debounce(checkFunc, findTarget.time);
               }
               orderInfoContextDispatch({
                 type: orderInfoReducerTypes.setInvoiceInfo,
