@@ -36,10 +36,8 @@ export function StoreTestNameContextProvider(props: any) {
     dispatch
   );
 
-  // @useEffect
-  const { getTestAjaxValue } = action;
-
   // global useEffect
+  const { getTestAjaxValue } = action;
   useEffect(() => {
     getTestAjaxValue();
   }, [getTestAjaxValue]);

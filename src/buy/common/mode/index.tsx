@@ -11,7 +11,7 @@ export function Name() {
   } = storeTestNameContext as IStoreTestNameContext;
   // 从context中获取值
   const { testValue } = storeTestNameContextValue;
-  // 发起请求
+  // local发起请求
   useEffect(() => {
     getTestAjaxValue();
   }, [getTestAjaxValue]);
