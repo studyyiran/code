@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { currencyTrans, getUrlAllParams } from "../../../../common/utils/util";
 import { payProtectionServer } from "../../server";
 import { locationHref } from "../../../../common/utils/routerHistory";
@@ -43,8 +43,8 @@ export function ProtectionPage(props: { render: (payInfo: any) => {} }) {
   const urlParams = getUrlAllParams();
   console.log(urlParams);
   const { token } = urlParams || ({} as any);
-  // 在拉取数据,完成渲染
-  useEffect(() => {
+
+  const loop = useCallback(() => {
     if (token) {
       payProtectionServer
         .tokenToUrl({ token })
@@ -59,6 +59,16 @@ export function ProtectionPage(props: { render: (payInfo: any) => {} }) {
         });
     }
   }, [token]);
+
+  // 在拉取数据,完成渲染
+  useEffect(() => {
+    const ref = window.setInterval(() => {
+      loop();
+    }, 1000);
+    return () => {
+      window.clearInterval(ref);
+    };
+  }, [loop]);
 
   const payInfo = useMemo(() => {
     if (orderInfo && orderInfo.groupOrderNo) {
@@ -137,7 +147,9 @@ function RenderOrderInfo(props: { orderInfo: IBuyOrderInfo }) {
         </ul>
         <div className="protection-price">
           <span>Protection</span>
-          <span>{currencyTrans(caclTotalProtection(orderInfo.subOrders))} / mo</span>
+          <span>
+            {currencyTrans(caclTotalProtection(orderInfo.subOrders))} / mo
+          </span>
         </div>
       </div>
     );
