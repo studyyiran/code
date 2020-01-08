@@ -11,4 +11,5 @@ export interface IProtectionOrder {
 
 export interface IProtectionSubscribe extends IProtectionOrder {
   planId: string;
+  subscribeId: string;
 }

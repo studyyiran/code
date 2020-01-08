@@ -12,11 +12,12 @@ export function PaySubscribePage() {
   const { planid: planId, token } = urlParams || ({} as any);
 
   // 支付成功回调
-  function finishPayHandler(id: any) {
-    console.log(id);
+  function finishPayHandler(data: any) {
+    const { orderID, subscriptionID } = data;
     payProtectionServer
       .orderPaySubscribe({
-        paypalOrderId: id,
+        paypalOrderId: orderID,
+        subscribeId: subscriptionID,
         token,
         planId
       })

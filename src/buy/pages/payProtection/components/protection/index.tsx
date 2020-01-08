@@ -49,7 +49,7 @@ export function ProtectionPage(props: { render: (payInfo: any) => {} }) {
       payProtectionServer
         .tokenToUrl({ token })
         .then(res => {
-          if (res && !orderInfo) {
+          if (res && !Object.keys(orderInfo).length) {
             setOrderInfo(res);
           }
         })
@@ -58,7 +58,7 @@ export function ProtectionPage(props: { render: (payInfo: any) => {} }) {
           // 如果没有 就应该跳出?
         });
     }
-  }, [token]);
+  }, [orderInfo, token]);
 
   // 在拉取数据,完成渲染
   useEffect(() => {
