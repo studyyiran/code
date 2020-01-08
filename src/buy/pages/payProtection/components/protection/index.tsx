@@ -49,7 +49,7 @@ export function ProtectionPage(props: { render: (payInfo: any) => {} }) {
       payProtectionServer
         .tokenToUrl({ token })
         .then(res => {
-          if (res) {
+          if (res && !orderInfo) {
             setOrderInfo(res);
           }
         })
