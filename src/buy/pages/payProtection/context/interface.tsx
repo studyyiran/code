@@ -1,10 +1,14 @@
 export interface IPostData {
-  groupOrderNo?: string,
-  userEmail?: string,
-  token: string,
+  groupOrderNo?: string;
+  userEmail?: string;
+  token: string;
 }
 
 export interface IProtectionOrder {
-  paypalOrderId: string,
-  token: string,
+  paypalOrderId: string;
+  token: string;
+}
+
+export interface IProtectionSubscribe extends IProtectionOrder {
+  planId: string;
 }
