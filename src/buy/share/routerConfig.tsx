@@ -120,6 +120,12 @@ export const routerConfig = [
     title: "Protection payment  | UpTradeit.com",
     exact: true,
     Component: PayProtectionPage
+  },
+  {
+    path: "/protectionsubscribe/payment",
+    title: "Protection subscribe  | UpTradeit.com",
+    exact: true,
+    Component: PayProtectionPage
   }
   // {
   //   title: "404 | UpTradeit.com",

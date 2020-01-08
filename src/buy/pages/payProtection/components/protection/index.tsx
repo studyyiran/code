@@ -1,11 +1,10 @@
-import React, { useContext, useEffect, useMemo, useState } from "react";
-import "./index.less";
-import { currencyTrans, getUrlAllParams } from "../../common/utils/util";
-import { payProtectionServer } from "./server";
-import { PayPaylButton } from "./components/paypalButton";
-import { InnerDivImage } from "../detail/components/innerDivImage";
-import { locationHref } from "../../common/utils/routerHistory";
-import { Message } from "../../components/message";
+import React, {useEffect, useMemo, useState} from "react";
+import {currencyTrans, getUrlAllParams} from "../../../../common/utils/util";
+import {payProtectionServer} from "../../server";
+import {locationHref} from "../../../../common/utils/routerHistory";
+import {Message} from "../../../../components/message";
+import {PayPaylButton} from "../paypalButton";
+import {InnerDivImage} from "../../../detail/components/innerDivImage";
 
 interface IBuyOrderInfo {
   autoConfirmDeadLine: string;
