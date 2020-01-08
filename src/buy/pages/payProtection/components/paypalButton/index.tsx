@@ -172,17 +172,9 @@ export function PayPaylButton(props: IPayPalButton) {
         },
         onApprove: function(data: any, actions: any) {
           // This function captures the funds from the transaction.
-          return actions.order.capture().then(async function(details: any) {
-            // This function shows a transaction success message to your buyer.
-            // startLoading
-            try {
-              // 开启全屏loading
-              finishPayCallBack && finishPayCallBack(details.id);
-            } catch (e) {
-              console.error(e);
-            }
-            setShowLoadingMask(false);
-          });
+          const {orderID, subscriptionID} = data
+          finishPayCallBack && finishPayCallBack(subscriptionID);
+          setShowLoadingMask(false);
         }
       };
       const payConfig = planId ? config2 : config1;
