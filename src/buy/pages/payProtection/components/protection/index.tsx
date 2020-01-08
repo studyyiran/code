@@ -5,6 +5,7 @@ import { locationHref } from "../../../../common/utils/routerHistory";
 import { Message } from "../../../../components/message";
 import { PayPaylButton } from "../paypalButton";
 import { InnerDivImage } from "../../../detail/components/innerDivImage";
+import "./index.less";
 
 export interface IBuyOrderInfo {
   autoConfirmDeadLine: string;
