@@ -137,7 +137,7 @@ function RenderOrderInfo(props: { orderInfo: IBuyOrderInfo }) {
         </ul>
         <div className="protection-price">
           <span>Protection</span>
-          <span>{currencyTrans(caclTotalProtection(orderInfo.subOrders))}</span>
+          <span>{currencyTrans(caclTotalProtection(orderInfo.subOrders))} / mo</span>
         </div>
       </div>
     );
