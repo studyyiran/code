@@ -30,6 +30,7 @@ export function PaySubscribePage() {
   const paypalDomId = "paypal-button-protection";
   return (
     <ProtectionPage
+      type="Subscribe"
       render={(payInfo: any) => {
         return (
           <PayPaylButton
@@ -66,6 +67,7 @@ export function PayProtectionPage() {
   const paypalDomId = "paypal-button-protection";
   return (
     <ProtectionPage
+      type=""
       render={(payInfo: any) => {
         return (
           <PayPaylButton

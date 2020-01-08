@@ -37,7 +37,10 @@ export interface IBuyOrderInfo {
 {
 }
 
-export function ProtectionPage(props: { render: (payInfo: any) => {} }) {
+export function ProtectionPage(props: {
+  render: (payInfo: any) => {};
+  type: string;
+}) {
   const [orderInfo, setOrderInfo] = useState({} as IBuyOrderInfo);
   // 获取url参数
   const urlParams = getUrlAllParams();
@@ -101,13 +104,13 @@ export function ProtectionPage(props: { render: (payInfo: any) => {} }) {
   const paypalDomId = "paypal-button-protection";
   return (
     <div className="pay-protection-page">
-      <RenderOrderInfo orderInfo={orderInfo as any} />
+      <RenderOrderInfo orderInfo={orderInfo as any} type={props.type} />
       {props.render(payInfo)}
     </div>
   );
 }
 
-function RenderOrderInfo(props: { orderInfo: IBuyOrderInfo }) {
+function RenderOrderInfo(props: { orderInfo: IBuyOrderInfo; type: string }) {
   const { orderInfo } = props;
   console.log(orderInfo);
 
@@ -147,9 +150,13 @@ function RenderOrderInfo(props: { orderInfo: IBuyOrderInfo }) {
         </ul>
         <div className="protection-price">
           <span>Protection</span>
-          <span>
-            {currencyTrans(caclTotalProtection(orderInfo.subOrders))} / mo
-          </span>
+          {props.type ? (
+            <span>$5 / mo</span>
+          ) : (
+            <span>
+              {currencyTrans(caclTotalProtection(orderInfo.subOrders))}
+            </span>
+          )}
         </div>
       </div>
     );
