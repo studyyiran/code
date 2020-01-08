@@ -9,7 +9,7 @@ import { ProtectionPage } from "./components/protection";
 export function PaySubscribePage() {
   const urlParams = getUrlAllParams();
   console.log(urlParams);
-  const { planId, token } = urlParams || ({} as any);
+  const { planid: planId, token } = urlParams || ({} as any);
 
   // 支付成功回调
   function finishPayHandler(id: any) {
