@@ -35,6 +35,7 @@ export function PaySubscribePage() {
             id={paypalDomId}
             finishPayCallBack={finishPayHandler}
             {...payInfo}
+            planId={planId}
           />
         );
       }}

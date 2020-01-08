@@ -1,12 +1,12 @@
-import React, {useEffect, useMemo, useState} from "react";
-import {currencyTrans, getUrlAllParams} from "../../../../common/utils/util";
-import {payProtectionServer} from "../../server";
-import {locationHref} from "../../../../common/utils/routerHistory";
-import {Message} from "../../../../components/message";
-import {PayPaylButton} from "../paypalButton";
-import {InnerDivImage} from "../../../detail/components/innerDivImage";
+import React, { useEffect, useMemo, useState } from "react";
+import { currencyTrans, getUrlAllParams } from "../../../../common/utils/util";
+import { payProtectionServer } from "../../server";
+import { locationHref } from "../../../../common/utils/routerHistory";
+import { Message } from "../../../../components/message";
+import { PayPaylButton } from "../paypalButton";
+import { InnerDivImage } from "../../../detail/components/innerDivImage";
 
-interface IBuyOrderInfo {
+export interface IBuyOrderInfo {
   autoConfirmDeadLine: string;
   groupOrderNo: string;
   orderCreateDate: string;
@@ -36,7 +36,7 @@ interface IBuyOrderInfo {
 {
 }
 
-export default function PayProtectionPage() {
+export function ProtectionPage(props: { render: (payInfo: any) => {} }) {
   const [orderInfo, setOrderInfo] = useState({} as IBuyOrderInfo);
   // 获取url参数
   const urlParams = getUrlAllParams();
@@ -91,11 +91,7 @@ export default function PayProtectionPage() {
   return (
     <div className="pay-protection-page">
       <RenderOrderInfo orderInfo={orderInfo as any} />
-      <PayPaylButton
-        id={paypalDomId}
-        finishPayCallBack={finishPayHandler}
-        {...payInfo}
-      />
+      {props.render(payInfo)}
     </div>
   );
 }
