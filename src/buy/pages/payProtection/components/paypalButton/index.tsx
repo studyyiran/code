@@ -172,8 +172,7 @@ export function PayPaylButton(props: IPayPalButton) {
         },
         onApprove: function(data: any, actions: any) {
           // This function captures the funds from the transaction.
-          const {orderID, subscriptionID} = data
-          finishPayCallBack && finishPayCallBack(subscriptionID);
+          finishPayCallBack && finishPayCallBack(data);
           setShowLoadingMask(false);
         }
       };
@@ -183,7 +182,7 @@ export function PayPaylButton(props: IPayPalButton) {
     },
     [finishPayCallBack, id, planId]
   );
-  
+
   useEffect(() => {
     // 只有有价格才是有效的
     if (!isServer()) {

@@ -12,11 +12,12 @@ export function PaySubscribePage() {
   const { planid: planId, token } = urlParams || ({} as any);
 
   // 支付成功回调
-  function finishPayHandler(id: any) {
-    console.log(id);
+  function finishPayHandler(data: any) {
+    const { orderID, subscriptionID } = data;
     payProtectionServer
       .orderPaySubscribe({
-        paypalOrderId: id,
+        paypalOrderId: orderID,
+        subscribeId: subscriptionID,
         token,
         planId
       })
@@ -29,6 +30,7 @@ export function PaySubscribePage() {
   const paypalDomId = "paypal-button-protection";
   return (
     <ProtectionPage
+      type="Subscribe"
       render={(payInfo: any) => {
         return (
           <PayPaylButton
@@ -65,6 +67,7 @@ export function PayProtectionPage() {
   const paypalDomId = "paypal-button-protection";
   return (
     <ProtectionPage
+      type=""
       render={(payInfo: any) => {
         return (
           <PayPaylButton
