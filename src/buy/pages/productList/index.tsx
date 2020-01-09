@@ -121,7 +121,7 @@ export default function ProductList(props: any) {
         );
       }
     }
-    ssrTitle = ssrTitle || 'Buy Used Phones | UpTradeit.com'
+    ssrTitle = ssrTitle || "Buy Used Phones | UpTradeit.com";
     if (ssrTitle && document.title !== ssrTitle) {
       document.title = ssrTitle;
     }

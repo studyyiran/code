@@ -75,9 +75,10 @@ export function currencyTrans(value: any, whenFree?: any) {
     if (!isServer()) {
       return fixValue ? constValue.priceUnit + transNumber(fixValue) : fixValue;
     } else {
-      return fixValue ? constValue.priceUnit + ' ' + transNumber(fixValue) : fixValue;
+      return fixValue
+        ? constValue.priceUnit + " " + transNumber(fixValue)
+        : fixValue;
     }
-    
   }
 }
 
@@ -154,19 +155,6 @@ export function promisify(func: any) {
 
 export function scrollTop() {
   window.scrollTo(0, 0);
-}
-
-export function debounce(callback: any, timer: any) {
-  let currentId: number;
-  const newFunc = (...arg: any[]) => {
-    if (currentId) {
-      window.clearInterval(currentId);
-    }
-    currentId = window.setTimeout(() => {
-      callback(...arg);
-    }, timer);
-  };
-  return newFunc;
 }
 
 export function getProductListPath() {
@@ -280,13 +268,21 @@ export function actionsWithCatchAndLoading({
   return res;
 }
 
-let lastTimeRef = 0;
-export function afterMinTimeCall(time: number, callback: any) {
+export function debounce(callback: any, timer: any) {
+  let currentId: number;
   if (!isServer()) {
-    //  如果有time直接清空
-    if (lastTimeRef) {
-      window.clearTimeout(lastTimeRef);
-    }
-    lastTimeRef = window.setTimeout(callback, time);
+    const newFunc = (...arg: any[]) => {
+      console.log('+++++++')
+      if (currentId) {
+        window.clearInterval(currentId);
+      }
+      currentId = window.setTimeout(() => {
+        console.log('!!!!!!')
+        callback(...arg);
+      }, timer);
+    };
+    return newFunc;
+  } else {
+    return callback;
   }
 }

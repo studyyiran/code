@@ -33,15 +33,15 @@ export function LastLineComponent() {
       <RenderByCondition
         ComponentPc={
           <div className="when-pc">
-            {arr.map((item: any) => {
-              return <Haha {...item} />;
+            {arr.map((item: any, index: number) => {
+              return <Haha key={index} {...item} />;
             })}
           </div>
         }
         ComponentMb={
           <Carousel className="mb-carousel">
-            {arr.map((item: any) => {
-              return <Haha {...item} />;
+            {arr.map((item: any, index: number) => {
+              return <Haha key={index} {...item} />;
             })}
           </Carousel>
         }

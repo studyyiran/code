@@ -43,6 +43,10 @@ export function ProductDetailContextProvider(props: any) {
   const action = useGetAction(state, dispatch);
   const { getPartsBySkuId } = action;
   const { skuId } = state.productDetail;
+
+  // 在detail页面的时候需要拉取配件信息
+  // 在后续order过程中.需要拉取配件信息
+  // productDetail -> skuId -> getPartsBySkuId
   useEffect(() => {
     // 当他有值的时候
     callBackWhenPassAllFunc([() => skuId], () => {

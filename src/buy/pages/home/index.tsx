@@ -8,8 +8,12 @@ import SearchProduct from "../../components/SearchProduct";
 import { locationHref } from "../../common/utils/routerHistory";
 import RouterLink from "../../common-modules/components/routerLink";
 import { brands, buyCardInfo, sellCardInfo } from "./components/constant";
-import { getProductListPath, sellPageGoTo } from "../../common/utils/util";
-import { useContext } from "react";
+import {
+  callBackWhenPassAllFunc,
+  getProductListPath,
+  sellPageGoTo
+} from "../../common/utils/util";
+import { useContext, useEffect } from "react";
 import { IOurHomeContext, OurHomeContext } from "./context";
 import { ourHomeSsrRule } from "./ssr";
 
@@ -20,7 +24,9 @@ export default function HomeWrapper(props: any) {
     ourHomeContextValue,
     useClientRepair,
     getBuyProductList,
-    getSellProductList
+    getSellProductList,
+    getSellTitleList,
+    getBuyTitleList
   } = ourHomeContext as IOurHomeContext;
   const {
     sellListTitle,
@@ -31,6 +37,33 @@ export default function HomeWrapper(props: any) {
 
   // 告知client执行对应的函数
   useClientRepair(ourHomeSsrRule);
+
+  // 监听变化
+  useEffect(() => {
+    if (!sellListTitle || !sellListTitle.length) {
+      getSellTitleList().then((res: any) => {
+        if (res && res[0] && res[0].seqNo && res[0].brandId) {
+          getSellProductList({
+            seq: res[0].seqNo,
+            brandId: res[0].brandId
+          });
+        }
+      });
+    }
+  }, [getSellProductList, getSellTitleList, sellListTitle]);
+
+  useEffect(() => {
+    if (!buyListTitle || !buyListTitle.length) {
+      getBuyTitleList().then((res: any) => {
+        if (res && res[0] && res[0].seqNo && res[0].brandId) {
+          getBuyProductList({
+            seq: res[0].seqNo,
+            brandId: res[0].brandId
+          });
+        }
+      });
+    }
+  }, [buyListTitle, getBuyProductList, getBuyTitleList]);
 
   return (
     <Home

@@ -18,7 +18,7 @@ import UserRegister from "../pages/personal/pages/register";
 import UserRegisterEmail from "../pages/personal/pages/registerEmail";
 import UserForgetPassword from "../pages/personal/pages/userForgetPassword";
 import UserResetPassword from "../pages/personal/pages/userResetPassword";
-import PayProtectionPage from "../pages/payProtection";
+import { PayProtectionPage, PaySubscribePage } from "../pages/payProtection";
 
 export const routerConfig = [
   {
@@ -120,6 +120,12 @@ export const routerConfig = [
     title: "Protection payment  | UpTradeit.com",
     exact: true,
     Component: PayProtectionPage
+  },
+  {
+    path: "/protectionsubscribe/payment",
+    title: "Protection subscribe  | UpTradeit.com",
+    exact: true,
+    Component: PaySubscribePage
   }
   // {
   //   title: "404 | UpTradeit.com",

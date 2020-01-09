@@ -1,23 +1,21 @@
 import React, {
   createContext,
   useReducer,
-  useCallback,
-  useRef,
   useEffect
 } from "react";
 import { IReducerAction } from "buy/common/interface/index.interface";
-import { callBackWhenPassAllFunc, promisify } from "buy/common/utils/util";
+import { callBackWhenPassAllFunc } from "buy/common/utils/util";
 import useReducerMiddleware from "../../../common/useHook/useReducerMiddleware";
 import { IContextValue } from "../../type";
 import { useIsCurrentPage } from "../../useHook";
-import { getTestAjaxResult } from "../server";
+import {IStoreTestNameActions, useStoreTestNameGetActions} from "./useGetActions";
 
 export const StoreTestNameContext = createContext({});
 
 // store name
 export const StoreTestName = "StoreTestName";
 // store state
-interface IStoreTestNameState {
+export interface IStoreTestNameState {
   testValue: number;
 }
 
@@ -38,7 +36,7 @@ export function StoreTestNameContextProvider(props: any) {
     useReducerMiddleware(reducer),
     initState
   );
-  const action: IStoreTestNameActions = useGetAction(state, dispatch);
+  const action: IStoreTestNameActions = useStoreTestNameGetActions(state, dispatch);
 
   const isPage = useIsCurrentPage("/test");
 
@@ -46,7 +44,7 @@ export function StoreTestNameContextProvider(props: any) {
   useEffect(() => {
     // 1 当前页面
     callBackWhenPassAllFunc([() => isPage], action.getTestAjaxValue);
-  }, [action.getTestAjaxValue]);
+  }, [action.getTestAjaxValue, isPage]);
 
   const propsValue: IStoreTestNameContext = {
     ...action,
@@ -56,33 +54,7 @@ export function StoreTestNameContextProvider(props: any) {
   return <StoreTestNameContext.Provider value={propsValue} {...props} />;
 }
 
-// @actions
-export interface IStoreTestNameActions {
-  getTestAjaxValue: () => any;
-}
 
-// useCreateActions
-function useGetAction(
-  state: IStoreTestNameState,
-  dispatch: (action: IReducerAction) => void
-): IStoreTestNameActions {
-  // 新增promise ref
-  const promiseStatus: any = useRef();
-  if (!promiseStatus.current) {
-    promiseStatus.current = {};
-  }
-  const actions: IStoreTestNameActions = {
-    getTestAjaxValue: promisify(async function() {
-      const res = await getTestAjaxResult();
-      dispatch({
-        type: storeTestNameReducerTypes.setTestValue,
-        value: res
-      });
-    })
-  };
-  actions.getTestAjaxValue = useCallback(actions.getTestAjaxValue, []);
-  return actions;
-}
 
 // action types
 export const storeTestNameReducerTypes = {
