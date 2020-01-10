@@ -64,14 +64,15 @@ export function ProtectionPage(props: {
   }, [orderInfo, token]);
 
   // 在拉取数据,完成渲染 todo 你tmd调错接口了。你个智障，先tm给你隐藏了。fuck!!
-  // useEffect(() => {
-  //   const ref = window.setInterval(() => {
-  //     loop();
-  //   }, 1000);
-  //   return () => {
-  //     window.clearInterval(ref);
-  //   };
-  // }, [loop]);
+  useEffect(() => {
+    // const ref = window.setInterval(() => {
+    //   loop();
+    // }, 1000);
+    // return () => {
+    //   window.clearInterval(ref);
+    // };
+    loop();
+  }, [loop]);
 
   const payInfo = useMemo(() => {
     if (orderInfo && orderInfo.groupOrderNo) {
