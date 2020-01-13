@@ -23,7 +23,7 @@ export function getAnswers(
   filterSelect: any,
   extraInfo = {}
 ) {
-  // 这块为什么需要单独再声明?
+  // 这块是初始化过程
   const answer: IAnswer = {
     buyLevel: [], //
     filterBQVS: [], //

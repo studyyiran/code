@@ -11,10 +11,7 @@ import {
 } from "../../detail/context";
 import { constProductType } from "../../../common/constValue";
 import { soldOutTips } from "../../detail/components/soldOutTips";
-import {
-  IOrderInfoState,
-  orderInfoReducerTypes
-} from "./index";
+import { IOrderInfoState, orderInfoReducerTypes } from "./index";
 
 // @actions
 export interface orderInfoContextActions {
@@ -173,6 +170,8 @@ export function useOrderInfoGetAction(
     },
     [dispatch, state.subOrders]
   );
+  
+  // 发起的action
   const orderProcessRecord = useCallback(
     async (payInfo, userInfo) => {
       orderInfoServer.orderProcessRecord(
@@ -223,7 +222,12 @@ export function useOrderInfoGetAction(
           invoiceInfo: state.invoiceInfo,
           subOrders: state.subOrders
         };
-        orderProcessRecord(payInfo, state.userInfo);
+        // 发起
+        try {
+          orderProcessRecord(payInfo, state.userInfo);
+        } catch (e) {
+          console.error(e);
+        }
         const orderResult = orderInfoServer.createOrder(obj);
         orderResult
           .then(res => {
