@@ -272,14 +272,18 @@ export function debounce(callback: any, timer: any) {
   let currentId: number;
   if (!isServer()) {
     const newFunc = (...arg: any[]) => {
-      console.log('+++++++')
+      console.log("+++++++");
+      let nextPromise: any;
       if (currentId) {
         window.clearInterval(currentId);
       }
       currentId = window.setTimeout(() => {
-        console.log('!!!!!!')
-        callback(...arg);
+        console.log("!!!!!!");
+        nextPromise(callback(...arg));
       }, timer);
+      return new Promise((resolve, reject) => {
+        nextPromise = resolve;
+      });
     };
     return newFunc;
   } else {
