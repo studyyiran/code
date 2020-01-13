@@ -101,7 +101,10 @@ export default function PhoneProductCard(props: any) {
             </div>
           )}
           ComponentNormal={
-            <span className="price">{currencyTrans(buyProductPrice)}</span>
+            <span className="price">
+              {currencyTrans(buyProductPrice)}
+              <img className="sale-tag" src={require("./res/sale.svg")} />
+            </span>
           }
         />
       </div>

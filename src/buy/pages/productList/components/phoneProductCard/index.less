@@ -90,7 +90,18 @@
         .font(12 * @px, @normalWeight, rgba(136, 136, 136, 1));
       }
       > .price {
+        > * {
+          vertical-align: middle;
+        }
         .title();
+        img.sale-tag {
+          display: inline-block;
+          margin-left: 10 * @px;
+          width: 45 * @px;
+          .mb({
+            width: 35 * @px;
+          })
+        }
       }
     }
   }
