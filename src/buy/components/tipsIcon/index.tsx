@@ -3,10 +3,10 @@ import "./index.less";
 import React from "react";
 import { Modal, Popconfirm, Tooltip } from "antd";
 
-export default function TipsIcon(props: { children?: any; isInfo?: any }) {
-  const { children, isInfo } = props;
+export default function TipsIcon(props: { children?: any; isInfo?: any; placement?: any; }) {
+  const { children, isInfo, placement } = props;
   return (
-    <Tooltip title={children} defaultVisible={false}>
+    <Tooltip title={children} defaultVisible={false} placement={placement}>
       <div className="comp-tips-icon-container canclick">
         <span>
           {isInfo ? (

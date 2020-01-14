@@ -214,7 +214,9 @@ function ProductInfo(props: any) {
     const dom = titleList.map(({ title, content, color }) => {
       return (
         <div className="condition-list-item">
-          <h4 className="condition-buy-level" style={{ background: color }}>{title}</h4>
+          <h4 className="condition-buy-level" style={{ background: color }}>
+            {title}
+          </h4>
           <p>{content}</p>
         </div>
       );
@@ -234,7 +236,10 @@ function ProductInfo(props: any) {
           >
             {buyLevel}
           </span>
-          <TipsIcon>{renderList()}</TipsIcon>
+          <RenderByCondition
+            ComponentMb={<TipsIcon>{renderList()}</TipsIcon>}
+            ComponentPc={<TipsIcon placement="right">{renderList()}</TipsIcon>}
+          />
         </span>
       </div>
     </section>
