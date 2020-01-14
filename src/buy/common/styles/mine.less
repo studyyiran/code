@@ -13,6 +13,18 @@
   height: @imageWidth;
 }
 
+// 自带变形
+.innerdiv-transition(@rules) {
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.3s;
+  transform: scale(1.01);
+  @rules();
+  &:hover {
+    transform: scale(1.2);
+  }
+}
+
 
 .font-size-reset(@px) {
   //font-size: 14 * @px;
