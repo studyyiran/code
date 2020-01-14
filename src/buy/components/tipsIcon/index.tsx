@@ -6,7 +6,7 @@ import { Modal, Popconfirm, Tooltip } from "antd";
 export default function TipsIcon(props: { children?: any; isInfo?: any }) {
   const { children, isInfo } = props;
   return (
-    <Tooltip title={children}>
+    <Tooltip title={children} defaultVisible={false}>
       <div className="comp-tips-icon-container canclick">
         <span>
           {isInfo ? (

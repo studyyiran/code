@@ -1,6 +1,33 @@
 @import (reference) "~buy/common/styles/index.less";
 
 @p1: {
+  // 全局弹窗样式-- 
+  .condition-buy-level {
+    border-radius: 4px;
+    padding: 0 * @px 19 * @px;
+    color: white;
+    margin-left: 10 * @px;
+    display: inline-block;
+  }
+
+  .condition-list {
+    //padding: 0 10 * @px;
+    .condition-buy-level {
+      margin-bottom: 5 *@px;
+      margin-left: 0;
+    }
+    .condition-list-item {
+      margin: 10 * @px auto;
+      .title {
+        font-size: 20 * @px;
+        color: white;
+      }
+      .content {
+      }
+    }
+  }
+  //--
+  
   .header-part {
     font-size: 16 * @f;
     .product-info {
@@ -21,13 +48,10 @@
         > .condition {
           font-size: 16 * @f;
           font-weight: @boldWeight;
-          span {
-            border-radius: 4px;
-            padding: 0 * @px 19 * @px;
-            color: white;
-            margin-left: 10 * @px;
-            display: inline-block;
+          > * {
+            vertical-align: middle;
           }
+          
         }
       }
       > .check-icon {
@@ -97,7 +121,7 @@
       }
     }
     .price-part-mb {
-      margin-top: 25 *@px;
+      margin-top: 25 * @px;
       .sku-price {
         .font(12 * @f, @boldWeight, rgba(136, 136, 136, 1));
         > span:last-child {

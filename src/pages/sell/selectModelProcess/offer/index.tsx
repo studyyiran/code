@@ -163,10 +163,10 @@ export default function Brand(props: any) {
         <section className="payout-container">
           <div>
             <span className="big-font">Total Payout</span>
-            <TipsIcon>
-              We will pay out this amount within 1-2 business day(s) once we
-              receive and inspect the device(s) in your order.{" "}
-            </TipsIcon>
+            {/*<TipsIcon>*/}
+            {/*  We will pay out this amount within 1-2 business day(s) once we*/}
+            {/*  receive and inspect the device(s) in your order.{" "}*/}
+            {/*</TipsIcon>*/}
           </div>
           <span className="big-font">{currencyTrans(guaranteedPayout)}</span>
         </section>
