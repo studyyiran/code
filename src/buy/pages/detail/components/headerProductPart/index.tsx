@@ -80,6 +80,7 @@ export function HeaderProductPart(props: {
                           <label>Retail</label>
                           <span>{currencyTrans(skuPrice)}</span>
                         </div>
+                        {/*<img className="sale-tag" src={require("./res/sale.svg")} />*/}
                       </div>
                     </div>
                   }
