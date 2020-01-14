@@ -1,7 +1,7 @@
 @import (reference) "~buy/common/styles/index.less";
 
 @p1: {
-  // 全局弹窗样式-- 
+  // 全局弹窗样式--
   .condition-buy-level {
     border-radius: 4px;
     padding: 0 * @px 19 * @px;
@@ -13,7 +13,7 @@
   .condition-list {
     //padding: 0 10 * @px;
     .condition-buy-level {
-      margin-bottom: 5 *@px;
+      margin-bottom: 5 * @px;
       margin-left: 0;
     }
     .condition-list-item {
@@ -27,9 +27,15 @@
     }
   }
   //--
-  
+
   .header-part {
     font-size: 16 * @f;
+    .sale-tag {
+      width: 55 * @px;
+      .mb({width: 35 * @px;});
+      margin-left: 10 * @px;
+      vertical-align: bottom;
+    }
     .product-info {
       position: relative;
       display: flex;
@@ -51,7 +57,6 @@
           > * {
             vertical-align: middle;
           }
-          
         }
       }
       > .check-icon {

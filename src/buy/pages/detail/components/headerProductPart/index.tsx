@@ -80,7 +80,7 @@ export function HeaderProductPart(props: {
                           <label>Retail</label>
                           <span>{currencyTrans(skuPrice)}</span>
                         </div>
-                        {/*<img className="sale-tag" src={require("./res/sale.svg")} />*/}
+                        <img className="sale-tag" src={require("./res/sale.svg")} />
                       </div>
                     </div>
                   }
@@ -156,6 +156,7 @@ export function HeaderProductPart(props: {
                         <span>{currencyTrans(skuPrice)}</span>
                       </div>
                     ) : null}
+                    <img className="sale-tag" src={require("./res/sale.svg")} />
                   </div>
                   <span className="product-id">
                     Product ID {buyProductCode}
