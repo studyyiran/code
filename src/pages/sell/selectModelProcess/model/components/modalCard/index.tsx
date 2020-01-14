@@ -3,6 +3,7 @@ import "./index.less";
 import { findArrByKey } from "pages/sell/selectModelProcess/model/util";
 import { IReducerAction } from "interface/index.interface";
 import { safeEqual } from "utils/util";
+import { InnerDivImage } from "../../../../../../buy/common-modules/components/innerDivImage";
 
 // const attrConfig = {
 //   PRODUCT_ID: "productId",
@@ -138,7 +139,7 @@ export default function ModelCard(props: any) {
     } else {
       return (
         <div className="img-container">
-          <img src={imageUrl} />
+          <InnerDivImage imgUrl={imageUrl} />
         </div>
       );
     }
