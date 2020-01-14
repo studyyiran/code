@@ -85,3 +85,30 @@ export function ChoiceQuestion(props: ISelect) {
     </div>
   );
 }
+
+function ChoiceQuestionInner(props: any) {
+  const { list } = props;
+  function onClickHandler() {
+    console.log("get it");
+  }
+  return (
+    <div className="comp-choice-question">
+      {list.map(({ content }: any, index: any) => {
+        if (content) {
+          return (
+            <Option
+              key={index}
+              index={index}
+              currentSelect={props.value || ""}
+              onClick={onClickHandler}
+            >
+              {content}
+            </Option>
+          );
+        } else {
+          return null;
+        }
+      })}
+    </div>
+  );
+}
