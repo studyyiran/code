@@ -14,7 +14,7 @@ import { soldOutTips } from "../detail/components/soldOutTips";
 export default function OrderRouter(props: any) {
   const orderInfoContext = useContext(OrderInfoContext);
   const productDetailContext = useContext(ProductDetailContext);
-  const [validAddressSuccessful, setValidAddressSuccessful] = useState(false);
+  const [validAddressSuccessful, setValidAddressSuccessful] = useState(true);
   const {
     productDetailContextValue
   } = productDetailContext as IProductDetailContext;
