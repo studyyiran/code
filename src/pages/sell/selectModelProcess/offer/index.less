@@ -2,7 +2,14 @@
 
 @world: {
   .page-offer {
-    .setpage(724 * @px);
+    .comp-choice-question {
+      padding-top: 40 * @px;
+      display: grid;
+      grid-template-columns: repeat(2, auto);
+      grid-column-gap: 50 * @px;
+      .mb({grid-template-columns: 1fr; padding: 0 @padding-value;});
+    }
+    .setpage(860 * @px);
     padding: 32 * @px 0 85 * @px;
     @padding-value: 15 * @px;
     .func-space-between {
@@ -74,18 +81,15 @@
         ul.li-container {
           color: #000000;
           > li {
-            .mb({
-              align-items: flex-start;
-            });
+            position: relative;
+            .mb({align-items: flex-start;});
             .comp-tag {
-              font-size: 10 *@px;
+              font-size: 10 * @px;
             }
             > * {
               &:first-child {
                 flex: 0 0 300 * @px;
-                .mb({
-                  flex: 0 0 140 * @px;
-                });
+                .mb({flex: 0 0 140 * @px;});
               }
               &:last-child {
                 flex: 1;
@@ -133,26 +137,10 @@
               display: flex;
               align-items: flex-end;
               justify-content: space-between;
-              .mb({
-                flex-wrap: wrap;
-                flex-direction: column-reverse;
-              });
-              .mb({
-                .comp-tag {
-                  //display: none;
-                  margin-right: 0;
-                  font-size: 10px;
-                  .content {
-                    padding: 0 5*@px;
-                  }
-                }
-                
-              });
-              > *:first-child.comp-tag  {
+              .mb({flex-wrap: wrap; flex-direction: column-reverse;});
+              > *:first-child.comp-tag {
                 margin-right: 10 * @px;
-                .mb({
-                  margin-right: 0;
-                });
+                .mb({margin-right: 0;});
                 .flex-container {
                   .content {
                     border-radius: 300 * @px;
@@ -201,6 +189,7 @@
       padding: 0 @padding-value;
       .risk {
         margin-top: 72 * @px;
+        .mb({margin-top: 50 * @px;});
         text-align: center;
         border-radius: 8 * @px;
         border: 1 * @px solid rgba(233, 233, 233, 1);
@@ -223,6 +212,24 @@
   .ismobile #root {
     .padding-container {
       border: none;
+    }
+    .page-offer {
+      .service-fee-line,.seller-fee-line {
+        margin-bottom: 30 *@px;
+      }
+      .tag-container {
+        
+        .comp-tag {
+          position: absolute;
+          bottom: -20 * @px;
+          left: 0;
+          margin-right: 0;
+          font-size: 10px;
+        }
+        .content {
+          padding: 0 5 * @px;
+        }
+      }
     }
   }
 };
