@@ -6,6 +6,13 @@
       font-size: 16 * @f;
       margin-top: 4 * @px;
       white-space: nowrap;
+      vertical-align: middle;
+      img {
+        vertical-align: middle;
+        width: 30 * @px;
+        margin-left: 10 * @px;
+        .mb({width: 20 * @px;});
+      }
     }
     @imgSize: 78;
     .Inspect-person-info {
@@ -28,6 +35,7 @@
           width: @imgSize * @f;
           height: @imgSize * @f;
           margin-right: 30 * @f;
+          .mb({margin-right: 0;});
         }
         .name-part {
           display: inline-block;
@@ -36,6 +44,7 @@
       .second {
         p {
           color: #1ab4e7;
+          font-weight: @boldWeight;
         }
         .pc(
           {margin-top: -30 * @px; margin-left: (@imgSize + 30) * @f;
