@@ -13,6 +13,7 @@ import { StartBuyButton } from "../startBuyButton";
 import { TopIconList } from "../topIconList";
 import "./index.less";
 import TipsIcon from "../../../../components/tipsIcon";
+import {OnSaleTag} from "../onSaleTag";
 
 export function HeaderProductPart(props: {
   productDetail: IProductDetail;
@@ -80,7 +81,7 @@ export function HeaderProductPart(props: {
                           <label>Retail</label>
                           <span>{currencyTrans(skuPrice)}</span>
                         </div>
-                        <img className="sale-tag" src={require("./res/sale.svg")} />
+                        <OnSaleTag />
                       </div>
                     </div>
                   }
@@ -156,7 +157,7 @@ export function HeaderProductPart(props: {
                         <span>{currencyTrans(skuPrice)}</span>
                       </div>
                     ) : null}
-                    <img className="sale-tag" src={require("./res/sale.svg")} />
+                    <OnSaleTag />
                   </div>
                   <span className="product-id">
                     Product ID {buyProductCode}
@@ -178,27 +179,27 @@ function ProductInfo(props: any) {
   const titleList = [
     {
       title: "NEW",
-      content: "The phone has no scratches",
+      content: "Phone has no scratches",
       color: "#43c0e3"
     },
     {
       title: "BEST",
-      content: "The phone has no scratches",
+      content: "Phone has no scratches",
       color: "rgba(109, 210, 48, 1)"
     },
     {
       title: "BETTER",
-      content: "The phone has no scratches",
+      content: "Phone has light scratches",
       color: "#e72349"
     },
     {
       title: "GOOD",
-      content: "The phone has no scratches",
+      content: "Phone has scratches",
       color: "#efc31b"
     },
     {
       title: "FAIR",
-      content: "The phone has no scratches",
+      content: "Phone has deep scratches",
       color: "#888888"
     }
   ];
@@ -213,7 +214,7 @@ function ProductInfo(props: any) {
     }
   }
   function renderList() {
-    const dom = titleList.map(({ title, content, color }) => {
+    const dom = titleList.slice(1).map(({ title, content, color }) => {
       return (
         <div className="condition-list-item">
           <h4 className="condition-buy-level" style={{ background: color }}>

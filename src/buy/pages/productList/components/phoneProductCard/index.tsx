@@ -11,6 +11,7 @@ import { FivePrice } from "../../../detail/components/fivePrice";
 import { FiveCountDown } from "../../../detail/components/fiveCountdown";
 import { RenderByCondition } from "../../../../components/RenderByCondition";
 import RouterLink from "../../../../common-modules/components/routerLink";
+import { OnSaleTag } from "../../../detail/components/onSaleTag";
 
 function isSoldOut(status: string) {
   return (
@@ -103,7 +104,7 @@ export default function PhoneProductCard(props: any) {
           ComponentNormal={
             <span className="price">
               {currencyTrans(buyProductPrice)}
-              <img className="sale-tag" src={require("./res/sale.svg")} />
+              <OnSaleTag />
             </span>
           }
         />
