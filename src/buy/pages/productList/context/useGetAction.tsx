@@ -11,6 +11,7 @@ import {
   IStoreProductListState,
   productListReducerActionTypes
 } from "./index";
+import {modelFilterAttr} from "../util";
 
 interface ISomeDataList {
   manufactureList: any[];
@@ -23,7 +24,7 @@ export function getAnswers(
   filterSelect: any,
   extraInfo = {}
 ) {
-  // 这块为什么需要单独再声明?
+  // 这块是初始化过程
   const answer: IAnswer = {
     buyLevel: [], //
     filterBQVS: [], //
@@ -283,15 +284,7 @@ export function useStoreProductListAction(
       // 其实在未来,数据filter也应该剥离出来.提高复用.
       dispatch({
         type: productListReducerActionTypes.setModelList,
-        value: (res || []).map(
-          ({ productDisplayName, productId, brandId }: any) => {
-            return {
-              id: productId,
-              displayName: productDisplayName,
-              brandId
-            };
-          }
-        )
+        value: (res || []).map(modelFilterAttr)
       });
     },
     [dispatch]
@@ -561,7 +554,7 @@ export function useStoreProductListAction(
         ...answer,
         productId: state.searchInfo.productId,
         productKey: state.searchInfo.productKey,
-        pageNum: state.pageNumber.pn,
+        pageNum: state.pageNumber.pn
       });
       const { productKey, filterBQVS }: any = answer;
       const result = filterBQVS

@@ -7,7 +7,7 @@ import Svg from "components/svg";
 interface IOption {
   children: any;
   index: string;
-  currentSelect: string;
+  currentSelect?: string;
   onClick: (value: string) => void;
 }
 
@@ -76,6 +76,52 @@ export function ChoiceQuestion(props: ISelect) {
                 .tz(addDate(new Date(), time), "America/Chicago")
                 .format("MMM DD")}
               {props.render ? props.render(index) : null}
+            </Option>
+          );
+        } else {
+          return null;
+        }
+      })}
+    </div>
+  );
+}
+
+interface IChoiceInner {
+  arr: {
+    render: () => void;
+    content: string;
+  }[];
+  currentSelect?: string;
+  onSelectHandler?: (id: string) => void;
+}
+
+export function ChoiceQuestionInner(props: IChoiceInner) {
+  return null
+  const { currentSelect } = props;
+  const [lastTimeSelect, setLastTimeSelect] = useState("");
+  function getCurrent() {
+    return currentSelect || lastTimeSelect;
+  }
+  const { arr, onSelectHandler } = props;
+  function onClickHandler(index: string) {
+    setLastTimeSelect(index);
+    if (onSelectHandler) {
+      onSelectHandler(index);
+    }
+  }
+  return (
+    <div className="comp-choice-question">
+      {arr.map(({ content, render }, index: any) => {
+        if (content) {
+          return (
+            <Option
+              key={index}
+              index={index}
+              currentSelect={getCurrent()}
+              onClick={onClickHandler.bind({}, index)}
+            >
+              {content}
+              {render ? render() : null}
             </Option>
           );
         } else {

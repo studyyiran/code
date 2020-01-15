@@ -6,11 +6,18 @@
       font-size: 16 * @f;
       margin-top: 4 * @px;
       white-space: nowrap;
+      vertical-align: middle;
+      img {
+        vertical-align: middle;
+        width: 30 * @px;
+        margin-left: 10 * @px;
+        .mb({width: 20 * @px;});
+      }
     }
     @imgSize: 78;
     .Inspect-person-info {
       display: flex;
-      .mb({flex-direction: column;});
+      flex-direction: column;
       padding-top: 15 * @px;
       > * {
         padding-bottom: 17 * @px;
@@ -19,17 +26,31 @@
         display: flex;
         flex-wrap: nowrap;
         align-items: flex-start;
-        .pc({margin-right: 95 * @px;});
+        .mb(
+          {justify-content: space-between; flex-direction: row-reverse; padding-bottom:
+            0px;}
+        );
+        .pc({margin-right: 95 * @px;padding-bottom: 0});
         img {
           width: @imgSize * @f;
           height: @imgSize * @f;
           margin-right: 30 * @f;
+          .mb({margin-right: 0;});
         }
         .name-part {
           display: inline-block;
         }
       }
       .second {
+        p {
+          color: #1ab4e7;
+          font-weight: @boldWeight;
+        }
+        .pc(
+          {margin-top: -30 * @px; margin-left: (@imgSize + 30) * @f;
+            padding-bottom: 30 * @px;}
+        );
+        .mb({margin-top: -20 * @px;});
       }
     }
     .item-list {
@@ -39,18 +60,17 @@
       section {
         h2.sub-title-size {
           margin-bottom: 8 * @px;
+          font-size: 16 * @f;
         }
         margin-bottom: 20 * @px;
       }
     }
   }
   .common-grid-3() {
-    .pc(
-      {display: grid; grid-template-columns: repeat(3, 1fr) ;}
-    );
+    .pc({display: grid; grid-template-columns: repeat(3, 1fr) ;});
     // 适当控制间距
     @media (max-width: 1344px) {
-      grid-column-gap: 20 *@px;
+      grid-column-gap: 20 * @px;
     }
   }
   .phone-background-history {

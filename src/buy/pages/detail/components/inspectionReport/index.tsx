@@ -74,7 +74,7 @@ function InspectPersonInfo({
         </div>
         {buyProductRemark ? (
           <div className="second">
-            <h3 className="title-style">Inspection Notes</h3>
+            <h3 className="title-style">Inspection Notes<img src={require('./res/notes-icon.svg')}/></h3>
             <p>{buyProductRemark}</p>
           </div>
         ) : null}

@@ -12,6 +12,8 @@ import { getDescArr } from "../../util";
 import { StartBuyButton } from "../startBuyButton";
 import { TopIconList } from "../topIconList";
 import "./index.less";
+import TipsIcon from "../../../../components/tipsIcon";
+import {OnSaleTag} from "../onSaleTag";
 
 export function HeaderProductPart(props: {
   productDetail: IProductDetail;
@@ -79,6 +81,7 @@ export function HeaderProductPart(props: {
                           <label>Retail</label>
                           <span>{currencyTrans(skuPrice)}</span>
                         </div>
+                        <OnSaleTag />
                       </div>
                     </div>
                   }
@@ -145,13 +148,16 @@ export function HeaderProductPart(props: {
               ComponentNormal={
                 <div className="bottom">
                   <div className="price">
-                    <span className="buy-price sub-title-size-main">{currencyTrans(buyPrice)}</span>
+                    <span className="buy-price sub-title-size-main">
+                      {currencyTrans(buyPrice)}
+                    </span>
                     {skuPrice ? (
                       <div className="sku-price">
                         <label>Retail</label>
                         <span>{currencyTrans(skuPrice)}</span>
                       </div>
                     ) : null}
+                    <OnSaleTag />
                   </div>
                   <span className="product-id">
                     Product ID {buyProductCode}
@@ -170,21 +176,55 @@ export function HeaderProductPart(props: {
 function ProductInfo(props: any) {
   const { productDisplayName, buyLevel, buyProductBQV } = props;
   const [lineOne, lineTwo] = getDescArr(buyProductBQV, productDisplayName);
-  function type2BgColor(type: string) {
-    switch (type) {
-      case "NEW":
-        return "#43c0e3";
-      case "BEST":
-        return "rgba(109, 210, 48, 1)";
-      case "BETTER":
-        return "#e72349";
-      case "GOOD":
-        return "#efc31b";
-      case "FAIR":
-        return "#888888";
-      default:
-        return "rgba(109, 210, 48, 1)";
+  const titleList = [
+    {
+      title: "NEW",
+      content: "Phone has no scratches",
+      color: "#43c0e3"
+    },
+    {
+      title: "BEST",
+      content: "Phone has no scratches",
+      color: "rgba(109, 210, 48, 1)"
+    },
+    {
+      title: "BETTER",
+      content: "Phone has light scratches",
+      color: "#e72349"
+    },
+    {
+      title: "GOOD",
+      content: "Phone has scratches",
+      color: "#efc31b"
+    },
+    {
+      title: "FAIR",
+      content: "Phone has deep scratches",
+      color: "#888888"
     }
+  ];
+  function type2BgColor(type: string) {
+    const target = titleList.find(item => {
+      return item.title === type;
+    });
+    if (target) {
+      return target.color;
+    } else {
+      return "";
+    }
+  }
+  function renderList() {
+    const dom = titleList.slice(1).map(({ title, content, color }) => {
+      return (
+        <div className="condition-list-item">
+          <h4 className="condition-buy-level" style={{ background: color }}>
+            {title}
+          </h4>
+          <p>{content}</p>
+        </div>
+      );
+    });
+    return <div className="condition-list">{dom}</div>;
   }
   return (
     <section className="product-info">
@@ -192,8 +232,17 @@ function ProductInfo(props: any) {
         <h2 className="sub-title-size-main">{lineOne ? ` ${lineOne}` : ""}</h2>
         <span className="attr">{lineTwo ? lineTwo : ""}</span>
         <span className="condition">
-          Condition{" "}
-          <span style={{ background: type2BgColor(buyLevel) }}>{buyLevel}</span>
+          <span>Condition</span>
+          <span
+            className="condition-buy-level"
+            style={{ background: type2BgColor(buyLevel) }}
+          >
+            {buyLevel}
+          </span>
+          <RenderByCondition
+            ComponentMb={<TipsIcon trigger="click">{renderList()}</TipsIcon>}
+            ComponentPc={<TipsIcon placement="right">{renderList()}</TipsIcon>}
+          />
         </span>
       </div>
     </section>

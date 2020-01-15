@@ -30,7 +30,7 @@ export const routerConfig = [
   },
   {
     path: getProductListPath(),
-    title: "Buy Used Cell Phones | UpTradeit.com",
+    title: "",
     Component: ProductList,
     getInitialProps: productListSsrRule
   },

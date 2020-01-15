@@ -57,6 +57,7 @@ export default function ProductDetail(props: any) {
 
   const id = useWhenUrlChange("productId");
 
+  // 设置title
   useEffect(() => {
     if (productDetail && productDetail.skuId) {
       const {

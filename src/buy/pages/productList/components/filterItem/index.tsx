@@ -109,7 +109,9 @@ function usePn(pnChangeCallBack?: (pn: any) => void) {
     });
   }
   useEffect(() => {
-    pnChangeCallBack && pnChangeCallBack(pn);
+    if (pnChangeCallBack) {
+      pnChangeCallBack(pn);
+    }
   }, [pn, pnChangeCallBack]);
   if (pnChangeCallBack) {
     return addPn;

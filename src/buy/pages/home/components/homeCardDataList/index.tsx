@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import "./index.less";
 import getSellPath, {currencyTrans, getProductListPath, urlRmSpaceAndToLower} from "../../../../common/utils/util";
 import {locationHref} from "../../../../common/utils/routerHistory";
+import {InnerDivImage} from "../../../detail/components/innerDivImage";
 
 // buy只显示苹果和三星品牌，业务要求
 function buyBrandFilter(titleList: any, type: any) {
@@ -83,7 +84,7 @@ export function HomeCardDataList(props: any) {
               <div className="data-item-wrapper" key={index}>
                 <div className="data-item" onClick={() => dataItemGotoPage(item)}>
                   <div className="data-img-wrapper">
-                    <img src={item.productImg} className="data-img" />
+                    <InnerDivImage imgUrl={item.productImg} />
                   </div>
                   <div className="data-bottom">
                     <div className="left">{item.productDisplayName}</div>

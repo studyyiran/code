@@ -5,7 +5,7 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    border-radius: 8*@px;
+    border-radius: 8 * @px;
     overflow: hidden;
     .model-content-container {
       flex: 1;
@@ -13,42 +13,47 @@
       flex-direction: column;
       overflow: auto;
       background: @white;
+      overflow: hidden;
       > div.img-container {
         display: flex;
         justify-content: center;
         align-items: center;
         height: 100%;
-        > img {
-          min-width: 204*@px;
-          max-width: 204*@px;
+        @img-width: 5.3rem;
+        @img-width: 204 * @px;
+        overflow: hidden;
+        .innerdiv-transition({
+        });
+        .innerdiv {
+          .innerdiv-imgsize(@img-width);
         }
       }
       > ul.attr-panel-container {
-        padding: 8*@px 16*@px;
+        padding: 8 * @px 16 * @px;
         height: 100%;
         > li.container {
           > h2 {
-            .font(26*@f, 500, #000000);
-            margin: 3*@px 0 12*@px;
+            .font(26 * @f, 500, #000000);
+            margin: 3 * @px 0 12 * @px;
           }
           > ul.one-attr-container {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            grid-column-gap: 10*@px;
+            grid-column-gap: 10 * @px;
             padding: 0px;
             > li.one-attr-option {
               &[data-selected="true"] {
                 background: #444b54;
                 color: @white;
               }
-              margin-bottom: 12*@px;
-              @content-height: 48*@px;
-              border-radius: 8*@px;
-              border: 1*@px solid rgba(34, 34, 34, 1);
+              margin-bottom: 12 * @px;
+              @content-height: 48 * @px;
+              border-radius: 8 * @px;
+              border: 1 * @px solid rgba(34, 34, 34, 1);
               text-align: center;
               line-height: @content-height;
               height: @content-height;
-              .font(12*@f, 500, #000000);
+              .font(12 * @f, 500, #000000);
             }
           }
         }
@@ -56,15 +61,15 @@
     }
     .model-name-container {
       background: #d8d8d8;
-      padding: 19*@px 0 29*@px 19*@px;
-      height: 73*@px;
+      padding: 19 * @px 0 29 * @px 19 * @px;
+      height: 73 * @px;
       color: #444b54;
       &[data-selected="true"] {
         background: #444b54;
         color: @white;
       }
       > span {
-        font-size: 18*@f;
+        font-size: 18 * @f;
         font-weight: 600;
       }
     }
@@ -72,7 +77,8 @@
 
   .ismobile #root {
     .model-card {
-      box-shadow:0px 2px 6px -4px rgba(141,141,148,0.48),0px 0px 2px 0px rgba(141,141,148,0.16);
+      box-shadow: 0px 2px 6px -4px rgba(141, 141, 148, 0.48),
+        0px 0px 2px 0px rgba(141, 141, 148, 0.16);
       .extra {
         &[data-selected="true"] {
           display: none;
@@ -86,10 +92,10 @@
         align-items: center;
         padding-bottom: 0.32rem;
         > button {
-          width:1.89rem;
-          height:0.85rem;
-          border-radius:0.21rem;
-          border:0.03rem solid rgba(34,34,34,1);
+          width: 1.89rem;
+          height: 0.85rem;
+          border-radius: 0.21rem;
+          border: 0.03rem solid rgba(34, 34, 34, 1);
         }
       }
       width: 100%;
@@ -109,27 +115,22 @@
           justify-content: center;
           align-items: center;
           height: 100%;
-          > img {
-            @img-width: 5.3rem;
-            min-width: @img-width;
-            max-width: @img-width;
-          }
         }
         > ul.attr-panel-container {
           padding: 0.35rem 0.27rem;
           height: 100%;
           > li.container {
             > h2 {
-              .font(26*@px, 500, #000000);
-              margin-bottom: 12 *@px;
+              .font(26 * @px, 500, #000000);
+              margin-bottom: 12 * @px;
             }
             > ul.one-attr-container {
               display: grid;
               grid-template-columns: 2fr 2fr;
-              grid-column-gap: 16 *@px;
+              grid-column-gap: 16 * @px;
               padding: 0;
               padding-top: 0.03rem;
-              @content-height: 38*@px;
+              @content-height: 38 * @px;
               > li.one-attr-option {
                 margin-bottom: 0.35rem;
                 &[data-selected="true"] {
@@ -137,12 +138,12 @@
                   color: @white;
                 }
                 @content-height: 1.01rem;
-                border-radius: 8*@px;
-                border: 1*@px solid rgba(34, 34, 34, 1);
+                border-radius: 8 * @px;
+                border: 1 * @px solid rgba(34, 34, 34, 1);
                 text-align: center;
                 line-height: @content-height;
                 height: @content-height;
-                .font(12*@px, 500, #000000);
+                .font(12 * @px, 500, #000000);
               }
             }
           }
@@ -161,11 +162,10 @@
           color: @white;
         }
         > span {
-          .font(18 *@px, 600, #FFFFFF);
+          .font(18 * @px, 600, #ffffff);
         }
       }
     }
   }
-}
+};
 .hello(@world);
-

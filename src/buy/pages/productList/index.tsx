@@ -125,7 +125,7 @@ export default function ProductList(props: any) {
     if (ssrTitle && document.title !== ssrTitle) {
       document.title = ssrTitle;
     }
-  });
+  }, [props.location.pathname]);
 
   function onClickSubmitHandler(searchValues: any) {
     try {

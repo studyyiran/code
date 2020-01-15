@@ -8,13 +8,11 @@ getInitialProps是一个异步方法.
  */
 
 import { serverProductList } from "./server";
-import {
-  ATTROF,
-  StoreProductList
-} from "./context";
+import { ATTROF, StoreProductList } from "./context";
 import { getProductListPath } from "../../common/utils/util";
 import { ISsrFileStore } from "../../common/interface/index.interface";
 import { getAnswers } from "./context/useGetAction";
+import { modelFilterAttr } from "./util";
 
 export const productListSsrRule = async (url: string) => {
   const ssrRes: ISsrFileStore = {
@@ -108,25 +106,21 @@ export const productListSsrRule = async (url: string) => {
     const { brandIds, productIds, skuAttrIds } = userSelectData;
     addIntoSelect(brandIds, (id: any) => ({ id: `Manufacture-${id}` }));
     addIntoSelect(productIds, (productInfo: any) => {
-      const { id, name } = productInfo;
+      const { id } = productInfo;
       // 顺带着 回补数据(这个回补不用考虑brand.因为这个url必带brand)
-      store.storeData.modelList.push({
-        id: id,
-        displayName: name
-      });
+      store.storeData.modelList.push(modelFilterAttr(productInfo));
       return { id: `Model-${id}` };
     });
 
-    // 为了 ssr 设置下model值.(这块因为考虑ssr效果,所以强行做一下.)
+    // 为了 ssr 设置下model值.(这块因为考虑ssr效果,因为这样一开始就能有model进行爬取操作.所以强行做一下.)
+    // 但是这块的页码没有返回回去 因为那边本来也是一个local值 不是所有的ssr值都能打成同步
     const res: any = await serverProductList.getModelList(1);
-    (res || []).forEach(({ productDisplayName, productId, brandId }: any) => {
-      const isRepeat = store.storeData.modelList.find((item) => item.id === productId)
+    (res || []).forEach((info: any) => {
+      const isRepeat = store.storeData.modelList.find(
+        item => item.id === info.productId
+      );
       if (!isRepeat) {
-        store.storeData.modelList.push({
-          id: productId,
-          displayName: productDisplayName,
-          brandId
-        });
+        store.storeData.modelList.push(modelFilterAttr(info));
       }
     });
 
@@ -161,7 +155,7 @@ export const productListSsrRule = async (url: string) => {
   // 后续我其实可以进一步优化,  杜绝掉 ,的能力,这样就能更加精准,更加满足需求.
   // 我们有8个运营商 6个品牌商  8个内存 18种颜色 若干个热销机型(6-11个).
   // 如果杜绝掉逗号,那么也就4000种可能.
-  const maxValue = 200
+  const maxValue = 200;
   const test = getAnswers(
     {
       modelList,
