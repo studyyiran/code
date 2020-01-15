@@ -184,12 +184,13 @@ export default function Brand(props: any) {
           <span className="big-font">{currencyTrans(guaranteedPayout)}</span>
         </section>
       </div>
-      <ChoiceQuestionInner
-        arr={staticProcessSelect.map(({ content, render }) => ({
-          content,
-          render
-        }))}
-      />
+      {/*暂时屏蔽,等待上线*/}
+      {/*<ChoiceQuestionInner*/}
+      {/*  arr={staticProcessSelect.map(({ content, render }) => ({*/}
+      {/*    content,*/}
+      {/*    render*/}
+      {/*  }))}*/}
+      {/*/>*/}
       <div className="risk-container">
         <section className="risk">
           <h3>Zero Risk & Free Retuns</h3>

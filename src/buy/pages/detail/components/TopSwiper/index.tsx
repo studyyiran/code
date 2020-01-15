@@ -43,12 +43,17 @@ export function TopSwiper(props: any) {
           Actual Phone
         </div>
         <RenderByCondition
+          ComponentMb={<img className="mb-zoom" src={require("./res/zoom.svg")} />}
+          ComponentPc={null}
+        />
+        <RenderByCondition
           ComponentPc={(() => {
             let dom = buyProductImgPc.map((item: string, index: number) => {
               return (
                 <div className="inner-div-container" key={index}>
                   <InnerDivImage imgUrl={item} dataIndex={index} />
-                </div>);
+                </div>
+              );
             });
             if (buyProductVideo) {
               dom.unshift(

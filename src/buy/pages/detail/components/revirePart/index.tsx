@@ -20,7 +20,7 @@ export function ReviewListPart({
             {reviewListInfo.stats
               ? `${reviewListInfo.stats.average_rating} `
               : ""}
-            Rating based on <RouterLink to={'/reviews'}>{reviews.length} reviews</RouterLink>
+            Rating based on <RouterLink target={"_blank"} to={'/reviews'}>{reviews.length} reviews</RouterLink>
           </span>
           <div className="data-from">
             <span>Data From</span>
