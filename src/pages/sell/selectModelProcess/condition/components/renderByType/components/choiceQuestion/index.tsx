@@ -96,6 +96,7 @@ interface IChoiceInner {
 }
 
 export function ChoiceQuestionInner(props: IChoiceInner) {
+  return null
   const { currentSelect } = props;
   const [lastTimeSelect, setLastTimeSelect] = useState("");
   function getCurrent() {
