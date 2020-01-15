@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Switch, Route } from "react-router-dom";
 import OrderLayout from "./components/orderLayout";
 // 业务模块级less
@@ -14,6 +14,7 @@ import { soldOutTips } from "../detail/components/soldOutTips";
 export default function OrderRouter(props: any) {
   const orderInfoContext = useContext(OrderInfoContext);
   const productDetailContext = useContext(ProductDetailContext);
+  const [validAddressSuccessful, setValidAddressSuccessful] = useState(true);
   const {
     productDetailContextValue
   } = productDetailContext as IProductDetailContext;
@@ -106,7 +107,8 @@ export default function OrderRouter(props: any) {
       } else {
         locationHref("", "back");
       }
-    }}
+    }
+  }
   return (
     <div id="order-common-less">
       <Switch>
@@ -125,6 +127,8 @@ export default function OrderRouter(props: any) {
                     >
                       <Component
                         {...routerProps}
+                        validAddressSuccessful={validAddressSuccessful}
+                        setValidAddressSuccessful={setValidAddressSuccessful}
                         renderButton={(pageNextClick: any) => {
                           return (
                             <ButtonGroup

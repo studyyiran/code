@@ -19,8 +19,8 @@ let addressErrorTips = "The address could not be found.";
 function PaymentInner(props: any) {
   const orderInfoContext = useContext(OrderInfoContext);
   const ajaxStatus = useRef();
-  const [validAddressSuccessful, setValidAddressSuccessful] = useState(false);
-
+  
+  const {validAddressSuccessful, setValidAddressSuccessful} = props
   const {
     orderInfoContextDispatch,
     orderInfoContextValue,
@@ -421,7 +421,7 @@ function PaymentInner(props: any) {
                   });
                 }
                 // 验证
-                debounce(checkFunc, findTarget.time);
+                afterMinTimeCall(checkFunc, 1000);
               }
               orderInfoContextDispatch({
                 type: orderInfoReducerTypes.setInvoiceInfo,
@@ -478,5 +478,17 @@ function PaymentInner(props: any) {
     </div>
   );
 }
+
+let lastTimeRef = 0;
+function afterMinTimeCall(callback: any, time: number) {
+  if (!isServer()) {
+    //  如果有time直接清空
+    if (lastTimeRef) {
+      window.clearTimeout(lastTimeRef);
+    }
+    lastTimeRef = window.setTimeout(callback, time);
+  }
+}
+
 const Payment = Form.create()(PaymentInner);
 export default Payment;
