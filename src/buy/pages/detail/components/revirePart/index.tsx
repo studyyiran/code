@@ -2,6 +2,7 @@ import React from "react";
 import "./index.less";
 import { Carousel, Rate } from "antd";
 import { IReviews, IReview } from "../../context/interface";
+import RouterLink from "../../../../common-modules/components/routerLink";
 
 export function ReviewListPart({
   reviewListInfo
@@ -19,7 +20,7 @@ export function ReviewListPart({
             {reviewListInfo.stats
               ? `${reviewListInfo.stats.average_rating} `
               : ""}
-            Rating based on {reviews.length} reviews
+            Rating based on <RouterLink to={'/reviews'}>{reviews.length} reviews</RouterLink>
           </span>
           <div className="data-from">
             <span>Data From</span>

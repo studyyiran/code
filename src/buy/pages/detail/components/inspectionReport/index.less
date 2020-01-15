@@ -10,7 +10,7 @@
     @imgSize: 78;
     .Inspect-person-info {
       display: flex;
-      .mb({flex-direction: column;});
+      flex-direction: column;
       padding-top: 15 * @px;
       > * {
         padding-bottom: 17 * @px;
@@ -19,7 +19,7 @@
         display: flex;
         flex-wrap: nowrap;
         align-items: flex-start;
-        .pc({margin-right: 95 * @px;});
+        .pc({margin-right: 95 * @px;padding-bottom: 0});
         img {
           width: @imgSize * @f;
           height: @imgSize * @f;
@@ -30,6 +30,9 @@
         }
       }
       .second {
+        .pc({
+          margin-left: (@imgSize + 30) * @f;
+        })
       }
     }
     .item-list {
@@ -39,18 +42,17 @@
       section {
         h2.sub-title-size {
           margin-bottom: 8 * @px;
+          font-size: 16 * @f;
         }
         margin-bottom: 20 * @px;
       }
     }
   }
   .common-grid-3() {
-    .pc(
-      {display: grid; grid-template-columns: repeat(3, 1fr) ;}
-    );
+    .pc({display: grid; grid-template-columns: repeat(3, 1fr) ;});
     // 适当控制间距
     @media (max-width: 1344px) {
-      grid-column-gap: 20 *@px;
+      grid-column-gap: 20 * @px;
     }
   }
   .phone-background-history {
