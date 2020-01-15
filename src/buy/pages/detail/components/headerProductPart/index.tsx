@@ -240,7 +240,7 @@ function ProductInfo(props: any) {
             {buyLevel}
           </span>
           <RenderByCondition
-            ComponentMb={<TipsIcon>{renderList()}</TipsIcon>}
+            ComponentMb={<TipsIcon trigger="click">{renderList()}</TipsIcon>}
             ComponentPc={<TipsIcon placement="right">{renderList()}</TipsIcon>}
           />
         </span>
