@@ -49,10 +49,16 @@ export default function Brand(props: any) {
   const staticProcessSelect = [
     {
       content: "Paid in 14 days after inspection complete",
+      render: () => {
+        return <div className="recommended comp-top-tag">Recommended</div>;
+      },
       paymentTimeType: "DELAY"
     },
     {
       content: "Paid in 1-2 days after inspection complete",
+      render: () => {
+        return <div className="comp-top-tag">Recommended</div>;
+      },
       paymentTimeType: "NORMAL"
     }
   ];
@@ -179,7 +185,10 @@ export default function Brand(props: any) {
         </section>
       </div>
       <ChoiceQuestionInner
-        arr={staticProcessSelect.map(({ content }) => content)}
+        arr={staticProcessSelect.map(({ content, render }) => ({
+          content,
+          render
+        }))}
       />
       <div className="risk-container">
         <section className="risk">

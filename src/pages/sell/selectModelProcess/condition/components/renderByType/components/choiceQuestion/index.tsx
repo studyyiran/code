@@ -87,13 +87,16 @@ export function ChoiceQuestion(props: ISelect) {
 }
 
 interface IChoiceInner {
-  arr: string[];
+  arr: {
+    render: () => void;
+    content: string;
+  }[];
   currentSelect?: string;
   onSelectHandler?: (id: string) => void;
 }
 
 export function ChoiceQuestionInner(props: IChoiceInner) {
-  const {currentSelect} = props
+  const { currentSelect } = props;
   const [lastTimeSelect, setLastTimeSelect] = useState("");
   function getCurrent() {
     return currentSelect || lastTimeSelect;
@@ -107,7 +110,7 @@ export function ChoiceQuestionInner(props: IChoiceInner) {
   }
   return (
     <div className="comp-choice-question">
-      {arr.map((content: any, index: any) => {
+      {arr.map(({ content, render }, index: any) => {
         if (content) {
           return (
             <Option
@@ -117,6 +120,7 @@ export function ChoiceQuestionInner(props: IChoiceInner) {
               onClick={onClickHandler.bind({}, index)}
             >
               {content}
+              {render ? render() : null}
             </Option>
           );
         } else {
