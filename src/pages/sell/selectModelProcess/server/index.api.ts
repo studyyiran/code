@@ -5,6 +5,7 @@ import config from "config/index";
 import { IPreOrder } from "store/interface/user.interface";
 import { mockgetexpressfee } from "../../mock";
 import { requestGetResponse, requestWrapper } from "utils/util";
+import { debounce } from "../../../../buy/common/utils/util";
 
 // 获取机型列表, 以及根据关键字搜索机型
 export const getProducts = <T>(brandId: string, categoryId: string) => {
@@ -30,15 +31,14 @@ export const getinquirybyids = <T>(inquiryInfo: any) => {
   return requestGetResponse(Request<T>(requestWrapper(opts), []));
 };
 
-export const getinquirybykeys = <T>(inquiryInfo: any) => {
+export const getinquirybykeys = debounce((inquiryInfo: any) => {
   const opts: IOpts = {
     url: "/product/getinquirybykeys",
     method: "post",
     params: inquiryInfo
   };
-
-  return requestGetResponse(Request<T>(requestWrapper(opts), []));
-};
+  return requestGetResponse(Request(requestWrapper(opts), []));
+}, 150);
 // 创建订单接口， 只要发生错误，都提示用户可以写邮件寻求帮助
 export const createOrderStart = <T>(orderParams: any) => {
   console.warn("**createOrderStart**");
@@ -123,7 +123,7 @@ export const getSkuId = <T>(params: any) => {
 
 export const skuIdToPhoneInfo = <T>(skuId: string) => {
   const opts: IOpts = {
-    url: `/product/getSKU/${skuId}`,
+    url: `/product/getSKU/${skuId}`
   };
   return requestGetResponse(Request<T>(requestWrapper(opts)));
 };

@@ -430,7 +430,7 @@ function useGetAction(
       if (state.userProductList && state.userProductList.length) {
         const keys = actions.getInquiryKeyList();
         // mock根据keyarray获取 最新的报价列表
-        const info: any = await getinquirybykeys({ keys });
+        const info: any = await getinquirybykeys({ keys, paymentTimeType: state.paymentTimeType });
         window.setTimeout(() => {
           const rNumber = Math.random();
           dispatch({
@@ -631,7 +631,7 @@ function useGetAction(
     state.categoryId
   ]);
   actions.getPriceInfo = useCallback(actions.getPriceInfo, [
-    state.userProductList
+    state.userProductList, state.paymentTimeType
   ]);
   // 虽然是主动调用，但是最好还是更新。需要补充更多的依赖
   actions.getInquiryByIds = useCallback(actions.getInquiryByIds, [

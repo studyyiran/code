@@ -58,7 +58,13 @@ export default function Brand(props: any) {
     {
       content: "Paid in 1-2 days after inspection complete",
       render: () => {
-        return <div className="comp-top-tag">Recommended</div>;
+        return (
+          <div className="comp-top-tag">
+            {resultList && resultList[0] && resultList[0].immediatePercent
+              ? -100 * Number(resultList[0].immediatePercent) + "%"
+              : "-10%"}
+          </div>
+        );
       },
       key: "NORMAL"
     }
@@ -73,6 +79,7 @@ export default function Brand(props: any) {
         platformFee,
         thirdPartyFee,
         realSubtotal,
+        immediateFee,
         productPhoto
       } = item;
       // 不需要自己组织数据的教训.因为数据出不来
@@ -139,6 +146,18 @@ export default function Brand(props: any) {
                 </div>
               </div>
             </li>
+            {paymentTimeType === "NORMAL" ? (
+              <li className="seller-fee-line">
+                <span>Immediate Payment Fee</span>
+                <div className="tag-container">
+                  <span />
+                  <div>
+                    <span>-{currencyTrans(immediateFee)}</span>
+                  </div>
+                </div>
+              </li>
+            ) : null}
+
             <li className="subtotal">
               <span>Subtotal</span>
               <span>{currencyTrans(realSubtotal)}</span>
@@ -186,11 +205,11 @@ export default function Brand(props: any) {
         </section>
       </div>
       <ChoiceQuestionInner
-        onSelectHandler={(key) => {
+        onSelectHandler={key => {
           selectModelContextDispatch({
-            type: 'setPaymentTimeType',
+            type: "setPaymentTimeType",
             value: key
-          })
+          });
         }}
         currentSelect={paymentTimeType}
         arr={staticProcessSelect.map(({ content, render, key }) => ({
