@@ -65,65 +65,67 @@ export default function ProductList(props: any) {
 
   // 根据选择设置title
   useEffect(() => {
-    let url = props.location.pathname;
+    if (!isServer()) {
+      let url = props.location.pathname;
 
-    const splitResult = url.split(getProductListPath());
-    url = splitResult && splitResult[1] ? splitResult[1] : "";
-    let paramsArr = url.split(/-|\//);
-    if (paramsArr && paramsArr[0] === "") {
-      paramsArr = paramsArr.slice(1);
-    }
-    const jsonArr = new Array(5)
-      .fill("")
-      .map((item, index) => {
-        if (paramsArr && paramsArr[index]) {
-          return paramsArr[index];
+      const splitResult = url.split(getProductListPath());
+      url = splitResult && splitResult[1] ? splitResult[1] : "";
+      let paramsArr = url.split(/-|\//);
+      if (paramsArr && paramsArr[0] === "") {
+        paramsArr = paramsArr.slice(1);
+      }
+      const jsonArr = new Array(5)
+        .fill("")
+        .map((item, index) => {
+          if (paramsArr && paramsArr[index]) {
+            return paramsArr[index];
+          } else {
+            return "";
+          }
+        })
+        .map((item: string) => {
+          if (item.indexOf("all") === -1) {
+            return item;
+          } else {
+            return "";
+          }
+        });
+      // 分割后，应该最多有5个字符。
+      const json = {
+        brandName: jsonArr[0],
+        productName: jsonArr[1],
+        skuAttrNames: [jsonArr[2], jsonArr[3], jsonArr[4]]
+      };
+      // ssrTitle
+      // 当有机型的时候
+      const titleTemplete = `Buy Used REPLACE | Uptradeit.com`;
+      let ssrTitle = "";
+      if (json.productName) {
+        if (json.skuAttrNames && json.skuAttrNames[0]) {
+          ssrTitle = titleTemplete.replace(
+            "REPLACE",
+            `${json.productName.split(",")[0]} ${
+              json.skuAttrNames[0].split(",")[0]
+            }`
+          );
         } else {
-          return "";
+          ssrTitle = titleTemplete.replace(
+            "REPLACE",
+            `${json.productName.split(",")[0]}`
+          );
         }
-      })
-      .map((item: string) => {
-        if (item.indexOf("all") === -1) {
-          return item;
-        } else {
-          return "";
-        }
-      });
-    // 分割后，应该最多有5个字符。
-    const json = {
-      brandName: jsonArr[0],
-      productName: jsonArr[1],
-      skuAttrNames: [jsonArr[2], jsonArr[3], jsonArr[4]]
-    };
-    // ssrTitle
-    // 当有机型的时候
-    const titleTemplete = `Buy Used REPLACE | Uptradeit.com`;
-    let ssrTitle = "";
-    if (json.productName) {
-      if (json.skuAttrNames && json.skuAttrNames[0]) {
-        ssrTitle = titleTemplete.replace(
-          "REPLACE",
-          `${json.productName.split(",")[0]} ${
-            json.skuAttrNames[0].split(",")[0]
-          }`
-        );
       } else {
-        ssrTitle = titleTemplete.replace(
-          "REPLACE",
-          `${json.productName.split(",")[0]}`
-        );
+        if (json.brandName) {
+          ssrTitle = titleTemplete.replace(
+            "REPLACE",
+            `${json.brandName.split(",")[0]}`
+          );
+        }
       }
-    } else {
-      if (json.brandName) {
-        ssrTitle = titleTemplete.replace(
-          "REPLACE",
-          `${json.brandName.split(",")[0]}`
-        );
+      ssrTitle = ssrTitle || "Buy Used Phones | UpTradeit.com";
+      if (ssrTitle && document.title !== ssrTitle) {
+        document.title = ssrTitle;
       }
-    }
-    ssrTitle = ssrTitle || "Buy Used Phones | UpTradeit.com";
-    if (ssrTitle && document.title !== ssrTitle) {
-      document.title = ssrTitle;
     }
   }, [props.location.pathname]);
 
