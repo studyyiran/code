@@ -7,6 +7,7 @@ import { Collapse } from "antd";
 import { currencyTrans } from "utils/util";
 import { Tabs } from "components/tabs";
 import Tag from "components/tag";
+import { ChoiceQuestionInner } from "../condition/components/renderByType/components/choiceQuestion";
 const { Panel } = Collapse;
 
 export default function Brand(props: any) {
@@ -45,19 +46,25 @@ export default function Brand(props: any) {
     // 更新这个brandHaha
     props.history.push(props.route.path);
   }
+  const staticProcessSelect = [
+    {
+      content: "Paid in 14 days after inspection complete",
+      paymentTimeType: "DELAY"
+    },
+    {
+      content: "Paid in 1-2 days after inspection complete",
+      paymentTimeType: "NORMAL"
+    }
+  ];
   function renderList() {
     return resultList.map((item: any, index: number) => {
       const {
-        brandName,
         productName,
         bpvIds,
-        qpvIds,
         inquiryKey: productInquiryKey,
         deviceEstimate,
         platformFee,
         thirdPartyFee,
-        brandId,
-        productId,
         subTotal,
         productPhoto
       } = item;
@@ -171,6 +178,9 @@ export default function Brand(props: any) {
           <span className="big-font">{currencyTrans(guaranteedPayout)}</span>
         </section>
       </div>
+      <ChoiceQuestionInner
+        arr={staticProcessSelect.map(({ content }) => content)}
+      />
       <div className="risk-container">
         <section className="risk">
           <h3>Zero Risk & Free Retuns</h3>
