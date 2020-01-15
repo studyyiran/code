@@ -69,6 +69,9 @@ export default function Brand(props: any) {
       key: "NORMAL"
     }
   ];
+  function isNormal() {
+    return paymentTimeType === "NORMAL";
+  }
   function renderList() {
     return resultList.map((item: any, index: number) => {
       const {
@@ -79,6 +82,7 @@ export default function Brand(props: any) {
         platformFee,
         thirdPartyFee,
         realSubtotal,
+        subTotal,
         immediateFee,
         productPhoto
       } = item;
@@ -146,7 +150,7 @@ export default function Brand(props: any) {
                 </div>
               </div>
             </li>
-            {paymentTimeType === "NORMAL" ? (
+            {isNormal() ? (
               <li className="seller-fee-line">
                 <span>Immediate Payment Fee</span>
                 <div className="tag-container">
@@ -160,12 +164,26 @@ export default function Brand(props: any) {
 
             <li className="subtotal">
               <span>Subtotal</span>
-              <span>{currencyTrans(realSubtotal)}</span>
+              <span>
+                {currencyTrans(isNormal() ? subTotal - immediateFee : subTotal)}
+              </span>
             </li>
           </ul>
         </Panel>
       );
     });
+  }
+
+  function getTotalPayout() {
+    let count = 0;
+    (resultList || []).forEach(({ subTotal, immediateFee }: any) => {
+      if (isNormal() && subTotal > immediateFee) {
+        count += subTotal - immediateFee;
+      } else {
+        count += subTotal;
+      }
+    });
+    return currencyTrans(count);
   }
   return (
     <div className="page-offer">
@@ -201,7 +219,7 @@ export default function Brand(props: any) {
             {/*  receive and inspect the device(s) in your order.{" "}*/}
             {/*</TipsIcon>*/}
           </div>
-          <span className="big-font">{currencyTrans(guaranteedPayout)}</span>
+          <span className="big-font">{getTotalPayout()}</span>
         </section>
       </div>
       <ChoiceQuestionInner

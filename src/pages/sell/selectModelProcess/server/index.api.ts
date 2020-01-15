@@ -31,14 +31,14 @@ export const getinquirybyids = <T>(inquiryInfo: any) => {
   return requestGetResponse(Request<T>(requestWrapper(opts), []));
 };
 
-export const getinquirybykeys = debounce((inquiryInfo: any) => {
+export const getinquirybykeys = (inquiryInfo: any) => {
   const opts: IOpts = {
     url: "/product/getinquirybykeys",
     method: "post",
     params: inquiryInfo
   };
   return requestGetResponse(Request(requestWrapper(opts), []));
-}, 150);
+};
 // 创建订单接口， 只要发生错误，都提示用户可以写邮件寻求帮助
 export const createOrderStart = <T>(orderParams: any) => {
   console.warn("**createOrderStart**");
