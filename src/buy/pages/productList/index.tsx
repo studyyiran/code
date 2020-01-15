@@ -63,14 +63,13 @@ export default function ProductList(props: any) {
     getProductList();
   }, [getProductList]);
 
+  let hehePathName = props && props.location ? props.location.pathname : "";
   // 根据选择设置title
   useEffect(() => {
     if (!isServer()) {
-      let url = props.location.pathname;
-
-      const splitResult = url.split(getProductListPath());
-      url = splitResult && splitResult[1] ? splitResult[1] : "";
-      let paramsArr = url.split(/-|\//);
+      const splitResult = hehePathName.split(getProductListPath());
+      hehePathName = splitResult && splitResult[1] ? splitResult[1] : "";
+      let paramsArr = hehePathName.split(/-|\//);
       if (paramsArr && paramsArr[0] === "") {
         paramsArr = paramsArr.slice(1);
       }
@@ -127,7 +126,7 @@ export default function ProductList(props: any) {
         document.title = ssrTitle;
       }
     }
-  }, [props.location.pathname]);
+  }, []);
 
   function onClickSubmitHandler(searchValues: any) {
     try {
