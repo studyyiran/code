@@ -165,7 +165,7 @@ export function HeaderProductPart(props: {
                 </div>
               }
             />
-            <TopIconList />
+            {/*<TopIconList />*/}
           </div>
         }
       />
