@@ -43,7 +43,7 @@ export function TopSwiper(props: any) {
           Actual Phone
         </div>
         <RenderByCondition
-          ComponentMb={<img className="mb-zoom" src={require("./res/zoom.svg")} />}
+          ComponentMb={<img onClick={onOpenModal} className="mb-zoom" src={require("./res/zoom.svg")} />}
           ComponentPc={null}
         />
         <RenderByCondition
