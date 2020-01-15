@@ -25,7 +25,7 @@ export default function OrderInfo() {
       ((needInsurance && shippingInsurance) || 0);
   }
   function RenderOneProductOrder(props: any) {
-    const { productName, bpvIds, inquiryKey, subTotal, children } = props;
+    const { productName, bpvIds, inquiryKey, realSubtotal, children } = props;
     return (
       <div className="com-order-info">
         <ul key={inquiryKey}>
@@ -41,7 +41,7 @@ export default function OrderInfo() {
             <h3>Subtotal</h3>
             <p>
               {priceUnit}
-              {subTotal}
+              {realSubtotal}
             </p>
           </li>
         </ul>

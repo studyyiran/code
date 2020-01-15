@@ -90,6 +90,7 @@ interface IChoiceInner {
   arr: {
     render: () => void;
     content: string;
+    key: string;
   }[];
   currentSelect?: string;
   onSelectHandler?: (id: string) => void;
@@ -111,14 +112,14 @@ export function ChoiceQuestionInner(props: IChoiceInner) {
   }
   return (
     <div className="comp-choice-question">
-      {arr.map(({ content, render }, index: any) => {
+      {arr.map(({ content, render, key }) => {
         if (content) {
           return (
             <Option
-              key={index}
-              index={index}
+              key={key}
+              index={key}
               currentSelect={getCurrent()}
-              onClick={onClickHandler.bind({}, index)}
+              onClick={onClickHandler.bind({}, key)}
             >
               {content}
               {render ? render() : null}

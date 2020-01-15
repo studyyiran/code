@@ -37,6 +37,13 @@ function reducer(state: IContextState, action: IReducerAction) {
   const { type, value } = action;
   let newState = { ...state };
   switch (type) {
+    case 'setPaymentTimeType': {
+      newState = {
+        ...newState,
+        paymentTimeType: value
+      };
+      break;
+    }
     case "setSkuId": {
       newState = {
         ...newState,
@@ -265,6 +272,7 @@ function reducer(state: IContextState, action: IReducerAction) {
       "userProductList",
       "needInsurance",
       "expressOption",
+      "paymentTimeType",
       "inquiryKey",
       "phoneConditionStaticAnswer"
     ]);
@@ -654,6 +662,7 @@ interface IContextState {
   productsList: []; // 热刷新
   expressOption: any; // 用户数据
   needInsurance: boolean; // 用户数据
+  paymentTimeType: "NORMAL" | "DELAY";
   lastestOrder: any[]; // 用户数据
   skuId: string; // 用户数据
 }
@@ -665,6 +674,7 @@ export interface ISelectModelContext extends IContextActions {
 
 export function ModelContextProvider(props: any) {
   let initState: IContextState = {
+    paymentTimeType: 'DELAY',
     brandList: [],
     modelInfo: {
       modelId: "",

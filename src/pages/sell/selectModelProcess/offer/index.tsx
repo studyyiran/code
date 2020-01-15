@@ -22,7 +22,8 @@ export default function Brand(props: any) {
     priceInfo,
     userProductList,
     inquiryKey,
-    productsList
+    productsList,
+    paymentTimeType
   } = selectModelContextValue;
   const { resultList, guaranteedPayout } = priceInfo;
   function selectHandler(id: any) {
@@ -52,14 +53,14 @@ export default function Brand(props: any) {
       render: () => {
         return <div className="recommended comp-top-tag">Recommended</div>;
       },
-      paymentTimeType: "DELAY"
+      key: "DELAY"
     },
     {
       content: "Paid in 1-2 days after inspection complete",
       render: () => {
         return <div className="comp-top-tag">Recommended</div>;
       },
-      paymentTimeType: "NORMAL"
+      key: "NORMAL"
     }
   ];
   function renderList() {
@@ -71,7 +72,7 @@ export default function Brand(props: any) {
         deviceEstimate,
         platformFee,
         thirdPartyFee,
-        subTotal,
+        realSubtotal,
         productPhoto
       } = item;
       // 不需要自己组织数据的教训.因为数据出不来
@@ -140,7 +141,7 @@ export default function Brand(props: any) {
             </li>
             <li className="subtotal">
               <span>Subtotal</span>
-              <span>{currencyTrans(subTotal)}</span>
+              <span>{currencyTrans(realSubtotal)}</span>
             </li>
           </ul>
         </Panel>
@@ -185,9 +186,17 @@ export default function Brand(props: any) {
         </section>
       </div>
       <ChoiceQuestionInner
-        arr={staticProcessSelect.map(({ content, render }) => ({
+        onSelectHandler={(key) => {
+          selectModelContextDispatch({
+            type: 'setPaymentTimeType',
+            value: key
+          })
+        }}
+        currentSelect={paymentTimeType}
+        arr={staticProcessSelect.map(({ content, render, key }) => ({
           content,
-          render
+          render,
+          key
         }))}
       />
       <div className="risk-container">
