@@ -19,8 +19,8 @@ let addressErrorTips = "The address could not be found.";
 function PaymentInner(props: any) {
   const orderInfoContext = useContext(OrderInfoContext);
   const ajaxStatus = useRef();
-  const [validAddressSuccessful, setValidAddressSuccessful] = useState(false);
-
+  
+  const {validAddressSuccessful, setValidAddressSuccessful} = props
   const {
     orderInfoContextDispatch,
     orderInfoContextValue,
