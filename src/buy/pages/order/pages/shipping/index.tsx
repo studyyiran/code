@@ -54,7 +54,7 @@ export default function Shipping(props: any) {
         {expressInfo.map((item: any) => {
           const { token, totalFee, name } = item;
           return (
-            <div className="checkbox-container">
+            <div className="checkbox-container" key={token}>
               <Checkbox
                 checked={String(currentUserExpress) === String(token)}
                 onChange={() => {
