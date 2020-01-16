@@ -140,28 +140,29 @@ export function useOrderInfoGetAction(
             type: orderInfoReducerTypes.setExpressInfo,
             value: res
           });
+          // 结束
+          dispatch({
+            type: orderInfoReducerTypes.setPendingStatus,
+            value: false
+          });
         });
         // 3 处理结果
-        expressInfo
-          .catch(res => {
-            if (res) {
-              const { code, resultMessage } = res;
-              if (String(code) === "10007") {
-              }
-              if (resultMessage) {
-                Message.error(resultMessage);
-              }
+        expressInfo.catch(res => {
+          if (res) {
+            const { code, resultMessage } = res;
+            if (String(code) === "10007") {
             }
-            return res;
-          })
-          .then(res => {
-            // 结束
-            dispatch({
-              type: orderInfoReducerTypes.setPendingStatus,
-              value: false
-            });
-            return Promise.reject(res);
+            if (resultMessage) {
+              Message.error(resultMessage);
+            }
+          }
+          // 结束
+          dispatch({
+            type: orderInfoReducerTypes.setPendingStatus,
+            value: false
           });
+          return res;
+        });
         // 2 返回结果给外面
         return expressInfo;
       } else {

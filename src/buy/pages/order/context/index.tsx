@@ -81,7 +81,7 @@ export function OrderInfoContextProvider(props: any) {
     expressInfo: [],
     userInfo: {} as any,
     invoiceInfo: {} as any,
-    invoiceSameAddr: false,
+    invoiceSameAddr: true,
     orderInfo: "",
     checkOrderInfo: {} as any,
     payInfo: {

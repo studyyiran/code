@@ -30,17 +30,18 @@ function UserInformationWrapper(props: any) {
       {...props}
       // 这个问题能引申出很多问题.我们交给表单的数据源的安全,是否能够保证?你用dispatch,能否解决数据不被意外变动的问题呢?需要去制作demo来考证,直接修改store数据的影响.我其实并不敢相信他居然能修改成功.
       // propsInfo={Object.assign(userInfoForm, userInfo)}
-      propsInfo={{...userInfoForm, ...userInfo}}
+      propsInfo={{ ...userInfoForm, ...userInfo }}
       submitHandler={(result: any) => {
         // 开始验证地址 // 返回promise
-        return checkAddress(result).then(() => {
-          // 地址通过后,才提交最终的结果
-          orderProcessRecord(undefined, result);
-          orderInfoContextDispatch({
-            type: orderInfoReducerTypes.setUserInfo,
-            value: result
-          });
-        });
+        return checkAddress(result)
+          .then(() => {
+            // 地址通过后,才提交最终的结果
+            orderProcessRecord(undefined, result);
+            orderInfoContextDispatch({
+              type: orderInfoReducerTypes.setUserInfo,
+              value: result
+            });
+          })
       }}
     >
       {/*<LoginPop />*/}
