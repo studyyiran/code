@@ -156,6 +156,7 @@ function reducer(state: IOrderInfoState, action: IReducerAction) {
       // 清空paypal信息 信用卡信息
       newState = {
         ...newState,
+        invoiceSameAddr: true,
         userExpress: "",
         // orderInfo: [], // 不能清空
         // userInfo: {} as any, // 不能清空 因为后续渲染还需要这个
