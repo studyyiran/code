@@ -8,6 +8,7 @@ export interface IReducerAction {
 export interface ISsrFileStore {
   ssrConfig: {
     ssrTitle: string;
+    metaDesc?: string;
   };
   storeList: IOriginData[];
 }
