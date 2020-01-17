@@ -33,7 +33,7 @@ export default function VideoComponent(props: {
       const ref = window.setInterval(() => {
         // @ts-ignore
         setRandomKey(randomKey => {
-          if (randomKey < 2) {
+          if (randomKey < 5) {
             window.clearInterval(ref);
           } else {
             const next = randomKey + 1;
