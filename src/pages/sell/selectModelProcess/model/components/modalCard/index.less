@@ -13,7 +13,9 @@
       flex-direction: column;
       background: @white;
       overflow: hidden;
-      overflow-y: scroll;
+      &[data-selected='true'] {
+        overflow-y: scroll;
+      }
       > div.img-container {
         display: flex;
         justify-content: center;
