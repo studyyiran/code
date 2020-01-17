@@ -72,12 +72,16 @@
 .innerdiv-transition(@rules) {
   background-size: cover;
   background-position: center;
-  transition: transform 0.3s;
+  .pc({
+    transition: transform 0.3s;
+  });
   transform: scale(1.01);
   @rules();
-  &:hover {
-    transform: scale(1.2);
-  }
+  .pc({
+    &:hover {
+      transform: scale(1.2);
+    } 
+  });
 }
 
 .hello({
