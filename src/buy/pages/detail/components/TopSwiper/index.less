@@ -57,13 +57,14 @@
     .swiper-pc {
       display: flex;
       justify-content: center;
-
+      >div {
+        flex: 0 0 @imageWidth;
+      }
       //margin-bottom: 40 * @px;
       //padding: 10 * @px 0;
       height: @imageWidth;
       .inner-div-container {
         overflow: hidden;
-        width: @imageWidth;
         height: @imageWidth;
         .innerdiv {
           .upup();
