@@ -126,6 +126,24 @@ export const routerConfig = [
     title: "Protection subscribe  | UpTradeit.com",
     exact: true,
     Component: PaySubscribePage
+  },
+  {
+    path: "/jobs",
+    title: " Jobs at UpTrade | UpTradeit.com",
+    exact: true,
+    Component: PaySubscribePage
+  },
+  {
+    path: "/jobs/headofoperations",
+    title: "Jobs at UpTrade - Head of Operations | UpTradeit.com",
+    exact: true,
+    Component: PaySubscribePage
+  },
+  {
+    path: "/jobs/operationintern",
+    title: "Jobs at UpTrade - Operation Intern | UpTradeit.com",
+    exact: true,
+    Component: PaySubscribePage
   }
   // {
   //   title: "404 | UpTradeit.com",
