@@ -72,7 +72,12 @@
               overflow: hidden;
               .innerdiv {
                 width: 100%;
-                height: 260 * @px;
+                .pc({
+                  height: 260 * @px;
+                });
+                .mb({
+                  height: 120 * @px;
+                });
                 .innerdiv-transition({
                   background-size: contain;
                 });
