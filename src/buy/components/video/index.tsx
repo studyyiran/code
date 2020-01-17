@@ -28,8 +28,8 @@ export default function VideoComponent(props: {
   }
   return (
     <Player
-      preload={"none"}
-      poster={require("./res/poster.png")}
+      // preload={"none"}
+      // poster={require("./res/poster.png")}
       ref={(player: any) => {
         if (player) {
           (playerRef.current as any) = player;
