@@ -55,7 +55,7 @@ export const detailSsrRule = async (url: string) => {
           const PHONEMODEL = `${lineOne} ${lineTwo
             .replace("(", " ")
             .replace(")", "")}`;
-          ssrRes.ssrConfig.metaDesc = `"This used refurbished certified ${PHONEMODEL} for sale has passed a rigorous inspection process by UpTrade. View real actual phone photos and inspection report. This phone comes with a 30 day free return policy.`;
+          ssrRes.ssrConfig.metaDesc = `start!!! This used refurbished certified ${PHONEMODEL} for sale has passed a rigorous inspection process by UpTrade. View real actual phone photos and inspection report. This phone comes with a 30 day free return policy.end!!!`;
           try {
             const json = {
               "@context": "https://schema.org/",
