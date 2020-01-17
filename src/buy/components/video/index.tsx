@@ -5,6 +5,7 @@ import { Player, BigPlayButton } from "video-react";
 import "./index.less";
 import { GlobalSettingContext, IGlobalSettingContext } from "../../context";
 import { isServer } from "../../common/utils/util";
+import { RenderByCondition } from "../RenderByCondition";
 let isFullScreen = false;
 export default function VideoComponent(props: {
   src: "";
@@ -33,7 +34,7 @@ export default function VideoComponent(props: {
       const ref = window.setInterval(() => {
         // @ts-ignore
         setRandomKey(randomKey => {
-          if (randomKey > 5) {
+          if (randomKey > 0) {
             window.clearInterval(ref);
           } else {
             const next = randomKey + 1;
@@ -44,24 +45,50 @@ export default function VideoComponent(props: {
     }
   }, []);
   return (
-    <Player
-      key={randomKey}
-      // preload={"none"}
-      // poster={require("./res/poster.png")}
-      ref={(player: any) => {
-        if (player) {
-          (playerRef.current as any) = player;
-          (playerRef.current as any).subscribeToStateChange(handleStateChange);
-        }
-      }}
-      src={src}
-      className={`${className ? className : ""} comp-video`}
-      height="100px"
-      fluid={false}
-    >
-      <BigPlayButton position={"center"} />
-    </Player>
+    <RenderByCondition
+      ComponentMb={
+        <Player
+          key={randomKey}
+          preload={"none"}
+          poster={poster}
+          ref={(player: any) => {
+            if (player) {
+              (playerRef.current as any) = player;
+              (playerRef.current as any).subscribeToStateChange(
+                handleStateChange
+              );
+            }
+          }}
+          src={src}
+          className={`${className ? className : ""} comp-video`}
+          height="100px"
+          fluid={false}
+        >
+          <BigPlayButton position={"center"} />
+        </Player>
+      }
+      ComponentPc={
+        <Player
+          key={randomKey}
+          ref={(player: any) => {
+            if (player) {
+              (playerRef.current as any) = player;
+              (playerRef.current as any).subscribeToStateChange(
+                handleStateChange
+              );
+            }
+          }}
+          src={src}
+          className={`${className ? className : ""} comp-video`}
+          height="100px"
+          fluid={false}
+        >
+          <BigPlayButton position={"center"} />
+        </Player>
+      }
+    />
   );
+
   return (
     <video
       className={`${className ? className : ""} comp-video`}

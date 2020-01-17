@@ -43,7 +43,13 @@ export function TopSwiper(props: any) {
           Actual Phone
         </div>
         <RenderByCondition
-          ComponentMb={<img onClick={onOpenModal} className="mb-zoom" src={require("./res/zoom.svg")} />}
+          ComponentMb={
+            <img
+              onClick={onOpenModal}
+              className="mb-zoom"
+              src={require("./res/zoom.svg")}
+            />
+          }
           ComponentPc={null}
         />
         <RenderByCondition
@@ -137,7 +143,15 @@ export function TopSwiper(props: any) {
 
             if (buyProductVideo) {
               dom.unshift(
-                <VideoComponent className="innerdiv" src={buyProductVideo} />
+                <VideoComponent
+                  className="innerdiv"
+                  src={buyProductVideo}
+                  poster={
+                    buyProductImgM && buyProductImgM[0]
+                      ? buyProductImgM[0]
+                      : require("./res/poster.png")
+                  }
+                />
               );
             }
             return <Carousel className="swiper-mb mb-carousel">{dom}</Carousel>;
