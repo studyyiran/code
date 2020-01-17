@@ -2,16 +2,24 @@
 
 @p1: {
   .jobs-layout {
-    ul,li {
+    ul,
+    li {
       list-style: disc;
-      margin-left: 13 *@px;
+      margin-left: 13 * @px;
     }
     a {
       text-decoration: underline;
     }
     .title-font {
+      .font(16 * @f, @boldWeight, #000000);
     }
     .normal-font {
+    }
+    .job-content-section {
+      margin: 30 * @px 0;
+      h4 {
+        margin-bottom: 10 * @px;
+      }
     }
     .footer {
       margin-top: 100 * @px;
