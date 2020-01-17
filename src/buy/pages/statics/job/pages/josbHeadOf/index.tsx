@@ -1,7 +1,7 @@
 import React from "react";
 import { JobsContent } from "../../components/content";
 
-export const JosbHeadOf: React.FC = props => {
+export const JobsHeadOf: React.FC = props => {
   const config = [
     {
       title: "Job Description",

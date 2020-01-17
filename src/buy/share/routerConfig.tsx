@@ -19,8 +19,9 @@ import UserRegisterEmail from "../pages/personal/pages/registerEmail";
 import UserForgetPassword from "../pages/personal/pages/userForgetPassword";
 import UserResetPassword from "../pages/personal/pages/userResetPassword";
 import { PayProtectionPage, PaySubscribePage } from "../pages/payProtection";
-import {JobsPage} from "../pages/statics/job/pages/jobs";
-import {JosbHeadOf} from "../pages/statics/job/pages/josbHeadOf";
+import { JobsPage } from "../pages/statics/job/pages/jobs";
+import { JobsHeadOf } from "../pages/statics/job/pages/josbHeadOf";
+import { JobsIntern } from "../pages/statics/job/pages/josbIntern";
 
 export const routerConfig = [
   {
@@ -139,14 +140,14 @@ export const routerConfig = [
     path: "/jobs/headofoperations",
     title: "Jobs at UpTrade - Head of Operations | UpTradeit.com",
     exact: true,
-    Component: JosbHeadOf
+    Component: JobsHeadOf
   },
-  // {
-  //   path: "/jobs/operationintern",
-  //   title: "Jobs at UpTrade - Operation Intern | UpTradeit.com",
-  //   exact: true,
-  //   Component: JobPosTwo
-  // }
+  {
+    path: "/jobs/operationintern",
+    title: "Jobs at UpTrade - Operation Intern | UpTradeit.com",
+    exact: true,
+    Component: JobsIntern
+  }
   // {
   //   title: "404 | UpTradeit.com",
   //   Component: () => <div>404</div>
