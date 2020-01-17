@@ -317,7 +317,7 @@ const gotoBuy = async (ctx: any, next: any, buyCurrentRouter: any) => {
     "<script>var SSRDATA=" + JSON.stringify(originData) + ";</script>$1"
   );
   template = template.replace(
-    /\<meta name=\"description\" content=\"\"\ \/>/,
+    /\<meta name=\"description\" content=\"\"\/>/,
     '<meta name="description" content="' + htmlDes + '">'
   );
   const jsonInfo =
@@ -325,7 +325,7 @@ const gotoBuy = async (ctx: any, next: any, buyCurrentRouter: any) => {
       ? originData.ssrConfig.jsonInfo
       : "";
   template = template.replace(
-    /\<script type=\"application\" \/>/,
+    /\<script type=\"application\">\<\/script\>/,
     `<script type="application/ld+json">${jsonInfo}</script>`
   );
 
