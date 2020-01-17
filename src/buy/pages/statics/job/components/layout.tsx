@@ -5,7 +5,7 @@ interface IProps {}
 
 export const JobsLayout: React.FC = (props) => {
   return <div className="jobs-layout">
-    <h3>Jobs at UpTrade</h3>
+    <h3 className="title">Jobs at UpTrade</h3>
     <section>
       {props.children}
     </section>
