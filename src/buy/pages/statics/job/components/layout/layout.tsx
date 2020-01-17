@@ -16,7 +16,7 @@ export const JobsLayout: React.FC<IProps> = (props: IProps) => {
         {props.children}
         <div className="footer">
           {isJobFooter
-            ? "Apply to UP Trade Technologies Inc., 550 S Watters Road, Suite 276, Allen, TX 75013."
+            ? "Apply to UP Trade Technologies Inc.550 S Watters Road, Suite 276, Allen, TX 75013."
             : "Jan 17, 2019"}
         </div>
       </section>

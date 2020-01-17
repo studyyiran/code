@@ -11,7 +11,6 @@ export const JobsPage: React.FC = props => {
         <li><RouterLink to={'/jobs/headofoperations'}>Heads of Operations</RouterLink></li>
         <li><RouterLink to={'/jobs/operationintern'}>Operation Intern</RouterLink></li>
       </ul>
-      
     </JobsLayout>
   );
 };
