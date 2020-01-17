@@ -51,9 +51,11 @@ export const detailSsrRule = async (url: string) => {
             .replace("(", "- ")
             .replace(")", "")} For Sale | UpTradeit.com`;
 
-          ssrRes.ssrConfig.metaDesc = `${lineOne} ${lineTwo
+          // 设置描述
+          const PHONEMODEL = `${lineOne} ${lineTwo
             .replace("(", " ")
             .replace(")", "")}`;
+          ssrRes.ssrConfig.metaDesc = `"This used refurbished certified ${PHONEMODEL} for sale has passed a rigorous inspection process by UpTrade. View real actual phone photos and inspection report. This phone comes with a 30 day free return policy.`;
           try {
             const json = {
               "@context": "https://schema.org/",

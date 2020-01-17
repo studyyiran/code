@@ -301,13 +301,11 @@ const gotoBuy = async (ctx: any, next: any, buyCurrentRouter: any) => {
     originData && originData.ssrConfig && originData.ssrConfig.ssrTitle
       ? originData.ssrConfig.ssrTitle
       : title;
-  const PHONEMODEL = "PHONEMODEL";
-  const defaultDes = `Set all product detail page meta descriptions to this format: "This used refurbished certified ${PHONEMODEL} for sale has passed a rigorous inspection process by UpTrade. View real actual phone photos and inspection report. This phone comes with a 30 day free return policy.`;
 
   let htmlDes =
     originData && originData.ssrConfig && originData.ssrConfig.metaDesc
-      ? defaultDes.replace(PHONEMODEL, originData.ssrConfig.metaDesc)
-      : defaultDes;
+      ? originData.ssrConfig.metaDesc
+      : "";
   template = template.replace(
     "<ssrtitle/>",
     "<title>" + htmlTitle + "</title>"
