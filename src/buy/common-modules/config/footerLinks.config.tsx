@@ -72,6 +72,10 @@ const footerInfo = [
       {
         subTitle: "Who We Are",
         href: "/who-we-are"
+      },
+      {
+        subTitle: "Jobs at UpTrade",
+        href: "/jobs"
       }
     ]
   },

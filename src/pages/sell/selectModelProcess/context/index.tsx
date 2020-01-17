@@ -37,6 +37,13 @@ function reducer(state: IContextState, action: IReducerAction) {
   const { type, value } = action;
   let newState = { ...state };
   switch (type) {
+    case 'setPaymentTimeType': {
+      newState = {
+        ...newState,
+        paymentTimeType: value
+      };
+      break;
+    }
     case "setSkuId": {
       newState = {
         ...newState,
@@ -265,6 +272,7 @@ function reducer(state: IContextState, action: IReducerAction) {
       "userProductList",
       "needInsurance",
       "expressOption",
+      "paymentTimeType",
       "inquiryKey",
       "phoneConditionStaticAnswer"
     ]);
@@ -422,7 +430,7 @@ function useGetAction(
       if (state.userProductList && state.userProductList.length) {
         const keys = actions.getInquiryKeyList();
         // mock根据keyarray获取 最新的报价列表
-        const info: any = await getinquirybykeys({ keys });
+        const info: any = await getinquirybykeys({ keys, paymentTimeType: state.paymentTimeType });
         window.setTimeout(() => {
           const rNumber = Math.random();
           dispatch({
@@ -623,7 +631,7 @@ function useGetAction(
     state.categoryId
   ]);
   actions.getPriceInfo = useCallback(actions.getPriceInfo, [
-    state.userProductList
+    state.userProductList, state.paymentTimeType
   ]);
   // 虽然是主动调用，但是最好还是更新。需要补充更多的依赖
   actions.getInquiryByIds = useCallback(actions.getInquiryByIds, [
@@ -654,6 +662,7 @@ interface IContextState {
   productsList: []; // 热刷新
   expressOption: any; // 用户数据
   needInsurance: boolean; // 用户数据
+  paymentTimeType: "NORMAL" | "DELAY";
   lastestOrder: any[]; // 用户数据
   skuId: string; // 用户数据
 }
@@ -665,6 +674,7 @@ export interface ISelectModelContext extends IContextActions {
 
 export function ModelContextProvider(props: any) {
   let initState: IContextState = {
+    paymentTimeType: 'DELAY',
     brandList: [],
     modelInfo: {
       modelId: "",

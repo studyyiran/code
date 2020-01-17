@@ -1,8 +1,15 @@
 @import (reference) "~buy/common/styles/index.less";
 @p: {
+  .yr-modal-content {
+    .user-input-submit-button {
+      margin-bottom: 10*@px;
+    }
+  }
   .user-input-submit-button {
     margin-top: 20 * @px;
-    margin-bottom: 150*@px;
+    .pc({
+      margin-bottom: 150*@px;
+    });
   }
   .order-layout {
     .setpage(1170 * @px);

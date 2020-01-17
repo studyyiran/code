@@ -301,6 +301,11 @@ const gotoBuy = async (ctx: any, next: any, buyCurrentRouter: any) => {
     originData && originData.ssrConfig && originData.ssrConfig.ssrTitle
       ? originData.ssrConfig.ssrTitle
       : title;
+
+  let htmlDes =
+    originData && originData.ssrConfig && originData.ssrConfig.metaDesc
+      ? originData.ssrConfig.metaDesc
+      : "";
   template = template.replace(
     "<ssrtitle/>",
     "<title>" + htmlTitle + "</title>"
@@ -309,6 +314,19 @@ const gotoBuy = async (ctx: any, next: any, buyCurrentRouter: any) => {
     /(<\/head>)/,
     "<script>var SSRDATA=" + JSON.stringify(originData) + ";</script>$1"
   );
+  template = template.replace(
+    /\<meta name=\"description\" content=\"\"\/>/,
+    '<meta name="description" content="' + htmlDes + '">'
+  );
+  const jsonInfo =
+    originData && originData.ssrConfig && originData.ssrConfig.jsonInfo
+      ? originData.ssrConfig.jsonInfo
+      : "";
+  template = template.replace(
+    /\<script type=\"application\">\<\/script\>/,
+    `<script type="application/ld+json">${jsonInfo}</script>`
+  );
+
   ctx.body = template;
   next();
 };

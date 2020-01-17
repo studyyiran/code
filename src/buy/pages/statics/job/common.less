@@ -1,0 +1,52 @@
+@import (reference) "~buy/common/styles/index.less";
+
+@p1: {
+  .jobs-layout {
+    ul,
+    li {
+      list-style: disc;
+      margin-left: 13 * @px;
+    }
+    a {
+      text-decoration: underline;
+    }
+    .title-font {
+      .font(16 * @f, @boldWeight, #000000);
+      .sub-title();
+    }
+    .normal-font {
+    }
+    .job-content-section {
+      margin: 50 * @px 0;
+      ul {
+        line-height: 1.4;
+        li {
+          margin: 4 *@px 0;
+        }
+      }
+      .mb({
+        margin: 40 * @px 0;
+      });
+      h4 {
+        margin-bottom: 20 * @px;
+      }
+    }
+    .footer {
+      &[data-type="true"] {
+        font-style:italic;
+      }
+      margin-top: 100 * @px;
+      .mb({
+        margin-top: 50 * @px;
+      });
+    }
+    .sub-title {
+      font-size: 32 * @px;
+      .mb({
+        font-size: 22 * @px;
+      });
+    }
+  }
+};
+
+.hello(@p1);

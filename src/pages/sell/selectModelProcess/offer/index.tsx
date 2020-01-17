@@ -22,7 +22,8 @@ export default function Brand(props: any) {
     priceInfo,
     userProductList,
     inquiryKey,
-    productsList
+    productsList,
+    paymentTimeType
   } = selectModelContextValue;
   const { resultList, guaranteedPayout } = priceInfo;
   function selectHandler(id: any) {
@@ -52,16 +53,25 @@ export default function Brand(props: any) {
       render: () => {
         return <div className="recommended comp-top-tag">Recommended</div>;
       },
-      paymentTimeType: "DELAY"
+      key: "DELAY"
     },
     {
       content: "Paid in 1-2 days after inspection complete",
       render: () => {
-        return <div className="comp-top-tag">Recommended</div>;
+        return (
+          <div className="comp-top-tag">
+            {resultList && resultList[0] && resultList[0].immediatePercent
+              ? -100 * Number(resultList[0].immediatePercent) + "%"
+              : "-10%"}
+          </div>
+        );
       },
-      paymentTimeType: "NORMAL"
+      key: "NORMAL"
     }
   ];
+  function isNormal() {
+    return paymentTimeType === "NORMAL";
+  }
   function renderList() {
     return resultList.map((item: any, index: number) => {
       const {
@@ -71,7 +81,9 @@ export default function Brand(props: any) {
         deviceEstimate,
         platformFee,
         thirdPartyFee,
+        realSubtotal,
         subTotal,
+        immediateFee,
         productPhoto
       } = item;
       // 不需要自己组织数据的教训.因为数据出不来
@@ -138,14 +150,40 @@ export default function Brand(props: any) {
                 </div>
               </div>
             </li>
+            {isNormal() ? (
+              <li className="seller-fee-line">
+                <span>Immediate Payment Fee</span>
+                <div className="tag-container">
+                  <span />
+                  <div>
+                    <span>-{currencyTrans(immediateFee)}</span>
+                  </div>
+                </div>
+              </li>
+            ) : null}
+
             <li className="subtotal">
               <span>Subtotal</span>
-              <span>{currencyTrans(subTotal)}</span>
+              <span>
+                {currencyTrans(isNormal() ? subTotal - immediateFee : subTotal)}
+              </span>
             </li>
           </ul>
         </Panel>
       );
     });
+  }
+
+  function getTotalPayout() {
+    let count = 0;
+    (resultList || []).forEach(({ subTotal, immediateFee }: any) => {
+      if (isNormal() && subTotal > immediateFee) {
+        count += subTotal - immediateFee;
+      } else {
+        count += subTotal;
+      }
+    });
+    return currencyTrans(count);
   }
   return (
     <div className="page-offer">
@@ -181,13 +219,21 @@ export default function Brand(props: any) {
             {/*  receive and inspect the device(s) in your order.{" "}*/}
             {/*</TipsIcon>*/}
           </div>
-          <span className="big-font">{currencyTrans(guaranteedPayout)}</span>
+          <span className="big-font">{getTotalPayout()}</span>
         </section>
       </div>
       <ChoiceQuestionInner
-        arr={staticProcessSelect.map(({ content, render }) => ({
+        onSelectHandler={key => {
+          selectModelContextDispatch({
+            type: "setPaymentTimeType",
+            value: key
+          });
+        }}
+        currentSelect={paymentTimeType}
+        arr={staticProcessSelect.map(({ content, render, key }) => ({
           content,
-          render
+          render,
+          key
         }))}
       />
       <div className="risk-container">

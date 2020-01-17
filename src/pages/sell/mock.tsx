@@ -330,6 +330,7 @@ export const mockgetinquirybykeys = {
       platformFee: 30.0,
       thirdPartyFee: 15.0,
       subTotal: 18.0,
+      realSubtotal: 18.0,
       insuranceFee: 0.18,
       expressFeess: null,
       bpvIds: [

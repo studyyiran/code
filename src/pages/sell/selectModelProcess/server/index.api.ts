@@ -123,7 +123,7 @@ export const getSkuId = <T>(params: any) => {
 
 export const skuIdToPhoneInfo = <T>(skuId: string) => {
   const opts: IOpts = {
-    url: `/product/getSKU/${skuId}`,
+    url: `/product/getSKU/${skuId}`
   };
   return requestGetResponse(Request<T>(requestWrapper(opts)));
 };

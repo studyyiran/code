@@ -39,7 +39,8 @@ export default function SummaryWrapper(props: any) {
   const {
     needInsurance,
     expressOption,
-    userProductList
+    userProductList,
+    paymentTimeType
   } = selectModelContextValue;
   const staticMap = {
     "1": "THREE_DAYS",
@@ -63,7 +64,8 @@ export default function SummaryWrapper(props: any) {
         brandId: item.brand,
         inquiryKey: item.inquiryKey
       };
-    })
+    }),
+    paymentTimeType: paymentTimeType,
   };
   return <Summary {...props} {...myProps} />;
 }
@@ -447,6 +449,7 @@ class Summary extends React.Component<IDoneProps, IDoneStates> {
       // 整合数据
       const {
         needInsurance,
+        paymentTimeType,
         sendBox,
         expreeSendDateType,
         subOrders,
@@ -492,6 +495,7 @@ class Summary extends React.Component<IDoneProps, IDoneStates> {
         needInsurance
       };
       const postData = {
+        paymentTimeType,
         sendBox,
         expreeSendDateType,
         userInfo,
