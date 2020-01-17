@@ -63,7 +63,7 @@ export function TopSwiper(props: any) {
             });
             if (buyProductVideo) {
               dom.unshift(
-                <VideoComponent className="innerdiv" src={buyProductVideo} />
+                <VideoComponent key="videocomponent" className="innerdiv" src={buyProductVideo} />
               );
             }
             dom = dom.filter((item: any, index: any) => {
@@ -144,6 +144,7 @@ export function TopSwiper(props: any) {
             if (buyProductVideo) {
               dom.unshift(
                 <VideoComponent
+                  key="videocomponent"
                   className="innerdiv"
                   src={buyProductVideo}
                   poster={

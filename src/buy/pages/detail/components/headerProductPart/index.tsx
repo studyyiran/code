@@ -13,7 +13,7 @@ import { StartBuyButton } from "../startBuyButton";
 import { TopIconList } from "../topIconList";
 import "./index.less";
 import TipsIcon from "../../../../components/tipsIcon";
-import {OnSaleTag} from "../onSaleTag";
+import { OnSaleTag } from "../onSaleTag";
 
 export function HeaderProductPart(props: {
   productDetail: IProductDetail;
@@ -214,9 +214,9 @@ function ProductInfo(props: any) {
     }
   }
   function renderList() {
-    const dom = titleList.slice(1).map(({ title, content, color }) => {
+    const dom = titleList.slice(1).map(({ title, content, color }, index) => {
       return (
-        <div className="condition-list-item">
+        <div className="condition-list-item" key={index}>
           <h4 className="condition-buy-level" style={{ background: color }}>
             {title}
           </h4>
