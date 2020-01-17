@@ -8,8 +8,8 @@ export const JobsPage: React.FC = props => {
   return (
     <JobsLayout className="job-page" >
       <ul>
-        <li><RouterLink to={'/jobs/headofoperations'}>Heads of Operations</RouterLink></li>
-        <li><RouterLink to={'/jobs/operationintern'}>Operation Intern</RouterLink></li>
+        <li className="sub-title"><RouterLink to={'/jobs/headofoperations'}>Heads of Operations</RouterLink></li>
+        <li className="sub-title"><RouterLink to={'/jobs/operationintern'}>Operation Intern</RouterLink></li>
       </ul>
     </JobsLayout>
   );

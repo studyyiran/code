@@ -12,6 +12,7 @@
     }
     .title-font {
       .font(16 * @f, @boldWeight, #000000);
+      .sub-title();
     }
     .normal-font {
     }
@@ -31,9 +32,18 @@
       }
     }
     .footer {
+      &[data-type="true"] {
+        font-style:italic;
+      }
       margin-top: 100 * @px;
       .mb({
         margin-top: 50 * @px;
+      });
+    }
+    .sub-title {
+      font-size: 32 * @px;
+      .mb({
+        font-size: 22 * @px;
       });
     }
   }
