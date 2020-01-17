@@ -137,13 +137,13 @@ export const routerConfig = [
     Component: JobsPage
   },
   {
-    path: "/jobs/headofoperations",
+    path: "/jobs/head-of-operations",
     title: "Jobs at UpTrade - Head of Operations | UpTradeit.com",
     exact: true,
     Component: JobsHeadOf
   },
   {
-    path: "/jobs/operationintern",
+    path: "/jobs/operation-intern",
     title: "Jobs at UpTrade - Operation Intern | UpTradeit.com",
     exact: true,
     Component: JobsIntern
