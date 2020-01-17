@@ -19,6 +19,7 @@ import UserRegisterEmail from "../pages/personal/pages/registerEmail";
 import UserForgetPassword from "../pages/personal/pages/userForgetPassword";
 import UserResetPassword from "../pages/personal/pages/userResetPassword";
 import { PayProtectionPage, PaySubscribePage } from "../pages/payProtection";
+import {JobsPage} from "../pages/statics/job/pages/jobs";
 
 export const routerConfig = [
   {
@@ -131,19 +132,19 @@ export const routerConfig = [
     path: "/jobs",
     title: " Jobs at UpTrade | UpTradeit.com",
     exact: true,
-    Component: PaySubscribePage
+    Component: JobsPage
   },
   {
     path: "/jobs/headofoperations",
     title: "Jobs at UpTrade - Head of Operations | UpTradeit.com",
     exact: true,
-    Component: PaySubscribePage
+    Component: JobsPage
   },
   {
     path: "/jobs/operationintern",
     title: "Jobs at UpTrade - Operation Intern | UpTradeit.com",
     exact: true,
-    Component: PaySubscribePage
+    Component: JobsPage
   }
   // {
   //   title: "404 | UpTradeit.com",

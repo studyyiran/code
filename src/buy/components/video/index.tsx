@@ -1,9 +1,10 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import "video-react/dist/video-react.css";
 // @ts-ignore
 import { Player, BigPlayButton } from "video-react";
 import "./index.less";
 import { GlobalSettingContext, IGlobalSettingContext } from "../../context";
+import { isServer } from "../../common/utils/util";
 let isFullScreen = false;
 export default function VideoComponent(props: {
   src: "";
@@ -26,8 +27,25 @@ export default function VideoComponent(props: {
       }
     }
   }
+  const [randomKey, setRandomKey] = useState(1);
+  useEffect(() => {
+    if (!isServer()) {
+      const ref = window.setInterval(() => {
+        // @ts-ignore
+        setRandomKey(randomKey => {
+          if (randomKey < 2) {
+            window.clearInterval(ref);
+          } else {
+            const next = randomKey + 1;
+            return next;
+          }
+        });
+      }, 1000);
+    }
+  }, []);
   return (
     <Player
+      key={randomKey}
       // preload={"none"}
       // poster={require("./res/poster.png")}
       ref={(player: any) => {
