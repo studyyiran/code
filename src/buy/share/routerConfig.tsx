@@ -20,6 +20,7 @@ import UserForgetPassword from "../pages/personal/pages/userForgetPassword";
 import UserResetPassword from "../pages/personal/pages/userResetPassword";
 import { PayProtectionPage, PaySubscribePage } from "../pages/payProtection";
 import {JobsPage} from "../pages/statics/job/pages/jobs";
+import {JosbHeadOf} from "../pages/statics/job/pages/josbHeadOf";
 
 export const routerConfig = [
   {
@@ -138,14 +139,14 @@ export const routerConfig = [
     path: "/jobs/headofoperations",
     title: "Jobs at UpTrade - Head of Operations | UpTradeit.com",
     exact: true,
-    Component: JobsPage
+    Component: JosbHeadOf
   },
-  {
-    path: "/jobs/operationintern",
-    title: "Jobs at UpTrade - Operation Intern | UpTradeit.com",
-    exact: true,
-    Component: JobsPage
-  }
+  // {
+  //   path: "/jobs/operationintern",
+  //   title: "Jobs at UpTrade - Operation Intern | UpTradeit.com",
+  //   exact: true,
+  //   Component: JobPosTwo
+  // }
   // {
   //   title: "404 | UpTradeit.com",
   //   Component: () => <div>404</div>

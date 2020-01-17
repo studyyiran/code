@@ -260,7 +260,7 @@ function RenderFooter() {
   if (productList.length === 0) {
     return (
       <div style={{ marginBottom: "30px", marginTop: "20px" }}>
-        Looks like we couldn't find what you were looking for.
+        Looks like we couldn't find what you were looking for.We are listing more phones to meet your needs.
       </div>
     );
   } else {
