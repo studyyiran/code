@@ -313,7 +313,7 @@ const gotoBuy = async (ctx: any, next: any, buyCurrentRouter: any) => {
     "<title>" + htmlTitle + "</title>"
   );
   template = template.replace(
-    /\<meta name=\"description\" content=\"\"\>/,
+    /\<meta name=\"description\" content=\"\"\ \/>/,
     '<meta name="description" content="' +
     (htmlDes) +
     '">'
