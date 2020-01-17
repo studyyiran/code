@@ -9,6 +9,7 @@ export interface ISsrFileStore {
   ssrConfig: {
     ssrTitle: string;
     metaDesc?: string;
+    jsonInfo?: string;
   };
   storeList: IOriginData[];
 }

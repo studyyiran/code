@@ -301,9 +301,9 @@ const gotoBuy = async (ctx: any, next: any, buyCurrentRouter: any) => {
     originData && originData.ssrConfig && originData.ssrConfig.ssrTitle
       ? originData.ssrConfig.ssrTitle
       : title;
-  const PHONEMODEL = "PHONEMODEL"
-  const defaultDes = `Set all product detail page meta descriptions to this format: "This used refurbished certified ${PHONEMODEL} for sale has passed a rigorous inspection process by UpTrade. View real actual phone photos and inspection report. This phone comes with a 30 day free return policy.`
-  
+  const PHONEMODEL = "PHONEMODEL";
+  const defaultDes = `Set all product detail page meta descriptions to this format: "This used refurbished certified ${PHONEMODEL} for sale has passed a rigorous inspection process by UpTrade. View real actual phone photos and inspection report. This phone comes with a 30 day free return policy.`;
+
   let htmlDes =
     originData && originData.ssrConfig && originData.ssrConfig.metaDesc
       ? defaultDes.replace(PHONEMODEL, originData.ssrConfig.metaDesc)
@@ -314,14 +314,21 @@ const gotoBuy = async (ctx: any, next: any, buyCurrentRouter: any) => {
   );
   template = template.replace(
     /\<meta name=\"description\" content=\"\"\ \/>/,
-    '<meta name="description" content="' +
-    (htmlDes) +
-    '">'
+    '<meta name="description" content="' + htmlDes + '">'
   );
   template = template.replace(
     /(<\/head>)/,
     "<script>var SSRDATA=" + JSON.stringify(originData) + ";</script>$1"
   );
+  const jsonInfo =
+    originData && originData.ssrConfig && originData.ssrConfig.jsonInfo
+      ? originData.ssrConfig.jsonInfo
+      : "";
+  template = template.replace(
+    /\<script type=\"application\" \/>/,
+    `<script type="application/ld+json">${jsonInfo}</script>`
+  );
+
   ctx.body = template;
   next();
 };
