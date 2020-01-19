@@ -241,6 +241,14 @@ export default function ProductDetail(props: any) {
           {renderSimilar()}
           <LastLineComponent />
         </div>
+        <RenderByCondition
+          ComponentMb={(() => {
+            return buyProductImgPc.map((item: string) => {
+              return <img style={{display: 'none'}} src={item} key={item} />;
+            });
+          })()}
+          ComponentPc={null}
+        />
       </div>
     );
   } else {
