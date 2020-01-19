@@ -28,7 +28,8 @@ export function HeaderProductPart(props: {
     skuPrice,
     buyProductCode,
     buyProductStatus,
-    skuId
+    skuId,
+    buyTags
   } = productDetail;
   return (
     <div className="header-part">
@@ -81,7 +82,7 @@ export function HeaderProductPart(props: {
                           <label>Retail</label>
                           <span>{currencyTrans(skuPrice)}</span>
                         </div>
-                        <OnSaleTag />
+                        <OnSaleTag tag={buyTags} />
                       </div>
                     </div>
                   }
@@ -157,7 +158,7 @@ export function HeaderProductPart(props: {
                         <span>{currencyTrans(skuPrice)}</span>
                       </div>
                     ) : null}
-                    <OnSaleTag />
+                    <OnSaleTag tag={buyTags} />
                   </div>
                   <span className="product-id">
                     Product ID {buyProductCode}
