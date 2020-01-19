@@ -2,8 +2,8 @@ import React, { useContext } from "react";
 import { GlobalSettingContext, IGlobalSettingContext } from "../../context";
 
 interface IRenderByCondition {
-  ComponentMb: any;
   ComponentPc: any;
+  ComponentMb: any;
 }
 export function RenderByCondition(props: IRenderByCondition) {
   const globalSettingContext = useContext(GlobalSettingContext);
