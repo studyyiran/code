@@ -13,6 +13,7 @@ import { isServer } from "../../../../common/utils/util";
 import { locationHref } from "../../../../common/utils/routerHistory";
 import LoadingMask from "../../../productList/components/loading";
 import { Message } from "../../../../components/message";
+import PayCardImages from "../../../detail/components/payCardImages";
 
 let addressErrorTips = "The address could not be found.";
 
@@ -148,8 +149,8 @@ function PaymentInner(props: any) {
     if (!form) {
       return Promise.reject();
     }
-    const allValues = form.getFieldsValue()
-    console.log(allValues)
+    const allValues = form.getFieldsValue();
+    console.log(allValues);
     try {
       const a = await validaddress({ userInfo: allValues });
     } catch (e) {
@@ -175,7 +176,7 @@ function PaymentInner(props: any) {
         return Promise.reject();
       }
     });
-    return b
+    return b;
   }
 
   function paypalPay(amount: any, info: any) {
@@ -289,92 +290,6 @@ function PaymentInner(props: any) {
 
   return (
     <div className="payment-page">
-      <section className="pay-card">
-        <h2 className="order-common-less-title">Payment information</h2>
-        {/*<div className="pay-card-container">*/}
-        {/*  <header className="paypayl-part card">*/}
-        {/*    <span>*/}
-        {/*      PayPal<span>-2.9%+$0.30 Fee</span>*/}
-        {/*    </span>*/}
-
-        {/*    <div className="img-container">*/}
-        {/*      <img src={require("./res/paypal.png")} />*/}
-        {/*    </div>*/}
-        {/*  </header>*/}
-        {/*  <div />*/}
-        {/*</div>*/}
-      </section>
-      {/*<section className="pay-card">*/}
-      {/*  <h2 className="order-common-less-title">Payment information</h2>*/}
-      {/*  <div className="pay-card-container">*/}
-      {/*    <header className="card">*/}
-      {/*      <span>Credit card</span>*/}
-      {/*      <PayCardImages />*/}
-      {/*    </header>*/}
-      {/*    <Form className="card">*/}
-      {/*      <Form.Item>*/}
-      {/*        {getFieldDecorator("cardNo", {*/}
-      {/*          initialValue: getCreditValue("cardNo"),*/}
-      {/*          rules: [*/}
-      {/*            {*/}
-      {/*              required: true,*/}
-      {/*              validateTrigger: "onBlur",*/}
-      {/*              message: "Enter a valid card number"*/}
-      {/*            }*/}
-      {/*          ]*/}
-      {/*        })(*/}
-      {/*          <Input*/}
-      {/*            placeholder={"Card number"}*/}
-      {/*            suffix={<Svg icon={"lock"} />}*/}
-      {/*          />*/}
-      {/*        )}*/}
-      {/*      </Form.Item>*/}
-      {/*      <Form.Item>*/}
-      {/*        {getFieldDecorator("userName", {*/}
-      {/*          initialValue: getCreditValue("userName"),*/}
-      {/*          rules: [*/}
-      {/*            {*/}
-      {/*              required: true,*/}
-      {/*              validateTrigger: "onBlur",*/}
-      {/*              message:*/}
-      {/*                "Enter your name exactly as it's written on your card"*/}
-      {/*            }*/}
-      {/*          ]*/}
-      {/*        })(<Input placeholder={"Name on card"} />)}*/}
-      {/*      </Form.Item>*/}
-      {/*      <Row gutter={24}>*/}
-      {/*        <Col sm={14} xs={14}>*/}
-      {/*          <Form.Item>*/}
-      {/*            {getFieldDecorator("invalidDate", {*/}
-      {/*              initialValue: getCreditValue("invalidDate"),*/}
-      {/*              rules: [*/}
-      {/*                {*/}
-      {/*                  required: true,*/}
-      {/*                  validateTrigger: "onBlur",*/}
-      {/*                  message: "Enter a valid card expiry date"*/}
-      {/*                }*/}
-      {/*              ]*/}
-      {/*            })(<Input placeholder={"Expiration date(MM/YY)"} />)}*/}
-      {/*          </Form.Item>*/}
-      {/*        </Col>*/}
-      {/*        <Col sm={10} xs={10}>*/}
-      {/*          <Form.Item>*/}
-      {/*            {getFieldDecorator("pinCode", {*/}
-      {/*              initialValue: getCreditValue("pinCode"),*/}
-      {/*              rules: [*/}
-      {/*                {*/}
-      {/*                  required: true,*/}
-      {/*                  validateTrigger: "onBlur",*/}
-      {/*                  message: "Enter the CVV or security code on your card"*/}
-      {/*                }*/}
-      {/*              ]*/}
-      {/*            })(<Input placeholder={"Security code"} />)}*/}
-      {/*          </Form.Item>*/}
-      {/*        </Col>*/}
-      {/*      </Row>*/}
-      {/*    </Form>*/}
-      {/*  </div>*/}
-      {/*</section>*/}
       <section className="address">
         <h2 className="order-common-less-title">Billing Address</h2>
         <p>Select the address that matches your card or payment method.</p>
@@ -413,9 +328,6 @@ function PaymentInner(props: any) {
           </div>
         </div>
       </section>
-      <LoadingMask visible={showLoadingMask} />
-      {/*选择决定表单*/}
-      {/*暂时屏蔽*/}
       <div className="paypal-container">
         {invoiceSameAddr === true ? null : (
           <PaymentInformation
@@ -438,6 +350,25 @@ function PaymentInner(props: any) {
         <div className="placeholder" />
         <div id={constValue.paypalButtonId} />
       </div>
+      <section className="pay-card">
+        <h2 className="order-common-less-title">Payment information</h2>
+        <div className="pay-card-container">
+          <header className="card">
+            <span>Credit card</span>
+            <PayCardImages />
+          </header>
+          <header className="paypayl-part card">
+            <span>
+              PayPal<span>-2.9%+$0.30 Fee</span>
+            </span>
+            <div className="img-container">
+              <img src={require("./res/paypal.png")} />
+            </div>
+          </header>
+          <div />
+        </div>
+      </section>
+      <LoadingMask visible={showLoadingMask} />
       {props.renderButton()}
     </div>
   );
