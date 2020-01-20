@@ -309,7 +309,7 @@ function PaymentInner(props: any) {
                 setPaymentType("CREDIT_CARD");
               }}
             >
-              <header className="card">
+              <header className="card my-card">
                 <span>Credit card</span>
                 <PayCardImages />
               </header>
@@ -323,10 +323,8 @@ function PaymentInner(props: any) {
                 setPaymentType("PAYPAL");
               }}
             >
-              <header className="paypayl-part card">
-                <span>
-                  PayPal<span>-2.9%+$0.30 Fee</span>
-                </span>
+              <header className="paypayl-part card my-card">
+                <span>PayPal</span>
                 <div className="img-container">
                   <img src={require("./res/paypal.png")} />
                 </div>
@@ -335,32 +333,35 @@ function PaymentInner(props: any) {
           </div>
         </div>
       </section>
-      {paymentType === "CREDIT_CARD" ? (
-        <PayForm
-          addressInfo={addressInfo}
-          amount={totalPrice}
-          onGetNonce={(nonce, cardData) => {
-            // 获取到回调.
-            // 1 检测表单
-            postHandler().then(() => {
-              // 2 发起后端调用
-              createOrderHandler({
-                creditCardInfo: {
-                  cardNo: cardData.last_4,
-                  invalidDate: `${cardData.exp_month}/${String(
-                    cardData.exp_year
-                  ).slice(2)}`,
-                  userName: `${addressInfo.firstName} ${addressInfo.lastName}`,
-                  pinCode: "", // 没有获得form控件的回传.
-                  cardId: nonce
-                }
+      <div className="pay-container">
+        {paymentType === "CREDIT_CARD" ? (
+          <PayForm
+            addressInfo={addressInfo}
+            amount={totalPrice}
+            onGetNonce={(nonce, cardData) => {
+              // 获取到回调.
+              // 1 检测表单
+              postHandler().then(() => {
+                // 2 发起后端调用
+                createOrderHandler({
+                  creditCardInfo: {
+                    cardNo: cardData.last_4,
+                    invalidDate: `${cardData.exp_month}/${String(
+                      cardData.exp_year
+                    ).slice(2)}`,
+                    userName: `${addressInfo.firstName} ${addressInfo.lastName}`,
+                    pinCode: "", // 没有获得form控件的回传.
+                    cardId: nonce
+                  }
+                });
               });
-            });
-          }}
-        />
-      ) : (
-        <div id={constValue.paypalButtonId} />
-      )}
+            }}
+          />
+        ) : (
+          <div id={constValue.paypalButtonId} />
+        )}
+      </div>
+      
       <LoadingMask visible={showLoadingMask} />
       {props.renderButton()}
     </div>

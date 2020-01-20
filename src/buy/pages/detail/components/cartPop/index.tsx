@@ -172,7 +172,7 @@ export function CartPop(props: ICartPop) {
               setStep(1);
             }}
           >{`< Go back`}</span>
-          <PayCardImages />
+          <PayCardImages><span>and more...</span></PayCardImages>
         </div>
       );
     } else {

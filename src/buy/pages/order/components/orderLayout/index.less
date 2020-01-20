@@ -12,7 +12,7 @@
     });
   }
   .order-layout {
-    .setpage(1170 * @px);
+    .setpage(1300 * @px);
     > header {
       display: flex;
       justify-content: space-between;
@@ -45,6 +45,9 @@
       padding: 30 * @px 0 80 * @px;
       .main-content {
         flex: 0 0 480 * @px;
+        .pc({
+          min-width: 380px;
+        });
       }
     }
   }

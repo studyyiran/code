@@ -1,4 +1,5 @@
 import "react-square-payment-form/lib/default.css";
+import './index.less';
 import React from "react";
 import SquarePaymentForm, {
   CreditCardNumberInput,
@@ -87,7 +88,7 @@ export class PayForm extends React.Component<IProps, any> {
     const SANDBOX_APPLICATION_ID = "sandbox-sq0idb-lbWWeXLIzIqk9fmpO-mkqw";
     const SANDBOX_LOCATION_ID = "D1YB0ZE5BHTRK";
     return (
-      <div>
+      <div className="pay-form-container">
         <SquarePaymentForm
           sandbox={true}
           applicationId={SANDBOX_APPLICATION_ID}

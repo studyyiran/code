@@ -2,6 +2,7 @@
 
 @p: {
   .payment-page {
+    //max-width: 600 *@px;
     //.ant-checkbox-checked .ant-checkbox-inner {
     //  background: transparent;
     //  border: transparent;
@@ -10,6 +11,9 @@
     //  background: @color-blue-liner-use;
     //  border-color: @color-blue-liner-use;
     //}
+    .pay-container {
+    }
+    
     .ant-checkbox-checked.ant-checkbox-disabled {
       .ant-checkbox-inner {
         background: #f5f5f5 !important;
@@ -64,7 +68,23 @@
         border-bottom: none;
       }
     }
+    
     .pay-card {
+      .ant-checkbox+span {
+        flex: 1;
+      }
+      .my-card {
+        padding: 0 !important;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .paycard-img-list {
+        justify-content: flex-end;
+        > *:last-child {
+          margin-right: 0;
+        }
+      }
       .pay-card-container {
         border: 1px solid @color-border;
         margin-bottom: 16 * @px;
