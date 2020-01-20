@@ -84,7 +84,7 @@ export class PayForm extends React.Component<IProps, any> {
   }
 
   render() {
-    const SANDBOX_APPLICATION_ID = "sandbox-sq0idb-A4499I96f3ueP7FIk1dt8g";
+    const SANDBOX_APPLICATION_ID = "sandbox-sq0idb-lbWWeXLIzIqk9fmpO-mkqw";
     const SANDBOX_LOCATION_ID = "D1YB0ZE5BHTRK";
     return (
       <div>
