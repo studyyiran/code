@@ -6,7 +6,7 @@ export default function PayCardImages(props: any) {
       <img src={require("./res/visa.svg")} />
       <img src={require("./res/masterCard.svg")} />
       <img src={require("./res/americanExpress.svg")} />
-      <img src={require("./res/paypal.svg")} />
+      {props.showPaypal ? <img src={require("./res/paypal.svg")} /> : null}
       {props.children}
     </div>
   );

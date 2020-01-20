@@ -338,10 +338,11 @@ function PaymentInner(props: any) {
           <PayForm
             addressInfo={addressInfo}
             amount={totalPrice}
-            onGetNonce={(nonce, cardData) => {
+            onGetNonce={(nonce, cardData, buyerVerificationToken) => {
               // 获取到回调.
               // 1 检测表单
               postHandler().then(() => {
+                console.log(buyerVerificationToken)
                 // 2 发起后端调用
                 createOrderHandler({
                   creditCardInfo: {
@@ -351,7 +352,8 @@ function PaymentInner(props: any) {
                     ).slice(2)}`,
                     userName: `${addressInfo.firstName} ${addressInfo.lastName}`,
                     pinCode: "", // 没有获得form控件的回传.
-                    cardId: nonce
+                    cardId: nonce,
+                    verificationToken: buyerVerificationToken,
                   }
                 });
               });
