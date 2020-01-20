@@ -19,6 +19,7 @@ let addressErrorTips = "The address could not be found.";
 function PaymentInner(props: any) {
   const orderInfoContext = useContext(OrderInfoContext);
   const ajaxStatus = useRef();
+  const formRef = useRef();
   
   const {validAddressSuccessful, setValidAddressSuccessful} = props
   const {
@@ -372,6 +373,9 @@ function PaymentInner(props: any) {
       <div className="paypal-container">
         {invoiceSameAddr === true ? null : (
           <PaymentInformation
+            wrappedComponentRef={(inst: any) => {
+              formRef.current = inst
+            }}
             onFormChangeHandler={(
               props: any,
               changedValues: any,
