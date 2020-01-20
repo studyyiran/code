@@ -1,4 +1,11 @@
-import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from "react";
 import "./index.less";
 import { Checkbox, Form } from "antd";
 import { PaymentInformation } from "../information";
@@ -48,11 +55,54 @@ function PaymentInner(props: any) {
       : { ...invoiceInfo, userEmail: userInfo.userEmail };
   }, [invoiceInfo, invoiceSameAddr, userInfo]);
 
-  // 渲染paypal
-  useEffect(() => {
-    console.log("run");
+  // 这个地址检验,其实应该内置到表单中去.但是因为来不及优化,只能在post的时候,再进行检测
+  const postHandler = useCallback(async () => {
+    if (invoiceSameAddr) {
+      // same的情况下,不需要任何检测
+      return Promise.resolve();
+    }
+    const form = (formRef.current as any).props.form;
+    if (!form) {
+      return Promise.reject();
+    }
+    const allValues = form.getFieldsValue();
+    try {
+      await validaddress({ userInfo: allValues });
+    } catch (e) {
+      Message.error("Something went wrong, please check the billing address.");
+      form.setFields({
+        street: {
+          errors: [new Error(addressErrorTips)]
+        }
+      });
+      window.scroll(0, 0);
+      return Promise.reject();
+    }
+    return Promise.resolve();
+    const b = form.validateFieldsAndScroll((err: any, values: any) => {
+      // 先验证表单
+      if (!err) {
+        const result = values;
+        // orderProcessRecord(undefined, result);
+        // orderInfoContextDispatch({
+        //   type: orderInfoReducerTypes.setUserInfo,
+        //   value: result
+        // });
+        return Promise.resolve();
+      } else {
+        return Promise.reject();
+      }
+    });
+    return b;
+  }, [
+    invoiceSameAddr,
+    orderInfoContextDispatch,
+    orderProcessRecord,
+    validaddress
+  ]);
 
-    function paypalPay(amount: any, info: any) {
+  const paypalPay = useCallback(
+    (amount: any, info: any) => {
       console.log("start paypalPay");
       console.log(info);
       // @ts-ignore
@@ -65,14 +115,15 @@ function PaymentInner(props: any) {
             //   setInputChangeStatus(true);
             // }
             // 异步调用
-            const promise = postHandler()
+            return postHandler()
               .then(() => {
+                console.log("1111");
                 return actions.resolve();
               })
               .catch(() => {
+                console.log("2222");
                 return actions.reject();
               });
-            return promise;
           },
           onCancel: function() {
             console.log("onCancel");
@@ -138,10 +189,16 @@ function PaymentInner(props: any) {
           }
         })
         .render("#paypal-button-container");
-    }
+    },
+    [createOrderHandler, postHandler]
+  );
 
+  // 渲染paypal
+  useEffect(() => {
+    console.log("run");
     // 只有有价格才是有效的
     function clear() {
+      console.log("clear");
       if (timeRef.current) {
         window.clearTimeout(timeRef.current);
       }
@@ -154,9 +211,6 @@ function PaymentInner(props: any) {
     if (totalPrice && !isServer() && paymentType === "PAYPAL") {
       // 根据形势整合数据
       if (addressInfo) {
-        if (timeRef && timeRef.current) {
-          window.clearTimeout(timeRef.current);
-        }
         (timeRef.current as any) = window.setTimeout(() => {
           paypalPay(totalPrice, addressInfo);
         }, 400);
@@ -164,47 +218,7 @@ function PaymentInner(props: any) {
       }
     }
     return clear;
-  }, [addressInfo, createOrderHandler, paymentType, postHandler, totalPrice]);
-
-  // 这个地址检验,其实应该内置到表单中去.但是因为来不及优化,只能在post的时候,再进行检测
-  async function postHandler() {
-    if (invoiceSameAddr) {
-      // same的情况下,不需要任何检测
-      return Promise.resolve();
-    }
-    const form = (formRef.current as any).props.form;
-    if (!form) {
-      return Promise.reject();
-    }
-    const allValues = form.getFieldsValue();
-    try {
-      await validaddress({ userInfo: allValues });
-    } catch (e) {
-      Message.error("Something went wrong, please check the billing address.");
-      form.setFields({
-        street: {
-          errors: [new Error(addressErrorTips)]
-        }
-      });
-      window.scroll(0, 0);
-      return Promise.reject();
-    }
-    const b = form.validateFieldsAndScroll((err: any, values: any) => {
-      // 先验证表单
-      if (!err) {
-        const result = values;
-        orderProcessRecord(undefined, result);
-        orderInfoContextDispatch({
-          type: orderInfoReducerTypes.setUserInfo,
-          value: result
-        });
-        return Promise.resolve();
-      } else {
-        return Promise.reject();
-      }
-    });
-    return b;
-  }
+  }, [addressInfo, paymentType, paypalPay, totalPrice]);
 
   // 开始发起请求
   async function createOrderHandler(props: any) {
