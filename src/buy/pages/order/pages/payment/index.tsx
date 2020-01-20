@@ -402,7 +402,7 @@ function PaymentInner(props: any) {
         <PayForm
           addressInfo={invoiceSameAddr ? userInfo : invoiceInfo}
           amount={totalPrice}
-          onGetNonce={nonce => {
+          onGetNonce={(nonce, cardData) => {
             // 获取到回调.
             console.log(nonce);
             // 1 检测表单
@@ -410,7 +410,11 @@ function PaymentInner(props: any) {
               console.log("success");
               // 2 发起后端调用
               createOrderHandler({
-                a: "a"
+                cardNo: cardData.last_4,
+                invalidDate: `${cardData.exp_month}/${String(cardData.exp_year).slice(2)}`,
+                userName: cardData,
+                pinCode: '',// 没有获得form控件的回传.
+                cardId: nonce,
               });
             });
           }}

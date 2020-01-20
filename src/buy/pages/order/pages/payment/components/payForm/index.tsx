@@ -11,7 +11,7 @@ import SquarePaymentForm, {
 interface IProps {
   amount: number;
   addressInfo: any;
-  onGetNonce: (nonce: string) => void;
+  onGetNonce: (nonce: string, cardData: any) => void;
 }
 
 export class PayForm extends React.Component<IProps, any> {
@@ -39,7 +39,7 @@ export class PayForm extends React.Component<IProps, any> {
     console.log(nonce);
     console.log(cardData);
     console.log(buyerVerificationToken);
-    this.props.onGetNonce(nonce);
+    this.props.onGetNonce(nonce, cardData);
   };
 
   createVerificationDetails(props: IProps) {
