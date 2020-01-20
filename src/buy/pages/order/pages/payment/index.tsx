@@ -149,7 +149,7 @@ function PaymentInner(props: any) {
   async function postHandler() {
     if (invoiceSameAddr) {
       // same的情况下,不需要任何检测
-      return Promise.resolve()
+      return Promise.resolve();
     }
     const form = (formRef.current as any).props.form;
     if (!form) {
@@ -185,7 +185,7 @@ function PaymentInner(props: any) {
     });
     return b;
   }
-  
+
   // 开始发起请求
   async function createOrderHandler(props: any) {
     // startLoading
@@ -284,7 +284,7 @@ function PaymentInner(props: any) {
           return actions.order.capture().then(async function(details: any) {
             createOrderHandler({
               paypalOrderId: details.id
-            })
+            });
           });
         }
       })
@@ -298,7 +298,7 @@ function PaymentInner(props: any) {
   //     ? (payInfo.creditCardInfo as any)[key]
   //     : "";
   // }
-
+  console.log(invoiceInfo)
   return (
     <div className="payment-page">
       <section className="address">
@@ -399,18 +399,22 @@ function PaymentInner(props: any) {
         </div>
       </section>
       {paymentType === "CREDIT_CARD" ? (
-        <PayForm amount={totalPrice} onGetNonce={(nonce) => {
-          // 获取到回调.
-          console.log(nonce)
-          // 1 检测表单
-          postHandler().then(() => {
-            console.log('success')
-            // 2 发起后端调用
-            createOrderHandler({
-              a: 'a',
-            })
-          })
-        }}/>
+        <PayForm
+          addressInfo={invoiceSameAddr ? userInfo : invoiceInfo}
+          amount={totalPrice}
+          onGetNonce={nonce => {
+            // 获取到回调.
+            console.log(nonce);
+            // 1 检测表单
+            postHandler().then(() => {
+              console.log("success");
+              // 2 发起后端调用
+              createOrderHandler({
+                a: "a"
+              });
+            });
+          }}
+        />
       ) : (
         <div id={constValue.paypalButtonId} />
       )}
