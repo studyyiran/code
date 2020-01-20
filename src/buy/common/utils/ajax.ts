@@ -20,10 +20,16 @@ const transUrl = (url: string) => {
 
 // 下面是所有api提取
 const getRootApi = function(urlRoot: string) {
-  let apiRoot = "http://qa-gateway-801477214.us-east-2.elb.amazonaws.com";
-  switch (process.env.REACT_APP_SERVER_ENV) {
+  let apiRoot = "https://qa-gateway.uptradeit.com";switch (process.env.REACT_APP_SERVER_ENV) {
     case "QA":
-      apiRoot = "http://qa-gateway-801477214.us-east-2.elb.amazonaws.com";
+      if (process.env.SSR_SERVER) {
+        //ssr
+        apiRoot =
+          "http://internal-qa-gateway-inner-1734987249.us-east-2.elb.amazonaws.com";
+      } else {
+        //web
+        apiRoot = "https://qa-gateway.uptradeit.com";
+      }
       break;
     case "UAT":
       apiRoot = "http://demo-gateway-1613913116.us-east-2.elb.amazonaws.com";
