@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import "./index.less";
 import { Checkbox, Form } from "antd";
 import { PaymentInformation } from "../information";
@@ -9,7 +9,7 @@ import {
 } from "../../context";
 import useGetTotalPrice from "../../components/orderLayout/useHook";
 import { constValue } from "../../../../common/constValue";
-import { debounce, isServer } from "../../../../common/utils/util";
+import { isServer } from "../../../../common/utils/util";
 import { locationHref } from "../../../../common/utils/routerHistory";
 import LoadingMask from "../../../productList/components/loading";
 import { Message } from "../../../../components/message";
@@ -18,15 +18,13 @@ let addressErrorTips = "The address could not be found.";
 
 function PaymentInner(props: any) {
   const orderInfoContext = useContext(OrderInfoContext);
-  const ajaxStatus = useRef();
   const formRef = useRef();
-  
-  const {validAddressSuccessful, setValidAddressSuccessful} = props
   const {
     orderInfoContextDispatch,
     orderInfoContextValue,
     validaddress,
-    startOrder
+    startOrder,
+    orderProcessRecord
   } = orderInfoContext as IOrderInfoContext;
 
   const [showLoadingMask, setShowLoadingMask] = useState(false);
@@ -36,6 +34,9 @@ function PaymentInner(props: any) {
   const { calcTotalPrice, totalProductPrice } = useGetTotalPrice();
 
   const { invoiceSameAddr, userInfo, invoiceInfo } = orderInfoContextValue;
+
+  // 需要检测.在每一帧.为了要进行重新渲染.(因为地址会变化.)
+  const validAddressSuccessful = useMemo(() => {}, []);
 
   function isOkInfo() {
     if (invoiceSameAddr) {
@@ -141,18 +142,63 @@ function PaymentInner(props: any) {
     isOkBool
   ]);
 
+  // 这个地址检验,其实应该内置到表单中去.但是因为来不及优化,只能在post的时候,再进行检测
+  async function postHandler() {
+    const form = (formRef.current as any).props.form;
+    if (!form) {
+      return Promise.reject();
+    }
+    const allValues = form.getFieldsValue()
+    console.log(allValues)
+    try {
+      const a = await validaddress({ userInfo: allValues });
+    } catch (e) {
+      Message.error("Something went wrong, please check the billing address.");
+      form.setFields({
+        street: {
+          errors: [new Error(addressErrorTips)]
+        }
+      });
+      return Promise.reject();
+    }
+    const b = form.validateFieldsAndScroll((err: any, values: any) => {
+      // 先验证表单
+      if (!err) {
+        const result = values;
+        orderProcessRecord(undefined, result);
+        orderInfoContextDispatch({
+          type: orderInfoReducerTypes.setUserInfo,
+          value: result
+        });
+        return Promise.resolve();
+      } else {
+        return Promise.reject();
+      }
+    });
+    return b
+  }
+
   function paypalPay(amount: any, info: any) {
     console.log("start paypalPay");
     console.log(info);
     // @ts-ignore
     paypal
       .Buttons({
-        onClick: function(a: any) {
-          console.log("hehe");
+        onClick: function(a: any, actions: any) {
+          // 封锁逻辑
           setInputChangeStatus(true);
           if (a && a.fundingSource === "paypal") {
             setInputChangeStatus(true);
           }
+          // 异步调用
+          const promise = postHandler()
+            .then(() => {
+              return actions.resolve();
+            })
+            .catch(() => {
+              return actions.reject();
+            });
+          return promise;
         },
         onCancel: function() {
           console.log("onCancel");
@@ -374,7 +420,7 @@ function PaymentInner(props: any) {
         {invoiceSameAddr === true ? null : (
           <PaymentInformation
             wrappedComponentRef={(inst: any) => {
-              formRef.current = inst
+              formRef.current = inst;
             }}
             onFormChangeHandler={(
               props: any,
@@ -382,96 +428,10 @@ function PaymentInner(props: any) {
               allValues: any
             ) => {
               // 如果监听到目标变更 都进行重置.然后重新验证.
-              let arr = [
-                {
-                  name: "street",
-                  time: 1000
-                },
-                {
-                  name: "city",
-                  time: 1
-                }
-              ];
-              let findTarget = arr.find((item1: any) => {
-                return !!Object.keys(changedValues).find((item2: any) => {
-                  return item2 === item1.name;
-                });
-              });
-              // 只有当前变更 并且都有值的时候
-              if (findTarget && arr.every(item => allValues[item.name])) {
-                // 重置
-                setValidAddressSuccessful(false);
-                props.form.setFields({
-                  street: {
-                    value: allValues.street
-                  }
-                });
-                // @ts-ignore
-                function checkFunc() {
-                  ajaxStatus.current = validaddress({ userInfo: allValues });
-                  (ajaxStatus.current as any).then((res: any) => {
-                    setValidAddressSuccessful(true);
-                  });
-                  (ajaxStatus.current as any).catch(() => {
-                    (ajaxStatus.current as any) = checkFunc;
-                    Message.error(
-                      "Something went wrong, please check the billing address."
-                    );
-                    props.form.setFields({
-                      street: {
-                        errors: [new Error(addressErrorTips)]
-                      }
-                    });
-                  });
-                }
-                // 验证
-                afterMinTimeCall(checkFunc, 1000);
-              }
               orderInfoContextDispatch({
                 type: orderInfoReducerTypes.setInvoiceInfo,
                 value: allValues
               });
-            }}
-            renderButton={(informationHandleNext: any, formInnerProps: any) => {
-              if (isOkInfo()) {
-                return null;
-              } else {
-                return (
-                  <div
-                    className="paypal-button-mask"
-                    onClick={() => {
-                      formInnerProps.form.validateFieldsAndScroll(
-                        (err: any, values: any) => {
-                          // 先验证表单
-                          if (!err) {
-                            // 如果验证通过了
-                            if (!validAddressSuccessful) {
-                              // 如果当前没有?
-                              if (!ajaxStatus.current) {
-                                // 直接设置非法
-                                formInnerProps.form.setFields({
-                                  street: {
-                                    errors: [new Error(addressErrorTips)]
-                                  }
-                                });
-                              } else {
-                                // 如果promise已经变成方法
-                                if (
-                                  (ajaxStatus.current as any) instanceof
-                                  Function
-                                ) {
-                                  (ajaxStatus.current as any)();
-                                }
-                              }
-                            }
-                          }
-                        }
-                      );
-                      informationHandleNext();
-                    }}
-                  />
-                );
-              }
             }}
           />
         )}
