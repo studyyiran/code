@@ -50,32 +50,121 @@ function PaymentInner(props: any) {
 
   // 渲染paypal
   useEffect(() => {
+    console.log("run");
+
+    function paypalPay(amount: any, info: any) {
+      console.log("start paypalPay");
+      console.log(info);
+      // @ts-ignore
+      paypal
+        .Buttons({
+          onClick: function(a: any, actions: any) {
+            // 封锁逻辑
+            setInputChangeStatus(true);
+            // if (a && a.fundingSource === "paypal") {
+            //   setInputChangeStatus(true);
+            // }
+            // 异步调用
+            const promise = postHandler()
+              .then(() => {
+                return actions.resolve();
+              })
+              .catch(() => {
+                return actions.reject();
+              });
+            return promise;
+          },
+          onCancel: function() {
+            console.log("onCancel");
+            setInputChangeStatus(false);
+          },
+          createOrder: function(data: any, actions: any) {
+            // This function sets up the details of the transaction, including the amount and line item details.
+            const {
+              firstName = undefined,
+              userEmail = undefined,
+              lastName = undefined,
+              street = undefined,
+              apartment = undefined,
+              city = undefined,
+              state = undefined,
+              zipCode = undefined,
+              userPhone = undefined
+            } = info;
+            return actions.order.create({
+              payer: {
+                name: {
+                  given_name: firstName,
+                  surname: lastName
+                },
+                address: {
+                  address_line_1: street,
+                  address_line_2: apartment,
+                  admin_area_2: city,
+                  admin_area_1: state,
+                  postal_code: zipCode,
+                  country_code: "US"
+                },
+                email_address: userEmail,
+                phone: userPhone
+                  ? {
+                      phone_type: "MOBILE",
+                      phone_number: {
+                        national_number: userPhone
+                      }
+                    }
+                  : null
+              },
+              application_context: {
+                shipping_preference: "NO_SHIPPING"
+              },
+              purchase_units: [
+                {
+                  amount: {
+                    value: amount,
+                    currency_code: "USD"
+                  }
+                }
+              ]
+            });
+          },
+          onApprove: function(data: any, actions: any) {
+            // This function captures the funds from the transaction.
+            return actions.order.capture().then(async function(details: any) {
+              createOrderHandler({
+                paypalOrderId: details.id
+              });
+            });
+          }
+        })
+        .render("#paypal-button-container");
+    }
+
     // 只有有价格才是有效的
-    if (totalPrice && !isServer()) {
+    function clear() {
+      if (timeRef.current) {
+        window.clearTimeout(timeRef.current);
+      }
+      // 每次触发更新操作的时候.清空
+      const dom: any = document.querySelector(`#${constValue.paypalButtonId}`);
+      if (dom) {
+        dom.innerHTML = "";
+      }
+    }
+    if (totalPrice && !isServer() && paymentType === "PAYPAL") {
       // 根据形势整合数据
       if (addressInfo) {
         if (timeRef && timeRef.current) {
           window.clearTimeout(timeRef.current);
         }
         (timeRef.current as any) = window.setTimeout(() => {
-          // 每次触发更新操作的时候.清空
-          const dom: any = document.querySelector(
-            `#${constValue.paypalButtonId}`
-          );
-          if (dom) {
-            dom.innerHTML = "";
-          }
           paypalPay(totalPrice, addressInfo);
         }, 400);
-        return () => {
-          if (timeRef.current) {
-            window.clearTimeout(timeRef.current);
-          }
-        };
+        return clear;
       }
     }
-    return () => {};
-  }, [addressInfo, paypalPay, totalPrice]);
+    return clear;
+  }, [addressInfo, createOrderHandler, paymentType, postHandler, totalPrice]);
 
   // 这个地址检验,其实应该内置到表单中去.但是因为来不及优化,只能在post的时候,再进行检测
   async function postHandler() {
@@ -132,94 +221,6 @@ function PaymentInner(props: any) {
       console.error(e);
     }
     setShowLoadingMask(false);
-  }
-
-  function paypalPay(amount: any, info: any) {
-    console.log("start paypalPay");
-    console.log(info);
-    // @ts-ignore
-    paypal
-      .Buttons({
-        onClick: function(a: any, actions: any) {
-          // 封锁逻辑
-          setInputChangeStatus(true);
-          if (a && a.fundingSource === "paypal") {
-            setInputChangeStatus(true);
-          }
-          // 异步调用
-          const promise = postHandler()
-            .then(() => {
-              return actions.resolve();
-            })
-            .catch(() => {
-              return actions.reject();
-            });
-          return promise;
-        },
-        onCancel: function() {
-          console.log("onCancel");
-          setInputChangeStatus(false);
-        },
-        createOrder: function(data: any, actions: any) {
-          // This function sets up the details of the transaction, including the amount and line item details.
-          const {
-            firstName = undefined,
-            userEmail = undefined,
-            lastName = undefined,
-            street = undefined,
-            apartment = undefined,
-            city = undefined,
-            state = undefined,
-            zipCode = undefined,
-            userPhone = undefined
-          } = info;
-          return actions.order.create({
-            payer: {
-              name: {
-                given_name: firstName,
-                surname: lastName
-              },
-              address: {
-                address_line_1: street,
-                address_line_2: apartment,
-                admin_area_2: city,
-                admin_area_1: state,
-                postal_code: zipCode,
-                country_code: "US"
-              },
-              email_address: userEmail,
-              phone: userPhone
-                ? {
-                    phone_type: "MOBILE",
-                    phone_number: {
-                      national_number: userPhone
-                    }
-                  }
-                : null
-            },
-            application_context: {
-              shipping_preference: "NO_SHIPPING"
-            },
-            purchase_units: [
-              {
-                amount: {
-                  value: amount,
-                  currency_code: "USD"
-                }
-              }
-            ]
-          });
-        },
-        onApprove: function(data: any, actions: any) {
-          // This function captures the funds from the transaction.
-          return actions.order.capture().then(async function(details: any) {
-            createOrderHandler({
-              paypalOrderId: details.id
-            });
-          });
-        }
-      })
-      .render("#paypal-button-container");
   }
 
   // function getCreditValue(key: string) {
