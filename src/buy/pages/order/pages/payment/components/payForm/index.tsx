@@ -36,9 +36,6 @@ export class PayForm extends React.Component<IProps, any> {
     }
 
     this.setState({ errorMessages: [] });
-    console.log(nonce);
-    console.log(cardData);
-    console.log(buyerVerificationToken);
     this.props.onGetNonce(nonce, cardData);
   };
 
@@ -54,22 +51,21 @@ export class PayForm extends React.Component<IProps, any> {
       firstName = "",
       lastName = ""
     } = addressInfo;
-    console.log('!!!!!!!!!!!!!!!!!!!!!')
-    console.log({
-      amount: String(100 * amount),
-      currencyCode: "USD",
-      intent: "CHARGE",
-      billingContact: {
-        familyName: lastName,
-        givenName:firstName,
-        email: userEmail,
-        country: country, //
-        city: city, //
-        addressLines: [street],
-        postalCode: zipCode,
-        phone: userPhone //
-      }
-    });
+    // console.log({
+    //   amount: String(100 * amount),
+    //   currencyCode: "USD",
+    //   intent: "CHARGE",
+    //   billingContact: {
+    //     familyName: lastName,
+    //     givenName:firstName,
+    //     email: userEmail,
+    //     country: country, //
+    //     city: city, //
+    //     addressLines: [street],
+    //     postalCode: zipCode,
+    //     phone: userPhone //
+    //   }
+    // });
     return {
       amount: String(100 * amount),
       currencyCode: "USD",

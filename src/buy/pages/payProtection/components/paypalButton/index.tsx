@@ -32,12 +32,8 @@ export function PayPaylButton(props: IPayPalButton) {
   const timeRef = useRef();
   const paypalPay = useCallback(
     (amount: any, info: any) => {
-      console.log("start paypalPay");
-      console.log(amount);
-      console.log(info);
       const config1 = {
         onInit: function() {
-          console.log("haha");
         },
         onClick: function(a: any) {
           if (a && a.fundingSource === "paypal") {
@@ -45,7 +41,6 @@ export function PayPaylButton(props: IPayPalButton) {
           }
         },
         onCancel: function() {
-          console.log("onCancel");
           setShowLoadingMask(false);
         },
         createOrder: function(data: any, actions: any) {
@@ -116,7 +111,6 @@ export function PayPaylButton(props: IPayPalButton) {
 
       const config2 = {
         onInit: function() {
-          console.log("haha");
         },
         onClick: function(a: any) {
           if (a && a.fundingSource === "paypal") {
@@ -124,7 +118,6 @@ export function PayPaylButton(props: IPayPalButton) {
           }
         },
         onCancel: function() {
-          console.log("onCancel");
           setShowLoadingMask(false);
         },
         createSubscription: function(data: any, actions: any) {

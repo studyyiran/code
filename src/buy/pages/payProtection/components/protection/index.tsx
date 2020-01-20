@@ -44,7 +44,6 @@ export function ProtectionPage(props: {
   const [orderInfo, setOrderInfo] = useState({} as IBuyOrderInfo);
   // 获取url参数
   const urlParams = getUrlAllParams();
-  console.log(urlParams);
   const { token } = urlParams || ({} as any);
 
   const loop = useCallback(() => {
@@ -90,7 +89,6 @@ export function ProtectionPage(props: {
 
   // 支付成功回调
   function finishPayHandler(id: any) {
-    console.log(id);
     payProtectionServer
       .orderPayProtection({
         paypalOrderId: id,
@@ -113,7 +111,6 @@ export function ProtectionPage(props: {
 
 function RenderOrderInfo(props: { orderInfo: IBuyOrderInfo; type: string }) {
   const { orderInfo } = props;
-  console.log(orderInfo);
 
   if (orderInfo && orderInfo.groupOrderNo) {
     return (

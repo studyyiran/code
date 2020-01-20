@@ -9,7 +9,6 @@ import {
 import { viewAllClickHandler } from "../../util";
 
 export function soldOutTips(detailInfo: any) {
-  console.log(soldOutTips);
   (Modal as any).confirm({
     width: "90%",
     className: "sold-out-tips-modal",

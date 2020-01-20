@@ -29,7 +29,6 @@ export default function SearchProduct(props: any) {
   }, [searchInfo.productKey]);
   // 用户选中了某一个机型
   function onSelect(value: any) {
-    console.log("onSelect", value);
     const target: any = list.find((item: any) => {
       return String(item.productBrandName) === String(value);
     });
@@ -40,7 +39,6 @@ export default function SearchProduct(props: any) {
   }
   // 用户输入文字后,自动触发一次搜索行为
   function handleSearchInner(value: string) {
-    console.log("handleSearch");
     getDropDownInfo(value).then((res: any) => {
       if (res && res.length) {
         setList(res);
@@ -52,7 +50,6 @@ export default function SearchProduct(props: any) {
   const handleSearch = debounce(handleSearchInner, 300);
   // 用户输入了文字,自动保存当前的输入.
   function onChangeHandler(value: string) {
-    console.log("onchange");
     // 不需要每次都修改.只需要search的时候修改
     // setSearchInfo({
     //   productKey: [value]
@@ -62,7 +59,6 @@ export default function SearchProduct(props: any) {
 
   function getValue() {
     if (searchInfo && searchInfo.productKey && searchInfo.productKey.length) {
-      console.log("set value");
       return (searchInfo.productKey as any).join(" ");
     } else {
       return "";

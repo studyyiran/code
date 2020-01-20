@@ -51,7 +51,6 @@ myTimer.prototype.perSecondCall = function(firstCall: any) {
     if (this.timeIntervalId) {
       this.stop();
     }
-    console.log(this)
     this.finishCallBack && this.finishCallBack(this.currentTime);
   }
 };

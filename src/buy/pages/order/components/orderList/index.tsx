@@ -29,8 +29,6 @@ export default function OrderList(props: any) {
   } = useGetTotalPrice();
 
   function renderList() {
-    console.log(productDetail)
-    console.log(subOrders)
     if (!productDetail || !productDetail.buyProductId) {
       return null;
     }

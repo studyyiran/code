@@ -88,7 +88,6 @@ function PaymentInner(props: any) {
       return Promise.reject();
     }
     const allValues = form.getFieldsValue();
-    console.log(allValues);
     try {
       await validaddress({ userInfo: allValues });
     } catch (e) {
@@ -230,7 +229,6 @@ function PaymentInner(props: any) {
   //     ? (payInfo.creditCardInfo as any)[key]
   //     : "";
   // }
-  console.log(invoiceInfo);
   return (
     <div className="payment-page">
       <section className="address">
@@ -336,10 +334,8 @@ function PaymentInner(props: any) {
           amount={totalPrice}
           onGetNonce={(nonce, cardData) => {
             // 获取到回调.
-            console.log(nonce);
             // 1 检测表单
             postHandler().then(() => {
-              console.log("success");
               // 2 发起后端调用
               createOrderHandler({
                 cardNo: cardData.last_4,

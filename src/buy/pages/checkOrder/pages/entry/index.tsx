@@ -23,21 +23,17 @@ function CheckOrderEntryForm(props: any) {
     e.preventDefault();
     validateFields((error: any, values: any) => {
       if (!error) {
-        console.log(values);
         const { email, orderId } = values;
         getCheckOrderDetail({
           groupOrderNo: orderId,
           userEmail: email
         }).then((res: any) => {
-          console.log("get it and go");
           locationHref("/buy/checkorder/order");
-          console.log(res);
         });
       }
     });
   };
 
-  console.log(storeCheckOrderContextValue);
   const { form } = props;
   const { getFieldDecorator, validateFields, getFieldsError } = form;
   useLayoutEffect(() => {
