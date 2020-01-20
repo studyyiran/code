@@ -147,6 +147,10 @@ function PaymentInner(props: any) {
 
   // 这个地址检验,其实应该内置到表单中去.但是因为来不及优化,只能在post的时候,再进行检测
   async function postHandler() {
+    if (invoiceSameAddr) {
+      // same的情况下,不需要任何检测
+      return Promise.resolve()
+    }
     const form = (formRef.current as any).props.form;
     if (!form) {
       return Promise.reject();
@@ -162,6 +166,7 @@ function PaymentInner(props: any) {
           errors: [new Error(addressErrorTips)]
         }
       });
+      window.scroll(0, 0);
       return Promise.reject();
     }
     const b = form.validateFieldsAndScroll((err: any, values: any) => {
@@ -179,6 +184,23 @@ function PaymentInner(props: any) {
       }
     });
     return b;
+  }
+  
+  // 开始发起请求
+  async function createOrderHandler(props: any) {
+    // startLoading
+    try {
+      setShowLoadingMask(true);
+      // 开启全屏loading
+      await startOrder({
+        paymentType: paymentType,
+        ...props
+      });
+      locationHref("/buy/confirmation");
+    } catch (e) {
+      console.error(e);
+    }
+    setShowLoadingMask(false);
   }
 
   function paypalPay(amount: any, info: any) {
@@ -260,22 +282,9 @@ function PaymentInner(props: any) {
         onApprove: function(data: any, actions: any) {
           // This function captures the funds from the transaction.
           return actions.order.capture().then(async function(details: any) {
-            // This function shows a transaction success message to your buyer.
-            //那这个id，和接口一起传到后台就行
-            console.log(details.id);
-            // startLoading
-            try {
-              setShowLoadingMask(true);
-              // 开启全屏loading
-              await startOrder({
-                paymentType: paymentType,
-                paypalOrderId: details.id
-              });
-              locationHref("/buy/confirmation");
-            } catch (e) {
-              console.error(e);
-            }
-            setShowLoadingMask(false);
+            createOrderHandler({
+              paypalOrderId: details.id
+            })
           });
         }
       })
@@ -393,6 +402,14 @@ function PaymentInner(props: any) {
         <PayForm amount={totalPrice} onGetNonce={(nonce) => {
           // 获取到回调.
           console.log(nonce)
+          // 1 检测表单
+          postHandler().then(() => {
+            console.log('success')
+            // 2 发起后端调用
+            createOrderHandler({
+              a: 'a',
+            })
+          })
         }}/>
       ) : (
         <div id={constValue.paypalButtonId} />
