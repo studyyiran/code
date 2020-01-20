@@ -390,7 +390,10 @@ function PaymentInner(props: any) {
         </div>
       </section>
       {paymentType === "CREDIT_CARD" ? (
-        <PayForm amount={totalPrice} />
+        <PayForm amount={totalPrice} onGetNonce={(nonce) => {
+          // 获取到回调.
+          console.log(nonce)
+        }}/>
       ) : (
         <div id={constValue.paypalButtonId} />
       )}

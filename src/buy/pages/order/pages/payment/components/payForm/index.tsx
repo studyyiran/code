@@ -10,10 +10,11 @@ import SquarePaymentForm, {
 
 interface IProps {
   amount: number,
+  onGetNonce: (nonce: string) => void
 }
 
-export class PayForm extends React.Component<IProps, any> {
 
+export class PayForm extends React.Component<IProps, any> {
   constructor(props: IProps) {
     super(props)
     this.state = {
@@ -28,11 +29,14 @@ export class PayForm extends React.Component<IProps, any> {
     }
 
     this.setState({ errorMessages: [] })
-    alert("nonce created: " + nonce + ", buyerVerificationToken: " + buyerVerificationToken)
+    console.log(nonce)
+    console.log(cardData)
+    console.log(buyerVerificationToken)
+    this.props.onGetNonce(nonce)
   }
 
-  createVerificationDetails() {
-    const {amount} = this.props
+  createVerificationDetails(props: IProps) {
+    const {amount} = props
     return {
       amount: String(100 * amount),
       currencyCode: "USD",
@@ -62,7 +66,9 @@ export class PayForm extends React.Component<IProps, any> {
           applicationId={SANDBOX_APPLICATION_ID}
           locationId={SANDBOX_LOCATION_ID}
           cardNonceResponseReceived={this.cardNonceResponseReceived}
-          createVerificationDetails={this.createVerificationDetails}
+          createVerificationDetails={() => {
+            return this.createVerificationDetails(this.props)
+          }}
         >
           <fieldset className="sq-fieldset">
             <CreditCardNumberInput />
