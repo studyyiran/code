@@ -345,13 +345,15 @@ function PaymentInner(props: any) {
             postHandler().then(() => {
               // 2 发起后端调用
               createOrderHandler({
-                cardNo: cardData.last_4,
-                invalidDate: `${cardData.exp_month}/${String(
-                  cardData.exp_year
-                ).slice(2)}`,
-                userName: `${addressInfo.firstName} ${addressInfo.lastName}`,
-                pinCode: "", // 没有获得form控件的回传.
-                cardId: nonce
+                creditCardInfo: {
+                  cardNo: cardData.last_4,
+                  invalidDate: `${cardData.exp_month}/${String(
+                    cardData.exp_year
+                  ).slice(2)}`,
+                  userName: `${addressInfo.firstName} ${addressInfo.lastName}`,
+                  pinCode: "", // 没有获得form控件的回传.
+                  cardId: nonce
+                }
               });
             });
           }}

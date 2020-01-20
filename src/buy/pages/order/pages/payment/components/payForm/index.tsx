@@ -88,8 +88,6 @@ export class PayForm extends React.Component<IProps, any> {
     const SANDBOX_LOCATION_ID = "D1YB0ZE5BHTRK";
     return (
       <div>
-        <h1>Payment Page</h1>
-
         <SquarePaymentForm
           sandbox={true}
           applicationId={SANDBOX_APPLICATION_ID}
