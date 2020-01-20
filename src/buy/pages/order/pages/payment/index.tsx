@@ -14,6 +14,7 @@ import { locationHref } from "../../../../common/utils/routerHistory";
 import LoadingMask from "../../../productList/components/loading";
 import { Message } from "../../../../components/message";
 import PayCardImages from "../../../detail/components/payCardImages";
+import { PayForm } from "./components/payForm";
 
 let addressErrorTips = "The address could not be found.";
 
@@ -29,6 +30,7 @@ function PaymentInner(props: any) {
   } = orderInfoContext as IOrderInfoContext;
 
   const [showLoadingMask, setShowLoadingMask] = useState(false);
+  const [paymentType, setPaymentType] = useState("CREDIT_CARD");
   const [inputChangeStatus, setInputChangeStatus] = useState(false);
 
   // 计算总价
@@ -266,7 +268,7 @@ function PaymentInner(props: any) {
               setShowLoadingMask(true);
               // 开启全屏loading
               await startOrder({
-                paymentType: "PAYPAL",
+                paymentType: paymentType,
                 paypalOrderId: details.id
               });
               locationHref("/buy/confirmation");
@@ -348,26 +350,50 @@ function PaymentInner(props: any) {
           />
         )}
         <div className="placeholder" />
-        <div id={constValue.paypalButtonId} />
       </div>
       <section className="pay-card">
         <h2 className="order-common-less-title">Payment information</h2>
-        <div className="pay-card-container">
-          <header className="card">
-            <span>Credit card</span>
-            <PayCardImages />
-          </header>
-          <header className="paypayl-part card">
-            <span>
-              PayPal<span>-2.9%+$0.30 Fee</span>
-            </span>
-            <div className="img-container">
-              <img src={require("./res/paypal.png")} />
-            </div>
-          </header>
-          <div />
+
+        <div className="checkbox-container-group">
+          <div className="checkbox-container">
+            <Checkbox
+              disabled={inputChangeStatus}
+              checked={paymentType === "CREDIT_CARD"}
+              onChange={() => {
+                setPaymentType("CREDIT_CARD");
+              }}
+            >
+              <header className="card">
+                <span>Credit card</span>
+                <PayCardImages />
+              </header>
+            </Checkbox>
+          </div>
+          <div className="checkbox-container">
+            <Checkbox
+              disabled={inputChangeStatus}
+              checked={paymentType === "PAYPAL"}
+              onChange={() => {
+                setPaymentType("PAYPAL");
+              }}
+            >
+              <header className="paypayl-part card">
+                <span>
+                  PayPal<span>-2.9%+$0.30 Fee</span>
+                </span>
+                <div className="img-container">
+                  <img src={require("./res/paypal.png")} />
+                </div>
+              </header>
+            </Checkbox>
+          </div>
         </div>
       </section>
+      {paymentType === "CREDIT_CARD" ? (
+        <PayForm amount={totalPrice} />
+      ) : (
+        <div id={constValue.paypalButtonId} />
+      )}
       <LoadingMask visible={showLoadingMask} />
       {props.renderButton()}
     </div>
