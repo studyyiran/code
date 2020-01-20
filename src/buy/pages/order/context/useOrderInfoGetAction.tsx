@@ -223,6 +223,7 @@ export function useOrderInfoGetAction(
           invoiceInfo: state.invoiceInfo,
           subOrders: state.subOrders
         };
+        console.log(JSON.stringify(obj))
         // 发起
         try {
           orderProcessRecord(payInfo, state.userInfo);
