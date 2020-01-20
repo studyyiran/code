@@ -34,51 +34,26 @@ function PaymentInner(props: any) {
   const [inputChangeStatus, setInputChangeStatus] = useState(false);
 
   // 计算总价
-  const { calcTotalPrice, totalProductPrice } = useGetTotalPrice();
+  const { calcTotalPrice } = useGetTotalPrice();
 
   const { invoiceSameAddr, userInfo, invoiceInfo } = orderInfoContextValue;
 
-  // 需要检测.在每一帧.为了要进行重新渲染.(因为地址会变化.)
-  const validAddressSuccessful = useMemo(() => {}, []);
-
-  function isOkInfo() {
-    if (invoiceSameAddr) {
-      // 因为是obj.检验一个必填
-      if (userInfo && userInfo.userEmail) {
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      const notRequiredArr: any[] = ["apartment"];
-      // 地址合法 有值 就行
-      return (
-        validAddressSuccessful &&
-        invoiceInfo &&
-        invoiceInfo.country &&
-        Object.keys(invoiceInfo).every((key: string) => {
-          return (
-            notRequiredArr.some(notRequired => notRequired === key) ||
-            invoiceInfo[key]
-          );
-        })
-      );
-    }
-  }
-
   const totalPrice = calcTotalPrice();
-  const productPrice = totalProductPrice();
   //  价格变化的时候，重新设置。
   const timeRef = useRef();
-  const isOkBool = isOkInfo();
 
-  // 首次展示
+  const addressInfo = useMemo(() => {
+    return invoiceSameAddr
+      ? userInfo
+      : { ...invoiceInfo, userEmail: userInfo.userEmail };
+  }, [invoiceInfo, invoiceSameAddr, userInfo]);
+
+  // 渲染paypal
   useEffect(() => {
     // 只有有价格才是有效的
-    if (productPrice && !isServer()) {
-      let info = userInfo;
+    if (totalPrice && !isServer()) {
       // 根据形势整合数据
-      if (info) {
+      if (addressInfo) {
         if (timeRef && timeRef.current) {
           window.clearTimeout(timeRef.current);
         }
@@ -90,7 +65,7 @@ function PaymentInner(props: any) {
           if (dom) {
             dom.innerHTML = "";
           }
-          paypalPay(totalPrice, info);
+          paypalPay(totalPrice, addressInfo);
         }, 400);
         return () => {
           if (timeRef.current) {
@@ -100,50 +75,7 @@ function PaymentInner(props: any) {
       }
     }
     return () => {};
-  }, [productPrice, totalPrice, userInfo]);
-
-  useEffect(() => {
-    // 只有有价格才是有效的
-    if (productPrice && !isServer()) {
-      let info = {};
-      // 根据形势整合数据
-      if (invoiceSameAddr) {
-        info = userInfo;
-      } else {
-        info = { ...invoiceInfo, userEmail: userInfo.userEmail };
-      }
-      if (info) {
-        if (isOkBool) {
-          if (timeRef && timeRef.current) {
-            window.clearTimeout(timeRef.current);
-          }
-          (timeRef.current as any) = window.setTimeout(() => {
-            // 每次触发更新操作的时候.清空
-            const dom: any = document.querySelector(
-              `#${constValue.paypalButtonId}`
-            );
-            if (dom) {
-              dom.innerHTML = "";
-            }
-            paypalPay(totalPrice, info);
-          }, 400);
-          return () => {
-            if (timeRef.current) {
-              window.clearTimeout(timeRef.current);
-            }
-          };
-        }
-      }
-    }
-    return () => {};
-  }, [
-    productPrice,
-    totalPrice,
-    userInfo,
-    invoiceInfo,
-    invoiceSameAddr,
-    isOkBool
-  ]);
+  }, [addressInfo, paypalPay, totalPrice]);
 
   // 这个地址检验,其实应该内置到表单中去.但是因为来不及优化,只能在post的时候,再进行检测
   async function postHandler() {
@@ -158,7 +90,7 @@ function PaymentInner(props: any) {
     const allValues = form.getFieldsValue();
     console.log(allValues);
     try {
-      const a = await validaddress({ userInfo: allValues });
+      await validaddress({ userInfo: allValues });
     } catch (e) {
       Message.error("Something went wrong, please check the billing address.");
       form.setFields({
@@ -298,7 +230,7 @@ function PaymentInner(props: any) {
   //     ? (payInfo.creditCardInfo as any)[key]
   //     : "";
   // }
-  console.log(invoiceInfo)
+  console.log(invoiceInfo);
   return (
     <div className="payment-page">
       <section className="address">
@@ -400,7 +332,7 @@ function PaymentInner(props: any) {
       </section>
       {paymentType === "CREDIT_CARD" ? (
         <PayForm
-          addressInfo={invoiceSameAddr ? userInfo : invoiceInfo}
+          addressInfo={addressInfo}
           amount={totalPrice}
           onGetNonce={(nonce, cardData) => {
             // 获取到回调.
@@ -411,10 +343,12 @@ function PaymentInner(props: any) {
               // 2 发起后端调用
               createOrderHandler({
                 cardNo: cardData.last_4,
-                invalidDate: `${cardData.exp_month}/${String(cardData.exp_year).slice(2)}`,
-                userName: cardData,
-                pinCode: '',// 没有获得form控件的回传.
-                cardId: nonce,
+                invalidDate: `${cardData.exp_month}/${String(
+                  cardData.exp_year
+                ).slice(2)}`,
+                userName: `${addressInfo.firstName} ${addressInfo.lastName}`,
+                pinCode: "", // 没有获得form控件的回传.
+                cardId: nonce
               });
             });
           }}
