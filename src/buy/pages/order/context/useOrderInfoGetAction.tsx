@@ -171,7 +171,7 @@ export function useOrderInfoGetAction(
     },
     [dispatch, state.subOrders]
   );
-  
+
   // 发起的action
   const orderProcessRecord = useCallback(
     async (info, userInfo) => {
@@ -223,7 +223,7 @@ export function useOrderInfoGetAction(
           },
           subOrders: state.subOrders
         };
-        console.log(JSON.stringify(obj))
+        console.log(JSON.stringify(obj));
         // 发起
         try {
           orderProcessRecord(info, state.userInfo);
@@ -292,6 +292,8 @@ export function useOrderInfoGetAction(
             if (e && safeEqual(10011, e.code)) {
               // 报错弹框
               soldOutTips(productDetail);
+            } else if (e) {
+              Message.error(e.resultMessage);
             }
           })
           .then(() => {
