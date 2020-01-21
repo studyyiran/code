@@ -85,8 +85,10 @@ export class PayForm extends React.Component<IProps, any> {
   }
 
   render() {
-    const SANDBOX_APPLICATION_ID = "sandbox-sq0idb-lbWWeXLIzIqk9fmpO-mkqw";
-    const SANDBOX_LOCATION_ID = "D1YB0ZE5BHTRK";
+    // const SANDBOX_APPLICATION_ID = "sandbox-sq0idb-lbWWeXLIzIqk9fmpO-mkqw";
+    const SANDBOX_APPLICATION_ID = "sq0idp-CQMGFAMbQelpCDtFk6XuWQ";
+    // const SANDBOX_LOCATION_ID = "D1YB0ZE5BHTRK";
+    const SANDBOX_LOCATION_ID = "C10TQZ8Y1TH4T";
     return (
       <div className="pay-form-container">
         <SquarePaymentForm
