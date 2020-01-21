@@ -37,7 +37,7 @@ function PaymentInner(props: any) {
     orderInfoContextDispatch,
     orderInfoContextValue,
     validaddress,
-    startOrder,
+    startOrder
   } = orderInfoContext as IOrderInfoContext;
 
   const [showLoadingMask, setShowLoadingMask] = useState(false);
@@ -359,24 +359,29 @@ function PaymentInner(props: any) {
           addressInfo={addressInfo}
           amount={totalPrice}
           onGetNonce={(nonce, cardData, buyerVerificationToken) => {
+            setShowLoadingMask(true);
             // 获取到回调.
             // 1 检测表单
-            postHandler().then(() => {
-              console.log(buyerVerificationToken);
-              // 2 发起后端调用
-              createOrderHandler({
-                creditCardInfo: {
-                  cardNo: cardData.last_4,
-                  invalidDate: `${cardData.exp_month}/${String(
-                    cardData.exp_year
-                  ).slice(2)}`,
-                  userName: `${addressInfo.firstName} ${addressInfo.lastName}`,
-                  pinCode: "", // 没有获得form控件的回传.
-                  cardId: nonce,
-                  verificationToken: buyerVerificationToken
-                }
-              });
-            });
+            postHandler()
+              .then(() => {
+                console.log(buyerVerificationToken);
+                // 2 发起后端调用
+                createOrderHandler({
+                  creditCardInfo: {
+                    cardNo: cardData.last_4,
+                    invalidDate: `${cardData.exp_month}/${String(
+                      cardData.exp_year
+                    ).slice(2)}`,
+                    userName: `${addressInfo.firstName} ${addressInfo.lastName}`,
+                    pinCode: "", // 没有获得form控件的回传.
+                    cardId: nonce,
+                    verificationToken: buyerVerificationToken
+                  }
+                });
+              })
+              .catch(() => {
+                setShowLoadingMask(false);
+              })
           }}
         />
       ) : (
