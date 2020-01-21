@@ -102,16 +102,18 @@ export class PayForm extends React.Component<IProps, any> {
         >
           <fieldset className="sq-fieldset">
             <CreditCardNumberInput />
-            <div className="sq-form-third">
-              <CreditCardExpirationDateInput />
-            </div>
+            <div className="sq-form-third-container">
+              <div >
+                <CreditCardExpirationDateInput />
+              </div>
 
-            <div className="sq-form-third">
-              <CreditCardPostalCodeInput />
-            </div>
+              <div >
+                <CreditCardPostalCodeInput />
+              </div>
 
-            <div className="sq-form-third">
-              <CreditCardCVVInput />
+              <div >
+                <CreditCardCVVInput />
+              </div>
             </div>
           </fieldset>
 
