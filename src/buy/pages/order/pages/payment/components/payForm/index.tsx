@@ -96,7 +96,6 @@ export class PayForm extends React.Component<IProps, any> {
     return (
       <div className="pay-form-container">
         <SquarePaymentForm
-          sandbox={true}
           applicationId={SANDBOX_APPLICATION_ID}
           locationId={SANDBOX_LOCATION_ID}
           cardNonceResponseReceived={this.cardNonceResponseReceived}
