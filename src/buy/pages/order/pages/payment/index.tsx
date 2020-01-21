@@ -38,7 +38,6 @@ function PaymentInner(props: any) {
     orderInfoContextValue,
     validaddress,
     startOrder,
-    orderProcessRecord
   } = orderInfoContext as IOrderInfoContext;
 
   const [showLoadingMask, setShowLoadingMask] = useState(false);
