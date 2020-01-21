@@ -1,5 +1,5 @@
 import "react-square-payment-form/lib/default.css";
-import './index.less';
+import "./index.less";
 import React from "react";
 import SquarePaymentForm, {
   CreditCardNumberInput,
@@ -12,7 +12,11 @@ import SquarePaymentForm, {
 interface IProps {
   amount: number;
   addressInfo: any;
-  onGetNonce: (nonce: string, cardData: any, buyerVerificationToken: any) => void;
+  onGetNonce: (
+    nonce: string,
+    cardData: any,
+    buyerVerificationToken: any
+  ) => void;
 }
 
 export class PayForm extends React.Component<IProps, any> {
@@ -73,7 +77,7 @@ export class PayForm extends React.Component<IProps, any> {
       intent: "CHARGE",
       billingContact: {
         familyName: lastName,
-        givenName:firstName,
+        givenName: firstName,
         email: userEmail,
         country: country, //
         city: city, //
@@ -103,17 +107,9 @@ export class PayForm extends React.Component<IProps, any> {
           <fieldset className="sq-fieldset">
             <CreditCardNumberInput />
             <div className="sq-form-third-container">
-              <div >
-                <CreditCardExpirationDateInput />
-              </div>
-
-              <div >
-                <CreditCardPostalCodeInput />
-              </div>
-
-              <div >
-                <CreditCardCVVInput />
-              </div>
+              <CreditCardExpirationDateInput />
+              <CreditCardPostalCodeInput />
+              <CreditCardCVVInput />
             </div>
           </fieldset>
 
