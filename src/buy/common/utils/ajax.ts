@@ -32,7 +32,14 @@ const getRootApi = function(urlRoot: string) {
       }
       break;
     case "UAT":
-      apiRoot = "http://demo-gateway-1613913116.us-east-2.elb.amazonaws.com";
+      if (process.env.SSR_SERVER) {
+        //ssr
+        apiRoot =
+          "http://internal-demo-gateway-inner-1838539681.us-east-2.elb.amazonaws.com";
+      } else {
+        //web
+        apiRoot = "https://demo-gateway.uptradeit.com";
+      }
       break;
     case "PUB":
       if (process.env.SSR_SERVER) {

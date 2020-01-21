@@ -10,6 +10,7 @@ export const staticContentConfig = {
   INTRANSACTION: "INTRANSACTION"
 };
 
+// 废弃
 export function requestWrapper(obj: any, all?: boolean) {
   let fixUrl = "";
   switch (process.env.REACT_APP_SERVER_ENV) {
