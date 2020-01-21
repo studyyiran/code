@@ -38,7 +38,7 @@ function PaymentInner(props: any) {
 
   const [showLoadingMask, setShowLoadingMask] = useState(false);
   const [paymentType, setPaymentType] = useState("CREDIT_CARD");
-  const [inputChangeStatus, setInputChangeStatus] = useState(false);
+  // const [inputChangeStatus, setInputChangeStatus] = useState(false);
 
   // 计算总价
   const { calcTotalPrice } = useGetTotalPrice();
@@ -104,7 +104,7 @@ function PaymentInner(props: any) {
       .Buttons({
         onClick: function(a: any, actions: any) {
           // 封锁逻辑
-          setInputChangeStatus(true);
+          // setInputChangeStatus(true);
           // if (a && a.fundingSource === "paypal") {
           //   setInputChangeStatus(true);
           // }
@@ -121,7 +121,7 @@ function PaymentInner(props: any) {
         },
         onCancel: function() {
           console.log("onCancel");
-          setInputChangeStatus(false);
+          // setInputChangeStatus(false);
         },
         createOrder: function(data: any, actions: any) {
           // This function sets up the details of the transaction, including the amount and line item details.
@@ -244,15 +244,13 @@ function PaymentInner(props: any) {
         <div className="checkbox-container-group">
           <div className="checkbox-container">
             <Checkbox
-              disabled={inputChangeStatus}
+              // disabled={inputChangeStatus}
               checked={invoiceSameAddr === true}
               onChange={() => {
-                if (!inputChangeStatus) {
-                  orderInfoContextDispatch({
-                    type: orderInfoReducerTypes.setInvoiceSameAddr,
-                    value: true
-                  });
-                }
+                orderInfoContextDispatch({
+                  type: orderInfoReducerTypes.setInvoiceSameAddr,
+                  value: true
+                });
               }}
             >
               <span>Same as shipping address</span>
@@ -260,15 +258,13 @@ function PaymentInner(props: any) {
           </div>
           <div className="checkbox-container">
             <Checkbox
-              disabled={inputChangeStatus}
+              // disabled={inputChangeStatus}
               checked={invoiceSameAddr === false}
               onChange={() => {
-                if (!inputChangeStatus) {
-                  orderInfoContextDispatch({
-                    type: orderInfoReducerTypes.setInvoiceSameAddr,
-                    value: false
-                  });
-                }
+                orderInfoContextDispatch({
+                  type: orderInfoReducerTypes.setInvoiceSameAddr,
+                  value: false
+                });
               }}
             >
               <span>Use a different billing address</span>
@@ -303,7 +299,7 @@ function PaymentInner(props: any) {
         <div className="checkbox-container-group">
           <div className="checkbox-container">
             <Checkbox
-              disabled={inputChangeStatus}
+              // disabled={inputChangeStatus}
               checked={paymentType === "CREDIT_CARD"}
               onChange={() => {
                 setPaymentType("CREDIT_CARD");
@@ -317,7 +313,7 @@ function PaymentInner(props: any) {
           </div>
           <div className="checkbox-container">
             <Checkbox
-              disabled={inputChangeStatus}
+              // disabled={inputChangeStatus}
               checked={paymentType === "PAYPAL"}
               onChange={() => {
                 setPaymentType("PAYPAL");
