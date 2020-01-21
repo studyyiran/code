@@ -354,36 +354,34 @@ function PaymentInner(props: any) {
           </div>
         </div>
       </section>
-      <div className="pay-container">
-        {paymentType === "CREDIT_CARD" ? (
-          <PayForm
-            addressInfo={addressInfo}
-            amount={totalPrice}
-            onGetNonce={(nonce, cardData, buyerVerificationToken) => {
-              // 获取到回调.
-              // 1 检测表单
-              postHandler().then(() => {
-                console.log(buyerVerificationToken);
-                // 2 发起后端调用
-                createOrderHandler({
-                  creditCardInfo: {
-                    cardNo: cardData.last_4,
-                    invalidDate: `${cardData.exp_month}/${String(
-                      cardData.exp_year
-                    ).slice(2)}`,
-                    userName: `${addressInfo.firstName} ${addressInfo.lastName}`,
-                    pinCode: "", // 没有获得form控件的回传.
-                    cardId: nonce,
-                    verificationToken: buyerVerificationToken
-                  }
-                });
+      {paymentType === "CREDIT_CARD" ? (
+        <PayForm
+          addressInfo={addressInfo}
+          amount={totalPrice}
+          onGetNonce={(nonce, cardData, buyerVerificationToken) => {
+            // 获取到回调.
+            // 1 检测表单
+            postHandler().then(() => {
+              console.log(buyerVerificationToken);
+              // 2 发起后端调用
+              createOrderHandler({
+                creditCardInfo: {
+                  cardNo: cardData.last_4,
+                  invalidDate: `${cardData.exp_month}/${String(
+                    cardData.exp_year
+                  ).slice(2)}`,
+                  userName: `${addressInfo.firstName} ${addressInfo.lastName}`,
+                  pinCode: "", // 没有获得form控件的回传.
+                  cardId: nonce,
+                  verificationToken: buyerVerificationToken
+                }
               });
-            }}
-          />
-        ) : (
-          <div id={constValue.paypalButtonId} />
-        )}
-      </div>
+            });
+          }}
+        />
+      ) : (
+        <div id={constValue.paypalButtonId} />
+      )}
 
       <LoadingMask visible={showLoadingMask} />
       {props.renderButton()}
