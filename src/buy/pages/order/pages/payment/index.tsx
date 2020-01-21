@@ -61,7 +61,7 @@ function PaymentInner(props: any) {
   }, [invoiceInfo, invoiceSameAddr, userInfo]);
 
   // 这个地址检验,其实应该内置到表单中去.但是因为来不及优化,只能在post的时候,再进行检测
-  const postHandler = async () => {
+  const postHandler = useCallback(async () => {
     function checkResolve() {
       // 储存赋值快照
       (postInfoCapture as any).current = {
@@ -106,95 +106,127 @@ function PaymentInner(props: any) {
       window.scroll(0, 0);
       return Promise.reject();
     }
-  };
+  }, [invoiceInfo, invoiceSameAddr, paymentType, validaddress]);
 
-  const paypalPay = (amount: any, info: any) => {
-    console.log("start paypalPay");
-    console.log(info);
-    // @ts-ignore
-    paypal
-      .Buttons({
-        onClick: function(a: any, actions: any) {
-          // 封锁逻辑
-          // setInputChangeStatus(true);
-          // if (a && a.fundingSource === "paypal") {
-          //   setInputChangeStatus(true);
-          // }
-          // 异步调用
-          return postHandler()
-            .then(() => {
-              return actions.resolve();
-            })
-            .catch(() => {
-              console.log("2222");
-              return actions.reject();
-            });
-        },
-        onCancel: function() {
-          console.log("onCancel");
-          // setInputChangeStatus(false);
-        },
-        createOrder: function(data: any, actions: any) {
-          // This function sets up the details of the transaction, including the amount and line item details.
-          const {
-            firstName = undefined,
-            userEmail = undefined,
-            lastName = undefined,
-            street = undefined,
-            apartment = undefined,
-            city = undefined,
-            state = undefined,
-            zipCode = undefined,
-            userPhone = undefined
-          } = info;
-          return actions.order.create({
-            payer: {
-              name: {
-                given_name: firstName,
-                surname: lastName
-              },
-              address: {
-                address_line_1: street,
-                address_line_2: apartment,
-                admin_area_2: city,
-                admin_area_1: state,
-                postal_code: zipCode,
-                country_code: "US"
-              },
-              email_address: userEmail,
-              phone: userPhone
-                ? {
-                    phone_type: "MOBILE",
-                    phone_number: {
-                      national_number: userPhone
+  // 开始发起请求
+  const createOrderHandler = useCallback(
+    async (props: any) => {
+      // startLoading
+      try {
+        setShowLoadingMask(true);
+        // 开启全屏loading
+        const {
+          invoiceInfo,
+          paymentType,
+          invoiceSameAddr
+        } = postInfoCapture.current;
+        await startOrder({
+          payInfo: { ...props, paymentType: paymentType },
+          invoiceSameAddr,
+          invoiceInfo
+        });
+        locationHref("/buy/confirmation");
+      } catch (e) {
+        console.error(e);
+      }
+      setShowLoadingMask(false);
+    },
+    [startOrder]
+  );
+
+  const paypalPay = useCallback(
+    (amount: any, info: any) => {
+      console.log("start paypalPay");
+      console.log(info);
+      // @ts-ignore
+      paypal
+        .Buttons({
+          onClick: function(a: any, actions: any) {
+            setShowLoadingMask(true);
+            // 封锁逻辑
+            // setInputChangeStatus(true);
+            // if (a && a.fundingSource === "paypal") {
+            //   setInputChangeStatus(true);
+            // }
+            // 异步调用
+            return postHandler()
+              .then(() => {
+                return actions.resolve();
+              })
+              .catch(() => {
+                console.log("2222");
+                setShowLoadingMask(false);
+                return actions.reject();
+              });
+          },
+          onCancel: function() {
+            setShowLoadingMask(false);
+            console.log("onCancel");
+            // setInputChangeStatus(false);
+          },
+          createOrder: function(data: any, actions: any) {
+            // This function sets up the details of the transaction, including the amount and line item details.
+            const {
+              firstName = undefined,
+              userEmail = undefined,
+              lastName = undefined,
+              street = undefined,
+              apartment = undefined,
+              city = undefined,
+              state = undefined,
+              zipCode = undefined,
+              userPhone = undefined
+            } = info;
+            return actions.order.create({
+              payer: {
+                name: {
+                  given_name: firstName,
+                  surname: lastName
+                },
+                address: {
+                  address_line_1: street,
+                  address_line_2: apartment,
+                  admin_area_2: city,
+                  admin_area_1: state,
+                  postal_code: zipCode,
+                  country_code: "US"
+                },
+                email_address: userEmail,
+                phone: userPhone
+                  ? {
+                      phone_type: "MOBILE",
+                      phone_number: {
+                        national_number: userPhone
+                      }
                     }
+                  : null
+              },
+              application_context: {
+                shipping_preference: "NO_SHIPPING"
+              },
+              purchase_units: [
+                {
+                  amount: {
+                    value: amount,
+                    currency_code: "USD"
                   }
-                : null
-            },
-            application_context: {
-              shipping_preference: "NO_SHIPPING"
-            },
-            purchase_units: [
-              {
-                amount: {
-                  value: amount,
-                  currency_code: "USD"
                 }
-              }
-            ]
-          });
-        },
-        onApprove: function(data: any, actions: any) {
-          // This function captures the funds from the transaction.
-          return actions.order.capture().then(async function(details: any) {
-            createOrderHandler({
-              paypalOrderId: details.id
+              ]
             });
-          });
-        }
-      })
-      .render("#paypal-button-container");
-  };
+          },
+          onApprove: function(data: any, actions: any) {
+            // This function captures the funds from the transaction.
+            return actions.order.capture().then(async function(details: any) {
+              createOrderHandler({
+                paypalOrderId: details.id
+              });
+            });
+          }
+        })
+        .render("#paypal-button-container");
+    },
+    [createOrderHandler, postHandler]
+  );
 
   // 渲染paypal
   useEffect(() => {
@@ -222,29 +254,6 @@ function PaymentInner(props: any) {
     }
     return clear;
   }, [addressInfo, paymentType, paypalPay, totalPrice]);
-
-  // 开始发起请求
-  async function createOrderHandler(props: any) {
-    // startLoading
-    try {
-      setShowLoadingMask(true);
-      // 开启全屏loading
-      const {
-        invoiceInfo,
-        paymentType,
-        invoiceSameAddr
-      } = postInfoCapture.current;
-      await startOrder({
-        payInfo: { ...props, paymentType: paymentType },
-        invoiceSameAddr,
-        invoiceInfo
-      });
-      locationHref("/buy/confirmation");
-    } catch (e) {
-      console.error(e);
-    }
-    setShowLoadingMask(false);
-  }
 
   // function getCreditValue(key: string) {
   //   return payInfo &&
