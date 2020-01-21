@@ -80,8 +80,22 @@ function PaymentInner(props: any) {
       return Promise.reject();
     }
     const allValues = form.getFieldsValue();
+    // 第一道检测
+    try {
+      await form.validateFieldsAndScroll((err: any, values: any) => {
+        // 先验证表单
+        if (!err) {
+          return Promise.resolve();
+        } else {
+          return Promise.reject();
+        }
+      });
+    } catch (e) {
+      return Promise.reject();
+    }
     try {
       await validaddress({ userInfo: allValues });
+      return checkResolve();
     } catch (e) {
       Message.error("Something went wrong, please check the billing address.");
       form.setFields({
@@ -92,22 +106,6 @@ function PaymentInner(props: any) {
       window.scroll(0, 0);
       return Promise.reject();
     }
-    return checkResolve();
-    const b = form.validateFieldsAndScroll((err: any, values: any) => {
-      // 先验证表单
-      if (!err) {
-        const result = values;
-        // orderProcessRecord(undefined, result);
-        // orderInfoContextDispatch({
-        //   type: orderInfoReducerTypes.setUserInfo,
-        //   value: result
-        // });
-        return checkResolve();
-      } else {
-        return Promise.reject();
-      }
-    });
-    return b;
   };
 
   const paypalPay = (amount: any, info: any) => {
