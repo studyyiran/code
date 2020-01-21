@@ -8,7 +8,6 @@ import { ProtectionPage } from "./components/protection";
 
 export function PaySubscribePage() {
   const urlParams = getUrlAllParams();
-  console.log(urlParams);
   const { planid: planId, token } = urlParams || ({} as any);
 
   // 支付成功回调
@@ -52,7 +51,6 @@ export function PayProtectionPage() {
 
   // 支付成功回调
   function finishPayHandler(id: any) {
-    console.log(id);
     payProtectionServer
       .orderPayProtection({
         paypalOrderId: id,

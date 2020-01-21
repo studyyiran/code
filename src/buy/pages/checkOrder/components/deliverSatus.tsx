@@ -10,7 +10,6 @@ const FEDICON = require("../static/fedIcon.png");
 const UPSICON = require("../static/uspsIcon.png");
 
 export default function(props: any) {
-  console.log(props.transInfo);
   // 纯函数外面简单的数据封装
   return <DeliverSatus order={props.transInfo || {}} />;
 }

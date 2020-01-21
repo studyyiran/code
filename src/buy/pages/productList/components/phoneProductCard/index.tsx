@@ -29,7 +29,8 @@ export default function PhoneProductCard(props: any) {
     buyProductLevel,
     buyProductId,
     buyProductBQV,
-    buyProductStatus
+    buyProductStatus,
+    buyTags,
   } = props;
   const imgUrl = require("buy/common/static/pic.png");
   const [lineOne, lineTwo] = getDescArr(buyProductBQV, buyProductName);
@@ -104,7 +105,7 @@ export default function PhoneProductCard(props: any) {
           ComponentNormal={
             <span className="price">
               {currencyTrans(buyProductPrice)}
-              <OnSaleTag />
+              <OnSaleTag tag={buyTags} />
             </span>
           }
         />

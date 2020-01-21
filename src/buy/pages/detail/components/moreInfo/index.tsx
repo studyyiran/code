@@ -28,7 +28,6 @@ export function MoreInfo(): any {
   return (
     <div className="more-info-container">
       {content.map(({ icon, title, content }) => {
-        console.log(icon);
         return (
           <div className="more-info" key={title}>
             {/*暂时强制更新 为了解决首次不正常渲染的问题*/}

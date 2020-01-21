@@ -18,7 +18,6 @@ class FormWrapperComponent extends React.Component<any, any> {
       e.preventDefault();
       validateFields((error: any, values: any) => {
         if (!error) {
-          console.log(values);
           onSubmit && onSubmit(values);
         }
       });

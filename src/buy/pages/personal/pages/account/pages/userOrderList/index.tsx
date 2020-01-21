@@ -114,7 +114,6 @@ export function UserOrderList(props: any) {
     if (userOrderList && userOrderList.length) {
       let arr = userOrderList.map(item => {
         const { groupOrderNo, createdDt, suborderList, userEmail } = item;
-        console.log(moment.tz(createdDt, "America/Chicago").format("LL"));
         return (
           <div className="user-order-item">
             <header>

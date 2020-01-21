@@ -49,30 +49,33 @@ function UserInformationWrapper(props: any) {
   );
 }
 
-function PaymentInformationWrapper(props: any) {
-  const orderInfoContext = useContext(OrderInfoContext);
-  const {
-    orderInfoContextValue,
-    orderInfoContextDispatch
-  } = orderInfoContext as IOrderInfoContext;
-  const { invoiceInfo } = orderInfoContextValue;
-  return (
-    <PureForm
-      {...props}
-      hideTitle={true}
-      hideEmail={true}
-      propsInfo={invoiceInfo}
-      submitHandler={(result: any) => {
-        orderInfoContextDispatch({
-          type: orderInfoReducerTypes.setInvoiceInfo,
-          value: result
-        });
-        return true;
-      }}
-    />
-  );
+class PaymentInformationWrapper extends React.Component {
+  render() {
+    // 使用class获取ref
+    const orderInfoContext = this.context;
+    const {
+      orderInfoContextValue,
+      orderInfoContextDispatch
+    } = orderInfoContext as IOrderInfoContext;
+    const { invoiceInfo } = orderInfoContextValue;
+    return (
+      <PureForm
+        {...this.props}
+        hideTitle={true}
+        hideEmail={true}
+        propsInfo={invoiceInfo}
+        submitHandler={(result: any) => {
+          orderInfoContextDispatch({
+            type: orderInfoReducerTypes.setInvoiceInfo,
+            value: result
+          });
+          return true;
+        }}
+      />
+    );
+  }
 }
-
+PaymentInformationWrapper.contextType = OrderInfoContext;
 function PureForm(props: any) {
   const orderInfoContext = useContext(OrderInfoContext);
   const { zipCodeToAddressInfo } = orderInfoContext as IOrderInfoContext;

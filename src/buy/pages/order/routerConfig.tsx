@@ -59,7 +59,6 @@ export const routerConfig: {
     name: "Payment",
     Component: Payment,
     renderDisplayContent: ({ payInfo }: IOrderInfoState) => {
-      console.log(payInfo);
       if (payInfo && payInfo.creditCardInfo && payInfo.creditCardInfo.cardNo) {
         return (
           <div>

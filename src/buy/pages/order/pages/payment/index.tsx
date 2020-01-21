@@ -1,4 +1,11 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from "react";
 import "./index.less";
 import { Checkbox, Form } from "antd";
 import { PaymentInformation } from "../information";
@@ -9,228 +16,243 @@ import {
 } from "../../context";
 import useGetTotalPrice from "../../components/orderLayout/useHook";
 import { constValue } from "../../../../common/constValue";
-import { debounce, isServer } from "../../../../common/utils/util";
+import { isServer } from "../../../../common/utils/util";
 import { locationHref } from "../../../../common/utils/routerHistory";
 import LoadingMask from "../../../productList/components/loading";
 import { Message } from "../../../../components/message";
+import PayCardImages from "../../../detail/components/payCardImages";
+import { PayForm } from "./components/payForm";
 
 let addressErrorTips = "The address could not be found.";
 
 function PaymentInner(props: any) {
   const orderInfoContext = useContext(OrderInfoContext);
-  const ajaxStatus = useRef();
-  
-  const {validAddressSuccessful, setValidAddressSuccessful} = props
+  const formRef = useRef();
+  const postInfoCapture = useRef({
+    invoiceSameAddr: {},
+    invoiceInfo: {},
+    paymentType: ""
+  });
   const {
     orderInfoContextDispatch,
     orderInfoContextValue,
     validaddress,
-    startOrder
+    startOrder,
   } = orderInfoContext as IOrderInfoContext;
 
   const [showLoadingMask, setShowLoadingMask] = useState(false);
-  const [inputChangeStatus, setInputChangeStatus] = useState(false);
+  const [paymentType, setPaymentType] = useState("CREDIT_CARD");
+  // const [inputChangeStatus, setInputChangeStatus] = useState(false);
 
   // 计算总价
-  const { calcTotalPrice, totalProductPrice } = useGetTotalPrice();
+  const { calcTotalPrice } = useGetTotalPrice();
 
   const { invoiceSameAddr, userInfo, invoiceInfo } = orderInfoContextValue;
 
-  function isOkInfo() {
-    if (invoiceSameAddr) {
-      // 因为是obj.检验一个必填
-      if (userInfo && userInfo.userEmail) {
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      const notRequiredArr: any[] = ["apartment"];
-      // 地址合法 有值 就行
-      return (
-        validAddressSuccessful &&
-        invoiceInfo &&
-        invoiceInfo.country &&
-        Object.keys(invoiceInfo).every((key: string) => {
-          return (
-            notRequiredArr.some(notRequired => notRequired === key) ||
-            invoiceInfo[key]
-          );
-        })
-      );
-    }
-  }
-
   const totalPrice = calcTotalPrice();
-  const productPrice = totalProductPrice();
   //  价格变化的时候，重新设置。
   const timeRef = useRef();
-  const isOkBool = isOkInfo();
 
-  // 首次展示
-  useEffect(() => {
-    // 只有有价格才是有效的
-    if (productPrice && !isServer()) {
-      let info = userInfo;
-      // 根据形势整合数据
-      if (info) {
-        if (timeRef && timeRef.current) {
-          window.clearTimeout(timeRef.current);
-        }
-        (timeRef.current as any) = window.setTimeout(() => {
-          // 每次触发更新操作的时候.清空
-          const dom: any = document.querySelector(
-            `#${constValue.paypalButtonId}`
-          );
-          if (dom) {
-            dom.innerHTML = "";
-          }
-          paypalPay(totalPrice, info);
-        }, 400);
-        return () => {
-          if (timeRef.current) {
-            window.clearTimeout(timeRef.current);
-          }
-        };
-      }
+  const addressInfo = useMemo(() => {
+    return invoiceSameAddr
+      ? userInfo
+      : { ...invoiceInfo, userEmail: userInfo.userEmail };
+  }, [invoiceInfo, invoiceSameAddr, userInfo]);
+
+  // 这个地址检验,其实应该内置到表单中去.但是因为来不及优化,只能在post的时候,再进行检测
+  const postHandler = useCallback(async () => {
+    function checkResolve() {
+      // 储存赋值快照
+      (postInfoCapture as any).current = {
+        invoiceSameAddr,
+        invoiceInfo,
+        paymentType
+      };
+      return Promise.resolve();
     }
-    return () => {};
-  }, [productPrice, totalPrice, userInfo]);
-
-  useEffect(() => {
-    // 只有有价格才是有效的
-    if (productPrice && !isServer()) {
-      let info = {};
-      // 根据形势整合数据
-      if (invoiceSameAddr) {
-        info = userInfo;
-      } else {
-        info = { ...invoiceInfo, userEmail: userInfo.userEmail };
-      }
-      if (info) {
-        if (isOkBool) {
-          if (timeRef && timeRef.current) {
-            window.clearTimeout(timeRef.current);
-          }
-          (timeRef.current as any) = window.setTimeout(() => {
-            // 每次触发更新操作的时候.清空
-            const dom: any = document.querySelector(
-              `#${constValue.paypalButtonId}`
-            );
-            if (dom) {
-              dom.innerHTML = "";
-            }
-            paypalPay(totalPrice, info);
-          }, 400);
-          return () => {
-            if (timeRef.current) {
-              window.clearTimeout(timeRef.current);
-            }
-          };
-        }
-      }
+    if (invoiceSameAddr) {
+      // same的情况下,不需要任何检测
+      return checkResolve();
     }
-    return () => {};
-  }, [
-    productPrice,
-    totalPrice,
-    userInfo,
-    invoiceInfo,
-    invoiceSameAddr,
-    isOkBool
-  ]);
+    const form = (formRef.current as any).props.form;
+    if (!form) {
+      return Promise.reject();
+    }
+    const allValues = form.getFieldsValue();
+    // 第一道检测
+    try {
+      await form.validateFieldsAndScroll((err: any, values: any) => {
+        // 先验证表单
+        if (!err) {
+          return Promise.resolve();
+        } else {
+          return Promise.reject();
+        }
+      });
+    } catch (e) {
+      return Promise.reject();
+    }
+    try {
+      await validaddress({ userInfo: allValues });
+      return checkResolve();
+    } catch (e) {
+      Message.error("Something went wrong, please check the billing address.");
+      form.setFields({
+        street: {
+          errors: [new Error(addressErrorTips)]
+        }
+      });
+      window.scroll(0, 0);
+      return Promise.reject();
+    }
+  }, [invoiceInfo, invoiceSameAddr, paymentType, validaddress]);
 
-  function paypalPay(amount: any, info: any) {
-    console.log("start paypalPay");
-    console.log(info);
-    // @ts-ignore
-    paypal
-      .Buttons({
-        onClick: function(a: any) {
-          console.log("hehe");
-          setInputChangeStatus(true);
-          if (a && a.fundingSource === "paypal") {
-            setInputChangeStatus(true);
-          }
-        },
-        onCancel: function() {
-          console.log("onCancel");
-          setInputChangeStatus(false);
-        },
-        createOrder: function(data: any, actions: any) {
-          // This function sets up the details of the transaction, including the amount and line item details.
-          const {
-            firstName = undefined,
-            userEmail = undefined,
-            lastName = undefined,
-            street = undefined,
-            apartment = undefined,
-            city = undefined,
-            state = undefined,
-            zipCode = undefined,
-            userPhone = undefined
-          } = info;
-          return actions.order.create({
-            payer: {
-              name: {
-                given_name: firstName,
-                surname: lastName
-              },
-              address: {
-                address_line_1: street,
-                address_line_2: apartment,
-                admin_area_2: city,
-                admin_area_1: state,
-                postal_code: zipCode,
-                country_code: "US"
-              },
-              email_address: userEmail,
-              phone: userPhone
-                ? {
-                    phone_type: "MOBILE",
-                    phone_number: {
-                      national_number: userPhone
+  // 开始发起请求
+  const createOrderHandler = useCallback(
+    async (props: any) => {
+      // startLoading
+      try {
+        setShowLoadingMask(true);
+        // 开启全屏loading
+        const {
+          invoiceInfo,
+          paymentType,
+          invoiceSameAddr
+        } = postInfoCapture.current;
+        await startOrder({
+          payInfo: { ...props, paymentType: paymentType },
+          invoiceSameAddr,
+          invoiceInfo
+        });
+        locationHref("/buy/confirmation");
+      } catch (e) {
+        console.error(e);
+      }
+      setShowLoadingMask(false);
+    },
+    [startOrder]
+  );
+
+  const paypalPay = useCallback(
+    (amount: any, info: any) => {
+      console.log("start paypalPay");
+      console.log(info);
+      // @ts-ignore
+      paypal
+        .Buttons({
+          onClick: function(a: any, actions: any) {
+            setShowLoadingMask(true);
+            // 封锁逻辑
+            // setInputChangeStatus(true);
+            // if (a && a.fundingSource === "paypal") {
+            //   setInputChangeStatus(true);
+            // }
+            // 异步调用
+            return postHandler()
+              .then(() => {
+                return actions.resolve();
+              })
+              .catch(() => {
+                console.log("2222");
+                setShowLoadingMask(false);
+                return actions.reject();
+              });
+          },
+          onCancel: function() {
+            setShowLoadingMask(false);
+            console.log("onCancel");
+            // setInputChangeStatus(false);
+          },
+          createOrder: function(data: any, actions: any) {
+            // This function sets up the details of the transaction, including the amount and line item details.
+            const {
+              firstName = undefined,
+              userEmail = undefined,
+              lastName = undefined,
+              street = undefined,
+              apartment = undefined,
+              city = undefined,
+              state = undefined,
+              zipCode = undefined,
+              userPhone = undefined
+            } = info;
+            return actions.order.create({
+              payer: {
+                name: {
+                  given_name: firstName,
+                  surname: lastName
+                },
+                address: {
+                  address_line_1: street,
+                  address_line_2: apartment,
+                  admin_area_2: city,
+                  admin_area_1: state,
+                  postal_code: zipCode,
+                  country_code: "US"
+                },
+                email_address: userEmail,
+                phone: userPhone
+                  ? {
+                      phone_type: "MOBILE",
+                      phone_number: {
+                        national_number: userPhone
+                      }
                     }
+                  : null
+              },
+              application_context: {
+                shipping_preference: "NO_SHIPPING"
+              },
+              purchase_units: [
+                {
+                  amount: {
+                    value: amount,
+                    currency_code: "USD"
                   }
-                : null
-            },
-            application_context: {
-              shipping_preference: "NO_SHIPPING"
-            },
-            purchase_units: [
-              {
-                amount: {
-                  value: amount,
-                  currency_code: "USD"
                 }
-              }
-            ]
-          });
-        },
-        onApprove: function(data: any, actions: any) {
-          // This function captures the funds from the transaction.
-          return actions.order.capture().then(async function(details: any) {
-            // This function shows a transaction success message to your buyer.
-            //那这个id，和接口一起传到后台就行
-            console.log(details.id);
-            // startLoading
-            try {
-              setShowLoadingMask(true);
-              // 开启全屏loading
-              await startOrder({
-                paymentType: "PAYPAL",
+              ]
+            });
+          },
+          onApprove: function(data: any, actions: any) {
+            // This function captures the funds from the transaction.
+            return actions.order.capture().then(async function(details: any) {
+              createOrderHandler({
                 paypalOrderId: details.id
               });
-              locationHref("/buy/confirmation");
-            } catch (e) {
-              console.error(e);
-            }
-            setShowLoadingMask(false);
-          });
-        }
-      })
-      .render("#paypal-button-container");
-  }
+            });
+          }
+        })
+        .render("#paypal-button-container");
+    },
+    [createOrderHandler, postHandler]
+  );
+
+  // 渲染paypal
+  useEffect(() => {
+    console.log("run");
+    // 只有有价格才是有效的
+    function clear() {
+      console.log("clear");
+      if (timeRef.current) {
+        window.clearTimeout(timeRef.current);
+      }
+      // 每次触发更新操作的时候.清空
+      const dom: any = document.querySelector(`#${constValue.paypalButtonId}`);
+      if (dom) {
+        dom.innerHTML = "";
+      }
+    }
+    if (totalPrice && !isServer() && paymentType === "PAYPAL") {
+      // 根据形势整合数据
+      if (addressInfo) {
+        (timeRef.current as any) = window.setTimeout(() => {
+          paypalPay(totalPrice, addressInfo);
+        }, 400);
+        return clear;
+      }
+    }
+    return clear;
+  }, [addressInfo, paymentType, paypalPay, totalPrice]);
 
   // function getCreditValue(key: string) {
   //   return payInfo &&
@@ -239,110 +261,21 @@ function PaymentInner(props: any) {
   //     ? (payInfo.creditCardInfo as any)[key]
   //     : "";
   // }
-
   return (
     <div className="payment-page">
-      <section className="pay-card">
-        <h2 className="order-common-less-title">Payment information</h2>
-        {/*<div className="pay-card-container">*/}
-        {/*  <header className="paypayl-part card">*/}
-        {/*    <span>*/}
-        {/*      PayPal<span>-2.9%+$0.30 Fee</span>*/}
-        {/*    </span>*/}
-
-        {/*    <div className="img-container">*/}
-        {/*      <img src={require("./res/paypal.png")} />*/}
-        {/*    </div>*/}
-        {/*  </header>*/}
-        {/*  <div />*/}
-        {/*</div>*/}
-      </section>
-      {/*<section className="pay-card">*/}
-      {/*  <h2 className="order-common-less-title">Payment information</h2>*/}
-      {/*  <div className="pay-card-container">*/}
-      {/*    <header className="card">*/}
-      {/*      <span>Credit card</span>*/}
-      {/*      <PayCardImages />*/}
-      {/*    </header>*/}
-      {/*    <Form className="card">*/}
-      {/*      <Form.Item>*/}
-      {/*        {getFieldDecorator("cardNo", {*/}
-      {/*          initialValue: getCreditValue("cardNo"),*/}
-      {/*          rules: [*/}
-      {/*            {*/}
-      {/*              required: true,*/}
-      {/*              validateTrigger: "onBlur",*/}
-      {/*              message: "Enter a valid card number"*/}
-      {/*            }*/}
-      {/*          ]*/}
-      {/*        })(*/}
-      {/*          <Input*/}
-      {/*            placeholder={"Card number"}*/}
-      {/*            suffix={<Svg icon={"lock"} />}*/}
-      {/*          />*/}
-      {/*        )}*/}
-      {/*      </Form.Item>*/}
-      {/*      <Form.Item>*/}
-      {/*        {getFieldDecorator("userName", {*/}
-      {/*          initialValue: getCreditValue("userName"),*/}
-      {/*          rules: [*/}
-      {/*            {*/}
-      {/*              required: true,*/}
-      {/*              validateTrigger: "onBlur",*/}
-      {/*              message:*/}
-      {/*                "Enter your name exactly as it's written on your card"*/}
-      {/*            }*/}
-      {/*          ]*/}
-      {/*        })(<Input placeholder={"Name on card"} />)}*/}
-      {/*      </Form.Item>*/}
-      {/*      <Row gutter={24}>*/}
-      {/*        <Col sm={14} xs={14}>*/}
-      {/*          <Form.Item>*/}
-      {/*            {getFieldDecorator("invalidDate", {*/}
-      {/*              initialValue: getCreditValue("invalidDate"),*/}
-      {/*              rules: [*/}
-      {/*                {*/}
-      {/*                  required: true,*/}
-      {/*                  validateTrigger: "onBlur",*/}
-      {/*                  message: "Enter a valid card expiry date"*/}
-      {/*                }*/}
-      {/*              ]*/}
-      {/*            })(<Input placeholder={"Expiration date(MM/YY)"} />)}*/}
-      {/*          </Form.Item>*/}
-      {/*        </Col>*/}
-      {/*        <Col sm={10} xs={10}>*/}
-      {/*          <Form.Item>*/}
-      {/*            {getFieldDecorator("pinCode", {*/}
-      {/*              initialValue: getCreditValue("pinCode"),*/}
-      {/*              rules: [*/}
-      {/*                {*/}
-      {/*                  required: true,*/}
-      {/*                  validateTrigger: "onBlur",*/}
-      {/*                  message: "Enter the CVV or security code on your card"*/}
-      {/*                }*/}
-      {/*              ]*/}
-      {/*            })(<Input placeholder={"Security code"} />)}*/}
-      {/*          </Form.Item>*/}
-      {/*        </Col>*/}
-      {/*      </Row>*/}
-      {/*    </Form>*/}
-      {/*  </div>*/}
-      {/*</section>*/}
       <section className="address">
         <h2 className="order-common-less-title">Billing Address</h2>
         <p>Select the address that matches your card or payment method.</p>
         <div className="checkbox-container-group">
           <div className="checkbox-container">
             <Checkbox
-              disabled={inputChangeStatus}
+              // disabled={inputChangeStatus}
               checked={invoiceSameAddr === true}
               onChange={() => {
-                if (!inputChangeStatus) {
-                  orderInfoContextDispatch({
-                    type: orderInfoReducerTypes.setInvoiceSameAddr,
-                    value: true
-                  });
-                }
+                orderInfoContextDispatch({
+                  type: orderInfoReducerTypes.setInvoiceSameAddr,
+                  value: true
+                });
               }}
             >
               <span>Same as shipping address</span>
@@ -350,15 +283,13 @@ function PaymentInner(props: any) {
           </div>
           <div className="checkbox-container">
             <Checkbox
-              disabled={inputChangeStatus}
+              // disabled={inputChangeStatus}
               checked={invoiceSameAddr === false}
               onChange={() => {
-                if (!inputChangeStatus) {
-                  orderInfoContextDispatch({
-                    type: orderInfoReducerTypes.setInvoiceSameAddr,
-                    value: false
-                  });
-                }
+                orderInfoContextDispatch({
+                  type: orderInfoReducerTypes.setInvoiceSameAddr,
+                  value: false
+                });
               }}
             >
               <span>Use a different billing address</span>
@@ -366,114 +297,95 @@ function PaymentInner(props: any) {
           </div>
         </div>
       </section>
-      <LoadingMask visible={showLoadingMask} />
-      {/*选择决定表单*/}
-      {/*暂时屏蔽*/}
       <div className="paypal-container">
         {invoiceSameAddr === true ? null : (
           <PaymentInformation
+            wrappedComponentRef={(inst: any) => {
+              formRef.current = inst;
+            }}
             onFormChangeHandler={(
               props: any,
               changedValues: any,
               allValues: any
             ) => {
               // 如果监听到目标变更 都进行重置.然后重新验证.
-              let arr = [
-                {
-                  name: "street",
-                  time: 1000
-                },
-                {
-                  name: "city",
-                  time: 1
-                }
-              ];
-              let findTarget = arr.find((item1: any) => {
-                return !!Object.keys(changedValues).find((item2: any) => {
-                  return item2 === item1.name;
-                });
-              });
-              // 只有当前变更 并且都有值的时候
-              if (findTarget && arr.every(item => allValues[item.name])) {
-                // 重置
-                setValidAddressSuccessful(false);
-                props.form.setFields({
-                  street: {
-                    value: allValues.street
-                  }
-                });
-                // @ts-ignore
-                function checkFunc() {
-                  ajaxStatus.current = validaddress({ userInfo: allValues });
-                  (ajaxStatus.current as any).then((res: any) => {
-                    setValidAddressSuccessful(true);
-                  });
-                  (ajaxStatus.current as any).catch(() => {
-                    (ajaxStatus.current as any) = checkFunc;
-                    Message.error(
-                      "Something went wrong, please check the billing address."
-                    );
-                    props.form.setFields({
-                      street: {
-                        errors: [new Error(addressErrorTips)]
-                      }
-                    });
-                  });
-                }
-                // 验证
-                afterMinTimeCall(checkFunc, 1000);
-              }
               orderInfoContextDispatch({
                 type: orderInfoReducerTypes.setInvoiceInfo,
                 value: allValues
               });
             }}
-            renderButton={(informationHandleNext: any, formInnerProps: any) => {
-              if (isOkInfo()) {
-                return null;
-              } else {
-                return (
-                  <div
-                    className="paypal-button-mask"
-                    onClick={() => {
-                      formInnerProps.form.validateFieldsAndScroll(
-                        (err: any, values: any) => {
-                          // 先验证表单
-                          if (!err) {
-                            // 如果验证通过了
-                            if (!validAddressSuccessful) {
-                              // 如果当前没有?
-                              if (!ajaxStatus.current) {
-                                // 直接设置非法
-                                formInnerProps.form.setFields({
-                                  street: {
-                                    errors: [new Error(addressErrorTips)]
-                                  }
-                                });
-                              } else {
-                                // 如果promise已经变成方法
-                                if (
-                                  (ajaxStatus.current as any) instanceof
-                                  Function
-                                ) {
-                                  (ajaxStatus.current as any)();
-                                }
-                              }
-                            }
-                          }
-                        }
-                      );
-                      informationHandleNext();
-                    }}
-                  />
-                );
-              }
-            }}
           />
         )}
         <div className="placeholder" />
-        <div id={constValue.paypalButtonId} />
       </div>
+      <section className="pay-card">
+        <h2 className="order-common-less-title">Payment information</h2>
+
+        <div className="checkbox-container-group">
+          <div className="checkbox-container">
+            <Checkbox
+              // disabled={inputChangeStatus}
+              checked={paymentType === "CREDIT_CARD"}
+              onChange={() => {
+                setPaymentType("CREDIT_CARD");
+              }}
+            >
+              <header className="card my-card">
+                <span>Credit card</span>
+                <PayCardImages />
+              </header>
+            </Checkbox>
+          </div>
+          <div className="checkbox-container">
+            <Checkbox
+              // disabled={inputChangeStatus}
+              checked={paymentType === "PAYPAL"}
+              onChange={() => {
+                setPaymentType("PAYPAL");
+              }}
+            >
+              <header className="paypayl-part card my-card">
+                <span>PayPal</span>
+                <div className="img-container">
+                  <img src={require("./res/paypal.png")} />
+                </div>
+              </header>
+            </Checkbox>
+          </div>
+        </div>
+      </section>
+      <div className="pay-container">
+        {paymentType === "CREDIT_CARD" ? (
+          <PayForm
+            addressInfo={addressInfo}
+            amount={totalPrice}
+            onGetNonce={(nonce, cardData, buyerVerificationToken) => {
+              // 获取到回调.
+              // 1 检测表单
+              postHandler().then(() => {
+                console.log(buyerVerificationToken);
+                // 2 发起后端调用
+                createOrderHandler({
+                  creditCardInfo: {
+                    cardNo: cardData.last_4,
+                    invalidDate: `${cardData.exp_month}/${String(
+                      cardData.exp_year
+                    ).slice(2)}`,
+                    userName: `${addressInfo.firstName} ${addressInfo.lastName}`,
+                    pinCode: "", // 没有获得form控件的回传.
+                    cardId: nonce,
+                    verificationToken: buyerVerificationToken
+                  }
+                });
+              });
+            }}
+          />
+        ) : (
+          <div id={constValue.paypalButtonId} />
+        )}
+      </div>
+
+      <LoadingMask visible={showLoadingMask} />
       {props.renderButton()}
     </div>
   );

@@ -14,7 +14,6 @@ import { soldOutTips } from "../detail/components/soldOutTips";
 export default function OrderRouter(props: any) {
   const orderInfoContext = useContext(OrderInfoContext);
   const productDetailContext = useContext(ProductDetailContext);
-  const [validAddressSuccessful, setValidAddressSuccessful] = useState(true);
   const {
     productDetailContextValue
   } = productDetailContext as IProductDetailContext;
@@ -127,8 +126,6 @@ export default function OrderRouter(props: any) {
                     >
                       <Component
                         {...routerProps}
-                        validAddressSuccessful={validAddressSuccessful}
-                        setValidAddressSuccessful={setValidAddressSuccessful}
                         renderButton={(pageNextClick: any) => {
                           return (
                             <ButtonGroup

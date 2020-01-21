@@ -28,7 +28,8 @@ export interface IProductDetail {
     userId: string;
     userName: string;
     userImg: string;
-  }
+  },
+  buyTags?: string
 }
 
 export interface IReviews {
