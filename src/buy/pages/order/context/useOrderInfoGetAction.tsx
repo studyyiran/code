@@ -178,9 +178,9 @@ export function useOrderInfoGetAction(
       orderInfoServer.orderProcessRecord(
         {
           userInfo: userInfo,
-          payInfo: info.payInfo,
-          invoiceSameAddr: info.invoiceSameAddr,
-          invoiceInfo: info.invoiceInfo,
+          payInfo: info ? info.payInfo : {},
+          invoiceSameAddr: info ? info.invoiceSameAddr : state.invoiceSameAddr,
+          invoiceInfo: info ? info.invoiceInfo : state.invoiceInfo,
           shippoRateInfo: {
             rateId: state.expressInfo.find(item => {
               return String(item.token) === state.userExpress;

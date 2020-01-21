@@ -56,10 +56,16 @@
         }
       }
       .img-container {
-        padding: 10 * @px 5 * @px 5 * @px;
+        padding: 5 * @px 5 * @px;
         border: 1px solid @color-border;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         img {
-          width: 100 * @px;
+          .mb({
+            width: 30*@px;
+          });
+          width: 50 * @px;
         }
       }
     }
