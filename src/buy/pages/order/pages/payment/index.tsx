@@ -28,6 +28,11 @@ let addressErrorTips = "The address could not be found.";
 function PaymentInner(props: any) {
   const orderInfoContext = useContext(OrderInfoContext);
   const formRef = useRef();
+  const postInfoCapture = useRef({
+    invoiceSameAddr: {},
+    invoiceInfo: {},
+    paymentType: ""
+  });
   const {
     orderInfoContextDispatch,
     orderInfoContextValue,
@@ -57,9 +62,18 @@ function PaymentInner(props: any) {
 
   // 这个地址检验,其实应该内置到表单中去.但是因为来不及优化,只能在post的时候,再进行检测
   const postHandler = async () => {
+    function checkResolve() {
+      // 储存赋值快照
+      (postInfoCapture as any).current = {
+        invoiceSameAddr,
+        invoiceInfo,
+        paymentType
+      };
+      return Promise.resolve();
+    }
     if (invoiceSameAddr) {
       // same的情况下,不需要任何检测
-      return Promise.resolve();
+      return checkResolve();
     }
     const form = (formRef.current as any).props.form;
     if (!form) {
@@ -78,7 +92,7 @@ function PaymentInner(props: any) {
       window.scroll(0, 0);
       return Promise.reject();
     }
-    return Promise.resolve();
+    return checkResolve();
     const b = form.validateFieldsAndScroll((err: any, values: any) => {
       // 先验证表单
       if (!err) {
@@ -88,7 +102,7 @@ function PaymentInner(props: any) {
         //   type: orderInfoReducerTypes.setUserInfo,
         //   value: result
         // });
-        return Promise.resolve();
+        return checkResolve();
       } else {
         return Promise.reject();
       }
@@ -111,7 +125,6 @@ function PaymentInner(props: any) {
           // 异步调用
           return postHandler()
             .then(() => {
-              console.log("1111");
               return actions.resolve();
             })
             .catch(() => {
@@ -218,9 +231,15 @@ function PaymentInner(props: any) {
     try {
       setShowLoadingMask(true);
       // 开启全屏loading
+      const {
+        invoiceInfo,
+        paymentType,
+        invoiceSameAddr
+      } = postInfoCapture.current;
       await startOrder({
-        paymentType: paymentType,
-        ...props
+        payInfo: { ...props, paymentType: paymentType },
+        invoiceSameAddr,
+        invoiceInfo
       });
       locationHref("/buy/confirmation");
     } catch (e) {
@@ -338,7 +357,7 @@ function PaymentInner(props: any) {
               // 获取到回调.
               // 1 检测表单
               postHandler().then(() => {
-                console.log(buyerVerificationToken)
+                console.log(buyerVerificationToken);
                 // 2 发起后端调用
                 createOrderHandler({
                   creditCardInfo: {
@@ -349,7 +368,7 @@ function PaymentInner(props: any) {
                     userName: `${addressInfo.firstName} ${addressInfo.lastName}`,
                     pinCode: "", // 没有获得form控件的回传.
                     cardId: nonce,
-                    verificationToken: buyerVerificationToken,
+                    verificationToken: buyerVerificationToken
                   }
                 });
               });
@@ -359,7 +378,7 @@ function PaymentInner(props: any) {
           <div id={constValue.paypalButtonId} />
         )}
       </div>
-      
+
       <LoadingMask visible={showLoadingMask} />
       {props.renderButton()}
     </div>

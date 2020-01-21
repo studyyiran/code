@@ -17,7 +17,7 @@ import { IOrderInfoState, orderInfoReducerTypes } from "./index";
 export interface orderInfoContextActions {
   getOrderTax: (zipCode?: string) => void; // 可以从外部实时传入zipCode进行运算
   getExpress: () => void;
-  startOrder: (payInfo: IOrderInfoState["payInfo"]) => any; // 1231 这块我还是先写成调用触发,因为用状态触发有风险
+  startOrder: (payInfo: any) => any; // 1231 这块我还是先写成调用触发,因为用状态触发有风险
   zipCodeToAddressInfo: (zipCode: string, form: any) => any;
   checkAddress: (info: any) => any;
   orderIdToCheckOrderInfo: () => any;
@@ -174,12 +174,13 @@ export function useOrderInfoGetAction(
   
   // 发起的action
   const orderProcessRecord = useCallback(
-    async (payInfo, userInfo) => {
+    async (info, userInfo) => {
       orderInfoServer.orderProcessRecord(
         {
           userInfo: userInfo,
-          payInfo: payInfo,
-          invoiceSameAddr: state.invoiceSameAddr,
+          payInfo: info.payInfo,
+          invoiceSameAddr: info.invoiceSameAddr,
+          invoiceInfo: info.invoiceInfo,
           shippoRateInfo: {
             rateId: state.expressInfo.find(item => {
               return String(item.token) === state.userExpress;
@@ -189,10 +190,9 @@ export function useOrderInfoGetAction(
                 }) as any).rateId
               : ""
           },
-          invoiceInfo: state.invoiceInfo,
           subOrders: state.subOrders
         },
-        Boolean(payInfo && payInfo.paypalOrderId)
+        true
       );
     },
     [
@@ -204,13 +204,14 @@ export function useOrderInfoGetAction(
     ]
   );
   const startOrder = useCallback(
-    async function(payInfo) {
+    async function(info) {
       // 临时trigger检验变量.这块需要系统封装好.
-      if (payInfo) {
+      if (info) {
         const obj = {
           userInfo: state.userInfo,
-          payInfo: payInfo,
-          invoiceSameAddr: state.invoiceSameAddr,
+          payInfo: info.payInfo,
+          invoiceSameAddr: info.invoiceSameAddr,
+          invoiceInfo: info.invoiceInfo,
           shippoRateInfo: {
             rateId: state.expressInfo.find(item => {
               return String(item.token) === state.userExpress;
@@ -220,13 +221,12 @@ export function useOrderInfoGetAction(
                 }) as any).rateId
               : ""
           },
-          invoiceInfo: state.invoiceInfo,
           subOrders: state.subOrders
         };
         console.log(JSON.stringify(obj))
         // 发起
         try {
-          orderProcessRecord(payInfo, state.userInfo);
+          orderProcessRecord(info, state.userInfo);
         } catch (e) {
           console.error(e);
         }
