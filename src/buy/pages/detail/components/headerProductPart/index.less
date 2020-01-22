@@ -31,10 +31,10 @@
   .header-part {
     font-size: 16 * @f;
     .sale-tag {
-      width: 55 * @px;
-      .mb({width: 35 * @px;});
+      width: 45 * @px;
       margin-left: 20 * @px;
-      vertical-align: bottom;
+      .mb({width: 25 * @px;margin-left: 10 * @px;});
+      vertical-align: middle;
     }
     .product-info {
       position: relative;
@@ -108,10 +108,10 @@
       }
       .right {
         .price-and-button {
-          margin-bottom: 6 * @px;
+          margin-bottom: 10 * @px;
           .price {
             > * {
-              vertical-align: baseline;
+              vertical-align: middle;
             }
             .act-timer {
               flex: 1;
@@ -145,6 +145,7 @@
       /*移动端*/
       .bottom {
         .price {
+          margin-bottom: 5 *@px;
           .buy-price {
             margin-right: 8 * @px;
           }
