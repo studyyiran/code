@@ -41,7 +41,7 @@ function PaymentInner(props: any) {
   } = orderInfoContext as IOrderInfoContext;
 
   const [showLoadingMask, setShowLoadingMask] = useState(false);
-  const [paymentType, setPaymentType] = useState("CREDIT_CARD");
+  const [paymentType, setPaymentType] = useState("PAYPAL");
   // const [inputChangeStatus, setInputChangeStatus] = useState(false);
 
   // 计算总价
@@ -322,20 +322,20 @@ function PaymentInner(props: any) {
         <h2 className="order-common-less-title">Payment information</h2>
 
         <div className="checkbox-container-group">
-          <div className="checkbox-container">
-            <Checkbox
-              // disabled={inputChangeStatus}
-              checked={paymentType === "CREDIT_CARD"}
-              onChange={() => {
-                setPaymentType("CREDIT_CARD");
-              }}
-            >
-              <header className="card my-card">
-                <span>Credit card</span>
-                <PayCardImages />
-              </header>
-            </Checkbox>
-          </div>
+          {/*<div className="checkbox-container">*/}
+          {/*  <Checkbox*/}
+          {/*    // disabled={inputChangeStatus}*/}
+          {/*    checked={paymentType === "CREDIT_CARD"}*/}
+          {/*    onChange={() => {*/}
+          {/*      setPaymentType("CREDIT_CARD");*/}
+          {/*    }}*/}
+          {/*  >*/}
+          {/*    <header className="card my-card">*/}
+          {/*      <span>Credit card</span>*/}
+          {/*      <PayCardImages />*/}
+          {/*    </header>*/}
+          {/*  </Checkbox>*/}
+          {/*</div>*/}
           <div className="checkbox-container">
             <Checkbox
               // disabled={inputChangeStatus}
@@ -346,13 +346,15 @@ function PaymentInner(props: any) {
             >
               <header className="paypayl-part card my-card">
                 <span>PayPal</span>
-                <div className="img-container">
-                  <img src={require("./res/paypal.png")} />
-                </div>
+                <PayCardImages showPaypal={true} />
+                {/*<div className="img-container">*/}
+                  {/*<img src={require("./res/paypal.png")} />*/}
+                {/*</div>*/}
               </header>
             </Checkbox>
           </div>
         </div>
+        <p className="phone-call">Trouble placing your order? Call or text 972-833-0136 for help</p>
       </section>
       {paymentType === "CREDIT_CARD" ? (
         <PayForm
