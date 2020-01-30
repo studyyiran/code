@@ -64,7 +64,7 @@ export default function Shipping(props: any) {
               >
                 <span>{nameToContent(token)}</span>
               </Checkbox>
-              <span>{currencyTrans(totalFee, "free")}</span>
+              <span>{currencyTrans(totalFee, "Free")}</span>
             </div>
           );
         })}
