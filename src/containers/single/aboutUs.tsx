@@ -99,7 +99,7 @@ const userIntro: IUserIntro[] = [
     headimg: require("./res/whoWeAre/head_0.png"),
     name: "Alex Wang",
     desc: "Business Development"
-  },
+  }
 ];
 
 const ArticleComp = (props: {
@@ -128,11 +128,10 @@ class AboutUs extends React.Component<RouteComponentProps> {
             <section className="statement__content">
               <h2>Mission Statement</h2>
               <p>
-                Our mission is to make today better so that the world will be
-                brighter tomorrow; to build a company where the life of used
-                electronics is extended through the hands of others or recycled
-                to help reduce carbon footprint. We are committed to providing a
-                fast, easy, safe, and trustworthy service for everyone.
+                Our mission is to make technology affordable; to empower the
+                world by extending the life of used electronics through the
+                hands of others. We are committed to providing a safe and
+                trustworthy service for everyone.
               </p>
             </section>
           </div>
