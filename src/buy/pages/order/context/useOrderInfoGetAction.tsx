@@ -207,19 +207,17 @@ export function useOrderInfoGetAction(
     async function(info) {
       // 临时trigger检验变量.这块需要系统封装好.
       if (info) {
+        const currentRateInfo = state.expressInfo.find(item => {
+          return String(item.token) === state.userExpress;
+        });
         const obj = {
           userInfo: state.userInfo,
           payInfo: info.payInfo,
           invoiceSameAddr: info.invoiceSameAddr,
           invoiceInfo: info.invoiceInfo,
           shippoRateInfo: {
-            rateId: state.expressInfo.find(item => {
-              return String(item.token) === state.userExpress;
-            })
-              ? (state.expressInfo.find(item => {
-                  return String(item.token) === state.userExpress;
-                }) as any).rateId
-              : ""
+            rateId: currentRateInfo ? currentRateInfo.rateId : "",
+            token: currentRateInfo ? currentRateInfo.token : ""
           },
           subOrders: state.subOrders
         };
