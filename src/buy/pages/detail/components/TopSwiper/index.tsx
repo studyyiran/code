@@ -9,6 +9,8 @@ import {isServer, safeEqual} from "../../../../common/utils/util";
 import TestCarousel, { Modal, ModalGateway } from "react-images";
 // @ts-ignore
 import WxImageViewer from "react-wx-images-viewer";
+// @ts-ignore
+import ReactImageMagnify from 'react-image-magnify';
 import "./index.less";
 
 export function TopSwiper(props: any) {
@@ -79,7 +81,21 @@ export function TopSwiper(props: any) {
         />
       );
     } else {
-      return <div>{currentImageIndex}</div>;
+      const width = 439;
+      const height = 292;
+      const zoomSize = 6;
+      return <ReactImageMagnify {...{
+        smallImage: {
+          alt: 'Wristwatch by Ted Baker London',
+          isFluidWidth: true,
+          src: buyProductImgM[currentImageIndex]
+        },
+        largeImage: {
+          src: buyProductImgPc[currentImageIndex],
+          width: width * zoomSize,
+          height: height * zoomSize
+        }
+      }} />
     }
   };
 
