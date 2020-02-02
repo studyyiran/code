@@ -85,6 +85,9 @@ export function TopSwiper(props: any) {
       const height = 292;
       const zoomSize = 6;
       return <ReactImageMagnify {...{
+        enlargedImageContainerDimensions: {
+          width: '100%', height: '100%'
+        },
         smallImage: {
           alt: 'Wristwatch by Ted Baker London',
           isFluidWidth: true,
