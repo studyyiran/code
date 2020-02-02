@@ -138,8 +138,6 @@ export default function ProductDetail(props: any) {
     }
   }, [id, productDetail]);
 
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
   const renderSimilar = () => {
     // 哪怕有ts,也不能相信他一定有值.
     if (similiarPhoneList && similiarPhoneList.length) {
@@ -216,8 +214,6 @@ export default function ProductDetail(props: any) {
     return (
       <div className="product-detail-page">
         <TopSwiper
-          currentImageIndex={currentImageIndex}
-          setCurrentImageIndex={setCurrentImageIndex}
           buyProductVideo={buyProductVideo}
           buyProductImgPc={buyProductImgPc}
           buyProductImgM={buyProductImgM}
