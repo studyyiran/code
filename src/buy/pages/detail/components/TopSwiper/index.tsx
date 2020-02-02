@@ -35,7 +35,7 @@ export function TopSwiper(props: any) {
     // setShowImgModal(true);
   }
   const renderSwiper = () => {
-    let dom = buyProductImgPc.map((item: string, index: number) => {
+    let dom = buyProductImgM.map((item: string, index: number) => {
       return (
         <div className="inner-div-container" key={index} data-selected={safeEqual(index, currentImageIndex)}>
           <InnerDivImage imgUrl={item} dataIndex={index} />
@@ -88,7 +88,7 @@ export function TopSwiper(props: any) {
         smallImage: {
           alt: 'Wristwatch by Ted Baker London',
           isFluidWidth: true,
-          src: buyProductImgM[currentImageIndex]
+          src: buyProductImgPc[currentImageIndex]
         },
         largeImage: {
           src: buyProductImgPc[currentImageIndex],
