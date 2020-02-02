@@ -81,6 +81,7 @@
     "react": "^16.9.0",
     "react-dev-utils": "^5.0.1",
     "react-dom": "^16.9.0",
+    "react-image-magnify": "^2.7.4",
     "react-images": "^1.0.0",
     "react-images-viewer": "^1.6.2",
     "react-lazyload": "^2.6.2",
