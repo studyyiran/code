@@ -76,7 +76,7 @@ const getReviewScoreUrl = `https://api.reviews.io/merchant/reviews`;
 export async function getReviewScore() {
   const res = await ajax.get(getReviewScoreUrl, {
     page: 0,
-    per_page: 100,
+    per_page: 1000,
     order: "desc",
     store: "uptradeit-com"
   });
