@@ -62,7 +62,7 @@ export const getReviews = <T>(query: { [key: string]: string | number }): Promis
     url: `https://api.reviews.io/merchant/reviews`,
     params: {
       page: query.page || 0,
-      per_page: query.pageSize || 10,
+      per_page: 1000 || query.pageSize,
       order: query.order || 'desc',
       min_rating: query.min_rating,
       max_rating: query.max_rating,
