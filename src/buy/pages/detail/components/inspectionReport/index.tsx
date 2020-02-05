@@ -9,25 +9,17 @@ export function InspectionReport(props: {
   productDescription: any;
   buyProductHistoryPdf?: any;
   backGroundCheck: any;
-  buyProductRemark: any;
-  userInfo?: any;
 }) {
   const {
     productDescription,
-    buyProductRemark,
     buyProductHistoryPdf,
     backGroundCheck,
-    userInfo
   } = props;
   return (
     <div className="inspection-report">
-      <h2 className="sub-title-size-main title-with-border">
-        Inspection Report
-      </h2>
-      <InspectPersonInfo
-        buyProductRemark={buyProductRemark}
-        userInfo={userInfo}
-      />
+      {/*<h2 className="sub-title-size-main title-with-border">*/}
+      {/*  Inspection Report*/}
+      {/*</h2>*/}
       <div className="item-list">
         <WithTitle title={"Fully Functional"}>
           <FullyFunctionalPart backGroundCheck={backGroundCheck} />
@@ -54,36 +46,7 @@ function WithTitle({ title, children }: { title: string; children: any }) {
   );
 }
 
-function InspectPersonInfo({
-  buyProductRemark,
-  userInfo
-}: {
-  buyProductRemark: any;
-  userInfo: IProductDetail["userInfo"];
-}) {
-  // 就算有if 有的时候 也不好
-  if (userInfo) {
-    return (
-      <div className="Inspect-person-info">
-        <div className="first">
-          <img src={userInfo.userImg || require("./res/defaulthead.png")} />
-          <div className="name-part">
-            <h3 className="title-style">Inspected by</h3>
-            <span>{userInfo.userName || `UpTrade`}</span>
-          </div>
-        </div>
-        {buyProductRemark ? (
-          <div className="second">
-            <h3 className="title-style">Inspection Notes<img src={require('./res/notes-icon.svg')}/></h3>
-            <p>{buyProductRemark}</p>
-          </div>
-        ) : null}
-      </div>
-    );
-  } else {
-    return null;
-  }
-}
+
 
 // function renderReport() {
 //   return (

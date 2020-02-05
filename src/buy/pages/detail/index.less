@@ -18,7 +18,20 @@
       padding-bottom: 100px !important;
     }
     .top-part {
-      
+      position: relative;
+      display: flex;
+      .product-detail {
+        flex: 0 0 800 *@px;
+        min-width: 0;
+      }
+      .fixed-wrapper {
+        flex: 0 0 200 *@px;
+        > div {
+          position:absolute;
+          bottom:0;
+          height: 90vh;
+        }
+      }
     }
 
     /*

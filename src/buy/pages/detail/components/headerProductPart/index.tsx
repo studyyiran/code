@@ -14,14 +14,17 @@ import { TopIconList } from "../topIconList";
 import "./index.less";
 import TipsIcon from "../../../../components/tipsIcon";
 import { OnSaleTag } from "../onSaleTag";
+import {InspectPersonInfo} from "../inspectPersonInfo";
 
 export function HeaderProductPart(props: {
   productDetail: IProductDetail;
   partsInfo: any;
   showModal: any;
   setShowModal: any;
+  buyProductRemark: any;
+  userInfo?: any;
 }) {
-  const { productDetail, partsInfo, showModal, setShowModal } = props;
+  const { productDetail, partsInfo, showModal, setShowModal, buyProductRemark, userInfo } = props;
   const {
     productDisplayName,
     buyPrice,
@@ -42,7 +45,7 @@ export function HeaderProductPart(props: {
       <RenderByCondition
         ComponentPc={
           <>
-            <TopIconList />
+            {/*<TopIconList />*/}
             <div className="price-part-pc">
               <div className="left">
                 <ProductInfo {...productDetail} />
@@ -110,6 +113,10 @@ export function HeaderProductPart(props: {
                   productDetail={productDetail}
                 />
               </div>
+              <InspectPersonInfo
+                buyProductRemark={buyProductRemark}
+                userInfo={userInfo}
+              />
             </div>
           </>
         }

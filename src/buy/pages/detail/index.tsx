@@ -218,6 +218,8 @@ export default function ProductDetail(props: any) {
         setShowModal={setShowModal}
         productDetail={productDetail}
         partsInfo={partsInfo}
+        userInfo={userInfo}
+        buyProductRemark={buyProductRemark}
       />
     );
   }
@@ -226,10 +228,6 @@ export default function ProductDetail(props: any) {
     return (
       <div className="product-detail-page">
         <div className="top-part">
-          <RenderByCondition
-            ComponentPc={renderHeaderProductPart()}
-            ComponentMb={null}
-          />
           <div className="product-detail">
             <RenderByCondition
               ComponentPc={null}
@@ -241,13 +239,28 @@ export default function ProductDetail(props: any) {
               buyProductImgM={buyProductImgM}
             />
             <InspectionReport
-              userInfo={userInfo}
               productDescription={productDescription}
-              buyProductRemark={buyProductRemark}
               backGroundCheck={backGroundCheck}
             />
+            {/*<Affix offsetTop={10}>*/}
+            {/*  <h1 style={{position: "absolute", bottom:"100px"}}>offsetTopoffsetTopoffsetTop</h1>*/}
+            {/*</Affix>*/}
+            {/*<Affix offsetBottom={10}>*/}
+            {/*  <div style={{background: 'red', position: 'relative'}}>123*/}
+            {/*    <h1 style={{position: "absolute", top:"100px"}}>offsetBottomoffsetBottom</h1>*/}
+            {/*  </div>456*/}
+            {/*</Affix>*/}
             <MoreInfo />
-            {/*{renderMobileStartButton()}*/}
+            {renderMobileStartButton()}
+          </div>
+
+          <div className="fixed-wrapper">
+            <Affix offsetBottom={0}>
+              <RenderByCondition
+                ComponentPc={renderHeaderProductPart()}
+                ComponentMb={null}
+              />
+            </Affix>
           </div>
         </div>
         <>
