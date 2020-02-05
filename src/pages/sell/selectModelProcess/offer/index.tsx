@@ -49,25 +49,26 @@ export default function Brand(props: any) {
   }
   const staticProcessSelect = [
     {
-      content: "Paid in 14 days after inspection complete",
-      render: () => {
-        return <div className="recommended comp-top-tag">Recommended</div>;
-      },
-      key: "DELAY"
-    },
-    {
       content: "Paid in 1-2 days after inspection complete",
       render: () => {
         return (
           <div className="comp-top-tag">
-            {resultList && resultList[0] && resultList[0].immediatePercent
-              ? -100 * Number(resultList[0].immediatePercent) + "%"
-              : "-10%"}
+            Get Paid Faster
+            {/*{resultList && resultList[0] && resultList[0].immediatePercent*/}
+            {/*  ? -100 * Number(resultList[0].immediatePercent) + "%"*/}
+            {/*  : "-10%"}*/}
           </div>
         );
       },
       key: "NORMAL"
-    }
+    },
+    {
+      content: "Paid in 14 days after inspection complete",
+      render: () => {
+        return <div className="recommended comp-top-tag">Get Paid More</div>;
+      },
+      key: "DELAY"
+    },
   ];
   function isNormal() {
     return paymentTimeType === "NORMAL";
