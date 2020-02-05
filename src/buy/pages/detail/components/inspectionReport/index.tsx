@@ -21,14 +21,14 @@ export function InspectionReport(props: {
       {/*  Inspection Report*/}
       {/*</h2>*/}
       <div className="item-list">
-        <WithTitle title={"Fully Functional"}>
+        <WithTitle title={"Fully Functional"} className="common-detail-page-card">
           <FullyFunctionalPart backGroundCheck={backGroundCheck} />
         </WithTitle>
-        <WithTitle title={"Phone History"}>
+        <WithTitle title={"Phone History"} className="common-detail-page-card">
           <PhoneBackgroundHistory />
         </WithTitle>
         {productDescription ? (
-          <WithTitle title={"Phone Details"}>
+          <WithTitle title={"Phone Details"} className="common-detail-page-card">
             <EditorResolver editorContent={productDescription} />
           </WithTitle>
         ) : null}
@@ -37,9 +37,9 @@ export function InspectionReport(props: {
   );
 }
 
-function WithTitle({ title, children }: { title: string; children: any }) {
+function WithTitle({ title, children, className }: { title: string; children: any; className?: string }) {
   return (
-    <section>
+    <section className={className ? className : ''}>
       <h2 className="sub-title-size">{title}</h2>
       {children}
     </section>
