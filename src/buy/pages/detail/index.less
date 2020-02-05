@@ -5,8 +5,20 @@
     /*
     样式覆盖的
      */
+    //margin-top: 15 * @px;
+    .mb({@imageWidth: 100vw;});
+    //页面结构
+
+    .setpage(3 * @imageWidth);
+    .page-padding();
+    //padding-top: 25 * @px;
+    padding-bottom: 80 * @px;
+    
     .react-images__footer {
       padding-bottom: 100px !important;
+    }
+    .top-part {
+      
     }
 
     /*
@@ -117,14 +129,6 @@
 
     @imageWidth: 470 * @px;
     .product-detail {
-      //margin-top: 15 * @px;
-      .mb({@imageWidth: 100vw;});
-      //页面结构
-
-      .setpage(3 * @imageWidth);
-      .page-padding();
-      //padding-top: 25 * @px;
-      padding-bottom: 80 * @px;
       // reset
       .common-collapse {
         margin-bottom: 21 * @px;
@@ -177,48 +181,6 @@
         padding: 10 * @px 10 * @px;
         margin-top: 15 * @px;
       }
-
-      .similar {
-        margin-top: 66 * @px;
-        .mb({margin-top: 40 * @px;});
-        header {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          margin-bottom: 46 * @px;
-          .mb({margin-bottom: 40 * @px;});
-          > h2 {
-            .mb({font-size: 24 * @px;});
-          }
-          > span {
-            color: rgba(26, 180, 231, 1);
-            font-weight: @boldWeight;
-          }
-        }
-        .list {
-          @widthSize: 280 * @px;
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          justify-items: center;
-          :first-child {
-            justify-self: start;
-          }
-          :last-child {
-            justify-self: end;
-          }
-          .phone-product-card {
-            .innerdiv {
-              .innerdiv-imgsize(@widthSize);
-            }
-            //min-width: 280 *@px;
-          }
-        }
-
-        .view-all-text {
-          color: #2ba8d8;
-          font-weight: bolder;
-        }
-      }
     }
     .checkbox-protection {
       display: flex;
@@ -247,11 +209,6 @@
         > input {
           margin: 0 0 16 * @px;
           height: 36 * @px;
-        }
-      }
-      .similar {
-        .ant-carousel .slick-dots-bottom {
-          bottom: 0;
         }
       }
     }

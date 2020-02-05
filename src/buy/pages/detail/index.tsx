@@ -20,6 +20,7 @@ import { MoreInfo } from "./components/moreInfo";
 import { getDescArr, viewAllClickHandler } from "./util";
 import { ReviewListPart } from "./components/revirePart";
 import { LastLineComponent } from "./components/lastLineComponent";
+import { RenderSimilar } from "./components/renderSimilar";
 
 export default function ProductDetail(props: any) {
   const [showModal, setShowModal] = useState(false);
@@ -210,37 +211,58 @@ export default function ProductDetail(props: any) {
     );
   }
 
+  function renderHeaderProductPart() {
+    return (
+      <HeaderProductPart
+        showModal={showModal}
+        setShowModal={setShowModal}
+        productDetail={productDetail}
+        partsInfo={partsInfo}
+      />
+    );
+  }
+
   if (buyProductId) {
     return (
       <div className="product-detail-page">
-        <TopSwiper
-          buyProductVideo={buyProductVideo}
-          buyProductImgPc={buyProductImgPc}
-          buyProductImgM={buyProductImgM}
-        />
-        <div className="product-detail">
-          <HeaderProductPart
-            showModal={showModal}
-            setShowModal={setShowModal}
-            productDetail={productDetail}
-            partsInfo={partsInfo}
+        <div className="top-part">
+          <RenderByCondition
+            ComponentPc={renderHeaderProductPart()}
+            ComponentMb={null}
           />
-          <InspectionReport
-            userInfo={userInfo}
-            productDescription={productDescription}
-            buyProductRemark={buyProductRemark}
-            backGroundCheck={backGroundCheck}
-          />
-          {renderMobileStartButton()}
-          <ReviewListPart reviewListInfo={reviewListInfo} />
-          <MoreInfo />
-          {renderSimilar()}
-          <LastLineComponent />
+          <div className="product-detail">
+            <RenderByCondition
+              ComponentPc={null}
+              ComponentMb={renderHeaderProductPart()}
+            />
+            <TopSwiper
+              buyProductVideo={buyProductVideo}
+              buyProductImgPc={buyProductImgPc}
+              buyProductImgM={buyProductImgM}
+            />
+            <InspectionReport
+              userInfo={userInfo}
+              productDescription={productDescription}
+              buyProductRemark={buyProductRemark}
+              backGroundCheck={backGroundCheck}
+            />
+            <MoreInfo />
+            {/*{renderMobileStartButton()}*/}
+          </div>
         </div>
+        <>
+          <ReviewListPart reviewListInfo={reviewListInfo} />
+          <RenderSimilar
+            similiarPhoneList={similiarPhoneList}
+            productDetail={productDetail}
+            history={props.history}
+          />
+          <LastLineComponent />
+        </>
         <RenderByCondition
           ComponentMb={(() => {
             return buyProductImgPc.map((item: string) => {
-              return <img style={{display: 'none'}} src={item} key={item} />;
+              return <img style={{ display: "none" }} src={item} key={item} />;
             });
           })()}
           ComponentPc={null}
