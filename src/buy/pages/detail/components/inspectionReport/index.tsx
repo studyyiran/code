@@ -154,7 +154,7 @@ function FullyFunctionalPart({
     backGroundCheck.filter(({ title, content }) => {
       return title && content !== "";
     }),
-    3
+    2
   );
 
   return (
