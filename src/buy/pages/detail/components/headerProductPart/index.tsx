@@ -113,10 +113,10 @@ export function HeaderProductPart(props: {
                   productDetail={productDetail}
                 />
               </div>
-              <InspectPersonInfo
-                buyProductRemark={buyProductRemark}
-                userInfo={userInfo}
-              />
+              {/*<InspectPersonInfo*/}
+              {/*  buyProductRemark={buyProductRemark}*/}
+              {/*  userInfo={userInfo}*/}
+              {/*/>*/}
             </div>
           </>
         }
