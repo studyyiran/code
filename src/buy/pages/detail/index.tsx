@@ -21,7 +21,7 @@ import { getDescArr, viewAllClickHandler } from "./util";
 import { ReviewListPart } from "./components/revirePart";
 import { LastLineComponent } from "./components/lastLineComponent";
 import { RenderSimilar } from "./components/renderSimilar";
-import {DetailLoading} from "./components/loading";
+import { DetailLoading } from "./components/loading";
 
 export default function ProductDetail(props: any) {
   const [showModal, setShowModal] = useState(false);
@@ -251,17 +251,15 @@ export default function ProductDetail(props: any) {
             {/*  </div>456*/}
             {/*</Affix>*/}
             <MoreInfo />
-            {renderMobileStartButton()}
           </div>
-
-          <div className="fixed-wrapper">
-            <Affix offsetBottom={0}>
-              <RenderByCondition
-                ComponentPc={renderHeaderProductPart()}
-                ComponentMb={null}
-              />
-            </Affix>
-          </div>
+          <RenderByCondition
+            ComponentPc={
+              <div className="fixed-wrapper">
+                <Affix offsetBottom={0}>{renderHeaderProductPart()}</Affix>
+              </div>
+            }
+            ComponentMb={null}
+          />
         </div>
         <>
           <ReviewListPart reviewListInfo={reviewListInfo} />
@@ -283,6 +281,6 @@ export default function ProductDetail(props: any) {
       </div>
     );
   } else {
-    return <DetailLoading />
+    return <DetailLoading />;
   }
 }

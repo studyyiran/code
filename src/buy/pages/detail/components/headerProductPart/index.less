@@ -30,8 +30,10 @@
 
   .header-part {
     font-size: 16 * @f;
-    height: 100%;
-    .magic-mixin({});
+    .pc({
+      height: 100%;
+      .magic-mixin({});
+    });
     .sale-tag {
       width: 45 * @px;
       margin-left: 20 * @px;

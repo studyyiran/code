@@ -17,7 +17,9 @@
     //页面结构
     @totalWidth: 1200 * @px;
     .setpage(@totalWidth);
-    .page-padding();
+    .pc({
+      .page-padding();
+    });
     //padding-top: 25 * @px;
     padding-bottom: 80 * @px;
     
@@ -30,6 +32,9 @@
       @rightPartWidth: 350 *@px;
       .product-detail {
         flex: 0 0 @totalWidth - @rightPartWidth;
+        .mb({
+          flex: 1;
+        });
         min-width: 0;
       }
       .fixed-wrapper {

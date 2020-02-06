@@ -23,7 +23,9 @@
     });
     //.setpage(50vw);
     .swiper-part {
-      margin-right: 20 *@px;
+      .pc({
+        margin-right: 20 *@px;
+      });
     }
     .content-part {
       flex: 0 0 550 *@px;
@@ -86,6 +88,8 @@
       .mb({
         flex-direction: row;
         justify-content: space-between;
+        width: 100%;
+        overflow-x: scroll;
       });
       >div {
         flex: 0 0 @imageWidth;
