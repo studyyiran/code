@@ -2,6 +2,18 @@
 @import (reference) "~buy/pages/detail/common.less";
 @p: {
   .product-detail-page {
+    .loading-part {
+      position: relative;
+      height: calc(100vh - 83 * @px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .loading-content {
+        margin-top: 200 *@px;
+        position: relative;
+        z-index: 1000000;
+      }
+    }
     .common-detail-page-card {
       border: 1px solid @color-border;
       padding: 20 *@px;
@@ -101,9 +113,6 @@
       white-space: nowrap;
     }
 
-    .loading-mask-min-height {
-      //min-height: 100vh;
-    }
     .fixtag {
       display: flex;
       align-items: center;

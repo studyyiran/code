@@ -113,6 +113,7 @@ export function HeaderProductPart(props: {
                   productDetail={productDetail}
                 />
               </div>
+              <TopIconList />
               {/*<InspectPersonInfo*/}
               {/*  buyProductRemark={buyProductRemark}*/}
               {/*  userInfo={userInfo}*/}
