@@ -7,6 +7,13 @@
     justify-content: flex-start;
     height: 600 *@px;
     align-items: initial;
+    .video-react-video {
+      object-fit: cover;
+    }
+    .my-video {
+      width: 400px;
+      height: 400px;
+    }
     .mb({
       width: 100vw;
     });
@@ -19,10 +26,6 @@
     }
     .content-part {
       flex: 0 0 550 *@px;
-      > div {
-        //height: 100%;
-        //width: 100%;
-      }
     }
     .mb-zoom {
       position: absolute;
@@ -100,7 +103,7 @@
           //.upup();
         }
         &[data-selected="true"] {
-          border: 1px solid red;
+          border: 1px solid @color-blue-liner-use;
         }
         &:not([data-selected="true"]) {
           border: 1px solid transparent;

@@ -53,6 +53,7 @@ export default function VideoComponent(props: {
           poster={poster}
           autoPlay={true}
           muted={true}
+          className={className}
           ref={(player: any) => {
             if (player) {
               (playerRef.current as any) = player;
@@ -69,6 +70,7 @@ export default function VideoComponent(props: {
       }
       ComponentPc={
         <Player
+          className={className}
           autoPlay={true}
           muted={true}
           key={randomKey}

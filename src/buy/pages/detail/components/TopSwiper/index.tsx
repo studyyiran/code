@@ -4,13 +4,13 @@ import { RenderByCondition } from "../../../../components/RenderByCondition";
 import { InnerDivImage } from "../innerDivImage";
 import VideoComponent from "../../../../components/video";
 import { Carousel } from "antd";
-import {isServer, safeEqual} from "../../../../common/utils/util";
+import { isServer, safeEqual } from "../../../../common/utils/util";
 // @ts-ignore
 import TestCarousel, { Modal, ModalGateway } from "react-images";
 // @ts-ignore
 import WxImageViewer from "react-wx-images-viewer";
 // @ts-ignore
-import ReactImageMagnify from 'react-image-magnify';
+import ReactImageMagnify from "react-image-magnify";
 import "./index.less";
 
 export function TopSwiper(props: any) {
@@ -37,14 +37,22 @@ export function TopSwiper(props: any) {
   const renderSwiper = () => {
     let dom = buyProductImgM.map((item: string, index: number) => {
       return (
-        <div className="inner-div-container" key={index} data-selected={safeEqual(index, currentImageIndex)}>
+        <div
+          className="inner-div-container"
+          key={index}
+          data-selected={safeEqual(index, currentImageIndex)}
+        >
           <InnerDivImage imgUrl={item} dataIndex={index} />
         </div>
       );
     });
     if (buyProductVideo) {
       dom.unshift(
-        <div className="inner-div-container" key={"videoimg"} data-selected={safeEqual("video", currentImageIndex)}>
+        <div
+          className="inner-div-container"
+          key={"videoimg"}
+          data-selected={safeEqual("video", currentImageIndex)}
+        >
           <InnerDivImage
             imgUrl={require("./res/poster.png")}
             dataIndex={"video"}
@@ -72,32 +80,39 @@ export function TopSwiper(props: any) {
   };
 
   const renderContent = () => {
-    if (currentImageIndex === 'video') {
+    if (currentImageIndex === "video") {
+      return <VideoComponent key="videocomponent" src={buyProductVideo} className="my-video"/>;
+    } else {
+      const width = 400;
+      const height = 400;
+      const zoomSize = 3;
       return (
-        <VideoComponent
-          key="videocomponent"
-          src={buyProductVideo}
+        <ReactImageMagnify
+          {...{
+            enlargedImageContainerDimensions: {
+              width: "100%",
+              height: "100%"
+            },
+            imageStyle: {
+              objectFit: 'cover',
+            },
+            enlargedImageStyle: {
+              objectFit: 'cover',
+            },
+            smallImage: {
+              // isFluidWidth: true,
+              width: width,
+              height: height,
+              src: buyProductImgPc[currentImageIndex]
+            },
+            largeImage: {
+              src: buyProductImgPc[currentImageIndex],
+              width: width * zoomSize,
+              height: height * zoomSize
+            }
+          }}
         />
       );
-    } else {
-      const width = 439;
-      const height = 292;
-      const zoomSize = 6;
-      return <ReactImageMagnify {...{
-        enlargedImageContainerDimensions: {
-          width: '100%', height: '100%'
-        },
-        smallImage: {
-          alt: 'Wristwatch by Ted Baker London',
-          isFluidWidth: true,
-          src: buyProductImgPc[currentImageIndex]
-        },
-        largeImage: {
-          src: buyProductImgPc[currentImageIndex],
-          width: width * zoomSize,
-          height: height * zoomSize
-        }
-      }} />
     }
   };
 
