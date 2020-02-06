@@ -21,6 +21,7 @@ import { getDescArr, viewAllClickHandler } from "./util";
 import { ReviewListPart } from "./components/revirePart";
 import { LastLineComponent } from "./components/lastLineComponent";
 import { RenderSimilar } from "./components/renderSimilar";
+import {DetailLoading} from "./components/loading";
 
 export default function ProductDetail(props: any) {
   const [showModal, setShowModal] = useState(false);
@@ -210,7 +211,6 @@ export default function ProductDetail(props: any) {
       />
     );
   }
-
   function renderHeaderProductPart() {
     return (
       <HeaderProductPart
@@ -283,22 +283,6 @@ export default function ProductDetail(props: any) {
       </div>
     );
   } else {
-    const arr = [
-      "All the photos you see on UpTrade are photos of the actual phone",
-      "UpTrade conducts a 50+ point hand inspection to ensure all phones listed for sale are 100% fully functional",
-      "UpTrade helps you sell your phone by listing it on multiple marketplaces to get you the maximum value"
-    ];
-    const index = Math.floor(3 * Math.random())
-    return (
-      <div className="product-detail-page">
-        <div className="loading-part loading-mask-min-height">
-          <LoadingMask visible={true} needWhite={true} />
-          <div className="loading-content">
-            <h2>Did you know?</h2>
-            <p>{arr[index]}</p>
-          </div>
-        </div>
-      </div>
-    );
+    return <DetailLoading />
   }
 }

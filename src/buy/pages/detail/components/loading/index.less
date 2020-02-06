@@ -1,0 +1,29 @@
+@import (reference) "~buy/common/styles/index.less";
+
+@p1: {
+  .loading-part {
+    .loading-mask {
+      > .ant-spin {
+        margin-bottom: 200 *@px;
+      }
+    }
+    position: relative;
+    height: calc(100vh - 83 * @px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .loading-content {
+      text-align: center;
+      .mb({
+        margin-top: -100 *@px;
+      });
+      p {
+        margin-top: 20 *@px;
+      }
+      position: relative;
+      z-index: 1000000;
+    }
+  }
+};
+
+.hello(@p1);
