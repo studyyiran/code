@@ -62,9 +62,7 @@ export default function VideoComponent(props: {
             }
           }}
           src={src}
-          className={`${className ? className : ""} comp-video`}
-          height="100px"
-          fluid={false}
+          fluid={true}
         >
           <BigPlayButton position={"center"} />
         </Player>
@@ -83,9 +81,7 @@ export default function VideoComponent(props: {
             }
           }}
           src={src}
-          className={`${className ? className : ""} comp-video`}
-          height="100px"
-          fluid={false}
+          fluid={true}
         >
           <BigPlayButton position={"center"} />
         </Player>

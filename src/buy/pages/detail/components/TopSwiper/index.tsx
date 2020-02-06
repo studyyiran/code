@@ -76,7 +76,6 @@ export function TopSwiper(props: any) {
       return (
         <VideoComponent
           key="videocomponent"
-          className="innerdiv"
           src={buyProductVideo}
         />
       );
