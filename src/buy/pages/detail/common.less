@@ -6,9 +6,11 @@
 还有一个场景呢?共有classname怎么说呢.
 
  */
-
-@p1: {
-
-};
-
-.hello(@p1);
+.magic-mixin(@rules) {
+  .pc({
+    position:absolute;
+    bottom:0;
+    height: calc(100vh - 83 * @px);
+    @rules();
+  });
+}

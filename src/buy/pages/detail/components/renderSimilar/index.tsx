@@ -3,6 +3,7 @@ import {RenderByCondition} from "../../../../components/RenderByCondition";
 import {Carousel} from "antd";
 import PhoneProductCard from "../../../productList/components/phoneProductCard";
 import React from "react";
+import './index.less';
 
 interface IProps {
   similiarPhoneList: any[];

@@ -1,5 +1,5 @@
 @import (reference) "~buy/common/styles/index.less";
-
+@import (reference) "~buy/pages/detail/common.less";
 @p1: {
   // 全局弹窗样式--
   .condition-buy-level {
@@ -30,6 +30,8 @@
 
   .header-part {
     font-size: 16 * @f;
+    height: 100%;
+    .magic-mixin({background: red;});
     .sale-tag {
       width: 45 * @px;
       margin-left: 20 * @px;
@@ -83,7 +85,6 @@
         .mb({width: 36 * @px;});
       }
     }
-    margin-bottom: 50 * @px;
     .product-id {
       color: rgba(55, 90, 125, 1);
     }
@@ -95,10 +96,10 @@
       color: rgba(136, 136, 136, 1);
     }
     .price-part-pc {
-      margin-top: 16 * @px;
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
+      flex-direction: column;
 
       .sku-price {
         > span:last-child {

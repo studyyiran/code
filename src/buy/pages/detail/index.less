@@ -1,5 +1,5 @@
 @import (reference) "~buy/common/styles/index.less";
-
+@import (reference) "~buy/pages/detail/common.less";
 @p: {
   .product-detail-page {
     .common-detail-page-card {
@@ -15,8 +15,8 @@
     //margin-top: 15 * @px;
     .mb({@imageWidth: 100vw;});
     //页面结构
-
-    .setpage(3 * @imageWidth);
+    @totalWidth: 1200 * @px;
+    .setpage(@totalWidth);
     .page-padding();
     //padding-top: 25 * @px;
     padding-bottom: 80 * @px;
@@ -27,16 +27,15 @@
     .top-part {
       position: relative;
       display: flex;
+      @rightPartWidth: 350 *@px;
       .product-detail {
-        flex: 0 0 800 *@px;
+        flex: 0 0 @totalWidth - @rightPartWidth;
         min-width: 0;
       }
       .fixed-wrapper {
-        flex: 0 0 200 *@px;
+        flex: 0 0 @rightPartWidth;
         > div {
-          position:absolute;
-          bottom:0;
-          height: 90vh;
+          .magic-mixin({width: @rightPartWidth});
         }
       }
     }
@@ -147,7 +146,7 @@
       }
     }
 
-    @imageWidth: 470 * @px;
+    
     .product-detail {
       // reset
       .common-collapse {
