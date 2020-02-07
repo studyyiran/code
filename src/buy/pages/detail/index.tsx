@@ -58,7 +58,7 @@ export default function ProductDetail(props: any) {
   } = productDetail;
 
   const id = useWhenUrlChange("productId");
-
+  const [containerWidth, setContainerWidth] = useState(0)
   // 设置title
   useEffect(() => {
     if (productDetail && productDetail.skuId) {
@@ -223,17 +223,22 @@ export default function ProductDetail(props: any) {
       />
     );
   }
-
+  
   if (buyProductId) {
     return (
       <div className="product-detail-page">
         <div className="top-part">
-          <div className="product-detail">
+          <div className="product-detail" ref={(element :any) => {
+            if (element && element.clientWidth) {
+              setContainerWidth(element.clientWidth)
+            }
+          }}>
             <RenderByCondition
               ComponentPc={null}
               ComponentMb={renderHeaderProductPart()}
             />
             <TopSwiper
+              containerWidth={containerWidth}
               buyProductVideo={buyProductVideo}
               buyProductImgPc={buyProductImgPc}
               buyProductImgM={buyProductImgM}

@@ -1,86 +1,28 @@
-import React, { useEffect, useState } from "react";
-import { RenderByCondition } from "../../../../components/RenderByCondition";
-import { InnerDivImage } from "../innerDivImage";
+import React, { useState } from "react";
 import VideoComponent from "../../../../components/video";
-import { Carousel } from "antd";
-import { isServer, safeEqual } from "../../../../common/utils/util";
 // @ts-ignore
 import ReactImageMagnify from "react-image-magnify";
 import "./index.less";
+import { RenderSwiper } from "./components/swiper";
 
 export function TopSwiper(props: any) {
+  const {
+    buyProductImgPc,
+    buyProductImgM,
+    buyProductVideo,
+    containerWidth
+  } = props;
   const [currentImageIndex, setCurrentImageIndex] = useState("");
-  const [showImageModal, setShowImgModal] = useState(false);
-  const { buyProductImgPc, buyProductImgM, buyProductVideo, containerWidth } = props;
-
-  useEffect(() => {
-    if (currentImageIndex === "") {
-      if (buyProductVideo) {
-        setCurrentImageIndex("video");
-      } else {
-        setCurrentImageIndex("0");
-      }
-    }
-  }, []);
-
-  const maxNumber = 7;
-  function onOpenModal(e: any, index = 0) {
-    // 可以确定当前显示的.
-    setCurrentImageIndex(String(index));
-    // setShowImgModal(true);
-  }
-  const renderSwiper = () => {
-    let dom = buyProductImgM.map((item: string, index: number) => {
-      return (
-        <div
-          className="inner-div-container"
-          key={index}
-          data-selected={safeEqual(index, currentImageIndex)}
-        >
-          <InnerDivImage imgUrl={item} dataIndex={index} />
-        </div>
-      );
-    });
-    if (buyProductVideo) {
-      dom.unshift(
-        <div
-          className="inner-div-container"
-          key={"videoimg"}
-          data-selected={safeEqual("video", currentImageIndex)}
-        >
-          <InnerDivImage
-            imgUrl={require("./res/poster.png")}
-            dataIndex={"video"}
-          />
-        </div>
-      );
-    }
-    dom = dom.filter((item: any, index: any) => {
-      return index < maxNumber;
-    });
-    return (
-      <div>
-        <div
-          className="swiper-pc"
-          onClick={(e: any) => {
-            if (e && e.target && e.target.dataset && e.target.dataset.index) {
-              onOpenModal(e, e.target.dataset.index);
-            }
-          }}
-        >
-          {dom}
-        </div>
-      </div>
-    );
-  };
-
-  const renderContent = () => {
+  const renderContent = (afterCalcSize: number) => {
     if (currentImageIndex === "video") {
-      return <VideoComponent key="videocomponent" src={buyProductVideo} className="my-video"/>;
+      return (
+        <VideoComponent
+          key="videocomponent"
+          src={buyProductVideo}
+          className="my-video"
+        />
+      );
     } else {
-      const afterCalcSize = 0.5 * containerWidth
-      const width = afterCalcSize;
-      const height = afterCalcSize;
       const zoomSize = 3;
       return (
         <ReactImageMagnify
@@ -90,21 +32,21 @@ export function TopSwiper(props: any) {
               height: "100%"
             },
             imageStyle: {
-              objectFit: 'cover',
+              objectFit: "cover"
             },
             enlargedImageStyle: {
-              objectFit: 'cover',
+              objectFit: "cover"
             },
             smallImage: {
               // isFluidWidth: true,
-              width: width,
-              height: height,
+              width: afterCalcSize,
+              height: afterCalcSize,
               src: buyProductImgPc[currentImageIndex]
             },
             largeImage: {
               src: buyProductImgPc[currentImageIndex],
-              width: width * zoomSize,
-              height: height * zoomSize
+              width: afterCalcSize * zoomSize,
+              height: afterCalcSize * zoomSize
             }
           }}
         />
@@ -114,148 +56,156 @@ export function TopSwiper(props: any) {
 
   return (
     <div className="detail-top-swiper">
-      <div className="swiper-part">{renderSwiper()}</div>
-      <div className="content-part">{renderContent()}</div>
+      <div className="swiper-part">
+        <RenderSwiper
+          buyProductVideo={buyProductVideo}
+          buyProductImgM={buyProductImgM}
+          swiperWidth={0.1 * containerWidth}
+          currentImageIndex={currentImageIndex}
+          setCurrentImageIndex={setCurrentImageIndex}
+        />
+      </div>
+      <div className="content-part">{renderContent(0.5 * containerWidth)}</div>
     </div>
   );
 
-  return (
-    <>
-      {/*<ModalView visible={showImageModal}>*/}
-      {/*  <WxImageViewer*/}
-      {/*    zIndex={9999}*/}
-      {/*    urls={buyProductImgPc}*/}
-      {/*    index={currentImageIndex}*/}
-      {/*    onClose={() => {*/}
-      {/*      setShowImgModal(false);*/}
-      {/*    }}*/}
-      {/*  />*/}
-      {/*</ModalView>*/}
-      <div className="detail-top-swiper">
-        <div className="actual-tag" onClick={onOpenModal}>
-          Actual Phone
-        </div>
-        <RenderByCondition
-          ComponentMb={
-            <img
-              onClick={onOpenModal}
-              className="mb-zoom"
-              src={require("./res/zoom.svg")}
-            />
-          }
-          ComponentPc={null}
-        />
-        <RenderByCondition
-          ComponentPc={(() => {
-            let dom = buyProductImgPc.map((item: string, index: number) => {
-              return (
-                <div className="inner-div-container" key={index}>
-                  <InnerDivImage imgUrl={item} dataIndex={index} />
-                </div>
-              );
-            });
-            if (buyProductVideo) {
-              dom.unshift(
-                <VideoComponent
-                  key="videocomponent"
-                  className="innerdiv"
-                  src={buyProductVideo}
-                />
-              );
-            }
-            dom = dom.filter((item: any, index: any) => {
-              return index < maxNumber;
-            });
-            return (
-              <div>
-                {buyProductImgPc.length > 3 ? (
-                  <div
-                    className="pc-total-count"
-                    onClick={onOpenModal}
-                  >{`See More (${buyProductImgPc.length}) `}</div>
-                ) : null}
-                <div
-                  className="swiper-pc"
-                  onClick={(e: any) => {
-                    if (
-                      e &&
-                      e.target &&
-                      e.target.dataset &&
-                      e.target.dataset.index
-                    ) {
-                      onOpenModal(e, e.target.dataset.index);
-                    }
-                  }}
-                >
-                  {dom}
-                </div>
-                {/*{isServer() ? null : (*/}
-                {/*  <ModalGateway>*/}
-                {/*    {showImageModal ? (*/}
-                {/*      <Modal*/}
-                {/*        onClose={() => {*/}
-                {/*          setShowImgModal(false);*/}
-                {/*        }}*/}
-                {/*      >*/}
-                {/*        <TestCarousel*/}
-                {/*          styles={{*/}
-                {/*            footer: (base: any) => {*/}
-                {/*              return {*/}
-                {/*                ...base,*/}
-                {/*                backgroud: "red",*/}
-                {/*                // paddingRight: "100px",*/}
-                {/*                // paddingBottom: '100px',*/}
-                {/*                justifyContent: "flex-start"*/}
-                {/*              };*/}
-                {/*            }*/}
-                {/*          }}*/}
-                {/*          currentIndex={Number(currentImageIndex)}*/}
-                {/*          views={buyProductImgPc.map((item: any) => ({*/}
-                {/*            src: item*/}
-                {/*          }))}*/}
-                {/*        >*/}
-                {/*          {dom}*/}
-                {/*        </TestCarousel>*/}
-                {/*      </Modal>*/}
-                {/*    ) : null}*/}
-                {/*  </ModalGateway>*/}
-                {/*)}*/}
-              </div>
-            );
-          })()}
-          ComponentMb={(() => {
-            let dom = buyProductImgM.map((item: string, index: number) => {
-              return (
-                <InnerDivImage
-                  imgUrl={item}
-                  key={index}
-                  dataIndex={index}
-                  onClick={(e: any) => {
-                    setCurrentImageIndex(String(index));
-                    setShowImgModal(true);
-                  }}
-                />
-              );
-            });
-
-            if (buyProductVideo) {
-              dom.unshift(
-                <VideoComponent
-                  key="videocomponent"
-                  className="innerdiv"
-                  src={buyProductVideo}
-                  poster={
-                    buyProductImgM && buyProductImgM[0]
-                      ? buyProductImgM[0]
-                      : require("./res/poster.png")
-                  }
-                />
-              );
-            }
-            return <Carousel className="swiper-mb mb-carousel">{dom}</Carousel>;
-          })()}
-        />
-      </div>
-    </>
-  );
+  // return (
+  //   <>
+  //     {/*<ModalView visible={showImageModal}>*/}
+  //     {/*  <WxImageViewer*/}
+  //     {/*    zIndex={9999}*/}
+  //     {/*    urls={buyProductImgPc}*/}
+  //     {/*    index={currentImageIndex}*/}
+  //     {/*    onClose={() => {*/}
+  //     {/*      setShowImgModal(false);*/}
+  //     {/*    }}*/}
+  //     {/*  />*/}
+  //     {/*</ModalView>*/}
+  //     <div className="detail-top-swiper">
+  //       <div className="actual-tag" onClick={onOpenModal}>
+  //         Actual Phone
+  //       </div>
+  //       <RenderByCondition
+  //         ComponentMb={
+  //           <img
+  //             onClick={onOpenModal}
+  //             className="mb-zoom"
+  //             src={require("./res/zoom.svg")}
+  //           />
+  //         }
+  //         ComponentPc={null}
+  //       />
+  //       <RenderByCondition
+  //         ComponentPc={(() => {
+  //           let dom = buyProductImgPc.map((item: string, index: number) => {
+  //             return (
+  //               <div className="inner-div-container" key={index}>
+  //                 <InnerDivImage imgUrl={item} dataIndex={index} />
+  //               </div>
+  //             );
+  //           });
+  //           if (buyProductVideo) {
+  //             dom.unshift(
+  //               <VideoComponent
+  //                 key="videocomponent"
+  //                 className="innerdiv"
+  //                 src={buyProductVideo}
+  //               />
+  //             );
+  //           }
+  //           dom = dom.filter((item: any, index: any) => {
+  //             return index < maxNumber;
+  //           });
+  //           return (
+  //             <div>
+  //               {buyProductImgPc.length > 3 ? (
+  //                 <div
+  //                   className="pc-total-count"
+  //                   onClick={onOpenModal}
+  //                 >{`See More (${buyProductImgPc.length}) `}</div>
+  //               ) : null}
+  //               <div
+  //                 className="swiper-pc"
+  //                 onClick={(e: any) => {
+  //                   if (
+  //                     e &&
+  //                     e.target &&
+  //                     e.target.dataset &&
+  //                     e.target.dataset.index
+  //                   ) {
+  //                     onOpenModal(e, e.target.dataset.index);
+  //                   }
+  //                 }}
+  //               >
+  //                 {dom}
+  //               </div>
+  //               {/*{isServer() ? null : (*/}
+  //               {/*  <ModalGateway>*/}
+  //               {/*    {showImageModal ? (*/}
+  //               {/*      <Modal*/}
+  //               {/*        onClose={() => {*/}
+  //               {/*          setShowImgModal(false);*/}
+  //               {/*        }}*/}
+  //               {/*      >*/}
+  //               {/*        <TestCarousel*/}
+  //               {/*          styles={{*/}
+  //               {/*            footer: (base: any) => {*/}
+  //               {/*              return {*/}
+  //               {/*                ...base,*/}
+  //               {/*                backgroud: "red",*/}
+  //               {/*                // paddingRight: "100px",*/}
+  //               {/*                // paddingBottom: '100px',*/}
+  //               {/*                justifyContent: "flex-start"*/}
+  //               {/*              };*/}
+  //               {/*            }*/}
+  //               {/*          }}*/}
+  //               {/*          currentIndex={Number(currentImageIndex)}*/}
+  //               {/*          views={buyProductImgPc.map((item: any) => ({*/}
+  //               {/*            src: item*/}
+  //               {/*          }))}*/}
+  //               {/*        >*/}
+  //               {/*          {dom}*/}
+  //               {/*        </TestCarousel>*/}
+  //               {/*      </Modal>*/}
+  //               {/*    ) : null}*/}
+  //               {/*  </ModalGateway>*/}
+  //               {/*)}*/}
+  //             </div>
+  //           );
+  //         })()}
+  //         ComponentMb={(() => {
+  //           let dom = buyProductImgM.map((item: string, index: number) => {
+  //             return (
+  //               <InnerDivImage
+  //                 imgUrl={item}
+  //                 key={index}
+  //                 dataIndex={index}
+  //                 onClick={(e: any) => {
+  //                   setCurrentImageIndex(String(index));
+  //                   setShowImgModal(true);
+  //                 }}
+  //               />
+  //             );
+  //           });
+  //
+  //           if (buyProductVideo) {
+  //             dom.unshift(
+  //               <VideoComponent
+  //                 key="videocomponent"
+  //                 className="innerdiv"
+  //                 src={buyProductVideo}
+  //                 poster={
+  //                   buyProductImgM && buyProductImgM[0]
+  //                     ? buyProductImgM[0]
+  //                     : require("./res/poster.png")
+  //                 }
+  //               />
+  //             );
+  //           }
+  //           return <Carousel className="swiper-mb mb-carousel">{dom}</Carousel>;
+  //         })()}
+  //       />
+  //     </div>
+  //   </>
+  // );
 }
