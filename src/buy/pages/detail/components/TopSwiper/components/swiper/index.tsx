@@ -27,25 +27,33 @@ export const RenderSwiper : React.FC<IProps> = ({swiperWidth, buyProductVideo, b
     setCurrentImageIndex(String(index));
     // setShowImgModal(true);
   }
+  const style = {
+    flex: `0 0 ${swiperWidth}px`,
+    width: swiperWidth,
+    height: swiperWidth,
+  }
   let dom = buyProductImgM.map((item: string, index: number) => {
     return (
       <div
+        style={style}
         className="inner-div-container"
         key={index}
         data-selected={safeEqual(index, currentImageIndex)}
       >
-        <InnerDivImage imgUrl={item} dataIndex={index} />
+        <InnerDivImage imgUrl={item} dataIndex={index} style={style} />
       </div>
     );
   });
   if (buyProductVideo) {
     dom.unshift(
       <div
+        style={style}
         className="inner-div-container"
         key={"videoimg"}
         data-selected={safeEqual("video", currentImageIndex)}
       >
         <InnerDivImage
+          style={style}
           imgUrl={require("./res/poster.png")}
           dataIndex={"video"}
         />

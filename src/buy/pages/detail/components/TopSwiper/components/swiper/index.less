@@ -11,19 +11,14 @@
       width: 100%;
       overflow-x: scroll;
     });
-    @imageWidth: 40 * @px;
-    >div {
-      flex: 0 0 @imageWidth;
-    }
     //margin-bottom: 40 * @px;
     //padding: 10 * @px 0;
     .innerdiv {
       .canclick();
-      .innerdiv-imgsize(@imageWidth);
+      .innerdiv-imgsize(auto);
     }
     .inner-div-container {
       overflow: hidden;
-      height: @imageWidth;
       margin-bottom: 20 *@px;
       .innerdiv {
         //.upup();
