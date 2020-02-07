@@ -45,12 +45,9 @@ export function HeaderProductPart(props: {
       <RenderByCondition
         ComponentPc={
           <>
-            {/*<TopIconList />*/}
             <div className="price-part-pc">
-              <div className="left">
-                <ProductInfo {...productDetail} />
-                <span className="product-id">Product ID {buyProductCode}</span>
-              </div>
+              <ProductInfo {...productDetail} />
+              <span className="product-id">Product ID {buyProductCode}</span>
               <div className="right">
                 <RenderByIsFive
                   renderFive={(blackHappyCountDown: any[]) => {
@@ -90,34 +87,34 @@ export function HeaderProductPart(props: {
                     </div>
                   }
                 />
-                <StartBuyButton
-                  onClick={() => {
-                    dataReport({
-                      event: "EEaddToCart",
-                      ecommerce: {
-                        currencyCode: "USD",
-                        add: {
-                          products: [
-                            {
-                              sku: String(skuId),
-                              name: productDisplayName,
-                              price: Number(buyPrice)
-                            }
-                          ]
-                        }
-                      }
-                    });
-                    setShowModal(true);
-                  }}
-                  buyProductStatus={buyProductStatus}
-                  productDetail={productDetail}
-                />
               </div>
               <TopIconList />
-              {/*<InspectPersonInfo*/}
-              {/*  buyProductRemark={buyProductRemark}*/}
-              {/*  userInfo={userInfo}*/}
-              {/*/>*/}
+              <InspectPersonInfo
+                buyProductRemark={buyProductRemark}
+                userInfo={userInfo}
+              />
+              <StartBuyButton
+                onClick={() => {
+                  dataReport({
+                    event: "EEaddToCart",
+                    ecommerce: {
+                      currencyCode: "USD",
+                      add: {
+                        products: [
+                          {
+                            sku: String(skuId),
+                            name: productDisplayName,
+                            price: Number(buyPrice)
+                          }
+                        ]
+                      }
+                    }
+                  });
+                  setShowModal(true);
+                }}
+                buyProductStatus={buyProductStatus}
+                productDetail={productDetail}
+              />
             </div>
           </>
         }
@@ -174,7 +171,6 @@ export function HeaderProductPart(props: {
                 </div>
               }
             />
-            {/*<TopIconList />*/}
           </div>
         }
       />
@@ -240,19 +236,19 @@ function ProductInfo(props: any) {
       <div className="info-part">
         <h2 className="sub-title-size-main">{lineOne ? ` ${lineOne}` : ""}</h2>
         <span className="attr">{lineTwo ? lineTwo : ""}</span>
-        <span className="condition">
-          <span>Condition</span>
-          <span
-            className="condition-buy-level"
-            style={{ background: type2BgColor(buyLevel) }}
-          >
-            {buyLevel}
-          </span>
-          <RenderByCondition
-            ComponentMb={<TipsIcon trigger="click">{renderList()}</TipsIcon>}
-            ComponentPc={<TipsIcon placement="right">{renderList()}</TipsIcon>}
-          />
-        </span>
+        {/*<span className="condition">*/}
+        {/*  <span>Condition</span>*/}
+        {/*  <span*/}
+        {/*    className="condition-buy-level"*/}
+        {/*    style={{ background: type2BgColor(buyLevel) }}*/}
+        {/*  >*/}
+        {/*    {buyLevel}*/}
+        {/*  </span>*/}
+        {/*  <RenderByCondition*/}
+        {/*    ComponentMb={<TipsIcon trigger="click">{renderList()}</TipsIcon>}*/}
+        {/*    ComponentPc={<TipsIcon placement="right">{renderList()}</TipsIcon>}*/}
+        {/*  />*/}
+        {/*</span>*/}
       </div>
     </section>
   );
