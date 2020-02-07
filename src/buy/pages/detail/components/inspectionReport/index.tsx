@@ -5,6 +5,8 @@ import "./index.less";
 import { RenderByCondition } from "../../../../components/RenderByCondition";
 import { Carousel } from "antd";
 import { IProductDetail } from "../../context/interface";
+
+const columnNumber = 2
 export function InspectionReport(props: {
   productDescription: any;
   buyProductHistoryPdf?: any;
@@ -105,7 +107,7 @@ function PhoneBackgroundHistory(): any {
       content: "Clear"
     }
   ];
-  const arr = splitByColumn(staticArr, 3);
+  const arr = splitByColumn(staticArr, columnNumber);
   return (
     <div className="phone-background-history">
       {arr.map((item, index) => {
@@ -154,7 +156,7 @@ function FullyFunctionalPart({
     backGroundCheck.filter(({ title, content }) => {
       return title && content !== "";
     }),
-    2
+    columnNumber
   );
 
   return (
