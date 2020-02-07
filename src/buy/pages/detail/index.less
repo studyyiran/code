@@ -29,9 +29,12 @@
     .top-part {
       position: relative;
       display: flex;
-      @rightPartWidth: @totalWidth / 2;
+      @rightPartWidth: @totalWidth / 2 - 70 *@px;
       .product-detail {
         flex: 0 0 @totalWidth - @rightPartWidth;
+        .pc({
+          margin-right: 10px;
+        });
         .mb({
           flex: 1;
         });

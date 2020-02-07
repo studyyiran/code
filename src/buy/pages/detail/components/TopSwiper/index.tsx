@@ -62,7 +62,7 @@ export function TopSwiper(props: any) {
     globalSettingContextValue
   } = globalSettingContext as IGlobalSettingContext;
   const { isMobile } = globalSettingContextValue;
-  const contentSize = (isMobile ? 1 : 0.8) * containerWidth;
+  const contentSize = (isMobile ? 1 : 0.87) * containerWidth;
   return (
     <div className="detail-top-swiper">
       <div className="swiper-part-container">
@@ -71,7 +71,7 @@ export function TopSwiper(props: any) {
           buyProductVideo={buyProductVideo}
           buyProductImgM={buyProductImgM}
           isMobile={isMobile}
-          swiperWidth={(isMobile ? 0.4 : 0.12) * contentSize}
+          swiperWidth={(isMobile ? 0.225 : 0.12) * contentSize}
           currentImageIndex={currentImageIndex}
           setCurrentImageIndex={setCurrentImageIndex}
         />

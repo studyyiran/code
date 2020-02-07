@@ -34,7 +34,7 @@ export const RenderSwiper: React.FC<IProps> = ({
 
   const [currentPos, setCurrentPos] = useState(0);
 
-  const maxNumber = isMobile ? 1000 : 5;
+  const maxNumber = isMobile ? 1000 : 7;
   function onOpenModal(e: any, index = 0) {
     // 可以确定当前显示的.
     setCurrentImageIndex(String(index));
@@ -123,7 +123,7 @@ export const RenderSwiper: React.FC<IProps> = ({
   return (
     <div
       className="swiper-part"
-      style={Object.assign({}, style, { width: swiperWidth })}
+      style={Object.assign({}, style, { width: isMobile ? '100%' : swiperWidth })}
       onClick={(e: any) => {
         if (e && e.target && e.target.dataset && e.target.dataset.index) {
           onOpenModal(e, e.target.dataset.index);
