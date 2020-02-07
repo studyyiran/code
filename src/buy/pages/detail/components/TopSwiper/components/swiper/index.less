@@ -5,6 +5,12 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    &[data-flex="true"] {
+      justify-content: flex-start;
+      > * {
+        margin-bottom: 20 * @px;
+      }
+    }
     .mb({
       flex-direction: row;
       width: 100%;

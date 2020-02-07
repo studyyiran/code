@@ -45,7 +45,7 @@ export const RenderSwiper: React.FC<IProps> = ({
     width: swiperWidth,
     height: swiperWidth
   };
-  let dom = buyProductImgM.map((item: string, index: number) => {
+  let dom = buyProductImgM.concat(buyProductImgM).concat(buyProductImgM).map((item: string, index: number) => {
     return (
       <div
         style={afterStyle}
@@ -79,7 +79,8 @@ export const RenderSwiper: React.FC<IProps> = ({
   });
 
   const getStyleAndClass: (
-    condition: boolean, onClickFunc: any
+    condition: boolean,
+    onClickFunc: any
   ) => { style: any; className?: any } = (condition, onClickFunc) => {
     if (condition) {
       return {
@@ -98,7 +99,7 @@ export const RenderSwiper: React.FC<IProps> = ({
     children,
     style,
     className,
-    onClick,
+    onClick
   }: {
     children: any;
     style: any;
@@ -119,11 +120,16 @@ export const RenderSwiper: React.FC<IProps> = ({
   const isFirst = () => {
     return safeEqual(currentPos, 0);
   };
-  
+
   return (
     <div
       className="swiper-part"
-      style={Object.assign({}, style, { width: isMobile ? '100%' : swiperWidth })}
+      data-flex={afterFilterDom.length < maxNumber - 1 ? true : false}
+      style={Object.assign(
+        {},
+        style,
+        { width: isMobile ? "100%" : swiperWidth }
+      )}
       onClick={(e: any) => {
         if (e && e.target && e.target.dataset && e.target.dataset.index) {
           onOpenModal(e, e.target.dataset.index);
@@ -138,9 +144,12 @@ export const RenderSwiper: React.FC<IProps> = ({
       })}
       {afterFilterDom}
       {renderButton({
-        ...getStyleAndClass(canRenderArrow && currentPos + maxNumber < dom.length, () => {
-          setCurrentPos(c => ++c);
-        }),
+        ...getStyleAndClass(
+          canRenderArrow && currentPos + maxNumber < dom.length,
+          () => {
+            setCurrentPos(c => ++c);
+          }
+        ),
         children: <Svg icon="arrow_down" />
       })}
     </div>
