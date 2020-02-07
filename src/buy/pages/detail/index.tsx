@@ -233,15 +233,15 @@ export default function ProductDetail(props: any) {
               setContainerWidth(element.clientWidth)
             }
           }}>
-            <RenderByCondition
-              ComponentPc={null}
-              ComponentMb={renderHeaderProductPart()}
-            />
             <TopSwiper
               containerWidth={containerWidth}
               buyProductVideo={buyProductVideo}
               buyProductImgPc={buyProductImgPc}
               buyProductImgM={buyProductImgM}
+            />
+            <RenderByCondition
+              ComponentPc={null}
+              ComponentMb={renderHeaderProductPart()}
             />
             <InspectionReport
               productDescription={productDescription}
