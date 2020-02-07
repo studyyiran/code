@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, {useContext, useState} from "react";
 import VideoComponent from "../../../../components/video";
 // @ts-ignore
 import ReactImageMagnify from "react-image-magnify";
 import "./index.less";
 import { RenderSwiper } from "./components/swiper";
+import {GlobalSettingContext, IGlobalSettingContext} from "../../../../context";
 
 export function TopSwiper(props: any) {
   const {
@@ -53,19 +54,27 @@ export function TopSwiper(props: any) {
       );
     }
   };
-
+  const globalSettingContext = useContext(GlobalSettingContext);
+  const {
+    globalSettingContextValue
+  } = globalSettingContext as IGlobalSettingContext;
+  const { isMobile } = globalSettingContextValue;
+  const contentSize = (isMobile ? 1 : 0.8) * containerWidth
+  console.log(contentSize)
   return (
     <div className="detail-top-swiper">
       <div className="swiper-part">
         <RenderSwiper
+          style={isMobile ? {width: contentSize} : {height: contentSize}}
           buyProductVideo={buyProductVideo}
           buyProductImgM={buyProductImgM}
-          swiperWidth={0.1 * containerWidth}
+          isMobile={isMobile}
+          swiperWidth={(isMobile ? 0.4 : 0.12) * contentSize}
           currentImageIndex={currentImageIndex}
           setCurrentImageIndex={setCurrentImageIndex}
         />
       </div>
-      <div className="content-part">{renderContent(0.5 * containerWidth)}</div>
+      <div className="content-part">{renderContent(contentSize)}</div>
     </div>
   );
 

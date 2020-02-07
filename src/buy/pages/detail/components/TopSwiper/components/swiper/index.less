@@ -4,13 +4,22 @@
   .swiper-pc {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     .mb({
       flex-direction: row;
-      justify-content: space-between;
       width: 100%;
       overflow-x: scroll;
     });
+    @arrowHeight: 15px;
+    .arrow-button {
+      width: 100%;
+      height: @arrowHeight;
+      .canclick();
+      background: red;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
     //margin-bottom: 40 * @px;
     //padding: 10 * @px 0;
     .innerdiv {
@@ -19,7 +28,6 @@
     }
     .inner-div-container {
       overflow: hidden;
-      margin-bottom: 20 *@px;
       .innerdiv {
         //.upup();
       }
