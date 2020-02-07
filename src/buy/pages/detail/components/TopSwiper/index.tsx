@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { ModalView } from "../../../../components/ModalView";
 import { RenderByCondition } from "../../../../components/RenderByCondition";
 import { InnerDivImage } from "../innerDivImage";
 import VideoComponent from "../../../../components/video";
 import { Carousel } from "antd";
 import { isServer, safeEqual } from "../../../../common/utils/util";
-// @ts-ignore
-import TestCarousel, { Modal, ModalGateway } from "react-images";
-// @ts-ignore
-import WxImageViewer from "react-wx-images-viewer";
 // @ts-ignore
 import ReactImageMagnify from "react-image-magnify";
 import "./index.less";
@@ -16,7 +11,7 @@ import "./index.less";
 export function TopSwiper(props: any) {
   const [currentImageIndex, setCurrentImageIndex] = useState("");
   const [showImageModal, setShowImgModal] = useState(false);
-  const { buyProductImgPc, buyProductImgM, buyProductVideo } = props;
+  const { buyProductImgPc, buyProductImgM, buyProductVideo, containerWidth } = props;
 
   useEffect(() => {
     if (currentImageIndex === "") {
@@ -83,8 +78,9 @@ export function TopSwiper(props: any) {
     if (currentImageIndex === "video") {
       return <VideoComponent key="videocomponent" src={buyProductVideo} className="my-video"/>;
     } else {
-      const width = 400;
-      const height = 400;
+      const afterCalcSize = 0.5 * containerWidth
+      const width = afterCalcSize;
+      const height = afterCalcSize;
       const zoomSize = 3;
       return (
         <ReactImageMagnify
