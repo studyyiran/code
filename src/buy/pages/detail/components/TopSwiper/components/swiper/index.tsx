@@ -1,6 +1,6 @@
 import { safeEqual } from "../../../../../../common/utils/util";
 import { InnerDivImage } from "../../../innerDivImage";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./index.less";
 import Svg from "../../../../../../components/svg";
 
@@ -30,8 +30,11 @@ export const RenderSwiper: React.FC<IProps> = ({
         setCurrentImageIndex("0");
       }
     }
-  }, []);
-  const maxNumber = isMobile ? 1000 : 7;
+  }, [buyProductVideo, currentImageIndex, setCurrentImageIndex]);
+
+  const [currentPos, setCurrentPos] = useState(0);
+
+  const maxNumber = isMobile ? 1000 : 5;
   function onOpenModal(e: any, index = 0) {
     // 可以确定当前显示的.
     setCurrentImageIndex(String(index));
@@ -71,30 +74,75 @@ export const RenderSwiper: React.FC<IProps> = ({
     );
   }
   const canRenderArrow = dom.length > maxNumber;
-  const upCanClick = canRenderArrow && currentImageIndex !== 0;
-  const downCanClick =
-    canRenderArrow && currentImageIndex + maxNumber < dom.length;
-  dom = dom.filter((item: any, index: any) => {
-    return index < maxNumber;
+  const afterFilterDom = dom.filter((item: any, index: any) => {
+    return index >= currentPos && index < maxNumber + currentPos;
   });
 
+  const getStyleAndClass: (
+    condition: boolean, onClickFunc: any
+  ) => { style: any; className?: any } = (condition, onClickFunc) => {
+    if (condition) {
+      return {
+        onClick: onClickFunc,
+        style: { background: "rgba(55, 90, 125, 1)" },
+        className: "canclick"
+      };
+    } else {
+      return {
+        style: { background: "rgba(233, 233, 233, 1)" }
+      };
+    }
+  };
+
+  const renderButton = ({
+    children,
+    style,
+    className,
+    onClick,
+  }: {
+    children: any;
+    style: any;
+    className?: any;
+    onClick?: any;
+  }) => {
+    if (canRenderArrow) {
+      return (
+        <div className="arrow-button" style={style} onClick={onClick}>
+          {children}
+        </div>
+      );
+    } else {
+      return null;
+    }
+  };
+
+  const isFirst = () => {
+    return safeEqual(currentPos, 0);
+  };
+  
   return (
     <div
       className="swiper-part"
-      style={Object.assign({}, style, {width: swiperWidth})}
+      style={Object.assign({}, style, { width: swiperWidth })}
       onClick={(e: any) => {
         if (e && e.target && e.target.dataset && e.target.dataset.index) {
           onOpenModal(e, e.target.dataset.index);
         }
       }}
     >
-      <div className="arrow-button">
-        <Svg icon="arrow_up" />
-      </div>
-      {dom}
-      <div className="arrow-button">
-        <Svg icon="arrow_down" />
-      </div>
+      {renderButton({
+        ...getStyleAndClass(canRenderArrow && !isFirst(), () => {
+          setCurrentPos(c => --c);
+        }),
+        children: <Svg icon="arrow_up" />
+      })}
+      {afterFilterDom}
+      {renderButton({
+        ...getStyleAndClass(canRenderArrow && currentPos + maxNumber < dom.length, () => {
+          setCurrentPos(c => ++c);
+        }),
+        children: <Svg icon="arrow_down" />
+      })}
     </div>
   );
 };
