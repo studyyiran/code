@@ -1,10 +1,13 @@
-import React, {useContext, useState} from "react";
+import React, { useContext, useState } from "react";
 import VideoComponent from "../../../../components/video";
 // @ts-ignore
 import ReactImageMagnify from "react-image-magnify";
 import "./index.less";
 import { RenderSwiper } from "./components/swiper";
-import {GlobalSettingContext, IGlobalSettingContext} from "../../../../context";
+import {
+  GlobalSettingContext,
+  IGlobalSettingContext
+} from "../../../../context";
 
 export function TopSwiper(props: any) {
   const {
@@ -59,13 +62,12 @@ export function TopSwiper(props: any) {
     globalSettingContextValue
   } = globalSettingContext as IGlobalSettingContext;
   const { isMobile } = globalSettingContextValue;
-  const contentSize = (isMobile ? 1 : 0.8) * containerWidth
-  console.log(contentSize)
+  const contentSize = (isMobile ? 1 : 0.8) * containerWidth;
   return (
     <div className="detail-top-swiper">
-      <div className="swiper-part">
+      <div className="swiper-part-container">
         <RenderSwiper
-          style={isMobile ? {width: contentSize} : {height: contentSize}}
+          style={isMobile ? { width: contentSize } : { height: contentSize }}
           buyProductVideo={buyProductVideo}
           buyProductImgM={buyProductImgM}
           isMobile={isMobile}
@@ -74,7 +76,16 @@ export function TopSwiper(props: any) {
           setCurrentImageIndex={setCurrentImageIndex}
         />
       </div>
-      <div className="content-part">{renderContent(contentSize)}</div>
+      <div
+        className="content-part"
+        style={{
+          width: contentSize,
+          height: contentSize,
+          flex: `0 0 ${contentSize}px`
+        }}
+      >
+        {renderContent(contentSize)}
+      </div>
     </div>
   );
 

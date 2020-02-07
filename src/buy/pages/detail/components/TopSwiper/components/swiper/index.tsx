@@ -79,23 +79,21 @@ export const RenderSwiper: React.FC<IProps> = ({
   });
 
   return (
-    <div>
-      <div
-        className="swiper-pc"
-        style={style}
-        onClick={(e: any) => {
-          if (e && e.target && e.target.dataset && e.target.dataset.index) {
-            onOpenModal(e, e.target.dataset.index);
-          }
-        }}
-      >
-        <div className="arrow-button">
-          <Svg icon="arrow_up" />
-        </div>
-        {dom}
-        <div className="arrow-button">
-          <Svg icon="arrow_down" />
-        </div>
+    <div
+      className="swiper-part"
+      style={Object.assign({}, style, {width: swiperWidth})}
+      onClick={(e: any) => {
+        if (e && e.target && e.target.dataset && e.target.dataset.index) {
+          onOpenModal(e, e.target.dataset.index);
+        }
+      }}
+    >
+      <div className="arrow-button">
+        <Svg icon="arrow_up" />
+      </div>
+      {dom}
+      <div className="arrow-button">
+        <Svg icon="arrow_down" />
       </div>
     </div>
   );
