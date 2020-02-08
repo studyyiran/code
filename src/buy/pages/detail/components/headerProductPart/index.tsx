@@ -53,6 +53,7 @@ export function HeaderProductPart(props: {
       <div className="price-part-pc">
         <ProductInfo {...productDetail} />
         <ProductIdAndPrice
+          hahaNumberArr={[1,2,3]}
           buyProductCode={buyProductCode}
           skuPrice={skuPrice}
           buyPrice={buyPrice}
@@ -148,7 +149,7 @@ function ProductInfo(props: any) {
     <section className="product-info">
       <div className="info-part">
         <h2 className="sub-title-size-main">{lineOne ? ` ${lineOne}` : ""}</h2>
-        <span className="attr">{lineTwo ? lineTwo : ""}</span>
+        {/*<span className="attr">{lineTwo ? lineTwo : ""}</span>*/}
         {/*<span className="condition">*/}
         {/*  <span>Condition</span>*/}
         {/*  <span*/}

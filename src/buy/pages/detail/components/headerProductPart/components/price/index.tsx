@@ -6,18 +6,30 @@ interface IProps {
   buyProductCode: string;
   skuPrice: string;
   buyPrice: string;
+  hahaNumberArr?: any[];
 }
 
 export const ProductIdAndPrice: React.FC<IProps> = ({
   buyProductCode,
   buyPrice,
   skuPrice,
-  children
+  children,
+  hahaNumberArr
 }) => {
   return (
     <div className="productid-and-price">
-      <span className="product-id">Product ID {buyProductCode}</span>
-      <div>
+      <div className="productid-part">
+        <span className="product-id">Product ID {buyProductCode}</span>
+        {hahaNumberArr && hahaNumberArr.length ? (
+          <span className="similar-number">
+            <span onClick={() => {}} className="number">
+              {hahaNumberArr.length}
+            </span>{" "}
+            like this
+          </span>
+        ) : null}
+      </div>
+      <div className="price-part-container">
         <div className="price-part">
           <span className="buy-price sub-title-size-main">
             {currencyTrans(buyPrice)}

@@ -2,21 +2,37 @@
 
 @p1: {
   .productid-and-price {
-    .product-id {
-      color: rgba(55, 90, 125, 1);
-    }
-    .price-part {
-      margin-bottom: 10 * @px;
-      .buy-price {
-        margin-right: 5 * @px;
+    .productid-part {
+      .product-id {
+        color: rgba(55, 90, 125, 1);
       }
-      .sku-price {
-        > span:last-child {
-          margin-left: 2 * @px;
-          text-decoration: line-through;
+      .similar-number {
+        display: inline-block;
+        margin-left: 20 *@px;
+        .number {
+          color: rgba(26, 180, 231, 1);
         }
       }
     }
+    .price-part-container {
+      margin-bottom: 20 * @px;
+      display: flex;
+      align-items: center;
+      .price-part {
+        display: flex;
+        align-items: baseline;
+        .buy-price {
+          margin-right: 5 * @px;
+        }
+        .sku-price {
+          > span:last-child {
+            margin-left: 2 * @px;
+            text-decoration: line-through;
+          }
+        }
+      }
+    }
+    
   }
 };
 
