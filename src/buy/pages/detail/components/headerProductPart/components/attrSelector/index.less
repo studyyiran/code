@@ -21,13 +21,23 @@
   .attr-selector {
     margin-bottom: 5 *@px;
     .button-select {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       border-radius: 5px;
       padding: 10 * @px;
       margin-right: 5 *@px;
       background: rgba(246, 246, 246, 1);
       color: rgba(106, 106, 106, 1);
+      .green {
+        color: rgba(109, 210, 48, 1);
+      }
     }
     .button-select-selected {
+      .green {
+        color: @white;
+      }
       background: linear-gradient(
         90deg,
         rgba(26, 180, 231, 1) 0%,

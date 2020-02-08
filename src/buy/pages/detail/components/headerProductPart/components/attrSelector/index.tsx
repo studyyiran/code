@@ -26,6 +26,30 @@ export const AttrSelector: React.FC<IProps> = props => {
       })
     },
     {
+      title: "Condition5",
+      arr: new Array(4).fill(1).map((item, index) => {
+        return {
+          name: "Condition" + index,
+          renderSelect: () => {
+            return (
+              <div className="button-select button-select-selected">
+                <span>Condition{index}</span>
+                <span className="green">From $1{index}3</span>
+              </div>
+            );
+          },
+          renderNotSelect: () => {
+            return (
+              <div className="button-select">
+                <span>Condition{index}</span>
+                <span className="green">From $1{index}3</span>
+              </div>
+            );
+          }
+        };
+      })
+    },
+    {
       title: "Storage",
       arr: new Array(4).fill(1).map((item, index) => {
         return {
