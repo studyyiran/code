@@ -3,17 +3,28 @@
 @p: {
   .product-detail-page {
     .long-button {
-      height: 70 *@px;
+      @height: 70*@px;
+      height: @height;
+      line-height: @height;
+      .mb({
+        @height: 50*@px;
+        height: @height;
+        line-height: @height;
+      });
       > * {
         height: 100%;
+        line-height: 100%;
         width: 100%;
       }
+      .mb({
+        min-width: 100%;
+        width: 100%;
+      })
     }
     .common-detail-page-card {
       border: 1px solid @color-border;
+      padding: 20 *@px;
       .mb-padding();
-      padding-top: 20 *@px;
-      padding-bottom: 20 *@px;
       border-radius: 3px;
       .mb({
         border-left: none;

@@ -45,7 +45,7 @@ export const RenderSwiper: React.FC<IProps> = ({
     width: swiperWidth,
     height: swiperWidth
   };
-  let dom = buyProductImgM.concat(buyProductImgM).concat(buyProductImgM).map((item: string, index: number) => {
+  let dom = buyProductImgM.map((item: string, index: number) => {
     return (
       <div
         style={afterStyle}
