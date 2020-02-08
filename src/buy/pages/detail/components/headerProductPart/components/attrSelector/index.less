@@ -21,6 +21,7 @@
   .attr-selector {
     margin-bottom: 5 *@px;
     .button-select {
+      .canclick();
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -47,6 +48,7 @@
       color: @white;
     }
     .circle-select {
+      .canclick();
       display: inline-block;
       width: 30 * @px;
       height: 30 * @px;
@@ -59,6 +61,9 @@
     .circle-select-selected {
       background: linear-gradient(rgba(26, 180, 231, 1), rgba(52, 152, 219, 1));
       box-shadow: 0px 5 * @px 15 * @px 0px rgba(0, 0, 0, 0.2);
+      svg {
+        color: @white;
+      }
     }
   }
 };

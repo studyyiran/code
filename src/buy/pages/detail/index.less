@@ -36,11 +36,11 @@
     .top-part {
       position: relative;
       display: flex;
-      @rightPartWidth: @totalWidth / 2 - 70 *@px;
+      @rightPartWidth: @totalWidth / 2;
       .product-detail {
         flex: 0 0 @totalWidth - @rightPartWidth;
         .pc({
-          margin-right: 10px;
+          margin-right: @totalWidth / 20;
         });
         .mb({
           flex: 1;

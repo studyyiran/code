@@ -35,14 +35,16 @@ export function TopSwiper(props: any) {
               width: "100%",
               height: "100%"
             },
-            // enlargedImageContainerStyle: {
-            //   width: '1px'
-            // },
+            enlargedImageContainerStyle: {
+              width: '1px',
+              marginLeft: 0.1 * containerWidth + "px",
+              zIndex: 99999,
+            },
             imageStyle: {
               objectFit: "cover"
             },
             enlargedImageStyle: {
-              objectFit: "cover"
+              objectFit: "cover",
             },
             smallImage: {
               // isFluidWidth: true,
