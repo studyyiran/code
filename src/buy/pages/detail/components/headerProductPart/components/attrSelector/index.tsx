@@ -25,7 +25,7 @@ export const AttrSelector: React.FC<IProps> = props => {
       title: "Color",
       arr: [
         {
-          name: "Red",
+          name: "Color1",
           renderSelect: (info: any) => {
             return (
               <span className="circle-select selected">
@@ -38,7 +38,7 @@ export const AttrSelector: React.FC<IProps> = props => {
           }
         },
         {
-          name: "Red",
+          name: "Color2",
           renderSelect: (info: any) => {
             return (
               <span className="circle-select selected">
@@ -85,11 +85,11 @@ export const RenderSelectList: React.FC<IProps2> = ({
     }
   }, [defaultSelect]);
   return (
-    <div>
-      <h3>
-        {title}: {arr[currentSelect].name}
+    <div className="select-list">
+      <h3 className="title">
+        {title} : <span className="name"> {arr[currentSelect].name}</span>
       </h3>
-      <ul>
+      <ul className="list-container">
         {arr.map(({ renderSelect, renderNotSelect }, index) => {
           return (
             <li

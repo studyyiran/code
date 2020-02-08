@@ -15,7 +15,7 @@ import "./index.less";
 import { OnSaleTag } from "../onSaleTag";
 import { InspectPersonInfo } from "../inspectPersonInfo";
 import { ProductIdAndPrice } from "./components/price";
-import {AttrSelector} from "./components/attrSelector";
+import { AttrSelector } from "./components/attrSelector";
 
 export function HeaderProductPart(props: {
   productDetail: IProductDetail;
@@ -53,7 +53,11 @@ export function HeaderProductPart(props: {
       <div className="price-part-pc">
         <ProductInfo {...productDetail} />
         <ProductIdAndPrice
-          hahaNumberArr={new Array(3).fill({ userInfo, buyProductRemark, ...productDetail })}
+          hahaNumberArr={new Array(3).fill({
+            userInfo,
+            buyProductRemark,
+            ...productDetail
+          })}
           buyProductCode={buyProductCode}
           skuPrice={skuPrice}
           buyPrice={buyPrice}
@@ -61,11 +65,11 @@ export function HeaderProductPart(props: {
           <OnSaleTag tag={buyTags} />
         </ProductIdAndPrice>
         <TopIconList />
+        <AttrSelector />
         <InspectPersonInfo
           buyProductRemark={buyProductRemark}
           userInfo={userInfo}
         />
-        <AttrSelector />
         <StartBuyButton
           onClick={() => {
             dataReport({
