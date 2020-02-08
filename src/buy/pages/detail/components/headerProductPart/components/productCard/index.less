@@ -2,13 +2,20 @@
 
 @p1: {
   .similar-modal {
-    max-width: 100% !important;
+    .pc({max-width: 100%  !important;});
+    .mb({width: 90vw  !important;});
     max-height: 85vh !important;
     top: 50 * @px !important;
     .sub-title-size-main {
       font-size: 24 * @px;
+      .mb({font-size: 20 * @px;});
       font-weight: @boldWeight;
     }
+    .mb({
+      .yr-modal-content {
+        padding: 10px !important;
+      }
+    })
   }
   .product-card-modal {
     .second-line {
@@ -16,16 +23,26 @@
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
-      padding-bottom: 10 * @px;
-      border-bottom: 1px solid @color-border;
-
+      .pc({
+        padding-bottom: 10 * @px;
+        border-bottom: 1px solid @color-border;
+      });
+      .mb({align-items: flex-start; flex-direction: column;});
+      .sort-container {
+        .mb({margin-top: 10 * @px;});
+      }
       ul.selector-container {
         display: flex;
         align-items: center;
+        width: 100%;
+        .mb(
+          {display: grid; grid-template-columns: repeat(2, 1fr) ; grid-row-gap: 10 *
+            @px; grid-column-gap: 10 * @px;}
+        );
         li {
           padding: 10 * @px;
           min-width: 150 * @px;
-          margin-right: 16 * @px;
+          .pc({margin-right: 16 * @px;});
           background: rgba(246, 246, 246, 1);
           border-radius: 4px;
           display: flex;
@@ -40,23 +57,43 @@
       margin: 15 * @px auto;
       border-radius: 6px;
       box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.16);
+      overflow: hidden;
+      .mb({
+        flex-direction: column;
+        .innerdiv {
+          .innerdiv-imgsize(calc(90vw - 20px));
+        }
+      });
       .content-container {
-        padding: 20 * @px 0 20 * @px 20 * @px;
+        .pc({
+          padding: 50 *@px;
+        });
+        padding: 16 *@px;
         flex: 1;
         display: flex;
         align-items: center;
+        > div {
+          width: 100%;
+        }
       }
       .price-part-container {
         margin-bottom: 0;
       }
       .long-button {
         .pc({min-width: 256 * @px;});
+        .mb({
+          min-width: 100%;
+        });
       }
     }
     .innerdiv {
       .canclick();
-      .innerdiv-imgsize(416 * @px);
     }
+    .pc({
+      .innerdiv {
+        .innerdiv-imgsize(416 * @px);
+      }
+    })
   }
 };
 

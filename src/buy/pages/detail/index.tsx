@@ -247,14 +247,6 @@ export default function ProductDetail(props: any) {
               productDescription={productDescription}
               backGroundCheck={backGroundCheck}
             />
-            {/*<Affix offsetTop={10}>*/}
-            {/*  <h1 style={{position: "absolute", bottom:"100px"}}>offsetTopoffsetTopoffsetTop</h1>*/}
-            {/*</Affix>*/}
-            {/*<Affix offsetBottom={10}>*/}
-            {/*  <div style={{background: 'red', position: 'relative'}}>123*/}
-            {/*    <h1 style={{position: "absolute", top:"100px"}}>offsetBottomoffsetBottom</h1>*/}
-            {/*  </div>456*/}
-            {/*</Affix>*/}
             <MoreInfo />
           </div>
           <RenderByCondition

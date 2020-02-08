@@ -56,7 +56,7 @@ const ProductCardModal: React.FC<IProps> = ({ arr, productDetail }) => {
             );
           })}
         </ul>
-        <div>
+        <div className="sort-container">
           <span>Sort</span>
         </div>
       </div>
