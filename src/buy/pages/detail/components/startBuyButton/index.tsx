@@ -12,7 +12,7 @@ export function StartBuyButton(props: {
 }) {
   const { onClick, buyProductStatus, productDetail } = props;
   return (
-    <div className="start-pay-button">
+    <div className="start-pay-button long-button">
       <Button disabled={buyProductStatus === "INTRANSACTION"} onClick={onClick}>
         {buyProductStatus === "INTRANSACTION" ? "Sold" : "Buy now"}
       </Button>

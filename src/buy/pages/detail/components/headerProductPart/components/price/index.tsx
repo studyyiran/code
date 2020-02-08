@@ -3,6 +3,7 @@ import {currencyTrans, getLocationUrl} from "../../../../../../common/utils/util
 import "./index.less";
 import Modal from "../../../../../../components/modal";
 import {locationHref} from "../../../../../../common/utils/routerHistory";
+import {showProductCardModal} from "../productCard";
 
 interface IProps {
   buyProductCode: string;
@@ -25,23 +26,7 @@ export const ProductIdAndPrice: React.FC<IProps> = ({
         {hahaNumberArr && hahaNumberArr.length ? (
           <span className="similar-number">
             <span onClick={() => {
-              console.log('get it');
-              (Modal as any).confirm({
-                width: "70%",
-                closable: false,
-                title: null,
-                footer: "single",
-                maskClosable: true,
-                cancelText: "Got it",
-                onCancel: () => {
-                  locationHref(getLocationUrl("home"));
-                },
-                children: (
-                  <div className="content">
-                    123123
-                  </div>
-                )
-              });
+              showProductCardModal(hahaNumberArr)
             }} className="number">
               {hahaNumberArr.length}
             </span>{" "}

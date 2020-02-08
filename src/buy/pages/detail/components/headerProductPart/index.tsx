@@ -53,7 +53,7 @@ export function HeaderProductPart(props: {
       <div className="price-part-pc">
         <ProductInfo {...productDetail} />
         <ProductIdAndPrice
-          hahaNumberArr={[1,2,3]}
+          hahaNumberArr={new Array(3).fill({ userInfo, buyProductRemark, ...productDetail })}
           buyProductCode={buyProductCode}
           skuPrice={skuPrice}
           buyPrice={buyPrice}
