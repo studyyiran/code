@@ -9,41 +9,45 @@ export const AttrSelector: React.FC<IProps> = props => {
   const config = [
     {
       title: "Carrier",
-      arr: [
-        {
-          name: "carrier1",
+      arr: new Array(6).fill(1).map((item, index) => {
+        return {
+          name: "carrier" + index,
           renderSelect: () => {
-            return <div className="button-select button-select-selected">carrier1</div>;
+            return (
+              <div className="button-select button-select-selected">
+                carrier{index}
+              </div>
+            );
           },
           renderNotSelect: () => {
-            return <div className="button-select">carrier1</div>;
+            return <div className="button-select">carrier{index}</div>;
           }
-        },
-        {
-          name: "carrier2",
+        };
+      })
+    },
+    {
+      title: "Storage",
+      arr: new Array(4).fill(1).map((item, index) => {
+        return {
+          name: "storage" + index,
           renderSelect: () => {
-            return <div className="button-select button-select-selected">carrier1</div>;
+            return (
+              <div className="button-select button-select-selected">
+                storage{index}
+              </div>
+            );
           },
           renderNotSelect: () => {
-            return <div className="button-select">carrier1</div>;
+            return <div className="button-select">storage{index}</div>;
           }
-        },
-        {
-          name: "carrier3",
-          renderSelect: () => {
-            return <div className="button-select button-select-selected">carrier1</div>;
-          },
-          renderNotSelect: () => {
-            return <div className="button-select">carrier1</div>;
-          }
-        }
-      ]
+        };
+      })
     },
     {
       title: "Color",
-      arr: [
-        {
-          name: "Color1",
+      arr: new Array(5).fill(1).map((item, index) => {
+        return {
+          name: "Color" + index,
           renderSelect: (info: any) => {
             return (
               <span className="circle-select circle-select-selected">
@@ -54,23 +58,11 @@ export const AttrSelector: React.FC<IProps> = props => {
           renderNotSelect: () => {
             return <div className="circle-select"></div>;
           }
-        },
-        {
-          name: "Color2",
-          renderSelect: (info: any) => {
-            return (
-              <span className="circle-select selected">
-                <Svg />
-              </span>
-            );
-          },
-          renderNotSelect: () => {
-            return <div className="circle-select"></div>;
-          }
-        }
-      ]
+        };
+      })
     }
   ];
+  console.log(config);
   return (
     <div className="attr-selector">
       {config.map(({ title, arr }) => {
