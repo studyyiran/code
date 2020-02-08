@@ -12,10 +12,10 @@ import { getDescArr } from "../../util";
 import { StartBuyButton } from "../startBuyButton";
 import { TopIconList } from "../topIconList";
 import "./index.less";
-import TipsIcon from "../../../../components/tipsIcon";
 import { OnSaleTag } from "../onSaleTag";
 import { InspectPersonInfo } from "../inspectPersonInfo";
 import { ProductIdAndPrice } from "./components/price";
+import {AttrSelector} from "./components/attrSelector";
 
 export function HeaderProductPart(props: {
   productDetail: IProductDetail;
@@ -65,6 +65,7 @@ export function HeaderProductPart(props: {
           buyProductRemark={buyProductRemark}
           userInfo={userInfo}
         />
+        <AttrSelector />
         <StartBuyButton
           onClick={() => {
             dataReport({
@@ -149,20 +150,6 @@ function ProductInfo(props: any) {
     <section className="product-info">
       <div className="info-part">
         <h2 className="sub-title-size-main">{lineOne ? ` ${lineOne}` : ""}</h2>
-        {/*<span className="attr">{lineTwo ? lineTwo : ""}</span>*/}
-        {/*<span className="condition">*/}
-        {/*  <span>Condition</span>*/}
-        {/*  <span*/}
-        {/*    className="condition-buy-level"*/}
-        {/*    style={{ background: type2BgColor(buyLevel) }}*/}
-        {/*  >*/}
-        {/*    {buyLevel}*/}
-        {/*  </span>*/}
-        {/*  <RenderByCondition*/}
-        {/*    ComponentMb={<TipsIcon trigger="click">{renderList()}</TipsIcon>}*/}
-        {/*    ComponentPc={<TipsIcon placement="right">{renderList()}</TipsIcon>}*/}
-        {/*  />*/}
-        {/*</span>*/}
       </div>
     </section>
   );

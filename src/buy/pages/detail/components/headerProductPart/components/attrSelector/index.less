@@ -1,0 +1,19 @@
+@import (reference) "~buy/common/styles/index.less";
+
+@p1: {
+  .attr-selector {
+    .circle-select {
+      display: inline-block;
+      width: 30 *@px;
+      height: 30 *@px;
+      border-radius: 50%;
+      border: 2px solid rgba(230,232,238,1);
+    }
+    .selected {
+      background: linear-gradient(rgba(26, 180, 231, 1), rgba(52, 152, 219, 1));
+      box-shadow:0px 5 *@px 15*@px 0px rgba(0,0,0,0.2);
+    }
+  }
+};
+
+.hello(@p1);
