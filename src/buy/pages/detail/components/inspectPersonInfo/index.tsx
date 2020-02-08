@@ -4,9 +4,11 @@ import "./index.less";
 
 export function InspectPersonInfo({
   buyProductRemark,
-  userInfo
+  userInfo,
+  hideImg
 }: {
   buyProductRemark: any;
+  hideImg?: boolean;
   userInfo: IProductDetail["userInfo"];
 }) {
   // 就算有if 有的时候 也不好
@@ -14,17 +16,18 @@ export function InspectPersonInfo({
     return (
       <div className="Inspect-person-info">
         <div className="first">
-          <img src={userInfo.userImg || require("./res/defaulthead.png")} />
+          {hideImg ? null : (
+            <img src={userInfo.userImg || require("./res/defaulthead.png")} />
+          )}
           {buyProductRemark ? (
             <div className="second">
               <h3 className="title-style">
-                Inspected by <span className="name-part">{userInfo.userName || `UpTrade`}</span>
+                <span className="blue">Inspected by </span><span>{userInfo.userName || `UpTrade`}</span>
               </h3>
               <p className="title-style">{buyProductRemark}</p>
             </div>
           ) : null}
         </div>
-        
       </div>
     );
   } else {
