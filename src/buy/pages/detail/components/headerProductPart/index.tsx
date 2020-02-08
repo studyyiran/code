@@ -14,7 +14,8 @@ import { TopIconList } from "../topIconList";
 import "./index.less";
 import TipsIcon from "../../../../components/tipsIcon";
 import { OnSaleTag } from "../onSaleTag";
-import {InspectPersonInfo} from "../inspectPersonInfo";
+import { InspectPersonInfo } from "../inspectPersonInfo";
+import { ProductIdAndPrice } from "./components/price";
 
 export function HeaderProductPart(props: {
   productDetail: IProductDetail;
@@ -24,7 +25,14 @@ export function HeaderProductPart(props: {
   buyProductRemark: any;
   userInfo?: any;
 }) {
-  const { productDetail, partsInfo, showModal, setShowModal, buyProductRemark, userInfo } = props;
+  const {
+    productDetail,
+    partsInfo,
+    showModal,
+    setShowModal,
+    buyProductRemark,
+    userInfo
+  } = props;
   const {
     productDisplayName,
     buyPrice,
@@ -42,138 +50,43 @@ export function HeaderProductPart(props: {
         productDetail={productDetail}
         partsInfo={partsInfo}
       />
-      <RenderByCondition
-        ComponentPc={
-          <>
-            <div className="price-part-pc">
-              <ProductInfo {...productDetail} />
-              <span className="product-id">Product ID {buyProductCode}</span>
-              <div className="right">
-                <RenderByIsFive
-                  renderFive={(blackHappyCountDown: any[]) => {
-                    return (
-                      <>
-                        <div className="sku-price">
-                          <label>Retail</label>
-                          <span>{currencyTrans(skuPrice)}</span>
-                        </div>
-                        <div className="price-and-button">
-                          <div className="price">
-                            <span className="buy-price sub-title-size-main">
-                              <FivePrice price={buyPrice} />
-                              <FiveCalcPrice
-                                buyPrice={buyPrice}
-                                skuPrice={skuPrice}
-                              />
-                            </span>
-                            <FiveCountDown timeArr={blackHappyCountDown} />
-                          </div>
-                        </div>
-                      </>
-                    );
-                  }}
-                  ComponentNormal={
-                    <div className="price-and-button">
-                      <div className="price">
-                        <span className="buy-price sub-title-size-main">
-                          {currencyTrans(buyPrice)}
-                        </span>
-                        <div className="sku-price">
-                          <label>Retail</label>
-                          <span>{currencyTrans(skuPrice)}</span>
-                        </div>
-                        <OnSaleTag tag={buyTags} />
-                      </div>
-                    </div>
-                  }
-                />
-              </div>
-              <TopIconList />
-              <InspectPersonInfo
-                buyProductRemark={buyProductRemark}
-                userInfo={userInfo}
-              />
-              <StartBuyButton
-                onClick={() => {
-                  dataReport({
-                    event: "EEaddToCart",
-                    ecommerce: {
-                      currencyCode: "USD",
-                      add: {
-                        products: [
-                          {
-                            sku: String(skuId),
-                            name: productDisplayName,
-                            price: Number(buyPrice)
-                          }
-                        ]
-                      }
+      <div className="price-part-pc">
+        <ProductInfo {...productDetail} />
+        <ProductIdAndPrice
+          buyProductCode={buyProductCode}
+          skuPrice={skuPrice}
+          buyPrice={buyPrice}
+        >
+          <OnSaleTag tag={buyTags} />
+        </ProductIdAndPrice>
+        <TopIconList />
+        <InspectPersonInfo
+          buyProductRemark={buyProductRemark}
+          userInfo={userInfo}
+        />
+        <StartBuyButton
+          onClick={() => {
+            dataReport({
+              event: "EEaddToCart",
+              ecommerce: {
+                currencyCode: "USD",
+                add: {
+                  products: [
+                    {
+                      sku: String(skuId),
+                      name: productDisplayName,
+                      price: Number(buyPrice)
                     }
-                  });
-                  setShowModal(true);
-                }}
-                buyProductStatus={buyProductStatus}
-                productDetail={productDetail}
-              />
-            </div>
-          </>
-        }
-        ComponentMb={
-          <div className="price-part-mb">
-            <div className="top">
-              <ProductInfo {...productDetail} />
-            </div>
-            <RenderByIsFive
-              renderFive={(blackHappyCountDown: any[]) => {
-                return (
-                  <>
-                    <div>
-                      <div className="sku-price">
-                        <label>Retail</label>
-                        <span>{currencyTrans(skuPrice)}</span>
-                      </div>
-                      <div className="price-and-button">
-                        <div className="price">
-                          <span className="buy-price sub-title-size-main">
-                            <FivePrice price={buyPrice} />
-                            <FiveCalcPrice
-                              buyPrice={buyPrice}
-                              skuPrice={skuPrice}
-                            />
-                          </span>
-                          <FiveCountDown timeArr={blackHappyCountDown} />
-                        </div>
-                      </div>
-                      <span className="product-id">
-                        Product ID {buyProductCode}
-                      </span>
-                    </div>
-                  </>
-                );
-              }}
-              ComponentNormal={
-                <div className="bottom">
-                  <div className="price">
-                    <span className="buy-price sub-title-size-main">
-                      {currencyTrans(buyPrice)}
-                    </span>
-                    {skuPrice ? (
-                      <div className="sku-price">
-                        <label>Retail</label>
-                        <span>{currencyTrans(skuPrice)}</span>
-                      </div>
-                    ) : null}
-                    <OnSaleTag tag={buyTags} />
-                  </div>
-                  <span className="product-id">
-                    Product ID {buyProductCode}
-                  </span>
-                </div>
+                  ]
+                }
               }
-            />
-          </div>
-        }
-      />
+            });
+            setShowModal(true);
+          }}
+          buyProductStatus={buyProductStatus}
+          productDetail={productDetail}
+        />
+      </div>
     </div>
   );
 }

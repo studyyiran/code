@@ -80,83 +80,39 @@
       .pc({font-size: 24 * @f;});
     }
 
-    .act-timer {
-      margin-left: 10 * @px;
-      img {
-        width: 46 * @px;
-        .mb({width: 36 * @px;});
-      }
-    }
-    .product-id {
-      color: rgba(55, 90, 125, 1);
-    }
-
-    .sku-price {
-      display: inline-block;
-      font-size: 12 * @f;
-      color: rgba(136, 136, 136, 1);
-    }
     .price-part-pc {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
       flex-direction: column;
-
-      .sku-price {
-        > span:last-child {
-          margin-left: 2 * @px;
-          text-decoration: line-through;
-        }
-      }
-      .right {
-        .price-and-button {
-          margin-bottom: 10 * @px;
-          .price {
-            > * {
-              vertical-align: middle;
-            }
-            .act-timer {
-              flex: 1;
-            }
-            margin-right: 32 * @px;
-            .buy-price {
-              margin-right: 5 * @px;
-            }
-            .act-timer {
-              .content {
-              }
-            }
-          }
-        }
-      }
     }
-    .price-part-mb {
-      margin-top: 25 * @px;
-      .sku-price {
-        .font(12 * @f, @boldWeight, rgba(136, 136, 136, 1));
-        > span:last-child {
-          margin-left: 5 * @px;
-          text-decoration: line-through;
-        }
-      }
-      .product-id {
-        > * {
-          vertical-align: text-bottom;
-        }
-      }
-      /*移动端*/
-      .bottom {
-        .price {
-          margin-bottom: 5 *@px;
-          .buy-price {
-            margin-right: 8 * @px;
-          }
-          .sku-price {
-            font-size: 14 * @px;
-          }
-        }
-      }
-    }
+    //.price-part-mb {
+    //  margin-top: 25 * @px;
+    //  .sku-price {
+    //    .font(12 * @f, @boldWeight, rgba(136, 136, 136, 1));
+    //    > span:last-child {
+    //      margin-left: 5 * @px;
+    //      text-decoration: line-through;
+    //    }
+    //  }
+    //  .product-id {
+    //    > * {
+    //      vertical-align: text-bottom;
+    //    }
+    //  }
+    //  /*移动端*/
+    //  .bottom {
+    //    .price {
+    //      margin-bottom: 5 *@px;
+    //      .buy-price {
+    //        margin-right: 8 * @px;
+    //      }
+    //      .sku-price {
+    //        font-size: 14 * @px;
+    //      }
+    //    }
+    //  }
+    //}
   }
 };
 

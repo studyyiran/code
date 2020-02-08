@@ -1,0 +1,23 @@
+@import (reference) "~buy/common/styles/index.less";
+
+@p1: {
+  .productid-and-price {
+    .product-id {
+      color: rgba(55, 90, 125, 1);
+    }
+    .price-part {
+      margin-bottom: 10 * @px;
+      .buy-price {
+        margin-right: 5 * @px;
+      }
+      .sku-price {
+        > span:last-child {
+          margin-left: 2 * @px;
+          text-decoration: line-through;
+        }
+      }
+    }
+  }
+};
+
+.hello(@p1);

@@ -260,7 +260,8 @@ export default function ProductDetail(props: any) {
           <RenderByCondition
             ComponentPc={
               <div className="fixed-wrapper">
-                <Affix offsetBottom={0}>{renderHeaderProductPart()}</Affix>
+                {renderHeaderProductPart()}
+                {/*<Affix offsetBottom={0}>{renderHeaderProductPart()}</Affix>*/}
               </div>
             }
             ComponentMb={null}
