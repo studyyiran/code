@@ -11,12 +11,30 @@ export const AttrSelector: React.FC<IProps> = props => {
       title: "Carrier",
       arr: [
         {
-          name: "1",
+          name: "carrier1",
           renderSelect: () => {
-            return <div>1</div>;
+            return <div className="button-select button-select-selected">carrier1</div>;
           },
           renderNotSelect: () => {
-            return <div>1</div>;
+            return <div className="button-select">carrier1</div>;
+          }
+        },
+        {
+          name: "carrier2",
+          renderSelect: () => {
+            return <div className="button-select button-select-selected">carrier1</div>;
+          },
+          renderNotSelect: () => {
+            return <div className="button-select">carrier1</div>;
+          }
+        },
+        {
+          name: "carrier3",
+          renderSelect: () => {
+            return <div className="button-select button-select-selected">carrier1</div>;
+          },
+          renderNotSelect: () => {
+            return <div className="button-select">carrier1</div>;
           }
         }
       ]
@@ -28,7 +46,7 @@ export const AttrSelector: React.FC<IProps> = props => {
           name: "Color1",
           renderSelect: (info: any) => {
             return (
-              <span className="circle-select selected">
+              <span className="circle-select circle-select-selected">
                 <Svg />
               </span>
             );

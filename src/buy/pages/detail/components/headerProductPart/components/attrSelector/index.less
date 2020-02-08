@@ -2,8 +2,10 @@
 
 @p1: {
   .select-list {
+    margin-bottom: 14 *@px;
     .title {
-      font-size: 16*@px;
+      font-size: 16 * @px;
+      margin-bottom: 8 *@px;
       .name {
         color: rgba(106, 106, 106, 1);
       }
@@ -11,10 +13,28 @@
     .list-container {
       display: flex;
       > li {
+        margin-right: 10 * @px;
       }
     }
   }
+
   .attr-selector {
+    .button-select {
+      border-radius: 5px;
+      padding: 10 * @px;
+      margin-right: 5 *@px;
+      background: rgba(246, 246, 246, 1);
+      color: rgba(106, 106, 106, 1);
+    }
+    .button-select-selected {
+      background: linear-gradient(
+        90deg,
+        rgba(26, 180, 231, 1) 0%,
+        rgba(52, 152, 219, 1) 100%
+      );
+      box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.2);
+      color: @white;
+    }
     .circle-select {
       display: inline-block;
       width: 30 * @px;
@@ -22,11 +42,10 @@
       line-height: 30 * @px;
       border-radius: 50%;
       border: 2px solid rgba(230, 232, 238, 1);
-      margin-right: 10 * @px;
       text-align: center;
       background: rgba(241, 215, 204, 1);
     }
-    .selected {
+    .circle-select-selected {
       background: linear-gradient(rgba(26, 180, 231, 1), rgba(52, 152, 219, 1));
       box-shadow: 0px 5 * @px 15 * @px 0px rgba(0, 0, 0, 0.2);
     }
