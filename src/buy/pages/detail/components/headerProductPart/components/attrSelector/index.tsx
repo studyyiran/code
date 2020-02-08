@@ -74,9 +74,9 @@ export const AttrSelector: React.FC<IProps> = props => {
           name: "Color" + index,
           renderSelect: (info: any) => {
             return (
-              <span className="circle-select circle-select-selected">
+              <div className="circle-select circle-select-selected">
                 <Svg />
-              </span>
+              </div>
             );
           },
           renderNotSelect: () => {
@@ -127,7 +127,6 @@ export const RenderSelectList: React.FC<IProps2> = ({
         {arr.map(({ renderSelect, renderNotSelect }, index) => {
           return (
             <li
-              className=""
               onClick={() => {
                 setCurrentSelect(index);
               }}
