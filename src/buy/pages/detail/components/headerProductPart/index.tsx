@@ -16,6 +16,7 @@ import { OnSaleTag } from "../onSaleTag";
 import { InspectPersonInfo } from "../inspectPersonInfo";
 import { ProductIdAndPrice } from "./components/price";
 import { AttrSelector } from "./components/attrSelector";
+import {ProductInfo} from "../productInfo";
 
 export function HeaderProductPart(props: {
   productDetail: IProductDetail;
@@ -53,6 +54,7 @@ export function HeaderProductPart(props: {
       <div className="price-part-pc">
         <ProductInfo {...productDetail} />
         <ProductIdAndPrice
+          productDetail={productDetail}
           hahaNumberArr={new Array(3).fill({
             userInfo,
             buyProductRemark,
@@ -97,64 +99,3 @@ export function HeaderProductPart(props: {
   );
 }
 
-function ProductInfo(props: any) {
-  const { productDisplayName, buyLevel, buyProductBQV } = props;
-  const [lineOne, lineTwo] = getDescArr(buyProductBQV, productDisplayName);
-  const titleList = [
-    {
-      title: "NEW",
-      content: "Phone has no scratches",
-      color: "#43c0e3"
-    },
-    {
-      title: "BEST",
-      content: "Phone has no scratches",
-      color: "rgba(109, 210, 48, 1)"
-    },
-    {
-      title: "BETTER",
-      content: "Phone has light scratches",
-      color: "#e72349"
-    },
-    {
-      title: "GOOD",
-      content: "Phone has scratches",
-      color: "#efc31b"
-    },
-    {
-      title: "FAIR",
-      content: "Phone has deep scratches",
-      color: "#888888"
-    }
-  ];
-  function type2BgColor(type: string) {
-    const target = titleList.find(item => {
-      return item.title === type;
-    });
-    if (target) {
-      return target.color;
-    } else {
-      return "";
-    }
-  }
-  function renderList() {
-    const dom = titleList.slice(1).map(({ title, content, color }, index) => {
-      return (
-        <div className="condition-list-item" key={index}>
-          <h4 className="condition-buy-level" style={{ background: color }}>
-            {title}
-          </h4>
-          <p>{content}</p>
-        </div>
-      );
-    });
-    return <div className="condition-list">{dom}</div>;
-  }
-  return (
-    <section className="product-info">
-      <div className="info-part">
-        <h2 className="sub-title-size-main">{lineOne ? ` ${lineOne}` : ""}</h2>
-      </div>
-    </section>
-  );
-}

@@ -1,14 +1,14 @@
 import React from "react";
-import {currencyTrans, getLocationUrl} from "../../../../../../common/utils/util";
+import { currencyTrans } from "../../../../../../common/utils/util";
 import "./index.less";
-import Modal from "../../../../../../components/modal";
-import {locationHref} from "../../../../../../common/utils/routerHistory";
-import {showProductCardModal} from "../productCard";
+import { showProductCardModal } from "../productCard";
+import {ProductInfo} from "../../../productInfo";
 
 interface IProps {
   buyProductCode: string;
   skuPrice: string;
   buyPrice: string;
+  productDetail: any;
   hahaNumberArr?: any[];
 }
 
@@ -17,7 +17,8 @@ export const ProductIdAndPrice: React.FC<IProps> = ({
   buyPrice,
   skuPrice,
   children,
-  hahaNumberArr
+  hahaNumberArr,
+  productDetail
 }) => {
   return (
     <div className="productid-and-price">
@@ -25,9 +26,12 @@ export const ProductIdAndPrice: React.FC<IProps> = ({
         <span className="product-id">Product ID {buyProductCode}</span>
         {hahaNumberArr && hahaNumberArr.length ? (
           <span className="similar-number">
-            <span onClick={() => {
-              showProductCardModal(hahaNumberArr)
-            }} className="number">
+            <span
+              onClick={() => {
+                showProductCardModal(hahaNumberArr, productDetail);
+              }}
+              className="number"
+            >
               {hahaNumberArr.length}
             </span>{" "}
             like this
