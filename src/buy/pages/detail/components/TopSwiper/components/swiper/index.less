@@ -8,7 +8,12 @@
     &[data-flex="true"] {
       justify-content: flex-start;
       > * {
-        margin-bottom: 20 * @px;
+        .pc({
+          margin-bottom: 20 * @px;
+        });
+        .mb({
+          margin-right: 5 *@px;
+        });
       }
     }
     .mb({

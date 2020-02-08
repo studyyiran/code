@@ -11,10 +11,14 @@
     }
     .common-detail-page-card {
       border: 1px solid @color-border;
-      padding: 20 *@px;
+      .mb-padding();
+      padding-top: 20 *@px;
+      padding-bottom: 20 *@px;
       border-radius: 3px;
       .mb({
-      })
+        border-left: none;
+        border-right: none;
+      });
     }
     /*
     样式覆盖的

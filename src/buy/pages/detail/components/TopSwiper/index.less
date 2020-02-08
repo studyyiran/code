@@ -1,12 +1,14 @@
 @import (reference) "~buy/common/styles/index.less";
-
+@import (reference) "~buy/pages/detail/common.less";
 @p1: {
   .detail-top-swiper {
     position: relative;
     display: flex;
     justify-content: flex-start;
     align-items: initial;
-    margin-bottom: 50 * @px;
+    .pc({
+      margin-bottom: 50 * @px;
+    });
     .video-react-video {
       object-fit: cover;
     }
@@ -21,8 +23,14 @@
       flex-direction: column-reverse;
     });
     .swiper-part-container {
+      
       .pc({
         flex: 1;
+      });
+      .mb({
+        //.mb-padding();
+        padding-top: 5 *@px;
+        padding-bottom: 5 *@px;
       });
     }
     .mb-zoom {

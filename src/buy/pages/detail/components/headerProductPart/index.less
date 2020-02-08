@@ -29,6 +29,7 @@
   //--
 
   .header-part {
+    .mb-padding();
     font-size: 16 * @f;
     .pc({
       height: 100%;
@@ -47,11 +48,14 @@
       .pc({font-size: 24 * @f;});
     }
 
-    .price-part-pc {
+    .price-part-out-container {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
       flex-direction: column;
+      .mb({
+        margin-top: 15 *@px;
+      })
     }
     //.price-part-mb {
     //  margin-top: 25 * @px;

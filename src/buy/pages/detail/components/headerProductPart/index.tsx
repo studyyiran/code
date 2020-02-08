@@ -51,7 +51,7 @@ export function HeaderProductPart(props: {
         productDetail={productDetail}
         partsInfo={partsInfo}
       />
-      <div className="price-part-pc">
+      <div className="price-part-out-container">
         <ProductInfo {...productDetail} />
         <ProductIdAndPrice
           productDetail={productDetail}
