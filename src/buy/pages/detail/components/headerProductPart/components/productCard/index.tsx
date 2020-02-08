@@ -9,7 +9,8 @@ import { ProductInfo } from "../../../productInfo";
 
 export const showProductCardModal = (arr: any[], productDetail: any) => {
   (Modal as any).confirm({
-    width: "70%",
+    className: "similar-modal",
+    width: "75%",
     closable: true,
     title: null,
     footer: null,
@@ -24,9 +25,41 @@ interface IProps {
 }
 
 const ProductCardModal: React.FC<IProps> = ({ arr, productDetail }) => {
+  const config = [
+    {
+      title: "Carrier",
+      content: "Verizon"
+    },
+    {
+      title: "Condition",
+      content: "Fair"
+    },
+    {
+      title: "Storage",
+      content: "64GB"
+    },
+    {
+      title: "Color",
+      content: "Prism Blue"
+    }
+  ];
   return (
     <div className="product-card-modal">
       <ProductInfo {...productDetail} />
+      <div className="second-line">
+        <ul className="selector-container">
+          {config.map(({ title, content }) => {
+            return (
+              <li className="selector">
+                {title}: {content}
+              </li>
+            );
+          })}
+        </ul>
+        <div>
+          <span>Sort</span>
+        </div>
+      </div>
       {arr.map(info => {
         return <ProductCard info={info} />;
       })}
@@ -49,20 +82,22 @@ const ProductCard = ({ info }: any) => {
   return (
     <div className="product-card">
       <InnerDivImage imgUrl={buyProductImgPc[0]} lazyload={false} />
-      <div>
-        <OnSaleTag tag={buyTags} />
-        <ProductIdAndPrice
-          productDetail={info}
-          buyProductCode={buyProductCode}
-          skuPrice={skuPrice}
-          buyPrice={buyPrice}
-        />
-        <InspectPersonInfo
-          hideImg={true}
-          buyProductRemark={buyProductRemark}
-          userInfo={userInfo}
-        />
-        <button className="common-button long-button">View Phone</button>
+      <div className="content-container">
+        <div>
+          <OnSaleTag tag={buyTags} />
+          <ProductIdAndPrice
+            productDetail={info}
+            buyProductCode={buyProductCode}
+            skuPrice={skuPrice}
+            buyPrice={buyPrice}
+          />
+          <InspectPersonInfo
+            hideImg={true}
+            buyProductRemark={buyProductRemark}
+            userInfo={userInfo}
+          />
+          <button className="common-button long-button">View Phone</button>
+        </div>
       </div>
     </div>
   );
