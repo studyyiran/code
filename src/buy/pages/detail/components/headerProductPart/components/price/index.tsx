@@ -1,6 +1,8 @@
 import React from "react";
-import { currencyTrans } from "../../../../../../common/utils/util";
+import {currencyTrans, getLocationUrl} from "../../../../../../common/utils/util";
 import "./index.less";
+import Modal from "../../../../../../components/modal";
+import {locationHref} from "../../../../../../common/utils/routerHistory";
 
 interface IProps {
   buyProductCode: string;
@@ -22,7 +24,25 @@ export const ProductIdAndPrice: React.FC<IProps> = ({
         <span className="product-id">Product ID {buyProductCode}</span>
         {hahaNumberArr && hahaNumberArr.length ? (
           <span className="similar-number">
-            <span onClick={() => {}} className="number">
+            <span onClick={() => {
+              console.log('get it');
+              (Modal as any).confirm({
+                width: "70%",
+                closable: false,
+                title: null,
+                footer: "single",
+                maskClosable: true,
+                cancelText: "Got it",
+                onCancel: () => {
+                  locationHref(getLocationUrl("home"));
+                },
+                children: (
+                  <div className="content">
+                    123123
+                  </div>
+                )
+              });
+            }} className="number">
               {hahaNumberArr.length}
             </span>{" "}
             like this
