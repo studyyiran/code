@@ -35,6 +35,9 @@ export function TopSwiper(props: any) {
               width: "100%",
               height: "100%"
             },
+            // enlargedImageContainerStyle: {
+            //   width: '1px'
+            // },
             imageStyle: {
               objectFit: "cover"
             },
