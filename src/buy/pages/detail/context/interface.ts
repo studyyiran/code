@@ -1,3 +1,7 @@
+export interface IProductDetailGetWithCode {
+  detail: IProductDetail
+}
+
 export interface IProductDetail {
   brandDisplayName: any; // 品牌名
   buyProductStatus: string; // 状态明

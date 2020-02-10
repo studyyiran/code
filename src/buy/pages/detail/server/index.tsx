@@ -2,6 +2,7 @@ import { productListMock, similiarMock } from "./mock";
 import ajax from "../../../common/utils/ajax";
 import { backgroundCheckList } from "../context/staticData";
 import { constProductType } from "../../../common/constValue";
+import {ICodeDetail} from "../context";
 
 function detailFormat(res: any) {
   if (res) {
@@ -40,6 +41,12 @@ export async function getProductDetail(id: string) {
     id
   });
   return detailFormat(res);
+}
+
+export async function getProductDetailByCode(data: ICodeDetail) {
+  const res: any = await ajax.post(`/buy/product/detail/bycodeormodel`, data);
+  res.detail = detailFormat(res.detail)
+  return res;
 }
 
 export async function getSimiliar(data: any) {

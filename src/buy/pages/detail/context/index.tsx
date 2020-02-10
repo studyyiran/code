@@ -4,7 +4,7 @@ import {
   getProductDetail,
   getSimiliar,
   getPartsBySkuId,
-  getReviewScore
+  getReviewScore, getProductDetailByCode
 } from "../server";
 import {
   callBackWhenPassAllFunc,
@@ -14,7 +14,7 @@ import {
 import { useGetOriginData } from "../../../common/useHook/useGetOriginData";
 import { IContextValue } from "../../../common/type";
 import { locationHref } from "../../../common/utils/routerHistory";
-import { IProductDetail, IReviews } from "./interface";
+import {IProductDetail, IProductDetailGetWithCode, IReviews} from "./interface";
 
 export const ProductDetailContext = createContext({});
 export const StoreDetail = "StoreDetail";
@@ -71,10 +71,16 @@ export interface IProductDetailContext extends IContextActions, IContextValue {
 // @actions
 interface IContextActions {
   getProductDetail: (id: string) => void;
+  getProductDetailByCode: (codeDetail: ICodeDetail) => void;
   getSimiliarPhoneList: (id: string) => any;
   getPartsBySkuId: (id: string) => any;
   resetProductInfo: () => any;
   getReviewScore: () => any;
+}
+
+export interface ICodeDetail {
+  modelDisplayName: string,
+  buyProductCode: string,
 }
 
 // useCreateActions
@@ -119,6 +125,22 @@ function useGetAction(
         } catch (e) {
           console.error(e);
           redirect();
+        }
+      },
+      [dispatch]
+    ),
+    getProductDetailByCode: useCallback(
+      async function(codeDetail) {
+        try {
+          const res: IProductDetailGetWithCode = await getProductDetailByCode(codeDetail);
+          if (res && res.detail) {
+            dispatch({
+              type: storeDetailActionTypes.setProductDetail,
+              value: res.detail
+            });
+          }
+        } catch (e) {
+          console.error(e);
         }
       },
       [dispatch]

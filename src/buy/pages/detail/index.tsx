@@ -32,7 +32,8 @@ export default function ProductDetail(props: any) {
     getProductDetail,
     resetProductInfo,
     getSimiliarPhoneList,
-    getReviewScore
+    getReviewScore,
+    getProductDetailByCode
   } = productDetailContext as IProductDetailContext;
 
   const {
@@ -63,8 +64,11 @@ export default function ProductDetail(props: any) {
   console.log(variant)
   // url -> id -> getDetail
   useEffect(() => {
-    getProductDetail(id);
-    getProductDetail(variant);
+    // getProductDetail(id);
+    getProductDetailByCode({
+      buyProductCode: variant,
+      modelDisplayName: '',
+    });
     // getSimiliarPhoneList(id);
     return () => {
       resetProductInfo();
