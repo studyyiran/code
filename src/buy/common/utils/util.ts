@@ -144,6 +144,10 @@ export function setSession(key: string, obj: any) {
   }
 }
 
+export function getBuyDetailPath(modalName: string, buyProductCode: string) {
+  return `/testbuy/${modalName}?variant=${buyProductCode}`;
+}
+
 export default function getSellPath() {
   return "/sell-phone";
 }

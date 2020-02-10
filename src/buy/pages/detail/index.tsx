@@ -3,7 +3,7 @@ import "./index.less";
 import { Affix, Carousel } from "antd";
 
 import { IProductDetailContext, ProductDetailContext } from "./context";
-import { safeEqual } from "../../common/utils/util";
+import { getUrlAllParams, safeEqual } from "../../common/utils/util";
 import { RenderByCondition } from "../../components/RenderByCondition";
 import PhoneProductCard from "../productList/components/phoneProductCard";
 import { detailSsrRule } from "./ssr";
@@ -57,8 +57,20 @@ export default function ProductDetail(props: any) {
     buyProductStatus
   } = productDetail;
 
-  const id = useWhenUrlChange("productId");
-  const [containerWidth, setContainerWidth] = useState(0)
+  const id = useWhenUrlChange("modalName");
+  const { variant } = getUrlAllParams();
+  const [containerWidth, setContainerWidth] = useState(0);
+  console.log(variant)
+  // url -> id -> getDetail
+  useEffect(() => {
+    getProductDetail(id);
+    getProductDetail(variant);
+    // getSimiliarPhoneList(id);
+    return () => {
+      resetProductInfo();
+    };
+  }, [getProductDetail, getSimiliarPhoneList, id, resetProductInfo]);
+
   // 设置title
   useEffect(() => {
     if (productDetail && productDetail.skuId) {
@@ -73,15 +85,6 @@ export default function ProductDetail(props: any) {
         .replace(")", "")} For Sale | UpTradeit.com`;
     }
   }, [productDetail]);
-
-  // url -> id -> getDetail
-  useEffect(() => {
-    getProductDetail(id);
-    getSimiliarPhoneList(id);
-    return () => {
-      resetProductInfo();
-    };
-  }, [getProductDetail, getSimiliarPhoneList, id, resetProductInfo]);
 
   // -> review
   useEffect(() => {
@@ -223,16 +226,19 @@ export default function ProductDetail(props: any) {
       />
     );
   }
-  
+
   if (buyProductId) {
     return (
       <div className="product-detail-page">
         <div className="top-part">
-          <div className="product-detail" ref={(element :any) => {
-            if (element && element.clientWidth) {
-              setContainerWidth(element.clientWidth)
-            }
-          }}>
+          <div
+            className="product-detail"
+            ref={(element: any) => {
+              if (element && element.clientWidth) {
+                setContainerWidth(element.clientWidth);
+              }
+            }}
+          >
             <TopSwiper
               containerWidth={containerWidth}
               buyProductVideo={buyProductVideo}
