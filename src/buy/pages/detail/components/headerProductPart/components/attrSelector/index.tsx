@@ -43,7 +43,7 @@ export const AttrSelector: React.FC<IProps> = ({ productDetailByCode }) => {
         })
     ];
   }
-  function renderSelect(tags: string, selectItem: IChoiceMin) {
+  function renderSelect(tags: string, selectItem: IChoiceMin, fatherName: string) {
     // 区分种类
     const { choose, disabled, name, conditionPrice, colorCode } = selectItem;
     if (tags === "ISCOLOR") {
@@ -63,7 +63,7 @@ export const AttrSelector: React.FC<IProps> = ({ productDetailByCode }) => {
         <div
           className={`select button-select ${
             choose ? "button-select-selected" : ""
-          } ${disabled && !choose ? "disabled" : ""}`}
+          } ${disabled && !choose ? "disabled" : ""} ${fatherName === 'Condition' ? "is-condition" : ""}`}
         >
           {name}
           {conditionPrice ? (
@@ -75,9 +75,9 @@ export const AttrSelector: React.FC<IProps> = ({ productDetailByCode }) => {
   }
   console.log(after);
   const config = after.map(item => {
-    const { name, values, tags } = item;
+    const { name: fatherName, values, tags } = item;
     return {
-      title: name,
+      title: fatherName,
       currentSelectName: (values.find(item => {
         return item.choose === true;
       }) as any).name,
@@ -87,7 +87,7 @@ export const AttrSelector: React.FC<IProps> = ({ productDetailByCode }) => {
           id,
           name,
           disabled,
-          children: renderSelect(tags, selectItem)
+          children: renderSelect(tags, selectItem, fatherName)
         };
       })
     };
