@@ -74,6 +74,16 @@ export default function ProductDetail(props: any) {
     }
   }, [buyProductCode, getSimiliarByCode]);
 
+  const pId =
+    productDetailByCode &&
+    productDetailByCode.detail &&
+    productDetailByCode.detail.buyProductId;
+  useEffect(() => {
+    if (!isNaN(Number(pId))) {
+      getSimiliarPhoneList(pId);
+    }
+  }, [getSimiliarPhoneList, pId]);
+
   // url -> id -> getDetail
   useEffect(() => {
     // getProductDetail(id);
@@ -98,7 +108,6 @@ export default function ProductDetail(props: any) {
     } else {
       return () => {};
     }
-    // getSimiliarPhoneList(id);
   }, [
     getProductDetailByCode,
     productDetail,
