@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./index.less";
 import { safeEqual } from "../../../../../../common/utils/util";
 import Svg from "../../../../../../components/svg";
@@ -7,6 +7,10 @@ import {
   IChoiceMin,
   IProductDetailGetWithCode
 } from "../../../../context/interface";
+import {
+  IProductDetailContext,
+  ProductDetailContext
+} from "../../../../context";
 
 interface IProps {
   productDetailByCode: IProductDetailGetWithCode;
@@ -50,7 +54,12 @@ export const AttrSelector: React.FC<IProps> = ({ productDetailByCode }) => {
           </div>
         );
       } else {
-        return <div className="circle-select" style={{backgroundColor: colorCode}}></div>;
+        return (
+          <div
+            className="circle-select"
+            style={{ backgroundColor: colorCode }}
+          ></div>
+        );
       }
     } else {
       return (
@@ -71,8 +80,9 @@ export const AttrSelector: React.FC<IProps> = ({ productDetailByCode }) => {
     return {
       title: name,
       arr: values.map(selectItem => {
-        const { name, choose } = selectItem;
+        const { name, choose, id } = selectItem;
         return {
+          id,
           name,
           children: renderSelect(tags, selectItem)
         };
@@ -93,6 +103,7 @@ interface IProps2 {
   defaultSelect?: number;
   title: string;
   arr: {
+    id: string
     name: string;
     children: any;
   }[];
@@ -103,24 +114,48 @@ export const RenderSelectList: React.FC<IProps2> = ({
   title,
   defaultSelect
 }) => {
-  const [currentSelect, setCurrentSelect] = useState(0);
+  const productDetailContext = useContext(ProductDetailContext);
+  const {
+    productDetailContextValue,
+    getProductDetailByIdAndCondition
+  } = productDetailContext as IProductDetailContext;
+  const { productDetail } = productDetailContextValue;
+  const { buyProductCode } = productDetail;
+  const [currentSelect, setCurrentSelect] = useState("");
 
   useEffect(() => {
-    if (defaultSelect) {
-      setCurrentSelect(defaultSelect);
+    if (currentSelect) {
+      if (!isNaN(Number(currentSelect))) {
+        getProductDetailByIdAndCondition({
+          buyProductCode: buyProductCode,
+          skuBasicPropertyValueId: currentSelect
+        });
+      } else {
+        getProductDetailByIdAndCondition({
+          buyProductCode: buyProductCode,
+          condition: currentSelect,
+        });
+      }
     }
-  }, [defaultSelect]);
+
+  }, [currentSelect]);
+
+  // useEffect(() => {
+  //   if (defaultSelect) {
+  //     setCurrentSelect(defaultSelect);
+  //   }
+  // }, [defaultSelect]);
   return (
     <div className="select-list">
       <h3 className="title">
-        {title} : <span className="name"> {arr[currentSelect].name}</span>
+        {title} : <span className="name">123</span>
       </h3>
       <ul className="list-container">
-        {arr.map(({ children }, index) => {
+        {arr.map(({ children, id }, index) => {
           return (
             <li
               onClick={() => {
-                setCurrentSelect(index);
+                setCurrentSelect(id);
               }}
             >
               {children}

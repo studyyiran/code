@@ -2,7 +2,7 @@ import { productListMock, similiarMock } from "./mock";
 import ajax from "../../../common/utils/ajax";
 import { backgroundCheckList } from "../context/staticData";
 import { constProductType } from "../../../common/constValue";
-import {ICodeDetail} from "../context";
+import {ICodeAndId, ICodeDetail} from "../context";
 
 function detailFormat(res: any) {
   if (res) {
@@ -48,6 +48,13 @@ export async function getProductDetailByCode(data: ICodeDetail) {
   res.detail = detailFormat(res.detail)
   return res;
 }
+
+export async function getProductDetailByIdAndCondition(data: ICodeAndId) {
+  const res: any = await ajax.post(`/buy/product/detail/byskuorcondition`, data);
+  res.detail = detailFormat(res.detail)
+  return res;
+}
+
 
 export async function getSimiliar(data: any) {
   // 当get 被catch的时候 await后续的流程都会终止掉.

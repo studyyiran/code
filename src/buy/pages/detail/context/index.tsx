@@ -4,7 +4,9 @@ import {
   getProductDetail,
   getSimiliar,
   getPartsBySkuId,
-  getReviewScore, getProductDetailByCode
+  getReviewScore,
+  getProductDetailByCode,
+  getProductDetailByIdAndCondition
 } from "../server";
 import {
   callBackWhenPassAllFunc,
@@ -14,7 +16,11 @@ import {
 import { useGetOriginData } from "../../../common/useHook/useGetOriginData";
 import { IContextValue } from "../../../common/type";
 import { locationHref } from "../../../common/utils/routerHistory";
-import {IProductDetail, IProductDetailGetWithCode, IReviews} from "./interface";
+import {
+  IProductDetail,
+  IProductDetailGetWithCode,
+  IReviews
+} from "./interface";
 
 export const ProductDetailContext = createContext({});
 export const StoreDetail = "StoreDetail";
@@ -74,6 +80,7 @@ export interface IProductDetailContext extends IContextActions, IContextValue {
 interface IContextActions {
   getProductDetail: (id: string) => void;
   getProductDetailByCode: (codeDetail: ICodeDetail) => void;
+  getProductDetailByIdAndCondition: (codeDetail: ICodeAndId) => void;
   getSimiliarPhoneList: (id: string) => any;
   getPartsBySkuId: (id: string) => any;
   resetProductInfo: () => any;
@@ -81,8 +88,14 @@ interface IContextActions {
 }
 
 export interface ICodeDetail {
-  modelDisplayName: string,
-  buyProductCode: string,
+  modelDisplayName: string;
+  buyProductCode: string;
+}
+
+export interface ICodeAndId {
+  buyProductCode: string;
+  skuBasicPropertyValueId?: string;
+  condition?: string;
 }
 
 // useCreateActions
@@ -134,7 +147,33 @@ function useGetAction(
     getProductDetailByCode: useCallback(
       async function(codeDetail) {
         try {
-          const res: IProductDetailGetWithCode = await getProductDetailByCode(codeDetail);
+          const res: IProductDetailGetWithCode = await getProductDetailByCode(
+            codeDetail
+          );
+          if (res) {
+            dispatch({
+              type: storeDetailActionTypes.setProductDetailByCode,
+              value: res
+            });
+            if (res.detail) {
+              dispatch({
+                type: storeDetailActionTypes.setProductDetail,
+                value: res.detail
+              });
+            }
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      },
+      [dispatch]
+    ),
+    getProductDetailByIdAndCondition: useCallback(
+      async function(codeDetail) {
+        try {
+          const res: IProductDetailGetWithCode = await getProductDetailByIdAndCondition(
+            codeDetail
+          );
           if (res) {
             dispatch({
               type: storeDetailActionTypes.setProductDetailByCode,
