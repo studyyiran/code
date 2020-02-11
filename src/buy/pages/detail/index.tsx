@@ -65,7 +65,8 @@ export default function ProductDetail(props: any) {
   const id = useWhenUrlChange("modalName");
   const { variant } = getUrlAllParams();
   const [containerWidth, setContainerWidth] = useState(0);
-
+  console.log("similiarPhoneListByCode")
+  console.log(similiarPhoneListByCode)
   // 用code拉取xxx
   useEffect(() => {
     if (buyProductCode) {
@@ -84,14 +85,7 @@ export default function ProductDetail(props: any) {
     return () => {
       resetProductInfo();
     };
-  }, [
-    getProductDetail,
-    getProductDetailByCode,
-    getSimiliarPhoneList,
-    id,
-    resetProductInfo,
-    variant
-  ]);
+  }, [getProductDetailByCode, resetProductInfo, variant]);
 
   // 设置title
   useEffect(() => {

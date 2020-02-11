@@ -57,7 +57,7 @@ export async function getProductDetailByIdAndCondition(data: ICodeAndId) {
 
 export async function getSimiliarByCode(buyProductCode: string) {
   const res: any = await ajax.get(`/buy/product/detail/similar/bycode?buyProductCode=${buyProductCode}`);
-  return res;
+  return res.map((item: any) => detailFormat(item));
 }
 
 

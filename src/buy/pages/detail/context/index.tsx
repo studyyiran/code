@@ -208,7 +208,7 @@ function useGetAction(
       async function(productId) {
         const res: any = await getSimiliarByCode(productId);
         dispatch({
-          type: storeDetailActionTypes.setSimiliarPhoneList,
+          type: storeDetailActionTypes.setSimiliarPhoneByCode,
           value: res
         });
       },
