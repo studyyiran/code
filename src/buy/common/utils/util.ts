@@ -145,7 +145,9 @@ export function setSession(key: string, obj: any) {
 }
 
 export function getBuyDetailPath(modalName: string, buyProductCode: string) {
-  return `/testbuy/${modalName}?variant=${buyProductCode}`;
+  return `/testbuy/${modalName
+    .replace(/\s+/g, "-")
+    .toLowerCase()}?variant=${buyProductCode}`;
 }
 
 export default function getSellPath() {

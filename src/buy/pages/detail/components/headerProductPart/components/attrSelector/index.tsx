@@ -64,7 +64,9 @@ export const AttrSelector: React.FC<IProps> = ({ productDetailByCode }) => {
     } else {
       return (
         <div
-          className={`button-select ${choose ? "button-select-selected" : ""}`}
+          className={`button-select ${choose ? "button-select-selected" : ""} ${
+            disabled && !choose ? "disabled" : ""
+          }`}
         >
           {name}
           {conditionPrice ? (
@@ -79,6 +81,9 @@ export const AttrSelector: React.FC<IProps> = ({ productDetailByCode }) => {
     const { name, values, tags } = item;
     return {
       title: name,
+      currentSelectName: (values.find(item => {
+        return item.choose === true;
+      }) as any).name,
       arr: values.map(selectItem => {
         const { name, choose, id } = selectItem;
         return {
@@ -92,18 +97,18 @@ export const AttrSelector: React.FC<IProps> = ({ productDetailByCode }) => {
   console.log(config);
   return (
     <div className="attr-selector">
-      {config.map(({ title, arr }) => {
-        return <RenderSelectList title={title} arr={arr} />;
+      {config.map(({ title, arr, currentSelectName }) => {
+        return <RenderSelectList title={title} arr={arr} currentSelectName={currentSelectName} />;
       })}
     </div>
   );
 };
 
 interface IProps2 {
-  defaultSelect?: number;
+  currentSelectName: string;
   title: string;
   arr: {
-    id: string
+    id: string;
     name: string;
     children: any;
   }[];
@@ -112,7 +117,7 @@ interface IProps2 {
 export const RenderSelectList: React.FC<IProps2> = ({
   arr,
   title,
-  defaultSelect
+  currentSelectName
 }) => {
   const productDetailContext = useContext(ProductDetailContext);
   const {
@@ -133,11 +138,10 @@ export const RenderSelectList: React.FC<IProps2> = ({
       } else {
         getProductDetailByIdAndCondition({
           buyProductCode: buyProductCode,
-          condition: currentSelect,
+          condition: currentSelect
         });
       }
     }
-
   }, [currentSelect]);
 
   // useEffect(() => {
@@ -148,7 +152,7 @@ export const RenderSelectList: React.FC<IProps2> = ({
   return (
     <div className="select-list">
       <h3 className="title">
-        {title} : <span className="name">123</span>
+        {title} : <span className="name">{currentSelectName}</span>
       </h3>
       <ul className="list-container">
         {arr.map(({ children, id }, index) => {

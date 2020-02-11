@@ -10,6 +10,7 @@ import {
 } from "../server";
 import {
   callBackWhenPassAllFunc,
+  getBuyDetailPath,
   getProductListPath,
   safeEqual
 } from "buy/common/utils/util";
@@ -184,6 +185,14 @@ function useGetAction(
                 type: storeDetailActionTypes.setProductDetail,
                 value: res.detail
               });
+              if (res.detail.buyProductCode) {
+                let url = getBuyDetailPath(
+                  res.detail.productDisplayName,
+                  res.detail.buyProductCode
+                );
+                // 这边插入一个难看的命令式 做伪的url变化
+                locationHref(url);
+              }
             }
           }
         } catch (e) {
