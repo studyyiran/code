@@ -194,7 +194,7 @@ function useGetAction(
                   res.detail.buyProductCode
                 );
                 // 这边插入一个难看的命令式 做伪的url变化
-                locationHref(url, "replace");
+                locationHref(url);
               }
             }
           }

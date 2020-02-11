@@ -78,7 +78,12 @@ export default function ProductDetail(props: any) {
   useEffect(() => {
     // getProductDetail(id);
     // 要规避
-    if (!productDetail || !productDetail.buyProductCode) {
+    if (
+      (!productDetail || !productDetail.buyProductCode) &&
+      (!productDetailByCode ||
+        !productDetailByCode.detail ||
+        !productDetailByCode.detail.buyProductCode)
+    ) {
       getProductDetailByCode({
         buyProductCode: variant,
         modelDisplayName: ""
@@ -94,7 +99,13 @@ export default function ProductDetail(props: any) {
       return () => {};
     }
     // getSimiliarPhoneList(id);
-  }, [getProductDetailByCode, productDetail, resetProductInfo, variant]);
+  }, [
+    getProductDetailByCode,
+    productDetail,
+    productDetailByCode,
+    resetProductInfo,
+    variant
+  ]);
 
   // 设置title
   useEffect(() => {
