@@ -1,14 +1,7 @@
-import { IProductDetail } from "../../context/interface";
+import {IProductDetail, IProductDetailGetWithCode} from "../../context/interface";
 import { CartPop } from "../cartPop";
-import { RenderByCondition } from "../../../../components/RenderByCondition";
-import { RenderByIsFive } from "../../../../components/RenderByIsFive";
-import { currencyTrans, isServer } from "../../../../common/utils/util";
-import { FivePrice } from "../fivePrice";
-import { FiveCalcPrice } from "../fiveCalcPrice";
-import { FiveCountDown } from "../fiveCountdown";
 import { dataReport } from "../../../../common/dataReport";
 import React, { useEffect, useState } from "react";
-import { getDescArr } from "../../util";
 import { StartBuyButton } from "../startBuyButton";
 import { TopIconList } from "../topIconList";
 import "./index.less";
@@ -20,6 +13,7 @@ import {ProductInfo} from "../productInfo";
 
 export function HeaderProductPart(props: {
   productDetail: IProductDetail;
+  productDetailByCode: IProductDetailGetWithCode;
   partsInfo: any;
   showModal: any;
   setShowModal: any;
@@ -32,7 +26,8 @@ export function HeaderProductPart(props: {
     showModal,
     setShowModal,
     buyProductRemark,
-    userInfo
+    userInfo,
+    productDetailByCode
   } = props;
   const {
     productDisplayName,
@@ -67,7 +62,7 @@ export function HeaderProductPart(props: {
           <OnSaleTag tag={buyTags} />
         </ProductIdAndPrice>
         <TopIconList />
-        <AttrSelector />
+        <AttrSelector productDetailByCode={productDetailByCode} />
         <InspectPersonInfo
           buyProductRemark={buyProductRemark}
           userInfo={userInfo}

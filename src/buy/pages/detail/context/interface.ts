@@ -1,5 +1,25 @@
+export interface IChoiceMin {
+  choose: boolean,
+  id: string;
+  name: string;
+  colorCode: string
+  disabled: boolean;
+  conditionPrice: string
+}
+
+export interface IChoice {
+  name: string;
+  id: number;
+  tags: string;
+  sort: number;
+  values: IChoiceMin[];
+}
+
 export interface IProductDetailGetWithCode {
-  detail: IProductDetail
+  detail: IProductDetail;
+  condition: IChoice;
+  attributes: IChoice[];
+  similarCount: number;
 }
 
 export interface IProductDetail {

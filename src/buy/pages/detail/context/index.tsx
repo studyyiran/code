@@ -22,6 +22,7 @@ export const StoreDetail = "StoreDetail";
 // state
 interface IContextState {
   productDetail: IProductDetail;
+  productDetailByCode: IProductDetailGetWithCode;
   similiarPhoneList: any[];
   reviewListInfo: IReviews;
   partsInfo: IProductDetail[];
@@ -33,7 +34,8 @@ export function ProductDetailContextProvider(props: any) {
     productDetail: {} as any,
     similiarPhoneList: [],
     reviewListInfo: {} as any,
-    partsInfo: []
+    partsInfo: [],
+    productDetailByCode: {} as any
   };
   const [state, dispatch, useClientRepair] = useGetOriginData(
     reducer,
@@ -133,11 +135,17 @@ function useGetAction(
       async function(codeDetail) {
         try {
           const res: IProductDetailGetWithCode = await getProductDetailByCode(codeDetail);
-          if (res && res.detail) {
+          if (res) {
             dispatch({
-              type: storeDetailActionTypes.setProductDetail,
-              value: res.detail
+              type: storeDetailActionTypes.setProductDetailByCode,
+              value: res
             });
+            if (res.detail) {
+              dispatch({
+                type: storeDetailActionTypes.setProductDetail,
+                value: res.detail
+              });
+            }
           }
         } catch (e) {
           console.error(e);
@@ -176,6 +184,7 @@ function useGetAction(
 // action types
 export const storeDetailActionTypes = {
   setProductDetail: "setProductDetail",
+  setProductDetailByCode: "setProductDetailByCode",
   setSimiliarPhoneList: "setSimiliarPhoneList",
   setPartsInfo: "setPartsInfo",
   setReviewListInfo: "setReviewListInfo"
@@ -211,6 +220,13 @@ function reducer(state: IContextState, action: IReducerAction) {
       newState = {
         ...newState,
         productDetail: value
+      };
+      break;
+    }
+    case storeDetailActionTypes.setProductDetailByCode: {
+      newState = {
+        ...newState,
+        productDetailByCode: value
       };
       break;
     }

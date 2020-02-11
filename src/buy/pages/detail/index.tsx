@@ -40,7 +40,8 @@ export default function ProductDetail(props: any) {
     productDetail,
     similiarPhoneList,
     partsInfo,
-    reviewListInfo
+    reviewListInfo,
+    productDetailByCode,
   } = productDetailContextValue;
 
   // 执行ssr
@@ -61,7 +62,9 @@ export default function ProductDetail(props: any) {
   const id = useWhenUrlChange("modalName");
   const { variant } = getUrlAllParams();
   const [containerWidth, setContainerWidth] = useState(0);
+  console.log('enter')
   console.log(variant)
+  console.log(productDetailByCode)
   // url -> id -> getDetail
   useEffect(() => {
     // getProductDetail(id);
@@ -221,6 +224,7 @@ export default function ProductDetail(props: any) {
   function renderHeaderProductPart() {
     return (
       <HeaderProductPart
+        productDetailByCode={productDetailByCode}
         showModal={showModal}
         setShowModal={setShowModal}
         productDetail={productDetail}

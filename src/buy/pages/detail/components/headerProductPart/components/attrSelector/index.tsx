@@ -2,90 +2,83 @@ import React, { useEffect, useState } from "react";
 import "./index.less";
 import { safeEqual } from "../../../../../../common/utils/util";
 import Svg from "../../../../../../components/svg";
+import {
+  IChoice,
+  IChoiceMin,
+  IProductDetailGetWithCode
+} from "../../../../context/interface";
 
-interface IProps {}
+interface IProps {
+  productDetailByCode: IProductDetailGetWithCode;
+}
 
-export const AttrSelector: React.FC<IProps> = props => {
-  const config = [
-    {
-      title: "Carrier",
-      arr: new Array(6).fill(1).map((item, index) => {
-        return {
-          name: "carrier" + index,
-          renderSelect: () => {
-            return (
-              <div className="button-select button-select-selected">
-                carrier{index}
-              </div>
-            );
-          },
-          renderNotSelect: () => {
-            return <div className="button-select">carrier{index}</div>;
-          }
-        };
+export const AttrSelector: React.FC<IProps> = ({ productDetailByCode }) => {
+  // 首先要排序.
+  // 1 先找出quick
+  const findQuickIndex = productDetailByCode.attributes.findIndex(item => {
+    return item.tags === "QUICKFILTERBUY";
+  });
+  let after = [];
+  if (findQuickIndex === -1) {
+    after = [
+      productDetailByCode.condition,
+      ...productDetailByCode.attributes.sort((a, b) => {
+        return a.sort - b.sort;
       })
-    },
-    {
-      title: "Condition5",
-      arr: new Array(4).fill(1).map((item, index) => {
-        return {
-          name: "Condition" + index,
-          renderSelect: () => {
-            return (
-              <div className="button-select button-select-selected">
-                <span>Condition{index}</span>
-                <span className="green">From $1{index}3</span>
-              </div>
-            );
-          },
-          renderNotSelect: () => {
-            return (
-              <div className="button-select">
-                <span>Condition{index}</span>
-                <span className="green">From $1{index}3</span>
-              </div>
-            );
-          }
-        };
-      })
-    },
-    {
-      title: "Storage",
-      arr: new Array(4).fill(1).map((item, index) => {
-        return {
-          name: "storage" + index,
-          renderSelect: () => {
-            return (
-              <div className="button-select button-select-selected">
-                storage{index}
-              </div>
-            );
-          },
-          renderNotSelect: () => {
-            return <div className="button-select">storage{index}</div>;
-          }
-        };
-      })
-    },
-    {
-      title: "Color",
-      arr: new Array(5).fill(1).map((item, index) => {
-        return {
-          name: "Color" + index,
-          renderSelect: (info: any) => {
-            return (
-              <div className="circle-select circle-select-selected">
-                <Svg />
-              </div>
-            );
-          },
-          renderNotSelect: () => {
-            return <div className="circle-select"></div>;
-          }
-        };
-      })
+    ];
+  } else {
+    after = [
+      productDetailByCode.attributes[findQuickIndex],
+      productDetailByCode.condition,
+      ...productDetailByCode.attributes
+        .filter((item, index) => {
+          return item.tags !== "QUICKFILTERBUY";
+        })
+        .sort((a, b) => {
+          return a.sort - b.sort;
+        })
+    ];
+  }
+  function renderSelect(tags: string, selectItem: IChoiceMin) {
+    // 区分种类
+    const { choose, disabled, name, conditionPrice, colorCode } = selectItem;
+    if (tags === "ISCOLOR") {
+      if (choose) {
+        return (
+          <div className="circle-select circle-select-selected">
+            <Svg />
+          </div>
+        );
+      } else {
+        return <div className="circle-select" style={{backgroundColor: colorCode}}></div>;
+      }
+    } else {
+      return (
+        <div
+          className={`button-select ${choose ? "button-select-selected" : ""}`}
+        >
+          {name}
+          {conditionPrice ? (
+            <span className="green">From ${conditionPrice}</span>
+          ) : null}
+        </div>
+      );
     }
-  ];
+  }
+  console.log(after);
+  const config = after.map(item => {
+    const { name, values, tags } = item;
+    return {
+      title: name,
+      arr: values.map(selectItem => {
+        const { name, choose } = selectItem;
+        return {
+          name,
+          children: renderSelect(tags, selectItem)
+        };
+      })
+    };
+  });
   console.log(config);
   return (
     <div className="attr-selector">
@@ -101,8 +94,7 @@ interface IProps2 {
   title: string;
   arr: {
     name: string;
-    renderSelect: any;
-    renderNotSelect: any;
+    children: any;
   }[];
 }
 
@@ -124,16 +116,14 @@ export const RenderSelectList: React.FC<IProps2> = ({
         {title} : <span className="name"> {arr[currentSelect].name}</span>
       </h3>
       <ul className="list-container">
-        {arr.map(({ renderSelect, renderNotSelect }, index) => {
+        {arr.map(({ children }, index) => {
           return (
             <li
               onClick={() => {
                 setCurrentSelect(index);
               }}
             >
-              {safeEqual(index, currentSelect)
-                ? renderSelect()
-                : renderNotSelect()}
+              {children}
             </li>
           );
         })}
