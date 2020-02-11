@@ -43,16 +43,20 @@ export const AttrSelector: React.FC<IProps> = ({ productDetailByCode }) => {
         })
     ];
   }
-  function renderSelect(tags: string, selectItem: IChoiceMin, fatherName: string) {
+  function renderSelect(
+    tags: string,
+    selectItem: IChoiceMin,
+    fatherName: string
+  ) {
     // 区分种类
     const { choose, disabled, name, conditionPrice, colorCode } = selectItem;
     if (tags === "ISCOLOR") {
-      // 
+      //
       return (
         <div
-          className={`select circle-select ${choose ? "circle-select-selected" : ""} ${
-            disabled && !choose ? "disabled" : ""
-          }`}
+          className={`select circle-select ${
+            choose ? "circle-select-selected" : ""
+          } ${disabled && !choose ? "disabled" : ""}`}
           style={{ backgroundColor: colorCode }}
         >
           {choose ? <Svg /> : null}
@@ -63,7 +67,9 @@ export const AttrSelector: React.FC<IProps> = ({ productDetailByCode }) => {
         <div
           className={`select button-select ${
             choose ? "button-select-selected" : ""
-          } ${disabled && !choose ? "disabled" : ""} ${fatherName === 'Condition' ? "is-condition" : ""}`}
+          } ${disabled && !choose ? "disabled" : ""} ${
+            fatherName === "Condition" ? "is-condition" : ""
+          }`}
         >
           {name}
           {conditionPrice ? (
@@ -127,7 +133,8 @@ export const RenderSelectList: React.FC<IProps2> = ({
   const productDetailContext = useContext(ProductDetailContext);
   const {
     productDetailContextValue,
-    getProductDetailByIdAndCondition
+    getProductDetailByIdAndCondition,
+    resetProductInfo
   } = productDetailContext as IProductDetailContext;
   const { productDetail } = productDetailContextValue;
   const { buyProductCode } = productDetail;
@@ -135,21 +142,20 @@ export const RenderSelectList: React.FC<IProps2> = ({
 
   useEffect(() => {
     if (currentSelect) {
+      resetProductInfo();
       if (!isNaN(Number(currentSelect))) {
-        console.log('1')
         getProductDetailByIdAndCondition({
           buyProductCode: buyProductCode,
           skuBasicPropertyValueId: currentSelect
         });
       } else {
-        console.log('2')
         getProductDetailByIdAndCondition({
           buyProductCode: buyProductCode,
           condition: currentSelect
         });
       }
     }
-  }, [currentSelect]);
+  }, [buyProductCode, currentSelect, getProductDetailByIdAndCondition]);
 
   // useEffect(() => {
   //   if (defaultSelect) {
@@ -167,7 +173,6 @@ export const RenderSelectList: React.FC<IProps2> = ({
             <li
               onClick={() => {
                 if (!disabled) {
-                  console.log(id)
                   setCurrentSelect(id);
                 }
               }}

@@ -3,7 +3,7 @@ import "./index.less";
 import { Affix, Carousel } from "antd";
 
 import { IProductDetailContext, ProductDetailContext } from "./context";
-import { getUrlAllParams, safeEqual } from "../../common/utils/util";
+import { getUrlAllParams, isServer, safeEqual } from "../../common/utils/util";
 import { RenderByCondition } from "../../components/RenderByCondition";
 import PhoneProductCard from "../productList/components/phoneProductCard";
 import { detailSsrRule } from "./ssr";
@@ -65,8 +65,8 @@ export default function ProductDetail(props: any) {
   const id = useWhenUrlChange("modalName");
   const { variant } = getUrlAllParams();
   const [containerWidth, setContainerWidth] = useState(0);
-  console.log("similiarPhoneListByCode")
-  console.log(similiarPhoneListByCode)
+  console.log("similiarPhoneListByCode");
+  console.log(similiarPhoneListByCode);
   // 用code拉取xxx
   useEffect(() => {
     if (buyProductCode) {
@@ -77,15 +77,24 @@ export default function ProductDetail(props: any) {
   // url -> id -> getDetail
   useEffect(() => {
     // getProductDetail(id);
-    getProductDetailByCode({
-      buyProductCode: variant,
-      modelDisplayName: ""
-    });
+    // 要规避
+    if (!productDetail || !productDetail.buyProductCode) {
+      getProductDetailByCode({
+        buyProductCode: variant,
+        modelDisplayName: ""
+      });
+      return () => {
+        if (!isServer()) {
+          if (window.location.href.indexOf("testbuy") === -1) {
+            resetProductInfo();
+          }
+        }
+      };
+    } else {
+      return () => {};
+    }
     // getSimiliarPhoneList(id);
-    return () => {
-      resetProductInfo();
-    };
-  }, [getProductDetailByCode, resetProductInfo, variant]);
+  }, [getProductDetailByCode, productDetail, resetProductInfo, variant]);
 
   // 设置title
   useEffect(() => {
