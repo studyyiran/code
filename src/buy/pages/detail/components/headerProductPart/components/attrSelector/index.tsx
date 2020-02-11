@@ -47,30 +47,27 @@ export const AttrSelector: React.FC<IProps> = ({ productDetailByCode }) => {
     // 区分种类
     const { choose, disabled, name, conditionPrice, colorCode } = selectItem;
     if (tags === "ISCOLOR") {
-      if (choose) {
-        return (
-          <div className="circle-select circle-select-selected">
-            <Svg />
-          </div>
-        );
-      } else {
-        return (
-          <div
-            className="circle-select"
-            style={{ backgroundColor: colorCode }}
-          ></div>
-        );
-      }
+      // 
+      return (
+        <div
+          className={`select circle-select ${choose ? "circle-select-selected" : ""} ${
+            disabled && !choose ? "disabled" : ""
+          }`}
+          style={{ backgroundColor: colorCode }}
+        >
+          {choose ? <Svg /> : null}
+        </div>
+      );
     } else {
       return (
         <div
-          className={`button-select ${choose ? "button-select-selected" : ""} ${
-            disabled && !choose ? "disabled" : ""
-          }`}
+          className={`select button-select ${
+            choose ? "button-select-selected" : ""
+          } ${disabled && !choose ? "disabled" : ""}`}
         >
           {name}
           {conditionPrice ? (
-            <span className="green">From ${conditionPrice}</span>
+            <span className="green">${conditionPrice}</span>
           ) : null}
         </div>
       );
@@ -85,10 +82,11 @@ export const AttrSelector: React.FC<IProps> = ({ productDetailByCode }) => {
         return item.choose === true;
       }) as any).name,
       arr: values.map(selectItem => {
-        const { name, choose, id } = selectItem;
+        const { name, choose, id, disabled } = selectItem;
         return {
           id,
           name,
+          disabled,
           children: renderSelect(tags, selectItem)
         };
       })
@@ -98,7 +96,13 @@ export const AttrSelector: React.FC<IProps> = ({ productDetailByCode }) => {
   return (
     <div className="attr-selector">
       {config.map(({ title, arr, currentSelectName }) => {
-        return <RenderSelectList title={title} arr={arr} currentSelectName={currentSelectName} />;
+        return (
+          <RenderSelectList
+            title={title}
+            arr={arr}
+            currentSelectName={currentSelectName}
+          />
+        );
       })}
     </div>
   );
@@ -110,6 +114,7 @@ interface IProps2 {
   arr: {
     id: string;
     name: string;
+    disabled: boolean;
     children: any;
   }[];
 }
@@ -131,11 +136,13 @@ export const RenderSelectList: React.FC<IProps2> = ({
   useEffect(() => {
     if (currentSelect) {
       if (!isNaN(Number(currentSelect))) {
+        console.log('1')
         getProductDetailByIdAndCondition({
           buyProductCode: buyProductCode,
           skuBasicPropertyValueId: currentSelect
         });
       } else {
+        console.log('2')
         getProductDetailByIdAndCondition({
           buyProductCode: buyProductCode,
           condition: currentSelect
@@ -155,11 +162,14 @@ export const RenderSelectList: React.FC<IProps2> = ({
         {title} : <span className="name">{currentSelectName}</span>
       </h3>
       <ul className="list-container">
-        {arr.map(({ children, id }, index) => {
+        {arr.map(({ children, id, disabled }, index) => {
           return (
             <li
               onClick={() => {
-                setCurrentSelect(id);
+                if (!disabled) {
+                  console.log(id)
+                  setCurrentSelect(id);
+                }
               }}
             >
               {children}
