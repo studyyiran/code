@@ -18,6 +18,7 @@ export function HeaderProductPart(props: {
   showModal: any;
   setShowModal: any;
   buyProductRemark: any;
+  similiarPhoneListByCode: any[];
   userInfo?: any;
 }) {
   const {
@@ -27,7 +28,8 @@ export function HeaderProductPart(props: {
     setShowModal,
     buyProductRemark,
     userInfo,
-    productDetailByCode
+    productDetailByCode,
+    similiarPhoneListByCode
   } = props;
   const {
     productDisplayName,
@@ -50,11 +52,7 @@ export function HeaderProductPart(props: {
         <ProductInfo {...productDetail} />
         <ProductIdAndPrice
           productDetail={productDetail}
-          hahaNumberArr={new Array(3).fill({
-            userInfo,
-            buyProductRemark,
-            ...productDetail
-          })}
+          hahaNumberArr={similiarPhoneListByCode}
           buyProductCode={buyProductCode}
           skuPrice={skuPrice}
           buyPrice={buyPrice}

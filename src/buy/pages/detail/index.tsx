@@ -33,7 +33,8 @@ export default function ProductDetail(props: any) {
     resetProductInfo,
     getSimiliarPhoneList,
     getReviewScore,
-    getProductDetailByCode
+    getProductDetailByCode,
+    getSimiliarByCode
   } = productDetailContext as IProductDetailContext;
 
   const {
@@ -42,6 +43,7 @@ export default function ProductDetail(props: any) {
     partsInfo,
     reviewListInfo,
     productDetailByCode,
+    similiarPhoneListByCode
   } = productDetailContextValue;
 
   // 执行ssr
@@ -49,6 +51,7 @@ export default function ProductDetail(props: any) {
   const {
     buyProductRemark,
     backGroundCheck,
+    buyProductCode,
     productDisplayName,
     buyProductId,
     buyProductImgPc,
@@ -62,21 +65,33 @@ export default function ProductDetail(props: any) {
   const id = useWhenUrlChange("modalName");
   const { variant } = getUrlAllParams();
   const [containerWidth, setContainerWidth] = useState(0);
-  console.log('enter')
-  console.log(variant)
-  console.log(productDetailByCode)
+
+  // 用code拉取xxx
+  useEffect(() => {
+    if (buyProductCode) {
+      getSimiliarByCode(buyProductCode);
+    }
+  }, [buyProductCode, getSimiliarByCode]);
+
   // url -> id -> getDetail
   useEffect(() => {
     // getProductDetail(id);
     getProductDetailByCode({
       buyProductCode: variant,
-      modelDisplayName: '',
+      modelDisplayName: ""
     });
     // getSimiliarPhoneList(id);
     return () => {
       resetProductInfo();
     };
-  }, [getProductDetail, getSimiliarPhoneList, id, resetProductInfo]);
+  }, [
+    getProductDetail,
+    getProductDetailByCode,
+    getSimiliarPhoneList,
+    id,
+    resetProductInfo,
+    variant
+  ]);
 
   // 设置title
   useEffect(() => {
@@ -224,6 +239,7 @@ export default function ProductDetail(props: any) {
   function renderHeaderProductPart() {
     return (
       <HeaderProductPart
+        similiarPhoneListByCode={similiarPhoneListByCode}
         productDetailByCode={productDetailByCode}
         showModal={showModal}
         setShowModal={setShowModal}

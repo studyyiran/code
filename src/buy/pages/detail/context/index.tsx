@@ -6,7 +6,7 @@ import {
   getPartsBySkuId,
   getReviewScore,
   getProductDetailByCode,
-  getProductDetailByIdAndCondition
+  getProductDetailByIdAndCondition, getSimiliarByCode
 } from "../server";
 import {
   callBackWhenPassAllFunc,
@@ -31,6 +31,7 @@ interface IContextState {
   productDetail: IProductDetail;
   productDetailByCode: IProductDetailGetWithCode;
   similiarPhoneList: any[];
+  similiarPhoneListByCode: any[];
   reviewListInfo: IReviews;
   partsInfo: IProductDetail[];
 }
@@ -40,6 +41,7 @@ export function ProductDetailContextProvider(props: any) {
   const initState: IContextState = {
     productDetail: {} as any,
     similiarPhoneList: [],
+    similiarPhoneListByCode: [],
     reviewListInfo: {} as any,
     partsInfo: [],
     productDetailByCode: {} as any
@@ -83,6 +85,7 @@ interface IContextActions {
   getProductDetailByCode: (codeDetail: ICodeDetail) => void;
   getProductDetailByIdAndCondition: (codeDetail: ICodeAndId) => void;
   getSimiliarPhoneList: (id: string) => any;
+  getSimiliarByCode: (code: string) => any;
   getPartsBySkuId: (id: string) => any;
   resetProductInfo: () => any;
   getReviewScore: () => any;
@@ -201,6 +204,16 @@ function useGetAction(
       },
       [dispatch]
     ),
+    getSimiliarByCode: useCallback(
+      async function(productId) {
+        const res: any = await getSimiliarByCode(productId);
+        dispatch({
+          type: storeDetailActionTypes.setSimiliarPhoneList,
+          value: res
+        });
+      },
+      [dispatch]
+    ),
     getSimiliarPhoneList: useCallback(
       async function(productId) {
         const res: any = await getSimiliar({
@@ -234,6 +247,7 @@ export const storeDetailActionTypes = {
   setProductDetail: "setProductDetail",
   setProductDetailByCode: "setProductDetailByCode",
   setSimiliarPhoneList: "setSimiliarPhoneList",
+  setSimiliarPhoneByCode: "setSimiliarPhoneByCode",
   setPartsInfo: "setPartsInfo",
   setReviewListInfo: "setReviewListInfo"
 };
@@ -261,6 +275,13 @@ function reducer(state: IContextState, action: IReducerAction) {
       newState = {
         ...newState,
         similiarPhoneList: value
+      };
+      break;
+    }
+    case storeDetailActionTypes.setSimiliarPhoneByCode: {
+      newState = {
+        ...newState,
+        similiarPhoneListByCode: value
       };
       break;
     }

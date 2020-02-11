@@ -148,6 +148,13 @@ export function getBuyDetailPath(modalName: string, buyProductCode: string) {
   return `/testbuy/${modalName
     .replace(/\s+/g, "-")
     .toLowerCase()}?variant=${buyProductCode}`;
+  // if (modalName) {
+  //   return `/testbuy/${modalName
+  //     .replace(/\s+/g, "-")
+  //     .toLowerCase()}?variant=${buyProductCode}`;
+  // } else {
+  //   return ""
+  // }
 }
 
 export default function getSellPath() {

@@ -55,6 +55,12 @@ export async function getProductDetailByIdAndCondition(data: ICodeAndId) {
   return res;
 }
 
+export async function getSimiliarByCode(buyProductCode: string) {
+  const res: any = await ajax.get(`/buy/product/detail/similar/bycode?buyProductCode=${buyProductCode}`);
+  return res;
+}
+
+
 
 export async function getSimiliar(data: any) {
   // 当get 被catch的时候 await后续的流程都会终止掉.
