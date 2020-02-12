@@ -122,6 +122,10 @@ function useGetAction(
         type: storeDetailActionTypes.setProductDetail,
         value: {}
       });
+      dispatch({
+        type: storeDetailActionTypes.setProductDetailByCode,
+        value: {}
+      });
     }, [dispatch]),
     getProductDetail: useCallback(
       async function(productId) {

@@ -98,16 +98,14 @@ export default function ProductDetail(props: any) {
         buyProductCode: variant,
         modelDisplayName: ""
       });
-      return () => {
-        if (!isServer()) {
-          if (window.location.href.indexOf("testbuy") === -1) {
-            resetProductInfo();
-          }
-        }
-      };
-    } else {
-      return () => {};
     }
+    return () => {
+      if (!isServer()) {
+        if (window.location.href.indexOf("testbuy") === -1) {
+          resetProductInfo();
+        }
+      }
+    };
   }, [
     getProductDetailByCode,
     productDetail,

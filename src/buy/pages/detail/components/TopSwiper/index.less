@@ -34,14 +34,16 @@
       });
     }
     .content-part {
+      position: relative;
       .real-phone-product {
         background: linear-gradient(90deg,rgba(26,180,231,1) 0%,rgba(52,152,219,1) 100%);
         display: inline;
         padding: 2*@px 10 *@px;
         color: @white;
-        position: relative;
-        //top: 8 *@px;
-        //left: 8 *@px;
+        position: absolute;
+        top: 8 *@px;
+        left: 8 *@px;
+        z-index: 10;
       }
     }
     .mb-zoom {
