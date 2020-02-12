@@ -2,6 +2,9 @@
 @import (reference) "~buy/pages/detail/common.less";
 @p: {
   .product-detail-page {
+    .pc({
+      padding-top: 27 *@px;
+    });
     .long-button {
       @height: 70*@px;
       height: @height;
@@ -37,7 +40,7 @@
     //margin-top: 15 * @px;
     .mb({@imageWidth: 100vw;});
     //页面结构
-    @totalWidth: 1700 * @px;
+    @totalWidth: 1400 * @px;
     .setpage(@totalWidth);
     .pc({
       .page-padding();
