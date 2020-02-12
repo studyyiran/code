@@ -2,7 +2,7 @@ import React from "react";
 import { currencyTrans } from "../../../../../../common/utils/util";
 import "./index.less";
 import { showProductCardModal } from "../productCard";
-import {ProductInfo} from "../../../productInfo";
+import { ProductInfo } from "../../../productInfo";
 
 interface IProps {
   buyProductCode: string;
@@ -25,16 +25,13 @@ export const ProductIdAndPrice: React.FC<IProps> = ({
       <div className="productid-part">
         <span className="product-id">Product ID {buyProductCode}</span>
         {hahaNumberArr && hahaNumberArr.length ? (
-          <span className="similar-number">
-            <span
-              onClick={() => {
-                showProductCardModal(hahaNumberArr, productDetail);
-              }}
-              className="number"
-            >
-              {hahaNumberArr.length}
-            </span>{" "}
-            like this
+          <span
+            className="similar-number"
+            onClick={() => {
+              showProductCardModal(hahaNumberArr, productDetail);
+            }}
+          >
+            <span className="number">{hahaNumberArr.length}</span> like this
           </span>
         ) : null}
       </div>

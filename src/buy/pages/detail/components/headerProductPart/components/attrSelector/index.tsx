@@ -73,8 +73,9 @@ export const AttrSelector: React.FC<IProps> = ({ productDetailByCode }) => {
         >
           {name}
           {conditionPrice ? (
-            <span className="green">${conditionPrice}</span>
+            <span className="green">{conditionPrice}</span>
           ) : null}
+          {fatherName === "Condition" && disabled &&!choose ? <span>Sold Out</span> : null}
         </div>
       );
     }
