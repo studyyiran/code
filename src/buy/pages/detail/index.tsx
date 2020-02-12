@@ -287,6 +287,7 @@ export default function ProductDetail(props: any) {
             }}
           >
             <TopSwiper
+              productId={buyProductCode}
               containerWidth={containerWidth}
               buyProductVideo={buyProductVideo}
               buyProductImgPc={buyProductImgPc}

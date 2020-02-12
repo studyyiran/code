@@ -8,12 +8,14 @@ import {
   GlobalSettingContext,
   IGlobalSettingContext
 } from "../../../../context";
+import {RenderByCondition} from "../../../../components/RenderByCondition";
 
 export function TopSwiper(props: any) {
   const {
     buyProductImgPc,
     buyProductImgM,
     buyProductVideo,
+    productId,
     containerWidth
   } = props;
   const [currentImageIndex, setCurrentImageIndex] = useState("");
@@ -89,7 +91,17 @@ export function TopSwiper(props: any) {
           flex: `0 0 ${contentSize}px`
         }}
       >
+        <div className="real-phone-product">Real Photo Product ID {productId}</div>
         {renderContent(contentSize)}
+        <RenderByCondition
+          ComponentPc={
+            <div>
+              <img />
+              <span>Roll over image to zoom in</span>
+            </div>
+          }
+          ComponentMb={null}
+        />
       </div>
     </div>
   );
