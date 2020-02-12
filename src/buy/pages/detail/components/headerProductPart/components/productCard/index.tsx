@@ -10,7 +10,8 @@ import { ProductInfo } from "../../../productInfo";
 export const showProductCardModal = (arr: any[], productDetail: any) => {
   (Modal as any).confirm({
     className: "similar-modal",
-    width: "65%",
+    needDefaultScroll: true,
+    width: "55%",
     closable: true,
     title: null,
     footer: null,
@@ -58,9 +59,12 @@ const ProductCardModal: React.FC<IProps> = ({ arr, productDetail }) => {
           })}
         </ul>
         <div className="sort-container">
-          <span onClick={() => {
-            setFromLowToHigh(a => !a)
-          }}>Sort</span>
+          <img
+            onClick={() => {
+              setFromLowToHigh(a => !a);
+            }}
+            src={require("./res/sort.svg")}
+          />
         </div>
       </div>
       {arr
@@ -72,7 +76,7 @@ const ProductCardModal: React.FC<IProps> = ({ arr, productDetail }) => {
           }
         })
         .map(info => {
-          return <ProductCard info={info} key={info.buyProductCode}/>;
+          return <ProductCard info={info} key={info.buyProductCode} />;
         })}
     </div>
   );
@@ -84,7 +88,7 @@ const ProductCard = ({ info }: any) => {
     buyPrice,
     skuPrice,
     buyProductCode,
-    buyProductImgPc,
+    buyProductImgM,
     buyProductRemark,
     userInfo,
     buyTags
@@ -92,7 +96,7 @@ const ProductCard = ({ info }: any) => {
   console.log(info);
   return (
     <div className="product-card">
-      <InnerDivImage imgUrl={buyProductImgPc[0]} lazyload={false} />
+      <InnerDivImage imgUrl={buyProductImgM[0]} lazyload={false} />
       <div className="content-container">
         <div>
           <OnSaleTag tag={buyTags} />
