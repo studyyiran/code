@@ -10,6 +10,7 @@ import { InspectPersonInfo } from "../inspectPersonInfo";
 import { ProductIdAndPrice } from "./components/price";
 import { AttrSelector } from "./components/attrSelector";
 import {ProductInfo} from "../productInfo";
+import {RenderByCondition} from "../../../../components/RenderByCondition";
 
 export function HeaderProductPart(props: {
   productDetail: IProductDetail;
@@ -59,7 +60,7 @@ export function HeaderProductPart(props: {
         >
           <OnSaleTag tag={buyTags} />
         </ProductIdAndPrice>
-        <TopIconList />
+        <RenderByCondition ComponentPc={null} ComponentMb={<TopIconList />}/>
         <AttrSelector productDetailByCode={productDetailByCode} />
         <InspectPersonInfo
           buyProductRemark={buyProductRemark}
@@ -87,6 +88,7 @@ export function HeaderProductPart(props: {
           buyProductStatus={buyProductStatus}
           productDetail={productDetail}
         />
+        <RenderByCondition ComponentPc={<TopIconList />} ComponentMb={null}/>
       </div>
     </div>
   );

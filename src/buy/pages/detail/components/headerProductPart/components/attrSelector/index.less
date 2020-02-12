@@ -2,7 +2,6 @@
 
 @p1: {
   .select-list {
-    margin-bottom: 14 *@px;
     .title {
       font-size: 16 * @px;
       margin-bottom: 8 *@px;
@@ -28,8 +27,11 @@
       }
     });
     .list-container {
+      font-size: 12 *@px;
       display: flex;
+      flex-wrap: wrap;
       > li {
+        margin-bottom: 14 *@px;
         .pc({
           margin-right: 10 * @px;
         });
@@ -51,6 +53,7 @@
       }
     }
     .button-select {
+      width: 130 *@px;
       &.is-condition {
         height: 64 * @px;
       }
@@ -62,7 +65,7 @@
       align-items: center;
       justify-content: center;
       border-radius: 5px;
-      padding: 10 * @px;
+      padding: 4 * @px;
       .pc({
         margin-right: 5 *@px;
       });
