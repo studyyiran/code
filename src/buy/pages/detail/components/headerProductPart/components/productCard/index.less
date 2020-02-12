@@ -29,6 +29,7 @@
       });
       .mb({align-items: flex-start; flex-direction: column;});
       .sort-container {
+        .canclick();
         .mb({margin-top: 10 * @px;});
       }
       ul.selector-container {
@@ -66,12 +67,14 @@
       });
       .content-container {
         .pc({
-          padding: 50 *@px;
+          padding: 30 *@px 50 *@px;
         });
         padding: 16 *@px;
         flex: 1;
         display: flex;
-        align-items: center;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-start;
         > div {
           width: 100%;
         }

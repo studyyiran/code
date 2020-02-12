@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./index.less";
 import { ProductIdAndPrice } from "../price";
 import Modal from "../../../../../../components/modal";
@@ -10,7 +10,7 @@ import { ProductInfo } from "../../../productInfo";
 export const showProductCardModal = (arr: any[], productDetail: any) => {
   (Modal as any).confirm({
     className: "similar-modal",
-    width: "75%",
+    width: "65%",
     closable: true,
     title: null,
     footer: null,
@@ -25,6 +25,7 @@ interface IProps {
 }
 
 const ProductCardModal: React.FC<IProps> = ({ arr, productDetail }) => {
+  const [fromLowToHigh, setFromLowToHigh] = useState(true);
   const config = [
     {
       title: "Carrier",
@@ -57,12 +58,22 @@ const ProductCardModal: React.FC<IProps> = ({ arr, productDetail }) => {
           })}
         </ul>
         <div className="sort-container">
-          <span>Sort</span>
+          <span onClick={() => {
+            setFromLowToHigh(a => !a)
+          }}>Sort</span>
         </div>
       </div>
-      {arr.map(info => {
-        return <ProductCard info={info} />;
-      })}
+      {arr
+        .sort((a, b) => {
+          if (fromLowToHigh) {
+            return a.buyPrice - b.buyPrice;
+          } else {
+            return b.buyPrice - a.buyPrice;
+          }
+        })
+        .map(info => {
+          return <ProductCard info={info} key={info.buyProductCode}/>;
+        })}
     </div>
   );
 };
@@ -96,8 +107,8 @@ const ProductCard = ({ info }: any) => {
             buyProductRemark={buyProductRemark}
             userInfo={userInfo}
           />
-          <button className="common-button long-button">View Phone</button>
         </div>
+        <button className="common-button long-button">View Phone</button>
       </div>
     </div>
   );

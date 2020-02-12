@@ -85,34 +85,46 @@ export default function ProductDetail(props: any) {
   }, [getSimiliarPhoneList, pId]);
 
   // url -> id -> getDetail
+  // useEffect(() => {
+  //   // getProductDetail(id);
+  //   // 要规避
+  //   if (
+  //     (!productDetail || !productDetail.buyProductCode) &&
+  //     (!productDetailByCode ||
+  //       !productDetailByCode.detail ||
+  //       !productDetailByCode.detail.buyProductCode)
+  //   ) {
+  //     getProductDetailByCode({
+  //       buyProductCode: variant,
+  //       modelDisplayName: ""
+  //     });
+  //   }
+  //   return () => {
+  //     if (!isServer()) {
+  //       if (window.location.href.indexOf("testbuy") === -1) {
+  //         resetProductInfo();
+  //       }
+  //     }
+  //   };
+  // }, [
+  //   getProductDetailByCode,
+  //   productDetail,
+  //   productDetailByCode,
+  //   resetProductInfo,
+  //   variant
+  // ]);
+
   useEffect(() => {
-    // getProductDetail(id);
-    // 要规避
-    if (
-      (!productDetail || !productDetail.buyProductCode) &&
-      (!productDetailByCode ||
-        !productDetailByCode.detail ||
-        !productDetailByCode.detail.buyProductCode)
-    ) {
+    if (variant) {
       getProductDetailByCode({
         buyProductCode: variant,
         modelDisplayName: ""
       });
     }
     return () => {
-      if (!isServer()) {
-        if (window.location.href.indexOf("testbuy") === -1) {
-          resetProductInfo();
-        }
-      }
-    };
-  }, [
-    getProductDetailByCode,
-    productDetail,
-    productDetailByCode,
-    resetProductInfo,
-    variant
-  ]);
+      resetProductInfo();
+    }
+  }, []);
 
   // 设置title
   useEffect(() => {

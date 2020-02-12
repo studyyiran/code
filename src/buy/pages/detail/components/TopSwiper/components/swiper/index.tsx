@@ -85,7 +85,7 @@ export const RenderSwiper: React.FC<IProps> = ({
     if (condition) {
       return {
         onClick: onClickFunc,
-        style: { background: "rgba(55, 90, 125, 1)" },
+        style: { background: "rgba(55, 90, 125, 1)", color: "white" },
         className: "canclick"
       };
     } else {
