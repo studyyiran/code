@@ -14,7 +14,8 @@
         .list-container {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          grid-row-gap: 16 *@px;
+          grid-column-gap: 10 * @px;
+          grid-row-gap: 6 *@px;
         }
       }
       &:last-child {
@@ -53,9 +54,17 @@
       }
     }
     .button-select {
-      width: 130 *@px;
+      .pc({
+        width: 130 *@px;
+      });
+      .mb({
+        width: 100%;
+      });
       &.is-condition {
         height: 64 * @px;
+        .mb({
+          height: 48 * @px;
+        });
       }
       &.disabled {
         color: rgba(106, 106, 106, 0.4);

@@ -25,14 +25,26 @@
         width: 100%;
       })
     }
+    .mb({
+      .item-list {
+        .common-detail-page-card {
+          &:first-child{
+            border-top: 1px solid @color-border;
+          }
+        }
+      }
+    });
     .common-detail-page-card {
       border: 1px solid @color-border;
       padding: 15 *@px;
       .mb-padding();
       border-radius: 3px;
       .mb({
+
+        border: none;
         border-left: none;
         border-right: none;
+        border-bottom: none;
       });
     }
     /*
