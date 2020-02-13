@@ -27,10 +27,11 @@ export function MoreInfo(): any {
   ];
   return (
     <div className="more-info-container">
-      {content.map(({ icon, title, content }) => {
+      {content.map(({ icon, title, content }, index) => {
         return (
           <div className="more-info common-detail-page-card" key={title}>
             {/*暂时强制更新 为了解决首次不正常渲染的问题*/}
+            {index === 0 ? <img className="logo" src={require('./res/logo.svg')} /> : null}
             <img src={icon} key={currentKey + icon} />
             <h3 className="sub-title-size-main">{title}</h3>
             <p>{content}</p>

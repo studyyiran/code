@@ -9,6 +9,21 @@
     grid-column-gap: 40 * @px;
     grid-row-gap: 40 * @px;
     .more-info {
+      position: relative;
+      .logo {
+        .mb({
+          width: 50 *@px;
+          height: 50 *@px;
+          left: 20 *@px;
+          top: 20 *@px;
+          position: absolute;
+        });
+        width: 100 *@px;
+        height: 100 *@px;
+        left: 40 *@px;
+        top: 40 *@px;
+        position: absolute;
+      }
       img {
         @size: 138 * @px;
         width: 100%;
