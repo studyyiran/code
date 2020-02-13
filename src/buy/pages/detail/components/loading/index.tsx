@@ -24,13 +24,11 @@ export function DetailLoading() {
     "UpTrade helps you sell your phone by listing it on multiple marketplaces to get you the maximum value"
   ];
   return (
-    <div className="product-detail-page">
-      <div className="loading-part loading-mask-min-height">
-        <LoadingMask visible={true} needWhite={true} />
-        <div className="loading-content">
-          <h2>Did you know?</h2>
-          <p>{arr[index]}</p>
-        </div>
+    <div className="loading-part">
+      <LoadingMask visible={true} needWhite={true} />
+      <div className="loading-content">
+        <h2>Did you know?</h2>
+        <p>{arr[index]}</p>
       </div>
     </div>
   );
