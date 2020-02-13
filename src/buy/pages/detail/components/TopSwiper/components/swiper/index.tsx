@@ -34,7 +34,7 @@ export const RenderSwiper: React.FC<IProps> = ({
 
   const [currentPos, setCurrentPos] = useState(0);
 
-  const maxNumber = isMobile ? 1000 : 7;
+  const maxNumber = isMobile ? 1000 : 9;
   function onOpenModal(e: any, index = 0) {
     // 可以确定当前显示的.
     setCurrentImageIndex(String(index));

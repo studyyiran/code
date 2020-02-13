@@ -337,7 +337,11 @@ export default function ProductDetail(props: any) {
               return <img style={{ display: "none" }} src={item} key={item} />;
             });
           })()}
-          ComponentPc={null}
+          ComponentPc={(() => {
+            return buyProductImgPc.map((item: string) => {
+              return <img style={{ display: "none" }} src={item} key={item} />;
+            });
+          })()}
         />
       </div>
     );
