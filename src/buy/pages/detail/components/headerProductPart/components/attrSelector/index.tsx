@@ -11,14 +11,14 @@ import {
   IProductDetailContext,
   ProductDetailContext
 } from "../../../../context";
-import {getArrBySort} from "../util";
+import { getArrBySort } from "../util";
 
 interface IProps {
   productDetailByCode: IProductDetailGetWithCode;
 }
 
 export const AttrSelector: React.FC<IProps> = ({ productDetailByCode }) => {
-  const after = getArrBySort(productDetailByCode)
+  const after = getArrBySort(productDetailByCode);
   function renderSelect(
     tags: string,
     selectItem: IChoiceMin,
@@ -51,7 +51,9 @@ export const AttrSelector: React.FC<IProps> = ({ productDetailByCode }) => {
           {conditionPrice ? (
             <span className="green">{conditionPrice}</span>
           ) : null}
-          {fatherName === "Condition" && disabled &&!choose ? <span>Sold Out</span> : null}
+          {fatherName === "Condition" && disabled && !choose ? (
+            <span>Sold Out</span>
+          ) : null}
         </div>
       );
     }
@@ -60,6 +62,7 @@ export const AttrSelector: React.FC<IProps> = ({ productDetailByCode }) => {
   const config = after.map(item => {
     const { name: fatherName, values, tags } = item;
     return {
+      tags: tags,
       title: fatherName,
       currentSelectName: (values.find(item => {
         return item.choose === true;
@@ -75,12 +78,14 @@ export const AttrSelector: React.FC<IProps> = ({ productDetailByCode }) => {
       })
     };
   });
+  console.log("config!!!!!!!!!!!!!!!!!!");
   console.log(config);
   return (
     <div className="attr-selector">
-      {config.map(({ title, arr, currentSelectName }) => {
+      {config.map(({ title, arr, currentSelectName, tags }) => {
         return (
           <RenderSelectList
+            tags={tags}
             title={title}
             arr={arr}
             currentSelectName={currentSelectName}
@@ -94,6 +99,7 @@ export const AttrSelector: React.FC<IProps> = ({ productDetailByCode }) => {
 interface IProps2 {
   currentSelectName: string;
   title: string;
+  tags: string;
   arr: {
     id: string;
     name: string;
@@ -105,6 +111,7 @@ interface IProps2 {
 export const RenderSelectList: React.FC<IProps2> = ({
   arr,
   title,
+  tags,
   currentSelectName
 }) => {
   const productDetailContext = useContext(ProductDetailContext);
@@ -140,7 +147,7 @@ export const RenderSelectList: React.FC<IProps2> = ({
   //   }
   // }, [defaultSelect]);
   return (
-    <div className="select-list">
+    <div className="select-list" data-iscolor={tags === "ISCOLOR"}>
       <h3 className="title">
         {title} : <span className="name">{currentSelectName}</span>
       </h3>
