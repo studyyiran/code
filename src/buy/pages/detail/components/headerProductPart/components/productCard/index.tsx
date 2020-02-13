@@ -6,8 +6,15 @@ import { InspectPersonInfo } from "../../../inspectPersonInfo";
 import { InnerDivImage } from "../../../innerDivImage";
 import { OnSaleTag } from "../../../onSaleTag";
 import { ProductInfo } from "../../../productInfo";
+import { IProductDetailGetWithCode } from "../../../../context/interface";
+import { getArrBySort } from "../util";
+import {getBuyDetailPath} from "../../../../../../common/utils/util";
 
-export const showProductCardModal = (arr: any[], productDetail: any) => {
+export const showProductCardModal = (
+  arr: any[],
+  productDetail: any,
+  productDetailByCode?: IProductDetailGetWithCode
+) => {
   (Modal as any).confirm({
     className: "similar-modal",
     needDefaultScroll: true,
@@ -16,35 +23,38 @@ export const showProductCardModal = (arr: any[], productDetail: any) => {
     title: null,
     footer: null,
     // maskClosable: true,
-    children: <ProductCardModal arr={arr} productDetail={productDetail} />
+    children: (
+      <ProductCardModal
+        arr={arr}
+        productDetail={productDetail}
+        productDetailByCode={productDetailByCode}
+      />
+    )
   });
 };
 
 interface IProps {
   arr: any[];
   productDetail: any;
+  productDetailByCode?: IProductDetailGetWithCode;
 }
 
-const ProductCardModal: React.FC<IProps> = ({ arr, productDetail }) => {
+const ProductCardModal: React.FC<IProps> = ({
+  arr,
+  productDetail,
+  productDetailByCode
+}) => {
   const [fromLowToHigh, setFromLowToHigh] = useState(true);
-  const config = [
-    {
-      title: "Carrier",
-      content: "Verizon"
-    },
-    {
-      title: "Condition",
-      content: "Fair"
-    },
-    {
-      title: "Storage",
-      content: "64GB"
-    },
-    {
-      title: "Color",
-      content: "Prism Blue"
-    }
-  ];
+  const config = getArrBySort(
+    productDetailByCode as IProductDetailGetWithCode
+  ).map(item => {
+    return {
+      title: item.name,
+      content: (item.values.find(item2 => {
+        return item2.choose;
+      }) as any).name
+    };
+  });
   return (
     <div className="product-card-modal">
       <ProductInfo {...productDetail} />
@@ -65,6 +75,7 @@ const ProductCardModal: React.FC<IProps> = ({ arr, productDetail }) => {
             }}
             src={require("./res/sort.svg")}
           />
+          Sort
         </div>
       </div>
       {arr
@@ -99,12 +110,12 @@ const ProductCard = ({ info }: any) => {
       <InnerDivImage imgUrl={buyProductImgM[0]} lazyload={false} />
       <div className="content-container">
         <div>
-          <OnSaleTag tag={buyTags} />
           <ProductIdAndPrice
             productDetail={info}
             buyProductCode={buyProductCode}
             skuPrice={skuPrice}
             buyPrice={buyPrice}
+            children2={<OnSaleTag tag={buyTags} />}
           />
           <InspectPersonInfo
             hideImg={true}
@@ -112,7 +123,10 @@ const ProductCard = ({ info }: any) => {
             userInfo={userInfo}
           />
         </div>
-        <button className="common-button long-button">View Phone</button>
+        <button className="common-button long-button" onClick={() => {
+          window.location.href = getBuyDetailPath(productDisplayName, buyProductCode)
+          // locationHref()
+        }}>View Phone</button>
       </div>
     </div>
   );

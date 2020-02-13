@@ -7,10 +7,10 @@ export const OnSaleTag: React.FC<IProps> = (props: IProps) => {
   console.log(props);
   if (props.tag) {
     switch (props.tag) {
-      case "ON_SALE2":
+      case "ON_SALE":
         return <img className="sale-tag" src={require("./res/sale.svg")} />;
         break;
-      case "ON_SALE":
+      case "ON_SALE2":
         return <span className="pdp-lower-tag">Lower Price</span>;
       default:
         return null;

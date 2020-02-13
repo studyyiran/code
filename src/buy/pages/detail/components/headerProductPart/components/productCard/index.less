@@ -29,6 +29,8 @@
       });
       .mb({align-items: flex-start; flex-direction: column;});
       .sort-container {
+        display: flex;
+        align-items: center;
         .canclick();
         .mb({margin-top: 10 * @px;});
       }
@@ -36,6 +38,7 @@
         display: flex;
         align-items: center;
         width: 100%;
+        font-size: 12 *@f;
         .mb(
           {display: grid; grid-template-columns: repeat(2, 1fr) ; grid-row-gap: 10 *
             @px; grid-column-gap: 10 * @px;}

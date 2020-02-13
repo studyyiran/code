@@ -52,6 +52,7 @@ export function HeaderProductPart(props: {
       <div className="price-part-out-container">
         <ProductInfo {...productDetail} />
         <ProductIdAndPrice
+          productDetailByCode={productDetailByCode}
           productDetail={productDetail}
           hahaNumberArr={similiarPhoneListByCode}
           buyProductCode={buyProductCode}
