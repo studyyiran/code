@@ -78,8 +78,6 @@ export const AttrSelector: React.FC<IProps> = ({ productDetailByCode }) => {
       })
     };
   });
-  console.log("config!!!!!!!!!!!!!!!!!!");
-  console.log(config);
   return (
     <div className="attr-selector">
       {config.map(({ title, arr, currentSelectName, tags }) => {
@@ -127,6 +125,7 @@ export const RenderSelectList: React.FC<IProps2> = ({
   useEffect(() => {
     if (currentSelect) {
       resetProductInfo();
+      window.scrollTo(0, 0);
       if (!isNaN(Number(currentSelect))) {
         getProductDetailByIdAndCondition({
           buyProductCode: buyProductCode,

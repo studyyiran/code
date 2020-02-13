@@ -20,6 +20,7 @@ export interface IProductDetailGetWithCode {
   condition: IChoice;
   attributes: IChoice[];
   similarCount: number;
+  sameProduct: boolean;
 }
 
 export interface IProductDetail {

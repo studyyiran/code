@@ -22,6 +22,7 @@ import {
   IProductDetailGetWithCode,
   IReviews
 } from "./interface";
+import {Message} from "../../../components/message";
 
 export const ProductDetailContext = createContext({});
 export const StoreDetail = "StoreDetail";
@@ -200,6 +201,9 @@ function useGetAction(
                 // 这边插入一个难看的命令式 做伪的url变化
                 locationHref(url);
               }
+            }
+            if (res.sameProduct) {
+              Message.error('Product not found, please try other color, storage or condition')
             }
           }
         } catch (e) {
