@@ -12,11 +12,14 @@ export const locationHref = (url: string, params?: string) => {
   const findInBuyRouter = routerConfigWithoutComponent.find((route: any) => {
     return !!matchPath(url, route);
   });
-  if (!findInBuyRouter) {
+  if (!findInBuyRouter && params !== 'push') {
     window.location.href = url;
     return;
   }
   switch (params) {
+    case "push":
+      routerHistory.push(url);
+      break;
     case "back":
       routerHistory.goBack();
       break;

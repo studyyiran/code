@@ -4,17 +4,25 @@ import {
   getProductDetail,
   getSimiliar,
   getPartsBySkuId,
-  getReviewScore
+  getReviewScore,
+  getProductDetailByCode,
+  getProductDetailByIdAndCondition, getSimiliarByCode
 } from "../server";
 import {
   callBackWhenPassAllFunc,
+  getBuyDetailPath,
   getProductListPath,
   safeEqual
 } from "buy/common/utils/util";
 import { useGetOriginData } from "../../../common/useHook/useGetOriginData";
 import { IContextValue } from "../../../common/type";
 import { locationHref } from "../../../common/utils/routerHistory";
-import { IProductDetail, IReviews } from "./interface";
+import {
+  IProductDetail,
+  IProductDetailGetWithCode,
+  IReviews
+} from "./interface";
+import {Message} from "../../../components/message";
 
 export const ProductDetailContext = createContext({});
 export const StoreDetail = "StoreDetail";
@@ -22,7 +30,9 @@ export const StoreDetail = "StoreDetail";
 // state
 interface IContextState {
   productDetail: IProductDetail;
+  productDetailByCode: IProductDetailGetWithCode;
   similiarPhoneList: any[];
+  similiarPhoneListByCode: any[];
   reviewListInfo: IReviews;
   partsInfo: IProductDetail[];
 }
@@ -32,8 +42,10 @@ export function ProductDetailContextProvider(props: any) {
   const initState: IContextState = {
     productDetail: {} as any,
     similiarPhoneList: [],
+    similiarPhoneListByCode: [],
     reviewListInfo: {} as any,
-    partsInfo: []
+    partsInfo: [],
+    productDetailByCode: {} as any
   };
   const [state, dispatch, useClientRepair] = useGetOriginData(
     reducer,
@@ -71,10 +83,24 @@ export interface IProductDetailContext extends IContextActions, IContextValue {
 // @actions
 interface IContextActions {
   getProductDetail: (id: string) => void;
+  getProductDetailByCode: (codeDetail: ICodeDetail) => void;
+  getProductDetailByIdAndCondition: (codeDetail: ICodeAndId) => void;
   getSimiliarPhoneList: (id: string) => any;
+  getSimiliarByCode: (code: string) => any;
   getPartsBySkuId: (id: string) => any;
   resetProductInfo: () => any;
   getReviewScore: () => any;
+}
+
+export interface ICodeDetail {
+  modelDisplayName: string;
+  buyProductCode: string;
+}
+
+export interface ICodeAndId {
+  buyProductCode: string;
+  skuBasicPropertyValueId?: string;
+  condition?: string;
 }
 
 // useCreateActions
@@ -95,6 +121,10 @@ function useGetAction(
     resetProductInfo: useCallback(() => {
       dispatch({
         type: storeDetailActionTypes.setProductDetail,
+        value: {}
+      });
+      dispatch({
+        type: storeDetailActionTypes.setProductDetailByCode,
         value: {}
       });
     }, [dispatch]),
@@ -120,6 +150,79 @@ function useGetAction(
           console.error(e);
           redirect();
         }
+      },
+      [dispatch]
+    ),
+    getProductDetailByCode: useCallback(
+      async function(codeDetail) {
+        try {
+          const res: IProductDetailGetWithCode = await getProductDetailByCode(
+            codeDetail
+          );
+          if (res) {
+            dispatch({
+              type: storeDetailActionTypes.setProductDetailByCode,
+              value: res
+            });
+            if (res.detail) {
+              dispatch({
+                type: storeDetailActionTypes.setProductDetail,
+                value: res.detail
+              });
+            }
+          } else {
+            locationHref(getProductListPath())
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      },
+      [dispatch]
+    ),
+    getProductDetailByIdAndCondition: useCallback(
+      async function(codeDetail) {
+        try {
+          const res: IProductDetailGetWithCode = await getProductDetailByIdAndCondition(
+            codeDetail
+          );
+          if (res) {
+            dispatch({
+              type: storeDetailActionTypes.setProductDetailByCode,
+              value: res
+            });
+            if (res.detail) {
+              dispatch({
+                type: storeDetailActionTypes.setProductDetail,
+                value: res.detail
+              });
+              if (res.detail.buyProductCode) {
+                let url = getBuyDetailPath(
+                  res.detail.productDisplayName,
+                  res.detail.buyProductCode
+                );
+                // 这边插入一个难看的命令式 做伪的url变化
+                locationHref(url);
+              }
+            }
+            if (res.sameProduct) {
+              Message.error('Product not found, please try other color, storage or condition')
+            }
+          } else {
+            locationHref(getProductListPath())
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      },
+      [dispatch]
+    ),
+    getSimiliarByCode: useCallback(
+      async function(productId) {
+        const res: any = await getSimiliarByCode(productId);
+        dispatch({
+          type: storeDetailActionTypes.setSimiliarPhoneByCode,
+          value: res
+        });
       },
       [dispatch]
     ),
@@ -154,7 +257,9 @@ function useGetAction(
 // action types
 export const storeDetailActionTypes = {
   setProductDetail: "setProductDetail",
+  setProductDetailByCode: "setProductDetailByCode",
   setSimiliarPhoneList: "setSimiliarPhoneList",
+  setSimiliarPhoneByCode: "setSimiliarPhoneByCode",
   setPartsInfo: "setPartsInfo",
   setReviewListInfo: "setReviewListInfo"
 };
@@ -185,10 +290,24 @@ function reducer(state: IContextState, action: IReducerAction) {
       };
       break;
     }
+    case storeDetailActionTypes.setSimiliarPhoneByCode: {
+      newState = {
+        ...newState,
+        similiarPhoneListByCode: value
+      };
+      break;
+    }
     case storeDetailActionTypes.setProductDetail: {
       newState = {
         ...newState,
         productDetail: value
+      };
+      break;
+    }
+    case storeDetailActionTypes.setProductDetailByCode: {
+      newState = {
+        ...newState,
+        productDetailByCode: value
       };
       break;
     }

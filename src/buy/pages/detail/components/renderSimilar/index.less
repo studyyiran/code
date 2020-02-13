@@ -1,0 +1,57 @@
+@import (reference) "~buy/common/styles/index.less";
+@import (reference) "~buy/pages/detail/common.less";
+@p1: {
+  .similar {
+    margin-top: 66 * @px;
+    .mb({margin-top: 40 * @px;});
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 46 * @px;
+      .mb({margin-bottom: 40 * @px;});
+      > h2 {
+        .mb({font-size: 24 * @px;});
+      }
+      > span {
+        color: rgba(26, 180, 231, 1);
+        font-weight: @boldWeight;
+      }
+    }
+    .list {
+      @widthSize: 280 * @px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      justify-items: center;
+      :first-child {
+        justify-self: start;
+      }
+      :last-child {
+        justify-self: end;
+      }
+      .phone-product-card {
+        .innerdiv {
+          .innerdiv-imgsize(@widthSize);
+        }
+        //min-width: 280 *@px;
+      }
+    }
+
+    .view-all-text {
+      color: #2ba8d8;
+      font-weight: bolder;
+    }
+  }
+  
+  
+  #ismobile {
+    .similar {
+      .mb-padding();
+      .ant-carousel .slick-dots-bottom {
+        bottom: 0;
+      }
+    }
+  }
+};
+
+.hello(@p1);

@@ -4,15 +4,15 @@ import './index.less'
 export function TopIconList() {
   const config = [
     {
-      title: "Real Photos",
+      title: "Actual Photos of Phone",
       icon: require("./res/1.png")
     },
     {
-      title: "Inspected by UpTrade",
+      title: "50+ Point Inspection",
       icon: require("./res/2.png")
     },
     {
-      title: "Fully Functional",
+      title: "30-day money back guarantee",
       icon: require("./res/3.png")
     }
   ];

@@ -3,42 +3,44 @@
 @p1: {
   .top-icon-list {
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    .pc({padding: 11 * @px 0 19 * @px;border: 1px solid @color-border;});
-
+    //margin-bottom: 18 *@px;
+    margin-bottom: 8 *@px;
+    margin-top: 8 *@px;
     img {
-      width: 24 * @f;
-      height: 24 * @f;
-      .pc({margin-bottom: 5 * @px;});
+      width: 20 * @px;
+      height: 20 * @px;
+      margin-right: 5 *@px;
     }
-    .pc({> li[data-index= "1" ] {margin: 0 70 * @px;};});
     > li {
-      text-align: center;
+      display: flex;
+      align-items: center;
       .title {
         display: block;
-        font-size: 16 * @f;
+        font-size: 12 * @f;
       }
     }
   }
-  .ismobile {
-    .top-icon-list {
-      flex-direction: column;
-      align-items: flex-start;
-      margin: 15 * @px auto;
-      img {
-        margin-right: 8 * @px;
-      }
-      > li {
-        margin: 4 * @px 0;
-        > * {
-          vertical-align: middle;
-        }
-        .title {
-          display: inline-block;
-        }
-      }
-    }
-  }
+  //.ismobile {
+  //  .top-icon-list {
+  //    flex-direction: column;
+  //    align-items: flex-start;
+  //    margin: 15 * @px auto;
+  //    img {
+  //      margin-right: 8 * @px;
+  //    }
+  //    > li {
+  //      margin: 4 * @px 0;
+  //      > * {
+  //        vertical-align: middle;
+  //      }
+  //      .title {
+  //        display: inline-block;
+  //      }
+  //    }
+  //  }
+  //}
 };
 
 .hello(@p1);

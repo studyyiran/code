@@ -2,10 +2,23 @@
 /*
 有一个场景需要common的帮助,就是模块级别mixin
 但是很遗憾 我没有研究出来如何引入 并且带上.helli
+
+还有一个场景呢?共有classname怎么说呢.
+
  */
+.magic-mixin(@rules) {
+  .pc({
+    position:absolute;
+    bottom:0;
+    height: calc(100vh - 83 * @px - 27 *@px);
+    @rules();
+    //z-index: -1;
+  });
+}
 
-@p1: {
-
-};
-
-.hello(@p1);
+.mb-padding() {
+  .mb({
+    padding-left: 16 *@px;
+    padding-right: 16 *@px;
+  });
+}

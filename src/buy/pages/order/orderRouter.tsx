@@ -47,7 +47,7 @@ export default function OrderRouter(props: any) {
     if (
       props.location &&
       props.location.pathname &&
-      props.location.pathname.includes("/buy/confirmation")
+      props.location.pathname.includes("/buy-checkout/confirmation")
     ) {
       return () => {};
     }

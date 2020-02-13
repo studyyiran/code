@@ -7,9 +7,11 @@ export function InnerDivImage(props: {
   children?: any;
   lazyload?: any;
   onClick?: any;
+  style?: any;
 }) {
-  const { imgUrl, dataIndex, lazyload = true, onClick } = props;
+  const { imgUrl, dataIndex, lazyload = true, onClick, style = {} } = props;
   const formatIndex = String(dataIndex);
+  const afterStyle = {...style, backgroundImage: `url("${imgUrl}")`}
   if (lazyload) {
     return (
       <LazyLoad height={200}>
@@ -21,9 +23,7 @@ export function InnerDivImage(props: {
           }}
           data-index={formatIndex ? formatIndex : false}
           className="innerdiv"
-          style={{
-            backgroundImage: `url("${imgUrl}")`
-          }}
+          style={afterStyle}
         >
           {props.children}
         </div>
@@ -39,9 +39,7 @@ export function InnerDivImage(props: {
         }}
         data-index={formatIndex ? formatIndex : false}
         className="innerdiv"
-        style={{
-          backgroundImage: `url("${imgUrl}")`
-        }}
+        style={afterStyle}
       >
         {props.children}
       </div>

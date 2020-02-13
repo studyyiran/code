@@ -1,5 +1,5 @@
 import {
-  currencyTrans,
+  currencyTrans, getBuyDetailPath,
   staticContentConfig
 } from "../../../../common/utils/util";
 import React, { useContext } from "react";
@@ -71,7 +71,7 @@ export default function PhoneProductCard(props: any) {
           e.preventDefault();
         }
       }}
-      to={`/detail/${buyProductId}`}
+      to={`${getBuyDetailPath(buyProductName, buyProductCode)}`}
       className="phone-product-card"
       data-disabled={isSoldOut(buyProductStatus) ? "true" : "false"}
     >

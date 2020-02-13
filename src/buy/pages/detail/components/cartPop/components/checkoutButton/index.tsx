@@ -41,7 +41,7 @@ export function CheckOutButton(props: {
         }
         // 2 短暂delay
         window.setTimeout(() => {
-          locationHref("/buy/info");
+          locationHref("/buy-checkout/info");
         }, 100);
       }}
     >

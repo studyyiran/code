@@ -1,0 +1,62 @@
+@import (reference) "~buy/common/styles/index.less";
+
+@p1: {
+  .swiper-part {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    &[data-flex="true"] {
+      justify-content: flex-start;
+      > * {
+        .pc({
+          margin-bottom: 20 * @px;
+        });
+        .mb({
+          margin-right: 5 *@px;
+        });
+      }
+    }
+    .mb({
+      flex-direction: row;
+      width: 100%;
+      overflow-x: scroll;
+    });
+    @arrowHeight: 15px;
+    .arrow-button {
+      width: 100%;
+      height: @arrowHeight;
+      .canclick();
+      background: red;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    //margin-bottom: 40 * @px;
+    //padding: 10 * @px 0;
+    .innerdiv {
+      .canclick();
+      .innerdiv-imgsize(auto);
+    }
+    .inner-div-container {
+      overflow: hidden;
+      .innerdiv {
+        //.upup();
+      }
+      &[data-selected="true"] {
+        border: 1px solid rgba(55, 90, 125, 1);
+      }
+      &:not([data-selected="true"]) {
+        border: 1px solid transparent;
+      }
+    }
+  }
+  .swiper-mb {
+    height: 100vw;
+    width: 100vw;
+    .innerdiv {
+      .innerdiv-imgsize(100vw);
+    }
+  }
+};
+
+.hello(@p1);

@@ -5,15 +5,30 @@
     .mb({border-top: 1px solid @color-border;});
     padding-top: 44 * @px;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(1fr);
     grid-column-gap: 40 * @px;
     grid-row-gap: 40 * @px;
     .more-info {
+      position: relative;
+      .logo {
+        .mb({
+          width: 50 *@px;
+          height: 50 *@px;
+          left: 20 *@px;
+          top: 20 *@px;
+          position: absolute;
+        });
+        width: 100 *@px;
+        height: 100 *@px;
+        left: 40 *@px;
+        top: 40 *@px;
+        position: absolute;
+      }
       img {
         @size: 138 * @px;
-        width: @size;
-        height: @size;
-        .mb({@size: 93 * @px; width: @size; height: @size;});
+        width: 100%;
+        //height: @size;
+        //.mb({@size: 93 * @px; width: @size; height: @size;});
         margin-bottom: 30 * @px;
         .mb({margin-bottom: 23 * @px;});
       }
@@ -21,7 +36,6 @@
         margin-bottom: 16 * @px;
       }
       p {
-        .pc({font-size: 16 * @f;});
       }
     }
   }

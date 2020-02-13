@@ -1,5 +1,5 @@
 @import (reference) "~buy/common/styles/index.less";
-
+@import (reference) "~buy/pages/detail/common.less";
 @p1: {
   // 全局弹窗样式--
   .condition-buy-level {
@@ -29,132 +29,61 @@
   //--
 
   .header-part {
-    font-size: 16 * @f;
+    width: 100%;
+    .mb-padding();
+    .pc({
+      height: 100%;
+      .magic-mixin({});
+    });
     .sale-tag {
       width: 45 * @px;
       margin-left: 20 * @px;
       .mb({width: 25 * @px;margin-left: 10 * @px;});
       vertical-align: middle;
     }
-    .product-info {
-      position: relative;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      > .info-part {
-        > * {
-          display: block;
-          margin-bottom: 8 * @px;
-          .mb({margin-bottom: 4 * @px;});
-        }
-        > .attr {
-          .mb({margin-top: 9 * @px;});
-          .font(16 * @f, @boldWeight, rgba(0, 0, 0, 1));
-        }
-        > .condition {
-          font-size: 16 * @f;
-          font-weight: @boldWeight;
-          > * {
-            vertical-align: middle;
-          }
-          .comp-tips-icon-container {
-            padding: 5 *@px;
-          }
-        }
-      }
-      > .check-icon {
-        @iconWidth: 63 * @f;
-        .pc({@iconWidth: 83 * @f;flex: 0 0 @iconWidth; height: @iconWidth;});
-        flex: 0 0 @iconWidth;
-        height: @iconWidth;
-        margin-left: 30 * @px;
-      }
-    }
+    
     .act-origin-price,
     .act-buy-price {
       font-size: 18 * @px;
       .pc({font-size: 24 * @f;});
     }
 
-    .act-timer {
-      margin-left: 10 * @px;
-      img {
-        width: 46 * @px;
-        .mb({width: 36 * @px;});
-      }
-    }
-    margin-bottom: 50 * @px;
-    .product-id {
-      color: rgba(55, 90, 125, 1);
-    }
-    .left {
-    }
-    .sku-price {
-      display: inline-block;
-      font-size: 12 * @f;
-      color: rgba(136, 136, 136, 1);
-    }
-    .price-part-pc {
-      margin-top: 16 * @px;
+    .price-part-out-container {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
-
-      .sku-price {
-        > span:last-child {
-          margin-left: 2 * @px;
-          text-decoration: line-through;
-        }
-      }
-      .right {
-        .price-and-button {
-          margin-bottom: 10 * @px;
-          .price {
-            > * {
-              vertical-align: middle;
-            }
-            .act-timer {
-              flex: 1;
-            }
-            margin-right: 32 * @px;
-            .buy-price {
-              margin-right: 5 * @px;
-            }
-            .act-timer {
-              .content {
-              }
-            }
-          }
-        }
-      }
+      align-items: stretch;
+      flex-direction: column;
+      .mb({
+        margin-top: 15 *@px;
+      })
     }
-    .price-part-mb {
-      margin-top: 25 * @px;
-      .sku-price {
-        .font(12 * @f, @boldWeight, rgba(136, 136, 136, 1));
-        > span:last-child {
-          margin-left: 5 * @px;
-          text-decoration: line-through;
-        }
-      }
-      .product-id {
-        > * {
-          vertical-align: text-bottom;
-        }
-      }
-      /*移动端*/
-      .bottom {
-        .price {
-          margin-bottom: 5 *@px;
-          .buy-price {
-            margin-right: 8 * @px;
-          }
-          .sku-price {
-            font-size: 14 * @px;
-          }
-        }
-      }
-    }
+    //.price-part-mb {
+    //  margin-top: 25 * @px;
+    //  .sku-price {
+    //    .font(12 * @f, @boldWeight, rgba(136, 136, 136, 1));
+    //    > span:last-child {
+    //      margin-left: 5 * @px;
+    //      text-decoration: line-through;
+    //    }
+    //  }
+    //  .product-id {
+    //    > * {
+    //      vertical-align: text-bottom;
+    //    }
+    //  }
+    //  /*移动端*/
+    //  .bottom {
+    //    .price {
+    //      margin-bottom: 5 *@px;
+    //      .buy-price {
+    //        margin-right: 8 * @px;
+    //      }
+    //      .sku-price {
+    //        font-size: 14 * @px;
+    //      }
+    //    }
+    //  }
+    //}
   }
 };
 
