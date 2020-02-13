@@ -1,4 +1,4 @@
-import { safeEqual } from "../../../../../../common/utils/util";
+import {getBuyDetailPath, safeEqual} from "../../../../../../common/utils/util";
 import { InnerDivImage } from "../../../innerDivImage";
 import React, { useEffect, useState } from "react";
 import "./index.less";
@@ -124,7 +124,7 @@ export const RenderSwiper: React.FC<IProps> = ({
   return (
     <div
       className="swiper-part"
-      data-flex={afterFilterDom.length < maxNumber - 1 ? true : false}
+      data-flex={afterFilterDom.length < maxNumber ? true : false}
       style={Object.assign(
         {},
         style,

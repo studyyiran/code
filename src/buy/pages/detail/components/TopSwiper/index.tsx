@@ -95,7 +95,7 @@ export function TopSwiper(props: any) {
           flex: `0 0 ${contentSize}px`
         }}
       >
-        <div className="real-phone-product">Real Photo Product ID {productId}</div>
+        <div className="real-phone-product">Real Phone Product ID {productId}</div>
         {renderContent(contentSize)}
         <RenderByCondition
           ComponentPc={

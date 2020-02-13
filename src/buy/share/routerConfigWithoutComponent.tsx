@@ -3,9 +3,6 @@ import {getLocationUrl, getProductListPath} from "../common/utils/util";
 
 export const routerConfigWithoutComponent = [
   {
-    path: "/buy",
-  },
-  {
     path: getProductListPath(),
   },
   {
@@ -25,6 +22,9 @@ export const routerConfigWithoutComponent = [
   },
   {
     path: "/buy",
+  },
+  {
+    path: "/buytest",
   },
   {
     path: "/",

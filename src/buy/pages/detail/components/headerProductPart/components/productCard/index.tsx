@@ -8,7 +8,7 @@ import { OnSaleTag } from "../../../onSaleTag";
 import { ProductInfo } from "../../../productInfo";
 import { IProductDetailGetWithCode } from "../../../../context/interface";
 import { getArrBySort } from "../util";
-import {getBuyDetailPath} from "../../../../../../common/utils/util";
+import { getBuyDetailPath } from "../../../../../../common/utils/util";
 
 export const showProductCardModal = (
   arr: any[],
@@ -70,13 +70,13 @@ const ProductCardModal: React.FC<IProps> = ({
             );
           })}
         </ul>
-        <div className="sort-container">
-          <img
-            onClick={() => {
-              setFromLowToHigh(a => !a);
-            }}
-            src={require("./res/sort.svg")}
-          />
+        <div
+          onClick={() => {
+            setFromLowToHigh(a => !a);
+          }}
+          className="sort-container"
+        >
+          <img src={require("./res/sort.svg")} />
           Sort
         </div>
       </div>
@@ -125,10 +125,18 @@ const ProductCard = ({ info }: any) => {
             userInfo={userInfo}
           />
         </div>
-        <button className="common-button long-button" onClick={() => {
-          window.location.href = getBuyDetailPath(productDisplayName, buyProductCode)
-          // locationHref()
-        }}>View Phone</button>
+        <button
+          className="common-button long-button"
+          onClick={() => {
+            window.location.href = getBuyDetailPath(
+              productDisplayName,
+              buyProductCode
+            );
+            // locationHref()
+          }}
+        >
+          View Phone
+        </button>
       </div>
     </div>
   );
