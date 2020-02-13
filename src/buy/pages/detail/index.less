@@ -79,9 +79,9 @@
         min-width: 0;
       }
       .fixed-wrapper {
-        flex: 0 0 @rightPartWidth;
+        flex: 0 0 calc(@rightPartWidth - @totalWidth / 20);
         > div {
-          .magic-mixin({width: @rightPartWidth});
+          .magic-mixin({width: calc(@rightPartWidth - @totalWidth / 20)});
         }
       }
     }

@@ -18,6 +18,12 @@ export function TopSwiper(props: any) {
     productId,
     containerWidth
   } = props;
+  const globalSettingContext = useContext(GlobalSettingContext);
+  const {
+    globalSettingContextValue
+  } = globalSettingContext as IGlobalSettingContext;
+  const { isMobile } = globalSettingContextValue;
+  const contentSize = (isMobile ? 1 : 0.9) * containerWidth;
   const [currentImageIndex, setCurrentImageIndex] = useState("");
   const renderContent = (afterCalcSize: number) => {
     if (currentImageIndex === "video") {
@@ -52,7 +58,7 @@ export function TopSwiper(props: any) {
               // isFluidWidth: true,
               width: afterCalcSize,
               height: afterCalcSize,
-              src: buyProductImgPc[currentImageIndex]
+              src: buyProductImgM[currentImageIndex]
             },
             largeImage: {
               src: buyProductImgPc[currentImageIndex],
@@ -64,12 +70,7 @@ export function TopSwiper(props: any) {
       );
     }
   };
-  const globalSettingContext = useContext(GlobalSettingContext);
-  const {
-    globalSettingContextValue
-  } = globalSettingContext as IGlobalSettingContext;
-  const { isMobile } = globalSettingContextValue;
-  const contentSize = (isMobile ? 1 : 0.87) * containerWidth;
+
   return (
     <div className="detail-top-swiper">
       <div className="swiper-part-container">
@@ -78,7 +79,7 @@ export function TopSwiper(props: any) {
           buyProductVideo={buyProductVideo}
           buyProductImgM={buyProductImgM}
           isMobile={isMobile}
-          swiperWidth={(isMobile ? 0.225 : 0.12) * contentSize}
+          swiperWidth={(isMobile ? 0.225 : 0.1) * contentSize}
           currentImageIndex={currentImageIndex}
           setCurrentImageIndex={setCurrentImageIndex}
         />
