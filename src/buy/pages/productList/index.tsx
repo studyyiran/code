@@ -21,6 +21,7 @@ import {
   isServer
 } from "../../common/utils/util";
 import { safeEqual } from "../../common/utils/util";
+import {DetailLoading} from "../detail/components/loading";
 
 export default function ProductList(props: any) {
   const productListContext = useContext(ProductListContext);
@@ -226,29 +227,33 @@ export default function ProductList(props: any) {
       />
     );
   }
-
-  return (
-    <div className="product-list-page">
-      <LoadingMask visible={pendingStatus} />
-      {renderFilterByCondition()}
-      <div className="list-part">
-        <section className="title-part">
-          <h1>Buy Used Phones</h1>
-          <p>
-            Buy used refurbished phones. Fully inspected, certified, data
-            cleaned, and sanitized by UpTrade.
-          </p>
-        </section>
-        <SearchProduct onClickSubmit={onClickSubmitHandler} />
-        <QuickSelect />
-        {renderFilterCard()}
-        <section className="product-list-container">
-          <RenderList productList={productList} />
-        </section>
-        <RenderFooter />
+  if (pendingStatus) {
+    return <DetailLoading/>
+  } else {
+    return (
+      <div className="product-list-page">
+        <LoadingMask visible={pendingStatus} />
+        {renderFilterByCondition()}
+        <div className="list-part">
+          <section className="title-part">
+            <h1>Buy Used Phones</h1>
+            <p>
+              Buy used refurbished phones. Fully inspected, certified, data
+              cleaned, and sanitized by UpTrade.
+            </p>
+          </section>
+          <SearchProduct onClickSubmit={onClickSubmitHandler} />
+          <QuickSelect />
+          {renderFilterCard()}
+          <section className="product-list-container">
+            <RenderList productList={productList} />
+          </section>
+          <RenderFooter />
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
+ 
 }
 function RenderFooter() {
   const productListContext = useContext(ProductListContext);
