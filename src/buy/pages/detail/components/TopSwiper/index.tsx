@@ -104,7 +104,7 @@ export function TopSwiper(props: any) {
               <span>Roll over image to zoom in</span>
             </div>
           }
-          ComponentMb={<div className="zoom-container-mb">
+          ComponentMb={currentImageIndex === "video" ? null : <div className="zoom-container-mb">
             <span>Long Press</span>
             <img src={require('./res/zoom2.svg')}/>
           </div>}
