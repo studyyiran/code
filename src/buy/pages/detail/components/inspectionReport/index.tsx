@@ -5,38 +5,32 @@ import "./index.less";
 import { RenderByCondition } from "../../../../components/RenderByCondition";
 import { Carousel } from "antd";
 import { IProductDetail } from "../../context/interface";
+
+const columnNumber = 2
 export function InspectionReport(props: {
   productDescription: any;
   buyProductHistoryPdf?: any;
   backGroundCheck: any;
-  buyProductRemark: any;
-  userInfo?: any;
 }) {
   const {
     productDescription,
-    buyProductRemark,
     buyProductHistoryPdf,
     backGroundCheck,
-    userInfo
   } = props;
   return (
     <div className="inspection-report">
-      <h2 className="sub-title-size-main title-with-border">
-        Inspection Report
-      </h2>
-      <InspectPersonInfo
-        buyProductRemark={buyProductRemark}
-        userInfo={userInfo}
-      />
+      {/*<h2 className="sub-title-size-main title-with-border">*/}
+      {/*  Inspection Report*/}
+      {/*</h2>*/}
       <div className="item-list">
-        <WithTitle title={"Fully Functional"}>
+        <WithTitle title={"Fully Functional"} className="common-detail-page-card">
           <FullyFunctionalPart backGroundCheck={backGroundCheck} />
         </WithTitle>
-        <WithTitle title={"Phone History"}>
+        <WithTitle title={"Phone History"} className="common-detail-page-card">
           <PhoneBackgroundHistory />
         </WithTitle>
         {productDescription ? (
-          <WithTitle title={"Phone Details"}>
+          <WithTitle title={"Phone Details"} className="common-detail-page-card">
             <EditorResolver editorContent={productDescription} />
           </WithTitle>
         ) : null}
@@ -45,45 +39,16 @@ export function InspectionReport(props: {
   );
 }
 
-function WithTitle({ title, children }: { title: string; children: any }) {
+function WithTitle({ title, children, className }: { title: string; children: any; className?: string }) {
   return (
-    <section>
+    <section className={className ? className : ''}>
       <h2 className="sub-title-size">{title}</h2>
       {children}
     </section>
   );
 }
 
-function InspectPersonInfo({
-  buyProductRemark,
-  userInfo
-}: {
-  buyProductRemark: any;
-  userInfo: IProductDetail["userInfo"];
-}) {
-  // 就算有if 有的时候 也不好
-  if (userInfo) {
-    return (
-      <div className="Inspect-person-info">
-        <div className="first">
-          <img src={userInfo.userImg || require("./res/defaulthead.png")} />
-          <div className="name-part">
-            <h3 className="title-style">Inspected by</h3>
-            <span>{userInfo.userName || `UpTrade`}</span>
-          </div>
-        </div>
-        {buyProductRemark ? (
-          <div className="second">
-            <h3 className="title-style">Inspection Notes<img src={require('./res/notes-icon.svg')}/></h3>
-            <p>{buyProductRemark}</p>
-          </div>
-        ) : null}
-      </div>
-    );
-  } else {
-    return null;
-  }
-}
+
 
 // function renderReport() {
 //   return (
@@ -142,7 +107,7 @@ function PhoneBackgroundHistory(): any {
       content: "Clear"
     }
   ];
-  const arr = splitByColumn(staticArr, 3);
+  const arr = splitByColumn(staticArr, columnNumber);
   return (
     <div className="phone-background-history">
       {arr.map((item, index) => {
@@ -191,7 +156,7 @@ function FullyFunctionalPart({
     backGroundCheck.filter(({ title, content }) => {
       return title && content !== "";
     }),
-    3
+    columnNumber
   );
 
   return (

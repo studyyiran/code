@@ -28,7 +28,7 @@ function CheckOrderEntryForm(props: any) {
           groupOrderNo: orderId,
           userEmail: email
         }).then((res: any) => {
-          locationHref("/buy/checkorder/order");
+          locationHref("/buy-checkorder/order");
         });
       }
     });

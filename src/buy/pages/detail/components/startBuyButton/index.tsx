@@ -12,14 +12,14 @@ export function StartBuyButton(props: {
 }) {
   const { onClick, buyProductStatus, productDetail } = props;
   return (
-    <div className="start-pay-button">
+    <div className="start-pay-button long-button">
       <Button disabled={buyProductStatus === "INTRANSACTION"} onClick={onClick}>
-        {buyProductStatus === "INTRANSACTION" ? "Sold" : "Start Your Purchase"}
+        {buyProductStatus === "INTRANSACTION" ? "Sold" : "Buy now"}
       </Button>
-      <span className="or">OR</span>
-      <a className="link" onClick={viewAllClickHandler.bind({}, productDetail)}>
-        Find Similar Phones >
-      </a>
+      {/*<span className="or">OR</span>*/}
+      {/*<a className="link" onClick={viewAllClickHandler.bind({}, productDetail)}>*/}
+      {/*  Find Similar Phones >*/}
+      {/*</a>*/}
     </div>
   );
 }

@@ -38,14 +38,6 @@ export const routerConfig = [
     getInitialProps: productListSsrRule
   },
   {
-    path: "/detail/:productId",
-    exact: true,
-    title: "",
-    // title: "Buy Used Phones | Sell My Phone | UpTradeit.com", // 为了测试ssr准确性
-    Component: ProductDetail,
-    getInitialProps: detailSsrRule
-  },
-  {
     path: "/detail-preview/:token",
     exact: true,
     title: "Buy Used Phones | Sell My Phone | UpTradeit.com",
@@ -65,15 +57,23 @@ export const routerConfig = [
     Component: UptradePolicy
   },
   {
-    path: "/buy/checkorder",
+    path: "/buy-checkorder/checkorder",
     title: "",
     Component: BuyCheckOrder
   },
   {
-    path: "/buy",
+    path: "/buy-checkout",
     title: "Check out - Information | Uptradeit.com",
     Component: OrderRouter,
     header: "hide"
+  },
+  {
+    path: "/buytest/:modelName",
+    exact: true,
+    title: "",
+    // title: "Buy Used Phones | Sell My Phone | UpTradeit.com", // 为了测试ssr准确性
+    Component: ProductDetail,
+    getInitialProps: detailSsrRule
   },
   {
     path: "/",

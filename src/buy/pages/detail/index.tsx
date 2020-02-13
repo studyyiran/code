@@ -3,7 +3,7 @@ import "./index.less";
 import { Affix, Carousel } from "antd";
 
 import { IProductDetailContext, ProductDetailContext } from "./context";
-import { safeEqual } from "../../common/utils/util";
+import { getUrlAllParams, isServer, safeEqual } from "../../common/utils/util";
 import { RenderByCondition } from "../../components/RenderByCondition";
 import PhoneProductCard from "../productList/components/phoneProductCard";
 import { detailSsrRule } from "./ssr";
@@ -20,6 +20,8 @@ import { MoreInfo } from "./components/moreInfo";
 import { getDescArr, viewAllClickHandler } from "./util";
 import { ReviewListPart } from "./components/revirePart";
 import { LastLineComponent } from "./components/lastLineComponent";
+import { RenderSimilar } from "./components/renderSimilar";
+import { DetailLoading } from "./components/loading";
 
 export default function ProductDetail(props: any) {
   const [showModal, setShowModal] = useState(false);
@@ -30,14 +32,18 @@ export default function ProductDetail(props: any) {
     getProductDetail,
     resetProductInfo,
     getSimiliarPhoneList,
-    getReviewScore
+    getReviewScore,
+    getProductDetailByCode,
+    getSimiliarByCode
   } = productDetailContext as IProductDetailContext;
 
   const {
     productDetail,
     similiarPhoneList,
     partsInfo,
-    reviewListInfo
+    reviewListInfo,
+    productDetailByCode,
+    similiarPhoneListByCode
   } = productDetailContextValue;
 
   // 执行ssr
@@ -45,6 +51,7 @@ export default function ProductDetail(props: any) {
   const {
     buyProductRemark,
     backGroundCheck,
+    buyProductCode,
     productDisplayName,
     buyProductId,
     buyProductImgPc,
@@ -55,7 +62,75 @@ export default function ProductDetail(props: any) {
     buyProductStatus
   } = productDetail;
 
-  const id = useWhenUrlChange("productId");
+  const modelName = useWhenUrlChange("modelName");
+  const { variant } = getUrlAllParams();
+  const [containerWidth, setContainerWidth] = useState(0);
+  // 用code拉取xxx
+  useEffect(() => {
+    if (buyProductCode) {
+      getSimiliarByCode(buyProductCode);
+    }
+  }, [buyProductCode, getSimiliarByCode]);
+
+  const pId =
+    productDetailByCode &&
+    productDetailByCode.detail &&
+    productDetailByCode.detail.buyProductId;
+  useEffect(() => {
+    if (!isNaN(Number(pId))) {
+      getSimiliarPhoneList(pId);
+    }
+  }, [getSimiliarPhoneList, pId]);
+
+  // url -> id -> getDetail
+  // useEffect(() => {
+  //   // getProductDetail(id);
+  //   // 要规避
+  //   if (
+  //     (!productDetail || !productDetail.buyProductCode) &&
+  //     (!productDetailByCode ||
+  //       !productDetailByCode.detail ||
+  //       !productDetailByCode.detail.buyProductCode)
+  //   ) {
+  //     getProductDetailByCode({
+  //       buyProductCode: variant,
+  //       modelDisplayName: ""
+  //     });
+  //   }
+  //   return () => {
+  //     if (!isServer()) {
+  //       if (window.location.href.indexOf("testbuy") === -1) {
+  //         resetProductInfo();
+  //       }
+  //     }
+  //   };
+  // }, [
+  //   getProductDetailByCode,
+  //   productDetail,
+  //   productDetailByCode,
+  //   resetProductInfo,
+  //   variant
+  // ]);
+
+  useEffect(() => {
+    if (variant) {
+      getProductDetailByCode({
+        buyProductCode: variant,
+        modelDisplayName: ""
+      });
+    } else {
+      if (modelName) {
+        getProductDetailByCode({
+          buyProductCode: "",
+          modelDisplayName: modelName
+        });
+      }
+    }
+
+    return () => {
+      resetProductInfo();
+    };
+  }, [modelName, variant]);
 
   // 设置title
   useEffect(() => {
@@ -72,15 +147,6 @@ export default function ProductDetail(props: any) {
     }
   }, [productDetail]);
 
-  // url -> id -> getDetail
-  useEffect(() => {
-    getProductDetail(id);
-    getSimiliarPhoneList(id);
-    return () => {
-      resetProductInfo();
-    };
-  }, [getProductDetail, getSimiliarPhoneList, id, resetProductInfo]);
-
   // -> review
   useEffect(() => {
     getReviewScore();
@@ -88,7 +154,7 @@ export default function ProductDetail(props: any) {
 
   useEffect(() => {
     // 只有有商品属性 并且有页面id的时候.并且相等.才进行上报操作
-    if (productDetail && id) {
+    if (productDetail && variant) {
       const {
         buyProductId,
         buyLevel,
@@ -98,7 +164,7 @@ export default function ProductDetail(props: any) {
         buyProductBQV,
         skuId
       } = productDetail;
-      if (safeEqual(id, productDetail.buyProductId)) {
+      if (safeEqual(variant, productDetail.buyProductCode)) {
         let bqvParams: any = {};
         if (buyProductBQV) {
           buyProductBQV.forEach((item: any) => {
@@ -136,9 +202,7 @@ export default function ProductDetail(props: any) {
         );
       }
     }
-  }, [id, productDetail]);
-
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  }, [variant, productDetail]);
 
   const renderSimilar = () => {
     // 哪怕有ts,也不能相信他一定有值.
@@ -211,52 +275,83 @@ export default function ProductDetail(props: any) {
       />
     );
   }
+  function renderHeaderProductPart() {
+    return (
+      <HeaderProductPart
+        similiarPhoneListByCode={similiarPhoneListByCode}
+        productDetailByCode={productDetailByCode}
+        showModal={showModal}
+        setShowModal={setShowModal}
+        productDetail={productDetail}
+        partsInfo={partsInfo}
+        userInfo={userInfo}
+        buyProductRemark={buyProductRemark}
+      />
+    );
+  }
 
   if (buyProductId) {
     return (
-      <div className="product-detail-page">
-        <TopSwiper
-          currentImageIndex={currentImageIndex}
-          setCurrentImageIndex={setCurrentImageIndex}
-          buyProductVideo={buyProductVideo}
-          buyProductImgPc={buyProductImgPc}
-          buyProductImgM={buyProductImgM}
-        />
-        <div className="product-detail">
-          <HeaderProductPart
-            showModal={showModal}
-            setShowModal={setShowModal}
-            productDetail={productDetail}
-            partsInfo={partsInfo}
+      <div
+        className="product-detail-page"
+        ref={(element: any) => {
+          if (element && element.clientWidth) {
+            setContainerWidth(element.clientWidth);
+          }
+        }}
+      >
+        <div className="top-part">
+          <div className="product-detail">
+            <TopSwiper
+              productId={buyProductCode}
+              containerWidth={containerWidth}
+              buyProductVideo={buyProductVideo}
+              buyProductImgPc={buyProductImgPc}
+              buyProductImgM={buyProductImgM}
+            />
+            <RenderByCondition
+              ComponentPc={null}
+              ComponentMb={renderHeaderProductPart()}
+            />
+            <InspectionReport
+              productDescription={productDescription}
+              backGroundCheck={backGroundCheck}
+            />
+            <MoreInfo />
+          </div>
+          <RenderByCondition
+            ComponentPc={
+              <div className="fixed-wrapper">
+                <Affix offsetBottom={0}>{renderHeaderProductPart()}</Affix>
+              </div>
+            }
+            ComponentMb={null}
           />
-          <InspectionReport
-            userInfo={userInfo}
-            productDescription={productDescription}
-            buyProductRemark={buyProductRemark}
-            backGroundCheck={backGroundCheck}
-          />
-          {renderMobileStartButton()}
-          <ReviewListPart reviewListInfo={reviewListInfo} />
-          <MoreInfo />
-          {renderSimilar()}
-          <LastLineComponent />
         </div>
+        <>
+          <ReviewListPart reviewListInfo={reviewListInfo} />
+          <RenderSimilar
+            similiarPhoneList={similiarPhoneList}
+            productDetail={productDetail}
+            history={props.history}
+          />
+          <LastLineComponent />
+        </>
         <RenderByCondition
           ComponentMb={(() => {
             return buyProductImgPc.map((item: string) => {
-              return <img style={{display: 'none'}} src={item} key={item} />;
+              return <img style={{ display: "none" }} src={item} key={item} />;
             });
           })()}
-          ComponentPc={null}
+          ComponentPc={(() => {
+            return buyProductImgPc.map((item: string) => {
+              return <img style={{ display: "none" }} src={item} key={item} />;
+            });
+          })()}
         />
       </div>
     );
   } else {
-    return (
-      <div className="product-detail-page">
-        <LoadingMask visible={true} />
-        <div className="loading-mask-min-height"></div>
-      </div>
-    );
+    return <DetailLoading />;
   }
 }

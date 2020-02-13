@@ -124,7 +124,7 @@ function PaymentInner(props: any) {
           invoiceSameAddr,
           invoiceInfo
         });
-        locationHref("/buy/confirmation");
+        locationHref("/buy-checkout/confirmation");
       } catch (e) {
         console.error(e);
       }

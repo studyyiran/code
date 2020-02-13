@@ -21,6 +21,7 @@ import {
   isServer
 } from "../../common/utils/util";
 import { safeEqual } from "../../common/utils/util";
+import {DetailLoading} from "../detail/components/loading";
 
 export default function ProductList(props: any) {
   const productListContext = useContext(ProductListContext);
@@ -226,10 +227,10 @@ export default function ProductList(props: any) {
       />
     );
   }
-
   return (
     <div className="product-list-page">
-      <LoadingMask visible={pendingStatus} />
+      <DetailLoading hide={!pendingStatus}/>
+      {/*<LoadingMask visible={pendingStatus} />*/}
       {renderFilterByCondition()}
       <div className="list-part">
         <section className="title-part">
@@ -249,6 +250,7 @@ export default function ProductList(props: any) {
       </div>
     </div>
   );
+ 
 }
 function RenderFooter() {
   const productListContext = useContext(ProductListContext);

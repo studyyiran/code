@@ -24,7 +24,7 @@ export default function VideoComponent(props: {
     if (!preState.hasStarted && state.hasStarted && !isFullScreen) {
       isFullScreen = true;
       if (!isMobile) {
-        (playerRef.current as any).toggleFullscreen();
+        // (playerRef.current as any).toggleFullscreen();
       }
     }
   }
@@ -51,6 +51,9 @@ export default function VideoComponent(props: {
           key={randomKey}
           preload={"none"}
           poster={poster}
+          autoPlay={true}
+          muted={true}
+          className={className}
           ref={(player: any) => {
             if (player) {
               (playerRef.current as any) = player;
@@ -60,15 +63,16 @@ export default function VideoComponent(props: {
             }
           }}
           src={src}
-          className={`${className ? className : ""} comp-video`}
-          height="100px"
-          fluid={false}
+          fluid={true}
         >
           <BigPlayButton position={"center"} />
         </Player>
       }
       ComponentPc={
         <Player
+          className={className}
+          autoPlay={true}
+          muted={true}
           key={randomKey}
           ref={(player: any) => {
             if (player) {
@@ -79,9 +83,7 @@ export default function VideoComponent(props: {
             }
           }}
           src={src}
-          className={`${className ? className : ""} comp-video`}
-          height="100px"
-          fluid={false}
+          fluid={true}
         >
           <BigPlayButton position={"center"} />
         </Player>

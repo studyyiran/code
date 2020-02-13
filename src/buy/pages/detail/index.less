@@ -1,12 +1,92 @@
 @import (reference) "~buy/common/styles/index.less";
-
+@import (reference) "~buy/pages/detail/common.less";
 @p: {
   .product-detail-page {
+    font-size: 12 * @f;
+    .pc({
+      padding-top: 27 *@px;
+    });
+    .long-button {
+      @height: 70*@px;
+      height: @height;
+      line-height: @height;
+      .mb({
+        @height: 50*@px;
+        height: @height;
+        line-height: @height;
+      });
+      > * {
+        height: 100%;
+        line-height: 100%;
+        width: 100%;
+      }
+      .mb({
+        min-width: 100%;
+        width: 100%;
+      })
+    }
+    .mb({
+      .item-list {
+        .common-detail-page-card {
+          &:first-child{
+            border-top: 1px solid @color-border;
+          }
+        }
+      }
+    });
+    .common-detail-page-card {
+      border: 1px solid @color-border;
+      padding: 15 *@px;
+      .mb-padding();
+      border-radius: 3px;
+      .mb({
+
+        border: none;
+        border-left: none;
+        border-right: none;
+        border-bottom: none;
+      });
+    }
     /*
     样式覆盖的
      */
+    //margin-top: 15 * @px;
+    .mb({@imageWidth: 100vw;});
+    //页面结构
+    @totalWidth: 1450 * @px;
+    .setpage(@totalWidth);
+    .pc({
+      .page-padding();
+    });
+    //padding-top: 25 * @px;
+    padding-bottom: 80 * @px;
+    
     .react-images__footer {
       padding-bottom: 100px !important;
+    }
+    @hahaA: 0.05;
+    @hahaB: 0.02;
+    .top-part {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      @rightPartWidth: (@totalWidth - @totalWidth * @hahaA - @totalWidth * @hahaB) / 2;
+      .product-detail {
+        flex: 0 0 (@hahaA * @totalWidth + @rightPartWidth);
+        //.pc({
+        //  margin-right: @totalWidth / 20;
+        //});
+        .mb({
+          flex: 1;
+        });
+        min-width: 0;
+      }
+      .fixed-wrapper {
+        flex: 0 0 @rightPartWidth;
+        > div {
+          .magic-mixin({width: @rightPartWidth});
+        }
+      }
     }
 
     /*
@@ -61,7 +141,7 @@
     }
     .sub-title-size-main {
       white-space: nowrap;
-      .pc({@size: 24 * @f; font-size: @size;});
+      .pc({@size: 22 * @f; font-size: @size;});
       .mb({@size: 20 * @px; font-size: @size;});
       font-weight: @boldWeight;
     }
@@ -70,9 +150,6 @@
       white-space: nowrap;
     }
 
-    .loading-mask-min-height {
-      //min-height: 100vh;
-    }
     .fixtag {
       display: flex;
       align-items: center;
@@ -115,16 +192,8 @@
       }
     }
 
-    @imageWidth: 470 * @px;
+    
     .product-detail {
-      //margin-top: 15 * @px;
-      .mb({@imageWidth: 100vw;});
-      //页面结构
-
-      .setpage(3 * @imageWidth);
-      .page-padding();
-      //padding-top: 25 * @px;
-      padding-bottom: 80 * @px;
       // reset
       .common-collapse {
         margin-bottom: 21 * @px;
@@ -177,48 +246,6 @@
         padding: 10 * @px 10 * @px;
         margin-top: 15 * @px;
       }
-
-      .similar {
-        margin-top: 66 * @px;
-        .mb({margin-top: 40 * @px;});
-        header {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          margin-bottom: 46 * @px;
-          .mb({margin-bottom: 40 * @px;});
-          > h2 {
-            .mb({font-size: 24 * @px;});
-          }
-          > span {
-            color: rgba(26, 180, 231, 1);
-            font-weight: @boldWeight;
-          }
-        }
-        .list {
-          @widthSize: 280 * @px;
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          justify-items: center;
-          :first-child {
-            justify-self: start;
-          }
-          :last-child {
-            justify-self: end;
-          }
-          .phone-product-card {
-            .innerdiv {
-              .innerdiv-imgsize(@widthSize);
-            }
-            //min-width: 280 *@px;
-          }
-        }
-
-        .view-all-text {
-          color: #2ba8d8;
-          font-weight: bolder;
-        }
-      }
     }
     .checkbox-protection {
       display: flex;
@@ -247,11 +274,6 @@
         > input {
           margin: 0 0 16 * @px;
           height: 36 * @px;
-        }
-      }
-      .similar {
-        .ant-carousel .slick-dots-bottom {
-          bottom: 0;
         }
       }
     }

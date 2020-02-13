@@ -1,8 +1,73 @@
 @import (reference) "~buy/common/styles/index.less";
-
+@import (reference) "~buy/pages/detail/common.less";
 @p1: {
   .detail-top-swiper {
     position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: initial;
+    .pc({
+      margin-bottom: 50 * @px;
+    });
+    .video-react-video {
+      object-fit: cover;
+    }
+    .my-video {
+      width: 100% !important;
+      height: 100% !important;
+    }
+    .mb({
+      width: 100vw;
+    });
+    .mb({
+      flex-direction: column-reverse;
+    });
+    .swiper-part-container {
+      .pc({
+        flex: 1;
+      });
+      .mb({
+        //.mb-padding();
+        padding-top: 5 *@px;
+        padding-bottom: 5 *@px;
+      });
+    }
+    .content-part {
+      position: relative;
+      .real-phone-product {
+        background: linear-gradient(90deg,rgba(26,180,231,1) 0%,rgba(52,152,219,1) 100%);
+        display: inline;
+        padding: 2*@px 10 *@px;
+        color: @white;
+        position: absolute;
+        top: 8 *@px;
+        left: 8 *@px;
+        z-index: 10;
+      }
+      .zoom-container-mb {
+        position: absolute;
+        bottom: 5 *@px;
+        right: 10*@px;
+        img {
+          margin-left: 10 *@px;
+        }
+        > * {
+          font-weight: @boldWeight;
+          vertical-align: middle;
+        }
+      }
+      .zoom-container-pc {
+        text-align: center;
+        margin-top: 10 *@px;
+        img {
+          margin-right: 10 *@px;
+        }
+        > * {
+          font-weight: @boldWeight;
+          vertical-align: middle;
+        }
+      }
+    }
     .mb-zoom {
       position: absolute;
       width: 30 *@px;
@@ -22,9 +87,9 @@
       z-index: 1;
       padding: 11 * @px;
       color: white;
-      font-size: 16 * @px;
+      font-size: 16 * @f;
       font-weight: @normalWeight;
-      .mb({padding: 2 * @px 8 * @px;font-size: 11 * @px;});
+      .mb({padding: 2 * @px 8 * @px;font-size: 11 * @f;});
       position: absolute;
       top: 10 * @px;
       left: 10 * @px;
@@ -34,15 +99,6 @@
         rgba(52, 152, 219, 1) 100%
       );
       border-radius: 4px;
-    }
-    @imageWidth: 470 * @px;
-    .setpage(3 * @imageWidth);
-    .swiper-mb {
-      height: 100vw;
-      width: 100vw;
-      .innerdiv {
-        .innerdiv-imgsize(100vw);
-      }
     }
     .pc-total-count {
       position: absolute;
@@ -54,27 +110,7 @@
       background: white;
       padding: 4 * @px 10 * @px;
     }
-    .swiper-pc {
-      display: flex;
-      justify-content: center;
-      >div {
-        flex: 0 0 @imageWidth;
-      }
-      //margin-bottom: 40 * @px;
-      //padding: 10 * @px 0;
-      height: @imageWidth;
-      .innerdiv {
-        .canclick();
-        .innerdiv-imgsize(@imageWidth);
-      }
-      .inner-div-container {
-        overflow: hidden;
-        height: @imageWidth;
-        .innerdiv {
-          .upup();
-        }
-      }
-    }
+    
     .ant-carousel .slick-slide {
       text-align: center;
       //height: 160px;

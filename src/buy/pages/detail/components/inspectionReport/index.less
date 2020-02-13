@@ -2,23 +2,10 @@
 
 @p1: {
   .inspection-report {
-    .title-style {
-      font-size: 16 * @f;
-      margin-top: 4 * @px;
-      white-space: nowrap;
-      vertical-align: middle;
-      img {
-        vertical-align: middle;
-        width: 30 * @px;
-        margin-left: 10 * @px;
-        .mb({width: 20 * @px;});
-      }
-    }
     @imgSize: 78;
     .Inspect-person-info {
       display: flex;
       flex-direction: column;
-      padding-top: 15 * @px;
       > * {
         padding-bottom: 17 * @px;
       }
@@ -54,9 +41,8 @@
       }
     }
     .item-list {
-      border-top: 1px solid @color-border;
       padding-top: 15 * @px;
-      .pc({margin-left: (@imgSize + 30) * @f;});
+      //.pc({margin-left: (@imgSize + 30) * @f;});
       section {
         h2.sub-title-size {
           margin-bottom: 8 * @px;
@@ -67,7 +53,7 @@
     }
   }
   .common-grid-3() {
-    .pc({display: grid; grid-template-columns: repeat(3, 1fr) ;});
+    .pc({display: grid; grid-template-columns: repeat(2, 1fr) ;});
     // 适当控制间距
     @media (max-width: 1344px) {
       grid-column-gap: 20 * @px;
@@ -103,7 +89,12 @@
       align-items: flex-start;
       grid-template-columns: 1fr 1fr;
       .icon-with-title();
+      img {
+        width: 22 *@px;
+        height: 22 *@px;
+      }
       label {
+        white-space: nowrap;
         display: inline-block;
       }
     }

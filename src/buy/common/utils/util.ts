@@ -144,6 +144,19 @@ export function setSession(key: string, obj: any) {
   }
 }
 
+export function getBuyDetailPath(modalName: string, buyProductCode: string) {
+  return `/buytest/${modalName
+    .replace(/\s+/g, "-")
+    .toLowerCase()}?variant=${buyProductCode}`;
+  // if (modalName) {
+  //   return `/testbuy/${modalName
+  //     .replace(/\s+/g, "-")
+  //     .toLowerCase()}?variant=${buyProductCode}`;
+  // } else {
+  //   return ""
+  // }
+}
+
 export default function getSellPath() {
   return "/sell-phone";
 }
@@ -214,7 +227,7 @@ export function getUrlAllParams() {
     let url = decodeURI(window.location.href);
     let res = {} as any;
     let url_data = url.split("?").length > 1 ? url.split("?")[1] : null;
-    if (!url_data) return null;
+    if (!url_data) return {};
     let params_arr = url_data.split("&");
     params_arr.forEach(function(item) {
       let key = item.split("=")[0];
@@ -223,7 +236,7 @@ export function getUrlAllParams() {
     });
     return res;
   } else {
-    return null;
+    return {};
   }
 }
 

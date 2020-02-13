@@ -1,0 +1,51 @@
+@import (reference) "~buy/common/styles/index.less";
+
+@p1: {
+  .Inspect-person-info {
+    @imgSize: 64 * @px;
+    display: flex;
+    flex-direction: column;
+    margin: 4 *@px 0 10 *@px 0;
+    .title-style {
+      font-size: 12 * @f;
+      //white-space: nowrap;
+      vertical-align: middle;
+      img {
+        vertical-align: middle;
+        width: 30 * @px;
+        margin-left: 10 * @px;
+        .mb({width: 20 * @px;});
+      }
+    }
+    .first {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: flex-start;
+      padding-bottom: 5 * @px;
+      img {
+        min-width: @imgSize;
+        width: @imgSize;
+        height: @imgSize;
+        margin-right: 23 * @px;
+      }
+      .blue {
+        color: #1ab4e7;
+      }
+    }
+    .second {
+      h3:first-child {
+        margin-bottom: 0 * @px;
+      }
+      //p {
+      //  color: #1ab4e7;
+      //  font-weight: @boldWeight;
+      //}
+      //.pc(
+      //{margin-top: -30 * @px; margin-left: (@imgSize + 30) * @f;
+      //  padding-bottom: 30 * @px;}
+      //);
+    }
+  }
+};
+
+.hello(@p1);

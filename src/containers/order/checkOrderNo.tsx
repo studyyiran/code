@@ -166,7 +166,7 @@ class CheckOrderNo extends React.Component<any, any> {
         });
         // 如果是销售侧的订单
         if (orderId.indexOf("XS") !== -1) {
-          const checkOrderBuyUrl = "/buy/checkorder/order";
+          const checkOrderBuyUrl = "/buy-checkorder/checkorder/order";
           window.location.href = checkOrderBuyUrl;
         } else {
           this.props.history.replace(nextUrl);
