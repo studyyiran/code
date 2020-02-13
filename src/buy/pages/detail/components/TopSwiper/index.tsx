@@ -99,12 +99,15 @@ export function TopSwiper(props: any) {
         {renderContent(contentSize)}
         <RenderByCondition
           ComponentPc={
-            <div className="zoom-container">
+            <div className="zoom-container-pc">
               <img src={require('./res/zoom2.svg')}/>
               <span>Roll over image to zoom in</span>
             </div>
           }
-          ComponentMb={null}
+          ComponentMb={<div className="zoom-container-mb">
+            <span>Long Press</span>
+            <img src={require('./res/zoom2.svg')}/>
+          </div>}
         />
       </div>
     </div>

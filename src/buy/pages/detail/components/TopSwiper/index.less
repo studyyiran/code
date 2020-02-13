@@ -44,8 +44,28 @@
         left: 8 *@px;
         z-index: 10;
       }
-      .zoom-container {
+      .zoom-container-mb {
+        position: absolute;
+        bottom: 5 *@px;
+        right: 10*@px;
+        img {
+          margin-left: 10 *@px;
+        }
+        > * {
+          font-weight: @boldWeight;
+          vertical-align: middle;
+        }
+      }
+      .zoom-container-pc {
         text-align: center;
+        margin-top: 10 *@px;
+        img {
+          margin-right: 10 *@px;
+        }
+        > * {
+          font-weight: @boldWeight;
+          vertical-align: middle;
+        }
       }
     }
     .mb-zoom {
