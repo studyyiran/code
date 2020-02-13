@@ -62,7 +62,8 @@ export default function ProductDetail(props: any) {
     buyProductStatus
   } = productDetail;
 
-  const id = useWhenUrlChange("modalName");
+  const modelName = useWhenUrlChange("modelName");
+  console.log(props)
   const { variant } = getUrlAllParams();
   const [containerWidth, setContainerWidth] = useState(0);
   console.log("similiarPhoneListByCode");
@@ -120,11 +121,19 @@ export default function ProductDetail(props: any) {
         buyProductCode: variant,
         modelDisplayName: ""
       });
+    } else {
+      if (modelName) {
+        getProductDetailByCode({
+          buyProductCode: "",
+          modelDisplayName: modelName
+        });
+      }
     }
+
     return () => {
       resetProductInfo();
     };
-  }, []);
+  }, [modelName, variant]);
 
   // 设置title
   useEffect(() => {
@@ -148,7 +157,7 @@ export default function ProductDetail(props: any) {
 
   useEffect(() => {
     // 只有有商品属性 并且有页面id的时候.并且相等.才进行上报操作
-    if (productDetail && id) {
+    if (productDetail && variant) {
       const {
         buyProductId,
         buyLevel,
@@ -158,7 +167,7 @@ export default function ProductDetail(props: any) {
         buyProductBQV,
         skuId
       } = productDetail;
-      if (safeEqual(id, productDetail.buyProductId)) {
+      if (safeEqual(variant, productDetail.buyProductCode)) {
         let bqvParams: any = {};
         if (buyProductBQV) {
           buyProductBQV.forEach((item: any) => {
@@ -196,7 +205,7 @@ export default function ProductDetail(props: any) {
         );
       }
     }
-  }, [id, productDetail]);
+  }, [variant, productDetail]);
 
   const renderSimilar = () => {
     // 哪怕有ts,也不能相信他一定有值.
