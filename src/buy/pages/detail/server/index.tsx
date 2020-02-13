@@ -45,13 +45,18 @@ export async function getProductDetail(id: string) {
 
 export async function getProductDetailByCode(data: ICodeDetail) {
   const res: any = await ajax.post(`/buy/product/detail/bycodeormodel`, data);
-  res.detail = detailFormat(res.detail)
+  if (res && res.detail) {
+    res.detail = detailFormat(res.detail)
+  }
+  
   return res;
 }
 
 export async function getProductDetailByIdAndCondition(data: ICodeAndId) {
   const res: any = await ajax.post(`/buy/product/detail/byskuorcondition`, data);
-  res.detail = detailFormat(res.detail)
+  if (res && res.detail) {
+    res.detail = detailFormat(res.detail)
+  }
   return res;
 }
 

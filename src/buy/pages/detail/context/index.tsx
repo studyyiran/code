@@ -170,6 +170,8 @@ function useGetAction(
                 value: res.detail
               });
             }
+          } else {
+            locationHref(getProductListPath())
           }
         } catch (e) {
           console.error(e);
@@ -205,6 +207,8 @@ function useGetAction(
             if (res.sameProduct) {
               Message.error('Product not found, please try other color, storage or condition')
             }
+          } else {
+            locationHref(getProductListPath())
           }
         } catch (e) {
           console.error(e);

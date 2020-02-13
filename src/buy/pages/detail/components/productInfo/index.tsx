@@ -2,7 +2,7 @@ import {getDescArr} from "../../util";
 import React from "react";
 
 export function ProductInfo(props: any) {
-  const { productDisplayName, buyLevel, buyProductBQV } = props;
+  const { productDisplayName, buyLevel, buyProductBQV, children } = props;
   const [lineOne, lineTwo] = getDescArr(buyProductBQV, productDisplayName);
   const titleList = [
     {
@@ -44,7 +44,7 @@ export function ProductInfo(props: any) {
   return (
     <section className="product-info">
       <div className="info-part">
-        <h2 className="sub-title-size-main">{lineOne ? ` ${lineOne}` : ""}</h2>
+        <h2 className="sub-title-size-main">{children ? children :lineOne ? ` ${lineOne}` : ""}</h2>
       </div>
     </section>
   );

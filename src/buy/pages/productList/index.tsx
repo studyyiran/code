@@ -227,32 +227,29 @@ export default function ProductList(props: any) {
       />
     );
   }
-  if (pendingStatus) {
-    return <DetailLoading/>
-  } else {
-    return (
-      <div className="product-list-page">
-        <LoadingMask visible={pendingStatus} />
-        {renderFilterByCondition()}
-        <div className="list-part">
-          <section className="title-part">
-            <h1>Buy Used Phones</h1>
-            <p>
-              Buy used refurbished phones. Fully inspected, certified, data
-              cleaned, and sanitized by UpTrade.
-            </p>
-          </section>
-          <SearchProduct onClickSubmit={onClickSubmitHandler} />
-          <QuickSelect />
-          {renderFilterCard()}
-          <section className="product-list-container">
-            <RenderList productList={productList} />
-          </section>
-          <RenderFooter />
-        </div>
+  return (
+    <div className="product-list-page">
+      <DetailLoading hide={!pendingStatus}/>
+      {/*<LoadingMask visible={pendingStatus} />*/}
+      {renderFilterByCondition()}
+      <div className="list-part">
+        <section className="title-part">
+          <h1>Buy Used Phones</h1>
+          <p>
+            Buy used refurbished phones. Fully inspected, certified, data
+            cleaned, and sanitized by UpTrade.
+          </p>
+        </section>
+        <SearchProduct onClickSubmit={onClickSubmitHandler} />
+        <QuickSelect />
+        {renderFilterCard()}
+        <section className="product-list-container">
+          <RenderList productList={productList} />
+        </section>
+        <RenderFooter />
       </div>
-    );
-  }
+    </div>
+  );
  
 }
 function RenderFooter() {

@@ -57,7 +57,9 @@ const ProductCardModal: React.FC<IProps> = ({
   });
   return (
     <div className="product-card-modal">
-      <ProductInfo {...productDetail} />
+      <ProductInfo {...productDetail}>
+        {productDetail.productDisplayName}
+      </ProductInfo>
       <div className="second-line">
         <ul className="selector-container">
           {config.map(({ title, content }) => {
