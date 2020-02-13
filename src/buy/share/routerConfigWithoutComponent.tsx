@@ -9,7 +9,7 @@ export const routerConfigWithoutComponent = [
     path: getProductListPath(),
   },
   {
-    path: "/testbuy/:modalName",
+    path: "/buy/:modalName",
   },
   {
     path: "/detail-preview/:token",
