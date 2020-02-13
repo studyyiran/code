@@ -58,7 +58,7 @@ const ProductCardModal: React.FC<IProps> = ({
   return (
     <div className="product-card-modal">
       <ProductInfo {...productDetail}>
-        {productDetail.productDisplayName}
+        {productDetail.brandDisplayName + ' ' + productDetail.productDisplayName}
       </ProductInfo>
       <div className="second-line">
         <ul className="selector-container">

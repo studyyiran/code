@@ -1,4 +1,7 @@
-import {IProductDetail, IProductDetailGetWithCode} from "../../context/interface";
+import {
+  IProductDetail,
+  IProductDetailGetWithCode
+} from "../../context/interface";
 import { CartPop } from "../cartPop";
 import { dataReport } from "../../../../common/dataReport";
 import React, { useEffect, useState } from "react";
@@ -9,8 +12,8 @@ import { OnSaleTag } from "../onSaleTag";
 import { InspectPersonInfo } from "../inspectPersonInfo";
 import { ProductIdAndPrice } from "./components/price";
 import { AttrSelector } from "./components/attrSelector";
-import {ProductInfo} from "../productInfo";
-import {RenderByCondition} from "../../../../components/RenderByCondition";
+import { ProductInfo } from "../productInfo";
+import { RenderByCondition } from "../../../../components/RenderByCondition";
 
 export function HeaderProductPart(props: {
   productDetail: IProductDetail;
@@ -39,7 +42,8 @@ export function HeaderProductPart(props: {
     buyProductCode,
     buyProductStatus,
     skuId,
-    buyTags
+    buyTags,
+    brandDisplayName
   } = productDetail;
   return (
     <div className="header-part">
@@ -50,7 +54,9 @@ export function HeaderProductPart(props: {
         partsInfo={partsInfo}
       />
       <div className="price-part-out-container">
-        <ProductInfo {...productDetail} />
+        <ProductInfo {...productDetail}>
+          {brandDisplayName + ' ' + productDisplayName}
+        </ProductInfo>
         <ProductIdAndPrice
           productDetailByCode={productDetailByCode}
           productDetail={productDetail}
@@ -61,7 +67,10 @@ export function HeaderProductPart(props: {
         >
           <OnSaleTag tag={buyTags} />
         </ProductIdAndPrice>
-        <RenderByCondition ComponentPc={<TopIconList />} ComponentMb={<TopIconList />}/>
+        <RenderByCondition
+          ComponentPc={<TopIconList />}
+          ComponentMb={<TopIconList />}
+        />
         <AttrSelector productDetailByCode={productDetailByCode} />
         <InspectPersonInfo
           buyProductRemark={buyProductRemark}
@@ -94,4 +103,3 @@ export function HeaderProductPart(props: {
     </div>
   );
 }
-

@@ -21,7 +21,7 @@ export const routerConfigWithoutComponent = [
     path: "/buy-checkorder/checkorder",
   },
   {
-    path: "/buy",
+    path: "/buy-checkout",
   },
   {
     path: "/buytest",

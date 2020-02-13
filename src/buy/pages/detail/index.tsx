@@ -63,11 +63,8 @@ export default function ProductDetail(props: any) {
   } = productDetail;
 
   const modelName = useWhenUrlChange("modelName");
-  console.log(props)
   const { variant } = getUrlAllParams();
   const [containerWidth, setContainerWidth] = useState(0);
-  console.log("similiarPhoneListByCode");
-  console.log(similiarPhoneListByCode);
   // 用code拉取xxx
   useEffect(() => {
     if (buyProductCode) {
