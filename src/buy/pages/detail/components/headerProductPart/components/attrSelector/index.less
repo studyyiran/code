@@ -2,8 +2,9 @@
 
 @p1: {
   .select-list {
+    min-width: 100%;
     .title {
-      font-size: 16 * @f;
+      font-size: 14 * @f;
       margin-bottom: 4 *@px;
       .name {
         color: rgba(106, 106, 106, 1);
@@ -27,20 +28,35 @@
         }
       }
     });
-    .list-container {
-      font-size: 12 *@f;
-      display: flex;
-      flex-wrap: wrap;
-      > li {
-        margin-bottom: 8 *@px;
-        .pc({
-          margin-right: 10 * @px;
-        });
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    .pc({
+      .list-container {
+        width: 100%;
+        max-width: 100%;
+        font-size: 12 *@f;
+        > li {
+          margin-bottom: 8 *@px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
       }
-    }
+      &:not(:last-child) {
+        .list-container {
+          display: grid;
+          grid-template-columns: repeat(5, 1fr);
+          grid-column-gap: 10 *@px;
+        }
+      }
+      &:last-child {
+        .list-container {
+          display: flex;
+          flex-wrap: wrap;
+          > li {
+            margin-right: 10 * @px;
+          }
+        }
+      }
+    });
   }
 
   .attr-selector {
@@ -55,7 +71,8 @@
     }
     .button-select {
       .pc({
-        width: 130 *@px;
+        width: 100%;
+        //width: 130 *@px;
       });
       .mb({
         width: 100%;
