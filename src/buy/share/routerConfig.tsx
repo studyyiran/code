@@ -57,12 +57,12 @@ export const routerConfig = [
     Component: UptradePolicy
   },
   {
-    path: "/buy/checkorder",
+    path: "/buy-checkorder/checkorder",
     title: "",
     Component: BuyCheckOrder
   },
   {
-    path: "/buy",
+    path: "/buy-checkout",
     title: "Check out - Information | Uptradeit.com",
     Component: OrderRouter,
     header: "hide"

@@ -18,7 +18,7 @@ export const routerConfigWithoutComponent = [
     path: "/return-policy",
   },
   {
-    path: "/buy/checkorder",
+    path: "/buy-checkorder/checkorder",
   },
   {
     path: "/buy",
