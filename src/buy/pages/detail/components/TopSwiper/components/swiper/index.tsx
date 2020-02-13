@@ -67,7 +67,7 @@ export const RenderSwiper: React.FC<IProps> = ({
       >
         <InnerDivImage
           style={afterStyle}
-          imgUrl={require("./res/poster.png")}
+          imgUrl={require("./res/poster2.jpg")}
           dataIndex={"video"}
         />
       </div>

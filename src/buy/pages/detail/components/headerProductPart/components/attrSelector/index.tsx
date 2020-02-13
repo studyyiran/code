@@ -151,9 +151,10 @@ export const RenderSelectList: React.FC<IProps2> = ({
         {title} : <span className="name">{currentSelectName}</span>
       </h3>
       <ul className="list-container">
-        {arr.map(({ children, id, disabled }, index) => {
+        {arr.map(({ children, id, disabled, name }, index) => {
           return (
             <li
+              title={tags === 'ISCOLOR' ? name : ''}
               onClick={() => {
                 if (!disabled) {
                   setCurrentSelect(id);
