@@ -61,7 +61,7 @@ export function HeaderProductPart(props: {
         >
           <OnSaleTag tag={buyTags} />
         </ProductIdAndPrice>
-        <RenderByCondition ComponentPc={null} ComponentMb={<TopIconList />}/>
+        <RenderByCondition ComponentPc={<TopIconList />} ComponentMb={<TopIconList />}/>
         <AttrSelector productDetailByCode={productDetailByCode} />
         <InspectPersonInfo
           buyProductRemark={buyProductRemark}
@@ -89,7 +89,7 @@ export function HeaderProductPart(props: {
           buyProductStatus={buyProductStatus}
           productDetail={productDetail}
         />
-        <RenderByCondition ComponentPc={<TopIconList />} ComponentMb={null}/>
+        {/*<RenderByCondition ComponentPc={<TopIconList />} ComponentMb={null}/>*/}
       </div>
     </div>
   );

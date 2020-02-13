@@ -11,7 +11,7 @@ import {
 import {RenderByCondition} from "../../../../components/RenderByCondition";
 
 const hahaA = 0.05;
-const hahaB = 0.01;
+const hahaB = 0.02;
 
 export function TopSwiper(props: any) {
   const {
