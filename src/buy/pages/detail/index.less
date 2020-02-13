@@ -64,24 +64,27 @@
     .react-images__footer {
       padding-bottom: 100px !important;
     }
+    @hahaA: 0.05;
+    @hahaB: 0.01;
     .top-part {
       position: relative;
       display: flex;
-      @rightPartWidth: @totalWidth / 2;
+      justify-content: space-between;
+      @rightPartWidth: (@totalWidth - @totalWidth * @hahaA - @totalWidth * @hahaB) / 2;
       .product-detail {
-        flex: 0 0 @totalWidth - @rightPartWidth;
-        .pc({
-          margin-right: @totalWidth / 20;
-        });
+        flex: 0 0 (@hahaA * @totalWidth + @rightPartWidth);
+        //.pc({
+        //  margin-right: @totalWidth / 20;
+        //});
         .mb({
           flex: 1;
         });
         min-width: 0;
       }
       .fixed-wrapper {
-        flex: 0 0 calc(@rightPartWidth - @totalWidth / 20);
+        flex: 0 0 @rightPartWidth;
         > div {
-          .magic-mixin({width: calc(@rightPartWidth - @totalWidth / 20)});
+          .magic-mixin({width: @rightPartWidth});
         }
       }
     }

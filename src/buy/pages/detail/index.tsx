@@ -123,7 +123,7 @@ export default function ProductDetail(props: any) {
     }
     return () => {
       resetProductInfo();
-    }
+    };
   }, []);
 
   // 设置title
@@ -286,16 +286,16 @@ export default function ProductDetail(props: any) {
 
   if (buyProductId) {
     return (
-      <div className="product-detail-page">
+      <div
+        className="product-detail-page"
+        ref={(element: any) => {
+          if (element && element.clientWidth) {
+            setContainerWidth(element.clientWidth);
+          }
+        }}
+      >
         <div className="top-part">
-          <div
-            className="product-detail"
-            ref={(element: any) => {
-              if (element && element.clientWidth) {
-                setContainerWidth(element.clientWidth);
-              }
-            }}
-          >
+          <div className="product-detail">
             <TopSwiper
               productId={buyProductCode}
               containerWidth={containerWidth}

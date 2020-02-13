@@ -10,6 +10,9 @@ import {
 } from "../../../../context";
 import {RenderByCondition} from "../../../../components/RenderByCondition";
 
+const hahaA = 0.05;
+const hahaB = 0.01;
+
 export function TopSwiper(props: any) {
   const {
     buyProductImgPc,
@@ -23,7 +26,7 @@ export function TopSwiper(props: any) {
     globalSettingContextValue
   } = globalSettingContext as IGlobalSettingContext;
   const { isMobile } = globalSettingContextValue;
-  const contentSize = (isMobile ? 1 : 0.9) * containerWidth;
+  const contentSize = (isMobile ? containerWidth : (containerWidth - containerWidth * hahaA - containerWidth * hahaB) / 2);
   const [currentImageIndex, setCurrentImageIndex] = useState("");
   const renderContent = (afterCalcSize: number) => {
     if (currentImageIndex === "video") {
@@ -45,7 +48,7 @@ export function TopSwiper(props: any) {
             },
             enlargedImageContainerStyle: {
               width: '1px',
-              marginLeft: 0.1 * containerWidth + "px",
+              marginLeft: hahaB * containerWidth + "px",
               zIndex: 99999,
             },
             imageStyle: {
@@ -79,7 +82,7 @@ export function TopSwiper(props: any) {
           buyProductVideo={buyProductVideo}
           buyProductImgM={buyProductImgM}
           isMobile={isMobile}
-          swiperWidth={(isMobile ? 0.225 : 0.1) * contentSize}
+          swiperWidth={(isMobile ? 0.225  * containerWidth : hahaA  * containerWidth - 10)}
           currentImageIndex={currentImageIndex}
           setCurrentImageIndex={setCurrentImageIndex}
         />
