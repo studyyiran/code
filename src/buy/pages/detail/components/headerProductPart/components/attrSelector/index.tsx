@@ -46,8 +46,8 @@ export const AttrSelector: React.FC<IProps> = ({ productDetailByCode }) => {
           "T-Mobile": "Tmobile",
           "Sprint": "Sprint",
           "MetroPCS": "Metro",
-          "Unlocked": "Unlocked",
-          "Others": "Others",
+          "Unlockeddelete": "Unlocked",
+          "Othersdelete": "Others",
         }
         let imgName = nameToImgName[name];
         if (imgName) {
