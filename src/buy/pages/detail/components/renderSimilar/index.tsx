@@ -4,6 +4,8 @@ import {Carousel} from "antd";
 import PhoneProductCard from "../../../productList/components/phoneProductCard";
 import React from "react";
 import './index.less';
+import {locationHref} from "../../../../common/utils/routerHistory";
+import {getProductListPath} from "../../../../common/utils/util";
 
 interface IProps {
   similiarPhoneList: any[];
@@ -22,7 +24,9 @@ export const RenderSimilar : React.FC<IProps> = (props) => {
           <a>
               <span
                 className={"view-all-text"}
-                onClick={viewAllClickHandler.bind({}, productDetail)}
+                onClick={() => {
+                  locationHref(getProductListPath());
+                }}
               >
                 VIEW ALL
               </span>

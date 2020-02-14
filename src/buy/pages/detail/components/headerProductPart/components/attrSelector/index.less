@@ -28,6 +28,22 @@
         }
       }
     });
+    .list-container {
+      > li {
+        > *:not(.circle-select) {
+          .pc({
+            min-height: 45 *@px;
+          });
+          .mb({
+            min-height: 35 *@px;
+          });
+          
+        }
+      }
+      img {
+        //width: 50%;
+      }
+    }
     .pc({
       .list-container {
         width: 100%;
@@ -35,6 +51,10 @@
         font-size: 12 *@f;
         > li {
           margin-bottom: 8 *@px;
+          > *:not(.circle-select) {
+            //min-height: 45 *@px;
+          }
+          
           display: flex;
           align-items: center;
           justify-content: center;
@@ -84,6 +104,7 @@
         });
       }
       &.disabled {
+        background: rgba(246, 246, 246, 0.3);
         color: rgba(106, 106, 106, 0.4);
       }
       display: flex;
