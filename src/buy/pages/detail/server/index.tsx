@@ -67,9 +67,9 @@ export async function getSimiliarByCode(buyProductCode: string) {
 
 
 
-export async function getSimiliar(data: any) {
+export async function getSimiliar(buyProductCode: string) {
   // 当get 被catch的时候 await后续的流程都会终止掉.
-  const res = await ajax.post(`/buy/product/similiar`, data);
+  const res = await ajax.get(`/buy/product/similiar?buyProductCode=${buyProductCode}`);
   return res;
 }
 

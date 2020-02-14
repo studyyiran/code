@@ -11,9 +11,9 @@ const getProductList = debounce(async (data: any) => {
   return res && res.list ? res.list : [];
 }, 10);
 
-async function getModelList(pn: any) {
+async function getModelList(pn: any, pageNumber?: any) {
   const res: any = await ajax.get(
-    `/buy/product/saleProduct?pageSize=5&pageNum=${pn}`
+    `/buy/product/saleProduct?pageSize=${pageNumber ? pageNumber : 5}&pageNum=${pn}`
   );
   return res;
 }

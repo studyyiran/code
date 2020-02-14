@@ -77,10 +77,10 @@ export default function ProductDetail(props: any) {
     productDetailByCode.detail &&
     productDetailByCode.detail.buyProductId;
   useEffect(() => {
-    if (!isNaN(Number(pId))) {
-      getSimiliarPhoneList(pId);
+    if (buyProductCode) {
+      getSimiliarPhoneList(buyProductCode);
     }
-  }, [getSimiliarPhoneList, pId]);
+  }, [getSimiliarPhoneList, buyProductCode]);
 
   // url -> id -> getDetail
   // useEffect(() => {
@@ -141,7 +141,7 @@ export default function ProductDetail(props: any) {
         productDisplayName
       } = productDetail;
       const [lineOne, lineTwo] = getDescArr(buyProductBQV, productDisplayName);
-      document.title = `Used ${lineOne} ${lineTwo
+      document.title = `${lineOne} ${lineTwo
         .replace("(", "- ")
         .replace(")", "")} For Sale | UpTradeit.com`;
     }

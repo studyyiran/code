@@ -10,8 +10,8 @@ import {
 } from "../../../../context";
 import {RenderByCondition} from "../../../../components/RenderByCondition";
 
-const hahaA = 0.05;
-const hahaB = 0.02;
+const hahaA = 0.06;
+const hahaB = 0.06;
 
 
 export function TopSwiper(props: any) {
@@ -62,7 +62,7 @@ export function TopSwiper(props: any) {
               // isFluidWidth: true,
               width: afterCalcSize,
               height: afterCalcSize,
-              src: buyProductImgM[currentImageIndex]
+              src: buyProductImgPc[currentImageIndex]
             },
             largeImage: {
               src: buyProductImgPc[currentImageIndex],
@@ -83,7 +83,7 @@ export function TopSwiper(props: any) {
           buyProductVideo={buyProductVideo}
           buyProductImgM={buyProductImgM}
           isMobile={isMobile}
-          swiperWidth={(isMobile ? 0.225  * containerWidth : hahaA  * containerWidth - 10)}
+          swiperWidth={(isMobile ? 0.225  * containerWidth : hahaA  * containerWidth - 18)}
           currentImageIndex={currentImageIndex}
           setCurrentImageIndex={setCurrentImageIndex}
         />

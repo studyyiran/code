@@ -25,7 +25,7 @@ export const AttrSelector: React.FC<IProps> = ({ productDetailByCode }) => {
     fatherName: string
   ) {
     // 区分种类
-    const { choose, disabled, name, conditionPrice, colorCode } = selectItem;
+    const { choose, disabled, name, conditionPrice, colorCode, id } = selectItem;
     if (tags === "ISCOLOR") {
       //
       return (
@@ -36,6 +36,44 @@ export const AttrSelector: React.FC<IProps> = ({ productDetailByCode }) => {
           style={{ backgroundColor: colorCode }}
         >
           {choose ? <Svg /> : null}
+        </div>
+      );
+    } else if (fatherName === "Carrier") {
+      const nameToImgUrl = () => {
+        const nameToImgName = {
+          "AT&T": "ATT",
+          "Verizon": "Verizon",
+          "T-Mobile": "Tmobile",
+          "Sprint": "Sprint",
+          "MetroPCS": "Metro",
+          "Unlocked": "Unlocked",
+          "Others": "Others",
+        }
+        let imgName = nameToImgName[name];
+        if (imgName) {
+          let statusName = ''
+          if (choose) {
+            statusName = 'Active'
+          } else {
+            if (disabled) {
+              statusName = 'Disabled'
+            } else {
+              statusName = 'Normal'
+            }
+          }
+          return require(`./res/${imgName}/${statusName}.svg`)
+        } else {
+          return ""
+        }
+      }
+
+      return (
+        <div
+          className={`select button-select ${
+            choose ? "button-select-selected" : ""
+          } ${disabled && !choose ? "disabled" : ""}`}
+        >
+          {nameToImgUrl() ? <img src={nameToImgUrl()} /> : name}
         </div>
       );
     } else {
@@ -66,7 +104,9 @@ export const AttrSelector: React.FC<IProps> = ({ productDetailByCode }) => {
       title: fatherName,
       currentSelectName: (values.find(item => {
         return item.choose === true;
-      }) as any).name,
+      }) as any) ? (values.find(item => {
+        return item.choose === true;
+      }) as any).name : "",
       arr: values.map(selectItem => {
         const { name, choose, id, disabled } = selectItem;
         return {
@@ -138,7 +178,12 @@ export const RenderSelectList: React.FC<IProps2> = ({
         });
       }
     }
-  }, [buyProductCode, currentSelect, getProductDetailByIdAndCondition]);
+  }, [
+    buyProductCode,
+    currentSelect,
+    getProductDetailByIdAndCondition,
+    resetProductInfo
+  ]);
 
   // useEffect(() => {
   //   if (defaultSelect) {
@@ -154,7 +199,7 @@ export const RenderSelectList: React.FC<IProps2> = ({
         {arr.map(({ children, id, disabled, name }, index) => {
           return (
             <li
-              title={tags === 'ISCOLOR' ? name : ''}
+              title={tags === "ISCOLOR" ? name : ""}
               onClick={() => {
                 if (!disabled) {
                   setCurrentSelect(id);

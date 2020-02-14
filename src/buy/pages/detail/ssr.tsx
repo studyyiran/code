@@ -47,7 +47,7 @@ export const detailSsrRule = async (url: string) => {
             productDisplayName
           );
           // 设置路径
-          ssrRes.ssrConfig.ssrTitle = `Used ${lineOne} ${lineTwo
+          ssrRes.ssrConfig.ssrTitle = `${lineOne} ${lineTwo
             .replace("(", "- ")
             .replace(")", "")} For Sale | UpTradeit.com`;
 
@@ -79,11 +79,7 @@ export const detailSsrRule = async (url: string) => {
           } catch (e) {}
         }
       }
-      const similiarPhoneList: any = await getSimiliar({
-        buyProductId: productId,
-        pageNum: 1,
-        pageSize: 4
-      });
+      const similiarPhoneList: any = await getSimiliar("");
       if (similiarPhoneList) {
         store.storeData.similiarPhoneList = similiarPhoneList;
       }
