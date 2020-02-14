@@ -228,11 +228,7 @@ function useGetAction(
     ),
     getSimiliarPhoneList: useCallback(
       async function(productId) {
-        const res: any = await getSimiliar({
-          buyProductId: productId,
-          pageNum: 1,
-          pageSize: 4
-        });
+        const res: any = await getSimiliar(productId);
         dispatch({
           type: storeDetailActionTypes.setSimiliarPhoneList,
           value: res

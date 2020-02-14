@@ -77,10 +77,10 @@ export default function ProductDetail(props: any) {
     productDetailByCode.detail &&
     productDetailByCode.detail.buyProductId;
   useEffect(() => {
-    if (!isNaN(Number(pId))) {
-      getSimiliarPhoneList(pId);
+    if (buyProductCode) {
+      getSimiliarPhoneList(buyProductCode);
     }
-  }, [getSimiliarPhoneList, pId]);
+  }, [getSimiliarPhoneList, buyProductCode]);
 
   // url -> id -> getDetail
   // useEffect(() => {
