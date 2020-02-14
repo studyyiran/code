@@ -119,8 +119,14 @@ export const productListSsrRule = async (url: string) => {
       const isRepeat = store.storeData.modelList.find(
         item => item.id === info.productId
       );
-      if (!isRepeat && store.storeData.modelList.length < 6) {
-        store.storeData.modelList.push(modelFilterAttr(info));
+      if (!isRepeat ) {
+        if (store.storeData.modelList.length < 6) {
+          store.storeData.modelList.push(modelFilterAttr(info));
+        } else if (productIds.find((item: any) => {
+          return item.id === info.productId
+        })){
+          store.storeData.modelList.push(modelFilterAttr(info));
+        }
       }
     });
 
