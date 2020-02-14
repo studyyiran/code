@@ -38,43 +38,45 @@ export function getAnswers(
   filterSelect.map(({ id: typeAddId }: any) => {
     const [type] = typeAddId.split("-");
     const [typeItem, infoItem] = findInfoById(typeAddId, info);
-    switch (type) {
-      case "Manufacture":
-        if (infoItem && infoItem.id) {
-          answer.brandId.push(infoItem.id);
-        }
+    if (infoItem) {
+      switch (type) {
+        case "Manufacture":
+          if (infoItem && infoItem.id) {
+            answer.brandId.push(infoItem.id);
+          }
 
-        break;
-      case "attrOf3":
-        // TODO hardcode
-        answer.filterBQVS.push({
-          bpId: typeItem.bpId,
-          bpName: typeItem.title,
-          list: [{ bpvId: "", bpvName: infoItem.id }]
-        });
-        break;
-      case "Model": {
-        answer.filterProductId.push(infoItem.id);
-        break;
+          break;
+        case "attrOf3":
+          // TODO hardcode
+          answer.filterBQVS.push({
+            bpId: typeItem.bpId,
+            bpName: typeItem.title,
+            list: [{ bpvId: "", bpvName: infoItem.id }]
+          });
+          break;
+        case "Model": {
+          answer.filterProductId.push(infoItem.id);
+          break;
+        }
+        case "Condition": {
+          answer.buyLevel.push(infoItem.value);
+          break;
+        }
+        case "Price": {
+          answer.price.push({
+            lowPrice: infoItem.value[0],
+            highPrice: infoItem.value[1]
+          });
+          break;
+        }
+        default:
+          // 无法识别
+          answer.filterBQVS.push({
+            bpId: typeItem.bpId,
+            bpName: typeItem.title,
+            list: [{ bpvId: infoItem.id, bpvName: infoItem.displayName }]
+          });
       }
-      case "Condition": {
-        answer.buyLevel.push(infoItem.value);
-        break;
-      }
-      case "Price": {
-        answer.price.push({
-          lowPrice: infoItem.value[0],
-          highPrice: infoItem.value[1]
-        });
-        break;
-      }
-      default:
-        // 无法识别
-        answer.filterBQVS.push({
-          bpId: typeItem.bpId,
-          bpName: typeItem.title,
-          list: [{ bpvId: infoItem.id, bpvName: infoItem.displayName }]
-        });
     }
   });
   const linshi: any = {};

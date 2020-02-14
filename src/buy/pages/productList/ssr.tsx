@@ -114,12 +114,12 @@ export const productListSsrRule = async (url: string) => {
 
     // 为了 ssr 设置下model值.(这块因为考虑ssr效果,因为这样一开始就能有model进行爬取操作.所以强行做一下.)
     // 但是这块的页码没有返回回去 因为那边本来也是一个local值 不是所有的ssr值都能打成同步
-    const res: any = await serverProductList.getModelList(1);
+    const res: any = await serverProductList.getModelList(1, 20);
     (res || []).forEach((info: any) => {
       const isRepeat = store.storeData.modelList.find(
         item => item.id === info.productId
       );
-      if (!isRepeat) {
+      if (!isRepeat && store.storeData.modelList.length < 6) {
         store.storeData.modelList.push(modelFilterAttr(info));
       }
     });
