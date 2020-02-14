@@ -68,7 +68,7 @@ export const routerConfig = [
     header: "hide"
   },
   {
-    path: "/buytest/:modelName",
+    path: "/buy/:modelName",
     exact: true,
     title: "",
     // title: "Buy Used Phones | Sell My Phone | UpTradeit.com", // 为了测试ssr准确性
