@@ -47,7 +47,7 @@ export const detailSsrRule = async (url: string) => {
             productDisplayName
           );
           // 设置路径
-          ssrRes.ssrConfig.ssrTitle = `Used ${lineOne} ${lineTwo
+          ssrRes.ssrConfig.ssrTitle = `${lineOne} ${lineTwo
             .replace("(", "- ")
             .replace(")", "")} For Sale | UpTradeit.com`;
 

@@ -141,7 +141,7 @@ export default function ProductDetail(props: any) {
         productDisplayName
       } = productDetail;
       const [lineOne, lineTwo] = getDescArr(buyProductBQV, productDisplayName);
-      document.title = `Used ${lineOne} ${lineTwo
+      document.title = `${lineOne} ${lineTwo
         .replace("(", "- ")
         .replace(")", "")} For Sale | UpTradeit.com`;
     }
