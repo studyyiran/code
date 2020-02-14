@@ -62,7 +62,7 @@ export function TopSwiper(props: any) {
               // isFluidWidth: true,
               width: afterCalcSize,
               height: afterCalcSize,
-              src: buyProductImgM[currentImageIndex]
+              src: buyProductImgPc[currentImageIndex]
             },
             largeImage: {
               src: buyProductImgPc[currentImageIndex],
