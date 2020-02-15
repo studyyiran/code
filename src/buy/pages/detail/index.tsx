@@ -65,6 +65,7 @@ export default function ProductDetail(props: any) {
   const modelName = useWhenUrlChange("modelName");
   const { variant } = getUrlAllParams();
   const [containerWidth, setContainerWidth] = useState(0);
+  const [containerTopPos, setContainerTopPos] = useState(0);
   // 用code拉取xxx
   useEffect(() => {
     if (buyProductCode) {
@@ -278,6 +279,7 @@ export default function ProductDetail(props: any) {
   function renderHeaderProductPart() {
     return (
       <HeaderProductPart
+        topPos={containerTopPos}
         similiarPhoneListByCode={similiarPhoneListByCode}
         productDetailByCode={productDetailByCode}
         showModal={showModal}
@@ -294,13 +296,13 @@ export default function ProductDetail(props: any) {
     return (
       <div
         className="product-detail-page"
-        ref={(element: any) => {
+      >
+        <div className="top-part" ref={(element: any) => {
           if (element && element.clientWidth) {
             setContainerWidth(element.clientWidth);
+            setContainerTopPos(element.offsetTop);
           }
-        }}
-      >
-        <div className="top-part">
+        }}>
           <div className="product-detail">
             <TopSwiper
               productId={buyProductCode}
@@ -321,7 +323,7 @@ export default function ProductDetail(props: any) {
           </div>
           <RenderByCondition
             ComponentPc={
-              <div className="fixed-wrapper">
+              <div className="fixed-wrapper" style={{height: `calc(100vh - ${containerTopPos}px)`}}>
                 <Affix offsetBottom={0}>{renderHeaderProductPart()}</Affix>
               </div>
             }

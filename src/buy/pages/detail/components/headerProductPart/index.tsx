@@ -24,6 +24,7 @@ export function HeaderProductPart(props: {
   buyProductRemark: any;
   similiarPhoneListByCode: any[];
   userInfo?: any;
+  topPos?: number;
 }) {
   const {
     productDetail,
@@ -33,7 +34,8 @@ export function HeaderProductPart(props: {
     buyProductRemark,
     userInfo,
     productDetailByCode,
-    similiarPhoneListByCode
+    similiarPhoneListByCode,
+    topPos,
   } = props;
   const {
     productDisplayName,
@@ -46,7 +48,7 @@ export function HeaderProductPart(props: {
     brandDisplayName
   } = productDetail;
   return (
-    <div className="header-part">
+    <div className="header-part" style={{height: `calc(100vh - ${topPos}px)`}}>
       <CartPop
         showModal={showModal}
         setShowModal={setShowModal}
