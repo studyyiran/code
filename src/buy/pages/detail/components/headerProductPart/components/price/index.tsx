@@ -47,7 +47,7 @@ export const ProductIdAndPrice: React.FC<IProps> = ({
             {currencyTrans(buyPrice)}
           </span>
           <div className="sku-price">
-            {/*<label>Retail</label>*/}
+            <label>Retail</label>
             <span>{currencyTrans(skuPrice)}</span>
           </div>
         </div>
