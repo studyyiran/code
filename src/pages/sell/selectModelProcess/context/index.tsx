@@ -674,7 +674,7 @@ export interface ISelectModelContext extends IContextActions {
 
 export function ModelContextProvider(props: any) {
   let initState: IContextState = {
-    paymentTimeType: "NORMAL",
+    paymentTimeType: "DELAY",
     brandList: [],
     modelInfo: {
       modelId: "",

@@ -20,7 +20,7 @@ export const RenderSimilar : React.FC<IProps> = (props) => {
     return (
       <section className="similar">
         <header className="title-with-border">
-          <h2 className="sub-title-size-main">Similar Phones</h2>
+          <h2 className="sub-title-size-main">Recommended</h2>
           <a>
               <span
                 className={"view-all-text"}
