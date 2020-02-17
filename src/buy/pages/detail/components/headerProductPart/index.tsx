@@ -4,7 +4,7 @@ import {
 } from "../../context/interface";
 import { CartPop } from "../cartPop";
 import { dataReport } from "../../../../common/dataReport";
-import React, { useEffect, useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import { StartBuyButton } from "../startBuyButton";
 import { TopIconList } from "../topIconList";
 import "./index.less";
@@ -14,6 +14,7 @@ import { ProductIdAndPrice } from "./components/price";
 import { AttrSelector } from "./components/attrSelector";
 import { ProductInfo } from "../productInfo";
 import { RenderByCondition } from "../../../../components/RenderByCondition";
+import {GlobalSettingContext, IGlobalSettingContext} from "../../../../context";
 
 export function HeaderProductPart(props: {
   productDetail: IProductDetail;
@@ -47,8 +48,13 @@ export function HeaderProductPart(props: {
     buyTags,
     brandDisplayName
   } = productDetail;
+  const globalSettingContext = useContext(GlobalSettingContext);
+  const {
+    globalSettingContextValue
+  } = globalSettingContext as IGlobalSettingContext;
+  const { isMobile } = globalSettingContextValue;
   return (
-    <div className="header-part" style={{height: `calc(100vh - ${topPos}px)`}}>
+    <div className="header-part" style={isMobile ? {} : {height: `calc(100vh - ${topPos}px)`}}>
       <CartPop
         showModal={showModal}
         setShowModal={setShowModal}
