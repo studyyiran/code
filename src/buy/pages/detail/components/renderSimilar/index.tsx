@@ -47,7 +47,7 @@ export const RenderSimilar : React.FC<IProps> = (props) => {
             </Carousel>
           }
           ComponentPc={
-            <div className="list">
+            <div className="list" data-length={similiarPhoneList && similiarPhoneList.length > 4 ? "true" : "false"}>
               {similiarPhoneList.map((item, index) => {
                 return (
                   <PhoneProductCard
