@@ -18,22 +18,36 @@
         font-weight: @boldWeight;
       }
     }
+    @widthSize: 280 * @px;
     .list {
-      @widthSize: 280 * @px;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      justify-items: center;
-      :first-child {
-        justify-self: start;
-      }
-      :last-child {
-        justify-self: end;
-      }
-      .phone-product-card {
-        .innerdiv {
-          .innerdiv-imgsize(@widthSize);
+      &[data-length="false"] {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        justify-items: center;
+        :last-child {
+          justify-self: end;
         }
-        //min-width: 280 *@px;
+        :first-child {
+          justify-self: start;
+        }
+        
+        .phone-product-card {
+          .innerdiv {
+            .innerdiv-imgsize(@widthSize);
+          }
+          //min-width: 280 *@px;
+        }
+      }
+      &[data-length="true"] {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: scroll;
+        width: 100%;
+        > * {
+          flex: 0 0 @widthSize;
+          width: @widthSize;
+          margin-right: calc((100% - 4.5 * @widthSize) / 4);
+        }
       }
     }
 
