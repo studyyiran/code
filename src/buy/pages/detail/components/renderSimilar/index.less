@@ -24,13 +24,13 @@
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         justify-items: center;
-        
-        :first-child {
-          justify-self: start;
-        }
         :last-child {
           justify-self: end;
         }
+        :first-child {
+          justify-self: start;
+        }
+        
         .phone-product-card {
           .innerdiv {
             .innerdiv-imgsize(@widthSize);
