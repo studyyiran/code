@@ -155,7 +155,7 @@ export default function ProductDetail(props: any) {
 
   useEffect(() => {
     // 只有有商品属性 并且有页面id的时候.并且相等.才进行上报操作
-    if (productDetail && variant) {
+    if (productDetail) {
       const {
         buyProductId,
         buyLevel,
@@ -165,45 +165,43 @@ export default function ProductDetail(props: any) {
         buyProductBQV,
         skuId
       } = productDetail;
-      if (safeEqual(variant, productDetail.buyProductCode)) {
-        let bqvParams: any = {};
-        if (buyProductBQV) {
-          buyProductBQV.forEach((item: any) => {
-            if (item && item.bpName) {
-              if (item.bpName.toLowerCase() === "color") {
-                bqvParams.colour = item.bpvName;
-              } else {
-                bqvParams[item.bpName.toLowerCase()] = item.bpvName;
-              }
+      let bqvParams: any = {};
+      if (buyProductBQV) {
+        buyProductBQV.forEach((item: any) => {
+          if (item && item.bpName) {
+            if (item.bpName.toLowerCase() === "color") {
+              bqvParams.colour = item.bpvName;
+            } else {
+              bqvParams[item.bpName.toLowerCase()] = item.bpvName;
             }
-          });
-        }
-        dataReport(
-          Object.assign(bqvParams, {
-            event: "productPageViewed",
-            manufacturer: brandDisplayName, //update this
-            model: productDisplayName, //update this
-            condition: buyLevel, //update this
-            productID: String(buyProductId), //update this
-            price: Number(buyPrice), //update this
-            protectionPlan: false, //update this
-            ecommerce: {
-              currencyCode: "USD",
-              detail: {
-                products: [
-                  {
-                    sku: String(skuId),
-                    name: productDisplayName,
-                    price: Number(buyPrice)
-                  }
-                ]
-              }
-            }
-          })
-        );
+          }
+        });
       }
+      dataReport(
+        Object.assign(bqvParams, {
+          event: "productPageViewed",
+          manufacturer: brandDisplayName, //update this
+          model: productDisplayName, //update this
+          condition: buyLevel, //update this
+          productID: String(buyProductId), //update this
+          price: Number(buyPrice), //update this
+          protectionPlan: false, //update this
+          ecommerce: {
+            currencyCode: "USD",
+            detail: {
+              products: [
+                {
+                  sku: String(skuId),
+                  name: productDisplayName,
+                  price: Number(buyPrice)
+                }
+              ]
+            }
+          }
+        })
+      );
     }
-  }, [variant, productDetail]);
+  }, [productDetail]);
 
   const renderSimilar = () => {
     // 哪怕有ts,也不能相信他一定有值.
