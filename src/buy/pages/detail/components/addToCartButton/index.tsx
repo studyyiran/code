@@ -28,9 +28,9 @@ export function AddToCartButton(props: IProps) {
   if (haveAdd) {
     return (
       <div className="long-button add-to-cart-button added">
-        <div>
+        <div className='reset-css'>
           <Svg />
-          Added
+          <span>Added</span>
         </div>
       </div>
     );

@@ -6,6 +6,16 @@
     &.added {
       background: @color;
       color: @white;
+      .reset-css {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        > svg {
+          flex: 0 0 20 *@px;
+          margin-right: 10 *@px;
+        }
+      }
+      
     }
     .canclick();
     border: 1px solid @color;
