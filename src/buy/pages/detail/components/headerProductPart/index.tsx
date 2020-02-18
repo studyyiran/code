@@ -15,6 +15,9 @@ import { AttrSelector } from "./components/attrSelector";
 import { ProductInfo } from "../productInfo";
 import { RenderByCondition } from "../../../../components/RenderByCondition";
 import {GlobalSettingContext, IGlobalSettingContext} from "../../../../context";
+import {JoinWaitList} from "../joinWaitList";
+import {AddToCart} from "../cartPop/components/addToCart";
+import {AddToCartButton} from "../addToCartButton";
 
 export function HeaderProductPart(props: {
   productDetail: IProductDetail;
@@ -84,28 +87,32 @@ export function HeaderProductPart(props: {
           buyProductRemark={buyProductRemark}
           userInfo={userInfo}
         />
-        <StartBuyButton
-          onClick={() => {
-            dataReport({
-              event: "EEaddToCart",
-              ecommerce: {
-                currencyCode: "USD",
-                add: {
-                  products: [
-                    {
-                      sku: String(skuId),
-                      name: productDisplayName,
-                      price: Number(buyPrice)
-                    }
-                  ]
+        <div>
+          {productDetail.buyProductStatus === "INTRANSACTION" ? <JoinWaitList/> : <AddToCartButton/>}
+          <StartBuyButton
+            onClick={() => {
+              dataReport({
+                event: "EEaddToCart",
+                ecommerce: {
+                  currencyCode: "USD",
+                  add: {
+                    products: [
+                      {
+                        sku: String(skuId),
+                        name: productDisplayName,
+                        price: Number(buyPrice)
+                      }
+                    ]
+                  }
                 }
-              }
-            });
-            setShowModal(true);
-          }}
-          buyProductStatus={buyProductStatus}
-          productDetail={productDetail}
-        />
+              });
+              setShowModal(true);
+            }}
+            buyProductStatus={buyProductStatus}
+            productDetail={productDetail}
+          />
+        </div>
+        
         {/*<RenderByCondition ComponentPc={<TopIconList />} ComponentMb={null}/>*/}
       </div>
     </div>
