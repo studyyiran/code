@@ -39,6 +39,7 @@ export function AddToCartButton(props: IProps) {
       <div
         onClick={() => {
           addIntoCartList(buyProductCode);
+          window.scrollTo(0, 0);
         }}
         className="long-button add-to-cart-button"
       >

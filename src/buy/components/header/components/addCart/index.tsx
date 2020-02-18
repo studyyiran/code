@@ -52,11 +52,13 @@ export function AddCart() {
     <span
       className="cart-icon-container"
       onClick={() => {
-        setShowModal(true);
+        // if (listLength > 0) {
+        //   setShowModal(true);
+        // }
       }}
     >
       <img src={require("./res/cart_icon.png")} />
-      <span>Cart</span>
+      <RenderByCondition ComponentPc={<span>Cart</span>} ComponentMb={null}/>
       {listLength > 0 ? <span className="point">{listLength}</span> : null}
       <Modal
         visible={showModal}
@@ -71,9 +73,10 @@ export function AddCart() {
         }}
       >
         <h1 className="title">Your cart</h1>
-        {detailList.map((item) => {
+        <div className="product-item-container">{detailList.map((item) => {
           return <Line {...item} />
-        }) }
+        }) }</div>
+        
         <div className="total-container">
           <div>{listLength} items</div>
           <div>

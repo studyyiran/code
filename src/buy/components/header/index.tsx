@@ -35,17 +35,20 @@ export default function Header() {
               header={
                 <div className="container">
                   <RenderBackHome />
-                  <div
-                    className="mobile-button-container"
-                    onClick={() => {
-                      setOpenColl((value: any) => !value);
-                    }}
-                  >
-                    {openColl ? (
-                      <Svg icon="wrong" />
-                    ) : (
-                      <img src={require("buy/common/static/menu.svg")} />
-                    )}
+                  <div className="cart-container">
+                    <AddCart />
+                    <div
+                      className="mobile-button-container"
+                      onClick={() => {
+                        setOpenColl((value: any) => !value);
+                      }}
+                    >
+                      {openColl ? (
+                        <Svg icon="wrong" />
+                      ) : (
+                        <img src={require("buy/common/static/menu.svg")} />
+                      )}
+                    </div>
                   </div>
                 </div>
               }
