@@ -56,7 +56,8 @@ export function AddCart() {
           setShowModal(false)
         }}
       >
-        <h1>123123</h1>
+        <h1>Your cart</h1>
+        <div className="long-button">View cart</div>
       </Modal>
     </span>
   );

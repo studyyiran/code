@@ -8,10 +8,37 @@
     width: 342 *@px!important;
     top: 88 *@px !important;left: calc(100vw - 342 *@px - 100 *@px )!important;
     margin: 0 !important;
+    .yr-modal-content {
+      padding: 24 *@px !important;
+    }
     h1 {
       font-size: 18 *@px;
       border-bottom: 1px solid @color-border;
       padding-bottom: 20 *@px;
+    }
+    .long-button {
+      @height: 70*@px;
+      height: @height;
+      line-height: @height;
+      font-size: 18 *@f;
+      background:linear-gradient(90deg,rgba(26,180,231,1) 0%,rgba(52,152,219,1) 100%);
+      border-radius: 4px;
+      color: @white;
+      text-align: center;
+      .mb({
+        @height: 50*@px;
+        height: @height;
+        line-height: @height;
+      });
+      > * {
+        height: 100%;
+        line-height: 100%;
+        width: 100%;
+      }
+      .mb({
+        min-width: 100%;
+        width: 100%;
+      })
     }
   }
 };
