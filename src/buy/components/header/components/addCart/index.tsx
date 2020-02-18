@@ -45,6 +45,9 @@ export function AddCart() {
       }
     }
   }, [cartList, listLength, showModal]);
+  
+  const detailList = listLength > 0 ? (new Array(listLength)).fill(productDetail) : []
+  
   return (
     <span
       className="cart-icon-container"
@@ -68,9 +71,17 @@ export function AddCart() {
         }}
       >
         <h1>Your cart</h1>
-        {listLength > 0 ? (new Array(listLength)).fill(productDetail).map((item) => {
+        {detailList.map((item) => {
           return <Line {...item} />
-        }) : null}
+        }) }
+        <div>
+          <div>{listLength} items</div>
+          <div>
+            <h1>Total: {currencyTrans(detailList.reduce((a, b) => {
+              return a + b.buyPrice
+            }, 0))}</h1>
+          </div>
+        </div>
         <div className="long-button">View cart</div>
         
       </Modal>
