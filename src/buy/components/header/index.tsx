@@ -68,6 +68,11 @@ export default function Header() {
                   </Dropdown>
                 );
               })}
+              <span className="cart-icon-container">
+                <img src={require('./res/cart_icon.png')} />
+                <span>Cart</span>
+              </span>
+              
             </div>
           </div>
         }

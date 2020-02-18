@@ -102,7 +102,7 @@ const footerInfo = [
         Component: LoginButton
       }
     ]
-  }
+  },
 ];
 
 export default footerInfo;
