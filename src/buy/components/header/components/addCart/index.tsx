@@ -70,11 +70,11 @@ export function AddCart() {
           setShowModal(false);
         }}
       >
-        <h1>Your cart</h1>
+        <h1 className="title">Your cart</h1>
         {detailList.map((item) => {
           return <Line {...item} />
         }) }
-        <div>
+        <div className="total-container">
           <div>{listLength} items</div>
           <div>
             <h1>Total: {currencyTrans(detailList.reduce((a, b) => {

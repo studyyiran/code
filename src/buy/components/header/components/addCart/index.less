@@ -65,7 +65,16 @@
       }
     }
   }
-  
+  .total-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30 *@px 0;
+    h1 {
+      padding: 0;
+      border: 0;
+    }
+  }
   .add-cart-modal {
     max-width: 100vw !important;
     @width: 480 *@px;
@@ -73,16 +82,19 @@
     top: 88 *@px !important;left: calc(100vw - @width - 100 *@px )!important;
     margin: 0 !important;
     .yr-modal-content {
-      padding: 12 *@px !important;
+      padding: 22 *@px !important;
     }
     font-size: 12 *@f;
     h2 {
       font-size: 12 *@f;
     }
-    h1 {
-      font-size: 18 *@px;
+    .title {
       border-bottom: 1px solid @color-border;
       padding-bottom: 20 *@px;
+    }
+    h1 {
+      font-size: 18 *@px;
+      
     }
     .long-button {
       @height: 70*@px;
