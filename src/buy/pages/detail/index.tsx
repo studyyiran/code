@@ -1,23 +1,20 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./index.less";
-import { Affix, Carousel } from "antd";
+import { Affix } from "antd";
 
 import { IProductDetailContext, ProductDetailContext } from "./context";
-import { getUrlAllParams, isServer, safeEqual } from "../../common/utils/util";
+import { getUrlAllParams } from "../../common/utils/util";
 import { RenderByCondition } from "../../components/RenderByCondition";
-import PhoneProductCard from "../productList/components/phoneProductCard";
 import { detailSsrRule } from "./ssr";
 
 import { dataReport } from "../../common/dataReport";
 import { useWhenUrlChange } from "../../common/useHook";
 
-import LoadingMask from "../productList/components/loading";
 import { HeaderProductPart } from "./components/headerProductPart";
-import { StartBuyButton } from "./components/startBuyButton";
 import { InspectionReport } from "./components/inspectionReport";
 import { TopSwiper } from "./components/TopSwiper";
 import { MoreInfo } from "./components/moreInfo";
-import { getDescArr, viewAllClickHandler } from "./util";
+import { getDescArr } from "./util";
 import { ReviewListPart } from "./components/revirePart";
 import { LastLineComponent } from "./components/lastLineComponent";
 import { RenderSimilar } from "./components/renderSimilar";
@@ -29,7 +26,6 @@ export default function ProductDetail(props: any) {
   const {
     productDetailContextValue,
     useClientRepair,
-    getProductDetail,
     resetProductInfo,
     getSimiliarPhoneList,
     getReviewScore,

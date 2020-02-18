@@ -2,9 +2,14 @@
 
 @p1: {
   .add-to-cart-button {
+    @color: rgba(55, 90, 125, 1);
+    &.added {
+      background: @color;
+      color: @white;
+    }
     .canclick();
-    border: 1px solid rgba(55, 90, 125, 1);
-    color: rgba(55, 90, 125, 1);
+    border: 1px solid @color;
+    color: @color;
     display: flex;
     align-items: center;
     justify-content: center;

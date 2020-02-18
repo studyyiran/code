@@ -24,7 +24,7 @@ import {
 } from "./interface";
 import {Message} from "../../../components/message";
 
-export const ProductDetailContext = createContext({});
+export const ProductDetailContext = createContext({} as IProductDetailContext);
 export const StoreDetail = "StoreDetail";
 
 // state
@@ -35,6 +35,7 @@ interface IContextState {
   similiarPhoneListByCode: any[];
   reviewListInfo: IReviews;
   partsInfo: IProductDetail[];
+  cartList: string[];
 }
 
 // @provider
@@ -45,6 +46,7 @@ export function ProductDetailContextProvider(props: any) {
     similiarPhoneListByCode: [],
     reviewListInfo: {} as any,
     partsInfo: [],
+    cartList: [],
     productDetailByCode: {} as any
   };
   const [state, dispatch, useClientRepair] = useGetOriginData(
@@ -89,6 +91,7 @@ interface IContextActions {
   getSimiliarByCode: (code: string) => any;
   getPartsBySkuId: (id: string) => any;
   resetProductInfo: () => any;
+  addIntoCartList: (id: string) => any;
   getReviewScore: () => any;
 }
 
@@ -109,6 +112,14 @@ function useGetAction(
   dispatch: (action: IReducerAction) => void
 ): IContextActions {
   const actions: IContextActions = {
+    addIntoCartList: useCallback(async (value) => {
+      if (value && state.cartList.length < 10) {
+        dispatch({
+          type: storeDetailActionTypes.addCartList,
+          value: [value]
+        });
+      }
+    }, [dispatch]),
     getReviewScore: useCallback(async () => {
       const res: any = await getReviewScore();
       if (res) {
@@ -257,6 +268,7 @@ export const storeDetailActionTypes = {
   setSimiliarPhoneList: "setSimiliarPhoneList",
   setSimiliarPhoneByCode: "setSimiliarPhoneByCode",
   setPartsInfo: "setPartsInfo",
+  addCartList: "addCartList",
   setReviewListInfo: "setReviewListInfo"
 };
 
@@ -265,6 +277,13 @@ function reducer(state: IContextState, action: IReducerAction) {
   const { type, value } = action;
   let newState = { ...state };
   switch (type) {
+    case storeDetailActionTypes.addCartList: {
+      newState = {
+        ...newState,
+        cartList: newState.cartList.concat([value])
+      };
+      break;
+    }
     case storeDetailActionTypes.setReviewListInfo: {
       newState = {
         ...newState,
