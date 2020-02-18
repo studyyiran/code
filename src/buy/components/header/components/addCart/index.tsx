@@ -3,11 +3,19 @@ import "./index.less";
 import { ProductDetailContext } from "../../../../pages/detail/context";
 import { FilterList } from "../../../../pages/productList/components/filsterList";
 import Modal from "../../../modal";
+import { getDescArr } from "../../../../pages/detail/util";
+import { RenderByIsFive } from "../../../RenderByIsFive";
+import { FivePrice } from "../../../../pages/detail/components/fivePrice";
+import { FiveCountDown } from "../../../../pages/detail/components/fiveCountdown";
+import { currencyTrans } from "../../../../common/utils/util";
+import { OnSaleTag } from "../../../../pages/detail/components/onSaleTag";
+import { InnerDivImage } from "../../../../pages/detail/components/innerDivImage";
+import { RenderByCondition } from "../../../RenderByCondition";
 
 export function AddCart() {
   const productDetailContext = useContext(ProductDetailContext);
   const { productDetailContextValue } = productDetailContext;
-  const { cartList } = productDetailContextValue;
+  const { cartList, productDetail } = productDetailContextValue;
   const [listLength, setListLength] = useState(-1);
   const [showModal, setShowModal] = useState(false);
   console.log(listLength);
@@ -36,11 +44,14 @@ export function AddCart() {
         }
       }
     }
-  }, [cartList, listLength]);
+  }, [cartList, listLength, showModal]);
   return (
-    <span className="cart-icon-container" onClick={() => {
-      setShowModal(true);
-    }}>
+    <span
+      className="cart-icon-container"
+      onClick={() => {
+        setShowModal(true);
+      }}
+    >
       <img src={require("./res/cart_icon.png")} />
       <span>Cart</span>
       {listLength > 0 ? <span className="point">{listLength}</span> : null}
@@ -51,14 +62,81 @@ export function AddCart() {
         maskClosable={true}
         footer={false}
         needDefaultScroll={true}
-        closable={false}
+        closable={true}
         onCancel={() => {
-          setShowModal(false)
+          setShowModal(false);
         }}
       >
         <h1>Your cart</h1>
+        {listLength > 0 ? (new Array(listLength)).fill(productDetail).map((item) => {
+          return <Line {...item} />
+        }) : null}
         <div className="long-button">View cart</div>
+        
       </Modal>
     </span>
   );
 }
+
+const Line = (props: any) => {
+  const {
+    buyProductImgM,
+    productDisplayName,
+    buyProductCode,
+    buyPrice,
+    buyLevel,
+    buyProductId,
+    buyProductBQV,
+    buyProductStatus,
+    buyTags
+  } = props;
+  console.log(buyProductBQV);
+  console.log(productDisplayName);
+  const [lineOne, lineTwo] = getDescArr(buyProductBQV, productDisplayName);
+  return (
+    <div className="product-item">
+      {/*{isSoldOut(buyProductStatus) ? (*/}
+      {/*  <InnerDivImage imgUrl={buyProductImgM && buyProductImgM[0]}>*/}
+      {/*    <div className="modal"></div>*/}
+      {/*  </InnerDivImage>*/}
+      {/*) : (*/}
+      {/*  <RenderByCondition*/}
+      {/*    ComponentMb={<InnerDivImage imgUrl={buyProductImgM && buyProductImgM[0]} />}*/}
+      {/*    ComponentPc={*/}
+      {/*      <div className="img-scale-container">*/}
+      {/*        <InnerDivImage imgUrl={buyProductImgM && buyProductImgM[0]} />*/}
+      {/*      </div>*/}
+      {/*    }*/}
+      {/*  />*/}
+      {/*)}*/}
+      <RenderByCondition
+        ComponentMb={
+          <InnerDivImage
+            lazyload={false}
+            imgUrl={buyProductImgM && buyProductImgM[0]}
+          />
+        }
+        ComponentPc={
+          <InnerDivImage
+            lazyload={false}
+            imgUrl={buyProductImgM && buyProductImgM[0]}
+          />
+        }
+      />
+      <div className="content-container">
+        {lineOne ? (
+          <div className="price-container">
+            <h2>{lineOne}</h2>
+            <h2 className="price">
+              {currencyTrans(buyPrice)}
+              <OnSaleTag tag={buyTags} />
+            </h2>
+          </div>
+        ) : null}
+        {lineTwo ? <span className="attr">{lineTwo}</span> : null}
+        <span className="condition">Condition {buyLevel}</span>
+        <span className="id">ID：{buyProductCode}</span>
+      </div>
+    </div>
+  );
+};
