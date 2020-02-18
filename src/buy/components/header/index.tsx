@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useContext, useState} from "react";
 import "./index.less";
 import { Collapse, Dropdown, Menu } from "antd";
 import { MbFooter } from "buy/components/footer";
@@ -7,10 +7,14 @@ import RouterLink from "buy/common-modules/components/routerLink";
 import { RenderByCondition } from "../RenderByCondition";
 import footerInfo from "../../common-modules/config/footerLinks.config";
 import HeaderComponent from "../../common-modules/components/header";
+import {ProductDetailContext} from "../../pages/detail/context";
+import {AddCart} from "./components/addCart";
 
 const { Panel } = Collapse;
 
 export default function Header() {
+ 
+  
   const [openColl, setOpenColl] = useState(false);
   function renderArr(arr: any) {
     return <HeaderComponent arr={arr} />;
@@ -68,11 +72,7 @@ export default function Header() {
                   </Dropdown>
                 );
               })}
-              <span className="cart-icon-container">
-                <img src={require('./res/cart_icon.png')} />
-                <span>Cart</span>
-              </span>
-              
+              <AddCart/>
             </div>
           </div>
         }
