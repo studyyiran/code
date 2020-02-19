@@ -1,12 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./index.less";
 import { ProductDetailContext } from "../../../../pages/detail/context";
-import { FilterList } from "../../../../pages/productList/components/filsterList";
 import Modal from "../../../modal";
 import { getDescArr } from "../../../../pages/detail/util";
-import { RenderByIsFive } from "../../../RenderByIsFive";
-import { FivePrice } from "../../../../pages/detail/components/fivePrice";
-import { FiveCountDown } from "../../../../pages/detail/components/fiveCountdown";
 import { currencyTrans } from "../../../../common/utils/util";
 import { OnSaleTag } from "../../../../pages/detail/components/onSaleTag";
 import { InnerDivImage } from "../../../../pages/detail/components/innerDivImage";
@@ -33,21 +29,22 @@ export function AddCart() {
         console.log(listLength);
         if (cartList.length > listLength) {
           // 弹框
-          // if (!showModal) {
-          //   setShowModal(true);
-          //   setTimeout(() => {
-          //     setShowModal(false);
-          //   }, 5000);
-          // }
+          if (!showModal) {
+            setShowModal(true);
+            // setTimeout(() => {
+            //   setShowModal(false);
+            // }, 5000);
+          }
           // 检测到变化后的更新.
           setListLength(cartList.length);
         }
       }
     }
   }, [cartList, listLength, showModal]);
-  
-  const detailList = listLength > 0 ? (new Array(listLength)).fill(productDetail) : []
-  
+
+  const detailList =
+    listLength > 0 ? new Array(listLength).fill(productDetail) : [];
+
   return (
     <span
       className="cart-icon-container"
@@ -58,7 +55,7 @@ export function AddCart() {
       }}
     >
       <img src={require("./res/cart_icon.png")} />
-      <RenderByCondition ComponentPc={<span>Cart</span>} ComponentMb={null}/>
+      <RenderByCondition ComponentPc={<span>Cart</span>} ComponentMb={null} />
       {listLength > 0 ? <span className="point">{listLength}</span> : null}
       <Modal
         visible={showModal}
@@ -73,20 +70,28 @@ export function AddCart() {
         }}
       >
         <h1 className="title">Your cart</h1>
-        <div className="product-item-container">{detailList.map((item) => {
-          return <Line {...item} />
-        }) }</div>
-        
+        <div className="product-item-container">
+          {detailList.map(item => {
+            return <Line {...item} />;
+          })}
+        </div>
+
         <div className="total-container">
-          <div>{listLength} items</div>
           <div>
-            <h1>Total: {currencyTrans(detailList.reduce((a, b) => {
-              return a + b.buyPrice
-            }, 0))}</h1>
+            <h1>{listLength} items</h1>
+          </div>
+          <div>
+            <h1>
+              Total:{" "}
+              {currencyTrans(
+                detailList.reduce((a, b) => {
+                  return a + b.buyPrice;
+                }, 0)
+              )}
+            </h1>
           </div>
         </div>
         <div className="long-button">View cart</div>
-        
       </Modal>
     </span>
   );

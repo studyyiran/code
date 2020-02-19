@@ -5,13 +5,20 @@
     .canclick();
   }
   .product-item-container {
-    max-height: 500 *@px;
+    @itemLineHeight: 2150 *@px;
+    .mb({
+      @itemLineHeight: 150 *@px;
+      max-height: @itemLineHeight * 2;
+      .product-item {
+        height: @itemLineHeight;
+      }
+    });
     overflow-y: auto;
     .product-item {
       display: flex;
       align-items: center;
-      padding: 24 * @px 0 0 *@px 0;
-      height: 250 *@px;
+      //padding: 24 * @px 0 0 *@px 0;
+      height: @itemLineHeight;
       border-bottom: 1px solid @color-border;
       .innerdiv {
         @imageWidth:125 *@px;
