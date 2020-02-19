@@ -66,7 +66,7 @@ export function HeaderProductPart(props: {
       />
       <div className="price-part-out-container">
         <ProductInfo {...productDetail}>
-          {brandDisplayName + ' ' + productDisplayName}
+          {productDisplayName}
         </ProductInfo>
         <ProductIdAndPrice
           productDetailByCode={productDetailByCode}

@@ -16,7 +16,7 @@ const footerInfo = [
         href: "/buy"
       },
       {
-        subTitle: "Buy Now",
+        subTitle: "Browse All",
         href: getProductListPath()
       }
     ]

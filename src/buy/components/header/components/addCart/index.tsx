@@ -33,12 +33,12 @@ export function AddCart() {
         console.log(listLength);
         if (cartList.length > listLength) {
           // 弹框
-          if (!showModal) {
-            setShowModal(true);
-            setTimeout(() => {
-              setShowModal(false);
-            }, 5000);
-          }
+          // if (!showModal) {
+          //   setShowModal(true);
+          //   setTimeout(() => {
+          //     setShowModal(false);
+          //   }, 5000);
+          // }
           // 检测到变化后的更新.
           setListLength(cartList.length);
         }
