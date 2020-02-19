@@ -70,7 +70,7 @@ export function AddCart() {
         }}
       >
         <h1 className="title">Your cart</h1>
-        <div className="product-item-container">
+        <div className="product-item-container" style={detailList && detailList.length > 2 ? {overflowY: 'scroll'} : {overflowY: 'auto'}}>
           {detailList.map(item => {
             return <Line {...item} />;
           })}

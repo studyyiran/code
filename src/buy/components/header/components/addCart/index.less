@@ -5,7 +5,8 @@
     .canclick();
   }
   .product-item-container {
-    @itemLineHeight: 2150 *@px;
+    @itemLineHeight: 250 *@px;
+    max-height: @itemLineHeight * 2.5;
     .mb({
       @itemLineHeight: 150 *@px;
       max-height: @itemLineHeight * 2;
@@ -13,7 +14,8 @@
         height: @itemLineHeight;
       }
     });
-    overflow-y: auto;
+    //overflow-y: auto;
+    overflow-y:scroll;
     .product-item {
       display: flex;
       align-items: center;
