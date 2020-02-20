@@ -7,11 +7,13 @@ import { getShoppingCartMock } from "./mock";
 export const getShoppingCartUrl = "/buy/order/shoppingcart/get";
 
 async function getShoppingCart() {
-  // const res: any = await ajax.get(getShoppingCartUrl);
-  // return res;
+  const res: any = await ajax.post(getShoppingCartUrl, {
+    cookieId: 123
+  });
+  return res;
   return getShoppingCartMock;
 }
 
 export const storeShoppingCartServer = {
   getShoppingCart
-}
+};
