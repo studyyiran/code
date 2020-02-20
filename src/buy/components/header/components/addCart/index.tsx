@@ -3,10 +3,11 @@ import "./index.less";
 import { ProductDetailContext } from "../../../../pages/detail/context";
 import Modal from "../../../modal";
 import { getDescArr } from "../../../../pages/detail/util";
-import { currencyTrans } from "../../../../common/utils/util";
+import {currencyTrans, getLocationUrl} from "../../../../common/utils/util";
 import { OnSaleTag } from "../../../../pages/detail/components/onSaleTag";
 import { InnerDivImage } from "../../../../pages/detail/components/innerDivImage";
 import { RenderByCondition } from "../../../RenderByCondition";
+import {locationHref} from "../../../../common/utils/routerHistory";
 
 export function AddCart() {
   const productDetailContext = useContext(ProductDetailContext);
@@ -52,6 +53,7 @@ export function AddCart() {
         // if (listLength > 0) {
         //   setShowModal(true);
         // }
+        locationHref(getLocationUrl('shoppingcart'));
       }}
     >
       <img src={require("./res/cart_icon.png")} />

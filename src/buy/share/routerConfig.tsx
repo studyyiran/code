@@ -22,6 +22,7 @@ import { PayProtectionPage, PaySubscribePage } from "../pages/payProtection";
 import { JobsPage } from "../pages/statics/job/pages/jobs";
 import { JobsHeadOf } from "../pages/statics/job/pages/josbHeadOf";
 import { JobsIntern } from "../pages/statics/job/pages/josbIntern";
+import {ShoppingCartPage} from "../pages/shoppingCartPage";
 
 export const routerConfig = [
   {
@@ -87,6 +88,12 @@ export const routerConfig = [
     title: "Log in | UpTradeit.com",
     exact: true,
     Component: PersonalLogin
+  },
+  {
+    path: getLocationUrl("shoppingcart"),
+    title: "Log in | UpTradeit.com",
+    exact: true,
+    Component: ShoppingCartPage,
   },
   {
     path: "/account/management",

@@ -186,6 +186,9 @@ export function getLocationUrl(type: string) {
     case "home": {
       return "/";
     }
+    case "shoppingcart": {
+      return "/shoppingcart";
+    }
     default:
       return "";
   }
