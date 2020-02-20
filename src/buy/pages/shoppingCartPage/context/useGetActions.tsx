@@ -1,11 +1,12 @@
-import React, {
-  useCallback,
-  useRef,
-} from "react";
+import React, { useCallback, useContext, useRef } from "react";
 import { IReducerAction } from "buy/common/interface/index.interface";
-import {storeShoppingCartServer} from "../server";
-import {IStoreShoppingCartState, storeShoppingCartReducerTypes} from "./index";
-import {Message} from "../../../components/message";
+import { storeShoppingCartServer } from "../server";
+import {
+  IStoreShoppingCartState,
+  storeShoppingCartReducerTypes
+} from "./index";
+import { Message } from "../../../components/message";
+import { GlobalSettingContext, IGlobalSettingContext } from "../../../context";
 
 // @actions
 export interface IStoreShoppingCartActions {
@@ -14,33 +15,45 @@ export interface IStoreShoppingCartActions {
 }
 
 // useCreateActions
-export function useStoreShoppingCartGetActions (
+export function useStoreShoppingCartGetActions(
   state: IStoreShoppingCartState,
   dispatch: (action: IReducerAction) => void
 ): IStoreShoppingCartActions {
+  const globalSettingContext = useContext(GlobalSettingContext);
+  const {
+    globalSettingContextValue
+  } = globalSettingContext as IGlobalSettingContext;
+  const { isMobile } = globalSettingContextValue;
   // 新增promise ref
   const promiseStatus: any = useRef();
   if (!promiseStatus.current) {
     promiseStatus.current = {};
   }
-  const getShoppingCart = useCallback(async function() {
-    const res = await storeShoppingCartServer.getShoppingCart();
-    dispatch({
-      type: storeShoppingCartReducerTypes.setShoppingCartList,
-      value: res
-    });
-  }, [dispatch])
-  const addCompareList = useCallback(async function(value) {
-    // 根据环境判断长度
-    if (true) {
+  const getShoppingCart = useCallback(
+    async function() {
+      const res = await storeShoppingCartServer.getShoppingCart();
       dispatch({
-        type: storeShoppingCartReducerTypes.addCompareList,
-        value: value
+        type: storeShoppingCartReducerTypes.setShoppingCartList,
+        value: res
       });
-    } else {
-      Message.error('You can only compare up to 4 phones');
-    }
-  }, [dispatch])
+    },
+    [dispatch]
+  );
+  const addCompareList = useCallback(
+    async function(value) {
+      let max = isMobile ? 2 : 4;
+      // 根据环境判断长度
+      if (state.compareList.length < max) {
+        dispatch({
+          type: storeShoppingCartReducerTypes.addCompareList,
+          value: value
+        });
+      } else {
+        Message.error(`You can only compare up to ${max} phones`);
+      }
+    },
+    [dispatch, isMobile, state.compareList.length]
+  );
   return {
     getShoppingCart,
     addCompareList
