@@ -9,8 +9,9 @@ export function CheckOutButton(props: {
   needProtection: boolean;
   otherProductList: IOtherProduct[];
   onClick: any;
+  children?: any;
 }) {
-  const { buyProductId, needProtection, otherProductList } = props;
+  const { buyProductId, needProtection, otherProductList, children } = props;
   const orderInfoContext = useContext(OrderInfoContext);
   const { orderInfoContextDispatch } = orderInfoContext as IOrderInfoContext;
   return (
@@ -45,7 +46,7 @@ export function CheckOutButton(props: {
         }, 100);
       }}
     >
-      Checkout
+      {children ? children : "Checkout"}
     </button>
   );
 }

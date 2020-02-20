@@ -42,6 +42,7 @@ export interface IProductDetail {
   buyProductCode: string; // productId
   buyLevel: string; // 商品等级
   buyPrice: string; // 销售价格签
+  buyProductPrice: string; // 销售价格签
   skuPrice: string; // 商品价格
   buyProductRemark: string; // 注释
   productType?: string; // 配件新增

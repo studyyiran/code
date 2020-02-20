@@ -36,22 +36,23 @@ export function CartShoppingItem(props: IProps) {
   const { productDetail, partsInfo, compareList } = props;
   const [needProtection, setNeedProtection] = useState(false);
   const [otherProductList, setOtherProductList] = useState(
-    [] as IOtherProduct[]
+    [] as any[]
   );
   const {
     buyProductId,
-    buyPrice,
+    buyProductPrice,
     productDisplayName,
     skuId,
     buyProductImgPc,
     buyProductCode
   } = productDetail;
+  console.log(productDetail)
   const otherProductSubTotal = otherProductList
-    .map(({ buyPrice }) => Number(buyPrice))
+    .map(({ buyProductPrice }) => Number(buyProductPrice))
     .reduce((count: number, a: number) => count + a, 0);
 
   function renderSubTotal() {
-    return <div>Subtotal (tax and shipping calculated at checkout)</div>;
+    return <div>Subtotal (tax and shipping calculated at checkout)<span>{currencyTrans(buyProductPrice + otherProductSubTotal)}</span></div>;
   }
 
   function renderButton() {
