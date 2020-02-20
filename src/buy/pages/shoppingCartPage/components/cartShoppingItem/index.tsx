@@ -50,14 +50,14 @@ export function CartShoppingItem(props: IProps) {
   } = productDetail;
   console.log(productDetail);
   const otherProductSubTotal = otherProductList
-    .map(({ buyProductPrice }) => Number(buyProductPrice))
+    .map(({ buyPrice }) => Number(buyPrice))
     .reduce((count: number, a: number) => count + a, 0);
 
   function renderSubTotal() {
     return (
       <div>
         Subtotal (tax and shipping calculated at checkout)
-        <span>{currencyTrans(buyProductPrice + otherProductSubTotal)}</span>
+        <span>{currencyTrans(Number(buyProductPrice) + Number(otherProductSubTotal) + (needProtection ? Number(protectPrice) : 0)) }</span>
       </div>
     );
   }
@@ -78,7 +78,6 @@ export function CartShoppingItem(props: IProps) {
   function renderCartShoppingItem() {
     const dom = partsInfo.map(item => {
       const { buyProductId, productType, buyProductPrice, buyProductCode, buyProductName } = item;
-      console.log(item)
       return (
         <ItemPriceLine
           name={<span>{buyProductName || buyProductCode} {currencyTrans(buyProductPrice)}</span>}
@@ -86,10 +85,13 @@ export function CartShoppingItem(props: IProps) {
           status={otherProductList.some(item =>
             safeEqual(item.productId, buyProductId)
           )}
-          onClick={(value: any) => {
+          onClick={() => {
             setOtherProductList((arr: IOtherProduct[]) => {
               // 根据选中状态来操作列表
-              if (value) {
+              const findTarget = otherProductList.find((item) => {
+                return safeEqual(item.productId, buyProductId)
+              })
+              if (!findTarget) {
                 return arr.concat([
                   {
                     productId: buyProductId,
@@ -297,7 +299,10 @@ const ItemPriceLine = ({
   function renderTitle() {
     return (
       <li>
-        <h2>{name}</h2>
+        <div>
+          <h2>{name}</h2>
+          <span>{price}</span>
+        </div>
         {secondLine ? secondLine : ""}
       </li>
     );
@@ -308,7 +313,7 @@ const ItemPriceLine = ({
   }
 
   function renderPrice() {
-    return <li>{currencyTrans(price)}</li>;
+    return <li>{status ? currencyTrans(price) : currencyTrans(0)}</li>;
   }
   return (
     <ul>
