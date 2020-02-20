@@ -283,31 +283,24 @@ const ProductInfoLine = (props: { info: any }) => {
   }
 
   return (
-    <ul className="product-info-line">
+    <div className="product-info-line">
       <RenderByCondition
         ComponentPc={
           <>
-            <li className="info">{renderInfoLine()}</li>
-            <li>
-              <h2 className="price">{currencyTrans(buyProductPrice)}</h2>
-            </li>
+            <div className="info">{renderInfoLine()}</div>
+            <h2 className="price">{currencyTrans(buyProductPrice)}</h2>
           </>
         }
         ComponentMb={
           <>
-            <li>
-              <li>{renderInfoLine()}</li>
-              <div>
-                <h2 className="price">
-                  {currencyTrans(buyProductPrice)}
-                  <OnSaleTag tag={buyTags} />
-                </h2>
-              </div>
-            </li>
+            <div>
+              <div className="info">{renderInfoLine()}</div>
+              <h2 className="price">{currencyTrans(buyProductPrice)}</h2>
+            </div>
           </>
         }
       />
-    </ul>
+    </div>
   );
 };
 
