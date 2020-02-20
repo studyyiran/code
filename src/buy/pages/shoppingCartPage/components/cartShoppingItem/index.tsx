@@ -19,8 +19,8 @@ import {
 import Button from "../../../../components/button";
 import RouterLink from "../../../../common-modules/components/routerLink";
 import { protectPrice } from "../../../../common/config/staticConst";
-import {PartsProductCard} from "../../../detail/components/partsProductCard";
-import {AddToCart} from "../../../detail/components/cartPop/components/addToCart";
+import { PartsProductCard } from "../../../detail/components/partsProductCard";
+import { AddToCart } from "../../../detail/components/cartPop/components/addToCart";
 
 interface IProps {
   productDetail: IProductDetail;
@@ -57,30 +57,54 @@ export function CartShoppingItem(props: IProps) {
     return (
       <div>
         Subtotal (tax and shipping calculated at checkout)
-        <span>{currencyTrans(Number(buyProductPrice) + Number(otherProductSubTotal) + (needProtection ? Number(protectPrice) : 0)) }</span>
+        <span>
+          {currencyTrans(
+            Number(buyProductPrice) +
+              Number(otherProductSubTotal) +
+              (needProtection ? Number(protectPrice) : 0)
+          )}
+        </span>
       </div>
     );
   }
 
   function renderButton() {
+    function renderRemove() {
+      return <div>Remove</div>;
+    }
     return (
-      <CheckOutButton
-        buyProductId={buyProductId}
-        otherProductList={otherProductList}
-        needProtection={needProtection}
-        onClick={() => {}}
-      >
-        Buy Now
-      </CheckOutButton>
+        <div>
+          <div>{renderRemove()}</div>
+          <CheckOutButton
+            buyProductId={buyProductId}
+            otherProductList={otherProductList}
+            needProtection={needProtection}
+            onClick={() => {}}
+          >
+            Buy Now
+          </CheckOutButton>
+        </div>
+      
     );
   }
 
   function renderCartShoppingItem() {
     const dom = partsInfo.map(item => {
-      const { buyProductId, productType, buyProductPrice, buyProductCode, buyProductName } = item;
+      const {
+        buyProductId,
+        productType,
+        buyProductPrice,
+        buyProductCode,
+        buyProductName
+      } = item;
       return (
         <ItemPriceLine
-          name={<span>{buyProductName || buyProductCode} {currencyTrans(buyProductPrice)}</span>}
+          name={
+            <span>
+              {buyProductName || buyProductCode}{" "}
+              {currencyTrans(buyProductPrice)}
+            </span>
+          }
           price={Number(buyProductPrice)}
           status={otherProductList.some(item =>
             safeEqual(item.productId, buyProductId)
@@ -88,15 +112,15 @@ export function CartShoppingItem(props: IProps) {
           onClick={() => {
             setOtherProductList((arr: IOtherProduct[]) => {
               // 根据选中状态来操作列表
-              const findTarget = otherProductList.find((item) => {
-                return safeEqual(item.productId, buyProductId)
-              })
+              const findTarget = otherProductList.find(item => {
+                return safeEqual(item.productId, buyProductId);
+              });
               if (!findTarget) {
                 return arr.concat([
                   {
                     productId: buyProductId,
                     productType,
-                    buyPrice:buyProductPrice
+                    buyPrice: buyProductPrice
                   }
                 ]);
               } else {
@@ -246,21 +270,14 @@ const ProductInfoLine = (props: { info: any }) => {
     );
   }
 
-  function renderRemove() {
-    return <div>Remove</div>;
-  }
   return (
     <ul className="product-info-line">
       <RenderByCondition
         ComponentPc={
           <>
             <li className="info">{renderInfoLine()}</li>
-            {/*<li>{renderRemove()}</li>*/}
             <li>
-              <h2 className="price">
-                {currencyTrans(buyProductPrice)}
-                <OnSaleTag tag={buyTags} />
-              </h2>
+              <h2 className="price">{currencyTrans(buyProductPrice)}</h2>
             </li>
           </>
         }
@@ -275,7 +292,6 @@ const ProductInfoLine = (props: { info: any }) => {
                 </h2>
               </div>
             </li>
-            {/*<li>{renderRemove()}</li>*/}
           </>
         }
       />
