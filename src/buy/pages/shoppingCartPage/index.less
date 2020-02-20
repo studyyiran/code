@@ -13,9 +13,15 @@
     }
     .content {
       .setpage(1170*@px);
+      .mb({
+        padding: 24 *@px;
+      });
       .button-container {
         border-bottom: 1px solid @color-border;
         padding-top: 48 *@px;
+        .mb({
+          padding-top: 24 *@px;
+        });
         padding-bottom: 15 *@px;
         button {
           font-size: 14 *@f;
@@ -31,12 +37,6 @@
       }
     }
   }
-  
-  
-  
-  
-  
-  
 };
 
 .hello(@p1);

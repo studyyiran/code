@@ -88,6 +88,9 @@
   .add-to-compare-part-img {
     .innerdiv {
       .innerdiv-imgsize(208 *@px);
+      .mb({
+        .innerdiv-imgsize(95 *@px);
+      })
     }
   }
   .add-to-compare-part-button {
@@ -95,6 +98,10 @@
     justify-content: center;
     align-items: center;
     font-weight: @boldWeight;
+    .mb({
+      justify-content: flex-start;
+      padding: 12 *@px 0;
+    });
   }
   
   
@@ -137,7 +144,12 @@
       display: grid;
       grid-template-columns: repeat(2, 1fr);
     });
-
+    .mb({
+      display: flex;
+      justify-content: space-between;
+      flex: 1;
+      margin-left: 10 *@px;
+    });
     .info {
       .content-container {
         display: flex;
@@ -148,10 +160,12 @@
           display: flex;
           align-items: center;
           justify-content: space-between;
-          h2 {
-            font-size: 22 *@f;
-            font-weight: @boldWeight;
-          }
+          .pc({
+            h2 {
+              font-size: 22 *@f;
+              font-weight: @boldWeight;
+            }
+          });
         }
         > * {
           margin-bottom: 4 * @px;

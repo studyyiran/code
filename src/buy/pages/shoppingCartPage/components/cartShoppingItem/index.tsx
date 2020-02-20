@@ -283,10 +283,8 @@ const ProductInfoLine = (props: { info: any }) => {
         }
         ComponentMb={
           <>
-            <div>
-              <div className="info">{renderInfoLine()}</div>
-              <h2 className="price">{currencyTrans(buyProductPrice)}</h2>
-            </div>
+            <div className="info">{renderInfoLine()}</div>
+            <h2 className="price">{currencyTrans(buyProductPrice)}</h2>
           </>
         }
       />
