@@ -4,11 +4,77 @@
   .shopping-cart-page {
     ul.list {
       li.list-item {
-        
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        .two-line-flex {
+          align-self: stretch;
+          display: flex;
+          justify-content: space-between;
+          .content-part {
+            flex: 1;
+          }
+        }
       }
     }
   }
-  
+  .product-info-line {
+    .pc({
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+    });
+
+    li.info {
+      
+    }
+    .content-container {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+
+      .price-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      > * {
+        margin-bottom: 4 * @px;
+      }
+      .title() {
+        .font(16 * @px, @boldWeight, rgba(34, 34, 34, 1));
+      }
+      .ok () {
+        .font(12 * @px, @normalWeight, rgba(59, 186, 0, 1));
+      }
+      > h2 {
+        .title();
+      }
+      > .attr {
+        font-size: 12 * @px;
+      }
+      > .condition {
+        .ok();
+      }
+      > .id {
+        .font(12 * @px, @normalWeight, rgba(136, 136, 136, 1));
+      }
+      > .price {
+        > * {
+          vertical-align: middle;
+        }
+        .title();
+        img.sale-tag {
+          display: inline-block;
+          margin-left: 15 * @px;
+          width: 35 * @px;
+          .mb({
+            margin-left: 10 * @px;
+            width: 25 * @px;
+          })
+        }
+      }
+    }
+  }
   .add-to-compare-part {
     .innerdiv {
       .innerdiv-imgsize(208 *@px);
