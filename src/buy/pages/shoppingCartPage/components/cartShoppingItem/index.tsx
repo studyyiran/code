@@ -222,23 +222,19 @@ const AddToComparePartButton = (props: {
 }) => {
   const { haveAdded, addCompareList, buyProductCode } = props;
   return (
-    <div className="add-to-compare-part-button">
-      <div>
-        <span>
-          <Svg />
-        </span>
-        {haveAdded ? (
-          "Added"
-        ) : (
-          <span
-            onClick={() => {
-              addCompareList(buyProductCode);
-            }}
-          >
-            Add to compare
-          </span>
-        )}
-      </div>
+    <div
+      className="add-to-compare-part-button"
+      data-haveadd={haveAdded ? "true" : "false"}
+      onClick={() => {
+        if (!haveAdded) {
+          addCompareList(buyProductCode);
+        }
+      }}
+    >
+      <span className="svg-container">
+        <Svg />
+      </span>
+      {haveAdded ? "Added" : <span>Add to compare</span>}
     </div>
   );
 };
