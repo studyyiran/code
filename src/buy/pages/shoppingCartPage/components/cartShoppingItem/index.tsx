@@ -109,14 +109,14 @@ export function CartShoppingItem(props: IProps) {
   function renderSubTotal() {
     return (
       <div className="render-sub-total">
-        Subtotal (tax and shipping calculated at checkout)
-        <span>
+        <span>Subtotal (tax and shipping calculated at checkout)</span>
+        <strong>
           {currencyTrans(
             Number(buyProductPrice) +
               Number(otherProductSubTotal) +
               (needProtection ? Number(protectPrice) : 0)
           )}
-        </span>
+        </strong>
       </div>
     );
   }
@@ -319,7 +319,11 @@ const ItemPriceLine = ({
 
   function renderAddButton() {
     return (
-      <li data-select={status ? "true" : "false"} className="add-to-cart-button" onClick={onClick}>
+      <li
+        data-select={status ? "true" : "false"}
+        className="add-to-cart-button"
+        onClick={onClick}
+      >
         {status ? "Remove" : "Add to cart"}
       </li>
     );
@@ -329,10 +333,23 @@ const ItemPriceLine = ({
     return <li>{status ? currencyTrans(price) : currencyTrans(0)}</li>;
   }
   return (
-    <ul className="item-price-line render-line">
-      {renderTitle()}
-      {renderAddButton()}
-      {renderPrice()}
-    </ul>
+    <RenderByCondition
+      ComponentPc={
+        <ul className="item-price-line render-line">
+          {renderTitle()}
+          {renderAddButton()}
+          {renderPrice()}
+        </ul>
+      }
+      ComponentMb={
+        <div className="item-price-line render-line">
+          <div className="mb-line-container">
+            {renderTitle()}
+            {renderPrice()}
+          </div>
+          {renderAddButton()}
+        </div>
+      }
+    />
   );
 };
