@@ -1,10 +1,17 @@
 @import (reference) "~buy/common/styles/index.less";
 
 @p1: {
-  .list-item {
+  .cart-shopping-item {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    padding-top: 30 *@px;
+    border-bottom: 1px solid @color-border;
+    .pc({
+      > *:first-child {
+        padding-bottom: 30 *@px;
+        border-bottom: 1px solid @color-border;
+      }
+    });
     .two-line-flex {
       align-self: stretch;
       display: flex;
@@ -13,6 +20,23 @@
         flex: 1;
         max-width: 800 *@px;
       }
+    }
+    
+    .render-sub-total {
+      text-align: right;
+      padding: 30 *@px 0;
+      border-bottom: 1px solid @color-border;
+    }
+    
+    .render-button-container {
+      padding: 20 *@px 0;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+    
+    .render-cart-shopping-item {
+      //
     }
   }
 
@@ -27,6 +51,19 @@
     justify-content: center;
     align-items: center;
     font-weight: @boldWeight;
+  }
+  
+  
+  // 组件
+  .item-price-line {
+    display: grid;
+    grid-template-columns:  2fr 1fr 1fr;
+    >li:nth-child(2) {
+      text-align: center;
+    }
+    >li:nth-child(3) {
+      text-align: right;
+    }
   }
   
   

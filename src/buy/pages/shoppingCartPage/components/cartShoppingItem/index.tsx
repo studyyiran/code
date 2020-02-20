@@ -56,7 +56,7 @@ export function CartShoppingItem(props: IProps) {
   return (
     <RenderByCondition
       ComponentPc={
-        <div className="list-item">
+        <div className="cart-shopping-item">
           <div className="two-line-flex">
             <div>
               <AddToComparePartImage
@@ -78,11 +78,11 @@ export function CartShoppingItem(props: IProps) {
             </div>
           </div>
           {renderSubTotal()}
-          {renderButton()}
+          {renderButtonContainer()}
         </div>
       }
       ComponentMb={
-        <li className="list-item">
+        <li className="cart-shopping-item">
           <div className="two-line-flex">
             <AddToComparePartImage
               imgUrl={
@@ -100,7 +100,7 @@ export function CartShoppingItem(props: IProps) {
           />
           {renderCartShoppingItem()}
           {renderSubTotal()}
-          {renderButton()}
+          {renderButtonContainer()}
         </li>
       }
     />
@@ -108,7 +108,7 @@ export function CartShoppingItem(props: IProps) {
 
   function renderSubTotal() {
     return (
-      <div>
+      <div className="render-sub-total">
         Subtotal (tax and shipping calculated at checkout)
         <span>
           {currencyTrans(
@@ -121,13 +121,13 @@ export function CartShoppingItem(props: IProps) {
     );
   }
 
-  function renderButton() {
+  function renderButtonContainer() {
     function renderRemove() {
-      return <div>Remove</div>;
+      return <div className="remove-button">Remove</div>;
     }
     return (
-      <div>
-        <div>{renderRemove()}</div>
+      <div className="render-button-container">
+        {renderRemove()}
         <CheckOutButton
           buyProductId={buyProductId}
           otherProductList={otherProductList}
@@ -153,8 +153,7 @@ export function CartShoppingItem(props: IProps) {
         <ItemPriceLine
           name={
             <span>
-              {buyProductName || buyProductCode}{" "}
-              {currencyTrans(buyProductPrice)}
+              {buyProductName || buyProductCode}
             </span>
           }
           price={Number(buyProductPrice)}
@@ -187,29 +186,27 @@ export function CartShoppingItem(props: IProps) {
     });
     // 渲染
     return (
-      <div className="list-item">
-        <div>
-          <ItemPriceLine
-            name="90 Days UpTrade Protect"
-            secondLine={
-              <RouterLink
-                target={"_blank"}
-                to={"/uptrade/protect"}
-                onClick={() => {
-                  // 这块在跳转的时候 写死一个关闭行为 强行修改潜在的bug
-                  // setShowModal(false);
-                }}
-              >
-                Learn more
-              </RouterLink>
-            }
-            price={protectPrice}
-            status={needProtection}
-            onClick={() => {
-              setNeedProtection(a => !a);
-            }}
-          />
-        </div>
+      <div className="render-cart-shopping-item">
+        <ItemPriceLine
+          name="90 Days UpTrade Protect"
+          secondLine={
+            <RouterLink
+              target={"_blank"}
+              to={"/uptrade/protect"}
+              onClick={() => {
+                // 这块在跳转的时候 写死一个关闭行为 强行修改潜在的bug
+                // setShowModal(false);
+              }}
+            >
+              Learn more
+            </RouterLink>
+          }
+          price={protectPrice}
+          status={needProtection}
+          onClick={() => {
+            setNeedProtection(a => !a);
+          }}
+        />
         {dom}
       </div>
     );
@@ -329,17 +326,17 @@ const ItemPriceLine = ({
     );
   }
 
-  function renderButton() {
-    return <li onClick={onClick}>{status ? "Remove" : "Add to cart"}</li>;
+  function renderAddButton() {
+    return <li className="add-to-cart-button" onClick={onClick}>{status ? "Remove" : "Add to cart"}</li>;
   }
 
   function renderPrice() {
     return <li>{status ? currencyTrans(price) : currencyTrans(0)}</li>;
   }
   return (
-    <ul>
+    <ul className="item-price-line">
       {renderTitle()}
-      {renderButton()}
+      {renderAddButton()}
       {renderPrice()}
     </ul>
   );
