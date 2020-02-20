@@ -17,5 +17,5 @@ export function ShoppingCartPage() {
   }, [getShoppingCart]);
   // 渲染
   console.log(shoppingCartList)
-  return <div className="test-page">{123}</div>;
+  return <div className="test-page">{123444}</div>;
 }
