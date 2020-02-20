@@ -13,7 +13,7 @@ export const StoreShoppingCartContext = createContext({});
 // store name
 export const StoreShoppingCart = "StoreShoppingCart";
 
-interface ShoppingCartInfo {
+export interface IShoppingCartInfo {
   list: {
     product: IProductDetail,
     skuReleated: IProductDetail[],
@@ -23,7 +23,7 @@ interface ShoppingCartInfo {
 }
 // store state
 export interface IStoreShoppingCartState {
-  shoppingCartList: ShoppingCartInfo;
+  shoppingCartList: IShoppingCartInfo;
   compareList: string[];
 }
 
