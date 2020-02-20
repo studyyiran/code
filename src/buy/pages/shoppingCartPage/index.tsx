@@ -1,20 +1,21 @@
 import React, { useContext, useEffect } from "react";
 import "./index.less";
-import { IStoreTestNameContext, StoreTestNameContext } from "./context";
+import { IStoreShoppingCartContext, StoreShoppingCartContext } from "./context";
 
-export function Name() {
+export function ShoppingCartPage() {
   // 引入context
-  const storeTestNameContext = useContext(StoreTestNameContext);
+  const storeShoppingCartContext = useContext(StoreShoppingCartContext);
   const {
-    storeTestNameContextValue,
-    getTestAjaxValue
-  } = storeTestNameContext as IStoreTestNameContext;
+    storeShoppingCartContextValue,
+    getShoppingCart
+  } = storeShoppingCartContext as IStoreShoppingCartContext;
   // 从context中获取值
-  const { testValue } = storeTestNameContextValue;
+  const { shoppingCartList } = storeShoppingCartContextValue;
   // local发起请求
   useEffect(() => {
-    getTestAjaxValue();
-  }, [getTestAjaxValue]);
+    getShoppingCart();
+  }, [getShoppingCart]);
   // 渲染
-  return <div className="test-page">{testValue}</div>;
+  console.log(shoppingCartList)
+  return <div className="test-page">{123}</div>;
 }

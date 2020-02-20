@@ -1,75 +1,76 @@
 import React, {
   createContext,
   useReducer,
-  useEffect
 } from "react";
 import { IReducerAction } from "buy/common/interface/index.interface";
-import { callBackWhenPassAllFunc } from "buy/common/utils/util";
 import useReducerMiddleware from "../../../common/useHook/useReducerMiddleware";
-import { IContextValue } from "../../type";
-import { useIsCurrentPage } from "../../useHook";
-import {IStoreTestNameActions, useStoreTestNameGetActions} from "./useGetActions";
+import {IStoreShoppingCartActions, useStoreShoppingCartGetActions} from "./useGetActions";
+import {IContextValue} from "../../../common/type";
 
-export const StoreTestNameContext = createContext({});
+export const StoreShoppingCartContext = createContext({});
 
 // store name
-export const StoreTestName = "StoreTestName";
+export const StoreShoppingCart = "StoreShoppingCart";
+
+interface ShoppingCartInfo {
+  
+}
 // store state
-export interface IStoreTestNameState {
-  testValue: number;
+export interface IStoreShoppingCartState {
+  shoppingCartList: ShoppingCartInfo[];
+  compareList: string[];
 }
 
 // interface
-export interface IStoreTestNameContext
-  extends IStoreTestNameActions,
+export interface IStoreShoppingCartContext
+  extends IStoreShoppingCartActions,
     IContextValue {
-  storeTestNameContextValue: IStoreTestNameState;
-  storeTestNameContextDispatch: (action: IReducerAction) => void;
+  storeShoppingCartContextValue: IStoreShoppingCartState;
+  storeShoppingCartContextDispatch: (action: IReducerAction) => void;
 }
 
 // store provider
-export function StoreTestNameContextProvider(props: any) {
-  const initState: IStoreTestNameState = {
-    testValue: 101
+export function StoreShoppingCartContextProvider(props: any) {
+  const initState: IStoreShoppingCartState = {
+    shoppingCartList: [],
+    compareList: []
   };
   const [state, dispatch] = useReducer(
     useReducerMiddleware(reducer),
     initState
   );
-  const action: IStoreTestNameActions = useStoreTestNameGetActions(state, dispatch);
-
-  const isPage = useIsCurrentPage("/test");
-
-  // @useEffect
-  useEffect(() => {
-    // 1 当前页面
-    callBackWhenPassAllFunc([() => isPage], action.getTestAjaxValue);
-  }, [action.getTestAjaxValue, isPage]);
-
-  const propsValue: IStoreTestNameContext = {
+  const action: IStoreShoppingCartActions = useStoreShoppingCartGetActions(state, dispatch);
+  
+  const propsValue: IStoreShoppingCartContext = {
     ...action,
-    storeTestNameContextValue: state,
-    storeTestNameContextDispatch: dispatch
+    storeShoppingCartContextValue: state,
+    storeShoppingCartContextDispatch: dispatch
   };
-  return <StoreTestNameContext.Provider value={propsValue} {...props} />;
+  return <StoreShoppingCartContext.Provider value={propsValue} {...props} />;
 }
 
-
-
 // action types
-export const storeTestNameReducerTypes = {
-  setTestValue: "setTestValue"
+export const storeShoppingCartReducerTypes = {
+  setShoppingCartList: "setShoppingCartList",
+  addCompareList: "addCompareList"
 };
 
 // reducer
-function reducer(state: IStoreTestNameState, action: IReducerAction) {
+function reducer(state: IStoreShoppingCartState, action: IReducerAction) {
   const { type, value } = action;
   let newState = { ...state };
   switch (type) {
-    case storeTestNameReducerTypes.setTestValue: {
+    case storeShoppingCartReducerTypes.setShoppingCartList: {
       newState = {
         ...newState,
-        testValue: value
+        shoppingCartList: value
+      };
+      break;
+    }
+    case storeShoppingCartReducerTypes.addCompareList: {
+      newState = {
+        ...newState,
+        compareList: newState.compareList.concat([value])
       };
       break;
     }
