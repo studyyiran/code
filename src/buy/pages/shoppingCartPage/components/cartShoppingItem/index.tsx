@@ -53,6 +53,59 @@ export function CartShoppingItem(props: IProps) {
     .map(({ buyPrice }) => Number(buyPrice))
     .reduce((count: number, a: number) => count + a, 0);
 
+  return (
+    <RenderByCondition
+      ComponentPc={
+        <div className="list-item">
+          <div className="two-line-flex">
+            <div>
+              <AddToComparePartImage
+                imgUrl={
+                  buyProductImgPc && buyProductImgPc.length && buyProductImgPc
+                }
+              />
+              <AddToComparePartButton
+                buyProductCode={buyProductCode}
+                addCompareList={addCompareList}
+                haveAdded={Boolean(
+                  compareList.find(i => safeEqual(i, buyProductCode))
+                )}
+              />
+            </div>
+            <div className="content-part">
+              <ProductInfoLine info={productDetail} />
+              {renderCartShoppingItem()}
+            </div>
+          </div>
+          {renderSubTotal()}
+          {renderButton()}
+        </div>
+      }
+      ComponentMb={
+        <li className="list-item">
+          <div className="two-line-flex">
+            <AddToComparePartImage
+              imgUrl={
+                buyProductImgPc && buyProductImgPc.length && buyProductImgPc
+              }
+            />
+            <ProductInfoLine info={productDetail} />
+          </div>
+          <AddToComparePartButton
+            buyProductCode={buyProductCode}
+            addCompareList={addCompareList}
+            haveAdded={Boolean(
+              compareList.find(i => safeEqual(i, buyProductCode))
+            )}
+          />
+          {renderCartShoppingItem()}
+          {renderSubTotal()}
+          {renderButton()}
+        </li>
+      }
+    />
+  );
+
   function renderSubTotal() {
     return (
       <div>
@@ -73,18 +126,17 @@ export function CartShoppingItem(props: IProps) {
       return <div>Remove</div>;
     }
     return (
-        <div>
-          <div>{renderRemove()}</div>
-          <CheckOutButton
-            buyProductId={buyProductId}
-            otherProductList={otherProductList}
-            needProtection={needProtection}
-            onClick={() => {}}
-          >
-            Buy Now
-          </CheckOutButton>
-        </div>
-      
+      <div>
+        <div>{renderRemove()}</div>
+        <CheckOutButton
+          buyProductId={buyProductId}
+          otherProductList={otherProductList}
+          needProtection={needProtection}
+          onClick={() => {}}
+        >
+          Buy Now
+        </CheckOutButton>
+      </div>
     );
   }
 
@@ -162,65 +214,25 @@ export function CartShoppingItem(props: IProps) {
       </div>
     );
   }
-
-  return (
-    <RenderByCondition
-      ComponentPc={
-        <li className="list-item">
-          <div className="two-line-flex">
-            <AddToComparePart
-              buyProductCode={buyProductCode}
-              addCompareList={addCompareList}
-              haveAdded={Boolean(
-                compareList.find(i => safeEqual(i, buyProductCode))
-              )}
-              imgUrl={
-                buyProductImgPc && buyProductImgPc.length && buyProductImgPc
-              }
-            />
-            <div className="content-part">
-              <ProductInfoLine info={productDetail} />
-              {renderCartShoppingItem()}
-            </div>
-          </div>
-          {renderSubTotal()}
-          {renderButton()}
-        </li>
-      }
-      ComponentMb={
-        <li className="list-item">
-          <div className="two-line-flex">
-            <AddToComparePart
-              buyProductCode={buyProductCode}
-              addCompareList={addCompareList}
-              haveAdded={Boolean(
-                compareList.find(i => safeEqual(i, buyProductCode))
-              )}
-              imgUrl={
-                buyProductImgPc && buyProductImgPc.length && buyProductImgPc
-              }
-            />
-            <ProductInfoLine info={productDetail} />
-          </div>
-          {renderCartShoppingItem()}
-          {renderSubTotal()}
-          {renderButton()}
-        </li>
-      }
-    />
-  );
 }
 
-const AddToComparePart = (props: {
+const AddToComparePartImage = (props: { imgUrl: string }) => {
+  const { imgUrl } = props;
+  return (
+    <div className="add-to-compare-part-img">
+      <InnerDivImage imgUrl={imgUrl} />
+    </div>
+  );
+};
+
+const AddToComparePartButton = (props: {
   haveAdded: boolean;
-  imgUrl: string;
   addCompareList: any;
   buyProductCode: string;
 }) => {
-  const { haveAdded, imgUrl, addCompareList, buyProductCode } = props;
+  const { haveAdded, addCompareList, buyProductCode } = props;
   return (
-    <div className="add-to-compare-part">
-      <InnerDivImage imgUrl={imgUrl} />
+    <div className="add-to-compare-part-button">
       <div>
         <span>
           <Svg />
