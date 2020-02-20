@@ -26,6 +26,7 @@ export interface IProductDetailGetWithCode {
 export interface IProductDetail {
   brandDisplayName: any; // 品牌名
   buyProductStatus: string; // 状态明
+  buyProductName: string; // 状态明
   buyProductImgPc: any;
   buyProductImgM: any;
   buyProductVideo: string;

@@ -17,6 +17,10 @@ import {
   StoreShoppingCartContext
 } from "../../context";
 import Button from "../../../../components/button";
+import RouterLink from "../../../../common-modules/components/routerLink";
+import { protectPrice } from "../../../../common/config/staticConst";
+import {PartsProductCard} from "../../../detail/components/partsProductCard";
+import {AddToCart} from "../../../detail/components/cartPop/components/addToCart";
 
 interface IProps {
   productDetail: IProductDetail;
@@ -35,9 +39,7 @@ export function CartShoppingItem(props: IProps) {
 
   const { productDetail, partsInfo, compareList } = props;
   const [needProtection, setNeedProtection] = useState(false);
-  const [otherProductList, setOtherProductList] = useState(
-    [] as any[]
-  );
+  const [otherProductList, setOtherProductList] = useState([] as any[]);
   const {
     buyProductId,
     buyProductPrice,
@@ -46,13 +48,18 @@ export function CartShoppingItem(props: IProps) {
     buyProductImgPc,
     buyProductCode
   } = productDetail;
-  console.log(productDetail)
+  console.log(productDetail);
   const otherProductSubTotal = otherProductList
     .map(({ buyProductPrice }) => Number(buyProductPrice))
     .reduce((count: number, a: number) => count + a, 0);
 
   function renderSubTotal() {
-    return <div>Subtotal (tax and shipping calculated at checkout)<span>{currencyTrans(buyProductPrice + otherProductSubTotal)}</span></div>;
+    return (
+      <div>
+        Subtotal (tax and shipping calculated at checkout)
+        <span>{currencyTrans(buyProductPrice + otherProductSubTotal)}</span>
+      </div>
+    );
   }
 
   function renderButton() {
@@ -69,24 +76,63 @@ export function CartShoppingItem(props: IProps) {
   }
 
   function renderCartShoppingItem() {
+    const dom = partsInfo.map(item => {
+      const { buyProductId, productType, buyProductPrice, buyProductCode, buyProductName } = item;
+      console.log(item)
+      return (
+        <ItemPriceLine
+          name={<span>{buyProductName || buyProductCode} {currencyTrans(buyProductPrice)}</span>}
+          price={Number(buyProductPrice)}
+          status={otherProductList.some(item =>
+            safeEqual(item.productId, buyProductId)
+          )}
+          onClick={(value: any) => {
+            setOtherProductList((arr: IOtherProduct[]) => {
+              // 根据选中状态来操作列表
+              if (value) {
+                return arr.concat([
+                  {
+                    productId: buyProductId,
+                    productType,
+                    buyPrice:buyProductPrice
+                  }
+                ]);
+              } else {
+                return arr.filter(
+                  item => !safeEqual(item.productId, buyProductId)
+                );
+              }
+            });
+          }}
+        />
+      );
+    });
     // 渲染
     return (
       <div className="test-page">
-        <RenderProtection
-          needAddButton={true}
-          needTitle={false}
-          setShowModal={() => {}}
-          needProtection={needProtection}
-          setNeedProtection={setNeedProtection}
-        />
-        {/*其他子商品*/}
-        <RenderOtherProduct
-          otherProductList={otherProductList}
-          setOtherProductList={setOtherProductList}
-          partsInfo={partsInfo}
-          needTitle={false}
-          needAddButton={true}
-        />
+        <div>
+          <ItemPriceLine
+            name="90 Days UpTrade Protect"
+            secondLine={
+              <RouterLink
+                target={"_blank"}
+                to={"/uptrade/protect"}
+                onClick={() => {
+                  // 这块在跳转的时候 写死一个关闭行为 强行修改潜在的bug
+                  // setShowModal(false);
+                }}
+              >
+                Learn more
+              </RouterLink>
+            }
+            price={protectPrice}
+            status={needProtection}
+            onClick={() => {
+              setNeedProtection(a => !a);
+            }}
+          />
+        </div>
+        {dom}
       </div>
     );
   }
@@ -231,6 +277,44 @@ const ProductInfoLine = (props: { info: any }) => {
           </>
         }
       />
+    </ul>
+  );
+};
+
+const ItemPriceLine = ({
+  name,
+  secondLine,
+  price,
+  onClick,
+  status
+}: {
+  name: any;
+  secondLine?: any;
+  status?: boolean;
+  price: number;
+  onClick: any;
+}) => {
+  function renderTitle() {
+    return (
+      <li>
+        <h2>{name}</h2>
+        {secondLine ? secondLine : ""}
+      </li>
+    );
+  }
+
+  function renderButton() {
+    return <li onClick={onClick}>{status ? "Remove" : "Add to cart"}</li>;
+  }
+
+  function renderPrice() {
+    return <li>{currencyTrans(price)}</li>;
+  }
+  return (
+    <ul>
+      {renderTitle()}
+      {renderButton()}
+      {renderPrice()}
     </ul>
   );
 };
