@@ -21,7 +21,10 @@ export function AddToCart(props: IAddToCard) {
 
   function cartChangeHandler() {
     const next = !getState();
-    (document as any).querySelector(".cart-modal").scroll(0, 1000);
+    const targetDom = (document as any).querySelector(".cart-modal")
+    if (targetDom) {
+      targetDom.scroll(0, 1000);
+    }
     cartChangeCallBack(next);
     setHaveAdd(next);
   }

@@ -6,6 +6,7 @@ import { IReducerAction } from "buy/common/interface/index.interface";
 import useReducerMiddleware from "../../../common/useHook/useReducerMiddleware";
 import {IStoreShoppingCartActions, useStoreShoppingCartGetActions} from "./useGetActions";
 import {IContextValue} from "../../../common/type";
+import {IProductDetail} from "../../detail/context/interface";
 
 export const StoreShoppingCartContext = createContext({});
 
@@ -13,11 +14,16 @@ export const StoreShoppingCartContext = createContext({});
 export const StoreShoppingCart = "StoreShoppingCart";
 
 interface ShoppingCartInfo {
-  
+  list: {
+    product: IProductDetail,
+    skuReleated: IProductDetail[],
+  }[],
+  cartTotalPrice: number,
+  totalCount: number
 }
 // store state
 export interface IStoreShoppingCartState {
-  shoppingCartList: ShoppingCartInfo[];
+  shoppingCartList: ShoppingCartInfo;
   compareList: string[];
 }
 
@@ -32,7 +38,7 @@ export interface IStoreShoppingCartContext
 // store provider
 export function StoreShoppingCartContextProvider(props: any) {
   const initState: IStoreShoppingCartState = {
-    shoppingCartList: [],
+    shoppingCartList: {} as any,
     compareList: []
   };
   const [state, dispatch] = useReducer(

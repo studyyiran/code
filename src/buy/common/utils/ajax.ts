@@ -52,6 +52,7 @@ const getRootApi = function(urlRoot: string) {
       }
       break;
   }
+  apiRoot = "https://api-gateway.uptradeit.com";
   return apiRoot + urlRoot;
 };
 

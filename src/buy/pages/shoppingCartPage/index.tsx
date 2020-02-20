@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import "./index.less";
 import { IStoreShoppingCartContext, StoreShoppingCartContext } from "./context";
+import {CartShoppingItem} from "./components";
 
 export function ShoppingCartPage() {
   // 引入context
@@ -16,6 +17,15 @@ export function ShoppingCartPage() {
     getShoppingCart();
   }, [getShoppingCart]);
   // 渲染
-  console.log(shoppingCartList)
-  return <div className="test-page">{123444}</div>;
+  function renderList() {
+    return shoppingCartList.list.map(({product, skuReleated}) => {
+      return <CartShoppingItem productDetail={product} partsInfo={skuReleated} />
+    })
+  }
+  if (shoppingCartList && shoppingCartList.list && shoppingCartList.list.length) {
+    return <div className="test-page">{renderList()}</div>;
+  } else {
+    return null
+  }
+  
 }
