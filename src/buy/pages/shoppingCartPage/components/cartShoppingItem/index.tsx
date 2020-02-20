@@ -135,7 +135,7 @@ export function CartShoppingItem(props: IProps) {
     });
     // 渲染
     return (
-      <div className="test-page">
+      <div className="list-item">
         <div>
           <ItemPriceLine
             name="90 Days UpTrade Protect"

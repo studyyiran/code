@@ -1,7 +1,18 @@
 @import (reference) "~buy/common/styles/index.less";
 
 @p1: {
-  .test-page {
+  .list-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    .two-line-flex {
+      align-self: stretch;
+      display: flex;
+      justify-content: space-between;
+      .content-part {
+        flex: 1;
+      }
+    }
   }
 };
 

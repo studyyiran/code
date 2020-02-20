@@ -2,22 +2,38 @@
 
 @p1: {
   .shopping-cart-page {
-    ul.list {
-      li.list-item {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        .two-line-flex {
-          align-self: stretch;
-          display: flex;
-          justify-content: space-between;
-          .content-part {
-            flex: 1;
-          }
+    .content {
+      .setpage(1170*@px);
+      > .title-container:first-child {
+        > h1:first-child {
+          font-size: 32 * @px;
+          text-align: center;
+          padding: 30 * @px 0;
+          .pc({padding: 64 * @px;});
+          border-bottom: 1px solid @color-border;
         }
+      }
+      .button-container {
+        border-bottom: 1px solid @color-border;
+        padding-top: 48 *@px;
+        padding-bottom: 15 *@px;
+        button {
+          width:200 *@px;
+          height:40*@px;
+          line-height:40*@px;
+          color: @white;
+          background:rgba(55,90,125,1);
+          border-radius:4px
+        }
+      }
+      .list-container {
       }
     }
   }
+  
+  
+  
+  
   .product-info-line {
     .pc({
       display: grid;

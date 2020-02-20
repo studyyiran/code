@@ -32,13 +32,16 @@ export function ShoppingCartPage() {
   ) {
     return (
       <div className="shopping-cart-page">
-        <div>
-          <h1>Shopping Cart</h1>
+        <div className="content">
+          <div className="title-container">
+            <h1>Shopping Cart</h1>
+          </div>
+          <div className="button-container">
+            <button>Compare ({compareList.length})</button>
+          </div>
+          <div className="list-container">{renderList()}</div>
         </div>
-        <div>
-          <div>Compare ({compareList.length})</div>
-        </div>
-        <ul className="list">{renderList()}</ul>
+        
       </div>
     );
   } else {
