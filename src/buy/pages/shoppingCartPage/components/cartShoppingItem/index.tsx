@@ -122,12 +122,9 @@ export function CartShoppingItem(props: IProps) {
   }
 
   function renderButtonContainer() {
-    function renderRemove() {
-      return <div className="remove-button">Remove</div>;
-    }
     return (
       <div className="render-button-container">
-        {renderRemove()}
+        <div className="remove-button">Remove</div>
         <CheckOutButton
           buyProductId={buyProductId}
           otherProductList={otherProductList}
@@ -151,11 +148,7 @@ export function CartShoppingItem(props: IProps) {
       } = item;
       return (
         <ItemPriceLine
-          name={
-            <span>
-              {buyProductName || buyProductCode}
-            </span>
-          }
+          name={<span>{buyProductName || buyProductCode}</span>}
           price={Number(buyProductPrice)}
           status={otherProductList.some(item =>
             safeEqual(item.productId, buyProductId)
@@ -280,7 +273,7 @@ const ProductInfoLine = (props: { info: any }) => {
   }
 
   return (
-    <div className="product-info-line">
+    <div className="product-info-line render-line">
       <RenderByCondition
         ComponentPc={
           <>
@@ -316,25 +309,29 @@ const ItemPriceLine = ({
 }) => {
   function renderTitle() {
     return (
-      <li>
-        <div>
+      <li className="render-title-container">
+        <div className="render-title-name">
           <h2>{name}</h2>
-          <span>{price}</span>
+          <span>{currencyTrans(price)}</span>
         </div>
-        {secondLine ? secondLine : ""}
+        {secondLine ? <div className="second-line">{secondLine}</div> : ""}
       </li>
     );
   }
 
   function renderAddButton() {
-    return <li className="add-to-cart-button" onClick={onClick}>{status ? "Remove" : "Add to cart"}</li>;
+    return (
+      <li data-select={status ? "true" : "false"} className="add-to-cart-button" onClick={onClick}>
+        {status ? "Remove" : "Add to cart"}
+      </li>
+    );
   }
 
   function renderPrice() {
     return <li>{status ? currencyTrans(price) : currencyTrans(0)}</li>;
   }
   return (
-    <ul className="item-price-line">
+    <ul className="item-price-line render-line">
       {renderTitle()}
       {renderAddButton()}
       {renderPrice()}
