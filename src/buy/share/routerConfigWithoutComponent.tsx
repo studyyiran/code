@@ -1,5 +1,6 @@
 import React from "react";
 import {getLocationUrl, getProductListPath} from "../common/utils/util";
+import {ShoppingCartPage} from "../pages/shoppingCartPage";
 
 export const routerConfigWithoutComponent = [
   {
@@ -28,6 +29,10 @@ export const routerConfigWithoutComponent = [
   },
   {
     path: "/",
+    exact: true,
+  },
+  {
+    path: getLocationUrl("shoppingcart"),
     exact: true,
   },
   {

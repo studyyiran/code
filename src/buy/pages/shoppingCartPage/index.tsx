@@ -3,6 +3,7 @@ import "./index.less";
 import { IStoreShoppingCartContext, StoreShoppingCartContext } from "./context";
 import { CartShoppingItem } from "./components/cartShoppingItem";
 import { RenderSimilar } from "../detail/components/renderSimilar";
+import {locationHref} from "../../common/utils/routerHistory";
 
 interface IProps {
   history?: any
@@ -51,18 +52,18 @@ export const ShoppingCartPage: React.FC<IProps> = props => {
             <button>Compare ({compareList.length}) </button>
           </div>
           <div className="list-container">{renderList()}</div>
+          <RenderSimilar
+            similiarPhoneList={
+              shoppingCartList && shoppingCartList.list
+                ? shoppingCartList.list.map(i => i.product)
+                : []
+            }
+            history={props.history}
+          >
+            <h2 className="sub-title">Browsing History</h2>
+          </RenderSimilar>
         </div>
-        <RenderSimilar
-          similiarPhoneList={
-            shoppingCartList && shoppingCartList.list
-              ? shoppingCartList.list.map(i => i.product)
-              : []
-          }
-          history={props.history}
-        >
-          <h2 className="sub-title">Browsing History</h2>
-        </RenderSimilar>
-        <div className="go-back-button">
+        <div className="go-back-button" onClick={() => {locationHref('', 'back')}}>
           <img src={require("./res/arrow_left.svg")} />
           <span>Go Back</span>
         </div>
