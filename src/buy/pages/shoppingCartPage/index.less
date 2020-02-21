@@ -46,9 +46,25 @@
       .list-container {
       }
       .similar {
-        .mb({
-          padding: 0 !important;
-        });
+        @widthSize: 200 * @px;
+        .list {
+          .img-scale-container {
+            width: @widthSize;
+            height: @widthSize;
+          }
+          .phone-product-card {
+            .innerdiv {
+              .innerdiv-imgsize(@widthSize);
+            }
+          }
+          &[data-length="true"] {
+            > * {
+              flex: 0 0 @widthSize;
+              width: @widthSize;
+              margin-right: calc((100% - 4.5 * @widthSize) / 4);
+            }
+          }
+        }
       }
     }
     .go-back-button {
