@@ -36,6 +36,13 @@
   }
 }
 
+.mb-padding() {
+  .mb({
+    padding-left: 16 *@px;
+    padding-right: 16 *@px;
+  });
+}
+
 .set-flex-grid(@leftWidth) {
   > *:first-child {
     flex: 0 0 @leftWidth;
