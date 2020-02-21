@@ -2,8 +2,13 @@ import React, { useContext, useEffect } from "react";
 import "./index.less";
 import { IStoreShoppingCartContext, StoreShoppingCartContext } from "./context";
 import { CartShoppingItem } from "./components/cartShoppingItem";
+import { RenderSimilar } from "../detail/components/renderSimilar";
 
-export function ShoppingCartPage() {
+interface IProps {
+  history?: any
+}
+
+export const ShoppingCartPage: React.FC<IProps> = props => {
   // 引入context
   const storeShoppingCartContext = useContext(StoreShoppingCartContext);
   const {
@@ -18,11 +23,17 @@ export function ShoppingCartPage() {
     getShoppingCart();
   }, [getShoppingCart]);
   console.log(shoppingCartList);
- 
+
   // 渲染
   function renderList() {
-    return shoppingCartList.list.map(({skuReleated, product}) => {
-      return <CartShoppingItem partsInfo={skuReleated} productDetail={product} compareList={compareList} />
+    return shoppingCartList.list.map(({ skuReleated, product }) => {
+      return (
+        <CartShoppingItem
+          partsInfo={skuReleated}
+          productDetail={product}
+          compareList={compareList}
+        />
+      );
     });
   }
   if (
@@ -40,12 +51,24 @@ export function ShoppingCartPage() {
             <button>Compare ({compareList.length}) </button>
           </div>
           <div className="list-container">{renderList()}</div>
+          <RenderSimilar
+            similiarPhoneList={
+              shoppingCartList && shoppingCartList.list
+                ? shoppingCartList.list.map(i => i.product)
+                : []
+            }
+            history={props.history}
+          >
+            <h2>Browsing History</h2>
+          </RenderSimilar>
         </div>
-        
+        <div className="go-back-button">
+          <img src={require("./res/arrow_left.svg")} />
+          <span>Go Back</span>
+        </div>
       </div>
     );
   } else {
     return null;
   }
-}
-
+};

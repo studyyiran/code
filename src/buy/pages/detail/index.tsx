@@ -257,7 +257,6 @@ export default function ProductDetail(props: any) {
           <ReviewListPart reviewListInfo={reviewListInfo} />
           <RenderSimilar
             similiarPhoneList={similiarPhoneList}
-            productDetail={productDetail}
             history={props.history}
           />
           <LastLineComponent />
