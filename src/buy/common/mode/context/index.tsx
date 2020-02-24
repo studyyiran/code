@@ -10,7 +10,7 @@ import { IContextValue } from "../../type";
 import { useIsCurrentPage } from "../../useHook";
 import {IStoreTestNameActions, useStoreTestNameGetActions} from "./useGetActions";
 
-export const StoreTestNameContext = createContext({});
+export const StoreTestNameContext = createContext({} as IStoreTestNameContext);
 
 // store name
 export const StoreTestName = "StoreTestName";

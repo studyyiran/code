@@ -8,7 +8,7 @@ import {IStoreShoppingCartActions, useStoreShoppingCartGetActions} from "./useGe
 import {IContextValue} from "../../../common/type";
 import {IProductDetail} from "../../detail/context/interface";
 
-export const StoreShoppingCartContext = createContext({});
+export const StoreShoppingCartContext = createContext({} as IStoreShoppingCartContext);
 
 // store name
 export const StoreShoppingCart = "StoreShoppingCart";
