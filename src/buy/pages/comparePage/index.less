@@ -6,10 +6,8 @@
     @perLineWidth: 300 *@px;
     .setpage(5 * @perLineWidth);
     .compare-item-list-container {
-      display: flex;
-      > * {
-        flex: 0 0 @perLineWidth;
-      }
+      display: grid;
+      grid-template-columns: repeat(5, @perLineWidth);
     }
     .go-back-button {
       .canclick();
