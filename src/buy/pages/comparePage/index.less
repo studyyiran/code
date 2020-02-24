@@ -3,9 +3,21 @@
 @p1: {
   .compare-page {
     padding-bottom: 160 * @px;
-    @perLineWidth: 300 *@px;
-    .setpage(5 * @perLineWidth);
+    @perLineWidth: 208 *@px;
+    > .title-container:first-child {
+      > h1:first-child {
+        font-size: 32 * @px;
+        text-align: center;
+        padding: 30 * @px 0;
+        .pc({padding: 64 * @px;});
+        border-bottom: 1px solid @color-border;
+      }
+    }
     .compare-item-list-container {
+      .pc({
+        padding-top: 10 *@px;
+      });
+      .setpage(5 * @perLineWidth);
       display: grid;
       grid-template-columns: repeat(5, @perLineWidth);
     }

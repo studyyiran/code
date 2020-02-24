@@ -54,7 +54,7 @@ export const ComparePage: React.FC<IProps> = props => {
         if (columnIndex === 0) {
           return <RenderTitleList>{title}</RenderTitleList>
         } else {
-          return <RenderListItem>{title}</RenderListItem>
+          return <RenderListItem />
         }
       }
     })
@@ -105,9 +105,7 @@ export const ComparePage: React.FC<IProps> = props => {
       <div className="title-container">
         <h1>Comparison Chart</h1>
       </div>
-      <div className="content">
-        <div className="compare-item-list-container">{renderList()}</div>
-      </div>
+      <div className="compare-item-list-container">{renderList()}</div>
       <div
         className="go-back-button"
         onClick={() => {
@@ -121,10 +119,15 @@ export const ComparePage: React.FC<IProps> = props => {
   );
 };
 
-const RenderTitleList = ({children}: { children: any }) => {
+const RenderTitleList = ({children}: { children?: any }) => {
   return <div>{children}</div>
 };
 
-const RenderListItem = ({children}: { children: any }) => {
-  return <div>{children}</div>
+const RenderListItem = ({children}: { children?: any }) => {
+  if (children) {
+    return <div>{children}</div>
+  } else {
+    return <div />
+  }
+  
 };
