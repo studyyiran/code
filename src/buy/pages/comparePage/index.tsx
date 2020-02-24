@@ -4,6 +4,8 @@ import { locationHref } from "../../common/utils/routerHistory";
 import { StoreShoppingCartContext } from "../shoppingCartPage/context";
 import { CompareItem } from "./components/compareItem";
 import { RenderByCondition } from "../../components/RenderByCondition";
+import Svg from "../../components/svg";
+import { getLocationUrl } from "../../common/utils/util";
 
 interface IProps {
   history?: any;
@@ -20,14 +22,6 @@ export const ComparePage: React.FC<IProps> = props => {
     getCompareInfoList();
   }, [getCompareInfoList]);
 
-  const renderTopPart = () => {
-    return <div>
-      <div>swiper part</div>
-      <button>Buy Now</button>
-      <div>remove</div>
-    </div>
-  }
-
   const fillWithEmpty = (maxLength: number) => {
     const arr = [];
     for (let i = 0; i < maxLength; i++) {
@@ -42,22 +36,22 @@ export const ComparePage: React.FC<IProps> = props => {
 
   const renderPc = (rowInfo: any) => {
     const { type, title } = rowInfo;
-    const columnArr = [{}].concat(fillWithEmpty(4))
+    const columnArr = [{}].concat(fillWithEmpty(4));
     return columnArr.map((columnInfo: any, columnIndex: number) => {
-      if (type === 'detail') {
+      if (type === "detail") {
         if (columnIndex === 0) {
-          return <div />
+          return <div />;
         } else {
-          return renderTopPart()
+          return <RenderTopPart />;
         }
       } else {
         if (columnIndex === 0) {
-          return <RenderTitleList>{title}</RenderTitleList>
+          return <RenderTitleList>{title}</RenderTitleList>;
         } else {
-          return <RenderListItem />
+          return <RenderListItem />;
         }
       }
-    })
+    });
   };
 
   const renderMb = (rowInfo: any) => {
@@ -119,15 +113,38 @@ export const ComparePage: React.FC<IProps> = props => {
   );
 };
 
-const RenderTitleList = ({children}: { children?: any }) => {
-  return <div>{children}</div>
+const RenderTopPart = ({ children }: { children?: any }) => {
+  if (children) {
+    return (
+      <div className="render-top-part">
+        <div>swiper part</div>
+        <button>Buy Now</button>
+        <div>remove</div>
+      </div>
+    );
+  } else {
+    return (
+      <div
+        className="render-top-part empty"
+        onClick={() => {
+          locationHref(getLocationUrl("shoppingcart"));
+        }}
+      >
+        <Svg icon="buyjia" />
+        <span>Add Device</span>
+      </div>
+    );
+  }
 };
 
-const RenderListItem = ({children}: { children?: any }) => {
+const RenderTitleList = ({ children }: { children?: any }) => {
+  return <div>{children}</div>;
+};
+
+const RenderListItem = ({ children }: { children?: any }) => {
   if (children) {
-    return <div>{children}</div>
+    return <div>{children}</div>;
   } else {
-    return <div />
+    return <div />;
   }
-  
 };

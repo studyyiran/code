@@ -4,6 +4,7 @@
   .compare-page {
     padding-bottom: 160 * @px;
     @perLineWidth: 208 *@px;
+    @perLineGap: 32 *@px;
     > .title-container:first-child {
       > h1:first-child {
         font-size: 32 * @px;
@@ -15,11 +16,12 @@
     }
     .compare-item-list-container {
       .pc({
-        padding-top: 10 *@px;
+        padding-top: 50 *@px;
       });
-      .setpage(5 * @perLineWidth);
+      .setpage(5 * (@perLineWidth + @perLineGap));
       display: grid;
-      grid-template-columns: repeat(5, @perLineWidth);
+      grid-template-columns: repeat(5, 1fr);
+      grid-column-gap: @perLineGap;
     }
     .go-back-button {
       .canclick();
@@ -35,6 +37,23 @@
       img {
         width: 22 *@f;
         margin-right: 10 *@px
+      }
+    }
+    .render-top-part {
+      border: 1px solid @color-border;
+      height: 304 *@px;
+      &.empty {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        span {
+          display: inline-block;
+          margin-top: 5 *@px;
+          font-size: 16 *@px;
+          font-weight: @boldWeight;
+          .canclick();
+        }
       }
     }
   }
