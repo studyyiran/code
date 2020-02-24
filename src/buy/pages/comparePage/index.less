@@ -3,11 +3,13 @@
 @p1: {
   .compare-page {
     padding-bottom: 160 * @px;
+    @perLineWidth: 300 *@px;
+    .setpage(5 * @perLineWidth);
     .compare-item-list-container {
-      display: grid;
-      .pc({
-        grid-template-columns: repeat(4, 1fr);
-      })
+      display: flex;
+      > * {
+        flex: 0 0 @perLineWidth;
+      }
     }
     .go-back-button {
       .canclick();

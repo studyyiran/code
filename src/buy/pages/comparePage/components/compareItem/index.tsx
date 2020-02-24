@@ -33,10 +33,10 @@ export function CompareItem(props: IProps) {
   
   // 渲染
   return (
-    <div className="compare-item">
+    <li className="compare-item">
       {isTitleLine ? <div></div> : renderTopPart()}
-      <RenderTitleList config={configArr} />
-    </div>
+      {isTitleLine ? <RenderTitleList config={configArr} /> : <RenderListItem config={configArr} />}
+    </li>
   );
 }
 
@@ -45,12 +45,19 @@ const RenderTitleList = (props: { config: any[] }) => {
   return (
     <div>
       {config.map(({ title }: any) => {
-        return <div>{title}</div>;
+        return <div>1{title}</div>;
       })}
     </div>
   );
 };
 
-const RenderListItem = () => {
-  return <div>123</div>;
+const RenderListItem = (props: { config: any[] }) => {
+  const { config } = props;
+  return (
+    <div>
+      {config.map(({ title }: any) => {
+        return <div>2{title}</div>;
+      })}
+    </div>
+  );
 };

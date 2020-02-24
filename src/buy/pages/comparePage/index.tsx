@@ -22,17 +22,11 @@ export const ComparePage: React.FC<IProps> = props => {
     return compareInfoList.map((item, index) => {
       if (true && index === 0) {
         return <>
-          <li key={"first"}>
-            <CompareItem isTitleLine={true} />
-          </li>
-          <li key={index}>
-            <CompareItem />
-          </li>
+          <CompareItem isTitleLine={true} key={"first"}/>
+          <CompareItem key={index}/>
         </>
       } else {
-        return <li key={index}>
-          <CompareItem />
-        </li>
+        return <CompareItem key={index}/>
       }
       
     })
@@ -42,9 +36,11 @@ export const ComparePage: React.FC<IProps> = props => {
       <div className="title-container">
         <h1>Comparison Chart</h1>
       </div>
-      <ul className="compare-item-list-container">
-        {renderList()}
-      </ul>
+      <div className="content">
+        <ul className="compare-item-list-container">
+          {renderList()}
+        </ul>
+      </div>
       <div
         className="go-back-button"
         onClick={() => {
