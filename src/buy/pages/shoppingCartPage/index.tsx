@@ -19,7 +19,8 @@ export const ShoppingCartPage: React.FC<IProps> = props => {
     addCompareList
   } = storeShoppingCartContext as IStoreShoppingCartContext;
   // 从context中获取值
-  const { shoppingCartList, compareList } = storeShoppingCartContextValue;
+  const { shoppingCartList  } = storeShoppingCartContextValue;
+  const compareList = [] as any[]
   // local发起请求
   useEffect(() => {
     getShoppingCart();

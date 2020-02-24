@@ -1,56 +1,8 @@
 @import (reference) "~buy/common/styles/index.less";
 
 @p1: {
-  .shopping-cart-page {
+  .compare-page {
     padding-bottom: 160 * @px;
-    
-    .sub-title {
-      font-size: 24 * @px;
-      .mb({font-size: 16 * @px;});
-      font-weight: @boldWeight;
-    }
-    .mb({
-      padding-bottom: 60 * @px;
-    });
-    > .title-container:first-child {
-      > h1:first-child {
-        font-size: 32 * @px;
-        text-align: center;
-        padding: 30 * @px 0;
-        .pc({padding: 64 * @px;});
-        border-bottom: 1px solid @color-border;
-      }
-    }
-    .content {
-      .setpage(1170*@px);
-      .mb-padding();
-      .button-container {
-        .mb({
-          border-bottom: 1px solid @color-border;
-        });
-        padding-top: 48 *@px;
-        .mb({
-          padding-top: 24 *@px;
-        });
-        padding-bottom: 15 *@px;
-        button {
-          font-size: 14 *@f;
-          width:200 *@px;
-          height:40*@px;
-          line-height:40*@px;
-          color: @white;
-          background:rgba(55,90,125,1);
-          border-radius:4px
-        }
-      }
-      .list-container {
-      }
-      .similar {
-        .mb({
-          padding: 0 !important;
-        });
-      }
-    }
     .go-back-button {
       .canclick();
       text-align: center;

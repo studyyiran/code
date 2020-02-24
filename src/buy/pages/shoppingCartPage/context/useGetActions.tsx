@@ -11,6 +11,7 @@ import { GlobalSettingContext, IGlobalSettingContext } from "../../../context";
 // @actions
 export interface IStoreShoppingCartActions {
   getShoppingCart: () => any;
+  getCompareInfoList: () => any;
   addCompareList: (value: string) => any;
 }
 
@@ -39,23 +40,35 @@ export function useStoreShoppingCartGetActions(
     },
     [dispatch]
   );
+  const getCompareInfoList = useCallback(
+    async function() {
+      // const res = await storeShoppingCartServer.getShoppingCart();
+      const res = [1,2,3,4]
+      dispatch({
+        type: storeShoppingCartReducerTypes.setCompareInfoList,
+        value: res
+      });
+    },
+    [dispatch]
+  );
   const addCompareList = useCallback(
     async function(value) {
-      let max = isMobile ? 2 : 4;
+      // let max = isMobile ? 2 : 4;
       // 根据环境判断长度
-      if (state.compareList.length < max) {
-        dispatch({
-          type: storeShoppingCartReducerTypes.addCompareList,
-          value: value
-        });
-      } else {
-        Message.error(`You can only compare up to ${max} phones`);
-      }
+      // if (state.compareList.length < max) {
+      //   dispatch({
+      //     type: storeShoppingCartReducerTypes.addCompareList,
+      //     value: value
+      //   });
+      // } else {
+      //   Message.error(`You can only compare up to ${max} phones`);
+      // }
     },
-    [dispatch, isMobile, state.compareList.length]
+    [dispatch, isMobile]
   );
   return {
     getShoppingCart,
-    addCompareList
+    addCompareList,
+    getCompareInfoList
   };
 }

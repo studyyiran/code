@@ -24,7 +24,7 @@ export interface IShoppingCartInfo {
 // store state
 export interface IStoreShoppingCartState {
   shoppingCartList: IShoppingCartInfo;
-  compareList: string[];
+  compareInfoList: string[];
 }
 
 // interface
@@ -39,7 +39,7 @@ export interface IStoreShoppingCartContext
 export function StoreShoppingCartContextProvider(props: any) {
   const initState: IStoreShoppingCartState = {
     shoppingCartList: {} as any,
-    compareList: []
+    compareInfoList: []
   };
   const [state, dispatch] = useReducer(
     useReducerMiddleware(reducer),
@@ -58,7 +58,7 @@ export function StoreShoppingCartContextProvider(props: any) {
 // action types
 export const storeShoppingCartReducerTypes = {
   setShoppingCartList: "setShoppingCartList",
-  addCompareList: "addCompareList"
+  setCompareInfoList: "setCompareInfoList"
 };
 
 // reducer
@@ -73,10 +73,10 @@ function reducer(state: IStoreShoppingCartState, action: IReducerAction) {
       };
       break;
     }
-    case storeShoppingCartReducerTypes.addCompareList: {
+    case storeShoppingCartReducerTypes.setCompareInfoList: {
       newState = {
         ...newState,
-        compareList: newState.compareList.concat([value])
+        compareInfoList: value
       };
       break;
     }
