@@ -40,6 +40,10 @@ export const routerConfigWithoutComponent = [
     exact: true,
   },
   {
+    path: getLocationUrl("comparepage"),
+    exact: true,
+  },
+  {
     path: "/account/management",
     exact: true,
   },

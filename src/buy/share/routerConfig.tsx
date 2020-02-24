@@ -23,6 +23,7 @@ import { JobsPage } from "../pages/statics/job/pages/jobs";
 import { JobsHeadOf } from "../pages/statics/job/pages/josbHeadOf";
 import { JobsIntern } from "../pages/statics/job/pages/josbIntern";
 import {ShoppingCartPage} from "../pages/shoppingCartPage";
+import {ComparePage} from "../pages/comparePage";
 
 export const routerConfig = [
   {
@@ -91,9 +92,15 @@ export const routerConfig = [
   },
   {
     path: getLocationUrl("shoppingcart"),
-    title: "Log in | UpTradeit.com",
+    title: "",
     exact: true,
     Component: ShoppingCartPage,
+  },
+  {
+    path: getLocationUrl("comparepage"),
+    title: "",
+    exact: true,
+    Component: ComparePage,
   },
   {
     path: "/account/management",
