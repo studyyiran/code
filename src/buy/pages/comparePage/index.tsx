@@ -58,6 +58,17 @@ export const ComparePage: React.FC<IProps> = props => {
 
   const renderMb = (rowInfo: any) => {
     const { type, title } = rowInfo;
+    const columnArr = fillWithEmpty(4);
+    return columnArr.map((columnInfo: any, columnIndex: number) => {
+      if (type === "detail") {
+        return <RenderTopPart />;
+      } else if(type === "Battery") {
+        return null
+      } else {
+        return null
+        return <RenderListItem />;
+      }
+    });
   };
 
   function renderList() {
