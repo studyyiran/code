@@ -4,6 +4,7 @@ import { IStoreShoppingCartContext, StoreShoppingCartContext } from "./context";
 import { CartShoppingItem } from "./components/cartShoppingItem";
 import { RenderSimilar } from "../detail/components/renderSimilar";
 import {locationHref} from "../../common/utils/routerHistory";
+import {getLocationUrl} from "../../common/utils/util";
 
 interface IProps {
   history?: any
@@ -49,7 +50,9 @@ export const ShoppingCartPage: React.FC<IProps> = props => {
         </div>
         <div className="content">
           <div className="button-container">
-            <button>Compare ({compareList.length}) </button>
+            <button onClick={() => {
+              locationHref(getLocationUrl('comparepage'))
+            }}>Compare ({compareList.length}) </button>
           </div>
           <div className="list-container">{renderList()}</div>
           <RenderSimilar
