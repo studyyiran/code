@@ -3,6 +3,12 @@
 @p1: {
   .compare-page {
     padding-bottom: 160 * @px;
+    .compare-item-list-container {
+      display: grid;
+      .pc({
+        grid-template-columns: repeat(4, 1fr);
+      })
+    }
     .go-back-button {
       .canclick();
       text-align: center;

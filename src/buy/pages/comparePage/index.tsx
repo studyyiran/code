@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import "./index.less";
 import { locationHref } from "../../common/utils/routerHistory";
 import { StoreShoppingCartContext } from "../shoppingCartPage/context";
+import {CompareItem} from "./components/compareItem";
 
 interface IProps {
   history?: any;
@@ -18,16 +19,30 @@ export const ComparePage: React.FC<IProps> = props => {
     getCompareInfoList();
   }, [getCompareInfoList]);
   function renderList() {
-    return compareInfoList.map((item) => {
-      return <li>{item}</li>
+    return compareInfoList.map((item, index) => {
+      if (true && index === 0) {
+        return <>
+          <li key={"first"}>
+            <CompareItem isTitleLine={true} />
+          </li>
+          <li key={index}>
+            <CompareItem />
+          </li>
+        </>
+      } else {
+        return <li key={index}>
+          <CompareItem />
+        </li>
+      }
+      
     })
   }
   return (
-    <div className="shopping-cart-page">
+    <div className="compare-page">
       <div className="title-container">
         <h1>Comparison Chart</h1>
       </div>
-      <ul>
+      <ul className="compare-item-list-container">
         {renderList()}
       </ul>
       <div
@@ -37,7 +52,7 @@ export const ComparePage: React.FC<IProps> = props => {
         }}
       >
         <img src={require("./res/arrow_left.svg")} />
-        <span>Go Back</span>
+        <span>Back to shopping cart</span>
       </div>
     </div>
   );
