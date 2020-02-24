@@ -44,6 +44,8 @@ export const ComparePage: React.FC<IProps> = props => {
         } else {
           return <RenderTopPart />;
         }
+      } else if(type === "Battery") {
+        return null
       } else {
         if (columnIndex === 0) {
           return <RenderTitleList>{title}</RenderTitleList>;
@@ -71,7 +73,35 @@ export const ComparePage: React.FC<IProps> = props => {
       {
         type: "",
         title: "Condition"
-      }
+      },
+      {
+        type: "",
+        title: "Inspection Notes"
+      },
+      {
+        type: "Battery",
+        title: "Battery"
+      },
+      {
+        type: "",
+        title: "Color"
+      },
+      {
+        type: "",
+        title: "Manufacture"
+      },
+      {
+        type: "",
+        title: "Storage"
+      },
+      {
+        type: "",
+        title: "Carrier"
+      },
+      {
+        type: "",
+        title: "Phone Specs"
+      },
     ];
     return configArr.map((rowInfo, rowIndex) => {
       return (
@@ -143,13 +173,13 @@ const RenderTopPart = ({ children }: { children?: any }) => {
 };
 
 const RenderTitleList = ({ children }: { children?: any }) => {
-  return <div>{children}</div>;
+  return <div className="title grid-block">{children}</div>;
 };
 
 const RenderListItem = ({ children }: { children?: any }) => {
   if (children) {
-    return <div>{children}</div>;
+    return <div className="grid-block">{children}</div>;
   } else {
-    return <div />;
+    return <div className="grid-block empty" />;
   }
 };
