@@ -40,19 +40,24 @@
       }
     }
     .render-top-part {
-      border: 1px solid @color-border;
-      height: 304 *@px;
-      &.empty {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        span {
-          display: inline-block;
-          margin-top: 5 *@px;
-          font-size: 16 *@px;
-          font-weight: @boldWeight;
-          .canclick();
+      .button-container {
+        height: 80 *@px;
+      }
+      .swiper-part {
+        border: 1px solid @color-border;
+        height: 304 *@px;
+        &.empty {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+          span {
+            display: inline-block;
+            margin-top: 5 *@px;
+            font-size: 16 *@px;
+            font-weight: @boldWeight;
+            .canclick();
+          }
         }
       }
     }

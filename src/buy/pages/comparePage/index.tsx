@@ -117,21 +117,26 @@ const RenderTopPart = ({ children }: { children?: any }) => {
   if (children) {
     return (
       <div className="render-top-part">
-        <div>swiper part</div>
-        <button>Buy Now</button>
-        <div>remove</div>
+        <div className="swiper-part">swiper part</div>
+        <div className="button-container">
+          <button>Buy Now</button>
+          <div>remove</div>
+        </div>
       </div>
     );
   } else {
     return (
-      <div
-        className="render-top-part empty"
-        onClick={() => {
-          locationHref(getLocationUrl("shoppingcart"));
-        }}
-      >
-        <Svg icon="buyjia" />
-        <span>Add Device</span>
+      <div className="render-top-part">
+        <div
+          className="swiper-part empty"
+          onClick={() => {
+            locationHref(getLocationUrl("shoppingcart"));
+          }}
+        >
+          <Svg icon="buyjia" />
+          <span>Add Device</span>
+        </div>
+        <div className="button-container empty" />
       </div>
     );
   }
