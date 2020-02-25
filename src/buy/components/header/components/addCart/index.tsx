@@ -81,7 +81,9 @@ export function AddCart() {
           className="long-button canclick"
           onClick={() => {
             setShowCartModal(false)
-            locationHref(getLocationUrl("shoppingcart"));
+            window.setTimeout(() => {
+              locationHref(getLocationUrl("shoppingcart"));
+            }, 0)
           }}
         >
           View cart
