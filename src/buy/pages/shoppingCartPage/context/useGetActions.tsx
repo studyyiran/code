@@ -14,6 +14,9 @@ export interface IStoreShoppingCartActions {
   getCompareInfoList: () => any;
   addCompareList: (value: string) => any;
   addShoppingCart: (code: string) => any;
+  deleteShoppingCart: (code: string) => any;
+  deleteSoldShoppingCart: () => any;
+  mergeShoppingCart: () => any;
 }
 
 // useCreateActions
@@ -72,10 +75,29 @@ export function useStoreShoppingCartGetActions(
     const res = await storeShoppingCartServer.addShoppingCart(id);
     const res2 = getShoppingCart()
   }, [])
+
+  const deleteShoppingCart = useCallback(async (id) => {
+    const res = await storeShoppingCartServer.deleteShoppingCart(id);
+    const res2 = getShoppingCart()
+  }, [])
+
+  const deleteSoldShoppingCart = useCallback(async () => {
+    const res = await storeShoppingCartServer.deleteSoldShoppingCart();
+    const res2 = getShoppingCart()
+  }, [])
+
+  const mergeShoppingCart = useCallback(async () => {
+    const res = await storeShoppingCartServer.mergeShoppingCart();
+    const res2 = getShoppingCart()
+  }, [])
+  
   return {
     getShoppingCart,
     addCompareList,
     getCompareInfoList,
+    deleteShoppingCart,
+    deleteSoldShoppingCart,
+    mergeShoppingCart,
     addShoppingCart
   };
 }

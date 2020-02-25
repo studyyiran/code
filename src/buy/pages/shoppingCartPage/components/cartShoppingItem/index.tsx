@@ -34,7 +34,9 @@ export function CartShoppingItem(props: IProps) {
   const {
     storeShoppingCartContextValue,
     getShoppingCart,
-    addCompareList
+    addCompareList,
+    deleteShoppingCart,
+    deleteSoldShoppingCart
   } = storeShoppingCartContext as IStoreShoppingCartContext;
 
   const { productDetail, partsInfo, compareList } = props;
@@ -124,7 +126,9 @@ export function CartShoppingItem(props: IProps) {
   function renderButtonContainer() {
     return (
       <div className="render-button-container">
-        <div className="remove-button">Remove</div>
+        <div className="remove-button" onClick={() => {
+          deleteShoppingCart(buyProductCode)
+        }}>Remove</div>
         <CheckOutButton
           buyProductId={buyProductId}
           otherProductList={otherProductList}
