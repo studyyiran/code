@@ -89,7 +89,7 @@ export const ShoppingCartPage: React.FC<IProps> = props => {
         </div>
       );
     } else {
-      return <img src={require("./res/empty.svg")} />;
+      return <img className="empty-img" src={require("./res/empty.svg")} />;
     }
   }
   return (
