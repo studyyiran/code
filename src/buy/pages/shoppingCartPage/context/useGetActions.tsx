@@ -13,6 +13,7 @@ export interface IStoreShoppingCartActions {
   getShoppingCart: () => any;
   getCompareInfoList: () => any;
   addCompareList: (value: string) => any;
+  addShoppingCart: (code: string) => any;
 }
 
 // useCreateActions
@@ -66,9 +67,15 @@ export function useStoreShoppingCartGetActions(
     },
     [dispatch, isMobile]
   );
+  
+  const addShoppingCart = useCallback(async (id) => {
+    const res = await storeShoppingCartServer.addShoppingCart(id);
+    
+  }, [])
   return {
     getShoppingCart,
     addCompareList,
-    getCompareInfoList
+    getCompareInfoList,
+    addShoppingCart
   };
 }

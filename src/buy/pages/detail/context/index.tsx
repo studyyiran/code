@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useCallback } from "react";
+import React, {createContext, useEffect, useCallback, useContext} from "react";
 import { IReducerAction } from "buy/common/interface/index.interface";
 import {
   getProductDetail,
@@ -23,6 +23,7 @@ import {
   IReviews
 } from "./interface";
 import {Message} from "../../../components/message";
+import {StoreShoppingCartContext} from "../../shoppingCartPage/context";
 
 export const ProductDetailContext = createContext({} as IProductDetailContext);
 export const StoreDetail = "StoreDetail";
@@ -111,14 +112,17 @@ function useGetAction(
   state: IContextState,
   dispatch: (action: IReducerAction) => void
 ): IContextActions {
+  const storeShoppingCartContext = useContext(StoreShoppingCartContext)
+  const {addShoppingCart} = storeShoppingCartContext
   const actions: IContextActions = {
     addIntoCartList: useCallback(async (value) => {
-      if (value && state.cartList.length < 10) {
-        dispatch({
-          type: storeDetailActionTypes.addCartList,
-          value: [value]
-        });
-      }
+      addShoppingCart(value)
+      // if (value && state.cartList.length < 10) {
+      //   dispatch({
+      //     type: storeDetailActionTypes.addCartList,
+      //     value: [value]
+      //   });
+      // }
     }, [dispatch]),
     getReviewScore: useCallback(async () => {
       const res: any = await getReviewScore();
