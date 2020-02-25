@@ -62,7 +62,7 @@ export function StoreShoppingCartContextProvider(props: any) {
   const initState: IStoreShoppingCartState = {
     shoppingCartList: {} as any,
     compareInfoList: [],
-    showCartModal: false
+    showCartModal: true
   };
   const [state, dispatch] = useReducer(
     useReducerMiddleware(reducer),

@@ -99,7 +99,8 @@ const Line = (props: any) => {
     buyProductPrice,
     buyProductLevel,
     buyProductBQV,
-    buyTags
+    buyTags,
+    buyProductStatus,
   } = props;
   console.log(props);
   const [lineOne, lineTwo] = getDescArr(buyProductBQV, buyProductName);
@@ -119,6 +120,7 @@ const Line = (props: any) => {
       {/*    }*/}
       {/*  />*/}
       {/*)}*/}
+      {buyProductStatus === 'INTRANSACTION' ? <div className="sold-out-tag">Sold out</div> : null}
       <RenderByCondition
         ComponentMb={
           <InnerDivImage lazyload={false} imgUrl={buyProductImgPc} />
