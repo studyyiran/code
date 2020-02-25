@@ -70,7 +70,7 @@ export function useStoreShoppingCartGetActions(
   
   const addShoppingCart = useCallback(async (id) => {
     const res = await storeShoppingCartServer.addShoppingCart(id);
-    
+    const res2 = getShoppingCart()
   }, [])
   return {
     getShoppingCart,

@@ -3,32 +3,31 @@ import "./index.less";
 import { ProductDetailContext } from "../../../../pages/detail/context";
 import Modal from "../../../modal";
 import { getDescArr } from "../../../../pages/detail/util";
-import {currencyTrans, getLocationUrl} from "../../../../common/utils/util";
+import { currencyTrans, getLocationUrl } from "../../../../common/utils/util";
 import { OnSaleTag } from "../../../../pages/detail/components/onSaleTag";
 import { InnerDivImage } from "../../../../pages/detail/components/innerDivImage";
 import { RenderByCondition } from "../../../RenderByCondition";
-import {locationHref} from "../../../../common/utils/routerHistory";
+import { locationHref } from "../../../../common/utils/routerHistory";
+import { StoreShoppingCartContext } from "../../../../pages/shoppingCartPage/context";
 
 export function AddCart() {
-  const productDetailContext = useContext(ProductDetailContext);
-  const { productDetailContextValue } = productDetailContext;
-  const { cartList, productDetail } = productDetailContextValue;
+  const storeShoppingCartContext = useContext(StoreShoppingCartContext);
+  const { storeShoppingCartContextValue } = storeShoppingCartContext;
+  const { shoppingCartList } = storeShoppingCartContextValue;
   const [listLength, setListLength] = useState(-1);
   const [showModal, setShowModal] = useState(false);
   console.log(listLength);
   // 这块没折腾明白
   useEffect(() => {
     // 初始化
-    if (cartList) {
+    if (shoppingCartList && shoppingCartList.list) {
       console.log("enter");
       if (listLength === -1) {
         // 初始化
-        setListLength(cartList.length);
+        setListLength(shoppingCartList.totalCount);
       } else {
         // 更新
-        console.log(cartList.length);
-        console.log(listLength);
-        if (cartList.length > listLength) {
+        if (shoppingCartList.totalCount > listLength) {
           // 弹框
           if (!showModal) {
             setShowModal(true);
@@ -37,14 +36,13 @@ export function AddCart() {
             // }, 5000);
           }
           // 检测到变化后的更新.
-          setListLength(cartList.length);
+          setListLength(shoppingCartList.totalCount);
         }
       }
     }
-  }, [cartList, listLength, showModal]);
+  }, [listLength, shoppingCartList, showModal]);
 
-  const detailList =
-    listLength > 0 ? new Array(listLength).fill(productDetail) : [];
+  const detailList = shoppingCartList && shoppingCartList.list;
 
   return (
     <span
@@ -53,7 +51,7 @@ export function AddCart() {
         // if (listLength > 0) {
         //   setShowModal(true);
         // }
-        locationHref(getLocationUrl('shoppingcart'));
+        locationHref(getLocationUrl("shoppingcart"));
       }}
     >
       <img src={require("./res/cart_icon.svg")} />
@@ -72,8 +70,15 @@ export function AddCart() {
         }}
       >
         <h1 className="title">Your cart</h1>
-        <div className="product-item-container" style={detailList && detailList.length > 2 ? {overflowY: 'scroll'} : {overflowY: 'auto'}}>
-          {detailList.map(item => {
+        <div
+          className="product-item-container"
+          style={
+            detailList && detailList.length > 2
+              ? { overflowY: "scroll" }
+              : { overflowY: "auto" }
+          }
+        >
+          {(detailList || []).map(item => {
             return <Line {...item} />;
           })}
         </div>
@@ -85,11 +90,7 @@ export function AddCart() {
           <div>
             <h1>
               Total:{" "}
-              {currencyTrans(
-                detailList.reduce((a, b) => {
-                  return a + b.buyPrice;
-                }, 0)
-              )}
+              {currencyTrans(shoppingCartList && shoppingCartList.totalCount)}
             </h1>
           </div>
         </div>

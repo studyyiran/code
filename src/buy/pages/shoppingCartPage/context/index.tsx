@@ -1,25 +1,27 @@
-import React, {
-  createContext,
-  useReducer,
-} from "react";
+import React, { createContext, useEffect, useReducer } from "react";
 import { IReducerAction } from "buy/common/interface/index.interface";
 import useReducerMiddleware from "../../../common/useHook/useReducerMiddleware";
-import {IStoreShoppingCartActions, useStoreShoppingCartGetActions} from "./useGetActions";
-import {IContextValue} from "../../../common/type";
-import {IProductDetail} from "../../detail/context/interface";
+import {
+  IStoreShoppingCartActions,
+  useStoreShoppingCartGetActions
+} from "./useGetActions";
+import { IContextValue } from "../../../common/type";
+import { IProductDetail } from "../../detail/context/interface";
 
-export const StoreShoppingCartContext = createContext({} as IStoreShoppingCartContext);
+export const StoreShoppingCartContext = createContext(
+  {} as IStoreShoppingCartContext
+);
 
 // store name
 export const StoreShoppingCart = "StoreShoppingCart";
 
 export interface IShoppingCartInfo {
   list: {
-    product: IProductDetail,
-    skuReleated: IProductDetail[],
-  }[],
-  cartTotalPrice: number,
-  totalCount: number
+    product: IProductDetail;
+    skuReleated: IProductDetail[];
+  }[];
+  cartTotalPrice: number;
+  totalCount: number;
 }
 // store state
 export interface IStoreShoppingCartState {
@@ -45,8 +47,14 @@ export function StoreShoppingCartContextProvider(props: any) {
     useReducerMiddleware(reducer),
     initState
   );
-  const action: IStoreShoppingCartActions = useStoreShoppingCartGetActions(state, dispatch);
-  
+  const action: IStoreShoppingCartActions = useStoreShoppingCartGetActions(
+    state,
+    dispatch
+  );
+  const { getShoppingCart } = action;
+  useEffect(() => {
+    getShoppingCart();
+  }, [getShoppingCart]);
   const propsValue: IStoreShoppingCartContext = {
     ...action,
     storeShoppingCartContextValue: state,
