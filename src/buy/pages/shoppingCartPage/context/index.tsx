@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useReducer } from "react";
+import React, { createContext, useContext, useEffect, useReducer } from "react";
 import { IReducerAction } from "buy/common/interface/index.interface";
 import useReducerMiddleware from "../../../common/useHook/useReducerMiddleware";
 import {
@@ -7,6 +7,15 @@ import {
 } from "./useGetActions";
 import { IContextValue } from "../../../common/type";
 import { IProductDetail } from "../../detail/context/interface";
+import {
+  callBackWhenPassAllFunc,
+  getFromCookie
+} from "../../../common/utils/util";
+import {
+  IStoreAuthContext,
+  StoreAuthContext
+} from "../../../common-modules/context/authToken/context";
+import { constValue } from "../../../common/constValue";
 
 export const StoreShoppingCartContext = createContext(
   {} as IStoreShoppingCartContext
@@ -39,6 +48,9 @@ export interface IStoreShoppingCartContext
 
 // store provider
 export function StoreShoppingCartContextProvider(props: any) {
+  const storeAuthContext = useContext(StoreAuthContext);
+  const { storeAuthContextValue } = storeAuthContext as IStoreAuthContext;
+  const { tokenInfo } = storeAuthContextValue;
   const initState: IStoreShoppingCartState = {
     shoppingCartList: {} as any,
     compareInfoList: []
@@ -51,10 +63,23 @@ export function StoreShoppingCartContextProvider(props: any) {
     state,
     dispatch
   );
-  const { getShoppingCart } = action;
+  const { getShoppingCart, mergeShoppingCart } = action;
   useEffect(() => {
     getShoppingCart();
   }, [getShoppingCart]);
+
+  useEffect(() => {
+    // 登录成功 就删除cookie
+    if (tokenInfo && tokenInfo.token) {
+      //1 merge
+      mergeShoppingCart().then((res: any) => {
+        console.log(res);
+        //2 清空cookie
+        document.cookie = `${constValue.SHOPPINGCART}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;`;
+      });
+    }
+  }, [mergeShoppingCart, tokenInfo]);
+
   const propsValue: IStoreShoppingCartContext = {
     ...action,
     storeShoppingCartContextValue: state,
