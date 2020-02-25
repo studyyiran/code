@@ -79,7 +79,11 @@ export function AddCart() {
           }
         >
           {(detailList || []).map(item => {
-            return <Line {...item} />;
+            if (item && item.product) {
+              return <Line {...item.product} />;
+            } else {
+              return null
+            }
           })}
         </div>
 
@@ -90,11 +94,13 @@ export function AddCart() {
           <div>
             <h1>
               Total:{" "}
-              {currencyTrans(shoppingCartList && shoppingCartList.totalCount)}
+              {currencyTrans(shoppingCartList && shoppingCartList.cartTotalPrice)}
             </h1>
           </div>
         </div>
-        <div className="long-button">View cart</div>
+        <div className="long-button canclick" onClick={() => {
+          locationHref(getLocationUrl('shoppingcart'))
+        }}>View cart</div>
       </Modal>
     </span>
   );
@@ -102,19 +108,16 @@ export function AddCart() {
 
 const Line = (props: any) => {
   const {
-    buyProductImgM,
-    productDisplayName,
+    buyProductImgPc,
+    buyProductName,
     buyProductCode,
-    buyPrice,
-    buyLevel,
-    buyProductId,
+    buyProductPrice,
+    buyProductLevel,
     buyProductBQV,
-    buyProductStatus,
     buyTags
   } = props;
-  console.log(buyProductBQV);
-  console.log(productDisplayName);
-  const [lineOne, lineTwo] = getDescArr(buyProductBQV, productDisplayName);
+  console.log(props);
+  const [lineOne, lineTwo] = getDescArr(buyProductBQV, buyProductName);
   return (
     <div className="product-item">
       {/*{isSoldOut(buyProductStatus) ? (*/}
@@ -135,13 +138,13 @@ const Line = (props: any) => {
         ComponentMb={
           <InnerDivImage
             lazyload={false}
-            imgUrl={buyProductImgM && buyProductImgM[0]}
+            imgUrl={buyProductImgPc}
           />
         }
         ComponentPc={
           <InnerDivImage
             lazyload={false}
-            imgUrl={buyProductImgM && buyProductImgM[0]}
+            imgUrl={buyProductImgPc}
           />
         }
       />
@@ -150,13 +153,13 @@ const Line = (props: any) => {
           <div className="price-container">
             <h2>{lineOne}</h2>
             <h2 className="price">
-              {currencyTrans(buyPrice)}
+              {currencyTrans(buyProductPrice)}
               <OnSaleTag tag={buyTags} />
             </h2>
           </div>
         ) : null}
         {lineTwo ? <span className="attr">{lineTwo}</span> : null}
-        <span className="condition">Condition {buyLevel}</span>
+        <span className="condition">Condition {buyProductLevel}</span>
         <span className="id">ID：{buyProductCode}</span>
       </div>
     </div>

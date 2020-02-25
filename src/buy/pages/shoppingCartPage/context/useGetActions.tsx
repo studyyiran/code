@@ -78,7 +78,10 @@ export function useStoreShoppingCartGetActions(
 
   const deleteShoppingCart = useCallback(async (id) => {
     const res = await storeShoppingCartServer.deleteShoppingCart(id);
-    const res2 = getShoppingCart()
+    dispatch({
+      type: storeShoppingCartReducerTypes.setShoppingCartList,
+      value: res
+    });
   }, [])
 
   const deleteSoldShoppingCart = useCallback(async () => {
