@@ -354,7 +354,7 @@ function reducer(state: IContextState, action: IReducerAction) {
         if (subType === 'concat') {
           newState = {
             ...newState,
-            productHistoryCodeList: newState.productHistoryCodeList.concat(subValue)
+            productHistoryCodeList: subValue.concat(newState.productHistoryCodeList)
           };
         } else if (subType === 'reset') {
           newState = {
