@@ -1,4 +1,9 @@
-import React, {createContext, useEffect, useCallback, useContext} from "react";
+import React, {
+  createContext,
+  useEffect,
+  useCallback,
+  useContext
+} from "react";
 import { IReducerAction } from "buy/common/interface/index.interface";
 import {
   getProductDetail,
@@ -6,13 +11,15 @@ import {
   getPartsBySkuId,
   getReviewScore,
   getProductDetailByCode,
-  getProductDetailByIdAndCondition, getSimiliarByCode
+  getProductDetailByIdAndCondition,
+  getSimiliarByCode
 } from "../server";
 import {
   callBackWhenPassAllFunc,
   getBuyDetailPath,
   getProductListPath,
-  safeEqual
+  safeEqual,
+  saveToCache
 } from "buy/common/utils/util";
 import { useGetOriginData } from "../../../common/useHook/useGetOriginData";
 import { IContextValue } from "../../../common/type";
@@ -22,8 +29,8 @@ import {
   IProductDetailGetWithCode,
   IReviews
 } from "./interface";
-import {Message} from "../../../components/message";
-import {StoreShoppingCartContext} from "../../shoppingCartPage/context";
+import { Message } from "../../../components/message";
+import { StoreShoppingCartContext } from "../../shoppingCartPage/context";
 
 export const ProductDetailContext = createContext({} as IProductDetailContext);
 export const StoreDetail = "StoreDetail";
@@ -36,7 +43,7 @@ interface IContextState {
   similiarPhoneListByCode: any[];
   reviewListInfo: IReviews;
   partsInfo: IProductDetail[];
-  cartList: string[];
+  productHistoryList: string[];
 }
 
 // @provider
@@ -47,7 +54,7 @@ export function ProductDetailContextProvider(props: any) {
     similiarPhoneListByCode: [],
     reviewListInfo: {} as any,
     partsInfo: [],
-    cartList: [],
+    productHistoryList: [],
     productDetailByCode: {} as any
   };
   const [state, dispatch, useClientRepair] = useGetOriginData(
@@ -93,6 +100,7 @@ interface IContextActions {
   getPartsBySkuId: (id: string) => any;
   resetProductInfo: () => any;
   addIntoCartList: (id: string) => any;
+  addProductHistoryList: (code: string) => any;
   getReviewScore: () => any;
 }
 
@@ -112,19 +120,22 @@ function useGetAction(
   state: IContextState,
   dispatch: (action: IReducerAction) => void
 ): IContextActions {
-  const storeShoppingCartContext = useContext(StoreShoppingCartContext)
-  const {addShoppingCart, setShowCartModal} = storeShoppingCartContext
+  const storeShoppingCartContext = useContext(StoreShoppingCartContext);
+  const { addShoppingCart, setShowCartModal } = storeShoppingCartContext;
   const actions: IContextActions = {
-    addIntoCartList: useCallback(async (value) => {
-      await addShoppingCart(value)
-      setShowCartModal(true)
-      // if (value && state.cartList.length < 10) {
-      //   dispatch({
-      //     type: storeDetailActionTypes.addCartList,
-      //     value: [value]
-      //   });
-      // }
-    }, [dispatch]),
+    addIntoCartList: useCallback(
+      async value => {
+        await addShoppingCart(value);
+        setShowCartModal(true);
+        // if (value && state.cartList.length < 10) {
+        //   dispatch({
+        //     type: storeDetailActionTypes.addCartList,
+        //     value: [value]
+        //   });
+        // }
+      },
+      [addShoppingCart, setShowCartModal]
+    ),
     getReviewScore: useCallback(async () => {
       const res: any = await getReviewScore();
       if (res) {
@@ -187,7 +198,7 @@ function useGetAction(
               });
             }
           } else {
-            locationHref(getProductListPath())
+            locationHref(getProductListPath());
           }
         } catch (e) {
           console.error(e);
@@ -221,10 +232,12 @@ function useGetAction(
               }
             }
             if (res.sameProduct) {
-              Message.error('Product not found, please try other color, storage or condition')
+              Message.error(
+                "Product not found, please try other color, storage or condition"
+              );
             }
           } else {
-            locationHref(getProductListPath())
+            locationHref(getProductListPath());
           }
         } catch (e) {
           console.error(e);
@@ -261,6 +274,17 @@ function useGetAction(
         });
       },
       [dispatch]
+    ),
+    addProductHistoryList: useCallback(
+      async function(skuId) {
+        if (skuId) {
+          dispatch({
+            type: "addProductHistoryList",
+            value: skuId
+          });
+        }
+      },
+      [dispatch]
     )
   };
   return actions;
@@ -273,7 +297,7 @@ export const storeDetailActionTypes = {
   setSimiliarPhoneList: "setSimiliarPhoneList",
   setSimiliarPhoneByCode: "setSimiliarPhoneByCode",
   setPartsInfo: "setPartsInfo",
-  addCartList: "addCartList",
+  addProductHistoryList: "addProductHistoryList",
   setReviewListInfo: "setReviewListInfo"
 };
 
@@ -282,11 +306,13 @@ function reducer(state: IContextState, action: IReducerAction) {
   const { type, value } = action;
   let newState = { ...state };
   switch (type) {
-    case storeDetailActionTypes.addCartList: {
-      newState = {
-        ...newState,
-        cartList: newState.cartList.concat([value])
-      };
+    case storeDetailActionTypes.addProductHistoryList: {
+      if (value) {
+        newState = {
+          ...newState,
+          productHistoryList: newState.productHistoryList.concat([value])
+        };
+      }
       break;
     }
     case storeDetailActionTypes.setReviewListInfo: {
@@ -334,5 +360,6 @@ function reducer(state: IContextState, action: IReducerAction) {
     default:
       newState = { ...newState };
   }
+  saveToCache(StoreDetail, newState, ["productHistoryList"], true);
   return newState;
 }

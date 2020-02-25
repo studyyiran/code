@@ -2,7 +2,7 @@ import { productListMock, similiarMock } from "./mock";
 import ajax from "../../../common/utils/ajax";
 import { backgroundCheckList } from "../context/staticData";
 import { constProductType } from "../../../common/constValue";
-import {ICodeAndId, ICodeDetail} from "../context";
+import { ICodeAndId, ICodeDetail } from "../context";
 
 function detailFormat(res: any) {
   if (res) {
@@ -46,30 +46,35 @@ export async function getProductDetail(id: string) {
 export async function getProductDetailByCode(data: ICodeDetail) {
   const res: any = await ajax.post(`/buy/product/detail/bycodeormodel`, data);
   if (res && res.detail) {
-    res.detail = detailFormat(res.detail)
+    res.detail = detailFormat(res.detail);
   }
-  
+
   return res;
 }
 
 export async function getProductDetailByIdAndCondition(data: ICodeAndId) {
-  const res: any = await ajax.post(`/buy/product/detail/byskuorcondition`, data);
+  const res: any = await ajax.post(
+    `/buy/product/detail/byskuorcondition`,
+    data
+  );
   if (res && res.detail) {
-    res.detail = detailFormat(res.detail)
+    res.detail = detailFormat(res.detail);
   }
   return res;
 }
 
 export async function getSimiliarByCode(buyProductCode: string) {
-  const res: any = await ajax.get(`/buy/product/detail/similar/bycode?buyProductCode=${buyProductCode}`);
+  const res: any = await ajax.get(
+    `/buy/product/detail/similar/bycode?buyProductCode=${buyProductCode}`
+  );
   return res.map((item: any) => detailFormat(item));
 }
 
-
-
 export async function getSimiliar(buyProductCode: string) {
   // 当get 被catch的时候 await后续的流程都会终止掉.
-  const res = await ajax.get(`/buy/product/similiar?buyProductCode=${buyProductCode}`);
+  const res = await ajax.get(
+    `/buy/product/similiar?buyProductCode=${buyProductCode}`
+  );
   return res;
 }
 
@@ -104,6 +109,14 @@ export async function getReviewScore() {
     per_page: 1000,
     order: "desc",
     store: "uptradeit-com"
+  });
+  return res;
+}
+
+export async function getProductHistory(list: any[]) {
+  const getProductHistoryUrl = "/buy/product/browsing/history";
+  const res = await ajax.get(getProductHistoryUrl, {
+    a: list
   });
   return res;
 }

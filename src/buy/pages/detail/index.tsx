@@ -30,7 +30,8 @@ export default function ProductDetail(props: any) {
     getSimiliarPhoneList,
     getReviewScore,
     getProductDetailByCode,
-    getSimiliarByCode
+    getSimiliarByCode,
+    addProductHistoryList
   } = productDetailContext as IProductDetailContext;
 
   const {
@@ -62,6 +63,13 @@ export default function ProductDetail(props: any) {
   const { variant } = getUrlAllParams();
   const [containerWidth, setContainerWidth] = useState(0);
   const [containerTopPos, setContainerTopPos] = useState(0);
+
+  useEffect(() => {
+    if (buyProductCode) {
+      addProductHistoryList(buyProductCode);
+    }
+  }, [addProductHistoryList, buyProductCode]);
+
   // 用code拉取xxx
   useEffect(() => {
     if (buyProductCode) {
@@ -127,7 +135,7 @@ export default function ProductDetail(props: any) {
     return () => {
       resetProductInfo();
     };
-  }, [modelName, variant]);
+  }, [getProductDetailByCode, modelName, resetProductInfo, variant]);
 
   // 设置title
   useEffect(() => {
@@ -217,15 +225,16 @@ export default function ProductDetail(props: any) {
 
   if (buyProductId) {
     return (
-      <div
-        className="product-detail-page"
-      >
-        <div className="top-part" ref={(element: any) => {
-          if (element && element.clientWidth) {
-            setContainerWidth(element.clientWidth);
-            setContainerTopPos(element.offsetTop);
-          }
-        }}>
+      <div className="product-detail-page">
+        <div
+          className="top-part"
+          ref={(element: any) => {
+            if (element && element.clientWidth) {
+              setContainerWidth(element.clientWidth);
+              setContainerTopPos(element.offsetTop);
+            }
+          }}
+        >
           <div className="product-detail">
             <TopSwiper
               productId={buyProductCode}
@@ -246,7 +255,10 @@ export default function ProductDetail(props: any) {
           </div>
           <RenderByCondition
             ComponentPc={
-              <div className="fixed-wrapper" style={{height: `calc(100vh - ${containerTopPos}px)`}}>
+              <div
+                className="fixed-wrapper"
+                style={{ height: `calc(100vh - ${containerTopPos}px)` }}
+              >
                 <Affix offsetBottom={0}>{renderHeaderProductPart()}</Affix>
               </div>
             }

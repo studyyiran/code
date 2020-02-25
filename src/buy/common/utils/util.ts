@@ -95,12 +95,12 @@ export function isServer() {
   }
 }
 
-export function saveToCache(key: string, storeState: any, needKey: any[]) {
+export function saveToCache(key: string, storeState: any, needKey: any[], isLocalStorage?: boolean) {
   const cache: any = {};
   needKey.forEach(item => {
     cache[item] = storeState[item];
   });
-  setSession(key, cache);
+  setSession(key, cache, isLocalStorage);
 }
 
 export function getFromCacheStore(key: string) {
@@ -113,12 +113,17 @@ export function getFromCacheStore(key: string) {
 }
 
 // 检测
-export function getFromSession(key: string) {
+export function getFromSession(key: string, isLocalStorage?: boolean) {
   try {
     if (isServer()) {
       return null;
     } else {
-      const data = window.sessionStorage.getItem(key);
+      let data;
+      if (isLocalStorage) {
+        data = window.localStorage.getItem(key);
+      } else {
+        data = window.sessionStorage.getItem(key);
+      }
       if (data) {
         return JSON.parse(data);
       } else {
@@ -130,10 +135,14 @@ export function getFromSession(key: string) {
   }
 }
 
-export function setSession(key: string, obj: any) {
+export function setSession(key: string, obj: any, isLocalStorage?: boolean) {
   try {
     if (!isServer()) {
-      window.sessionStorage.setItem(key, JSON.stringify(obj));
+      if (isLocalStorage) {
+        window.localStorage.setItem(key, JSON.stringify(obj));
+      } else {
+        window.sessionStorage.setItem(key, JSON.stringify(obj));
+      }
       return true;
     } else {
       return false;
@@ -179,19 +188,19 @@ export function getSetCurrentCookie() {
   const cookieWrapper = (cookie: any) => {
     return {
       cookieId: cookie
-    }
-  }
+    };
+  };
   // 1 设置cookie
   if (!isServer()) {
     // 确定是否有cookie
-    let cookie = getFromCookie(constValue.SHOPPINGCART)
+    let cookie = getFromCookie(constValue.SHOPPINGCART);
     if (cookie) {
-      return cookie
+      return cookie;
     } else {
       let exp = new Date();
-      const cookieExpired = 30 * 24 * 60 * 60 * 1000
+      const cookieExpired = 30 * 24 * 60 * 60 * 1000;
       exp.setTime(exp.getTime() + Number(cookieExpired));
-      const token = String(Math.floor(100000 * Math.random()))
+      const token = String(Math.floor(100000 * Math.random()));
       if (token && cookieExpired) {
         document.cookie =
           constValue.SHOPPINGCART +
@@ -201,11 +210,11 @@ export function getSetCurrentCookie() {
           exp.toUTCString() +
           "; path=/;";
       }
-      cookie = getFromCookie(constValue.SHOPPINGCART)
-      return cookie
+      cookie = getFromCookie(constValue.SHOPPINGCART);
+      return cookie;
     }
   } else {
-    return null
+    return null;
   }
 }
 
@@ -216,8 +225,8 @@ export function getFromCookie(sKey: string) {
         document.cookie.replace(
           new RegExp(
             "(?:(?:^|.*;)\\s*" +
-            encodeURIComponent(sKey).replace(/[-.+*]/g, "\\$&") +
-            "\\s*\\=\\s*([^;]*).*$)|^.*$"
+              encodeURIComponent(sKey).replace(/[-.+*]/g, "\\$&") +
+              "\\s*\\=\\s*([^;]*).*$)|^.*$"
           ),
           "$1"
         )

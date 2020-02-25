@@ -10,7 +10,7 @@ const addShoppingCartUrl = "/buy/order/shoppingcart/add";
 const deleteShoppingCartUrl = "/buy/order/shoppingcart/delete";
 const deleteSoldShoppingCartUrl = "/buy/order/shoppingcart/deletesold";
 const mergeShoppingCartUrl = "/buy/order/shoppingcart/merge";
-const getProductHistoryUrl = "/buy/product/browsing/history";
+
 
 async function getShoppingCart() {
   // return getShoppingCartMock;
