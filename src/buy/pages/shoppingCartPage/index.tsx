@@ -29,7 +29,6 @@ export const ShoppingCartPage: React.FC<IProps> = props => {
   useEffect(() => {
     // getShoppingCart();
   }, [getShoppingCart]);
-  console.log(shoppingCartList);
 
   useEffect(() => {
     getProductHistory();
@@ -37,15 +36,50 @@ export const ShoppingCartPage: React.FC<IProps> = props => {
 
   // 渲染
   function renderList() {
-    return shoppingCartList.list.map(({ skuReleated, product }) => {
+    if (
+      shoppingCartList &&
+      shoppingCartList.list &&
+      shoppingCartList.list.length
+    ) {
+      const list1: any[] = [];
+      const list2: any[] = [];
+      shoppingCartList.list.forEach(item => {
+        if (item.product.buyProductStatus === "INTRANSACTION") {
+          list2.push(item);
+        } else {
+          list1.push(item);
+        }
+      });
       return (
-        <CartShoppingItem
-          partsInfo={skuReleated}
-          productDetail={product}
-          compareList={compareList}
-        />
+        <div>
+          <div>
+            {list1.map(({ skuReleated, product }) => {
+              return (
+                <CartShoppingItem
+                  partsInfo={skuReleated}
+                  productDetail={product}
+                  compareList={compareList}
+                />
+              );
+            })}
+          </div>
+          <div>Remove all sold</div>
+          <div>
+            {list2.map(({ skuReleated, product }) => {
+              return (
+                <CartShoppingItem
+                  partsInfo={skuReleated}
+                  productDetail={product}
+                  compareList={compareList}
+                />
+              );
+            })}
+          </div>
+        </div>
       );
-    });
+    } else {
+      return <img src={require("./res/empty.svg")} />
+    }
   }
   return (
     <div className="shopping-cart-page">
@@ -62,13 +96,7 @@ export const ShoppingCartPage: React.FC<IProps> = props => {
             Compare ({compareList.length}){" "}
           </button>
         </div>
-        {shoppingCartList &&
-        shoppingCartList.list &&
-        shoppingCartList.list.length ? (
-          <div className="list-container">{renderList()}</div>
-        ) : (
-          <img src={require("./res/empty.svg")} />
-        )}
+        <div className="list-container">{renderList()}</div>
         <RenderSimilar
           similiarPhoneList={productHistoryList}
           history={props.history}
