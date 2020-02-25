@@ -174,7 +174,7 @@ const RenderTopPart = ({ children }: { children?: any }) => {
             locationHref(getLocationUrl("shoppingcart"));
           }}
         >
-          <Svg icon="buyjia" />
+          <Svg icon="jia" />
           <span>Add Device</span>
         </div>
         <div className="button-container empty" />

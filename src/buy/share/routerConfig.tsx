@@ -45,6 +45,12 @@ export const routerConfig = [
     title: "Buy Used Phones | Sell My Phone | UpTradeit.com",
     Component: DetailPreviewWrapper
   },
+  // {
+  //   path: "/detail",
+  //   exact: true,
+  //   title: "Buy Used Phones | Sell My Phone | UpTradeit.com",
+  //   Component: ProductList
+  // },
   {
     path: "/uptrade/protect",
     title: "UpTrade Protect - Extended Warranty | UpTradeit.com",

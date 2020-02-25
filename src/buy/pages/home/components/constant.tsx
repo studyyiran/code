@@ -26,11 +26,11 @@ export const brands = [
     iconUrl: require(`buy/pages/home/components/brandLogo/res/OnePlus.svg`),
     id: 5
   },
-  {
-    iconName: "Others",
-    iconUrl: "",
-    id: "others"
-  }
+  // {
+  //   iconName: "Others",
+  //   iconUrl: "",
+  //   id: "others"
+  // }
 ];
 
 export const buyCardInfo = [
