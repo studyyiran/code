@@ -12,11 +12,13 @@ import {
   getReviewScore,
   getProductDetailByCode,
   getProductDetailByIdAndCondition,
-  getSimiliarByCode
+  getSimiliarByCode,
+  getProductHistory
 } from "../server";
 import {
   callBackWhenPassAllFunc,
   getBuyDetailPath,
+  getFromCacheStore,
   getProductListPath,
   safeEqual,
   saveToCache
@@ -59,7 +61,10 @@ export function ProductDetailContextProvider(props: any) {
   };
   const [state, dispatch, useClientRepair] = useGetOriginData(
     reducer,
-    initState,
+    {
+      ...initState,
+      ...getFromCacheStore(StoreDetail)
+    },
     StoreDetail
   );
   const action = useGetAction(state, dispatch);
@@ -102,6 +107,7 @@ interface IContextActions {
   addIntoCartList: (id: string) => any;
   addProductHistoryList: (code: string) => any;
   getReviewScore: () => any;
+  getProductHistory: () => any;
 }
 
 export interface ICodeDetail {
@@ -123,6 +129,13 @@ function useGetAction(
   const storeShoppingCartContext = useContext(StoreShoppingCartContext);
   const { addShoppingCart, setShowCartModal } = storeShoppingCartContext;
   const actions: IContextActions = {
+    getProductHistory: useCallback(async () => {
+      const res = await getProductHistory(state.productHistoryList);
+      console.log(res);
+      // dispatch({
+      //   type: 'addProductHistoryList',
+      // })
+    }, [state.productHistoryList]),
     addIntoCartList: useCallback(
       async value => {
         await addShoppingCart(value);

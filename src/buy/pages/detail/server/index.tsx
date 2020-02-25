@@ -115,8 +115,6 @@ export async function getReviewScore() {
 
 export async function getProductHistory(list: any[]) {
   const getProductHistoryUrl = "/buy/product/browsing/history";
-  const res = await ajax.get(getProductHistoryUrl, {
-    a: list
-  });
+  const res = await ajax.post(getProductHistoryUrl, list);
   return res;
 }
