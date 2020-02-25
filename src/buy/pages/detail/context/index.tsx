@@ -63,7 +63,7 @@ export function ProductDetailContextProvider(props: any) {
     reducer,
     {
       ...initState,
-      ...getFromCacheStore(StoreDetail)
+      ...getFromCacheStore(StoreDetail, true)
     },
     StoreDetail
   );

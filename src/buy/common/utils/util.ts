@@ -103,12 +103,12 @@ export function saveToCache(key: string, storeState: any, needKey: any[], isLoca
   setSession(key, cache, isLocalStorage);
 }
 
-export function getFromCacheStore(key: string) {
+export function getFromCacheStore(key: string, isLocalStorage?: boolean) {
   let cacheStore = {};
   // 1 先从ssr缓存拉取
   // 2 从session拉取
   // TODO 当这两个出现矛盾的时候 如何解决.
-  cacheStore = { ...getFromSession(key) };
+  cacheStore = { ...getFromSession(key, isLocalStorage) };
   return cacheStore;
 }
 
