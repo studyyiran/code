@@ -1,4 +1,11 @@
-import React, { createContext, useContext, useEffect, useReducer } from "react";
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useReducer
+} from "react";
 import { IReducerAction } from "buy/common/interface/index.interface";
 import useReducerMiddleware from "../../../common/useHook/useReducerMiddleware";
 import {
@@ -36,6 +43,7 @@ export interface IShoppingCartInfo {
 export interface IStoreShoppingCartState {
   shoppingCartList: IShoppingCartInfo;
   compareInfoList: string[];
+  showCartModal: boolean
 }
 
 // interface
@@ -53,7 +61,8 @@ export function StoreShoppingCartContextProvider(props: any) {
   const { tokenInfo } = storeAuthContextValue;
   const initState: IStoreShoppingCartState = {
     shoppingCartList: {} as any,
-    compareInfoList: []
+    compareInfoList: [],
+    showCartModal: false
   };
   const [state, dispatch] = useReducer(
     useReducerMiddleware(reducer),
@@ -64,21 +73,20 @@ export function StoreShoppingCartContextProvider(props: any) {
     dispatch
   );
   const { getShoppingCart, mergeShoppingCart } = action;
-  useEffect(() => {
-    getShoppingCart();
-  }, [getShoppingCart]);
 
-  useEffect(() => {
+  const loginHandler = useCallback(async () => {
     // 登录成功 就删除cookie
     if (tokenInfo && tokenInfo.token) {
       //1 merge
-      mergeShoppingCart().then((res: any) => {
-        console.log(res);
-        //2 清空cookie
-        document.cookie = `${constValue.SHOPPINGCART}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;`;
-      });
+      await mergeShoppingCart();
+      //2 清空cookie
+      document.cookie = `${constValue.SHOPPINGCART}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;`;
     }
-  }, [mergeShoppingCart, tokenInfo]);
+    getShoppingCart();
+  }, [getShoppingCart, mergeShoppingCart, tokenInfo]);
+  useEffect(() => {
+    loginHandler();
+  }, [loginHandler]);
 
   const propsValue: IStoreShoppingCartContext = {
     ...action,
@@ -91,7 +99,8 @@ export function StoreShoppingCartContextProvider(props: any) {
 // action types
 export const storeShoppingCartReducerTypes = {
   setShoppingCartList: "setShoppingCartList",
-  setCompareInfoList: "setCompareInfoList"
+  setCompareInfoList: "setCompareInfoList",
+  setShowCartModal: "setShowCartModal"
 };
 
 // reducer
@@ -103,6 +112,13 @@ function reducer(state: IStoreShoppingCartState, action: IReducerAction) {
       newState = {
         ...newState,
         shoppingCartList: value
+      };
+      break;
+    }
+    case storeShoppingCartReducerTypes.setShowCartModal: {
+      newState = {
+        ...newState,
+        showCartModal: value
       };
       break;
     }

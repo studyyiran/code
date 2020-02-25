@@ -17,6 +17,7 @@ export interface IStoreShoppingCartActions {
   deleteShoppingCart: (code: string) => any;
   deleteSoldShoppingCart: () => any;
   mergeShoppingCart: () => any;
+  setShowCartModal: (bool: boolean) => any;
 }
 
 // useCreateActions
@@ -93,6 +94,13 @@ export function useStoreShoppingCartGetActions(
     const res = await storeShoppingCartServer.mergeShoppingCart();
     const res2 = getShoppingCart()
   }, [])
+
+  const setShowCartModal = useCallback(async (bool) => {
+    dispatch({
+      type: "setShowCartModal",
+      value: bool
+    })
+  }, [])
   
   return {
     getShoppingCart,
@@ -101,6 +109,7 @@ export function useStoreShoppingCartGetActions(
     deleteShoppingCart,
     deleteSoldShoppingCart,
     mergeShoppingCart,
+    setShowCartModal,
     addShoppingCart
   };
 }

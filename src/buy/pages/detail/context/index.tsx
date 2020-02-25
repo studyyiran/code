@@ -113,10 +113,11 @@ function useGetAction(
   dispatch: (action: IReducerAction) => void
 ): IContextActions {
   const storeShoppingCartContext = useContext(StoreShoppingCartContext)
-  const {addShoppingCart} = storeShoppingCartContext
+  const {addShoppingCart, setShowCartModal} = storeShoppingCartContext
   const actions: IContextActions = {
     addIntoCartList: useCallback(async (value) => {
-      addShoppingCart(value)
+      await addShoppingCart(value)
+      setShowCartModal(true)
       // if (value && state.cartList.length < 10) {
       //   dispatch({
       //     type: storeDetailActionTypes.addCartList,

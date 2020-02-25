@@ -12,36 +12,13 @@ import { StoreShoppingCartContext } from "../../../../pages/shoppingCartPage/con
 
 export function AddCart() {
   const storeShoppingCartContext = useContext(StoreShoppingCartContext);
-  const { storeShoppingCartContextValue } = storeShoppingCartContext;
-  const { shoppingCartList } = storeShoppingCartContextValue;
-  const [listLength, setListLength] = useState(-1);
-  const [showModal, setShowModal] = useState(false);
-  console.log(listLength);
+  const {
+    storeShoppingCartContextValue,
+    setShowCartModal
+  } = storeShoppingCartContext;
+  const { shoppingCartList, showCartModal } = storeShoppingCartContextValue;
   // 这块没折腾明白
-  useEffect(() => {
-    // 初始化
-    if (shoppingCartList && shoppingCartList.list) {
-      console.log("enter");
-      if (listLength === -1) {
-        // 初始化
-        setListLength(shoppingCartList.totalCount);
-      } else {
-        // 更新
-        if (shoppingCartList.totalCount > listLength) {
-          // 弹框
-          if (!showModal) {
-            setShowModal(true);
-            // setTimeout(() => {
-            //   setShowModal(false);
-            // }, 5000);
-          }
-          // 检测到变化后的更新.
-          setListLength(shoppingCartList.totalCount);
-        }
-      }
-    }
-  }, [listLength, shoppingCartList, showModal]);
-
+  const listLength = shoppingCartList && shoppingCartList.list && shoppingCartList.list.length
   const detailList = shoppingCartList && shoppingCartList.list;
 
   return (
@@ -58,7 +35,7 @@ export function AddCart() {
       <RenderByCondition ComponentPc={<span>Cart</span>} ComponentMb={null} />
       {listLength > 0 ? <span className="point">{listLength}</span> : null}
       <Modal
-        visible={showModal}
+        visible={showCartModal}
         title={""}
         className="add-cart-modal"
         maskClosable={true}
@@ -66,7 +43,7 @@ export function AddCart() {
         needDefaultScroll={true}
         closable={true}
         onCancel={() => {
-          setShowModal(false);
+          setShowCartModal(false)
         }}
       >
         <h1 className="title">Your cart</h1>
@@ -103,7 +80,7 @@ export function AddCart() {
         <div
           className="long-button canclick"
           onClick={() => {
-            setShowModal(false);
+            setShowCartModal(false)
             locationHref(getLocationUrl("shoppingcart"));
           }}
         >
