@@ -110,15 +110,20 @@ export function CartShoppingItem(props: IProps) {
 
   function renderSubTotal() {
     return (
-      <div className="render-sub-total">
-        <span>Subtotal (tax and shipping calculated at checkout)</span>
-        <strong>
-          {currencyTrans(
-            Number(buyProductPrice) +
-              Number(otherProductSubTotal) +
-              (needProtection ? Number(protectPrice) : 0)
-          )}
-        </strong>
+      <div className="render-sub-total-container">
+        <div className="render-sub-total">
+          <div className="line-one">
+            <span>Subtotal</span>
+            <strong>
+              {currencyTrans(
+                Number(buyProductPrice) +
+                  Number(otherProductSubTotal) +
+                  (needProtection ? Number(protectPrice) : 0)
+              )}
+            </strong>
+          </div>
+          <div>(tax and shipping calculated at checkout)</div>
+        </div>
       </div>
     );
   }
@@ -126,9 +131,14 @@ export function CartShoppingItem(props: IProps) {
   function renderButtonContainer() {
     return (
       <div className="render-button-container">
-        <div className="remove-button" onClick={() => {
-          deleteShoppingCart(buyProductCode)
-        }}>Remove</div>
+        <div
+          className="remove-button"
+          onClick={() => {
+            deleteShoppingCart(buyProductCode);
+          }}
+        >
+          Remove
+        </div>
         <CheckOutButton
           buyProductId={buyProductId}
           otherProductList={otherProductList}
