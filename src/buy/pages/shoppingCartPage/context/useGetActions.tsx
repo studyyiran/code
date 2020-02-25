@@ -73,15 +73,15 @@ export function useStoreShoppingCartGetActions(
   
   const addShoppingCart = useCallback(async (id) => {
     const res = await storeShoppingCartServer.addShoppingCart(id);
-    const res2 = getShoppingCart()
-  }, [])
-
-  const deleteShoppingCart = useCallback(async (id) => {
-    const res = await storeShoppingCartServer.deleteShoppingCart(id);
     dispatch({
       type: storeShoppingCartReducerTypes.setShoppingCartList,
       value: res
     });
+  }, [])
+
+  const deleteShoppingCart = useCallback(async (id) => {
+    const res = await storeShoppingCartServer.deleteShoppingCart(id);
+    const res2 = getShoppingCart()
   }, [])
 
   const deleteSoldShoppingCart = useCallback(async () => {

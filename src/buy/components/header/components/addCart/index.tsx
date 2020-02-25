@@ -82,7 +82,7 @@ export function AddCart() {
             if (item && item.product) {
               return <Line {...item.product} />;
             } else {
-              return null
+              return null;
             }
           })}
         </div>
@@ -94,13 +94,21 @@ export function AddCart() {
           <div>
             <h1>
               Total:{" "}
-              {currencyTrans(shoppingCartList && shoppingCartList.cartTotalPrice)}
+              {currencyTrans(
+                shoppingCartList && shoppingCartList.cartTotalPrice
+              )}
             </h1>
           </div>
         </div>
-        <div className="long-button canclick" onClick={() => {
-          locationHref(getLocationUrl('shoppingcart'))
-        }}>View cart</div>
+        <div
+          className="long-button canclick"
+          onClick={() => {
+            setShowModal(false);
+            locationHref(getLocationUrl("shoppingcart"));
+          }}
+        >
+          View cart
+        </div>
       </Modal>
     </span>
   );
@@ -136,16 +144,10 @@ const Line = (props: any) => {
       {/*)}*/}
       <RenderByCondition
         ComponentMb={
-          <InnerDivImage
-            lazyload={false}
-            imgUrl={buyProductImgPc}
-          />
+          <InnerDivImage lazyload={false} imgUrl={buyProductImgPc} />
         }
         ComponentPc={
-          <InnerDivImage
-            lazyload={false}
-            imgUrl={buyProductImgPc}
-          />
+          <InnerDivImage lazyload={false} imgUrl={buyProductImgPc} />
         }
       />
       <div className="content-container">
