@@ -26,15 +26,15 @@ export function RenderWithOriginData(props: any) {
             <TotalOrderInfoProvider>
               <StoreCheckOrderContextProvider>
                 <OurHomeContextProvider>
-                  <ProductDetailContextProvider>
-                    <OrderInfoContextProvider>
-                      <StoreShoppingCartContextProvider>
+                  <StoreShoppingCartContextProvider>
+                    <ProductDetailContextProvider>
+                      <OrderInfoContextProvider>
                         <ProductListContextProvider>
                           {props.children}
                         </ProductListContextProvider>
-                      </StoreShoppingCartContextProvider>
-                    </OrderInfoContextProvider>
-                  </ProductDetailContextProvider>
+                      </OrderInfoContextProvider>
+                    </ProductDetailContextProvider>
+                  </StoreShoppingCartContextProvider>
                 </OurHomeContextProvider>
               </StoreCheckOrderContextProvider>
             </TotalOrderInfoProvider>

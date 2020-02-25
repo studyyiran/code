@@ -186,7 +186,7 @@ export function getSetCurrentCookie() {
     // 确定是否有cookie
     let cookie = getFromCookie(constValue.SHOPPINGCART)
     if (cookie) {
-      return cookieWrapper(cookie)
+      return cookie
     } else {
       let exp = new Date();
       const cookieExpired = 30 * 24 * 60 * 60 * 1000
@@ -202,7 +202,7 @@ export function getSetCurrentCookie() {
           "; path=/;";
       }
       cookie = getFromCookie(constValue.SHOPPINGCART)
-      return cookieWrapper(cookie)
+      return cookie
     }
   } else {
     return null

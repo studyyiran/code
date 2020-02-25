@@ -56,7 +56,7 @@ export function AddCart() {
         locationHref(getLocationUrl('shoppingcart'));
       }}
     >
-      <img src={require("./res/cart_icon.png")} />
+      <img src={require("./res/cart_icon.svg")} />
       <RenderByCondition ComponentPc={<span>Cart</span>} ComponentMb={null} />
       {listLength > 0 ? <span className="point">{listLength}</span> : null}
       <Modal

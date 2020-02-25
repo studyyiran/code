@@ -138,7 +138,7 @@ export function CartShoppingItem(props: IProps) {
   }
 
   function renderCartShoppingItem() {
-    const dom = partsInfo.map(item => {
+    const dom = (partsInfo || []).map(item => {
       if (item) {
         const {
           buyProductId,

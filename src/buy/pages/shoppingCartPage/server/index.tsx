@@ -10,15 +10,15 @@ const addShoppingCartUrl = "/buy/order/shoppingcart/add";
 
 async function getShoppingCart() {
   // return getShoppingCartMock;
-  const cookieInfo = getSetCurrentCookie();
-  const res: any = await ajax.post(getShoppingCartUrl, cookieInfo);
+  const cookieId = getSetCurrentCookie();
+  const res: any = await ajax.post(getShoppingCartUrl, {cookieId});
   return res;
 }
 
 async function addShoppingCart(productCode: any) {
   // return getShoppingCartMock;
-  const cookieInfo = getSetCurrentCookie();
-  const res: any = await ajax.post(addShoppingCartUrl, {productCode, cookieInfo});
+  const cookieId = getSetCurrentCookie();
+  const res: any = await ajax.post(addShoppingCartUrl, {productCode, cookieId});
   return res;
 }
 
