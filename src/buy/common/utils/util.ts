@@ -175,6 +175,59 @@ export function getProductListPath() {
   return "/buy-phone";
 }
 
+export function getSetCurrentCookie() {
+  const cookieWrapper = (cookie: any) => {
+    return {
+      cookieId: cookie
+    }
+  }
+  // 1 设置cookie
+  if (!isServer()) {
+    // 确定是否有cookie
+    let cookie = getFromCookie(constValue.SHOPPINGCART)
+    if (cookie) {
+      return cookieWrapper(cookie)
+    } else {
+      let exp = new Date();
+      const cookieExpired = 30 * 24 * 60 * 60 * 1000
+      exp.setTime(exp.getTime() + Number(cookieExpired));
+      const token = String(Math.floor(100000 * Math.random()))
+      if (token && cookieExpired) {
+        document.cookie =
+          constValue.SHOPPINGCART +
+          "=" +
+          escape(token) +
+          ";expires=" +
+          exp.toUTCString() +
+          "; path=/;";
+      }
+      cookie = getFromCookie(constValue.SHOPPINGCART)
+      return cookieWrapper(cookie)
+    }
+  } else {
+    return null
+  }
+}
+
+export function getFromCookie(sKey: string) {
+  if (!isServer()) {
+    return (
+      decodeURIComponent(
+        document.cookie.replace(
+          new RegExp(
+            "(?:(?:^|.*;)\\s*" +
+            encodeURIComponent(sKey).replace(/[-.+*]/g, "\\$&") +
+            "\\s*\\=\\s*([^;]*).*$)|^.*$"
+          ),
+          "$1"
+        )
+      ) || null
+    );
+  } else {
+    return null;
+  }
+}
+
 export function getLocationUrl(type: string) {
   switch (type) {
     case "comparepage": {

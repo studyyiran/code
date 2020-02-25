@@ -74,6 +74,6 @@ export const ShoppingCartPage: React.FC<IProps> = props => {
       </div>
     );
   } else {
-    return null;
+    return "empty";
   }
 };

@@ -2,6 +2,7 @@ export const constValue = {
   REFUNDTIME: 30,
   priceUnit: "$",
   AUTHKEY: "uptrade_us_frontend_super_fuck_token",
+  SHOPPINGCART: "uptrade_us_frontend_gouwuche_token",
   fiveActValue: 10 / 7,
   paypalButtonId: "paypal-button-container"
 };

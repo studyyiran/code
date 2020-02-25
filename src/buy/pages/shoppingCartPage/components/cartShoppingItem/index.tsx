@@ -139,43 +139,47 @@ export function CartShoppingItem(props: IProps) {
 
   function renderCartShoppingItem() {
     const dom = partsInfo.map(item => {
-      const {
-        buyProductId,
-        productType,
-        buyProductPrice,
-        buyProductCode,
-        buyProductName
-      } = item;
-      return (
-        <ItemPriceLine
-          name={<span>{buyProductName || buyProductCode}</span>}
-          price={Number(buyProductPrice)}
-          status={otherProductList.some(item =>
-            safeEqual(item.productId, buyProductId)
-          )}
-          onClick={() => {
-            setOtherProductList((arr: IOtherProduct[]) => {
-              // 根据选中状态来操作列表
-              const findTarget = otherProductList.find(item => {
-                return safeEqual(item.productId, buyProductId);
+      if (item) {
+        const {
+          buyProductId,
+          productType,
+          buyProductPrice,
+          buyProductCode,
+          buyProductName
+        } = item;
+        return (
+          <ItemPriceLine
+            name={<span>{buyProductName || buyProductCode}</span>}
+            price={Number(buyProductPrice)}
+            status={otherProductList.some(item =>
+              safeEqual(item.productId, buyProductId)
+            )}
+            onClick={() => {
+              setOtherProductList((arr: IOtherProduct[]) => {
+                // 根据选中状态来操作列表
+                const findTarget = otherProductList.find(item => {
+                  return safeEqual(item.productId, buyProductId);
+                });
+                if (!findTarget) {
+                  return arr.concat([
+                    {
+                      productId: buyProductId,
+                      productType,
+                      buyPrice: buyProductPrice
+                    }
+                  ]);
+                } else {
+                  return arr.filter(
+                    item => !safeEqual(item.productId, buyProductId)
+                  );
+                }
               });
-              if (!findTarget) {
-                return arr.concat([
-                  {
-                    productId: buyProductId,
-                    productType,
-                    buyPrice: buyProductPrice
-                  }
-                ]);
-              } else {
-                return arr.filter(
-                  item => !safeEqual(item.productId, buyProductId)
-                );
-              }
-            });
-          }}
-        />
-      );
+            }}
+          />
+        );
+      } else {
+        return null;
+      }
     });
     // 渲染
     return (
