@@ -15,7 +15,8 @@ export const ShoppingCartPage: React.FC<IProps> = props => {
   // 引入context
   const storeShoppingCartContext = useContext(StoreShoppingCartContext);
   const productDetailContext = useContext(ProductDetailContext);
-  const { getProductHistory } = productDetailContext;
+  const { getProductHistory, productDetailContextValue } = productDetailContext;
+  const { productHistoryList } = productDetailContextValue;
   const {
     storeShoppingCartContextValue,
     getShoppingCart,
@@ -69,11 +70,7 @@ export const ShoppingCartPage: React.FC<IProps> = props => {
           <img src={require("./res/empty.svg")} />
         )}
         <RenderSimilar
-          similiarPhoneList={
-            shoppingCartList && shoppingCartList.list
-              ? shoppingCartList.list.map(i => i.product)
-              : []
-          }
+          similiarPhoneList={productHistoryList}
           history={props.history}
         >
           <h2 className="sub-title">Browsing History</h2>

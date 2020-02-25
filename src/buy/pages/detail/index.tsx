@@ -31,7 +31,7 @@ export default function ProductDetail(props: any) {
     getReviewScore,
     getProductDetailByCode,
     getSimiliarByCode,
-    addProductHistoryList
+    addProductHistoryCodeList
   } = productDetailContext as IProductDetailContext;
 
   const {
@@ -66,9 +66,9 @@ export default function ProductDetail(props: any) {
 
   useEffect(() => {
     if (buyProductCode) {
-      addProductHistoryList(buyProductCode);
+      addProductHistoryCodeList(buyProductCode);
     }
-  }, [addProductHistoryList, buyProductCode]);
+  }, [addProductHistoryCodeList, buyProductCode]);
 
   // 用code拉取xxx
   useEffect(() => {

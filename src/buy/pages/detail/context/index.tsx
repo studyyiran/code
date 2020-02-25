@@ -45,7 +45,8 @@ interface IContextState {
   similiarPhoneListByCode: any[];
   reviewListInfo: IReviews;
   partsInfo: IProductDetail[];
-  productHistoryList: string[];
+  productHistoryCodeList: string[];
+  productHistoryList: any[];
 }
 
 // @provider
@@ -56,6 +57,7 @@ export function ProductDetailContextProvider(props: any) {
     similiarPhoneListByCode: [],
     reviewListInfo: {} as any,
     partsInfo: [],
+    productHistoryCodeList: [],
     productHistoryList: [],
     productDetailByCode: {} as any
   };
@@ -105,7 +107,7 @@ interface IContextActions {
   getPartsBySkuId: (id: string) => any;
   resetProductInfo: () => any;
   addIntoCartList: (id: string) => any;
-  addProductHistoryList: (code: string) => any;
+  addProductHistoryCodeList: (code: string) => any;
   getReviewScore: () => any;
   getProductHistory: () => any;
 }
@@ -130,12 +132,35 @@ function useGetAction(
   const { addShoppingCart, setShowCartModal } = storeShoppingCartContext;
   const actions: IContextActions = {
     getProductHistory: useCallback(async () => {
-      const res = await getProductHistory(state.productHistoryList);
-      console.log(res);
-      // dispatch({
-      //   type: 'addProductHistoryList',
-      // })
-    }, [state.productHistoryList]),
+      // 判断去重
+      if (
+        state.productHistoryCodeList &&
+        state.productHistoryCodeList.some((code: string) => {
+          return Boolean(
+            !state.productHistoryList.find(item => {
+              return item.buyProductCode === code;
+            })
+          );
+        })
+      ) {
+        const res = await getProductHistory(state.productHistoryCodeList);
+        // 1 赋值
+        dispatch({
+          type: "setProductHistoryList",
+          value: res
+        });
+        // 2 去重重新赋值
+        dispatch({
+          type: "addProductHistoryCodeList",
+          value: {
+            subType: 'reset',
+            subValue: (res || []).map((item: any) => {
+              return item.buyProductCode;
+            })
+          }
+        });
+      }
+    }, [dispatch, state.productHistoryCodeList, state.productHistoryList]),
     addIntoCartList: useCallback(
       async value => {
         await addShoppingCart(value);
@@ -288,12 +313,15 @@ function useGetAction(
       },
       [dispatch]
     ),
-    addProductHistoryList: useCallback(
+    addProductHistoryCodeList: useCallback(
       async function(skuId) {
         if (skuId) {
           dispatch({
-            type: "addProductHistoryList",
-            value: skuId
+            type: "addProductHistoryCodeList",
+            value: {
+              subType: 'concat',
+              subValue: [skuId]
+            }
           });
         }
       },
@@ -310,7 +338,8 @@ export const storeDetailActionTypes = {
   setSimiliarPhoneList: "setSimiliarPhoneList",
   setSimiliarPhoneByCode: "setSimiliarPhoneByCode",
   setPartsInfo: "setPartsInfo",
-  addProductHistoryList: "addProductHistoryList",
+  addProductHistoryCodeList: "addProductHistoryCodeList",
+  setProductHistoryList: "setProductHistoryList",
   setReviewListInfo: "setReviewListInfo"
 };
 
@@ -319,11 +348,28 @@ function reducer(state: IContextState, action: IReducerAction) {
   const { type, value } = action;
   let newState = { ...state };
   switch (type) {
-    case storeDetailActionTypes.addProductHistoryList: {
+    case storeDetailActionTypes.addProductHistoryCodeList: {
+      if (value) {
+        const {subType, subValue} = value
+        if (subType === 'concat') {
+          newState = {
+            ...newState,
+            productHistoryCodeList: newState.productHistoryCodeList.concat(subValue)
+          };
+        } else if (subType === 'reset') {
+          newState = {
+            ...newState,
+            productHistoryCodeList: subValue
+          };
+        }
+      }
+      break;
+    }
+    case storeDetailActionTypes.setProductHistoryList: {
       if (value) {
         newState = {
           ...newState,
-          productHistoryList: newState.productHistoryList.concat([value])
+          productHistoryList: value
         };
       }
       break;
@@ -373,6 +419,6 @@ function reducer(state: IContextState, action: IReducerAction) {
     default:
       newState = { ...newState };
   }
-  saveToCache(StoreDetail, newState, ["productHistoryList"], true);
+  saveToCache(StoreDetail, newState, ["productHistoryCodeList"], true);
   return newState;
 }
