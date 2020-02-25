@@ -20,7 +20,8 @@ export const ShoppingCartPage: React.FC<IProps> = props => {
   const {
     storeShoppingCartContextValue,
     getShoppingCart,
-    addCompareList
+    addCompareList,
+    deleteSoldShoppingCart
   } = storeShoppingCartContext as IStoreShoppingCartContext;
   // 从context中获取值
   const { shoppingCartList } = storeShoppingCartContextValue;
@@ -63,14 +64,17 @@ export const ShoppingCartPage: React.FC<IProps> = props => {
               );
             })}
           </div>
-          <div
-            className="remove-button remove-button-line"
-            onClick={() => {
-            }}
-          >
-            <img src={require("./res/trash.svg")} />
-            <span>Remove all sold</span>
-          </div>
+          {list2 && list2.length ? (
+            <div
+              className="remove-button remove-button-line"
+              onClick={() => {
+                deleteSoldShoppingCart();
+              }}
+            >
+              <img src={require("./res/trash.svg")} />
+              <span>Remove all sold</span>
+            </div>
+          ) : null}
           <div>
             {list2.map(({ skuReleated, product }) => {
               return (
@@ -85,7 +89,7 @@ export const ShoppingCartPage: React.FC<IProps> = props => {
         </div>
       );
     } else {
-      return <img src={require("./res/empty.svg")} />
+      return <img src={require("./res/empty.svg")} />;
     }
   }
   return (
