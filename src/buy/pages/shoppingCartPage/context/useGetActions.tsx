@@ -48,11 +48,11 @@ export function useStoreShoppingCartGetActions(
   const getCompareInfoList = useCallback(
     async function() {
       // const res = await storeShoppingCartServer.getShoppingCart();
-      const res = [1,2,3,4]
-      dispatch({
-        type: storeShoppingCartReducerTypes.setCompareInfoList,
-        value: res
-      });
+      // const res = [1,2,3,4]
+      // dispatch({
+      //   type: storeShoppingCartReducerTypes.setCompareInfoList,
+      //   value: res
+      // });
     },
     [dispatch]
   );

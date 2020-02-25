@@ -23,7 +23,7 @@ export const ShoppingCartPage: React.FC<IProps> = props => {
   const compareList = [] as any[]
   // local发起请求
   useEffect(() => {
-    getShoppingCart();
+    // getShoppingCart();
   }, [getShoppingCart]);
   console.log(shoppingCartList);
 
