@@ -137,7 +137,8 @@ export function CartShoppingItem(props: IProps) {
             deleteShoppingCart(buyProductCode);
           }}
         >
-          Remove
+          <img src={require("../../res/trash.svg")} />
+          <span>Remove</span>
         </div>
         <CheckOutButton
           buyProductId={buyProductId}

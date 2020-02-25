@@ -63,7 +63,14 @@ export const ShoppingCartPage: React.FC<IProps> = props => {
               );
             })}
           </div>
-          <div>Remove all sold</div>
+          <div
+            className="remove-button remove-button-line"
+            onClick={() => {
+            }}
+          >
+            <img src={require("./res/trash.svg")} />
+            <span>Remove all sold</span>
+          </div>
           <div>
             {list2.map(({ skuReleated, product }) => {
               return (
