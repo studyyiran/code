@@ -37,6 +37,7 @@ export const ComparePage: React.FC<IProps> = props => {
     const { type, title } = rowInfo;
     const columnArr = [{}].concat(fillWithEmpty(4));
     return columnArr.map((columnInfo: any, columnIndex: number) => {
+      console.log(columnInfo)
       if (type === "detail") {
         if (columnIndex === 0) {
           return <div />;

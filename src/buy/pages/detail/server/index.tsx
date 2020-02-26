@@ -4,7 +4,7 @@ import { backgroundCheckList } from "../context/staticData";
 import { constProductType } from "../../../common/constValue";
 import { ICodeAndId, ICodeDetail } from "../context";
 
-function detailFormat(res: any) {
+export function detailFormat(res: any) {
   if (res) {
     let returenRes = { ...res };
     if (returenRes) {
