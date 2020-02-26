@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./index.less";
 import { locationHref } from "../../common/utils/routerHistory";
 import { StoreShoppingCartContext } from "../shoppingCartPage/context";
@@ -8,6 +8,9 @@ import Svg from "../../components/svg";
 import { getLocationUrl } from "../../common/utils/util";
 import { getDescArr } from "../detail/util";
 import { IProductDetail } from "../detail/context/interface";
+import VideoComponent from "../../components/video";
+// @ts-ignore
+import ReactImageMagnify from "react-image-magnify";
 
 interface IProps {
   history?: any;
@@ -97,7 +100,9 @@ export const ComparePage: React.FC<IProps> = props => {
             if (columnIndex === 0) {
               return <RenderTitleList>{title}</RenderTitleList>;
             } else {
-              return <RenderListItem rowInfo={rowInfo} columnInfo={columnInfo} />;
+              return (
+                <RenderListItem rowInfo={rowInfo} columnInfo={columnInfo} />
+              );
             }
           } else {
             return null;
@@ -106,9 +111,8 @@ export const ComparePage: React.FC<IProps> = props => {
           return <RenderListItem rowInfo={rowInfo} columnInfo={columnInfo} />;
         }
       } else {
-        return null
+        return null;
       }
-      
     });
   };
 
@@ -210,6 +214,126 @@ export const ComparePage: React.FC<IProps> = props => {
   );
 };
 
+const RenderContentImg = (props: any) => {
+  const [index, setIndex] = useState(0);
+  const [containerWidth, setContainerWidth] = useState(0);
+  const { buyProductImgPc } = props;
+  console.log(buyProductImgPc);
+  console.log(index);
+  const afterCalcSize = 100;
+  const zoomSize = 3;
+  if (buyProductImgPc && buyProductImgPc.length) {
+    return (
+      <div
+        className="render-content-img"
+        ref={(element: any) => {
+          if (element && element.clientWidth) {
+            setContainerWidth(element.clientWidth);
+          }
+        }}
+      >
+        {index !== 0 ? (
+          <span
+            style={{ top: containerWidth / 2 + "px" }}
+            className="arrow left"
+            onClick={() => {
+              setIndex(i => {
+                return --i;
+              });
+            }}
+          >
+            {"<"}
+          </span>
+        ) : null}
+        <RenderByCondition
+          ComponentPc={
+            <ReactImageMagnify
+              {...{
+                enlargedImageContainerDimensions: {
+                  width: "100%",
+                  height: "100%"
+                },
+                enlargedImageContainerStyle: {
+                  width: "1px",
+                  height: "3000",
+                  transformOrigin: "0 0 0",
+                  transform: "scale(2)",
+                  marginLeft: "0px",
+                  zIndex: 99999
+                },
+                imageStyle: {
+                  objectFit: "cover"
+                },
+                enlargedImageStyle: {
+                  objectFit: "cover"
+                },
+                smallImage: {
+                  // isFluidWidth: true,
+                  width: containerWidth,
+                  height: containerWidth,
+                  src: buyProductImgPc[index]
+                },
+                largeImage: {
+                  src: buyProductImgPc[index],
+                  width: containerWidth * zoomSize,
+                  height: containerWidth * zoomSize
+                }
+              }}
+            />
+          }
+          ComponentMb={
+            <ReactImageMagnify
+              {...{
+                enlargedImageContainerDimensions: {
+                  width: "100%",
+                  height: "100%"
+                },
+                enlargedImageContainerStyle: {
+                  marginLeft: "0px",
+                  zIndex: 99999
+                },
+                imageStyle: {
+                  objectFit: "cover"
+                },
+                enlargedImageStyle: {
+                  objectFit: "cover"
+                },
+                smallImage: {
+                  // isFluidWidth: true,
+                  width: containerWidth,
+                  height: containerWidth,
+                  src: buyProductImgPc[index]
+                },
+                largeImage: {
+                  src: buyProductImgPc[index],
+                  width: containerWidth * zoomSize,
+                  height: containerWidth * zoomSize
+                }
+              }}
+            />
+          }
+        />
+
+        {index !== buyProductImgPc.length - 1 ? (
+          <span
+            style={{ top: containerWidth / 2 + "px" }}
+            className="arrow right"
+            onClick={() => {
+              setIndex(i => {
+                return ++i;
+              });
+            }}
+          >
+            {">"}
+          </span>
+        ) : null}
+      </div>
+    );
+  } else {
+    return null;
+  }
+};
+
 const RenderTopPart = ({
   productInfo,
   orderCompareDelete
@@ -222,7 +346,8 @@ const RenderTopPart = ({
       buyProductBQV,
       productDisplayName,
       buyLevel,
-      buyProductCode
+      buyProductCode,
+      buyProductImgPc
     } = productInfo;
     const renderInfoLine = () => {
       const [lineOne, lineTwo] = getDescArr(buyProductBQV, productDisplayName);
@@ -241,7 +366,12 @@ const RenderTopPart = ({
     };
     return (
       <div className="render-top-part">
-        <div className="swiper-part">{renderInfoLine()}</div>
+        <div className="swiper-part">
+          <div>
+            <RenderContentImg buyProductImgPc={buyProductImgPc} />
+          </div>
+          {renderInfoLine()}
+        </div>
         <div className="button-container">
           <button className="common-button">Buy Now</button>
           <div
@@ -281,7 +411,10 @@ const RenderListItem = (props: any) => {
   const { rowInfo, columnInfo } = props;
   const renderBy = (value: string) => {
     return (
-      <RenderByCondition ComponentPc={null} ComponentMb={<div className="sub-title">{value}</div>} />
+      <RenderByCondition
+        ComponentPc={null}
+        ComponentMb={<div className="sub-title">{value}</div>}
+      />
     );
   };
   if (

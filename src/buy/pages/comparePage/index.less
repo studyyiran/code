@@ -71,7 +71,60 @@
       }
       .swiper-part {
         border: 1px solid @color-border;
-        height: 304 *@px;
+        height: 420 *@px;
+        .content-container {
+          display: flex;
+          flex: 1;
+          flex-direction: column;
+          padding: 10 *@px;
+          .price-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            .pc({
+              h2 {
+                font-size: 22 *@f;
+                font-weight: @boldWeight;
+              }
+            });
+          }
+          > * {
+            margin-bottom: 4 * @px;
+          }
+          .title() {
+            .font(16 * @px, @boldWeight, rgba(34, 34, 34, 1));
+          }
+          .ok () {
+            .font(12 * @px, @normalWeight, rgba(59, 186, 0, 1));
+          }
+          > h2 {
+            .title();
+          }
+          > .attr {
+            font-size: 12 * @px;
+          }
+          > .condition {
+            .ok();
+          }
+          > .id {
+            .font(12 * @px, @normalWeight, rgba(136, 136, 136, 1));
+          }
+          > .price {
+            > * {
+              vertical-align: middle;
+            }
+            .title();
+            img.sale-tag {
+              display: inline-block;
+              margin-left: 15 * @px;
+              width: 35 * @px;
+              .mb({
+                margin-left: 10 * @px;
+                width: 25 * @px;
+              })
+            }
+          }
+        }
         &.empty {
           display: flex;
           justify-content: center;
@@ -114,6 +167,27 @@
       }
       &.title {
         color: rgba(168, 168, 168, 1);
+      }
+    }
+  }
+  .render-content-img {
+    position: relative;
+    .arrow {
+      @size: 24px;
+      font-size: 26px;
+      position: absolute;
+      width: @size;
+      height: @size;
+      line-height: @size;
+      margin-top: -@size / 2;
+      text-align: center;
+      z-index: 99998;
+      .canclick();
+      &.left {
+        left: 0;
+      }
+      &.right {
+        right: 0;
       }
     }
   }
