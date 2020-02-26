@@ -51,21 +51,22 @@ async function mergeShoppingCart() {
   return res;
 }
 
-async function orderCompareAdd() {
-  const cookieId = getSetCurrentCookie();
-  const res: any = await ajax.post(orderCompareAddUrl, {cookieId});
-  return res;
-}
-
-async function orderCompareDelete() {
-  const cookieId = getSetCurrentCookie();
-  const res: any = await ajax.post(orderCompareDeleteUrl, {cookieId});
-  return res;
-}
-
 async function orderCompareGet() {
   const cookieId = getSetCurrentCookie();
   const res: any = await ajax.post(orderCompareGetUrl, {cookieId});
+  return res;
+}
+
+
+async function orderCompareAdd(productCode: any) {
+  const cookieId = getSetCurrentCookie();
+  const res: any = await ajax.post(orderCompareAddUrl, {cookieId, productCode});
+  return res;
+}
+
+async function orderCompareDelete(productCode: any) {
+  const cookieId = getSetCurrentCookie();
+  const res: any = await ajax.post(orderCompareDeleteUrl, {cookieId, productCode});
   return res;
 }
 
@@ -75,4 +76,7 @@ export const storeShoppingCartServer = {
   deleteShoppingCart,
   deleteSoldShoppingCart,
   mergeShoppingCart,
+  orderCompareGet,
+  orderCompareAdd,
+  orderCompareDelete,
 };

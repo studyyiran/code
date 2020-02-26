@@ -18,6 +18,9 @@ export interface IStoreShoppingCartActions {
   deleteSoldShoppingCart: () => any;
   mergeShoppingCart: () => any;
   setShowCartModal: (bool: boolean) => any;
+  orderCompareGet: () => any;
+  orderCompareAdd: (code: string) => any;
+  orderCompareDelete: (code: string) => any;
 }
 
 // useCreateActions
@@ -71,37 +74,52 @@ export function useStoreShoppingCartGetActions(
     },
     [dispatch, isMobile]
   );
-  
-  const addShoppingCart = useCallback(async (id) => {
+
+  const addShoppingCart = useCallback(async id => {
     const res = await storeShoppingCartServer.addShoppingCart(id);
     dispatch({
       type: storeShoppingCartReducerTypes.setShoppingCartList,
       value: res
     });
-  }, [])
+  }, []);
 
-  const deleteShoppingCart = useCallback(async (id) => {
+  const deleteShoppingCart = useCallback(async id => {
     const res = await storeShoppingCartServer.deleteShoppingCart(id);
-    const res2 = getShoppingCart()
-  }, [])
+    const res2 = getShoppingCart();
+  }, []);
 
   const deleteSoldShoppingCart = useCallback(async () => {
     const res = await storeShoppingCartServer.deleteSoldShoppingCart();
-    const res2 = getShoppingCart()
-  }, [])
+    const res2 = getShoppingCart();
+  }, []);
 
   const mergeShoppingCart = useCallback(async () => {
     const res = await storeShoppingCartServer.mergeShoppingCart();
-    const res2 = getShoppingCart()
-  }, [])
+    const res2 = getShoppingCart();
+  }, []);
 
-  const setShowCartModal = useCallback(async (bool) => {
+  const orderCompareGet = useCallback(async () => {
+    const res = await storeShoppingCartServer.orderCompareGet();
+    const res2 = getShoppingCart();
+  }, []);
+
+  const orderCompareAdd = useCallback(async code => {
+    const res = await storeShoppingCartServer.orderCompareAdd(code);
+    const res2 = getShoppingCart();
+  }, []);
+
+  const orderCompareDelete = useCallback(async code => {
+    const res = await storeShoppingCartServer.orderCompareDelete(code);
+    const res2 = getShoppingCart();
+  }, []);
+
+  const setShowCartModal = useCallback(async bool => {
     dispatch({
       type: "setShowCartModal",
       value: bool
-    })
-  }, [])
-  
+    });
+  }, []);
+
   return {
     getShoppingCart,
     addCompareList,
@@ -110,6 +128,9 @@ export function useStoreShoppingCartGetActions(
     deleteSoldShoppingCart,
     mergeShoppingCart,
     setShowCartModal,
-    addShoppingCart
+    addShoppingCart,
+    orderCompareGet,
+    orderCompareAdd,
+    orderCompareDelete
   };
 }

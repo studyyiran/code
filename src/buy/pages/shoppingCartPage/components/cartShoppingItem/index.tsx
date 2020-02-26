@@ -31,7 +31,7 @@ import { locationHref } from "../../../../common/utils/routerHistory";
 interface IProps {
   productDetail: IProductDetail;
   partsInfo: IProductDetail[];
-  compareList: any[];
+  isCompare: boolean;
 }
 
 export function CartShoppingItem(props: IProps) {
@@ -41,11 +41,12 @@ export function CartShoppingItem(props: IProps) {
     storeShoppingCartContextValue,
     getShoppingCart,
     addCompareList,
+    orderCompareAdd,
     deleteShoppingCart,
     deleteSoldShoppingCart
   } = storeShoppingCartContext as IStoreShoppingCartContext;
 
-  const { productDetail, partsInfo, compareList } = props;
+  const { productDetail, partsInfo, isCompare } = props;
   const [needProtection, setNeedProtection] = useState(false);
   const [otherProductList, setOtherProductList] = useState([] as any[]);
   const {
@@ -54,7 +55,7 @@ export function CartShoppingItem(props: IProps) {
     buyProductName,
     buyProductImgPc,
     buyProductCode,
-    buyProductStatus
+    buyProductStatus,
   } = productDetail;
   console.log(productDetail);
   const isSold = buyProductStatus === "INTRANSACTION";
@@ -81,10 +82,8 @@ export function CartShoppingItem(props: IProps) {
               />
               <AddToComparePartButton
                 buyProductCode={buyProductCode}
-                addCompareList={addCompareList}
-                haveAdded={Boolean(
-                  compareList.find(i => safeEqual(i, buyProductCode))
-                )}
+                orderCompareAdd={orderCompareAdd}
+                haveAdded={isCompare}
               />
             </div>
             <div className="content-part">
@@ -112,10 +111,8 @@ export function CartShoppingItem(props: IProps) {
           </div>
           <AddToComparePartButton
             buyProductCode={buyProductCode}
-            addCompareList={addCompareList}
-            haveAdded={Boolean(
-              compareList.find(i => safeEqual(i, buyProductCode))
-            )}
+            orderCompareAdd={orderCompareAdd}
+            haveAdded={isCompare}
           />
           {renderCartShoppingItem()}
           {renderSubTotal()}
@@ -261,17 +258,17 @@ const AddToComparePartImage = (props: { imgUrl: string; onClick: any }) => {
 
 const AddToComparePartButton = (props: {
   haveAdded: boolean;
-  addCompareList: any;
+  orderCompareAdd: any;
   buyProductCode: string;
 }) => {
-  const { haveAdded, addCompareList, buyProductCode } = props;
+  const { haveAdded, orderCompareAdd, buyProductCode } = props;
   return (
     <div
       className="add-to-compare-part-button"
       data-haveadd={haveAdded ? "true" : "false"}
       onClick={() => {
         if (!haveAdded) {
-          addCompareList(buyProductCode);
+          orderCompareAdd(buyProductCode);
         }
       }}
     >

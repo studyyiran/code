@@ -20,12 +20,10 @@ export const ShoppingCartPage: React.FC<IProps> = props => {
   const {
     storeShoppingCartContextValue,
     getShoppingCart,
-    addCompareList,
     deleteSoldShoppingCart
   } = storeShoppingCartContext as IStoreShoppingCartContext;
   // 从context中获取值
   const { shoppingCartList } = storeShoppingCartContextValue;
-  const compareList = [] as any[];
   // local发起请求
   useEffect(() => {
     // getShoppingCart();
@@ -54,12 +52,12 @@ export const ShoppingCartPage: React.FC<IProps> = props => {
       return (
         <div>
           <div>
-            {list1.map(({ skuReleated, product }) => {
+            {list1.map(({ skuReleated, product, isCompare }) => {
               return (
                 <CartShoppingItem
+                  isCompare={isCompare}
                   partsInfo={skuReleated}
                   productDetail={product}
-                  compareList={compareList}
                 />
               );
             })}
@@ -76,12 +74,12 @@ export const ShoppingCartPage: React.FC<IProps> = props => {
             </div>
           ) : null}
           <div>
-            {list2.map(({ skuReleated, product }) => {
+            {list2.map(({ skuReleated, product, isCompare }) => {
               return (
                 <CartShoppingItem
                   partsInfo={skuReleated}
+                  isCompare={isCompare}
                   productDetail={product}
-                  compareList={compareList}
                 />
               );
             })}
@@ -108,7 +106,13 @@ export const ShoppingCartPage: React.FC<IProps> = props => {
                   locationHref(getLocationUrl("comparepage"));
                 }}
               >
-                Compare ({compareList.length}){" "}
+                Compare ({shoppingCartList.list.reduce((sum, a) => {
+                if (a.isCompare) {
+                  return Number(sum) + 1
+                } else {
+                  return sum
+                }
+              }, 0)}){" "}
               </button>
             </div>
           ) : null}

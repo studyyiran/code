@@ -35,6 +35,7 @@ export interface IShoppingCartInfo {
   list: {
     product: IProductDetail;
     skuReleated: IProductDetail[];
+    isCompare: Boolean;
   }[];
   cartTotalPrice: number;
   totalCount: number;
