@@ -140,42 +140,52 @@ export const ComparePage: React.FC<IProps> = props => {
         key: "brandDisplayName"
       }
     ];
-    if (compareInfoList && compareInfoList[0]) {
-      const { buyProductBQV } = compareInfoList[0];
-      buyProductBQV.forEach(({ bpName, bpvName }: any, index: number) => {
-        configArr.push({
-          type: "",
-          title: bpName,
-          key: "buyProductBQV",
-          valueIndex: String(index)
-        } as any);
+    if (compareInfoList && compareInfoList.length) {
+      if (compareInfoList && compareInfoList[0]) {
+        const { buyProductBQV } = compareInfoList[0];
+        buyProductBQV.forEach(({ bpName, bpvName }: any, index: number) => {
+          configArr.push({
+            type: "",
+            title: bpName,
+            key: "buyProductBQV",
+            valueIndex: String(index)
+          } as any);
+        });
+      }
+      configArr.push({
+        type: "productDescription",
+        title: "Phone Specs",
+        key: "productDescription"
+      });
+      configArr.push({
+        type: "",
+        title: "Functional Test",
+        key: "FunctionalTest",
+      });
+      return configArr.map((rowInfo, rowIndex) => {
+        return (
+          <RenderByCondition
+            ComponentPc={renderPc(rowInfo)}
+            ComponentMb={renderMb(rowInfo)}
+          />
+        );
+      });
+    } else {
+      configArr.push({
+        type: "productDescription",
+        title: "Phone Specs",
+        key: "productDescription"
+      });
+      return configArr.map((rowInfo, rowIndex) => {
+        return (
+          <RenderByCondition
+            ComponentPc={renderPc(rowInfo)}
+            ComponentMb={renderMb(rowInfo)}
+          />
+        );
       });
     }
-    configArr.push({
-      type: "",
-      title: "Phone Specs",
-      key: "productDescription"
-    });
-    return configArr.map((rowInfo, rowIndex) => {
-      return (
-        <RenderByCondition
-          ComponentPc={renderPc(rowInfo)}
-          ComponentMb={renderMb(rowInfo)}
-        />
-      );
-    });
-    return compareInfoList.map((item, index) => {
-      if (true && index === 0) {
-        return (
-          <>
-            <CompareItem isTitleLine={true} key={"first"} />
-            <CompareItem key={index} />
-          </>
-        );
-      } else {
-        return <CompareItem key={index} />;
-      }
-    });
+    
   }
   return (
     <div className="compare-page">
@@ -264,13 +274,25 @@ const RenderTitleList = ({ children }: { children?: any }) => {
 
 const RenderListItem = (props: any) => {
   const { rowInfo, columnInfo } = props;
-
+  if (rowInfo && rowInfo.key === 'FunctionalTest') {
+    return <div className={"grid-block"}>All Pass</div>;
+  }
   if (columnInfo && rowInfo && rowInfo.key && columnInfo[rowInfo.key]) {
     const value =
       rowInfo && rowInfo.key === "buyProductBQV"
         ? columnInfo[rowInfo.key][Number(rowInfo.valueIndex)].bpvName
         : columnInfo[rowInfo.key];
     if (value) {
+      if (rowInfo && rowInfo.key === "productDescription") {
+        return (
+          <div
+            className={"grid-block"}
+            dangerouslySetInnerHTML={{ __html: value }}
+          />
+        );
+      } else {
+        return <div className={"grid-block"}>{value}</div>;
+      }
       return <div className="grid-block">{value}</div>;
     }
   }
