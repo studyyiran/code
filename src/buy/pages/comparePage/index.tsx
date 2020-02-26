@@ -14,14 +14,13 @@ interface IProps {
 export const ComparePage: React.FC<IProps> = props => {
   const storeShoppingCartContext = useContext(StoreShoppingCartContext);
   const {
-    getCompareInfoList,
+    orderCompareGet,
     storeShoppingCartContextValue
   } = storeShoppingCartContext;
   const { compareInfoList } = storeShoppingCartContextValue;
   useEffect(() => {
-    getCompareInfoList();
-  }, [getCompareInfoList]);
-
+    // orderCompareGet();
+  }, [orderCompareGet]);
   const fillWithEmpty = (maxLength: number) => {
     const arr = [];
     for (let i = 0; i < maxLength; i++) {

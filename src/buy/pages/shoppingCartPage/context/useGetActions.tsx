@@ -48,77 +48,90 @@ export function useStoreShoppingCartGetActions(
     },
     [dispatch]
   );
-  const getCompareInfoList = useCallback(
-    async function() {
-      // const res = await storeShoppingCartServer.getShoppingCart();
-      // const res = [1,2,3,4]
+  const getCompareInfoList = useCallback(async function() {
+    // const res = await storeShoppingCartServer.getShoppingCart();
+    // const res = [1,2,3,4]
+    // dispatch({
+    //   type: storeShoppingCartReducerTypes.setCompareInfoList,
+    //   value: res
+    // });
+  }, []);
+  const addCompareList = useCallback(async function(value) {
+    // let max = isMobile ? 2 : 4;
+    // 根据环境判断长度
+    // if (state.compareList.length < max) {
+    //   dispatch({
+    //     type: storeShoppingCartReducerTypes.addCompareList,
+    //     value: value
+    //   });
+    // } else {
+    //   Message.error(`You can only compare up to ${max} phones`);
+    // }
+  }, []);
+
+  const addShoppingCart = useCallback(
+    async id => {
+      const res = await storeShoppingCartServer.addShoppingCart(id);
+      const res2 = getShoppingCart();
       // dispatch({
-      //   type: storeShoppingCartReducerTypes.setCompareInfoList,
+      //   type: storeShoppingCartReducerTypes.setShoppingCartList,
       //   value: res
       // });
     },
-    [dispatch]
+    [getShoppingCart]
   );
-  const addCompareList = useCallback(
-    async function(value) {
-      // let max = isMobile ? 2 : 4;
-      // 根据环境判断长度
-      // if (state.compareList.length < max) {
-      //   dispatch({
-      //     type: storeShoppingCartReducerTypes.addCompareList,
-      //     value: value
-      //   });
-      // } else {
-      //   Message.error(`You can only compare up to ${max} phones`);
-      // }
+
+  const deleteShoppingCart = useCallback(
+    async id => {
+      const res = await storeShoppingCartServer.deleteShoppingCart(id);
+      const res2 = getShoppingCart();
     },
-    [dispatch, isMobile]
+    [getShoppingCart]
   );
-
-  const addShoppingCart = useCallback(async id => {
-    const res = await storeShoppingCartServer.addShoppingCart(id);
-    dispatch({
-      type: storeShoppingCartReducerTypes.setShoppingCartList,
-      value: res
-    });
-  }, []);
-
-  const deleteShoppingCart = useCallback(async id => {
-    const res = await storeShoppingCartServer.deleteShoppingCart(id);
-    const res2 = getShoppingCart();
-  }, []);
 
   const deleteSoldShoppingCart = useCallback(async () => {
     const res = await storeShoppingCartServer.deleteSoldShoppingCart();
     const res2 = getShoppingCart();
-  }, []);
+  }, [getShoppingCart]);
 
   const mergeShoppingCart = useCallback(async () => {
     const res = await storeShoppingCartServer.mergeShoppingCart();
     const res2 = getShoppingCart();
-  }, []);
+  }, [getShoppingCart]);
 
   const orderCompareGet = useCallback(async () => {
     const res = await storeShoppingCartServer.orderCompareGet();
-    const res2 = getShoppingCart();
-  }, []);
-
-  const orderCompareAdd = useCallback(async code => {
-    const res = await storeShoppingCartServer.orderCompareAdd(code);
-    const res2 = getShoppingCart();
-  }, []);
-
-  const orderCompareDelete = useCallback(async code => {
-    const res = await storeShoppingCartServer.orderCompareDelete(code);
-    const res2 = getShoppingCart();
-  }, []);
-
-  const setShowCartModal = useCallback(async bool => {
     dispatch({
-      type: "setShowCartModal",
-      value: bool
+      type: storeShoppingCartReducerTypes.setCompareInfoList,
+      value: res
     });
-  }, []);
+  }, [dispatch]);
+
+  const orderCompareAdd = useCallback(
+    async code => {
+      const res = await storeShoppingCartServer.orderCompareAdd(code);
+      const res2 = getShoppingCart();
+    },
+    [getShoppingCart]
+  );
+
+  const orderCompareDelete = useCallback(
+    async code => {
+      const res = await storeShoppingCartServer.orderCompareDelete(code);
+      const res2 = getShoppingCart();
+    },
+    [getShoppingCart]
+  );
+
+  const setShowCartModal = useCallback(
+    async bool => {
+      dispatch({
+        type: "setShowCartModal",
+        value: bool
+      });
+    },
+    [dispatch]
+  );
 
   return {
     getShoppingCart,

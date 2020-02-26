@@ -43,7 +43,7 @@ export interface IShoppingCartInfo {
 // store state
 export interface IStoreShoppingCartState {
   shoppingCartList: IShoppingCartInfo;
-  compareInfoList: string[];
+  compareInfoList: any[];
   showCartModal: boolean;
 }
 
@@ -73,7 +73,7 @@ export function StoreShoppingCartContextProvider(props: any) {
     state,
     dispatch
   );
-  const { getShoppingCart, mergeShoppingCart } = action;
+  const { getShoppingCart, mergeShoppingCart, orderCompareGet } = action;
 
   const loginHandler = useCallback(async () => {
     // 登录成功 就删除cookie
@@ -83,9 +83,11 @@ export function StoreShoppingCartContextProvider(props: any) {
         await mergeShoppingCart();
         //2 清空cookie
         document.cookie = `${constValue.SHOPPINGCART}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;`;
-        await getShoppingCart();
+        getShoppingCart();
+        orderCompareGet();
       } else {
         getShoppingCart();
+        orderCompareGet();
       }
     }, 10)
   }, [getShoppingCart, mergeShoppingCart, tokenInfo]);
