@@ -40,36 +40,69 @@ export const ComparePage: React.FC<IProps> = props => {
     const { type, title } = rowInfo;
     const columnArr = [{}].concat(fillWithEmpty(4));
     return columnArr.map((columnInfo: any, columnIndex: number) => {
-      console.log(columnInfo);
       if (type === "detail") {
         if (columnIndex === 0) {
           return <div />;
         } else {
-          return <RenderTopPart productInfo={columnInfo} orderCompareDelete={orderCompareDelete} />;
+          return (
+            <RenderTopPart
+              productInfo={columnInfo}
+              orderCompareDelete={orderCompareDelete}
+            />
+          );
         }
       } else if (type === "Battery") {
-        return null;
+        if (
+          columnArr.find((item: any) => {
+            return item.buyProductBatteryLife;
+          })
+        ) {
+          if (columnIndex === 0) {
+            return <RenderTitleList>{title}</RenderTitleList>;
+          } else {
+            return <RenderListItem rowInfo={rowInfo} columnInfo={columnInfo} />;
+          }
+        } else {
+          return null;
+        }
       } else {
         if (columnIndex === 0) {
           return <RenderTitleList>{title}</RenderTitleList>;
         } else {
-          return <RenderListItem />;
+          return <RenderListItem rowInfo={rowInfo} columnInfo={columnInfo} />;
         }
       }
     });
   };
 
   const renderMb = (rowInfo: any) => {
+    return 123;
     const { type, title } = rowInfo;
     const columnArr = fillWithEmpty(4);
     return columnArr.map((columnInfo: any, columnIndex: number) => {
       if (type === "detail") {
-        return <RenderTopPart productInfo={columnInfo} orderCompareDelete={orderCompareDelete} />;
+        return (
+          <RenderTopPart
+            productInfo={columnInfo}
+            orderCompareDelete={orderCompareDelete}
+          />
+        );
       } else if (type === "Battery") {
-        return null;
+        if (
+          columnArr.find((item: any) => {
+            return item.buyProductBatteryLife;
+          })
+        ) {
+          if (columnIndex === 0) {
+            return <RenderTitleList>{title}</RenderTitleList>;
+          } else {
+            return <RenderListItem rowInfo={rowInfo} columnInfo={columnInfo} />;
+          }
+        } else {
+          return null;
+        }
       } else {
-        return null;
-        return <RenderListItem />;
+        return <RenderListItem rowInfo={rowInfo} columnInfo={columnInfo} />;
       }
     });
   };
@@ -78,45 +111,51 @@ export const ComparePage: React.FC<IProps> = props => {
     const configArr = [
       {
         type: "detail",
-        title: "Price"
+        title: "",
+        key: ""
       },
       {
         type: "",
-        title: "Price"
+        title: "Price",
+        key: "buyPrice"
       },
       {
         type: "",
-        title: "Condition"
+        title: "Condition",
+        key: "buyLevel"
       },
       {
         type: "",
-        title: "Inspection Notes"
+        title: "Inspection Notes",
+        key: "buyProductRemark"
       },
       {
         type: "Battery",
-        title: "Battery"
+        title: "Battery",
+        key: "buyProductBatteryLife"
       },
       {
         type: "",
-        title: "Color"
-      },
-      {
-        type: "",
-        title: "Manufacture"
-      },
-      {
-        type: "",
-        title: "Storage"
-      },
-      {
-        type: "",
-        title: "Carrier"
-      },
-      {
-        type: "",
-        title: "Phone Specs"
+        title: "Manufacture",
+        key: "brandDisplayName"
       }
     ];
+    if (compareInfoList && compareInfoList[0]) {
+      const { buyProductBQV } = compareInfoList[0];
+      buyProductBQV.forEach(({ bpName, bpvName }: any, index: number) => {
+        configArr.push({
+          type: "",
+          title: bpName,
+          key: "buyProductBQV",
+          valueIndex: String(index)
+        } as any);
+      });
+    }
+    configArr.push({
+      type: "",
+      title: "Phone Specs",
+      key: "productDescription"
+    });
     return configArr.map((rowInfo, rowIndex) => {
       return (
         <RenderByCondition
@@ -223,10 +262,17 @@ const RenderTitleList = ({ children }: { children?: any }) => {
   return <div className="title grid-block">{children}</div>;
 };
 
-const RenderListItem = ({ children }: { children?: any }) => {
-  if (children) {
-    return <div className="grid-block">{children}</div>;
-  } else {
-    return <div className="grid-block empty" />;
+const RenderListItem = (props: any) => {
+  const { rowInfo, columnInfo } = props;
+
+  if (columnInfo && rowInfo && rowInfo.key && columnInfo[rowInfo.key]) {
+    const value =
+      rowInfo && rowInfo.key === "buyProductBQV"
+        ? columnInfo[rowInfo.key][Number(rowInfo.valueIndex)].bpvName
+        : columnInfo[rowInfo.key];
+    if (value) {
+      return <div className="grid-block">{value}</div>;
+    }
   }
+  return <div className="grid-block" />;
 };
