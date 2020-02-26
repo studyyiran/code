@@ -153,7 +153,7 @@ function useGetAction(
         dispatch({
           type: "addProductHistoryCodeList",
           value: {
-            subType: 'reset',
+            subType: "reset",
             subValue: (res || []).map((item: any) => {
               return item.buyProductCode;
             })
@@ -319,7 +319,7 @@ function useGetAction(
           dispatch({
             type: "addProductHistoryCodeList",
             value: {
-              subType: 'concat',
+              subType: "concat",
               subValue: [skuId]
             }
           });
@@ -350,13 +350,15 @@ function reducer(state: IContextState, action: IReducerAction) {
   switch (type) {
     case storeDetailActionTypes.addProductHistoryCodeList: {
       if (value) {
-        const {subType, subValue} = value
-        if (subType === 'concat') {
+        const { subType, subValue } = value;
+        if (subType === "concat") {
           newState = {
             ...newState,
-            productHistoryCodeList: subValue.concat(newState.productHistoryCodeList)
+            productHistoryCodeList: subValue.concat(
+              newState.productHistoryCodeList
+            )
           };
-        } else if (subType === 'reset') {
+        } else if (subType === "reset") {
           newState = {
             ...newState,
             productHistoryCodeList: subValue

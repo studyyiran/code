@@ -69,9 +69,12 @@
           text-align: center;
         }
       }
-      .swiper-part {
+      .compare-swiper-part {
         border: 1px solid @color-border;
-        height: 420 *@px;
+        height: 400 *@px;
+        .mb({
+          height: 360 *@px;
+        });
         .content-container {
           display: flex;
           flex: 1;
@@ -83,7 +86,13 @@
             justify-content: space-between;
             .pc({
               h2 {
-                font-size: 22 *@f;
+                font-size: 18 *@f;
+                font-weight: @boldWeight;
+              }
+            });
+            .mb({
+              h2 {
+                font-size: 16 *@f;
                 font-weight: @boldWeight;
               }
             });
@@ -172,6 +181,7 @@
   }
   .render-content-img {
     position: relative;
+    width: 100%;
     .arrow {
       @size: 24px;
       font-size: 26px;

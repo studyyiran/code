@@ -366,10 +366,8 @@ const RenderTopPart = ({
     };
     return (
       <div className="render-top-part">
-        <div className="swiper-part">
-          <div>
-            <RenderContentImg buyProductImgPc={buyProductImgPc} />
-          </div>
+        <div className="compare-swiper-part">
+          <RenderContentImg buyProductImgPc={buyProductImgPc} />
           {renderInfoLine()}
         </div>
         <div className="button-container">
@@ -389,7 +387,7 @@ const RenderTopPart = ({
     return (
       <div className="render-top-part">
         <div
-          className="swiper-part empty"
+          className="compare-swiper-part empty"
           onClick={() => {
             locationHref(getLocationUrl("shoppingcart"));
           }}
