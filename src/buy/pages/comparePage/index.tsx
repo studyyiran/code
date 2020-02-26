@@ -6,6 +6,8 @@ import { CompareItem } from "./components/compareItem";
 import { RenderByCondition } from "../../components/RenderByCondition";
 import Svg from "../../components/svg";
 import { getLocationUrl } from "../../common/utils/util";
+import { getDescArr } from "../detail/util";
+import { IProductDetail } from "../detail/context/interface";
 
 interface IProps {
   history?: any;
@@ -19,7 +21,7 @@ export const ComparePage: React.FC<IProps> = props => {
   } = storeShoppingCartContext;
   const { compareInfoList } = storeShoppingCartContextValue;
   useEffect(() => {
-    // orderCompareGet();
+    orderCompareGet();
   }, [orderCompareGet]);
   const fillWithEmpty = (maxLength: number) => {
     const arr = [];
@@ -37,15 +39,15 @@ export const ComparePage: React.FC<IProps> = props => {
     const { type, title } = rowInfo;
     const columnArr = [{}].concat(fillWithEmpty(4));
     return columnArr.map((columnInfo: any, columnIndex: number) => {
-      console.log(columnInfo)
+      console.log(columnInfo);
       if (type === "detail") {
         if (columnIndex === 0) {
           return <div />;
         } else {
-          return <RenderTopPart />;
+          return <RenderTopPart productInfo={columnInfo} />;
         }
-      } else if(type === "Battery") {
-        return null
+      } else if (type === "Battery") {
+        return null;
       } else {
         if (columnIndex === 0) {
           return <RenderTitleList>{title}</RenderTitleList>;
@@ -61,11 +63,11 @@ export const ComparePage: React.FC<IProps> = props => {
     const columnArr = fillWithEmpty(4);
     return columnArr.map((columnInfo: any, columnIndex: number) => {
       if (type === "detail") {
-        return <RenderTopPart />;
-      } else if(type === "Battery") {
-        return null
+        return <RenderTopPart productInfo={columnInfo} />;
+      } else if (type === "Battery") {
+        return null;
       } else {
-        return null
+        return null;
         return <RenderListItem />;
       }
     });
@@ -112,7 +114,7 @@ export const ComparePage: React.FC<IProps> = props => {
       {
         type: "",
         title: "Phone Specs"
-      },
+      }
     ];
     return configArr.map((rowInfo, rowIndex) => {
       return (
@@ -154,11 +156,32 @@ export const ComparePage: React.FC<IProps> = props => {
   );
 };
 
-const RenderTopPart = ({ children }: { children?: any }) => {
-  if (children) {
+const RenderTopPart = ({ productInfo }: { productInfo?: IProductDetail }) => {
+  if (productInfo && productInfo.buyProductCode) {
+    const {
+      buyProductBQV,
+      productDisplayName,
+      buyLevel,
+      buyProductCode
+    } = productInfo;
+    const renderInfoLine = () => {
+      const [lineOne, lineTwo] = getDescArr(buyProductBQV, productDisplayName);
+      return (
+        <div className="content-container">
+          {lineOne ? (
+            <div className="price-container">
+              <h2>{lineOne}</h2>
+            </div>
+          ) : null}
+          {lineTwo ? <span className="attr">{lineTwo}</span> : null}
+          <span className="condition">Condition {buyLevel}</span>
+          <span className="id">Product ID: #{buyProductCode}</span>
+        </div>
+      );
+    };
     return (
       <div className="render-top-part">
-        <div className="swiper-part">swiper part</div>
+        <div className="swiper-part">{renderInfoLine()}</div>
         <div className="button-container">
           <button>Buy Now</button>
           <div>remove</div>
