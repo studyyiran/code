@@ -92,44 +92,48 @@ export const ShoppingCartPage: React.FC<IProps> = props => {
       return <img className="empty-img" src={require("./res/empty.svg")} />;
     }
   }
-  return (
-    <div className="shopping-cart-page">
-      <div className="title-container">
-        <h1>Shopping Cart</h1>
-      </div>
-      <div className="content">
-        {shoppingCartList &&
-        shoppingCartList.list &&
-        shoppingCartList.list.length ? (
-          <div className="button-container">
-            <button
-              onClick={() => {
-                locationHref(getLocationUrl("comparepage"));
-              }}
-            >
-              Compare ({compareList.length}){" "}
-            </button>
+  if (shoppingCartList && shoppingCartList.list) {
+    return (
+      <div className="shopping-cart-page">
+        <div className="title-container">
+          <h1>Shopping Cart</h1>
+        </div>
+        <div className="content">
+          {shoppingCartList &&
+          shoppingCartList.list &&
+          shoppingCartList.list.length ? (
+            <div className="button-container">
+              <button
+                onClick={() => {
+                  locationHref(getLocationUrl("comparepage"));
+                }}
+              >
+                Compare ({compareList.length}){" "}
+              </button>
+            </div>
+          ) : null}
+          <div className="list-container">{renderList()}</div>
+          <RenderSimilar
+            similiarPhoneList={productHistoryList}
+            history={props.history}
+          >
+            <h2 className="sub-title">Browsing History</h2>
+          </RenderSimilar>
+        </div>
+        <div className="go-back-button-container">
+          <div
+            className="go-back-button"
+            onClick={() => {
+              locationHref("", "back");
+            }}
+          >
+            <img src={require("./res/arrow_left.svg")} />
+            <span>Go Back</span>
           </div>
-        ) : null}
-        <div className="list-container">{renderList()}</div>
-        <RenderSimilar
-          similiarPhoneList={productHistoryList}
-          history={props.history}
-        >
-          <h2 className="sub-title">Browsing History</h2>
-        </RenderSimilar>
-      </div>
-      <div className="go-back-button-container">
-        <div
-          className="go-back-button"
-          onClick={() => {
-            locationHref("", "back");
-          }}
-        >
-          <img src={require("./res/arrow_left.svg")} />
-          <span>Go Back</span>
         </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    return null;
+  }
 };
