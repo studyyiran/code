@@ -60,11 +60,23 @@
         }
       }
       .list-container {
-        .empty-img {
-          margin: auto;
-          display: block;
-          padding: 50 * @px 0 0;
-          width: 260 * @px;
+        .empty {
+          text-align: center;
+          .tips {
+            font-size: 18 * @f;
+            font-weight: @boldWeight;
+            margin: 20 * @px auto 30 * @px;
+          }
+          .empty-img {
+            margin: auto;
+            display: block;
+            padding: 50 * @px 0 0;
+            width: 260 * @px;
+          }
+          a {
+            font-size: 18 * @f;
+            color: rgba(26, 180, 231, 1);
+          }
         }
       }
       .similar {

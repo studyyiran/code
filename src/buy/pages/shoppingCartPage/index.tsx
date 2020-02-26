@@ -6,6 +6,7 @@ import { RenderSimilar } from "../detail/components/renderSimilar";
 import { locationHref } from "../../common/utils/routerHistory";
 import { getLocationUrl } from "../../common/utils/util";
 import { ProductDetailContext } from "../detail/context";
+import RouterLink from "../../common-modules/components/routerLink";
 
 interface IProps {
   history?: any;
@@ -87,7 +88,13 @@ export const ShoppingCartPage: React.FC<IProps> = props => {
         </div>
       );
     } else {
-      return <img className="empty-img" src={require("./res/empty.svg")} />;
+      return (
+        <div className="empty">
+          <img className="empty-img" src={require("./res/empty.svg")} />
+          <p className="tips">Your shopping cart is empty</p>
+          <RouterLink to={"buy-phone"}>Continue browsing ></RouterLink>
+        </div>
+      );
     }
   }
   if (shoppingCartList && shoppingCartList.list) {
@@ -106,13 +113,15 @@ export const ShoppingCartPage: React.FC<IProps> = props => {
                   locationHref(getLocationUrl("comparepage"));
                 }}
               >
-                Compare ({shoppingCartList.list.reduce((sum, a) => {
-                if (a.isCompare) {
-                  return Number(sum) + 1
-                } else {
-                  return sum
-                }
-              }, 0)}){" "}
+                Compare (
+                {shoppingCartList.list.reduce((sum, a) => {
+                  if (a.isCompare) {
+                    return Number(sum) + 1;
+                  } else {
+                    return sum;
+                  }
+                }, 0)}
+                ){" "}
               </button>
             </div>
           ) : null}

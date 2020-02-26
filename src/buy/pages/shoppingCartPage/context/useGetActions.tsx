@@ -109,9 +109,14 @@ export function useStoreShoppingCartGetActions(
 
   const orderCompareAdd = useCallback(
     async code => {
-      const res = await storeShoppingCartServer.orderCompareAdd(code);
-      const res2 = getShoppingCart();
-      const res3 = orderCompareGet();
+      const max = 4
+      if (state.compareInfoList.length < max) {
+        const res = await storeShoppingCartServer.orderCompareAdd(code);
+        const res2 = getShoppingCart();
+        const res3 = orderCompareGet();
+      } else {
+        Message.error(`You can only compare up to ${max} phones`);
+      }
     },
     [getShoppingCart]
   );

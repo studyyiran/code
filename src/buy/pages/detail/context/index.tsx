@@ -163,8 +163,8 @@ function useGetAction(
     }, [dispatch, state.productHistoryCodeList, state.productHistoryList]),
     addIntoCartList: useCallback(
       async value => {
-        await addShoppingCart(value);
         setShowCartModal(true);
+        await addShoppingCart(value);
         // if (value && state.cartList.length < 10) {
         //   dispatch({
         //     type: storeDetailActionTypes.addCartList,
