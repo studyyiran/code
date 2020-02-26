@@ -48,9 +48,11 @@ export function CartShoppingItem(props: IProps) {
     productDisplayName,
     skuId,
     buyProductImgPc,
-    buyProductCode
+    buyProductCode,
+    buyProductStatus
   } = productDetail;
   console.log(productDetail);
+  const isSold = buyProductStatus === "INTRANSACTION";
   const otherProductSubTotal = otherProductList
     .map(({ buyPrice }) => Number(buyPrice))
     .reduce((count: number, a: number) => count + a, 0);
@@ -58,7 +60,8 @@ export function CartShoppingItem(props: IProps) {
   return (
     <RenderByCondition
       ComponentPc={
-        <div className="cart-shopping-item">
+        <div className="cart-shopping-item" data-sold={isSold}>
+          {isSold ? <div className="sold-modal"></div> : null}
           <div className="two-line-flex">
             <div>
               <AddToComparePartImage
@@ -84,7 +87,7 @@ export function CartShoppingItem(props: IProps) {
         </div>
       }
       ComponentMb={
-        <li className="cart-shopping-item">
+        <li className="cart-shopping-item" data-sold={isSold}>
           <div className="two-line-flex">
             <AddToComparePartImage
               imgUrl={
@@ -140,14 +143,20 @@ export function CartShoppingItem(props: IProps) {
           <img src={require("../../res/trash.svg")} />
           <span>Remove</span>
         </div>
-        <CheckOutButton
-          buyProductId={buyProductId}
-          otherProductList={otherProductList}
-          needProtection={needProtection}
-          onClick={() => {}}
-        >
-          Buy Now
-        </CheckOutButton>
+        {isSold ? (
+          <div className="common-button" data-sold={isSold}>
+            SOLD
+          </div>
+        ) : (
+          <CheckOutButton
+            buyProductId={buyProductId}
+            otherProductList={otherProductList}
+            needProtection={needProtection}
+            onClick={() => {}}
+          >
+            Buy Now
+          </CheckOutButton>
+        )}
       </div>
     );
   }
@@ -164,6 +173,7 @@ export function CartShoppingItem(props: IProps) {
         } = item;
         return (
           <ItemPriceLine
+            isSold={isSold}
             name={<span>{buyProductName || buyProductCode}</span>}
             price={Number(buyProductPrice)}
             status={otherProductList.some(item =>
@@ -200,6 +210,7 @@ export function CartShoppingItem(props: IProps) {
     return (
       <div className="render-cart-shopping-item">
         <ItemPriceLine
+          isSold={isSold}
           name="90 Days UpTrade Protect"
           secondLine={
             <RouterLink
@@ -312,6 +323,7 @@ const ItemPriceLine = ({
   secondLine,
   price,
   onClick,
+  isSold,
   status
 }: {
   name: any;
@@ -319,6 +331,7 @@ const ItemPriceLine = ({
   status?: boolean;
   price: number;
   onClick: any;
+  isSold: boolean;
 }) => {
   function renderTitle() {
     return (
@@ -335,6 +348,7 @@ const ItemPriceLine = ({
   function renderAddButton() {
     return (
       <li
+        data-sold={isSold}
         data-select={status ? "true" : "false"}
         className="add-to-cart-button"
         onClick={onClick}
