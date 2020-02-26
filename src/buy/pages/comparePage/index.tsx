@@ -125,7 +125,7 @@ export const ComparePage: React.FC<IProps> = props => {
       },
       {
         type: "",
-        title: "Price",
+        title: "Price ($)",
         key: "buyPrice"
       },
       {
@@ -198,7 +198,7 @@ export const ComparePage: React.FC<IProps> = props => {
   return (
     <div className="compare-page">
       <div className="title-container">
-        <h1>Comparison Chart</h1>
+        <h1>Compare up to 4 phones</h1>
       </div>
       <div className="compare-item-list-container">{renderList()}</div>
       <div
@@ -387,7 +387,7 @@ const RenderTopPart = ({
     return (
       <div className="render-top-part">
         <div
-          className="compare-swiper-part empty"
+          className="compare-swiper-part empty canclick"
           onClick={() => {
             locationHref(getLocationUrl("shoppingcart"));
           }}
