@@ -11,6 +11,10 @@ const deleteShoppingCartUrl = "/buy/order/shoppingcart/delete";
 const deleteSoldShoppingCartUrl = "/buy/order/shoppingcart/deletesold";
 const mergeShoppingCartUrl = "/buy/order/shoppingcart/merge";
 
+const orderCompareAddUrl = "/buy/order/compare/add";
+const orderCompareDeleteUrl = "/buy/order/compare/delete";
+const orderCompareGetUrl = "/buy/order/compare/get";
+
 
 async function getShoppingCart() {
   // return getShoppingCartMock;
@@ -47,7 +51,23 @@ async function mergeShoppingCart() {
   return res;
 }
 
+async function orderCompareAdd() {
+  const cookieId = getSetCurrentCookie();
+  const res: any = await ajax.post(orderCompareAddUrl, {cookieId});
+  return res;
+}
 
+async function orderCompareDelete() {
+  const cookieId = getSetCurrentCookie();
+  const res: any = await ajax.post(orderCompareDeleteUrl, {cookieId});
+  return res;
+}
+
+async function orderCompareGet() {
+  const cookieId = getSetCurrentCookie();
+  const res: any = await ajax.post(orderCompareGetUrl, {cookieId});
+  return res;
+}
 
 export const storeShoppingCartServer = {
   addShoppingCart,

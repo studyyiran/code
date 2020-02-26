@@ -5,7 +5,12 @@ import { RenderOtherProduct } from "../../../detail/components/cartPop/component
 import { IOtherProduct } from "../../../detail/components/cartPop";
 import { IProductDetail } from "../../../detail/context/interface";
 import { CheckOutButton } from "../../../detail/components/cartPop/components/checkoutButton";
-import { currencyTrans, safeEqual } from "../../../../common/utils/util";
+import {
+  currencyTrans,
+  getBuyDetailPath,
+  getLocationUrl,
+  safeEqual
+} from "../../../../common/utils/util";
 import { RenderByCondition } from "../../../../components/RenderByCondition";
 import { InnerDivImage } from "../../../detail/components/innerDivImage";
 import Svg from "../../../../components/svg";
@@ -21,6 +26,7 @@ import RouterLink from "../../../../common-modules/components/routerLink";
 import { protectPrice } from "../../../../common/config/staticConst";
 import { PartsProductCard } from "../../../detail/components/partsProductCard";
 import { AddToCart } from "../../../detail/components/cartPop/components/addToCart";
+import { locationHref } from "../../../../common/utils/routerHistory";
 
 interface IProps {
   productDetail: IProductDetail;
@@ -45,8 +51,7 @@ export function CartShoppingItem(props: IProps) {
   const {
     buyProductId,
     buyProductPrice,
-    productDisplayName,
-    skuId,
+    buyProductName,
     buyProductImgPc,
     buyProductCode,
     buyProductStatus
@@ -57,6 +62,10 @@ export function CartShoppingItem(props: IProps) {
     .map(({ buyPrice }) => Number(buyPrice))
     .reduce((count: number, a: number) => count + a, 0);
 
+  function onClickHandler() {
+    locationHref(getBuyDetailPath(buyProductName, buyProductCode));
+  }
+
   return (
     <RenderByCondition
       ComponentPc={
@@ -65,6 +74,7 @@ export function CartShoppingItem(props: IProps) {
           <div className="two-line-flex">
             <div>
               <AddToComparePartImage
+                onClick={onClickHandler}
                 imgUrl={
                   buyProductImgPc && buyProductImgPc.length && buyProductImgPc
                 }
@@ -78,7 +88,10 @@ export function CartShoppingItem(props: IProps) {
               />
             </div>
             <div className="content-part">
-              <ProductInfoLine info={productDetail} />
+              <ProductInfoLine
+                info={productDetail}
+                onClickHandler={onClickHandler}
+              />
               {renderCartShoppingItem()}
             </div>
           </div>
@@ -90,11 +103,12 @@ export function CartShoppingItem(props: IProps) {
         <li className="cart-shopping-item" data-sold={isSold}>
           <div className="two-line-flex">
             <AddToComparePartImage
+              onClick={onClickHandler}
               imgUrl={
                 buyProductImgPc && buyProductImgPc.length && buyProductImgPc
               }
             />
-            <ProductInfoLine info={productDetail} />
+            <ProductInfoLine info={productDetail} onClickHandler={onClickHandler} />
           </div>
           <AddToComparePartButton
             buyProductCode={buyProductCode}
@@ -125,7 +139,7 @@ export function CartShoppingItem(props: IProps) {
               )}
             </strong>
           </div>
-          <div>(tax and shipping calculated at checkout)</div>
+          <div>*tax and shipping calculated at checkout</div>
         </div>
       </div>
     );
@@ -236,10 +250,10 @@ export function CartShoppingItem(props: IProps) {
   }
 }
 
-const AddToComparePartImage = (props: { imgUrl: string }) => {
-  const { imgUrl } = props;
+const AddToComparePartImage = (props: { imgUrl: string; onClick: any }) => {
+  const { imgUrl, onClick } = props;
   return (
-    <div className="add-to-compare-part-img">
+    <div className="add-to-compare-part-img" onClick={onClick}>
       <InnerDivImage imgUrl={imgUrl} />
     </div>
   );
@@ -269,8 +283,8 @@ const AddToComparePartButton = (props: {
   );
 };
 
-const ProductInfoLine = (props: { info: any }) => {
-  const { info } = props;
+const ProductInfoLine = (props: { info: any; onClickHandler: any }) => {
+  const { info, onClickHandler } = props;
   const {
     buyProductImgM,
     buyProductName,
@@ -299,7 +313,10 @@ const ProductInfoLine = (props: { info: any }) => {
   }
 
   return (
-    <div className="product-info-line render-line">
+    <div
+      className="product-info-line render-line canclick"
+      onClick={onClickHandler}
+    >
       <RenderByCondition
         ComponentPc={
           <>
