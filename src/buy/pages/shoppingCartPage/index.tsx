@@ -98,15 +98,19 @@ export const ShoppingCartPage: React.FC<IProps> = props => {
         <h1>Shopping Cart</h1>
       </div>
       <div className="content">
-        <div className="button-container">
-          <button
-            onClick={() => {
-              locationHref(getLocationUrl("comparepage"));
-            }}
-          >
-            Compare ({compareList.length}){" "}
-          </button>
-        </div>
+        {shoppingCartList &&
+        shoppingCartList.list &&
+        shoppingCartList.list.length ? (
+          <div className="button-container">
+            <button
+              onClick={() => {
+                locationHref(getLocationUrl("comparepage"));
+              }}
+            >
+              Compare ({compareList.length}){" "}
+            </button>
+          </div>
+        ) : null}
         <div className="list-container">{renderList()}</div>
         <RenderSimilar
           similiarPhoneList={productHistoryList}
@@ -115,14 +119,16 @@ export const ShoppingCartPage: React.FC<IProps> = props => {
           <h2 className="sub-title">Browsing History</h2>
         </RenderSimilar>
       </div>
-      <div
-        className="go-back-button"
-        onClick={() => {
-          locationHref("", "back");
-        }}
-      >
-        <img src={require("./res/arrow_left.svg")} />
-        <span>Go Back</span>
+      <div className="go-back-button-container">
+        <div
+          className="go-back-button"
+          onClick={() => {
+            locationHref("", "back");
+          }}
+        >
+          <img src={require("./res/arrow_left.svg")} />
+          <span>Go Back</span>
+        </div>
       </div>
     </div>
   );

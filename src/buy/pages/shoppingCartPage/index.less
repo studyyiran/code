@@ -5,11 +5,11 @@
     padding-bottom: 160 * @px;
     .title-with-border {
       border-bottom: 1px solid @color-border;
-      padding-bottom: 20 *@px;
-      margin-bottom: 30 *@px;
+      padding-bottom: 20 * @px;
+      margin-bottom: 30 * @px;
     }
     .remove-button-line {
-      padding: 20 *@px 0;
+      padding: 20 * @px 0;
     }
     .remove-button {
       .canclick();
@@ -19,24 +19,18 @@
         vertical-align: middle;
       }
       img {
-        width: 25 *@px;
-        margin-right: 5 *@px;
+        width: 25 * @px;
+        margin-right: 5 * @px;
       }
-      .mb({
-        margin-top: 10 *@px;
-      });
-      .pc({
-        margin-right: 20 *@px;
-      });
+      .mb({margin-top: 10 * @px;});
+      .pc({margin-right: 20 * @px;});
     }
     .sub-title {
       font-size: 24 * @px;
       .mb({font-size: 16 * @px;});
       font-weight: @boldWeight;
     }
-    .mb({
-      padding-bottom: 60 * @px;
-    });
+    .mb({padding-bottom: 60 * @px;});
     > .title-container:first-child {
       > h1:first-child {
         font-size: 32 * @px;
@@ -47,33 +41,30 @@
       }
     }
     .content {
-      .setpage(1170*@px);
+      .setpage(1170 * @px);
       .mb-padding();
       .button-container {
-        .mb({
-          border-bottom: 1px solid @color-border;
-        });
-        padding-top: 48 *@px;
-        .mb({
-          padding-top: 24 *@px;
-        });
-        padding-bottom: 15 *@px;
+        .mb({border-bottom: 1px solid @color-border;});
+        padding-top: 48 * @px;
+        .mb({padding-top: 24 * @px;});
+        padding-bottom: 15 * @px;
         button {
           .canclick();
-          font-size: 14 *@f;
-          width:200 *@px;
-          height:40*@px;
-          line-height:40*@px;
+          font-size: 14 * @f;
+          width: 200 * @px;
+          height: 40 * @px;
+          line-height: 40 * @px;
           color: @white;
-          background:rgba(55,90,125,1);
-          border-radius:4px
+          background: rgba(55, 90, 125, 1);
+          border-radius: 4px;
         }
       }
       .list-container {
         .empty-img {
           margin: auto;
           display: block;
-          padding: 100 *@px 0;
+          padding: 50 * @px 0 0;
+          width: 260 * @px;
         }
       }
       .similar {
@@ -98,20 +89,23 @@
         }
       }
     }
-    .go-back-button {
-      .canclick();
-      text-align: center;
-      > * {
-        vertical-align: middle;
-      }
-      font-size: 18 *@f;
-      margin-top: 100 *@px;
-      .mb({
-        margin-top: 50 *@px;
-      });
-      img {
-        width: 22 *@f;
-        margin-right: 10 *@px
+    .go-back-button-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .go-back-button {
+        .canclick();
+        text-align: center;
+        > * {
+          vertical-align: middle;
+        }
+        font-size: 18 * @f;
+        margin-top: 100 * @px;
+        .mb({margin-top: 50 * @px;});
+        img {
+          width: 22 * @f;
+          margin-right: 10 * @px;
+        }
       }
     }
   }
