@@ -17,6 +17,7 @@ export const ComparePage: React.FC<IProps> = props => {
   const storeShoppingCartContext = useContext(StoreShoppingCartContext);
   const {
     orderCompareGet,
+    orderCompareDelete,
     storeShoppingCartContextValue
   } = storeShoppingCartContext;
   const { compareInfoList } = storeShoppingCartContextValue;
@@ -44,7 +45,7 @@ export const ComparePage: React.FC<IProps> = props => {
         if (columnIndex === 0) {
           return <div />;
         } else {
-          return <RenderTopPart productInfo={columnInfo} />;
+          return <RenderTopPart productInfo={columnInfo} orderCompareDelete={orderCompareDelete} />;
         }
       } else if (type === "Battery") {
         return null;
@@ -63,7 +64,7 @@ export const ComparePage: React.FC<IProps> = props => {
     const columnArr = fillWithEmpty(4);
     return columnArr.map((columnInfo: any, columnIndex: number) => {
       if (type === "detail") {
-        return <RenderTopPart productInfo={columnInfo} />;
+        return <RenderTopPart productInfo={columnInfo} orderCompareDelete={orderCompareDelete} />;
       } else if (type === "Battery") {
         return null;
       } else {
@@ -156,7 +157,13 @@ export const ComparePage: React.FC<IProps> = props => {
   );
 };
 
-const RenderTopPart = ({ productInfo }: { productInfo?: IProductDetail }) => {
+const RenderTopPart = ({
+  productInfo,
+  orderCompareDelete
+}: {
+  productInfo?: IProductDetail;
+  orderCompareDelete: any;
+}) => {
   if (productInfo && productInfo.buyProductCode) {
     const {
       buyProductBQV,
@@ -184,7 +191,13 @@ const RenderTopPart = ({ productInfo }: { productInfo?: IProductDetail }) => {
         <div className="swiper-part">{renderInfoLine()}</div>
         <div className="button-container">
           <button>Buy Now</button>
-          <div>remove</div>
+          <div
+            onClick={() => {
+              orderCompareDelete(buyProductCode);
+            }}
+          >
+            remove
+          </div>
         </div>
       </div>
     );

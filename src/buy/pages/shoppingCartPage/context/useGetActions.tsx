@@ -119,6 +119,7 @@ export function useStoreShoppingCartGetActions(
     async code => {
       const res = await storeShoppingCartServer.orderCompareDelete(code);
       const res2 = getShoppingCart();
+      const res3 = orderCompareGet();
     },
     [getShoppingCart]
   );
