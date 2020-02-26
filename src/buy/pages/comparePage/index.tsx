@@ -281,7 +281,7 @@ const RenderListItem = (props: any) => {
   const { rowInfo, columnInfo } = props;
   const renderBy = (value: string) => {
     return (
-      <RenderByCondition ComponentPc={null} ComponentMb={<div>{value}</div>} />
+      <RenderByCondition ComponentPc={null} ComponentMb={<div className="sub-title">{value}</div>} />
     );
   };
   if (
