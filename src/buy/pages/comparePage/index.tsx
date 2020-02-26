@@ -76,7 +76,6 @@ export const ComparePage: React.FC<IProps> = props => {
   };
 
   const renderMb = (rowInfo: any) => {
-    return 123;
     const { type, title } = rowInfo;
     const columnArr = fillWithEmpty(4);
     return columnArr.map((columnInfo: any, columnIndex: number) => {
@@ -87,23 +86,29 @@ export const ComparePage: React.FC<IProps> = props => {
             orderCompareDelete={orderCompareDelete}
           />
         );
-      } else if (type === "Battery") {
-        if (
-          columnArr.find((item: any) => {
-            return item.buyProductBatteryLife;
-          })
-        ) {
-          if (columnIndex === 0) {
-            return <RenderTitleList>{title}</RenderTitleList>;
+      }
+      if (compareInfoList && compareInfoList.length) {
+        if (type === "Battery") {
+          if (
+            columnArr.find((item: any) => {
+              return item.buyProductBatteryLife;
+            })
+          ) {
+            if (columnIndex === 0) {
+              return <RenderTitleList>{title}</RenderTitleList>;
+            } else {
+              return <RenderListItem rowInfo={rowInfo} columnInfo={columnInfo} />;
+            }
           } else {
-            return <RenderListItem rowInfo={rowInfo} columnInfo={columnInfo} />;
+            return null;
           }
         } else {
-          return null;
+          return <RenderListItem rowInfo={rowInfo} columnInfo={columnInfo} />;
         }
       } else {
-        return <RenderListItem rowInfo={rowInfo} columnInfo={columnInfo} />;
+        return null
       }
+      
     });
   };
 
@@ -160,7 +165,7 @@ export const ComparePage: React.FC<IProps> = props => {
       configArr.push({
         type: "",
         title: "Functional Test",
-        key: "FunctionalTest",
+        key: "FunctionalTest"
       });
       return configArr.map((rowInfo, rowIndex) => {
         return (
@@ -185,7 +190,6 @@ export const ComparePage: React.FC<IProps> = props => {
         );
       });
     }
-    
   }
   return (
     <div className="compare-page">
@@ -239,13 +243,14 @@ const RenderTopPart = ({
       <div className="render-top-part">
         <div className="swiper-part">{renderInfoLine()}</div>
         <div className="button-container">
-          <button>Buy Now</button>
+          <button className="common-button">Buy Now</button>
           <div
+            className="remove"
             onClick={() => {
               orderCompareDelete(buyProductCode);
             }}
           >
-            remove
+            Remove
           </div>
         </div>
       </div>
@@ -274,7 +279,17 @@ const RenderTitleList = ({ children }: { children?: any }) => {
 
 const RenderListItem = (props: any) => {
   const { rowInfo, columnInfo } = props;
-  if (rowInfo && rowInfo.key === 'FunctionalTest') {
+  const renderBy = (value: string) => {
+    return (
+      <RenderByCondition ComponentPc={null} ComponentMb={<div>{value}</div>} />
+    );
+  };
+  if (
+    rowInfo &&
+    rowInfo.key === "FunctionalTest" &&
+    columnInfo &&
+    columnInfo.buyProductCode
+  ) {
     return <div className={"grid-block"}>All Pass</div>;
   }
   if (columnInfo && rowInfo && rowInfo.key && columnInfo[rowInfo.key]) {
@@ -285,16 +300,19 @@ const RenderListItem = (props: any) => {
     if (value) {
       if (rowInfo && rowInfo.key === "productDescription") {
         return (
-          <div
-            className={"grid-block"}
-            dangerouslySetInnerHTML={{ __html: value }}
-          />
+          <div className={"grid-block"}>
+            {renderBy(rowInfo.title)}
+            <div dangerouslySetInnerHTML={{ __html: value }} />
+          </div>
         );
-      } else {
-        return <div className={"grid-block"}>{value}</div>;
       }
-      return <div className="grid-block">{value}</div>;
+      return (
+        <div className="grid-block">
+          {renderBy(rowInfo.title)}
+          <div>{value}</div>
+        </div>
+      );
     }
   }
-  return <div className="grid-block" />;
+  return <div className="grid-block">{renderBy(rowInfo && rowInfo.title)}</div>;
 };

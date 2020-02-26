@@ -136,7 +136,7 @@ export function CartShoppingItem(props: IProps) {
               )}
             </strong>
           </div>
-          <div>*tax and shipping calculated at checkout</div>
+          <div className="line-two">Tax and shipping calculated at checkout</div>
         </div>
       </div>
     );
