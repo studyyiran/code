@@ -73,7 +73,7 @@ export function CartShoppingItem(props: IProps) {
         <div className="cart-shopping-item" data-sold={isSold}>
           {isSold ? <div className="sold-modal"></div> : null}
           <div className="two-line-flex">
-            <div>
+            <div className="img-container">
               <AddToComparePartImage
                 onClick={onClickHandler}
                 imgUrl={

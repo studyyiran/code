@@ -48,10 +48,12 @@
       align-self: stretch;
       display: flex;
       justify-content: space-between;
+      .img-container {
+        margin-right: 40 *@px;
+      }
       .content-part {
-        
         flex: 1;
-        max-width: 820 *@px;
+        //max-width: 820 *@px;
       }
     }
     .render-sub-total-container {
@@ -71,6 +73,10 @@
           display: flex;
           justify-content: space-between;
           span {
+            margin-left: 61*@px;
+            .mb({
+              margin-left: 92*@px;
+            });
             white-space: nowrap;
           }
           strong {
@@ -127,6 +133,12 @@
     
     .render-cart-shopping-item {
       //
+      a {
+        position: relative;
+        z-index: 10;
+        color: #375a7d;
+        text-decoration: underline;
+      }
     }
   }
 
@@ -180,6 +192,14 @@
   
   // 组件
   .item-price-line {
+    .mb({
+      &:first-child {
+        .add-to-cart-button {
+          margin-top: -20 *@px;
+          display: inline;
+        }
+      }
+    });
     .pc({
       display: grid;
       grid-template-columns:  2fr 1fr 1fr;
@@ -191,6 +211,9 @@
     .mb-line-container {
       display: flex;
       justify-content: space-between;
+      .render-title-container {
+        flex: 0 0 70%;
+      }
     }
     .mb-line-container + * {
       text-align: left !important;
@@ -207,6 +230,9 @@
       justify-content: space-between;
     }
     .add-to-cart-button {
+      .mb({
+        text-align: right !important;
+      });
       &[data-select="true"] {
         color: rgba(224, 32, 32, 1);
       }
@@ -252,7 +278,7 @@
           justify-content: space-between;
           .pc({
             h2 {
-              font-size: 22 *@f;
+              font-size: 18 *@f;
               font-weight: @boldWeight;
             }
           });
