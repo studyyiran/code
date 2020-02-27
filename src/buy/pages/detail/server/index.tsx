@@ -118,3 +118,12 @@ export async function getProductHistory(list: any[]) {
   const res = await ajax.post(getProductHistoryUrl, list);
   return res;
 }
+
+export async function addProductWaitList(info: {
+  buyProductCode: string;
+  email?: string;
+  phone?: string;
+}) {
+  const res = await ajax.post("/buy/product/waitlist/add", info);
+  return res;
+}

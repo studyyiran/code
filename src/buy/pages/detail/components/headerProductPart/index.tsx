@@ -88,7 +88,7 @@ export function HeaderProductPart(props: {
           userInfo={userInfo}
         />
         <div className="start-button-container">
-          {productDetail.buyProductStatus === "INTRANSACTION" ? <JoinWaitList /> : <AddToCartButton />}
+          {productDetail.buyProductStatus === "INTRANSACTION" ? <JoinWaitList buyProductCode={buyProductCode} /> : <AddToCartButton />}
           <StartBuyButton
             onClick={() => {
               dataReport({

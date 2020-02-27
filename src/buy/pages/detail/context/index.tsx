@@ -13,9 +13,11 @@ import {
   getProductDetailByCode,
   getProductDetailByIdAndCondition,
   getSimiliarByCode,
-  getProductHistory
+  getProductHistory,
+  addProductWaitList
 } from "../server";
 import {
+  actionsWithCatchAndLoading,
   callBackWhenPassAllFunc,
   getBuyDetailPath,
   getFromCacheStore,
@@ -47,6 +49,7 @@ interface IContextState {
   partsInfo: IProductDetail[];
   productHistoryCodeList: string[];
   productHistoryList: any[];
+  isLoading: any;
 }
 
 // @provider
@@ -59,6 +62,7 @@ export function ProductDetailContextProvider(props: any) {
     partsInfo: [],
     productHistoryCodeList: [],
     productHistoryList: [],
+    isLoading: {},
     productDetailByCode: {} as any
   };
   const [state, dispatch, useClientRepair] = useGetOriginData(
@@ -110,6 +114,11 @@ interface IContextActions {
   addProductHistoryCodeList: (code: string) => any;
   getReviewScore: () => any;
   getProductHistory: () => any;
+  addProductWaitList: (info: {
+    buyProductCode: string;
+    email?: string;
+    phone?: string;
+  }) => any;
 }
 
 export interface ICodeDetail {
@@ -326,7 +335,17 @@ function useGetAction(
         }
       },
       [dispatch]
-    )
+    ),
+    addProductWaitList: useCallback(async function(info) {
+      return actionsWithCatchAndLoading({
+        dispatch,
+        loadingDispatchName: storeDetailActionTypes.setLoadingObjectStatus,
+        loadingObjectKey: "addProductWaitList",
+        promiseFunc: () => {
+          return addProductWaitList(info);
+        }
+      });
+    }, [])
   };
   return actions;
 }
@@ -340,7 +359,8 @@ export const storeDetailActionTypes = {
   setPartsInfo: "setPartsInfo",
   addProductHistoryCodeList: "addProductHistoryCodeList",
   setProductHistoryList: "setProductHistoryList",
-  setReviewListInfo: "setReviewListInfo"
+  setReviewListInfo: "setReviewListInfo",
+  setLoadingObjectStatus: "setLoadingObjectStatus"
 };
 
 // reducer
@@ -348,6 +368,16 @@ function reducer(state: IContextState, action: IReducerAction) {
   const { type, value } = action;
   let newState = { ...state };
   switch (type) {
+    case storeDetailActionTypes.setLoadingObjectStatus: {
+      newState = {
+        ...newState,
+        isLoading: {
+          ...newState.isLoading,
+          ...value
+        }
+      };
+      break;
+    }
     case storeDetailActionTypes.addProductHistoryCodeList: {
       if (value) {
         const { subType, subValue } = value;
