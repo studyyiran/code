@@ -53,7 +53,7 @@ export function CartShoppingItem(props: IProps) {
     buyProductId,
     buyProductPrice,
     buyProductName,
-    buyProductImgPc,
+    buyProductImgM,
     buyProductCode,
     buyProductStatus,
   } = productDetail;
@@ -77,7 +77,7 @@ export function CartShoppingItem(props: IProps) {
               <AddToComparePartImage
                 onClick={onClickHandler}
                 imgUrl={
-                  buyProductImgPc && buyProductImgPc.length && buyProductImgPc
+                  buyProductImgM && buyProductImgM.length && buyProductImgM[0]
                 }
               />
               <AddToComparePartButton
@@ -104,7 +104,7 @@ export function CartShoppingItem(props: IProps) {
             <AddToComparePartImage
               onClick={onClickHandler}
               imgUrl={
-                buyProductImgPc && buyProductImgPc.length && buyProductImgPc
+                buyProductImgM && buyProductImgM.length && buyProductImgM[0]
               }
             />
             <ProductInfoLine info={productDetail} onClickHandler={onClickHandler} />

@@ -7,7 +7,7 @@ import {
 } from "./index";
 import { Message } from "../../../components/message";
 import { GlobalSettingContext, IGlobalSettingContext } from "../../../context";
-import {actionsWithCatchAndLoading} from "../../../common/utils/util";
+import { actionsWithCatchAndLoading } from "../../../common/utils/util";
 
 // @actions
 export interface IStoreShoppingCartActions {
@@ -74,7 +74,8 @@ export function useStoreShoppingCartGetActions(
     async id => {
       return actionsWithCatchAndLoading({
         dispatch,
-        loadingDispatchName: storeShoppingCartReducerTypes.setLoadingObjectStatus,
+        loadingDispatchName:
+          storeShoppingCartReducerTypes.setLoadingObjectStatus,
         loadingObjectKey: "addShoppingCart",
         promiseFunc: async () => {
           const res = await storeShoppingCartServer.addShoppingCart(id);
@@ -82,13 +83,13 @@ export function useStoreShoppingCartGetActions(
           return Promise.all([res, res2]);
         }
       });
-      
+
       // dispatch({
       //   type: storeShoppingCartReducerTypes.setShoppingCartList,
       //   value: res
       // });
     },
-    [getShoppingCart]
+    [dispatch, getShoppingCart]
   );
 
   const deleteShoppingCart = useCallback(
@@ -119,8 +120,9 @@ export function useStoreShoppingCartGetActions(
 
   const orderCompareAdd = useCallback(
     async code => {
-      const max = 4
+      const max = 4;
       if (state.compareInfoList.length < max) {
+        console.log(state.compareInfoList);
         const res = await storeShoppingCartServer.orderCompareAdd(code);
         const res2 = getShoppingCart();
         const res3 = orderCompareGet();
@@ -128,7 +130,7 @@ export function useStoreShoppingCartGetActions(
         Message.error(`You can only compare up to ${max} phones`);
       }
     },
-    [getShoppingCart]
+    [getShoppingCart, orderCompareGet, state.compareInfoList]
   );
 
   const orderCompareDelete = useCallback(
@@ -137,7 +139,7 @@ export function useStoreShoppingCartGetActions(
       const res2 = getShoppingCart();
       const res3 = orderCompareGet();
     },
-    [getShoppingCart]
+    [getShoppingCart, orderCompareGet]
   );
 
   const setShowCartModal = useCallback(
