@@ -97,13 +97,9 @@ export const ComparePage: React.FC<IProps> = props => {
               return item.buyProductBatteryLife;
             })
           ) {
-            if (columnIndex === 0) {
-              return <RenderTitleList>{title}</RenderTitleList>;
-            } else {
-              return (
-                <RenderListItem rowInfo={rowInfo} columnInfo={columnInfo} />
-              );
-            }
+            return (
+              <RenderListItem rowInfo={rowInfo} columnInfo={columnInfo} />
+            );
           } else {
             return null;
           }
