@@ -24,7 +24,7 @@ export function JoinWaitList(props: { buyProductCode: string }) {
         {
           type: "email",
           required: true,
-          message: tipsContent.emailMistake
+          message: "Please input a valid email."
         }
       ],
       renderFormEle: () => <Input />
@@ -36,7 +36,7 @@ export function JoinWaitList(props: { buyProductCode: string }) {
         {
           required: false,
           pattern: /\d{10}/,
-          message: "Please enter a valid mobile."
+          message: "Please input a valid phone number."
         }
       ],
       renderFormEle: () => <Input />
