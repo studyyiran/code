@@ -39,12 +39,14 @@ export interface IShoppingCartInfo {
   }[];
   cartTotalPrice: number;
   totalCount: number;
+  
 }
 // store state
 export interface IStoreShoppingCartState {
   shoppingCartList: IShoppingCartInfo;
   compareInfoList: IProductDetail[];
   showCartModal: boolean;
+  isLoading: any;
 }
 
 // interface
@@ -63,7 +65,8 @@ export function StoreShoppingCartContextProvider(props: any) {
   const initState: IStoreShoppingCartState = {
     shoppingCartList: {} as any,
     compareInfoList: [],
-    showCartModal: false
+    showCartModal: false,
+    isLoading: {},
   };
   const [state, dispatch] = useReducer(
     useReducerMiddleware(reducer),
@@ -107,7 +110,8 @@ export function StoreShoppingCartContextProvider(props: any) {
 export const storeShoppingCartReducerTypes = {
   setShoppingCartList: "setShoppingCartList",
   setCompareInfoList: "setCompareInfoList",
-  setShowCartModal: "setShowCartModal"
+  setShowCartModal: "setShowCartModal",
+  setLoadingObjectStatus: "setLoadingObjectStatus"
 };
 
 // reducer
@@ -115,6 +119,16 @@ function reducer(state: IStoreShoppingCartState, action: IReducerAction) {
   const { type, value } = action;
   let newState = { ...state };
   switch (type) {
+    case storeShoppingCartReducerTypes.setLoadingObjectStatus: {
+      newState = {
+        ...newState,
+        isLoading: {
+          ...newState.isLoading,
+          ...value
+        }
+      };
+      break;
+    }
     case storeShoppingCartReducerTypes.setShoppingCartList: {
       newState = {
         ...newState,

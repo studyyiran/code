@@ -7,6 +7,7 @@ import {
 } from "./index";
 import { Message } from "../../../components/message";
 import { GlobalSettingContext, IGlobalSettingContext } from "../../../context";
+import {actionsWithCatchAndLoading} from "../../../common/utils/util";
 
 // @actions
 export interface IStoreShoppingCartActions {
@@ -71,8 +72,17 @@ export function useStoreShoppingCartGetActions(
 
   const addShoppingCart = useCallback(
     async id => {
-      const res = await storeShoppingCartServer.addShoppingCart(id);
-      const res2 = getShoppingCart();
+      return actionsWithCatchAndLoading({
+        dispatch,
+        loadingDispatchName: storeShoppingCartReducerTypes.setLoadingObjectStatus,
+        loadingObjectKey: "addShoppingCart",
+        promiseFunc: async () => {
+          const res = await storeShoppingCartServer.addShoppingCart(id);
+          const res2 = await getShoppingCart();
+          return Promise.all([res, res2]);
+        }
+      });
+      
       // dispatch({
       //   type: storeShoppingCartReducerTypes.setShoppingCartList,
       //   value: res

@@ -3,6 +3,19 @@
 @p1: {
   .add-to-cart-out-button {
     @color: rgba(55, 90, 125, 1);
+    &.common-button {
+      background: transparent !important;
+      color: @color;
+      height: 100%;
+      line-height: 0;
+      //display: flex;
+      //align-items: center;
+      //justify-content: center;
+      vertical-align: baseline;
+      > * {
+        vertical-align: baseline;
+      }
+    }
     &.added {
       background: @color;
       color: @white;
@@ -12,17 +25,16 @@
         justify-content: center;
         > svg {
           flex: 0 0 40 *@px;
-          margin-right: 10 *@px;
+          //margin-right: 10 *@px;
         }
       }
-      
     }
     .canclick();
     border: 1px solid @color;
     color: @color;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    //display: flex;
+    //align-items: center;
+    //justify-content: center;
     border-radius: 6 *@px;
   }
 };

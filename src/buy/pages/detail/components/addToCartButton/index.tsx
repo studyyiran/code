@@ -8,6 +8,7 @@ import {
   IGlobalSettingContext
 } from "../../../../context";
 import { StoreShoppingCartContext } from "../../../shoppingCartPage/context";
+import Button from "../../../../components/button";
 
 interface IProps {}
 
@@ -22,7 +23,7 @@ export function AddToCartButton(props: IProps) {
   const productDetailContext = useContext(ProductDetailContext);
   const storeShoppingCartContext = useContext(StoreShoppingCartContext);
   const { storeShoppingCartContextValue } = storeShoppingCartContext;
-  const { shoppingCartList } = storeShoppingCartContextValue;
+  const { shoppingCartList, isLoading } = storeShoppingCartContextValue;
   const {
     productDetailContextValue,
     productDetailContextDispatch,
@@ -55,17 +56,19 @@ export function AddToCartButton(props: IProps) {
     );
   } else {
     return (
-      <div
+      <Button
+        isLoading={isLoading && isLoading.addShoppingCart}
         onClick={() => {
           addIntoCartList(buyProductCode);
           if (!isMobile) {
             window.scrollTo(0, 0);
           }
         }}
-        className="long-button add-to-cart-out-button"
+        className="add-to-cart-out-button"
       >
-        Add to cart
-      </div>
+        <span>Add to cart</span>
+        
+      </Button>
     );
   }
 
