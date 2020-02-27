@@ -166,7 +166,7 @@ export function CartShoppingItem(props: IProps) {
             needProtection={needProtection}
             onClick={() => {}}
           >
-            Buy Now
+            Check out
           </CheckOutButton>
         )}
       </div>

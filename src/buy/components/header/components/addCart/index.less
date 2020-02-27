@@ -25,18 +25,19 @@
       height: @itemLineHeight;
       border-bottom: 1px solid @color-border;
       position: relative;
+      @imageWidth:125 *@px;
       .sold-out-tag {
+        width: @imageWidth;
         background: rgba(224, 32, 32, 1);
         position: absolute;
         top: 20 *@px;
         left: 0;
         text-align: center;
-        padding: 10 *@px 20 *@px;
+        padding: 10 *@px 0 *@px;
         color: @white;
         border-radius:4px;
       }
       .innerdiv {
-        @imageWidth:125 *@px;
         background-position: center;
         background-size: cover;
         width: @imageWidth;

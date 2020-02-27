@@ -14,7 +14,7 @@ export function StartBuyButton(props: {
   return (
     <div className="start-pay-button long-button">
       <Button disabled={buyProductStatus === "INTRANSACTION"} onClick={buyProductStatus === "INTRANSACTION" ? () => {} : onClick}>
-        {buyProductStatus === "INTRANSACTION" ? "Sold" : "Check out"}
+        {buyProductStatus === "INTRANSACTION" ? "Sold" : "Buy now"}
       </Button>
       {/*<span className="or">OR</span>*/}
       {/*<a className="link" onClick={viewAllClickHandler.bind({}, productDetail)}>*/}

@@ -261,7 +261,7 @@ export function getLocationUrl(type: string) {
     case "home": {
       return "/";
     }
-    case "cart": {
+    case "shoppingcart": {
       return "/cart";
     }
     default:
