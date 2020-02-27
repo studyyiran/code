@@ -11,6 +11,7 @@ import { IProductDetail } from "../detail/context/interface";
 import VideoComponent from "../../components/video";
 // @ts-ignore
 import ReactImageMagnify from "react-image-magnify";
+import { CartPop } from "../detail/components/cartPop";
 
 interface IProps {
   history?: any;
@@ -27,6 +28,9 @@ export const ComparePage: React.FC<IProps> = props => {
   useEffect(() => {
     orderCompareGet();
   }, [orderCompareGet]);
+
+  const [currentCode, setCurrentCode] = useState('');
+
   const fillWithEmpty = (maxLength: number) => {
     const arr = [];
     for (let i = 0; i < maxLength; i++) {
@@ -49,6 +53,7 @@ export const ComparePage: React.FC<IProps> = props => {
         } else {
           return (
             <RenderTopPart
+              setCurrentCode={setCurrentCode}
               productInfo={columnInfo}
               orderCompareDelete={orderCompareDelete}
             />
@@ -85,6 +90,7 @@ export const ComparePage: React.FC<IProps> = props => {
       if (type === "detail") {
         return (
           <RenderTopPart
+            setCurrentCode={setCurrentCode}
             productInfo={columnInfo}
             orderCompareDelete={orderCompareDelete}
           />
@@ -97,9 +103,7 @@ export const ComparePage: React.FC<IProps> = props => {
               return item.buyProductBatteryLife;
             })
           ) {
-            return (
-              <RenderListItem rowInfo={rowInfo} columnInfo={columnInfo} />
-            );
+            return <RenderListItem rowInfo={rowInfo} columnInfo={columnInfo} />;
           } else {
             return null;
           }
@@ -196,6 +200,12 @@ export const ComparePage: React.FC<IProps> = props => {
       <div className="title-container">
         <h1>Compare up to 4 phones</h1>
       </div>
+      {/*<CartPop*/}
+      {/*  showModal={showModal}*/}
+      {/*  setShowModal={setShowModal}*/}
+      {/*  productDetail={productDetail}*/}
+      {/*  partsInfo={partsInfo}*/}
+      {/*/>*/}
       <div className="compare-item-list-container">{renderList()}</div>
       <div
         className="go-back-button"
@@ -331,11 +341,13 @@ const RenderContentImg = (props: any) => {
 };
 
 const RenderTopPart = ({
+  setCurrentCode,
   productInfo,
   orderCompareDelete
 }: {
   productInfo?: IProductDetail;
   orderCompareDelete: any;
+  setCurrentCode: any;
 }) => {
   if (productInfo && productInfo.buyProductCode) {
     const {
@@ -367,7 +379,14 @@ const RenderTopPart = ({
           {renderInfoLine()}
         </div>
         <div className="button-container">
-          <button className="common-button">Buy Now</button>
+          <button
+            className="common-button"
+            onClick={() => {
+              setCurrentCode(buyProductCode);
+            }}
+          >
+            Buy Now
+          </button>
           <div
             className="remove"
             onClick={() => {
