@@ -17,11 +17,12 @@ export default function ButtonGroup(props: any) {
       <button
         className="common-button second"
         onClick={() => {
-          if (handleBack) {
-            handleBack();
-          } else {
-            props.history.goBack();
-          }
+          props.history.goBack();
+          // if (handleBack) {
+          //   handleBack();
+          // } else {
+          //   props.history.goBack();
+          // }
         }}
       >
         {backContent ? backContent : `< Back to store`}

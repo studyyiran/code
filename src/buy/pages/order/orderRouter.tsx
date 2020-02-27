@@ -101,11 +101,12 @@ export default function OrderRouter(props: any) {
       if (subOrders && subOrders.length) {
         targetSkuId = subOrders[subOrders.length - 1].productId;
       }
-      if (targetSkuId) {
-        locationHref(`/detail/${targetSkuId}`);
-      } else {
-        locationHref("", "back");
-      }
+      locationHref("", "back");
+      // if (targetSkuId) {
+      //   locationHref(`/detail/${targetSkuId}`);
+      // } else {
+      //   locationHref("", "back");
+      // }
     }
   }
   return (
@@ -129,6 +130,7 @@ export default function OrderRouter(props: any) {
                         renderButton={(pageNextClick: any) => {
                           return (
                             <ButtonGroup
+                              history={props.history}
                               isLoading={pendingStatus}
                               backContent={backButton}
                               handleNext={() => {
