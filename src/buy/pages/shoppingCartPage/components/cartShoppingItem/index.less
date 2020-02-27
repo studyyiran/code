@@ -91,6 +91,8 @@
       display: flex;
       align-items: center;
       justify-content: flex-end;
+      position: relative;
+      z-index: 10;
       .mb({
         flex-direction: column-reverse;
       });
@@ -116,8 +118,9 @@
         });
         &[data-sold="true"] {
           text-align: center;
-          background: rgba(240, 240, 240, 1);
-          color: rgba(128, 128, 128, 1);
+          background: rgba(240, 240, 240, 1) !important;
+          color: rgba(128, 128, 128, 1) !important;
+          cursor: initial;
         }
       }
     }
