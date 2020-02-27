@@ -35,6 +35,7 @@ import {
 } from "./interface";
 import { Message } from "../../../components/message";
 import { StoreShoppingCartContext } from "../../shoppingCartPage/context";
+import { GlobalSettingContext, IGlobalSettingContext } from "../../../context";
 
 export const ProductDetailContext = createContext({} as IProductDetailContext);
 export const StoreDetail = "StoreDetail";
@@ -139,6 +140,13 @@ function useGetAction(
 ): IContextActions {
   const storeShoppingCartContext = useContext(StoreShoppingCartContext);
   const { addShoppingCart, setShowCartModal } = storeShoppingCartContext;
+
+  const globalSettingContext = useContext(GlobalSettingContext);
+  const {
+    globalSettingContextValue
+  } = globalSettingContext as IGlobalSettingContext;
+  const { isMobile } = globalSettingContextValue;
+
   const actions: IContextActions = {
     getProductHistory: useCallback(async () => {
       // 判断去重
@@ -172,8 +180,14 @@ function useGetAction(
     }, [dispatch, state.productHistoryCodeList, state.productHistoryList]),
     addIntoCartList: useCallback(
       async value => {
-        setShowCartModal(true);
-        await addShoppingCart(value);
+        if (isMobile) {
+          await addShoppingCart(value);
+          setShowCartModal(true);
+        } else {
+          setShowCartModal(true);
+          await addShoppingCart(value);
+        }
+
         // if (value && state.cartList.length < 10) {
         //   dispatch({
         //     type: storeDetailActionTypes.addCartList,
@@ -181,7 +195,7 @@ function useGetAction(
         //   });
         // }
       },
-      [addShoppingCart, setShowCartModal]
+      [addShoppingCart, isMobile, setShowCartModal]
     ),
     getReviewScore: useCallback(async () => {
       const res: any = await getReviewScore();
@@ -345,7 +359,7 @@ function useGetAction(
           return addProductWaitList(info);
         }
       });
-    }, [])
+    }, [dispatch])
   };
   return actions;
 }

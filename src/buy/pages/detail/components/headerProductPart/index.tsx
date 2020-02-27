@@ -4,7 +4,7 @@ import {
 } from "../../context/interface";
 import { CartPop } from "../cartPop";
 import { dataReport } from "../../../../common/dataReport";
-import React, {useContext, useEffect, useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { StartBuyButton } from "../startBuyButton";
 import { TopIconList } from "../topIconList";
 import "./index.less";
@@ -14,10 +14,13 @@ import { ProductIdAndPrice } from "./components/price";
 import { AttrSelector } from "./components/attrSelector";
 import { ProductInfo } from "../productInfo";
 import { RenderByCondition } from "../../../../components/RenderByCondition";
-import {GlobalSettingContext, IGlobalSettingContext} from "../../../../context";
-import {JoinWaitList} from "../joinWaitList";
-import {AddToCart} from "../cartPop/components/addToCart";
-import {AddToCartButton} from "../addToCartButton";
+import {
+  GlobalSettingContext,
+  IGlobalSettingContext
+} from "../../../../context";
+import { JoinWaitList } from "../joinWaitList";
+import { AddToCart } from "../cartPop/components/addToCart";
+import { AddToCartButton } from "../addToCartButton";
 
 export function HeaderProductPart(props: {
   productDetail: IProductDetail;
@@ -39,7 +42,7 @@ export function HeaderProductPart(props: {
     userInfo,
     productDetailByCode,
     similiarPhoneListByCode,
-    topPos,
+    topPos
   } = props;
   const {
     productDisplayName,
@@ -56,8 +59,12 @@ export function HeaderProductPart(props: {
     globalSettingContextValue
   } = globalSettingContext as IGlobalSettingContext;
   const { isMobile } = globalSettingContextValue;
+  const [showMaxTips, setShowMaxTips] = useState(false);
   return (
-    <div className="header-part" style={isMobile ? {} : {height: `calc(100vh - ${topPos}px)`}}>
+    <div
+      className="header-part"
+      style={isMobile ? {} : { height: `calc(100vh - ${topPos}px)` }}
+    >
       <CartPop
         showModal={showModal}
         setShowModal={setShowModal}
@@ -65,9 +72,7 @@ export function HeaderProductPart(props: {
         partsInfo={partsInfo}
       />
       <div className="price-part-out-container">
-        <ProductInfo {...productDetail}>
-          {productDisplayName}
-        </ProductInfo>
+        <ProductInfo {...productDetail}>{productDisplayName}</ProductInfo>
         <ProductIdAndPrice
           productDetailByCode={productDetailByCode}
           productDetail={productDetail}
@@ -88,7 +93,15 @@ export function HeaderProductPart(props: {
           userInfo={userInfo}
         />
         <div className="start-button-container">
-          {productDetail.buyProductStatus === "INTRANSACTION" ? <JoinWaitList buyProductCode={buyProductCode} /> : <AddToCartButton />}
+          {productDetail.buyProductStatus === "INTRANSACTION" ? (
+            <JoinWaitList buyProductCode={buyProductCode} />
+          ) : (
+            <AddToCartButton
+              onClickCallBack={() => {
+                setShowMaxTips(true);
+              }}
+            />
+          )}
           <StartBuyButton
             onClick={() => {
               dataReport({
@@ -112,7 +125,11 @@ export function HeaderProductPart(props: {
             productDetail={productDetail}
           />
         </div>
-        
+        {showMaxTips ? (
+          <div className="max-count-tips">
+            Cart limit reached. Please clear your cart.
+          </div>
+        ) : null}
         {/*<RenderByCondition ComponentPc={<TopIconList />} ComponentMb={null}/>*/}
       </div>
     </div>

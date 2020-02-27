@@ -59,7 +59,7 @@ export function JoinWaitList(props: { buyProductCode: string }) {
             setShowModal(true)
           }}
         >
-          Join waitlist1
+          Join waitlist
           <Modal
             visible={showModal}
             title={""}
@@ -93,7 +93,7 @@ export function JoinWaitList(props: { buyProductCode: string }) {
             });
           }}
         >
-          Join waitlist2
+          Join waitlist
         </div>
       )}
     />

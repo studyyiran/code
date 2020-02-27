@@ -38,6 +38,7 @@
         grid-template-areas:  'a'
                               'b';
         grid-template-columns: 1fr;
+        //grid-template-rows: 70 *@px 70 *@px;
         grid-row-gap: 10 *@px;
         > *:first-child {
           grid-area: b;
@@ -69,7 +70,11 @@
       flex-direction: column;
       .mb({
         margin-top: 15 *@px;
-      })
+      });
+      .max-count-tips {
+        color: rgba(224, 32, 32, 1);
+        margin: 5 *@px 0;
+      }
     }
     //.price-part-mb {
     //  margin-top: 25 * @px;

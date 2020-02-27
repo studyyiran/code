@@ -10,7 +10,9 @@ import {
 import { StoreShoppingCartContext } from "../../../shoppingCartPage/context";
 import Button from "../../../../components/button";
 
-interface IProps {}
+interface IProps {
+  onClickCallBack: any;
+}
 
 export function AddToCartButton(props: IProps) {
   const globalSettingContext = useContext(GlobalSettingContext);
@@ -41,10 +43,17 @@ export function AddToCartButton(props: IProps) {
         shoppingCartList &&
           shoppingCartList.list &&
           shoppingCartList.list.length &&
-          shoppingCartList.list.find(item => safeEqual(item.product.buyProductCode, buyProductCode))
+          shoppingCartList.list.find(item =>
+            safeEqual(item.product.buyProductCode, buyProductCode)
+          )
       );
     }
   }
+  const isMaxReached =
+    shoppingCartList &&
+    shoppingCartList.list &&
+    shoppingCartList.list.length &&
+    shoppingCartList.list.length >= 20;
   if (haveAdd) {
     return (
       <div className="long-button add-to-cart-out-button added">
@@ -59,15 +68,19 @@ export function AddToCartButton(props: IProps) {
       <Button
         isLoading={isLoading && isLoading.addShoppingCart}
         onClick={() => {
-          addIntoCartList(buyProductCode);
-          if (!isMobile) {
-            window.scrollTo(0, 0);
+          // 判断长度
+          if (isMaxReached) {
+            props.onClickCallBack();
+          } else {
+            addIntoCartList(buyProductCode);
+            if (!isMobile) {
+              window.scrollTo(0, 0);
+            }
           }
         }}
         className="add-to-cart-out-button"
       >
         <span>Add to cart</span>
-        
       </Button>
     );
   }
