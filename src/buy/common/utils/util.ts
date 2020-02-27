@@ -250,7 +250,7 @@ export function getFromCookie(sKey: string) {
 export function getLocationUrl(type: string) {
   switch (type) {
     case "comparepage": {
-      return "/comparepage";
+      return "/compare";
     }
     case "login": {
       return "/account/login";

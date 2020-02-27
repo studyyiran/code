@@ -98,13 +98,13 @@ export const routerConfig = [
   },
   {
     path: getLocationUrl("shoppingcart"),
-    title: "",
+    title: "Shopping Cart | UpTradeit.com",
     exact: true,
     Component: ShoppingCartPage,
   },
   {
     path: getLocationUrl("comparepage"),
-    title: "",
+    title: "Phone Comparison | UpTradeit.com",
     exact: true,
     Component: ComparePage,
   },

@@ -100,6 +100,7 @@ export function CartShoppingItem(props: IProps) {
       }
       ComponentMb={
         <li className="cart-shopping-item" data-sold={isSold}>
+          {isSold ? <div className="sold-modal"></div> : null}
           <div className="two-line-flex">
             <AddToComparePartImage
               onClick={onClickHandler}
