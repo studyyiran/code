@@ -206,15 +206,15 @@ export const ComparePage: React.FC<IProps> = props => {
       <div className="title-container">
         <h1>Compare up to 4 phones</h1>
       </div>
-      {current ? (
-        <CartPop
-          entry={"comparepage"}
-          showModal={Boolean(current)}
-          setShowModal={setCurrentCode}
-          productDetail={current.product}
-          partsInfo={current.skuReleated || []}
-        />
-      ) : null}
+      <CartPop
+        entry={"comparepage"}
+        showModal={Boolean(current)}
+        setShowModal={() => {
+          setCurrentCode("");
+        }}
+        productDetail={current ? current.product : {} as any}
+        partsInfo={current && current.skuReleated ? current.skuReleated : []}
+      />
 
       <div className="compare-item-list-container">{renderList()}</div>
       <div
