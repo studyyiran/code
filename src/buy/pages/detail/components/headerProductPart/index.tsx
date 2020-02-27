@@ -66,6 +66,7 @@ export function HeaderProductPart(props: {
       style={isMobile ? {} : { height: `calc(100vh - ${topPos}px)` }}
     >
       <CartPop
+        entry={"productpage"}
         showModal={showModal}
         setShowModal={setShowModal}
         productDetail={productDetail}

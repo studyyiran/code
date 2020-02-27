@@ -160,6 +160,7 @@ export function CartShoppingItem(props: IProps) {
           </div>
         ) : (
           <CheckOutButton
+            entry="cart"
             buyProductId={buyProductId}
             otherProductList={otherProductList}
             needProtection={needProtection}

@@ -29,7 +29,7 @@ export const ComparePage: React.FC<IProps> = props => {
     orderCompareGet();
   }, [orderCompareGet]);
 
-  const [currentCode, setCurrentCode] = useState('');
+  const [currentCode, setCurrentCode] = useState("");
 
   const fillWithEmpty = (maxLength: number) => {
     const arr = [];
@@ -46,7 +46,8 @@ export const ComparePage: React.FC<IProps> = props => {
   const renderPc = (rowInfo: any) => {
     const { type, title } = rowInfo;
     const columnArr = [{}].concat(fillWithEmpty(4));
-    return columnArr.map((columnInfo: any, columnIndex: number) => {
+    return columnArr.map((info: any, columnIndex: number) => {
+      const { product: columnInfo } = info;
       if (type === "detail") {
         if (columnIndex === 0) {
           return <div />;
@@ -152,7 +153,7 @@ export const ComparePage: React.FC<IProps> = props => {
     if (compareInfoList && compareInfoList.length) {
       if (compareInfoList && compareInfoList[0]) {
         const { product } = compareInfoList[0];
-        const {buyProductBQV} = product
+        const { buyProductBQV } = product;
         buyProductBQV.forEach(({ bpName, bpvName }: any, index: number) => {
           configArr.push({
             type: "",
@@ -196,17 +197,24 @@ export const ComparePage: React.FC<IProps> = props => {
       });
     }
   }
+  const current = compareInfoList.find(item => {
+    return item && item.product && item.product.buyProductCode === currentCode;
+  });
   return (
     <div className="compare-page">
       <div className="title-container">
         <h1>Compare up to 4 phones</h1>
       </div>
-      {/*<CartPop*/}
-      {/*  showModal={showModal}*/}
-      {/*  setShowModal={setShowModal}*/}
-      {/*  productDetail={productDetail}*/}
-      {/*  partsInfo={partsInfo}*/}
-      {/*/>*/}
+      {current ? (
+        <CartPop
+          entry={"comparepage"}
+          showModal={Boolean(current)}
+          setShowModal={setCurrentCode}
+          productDetail={current.product}
+          partsInfo={current.skuReleated || []}
+        />
+      ) : null}
+
       <div className="compare-item-list-container">{renderList()}</div>
       <div
         className="go-back-button"
@@ -225,10 +233,8 @@ const RenderContentImg = (props: any) => {
   const [index, setIndex] = useState(0);
   const [containerWidth, setContainerWidth] = useState(0);
   const { buyProductImgPc } = props;
-  console.log(buyProductImgPc);
-  console.log(index);
   const afterCalcSize = 100;
-  const zoomSize = 3;
+  const zoomSize = 4;
   if (buyProductImgPc && buyProductImgPc.length) {
     return (
       <div

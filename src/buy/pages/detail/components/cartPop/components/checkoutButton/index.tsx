@@ -10,8 +10,9 @@ export function CheckOutButton(props: {
   otherProductList: IOtherProduct[];
   onClick: any;
   children?: any;
+  entry: any;
 }) {
-  const { buyProductId, needProtection, otherProductList, children } = props;
+  const { buyProductId, needProtection, otherProductList, children, entry } = props;
   const orderInfoContext = useContext(OrderInfoContext);
   const { orderInfoContextDispatch } = orderInfoContext as IOrderInfoContext;
   return (

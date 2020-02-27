@@ -18,6 +18,7 @@ interface ICartPop {
   setShowModal: any;
   productDetail: IProductDetail;
   partsInfo: IProductDetail[];
+  entry: string;
 }
 
 export interface IOtherProduct {
@@ -27,7 +28,7 @@ export interface IOtherProduct {
 }
 
 export function CartPop(props: ICartPop) {
-  const { showModal, setShowModal, productDetail, partsInfo } = props;
+  const { showModal, setShowModal, productDetail, partsInfo, entry } = props;
   const [needProtection, setNeedProtection] = useState(false);
   const [otherProductList, setOtherProductList] = useState(
     [] as IOtherProduct[]
@@ -121,6 +122,7 @@ export function CartPop(props: ICartPop) {
             </li>
           </ul>
           <CheckOutButton
+            entry={entry}
             buyProductId={buyProductId}
             otherProductList={otherProductList}
             needProtection={needProtection}
