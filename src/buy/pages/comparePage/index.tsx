@@ -151,7 +151,8 @@ export const ComparePage: React.FC<IProps> = props => {
     ];
     if (compareInfoList && compareInfoList.length) {
       if (compareInfoList && compareInfoList[0]) {
-        const { buyProductBQV } = compareInfoList[0];
+        const { product } = compareInfoList[0];
+        const {buyProductBQV} = product
         buyProductBQV.forEach(({ bpName, bpvName }: any, index: number) => {
           configArr.push({
             type: "",

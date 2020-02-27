@@ -232,7 +232,7 @@ export function CartShoppingItem(props: IProps) {
                 // setShowModal(false);
               }}
             >
-              Learn more
+              Learn more >
             </RouterLink>
           }
           price={protectPrice}

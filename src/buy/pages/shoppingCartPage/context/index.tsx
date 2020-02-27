@@ -44,7 +44,10 @@ export interface IShoppingCartInfo {
 // store state
 export interface IStoreShoppingCartState {
   shoppingCartList: IShoppingCartInfo;
-  compareInfoList: IProductDetail[];
+  compareInfoList: {
+    product: IProductDetail,
+    skuReleated: IProductDetail,
+  }[];
   showCartModal: boolean;
   isLoading: any;
 }

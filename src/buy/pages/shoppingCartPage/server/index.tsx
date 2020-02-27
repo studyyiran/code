@@ -69,7 +69,10 @@ async function orderCompareGet() {
   const cookieId = getSetCurrentCookie();
   const res: any = await ajax.post(orderCompareGetUrl, { cookieId });
   return res.map((item: any) => {
-    return detailFormat(item);
+    return {
+      ...item,
+      product: detailFormat(item.product)
+    }
   });
 }
 
