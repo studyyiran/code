@@ -87,7 +87,8 @@ export const ComparePage: React.FC<IProps> = props => {
   const renderMb = (rowInfo: any) => {
     const { type, title } = rowInfo;
     const columnArr = fillWithEmpty(4);
-    return columnArr.map((columnInfo: any, columnIndex: number) => {
+    return columnArr.map((info: any, columnIndex: number) => {
+      const { product: columnInfo } = info;
       if (type === "detail") {
         return (
           <RenderTopPart

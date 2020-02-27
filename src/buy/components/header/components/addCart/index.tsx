@@ -18,32 +18,31 @@ export function AddCart() {
   } = storeShoppingCartContext;
   const { shoppingCartList, showCartModal } = storeShoppingCartContextValue;
   // 这块没折腾明白
-  const listLength = shoppingCartList && shoppingCartList.list && shoppingCartList.list.length
+  const listLength =
+    shoppingCartList && shoppingCartList.list && shoppingCartList.list.length;
   const detailList = shoppingCartList && shoppingCartList.list;
 
+  const onGoCart = () => {
+    locationHref(getLocationUrl("shoppingcart"));
+  };
   return (
-    <span
-      className="cart-icon-container"
-      onClick={() => {
-        // if (listLength > 0) {
-        //   setShowModal(true);
-        // }
-        locationHref(getLocationUrl("shoppingcart"));
-      }}
-    >
-      <img src={require("./res/cart_icon.svg")} />
-      <RenderByCondition ComponentPc={<span>Cart</span>} ComponentMb={null} />
+    <span className="cart-icon-container">
+      <img src={require("./res/cart_icon.svg")} onClick={onGoCart} />
+      <RenderByCondition
+        ComponentPc={<span onClick={onGoCart}>Cart</span>}
+        ComponentMb={null}
+      />
       {listLength > 0 ? <span className="point">{listLength}</span> : null}
       <Modal
         visible={showCartModal}
         title={""}
         className="add-cart-modal"
-        maskClosable={true}
+        maskClosable={false}
         footer={false}
         needDefaultScroll={true}
         closable={true}
         onCancel={() => {
-          setShowCartModal(false)
+          setShowCartModal(false);
         }}
       >
         <h1 className="title">Your cart</h1>
@@ -80,10 +79,10 @@ export function AddCart() {
         <div
           className="long-button canclick"
           onClick={() => {
-            setShowCartModal(false)
+            setShowCartModal(false);
             window.setTimeout(() => {
               locationHref(getLocationUrl("shoppingcart"));
-            }, 0)
+            }, 0);
           }}
         >
           View cart
@@ -102,7 +101,7 @@ const Line = (props: any) => {
     buyProductLevel,
     buyProductBQV,
     buyTags,
-    buyProductStatus,
+    buyProductStatus
   } = props;
   console.log(props);
   const [lineOne, lineTwo] = getDescArr(buyProductBQV, buyProductName);
@@ -122,7 +121,9 @@ const Line = (props: any) => {
       {/*    }*/}
       {/*  />*/}
       {/*)}*/}
-      {buyProductStatus === 'INTRANSACTION' ? <div className="sold-out-tag">Sold out</div> : null}
+      {buyProductStatus === "INTRANSACTION" ? (
+        <div className="sold-out-tag">Sold out</div>
+      ) : null}
       <RenderByCondition
         ComponentMb={
           <InnerDivImage lazyload={false} imgUrl={buyProductImgPc} />

@@ -81,6 +81,7 @@ export function CartShoppingItem(props: IProps) {
                 }
               />
               <AddToComparePartButton
+                isSold={isSold}
                 buyProductCode={buyProductCode}
                 orderCompareAdd={orderCompareAdd}
                 haveAdded={isCompare}
@@ -111,6 +112,7 @@ export function CartShoppingItem(props: IProps) {
             <ProductInfoLine info={productDetail} onClickHandler={onClickHandler} />
           </div>
           <AddToComparePartButton
+            isSold={isSold}
             buyProductCode={buyProductCode}
             orderCompareAdd={orderCompareAdd}
             haveAdded={isCompare}
@@ -234,7 +236,7 @@ export function CartShoppingItem(props: IProps) {
                 // setShowModal(false);
               }}
             >
-              Learn more >
+              Learn more
             </RouterLink>
           }
           price={protectPrice}
@@ -262,8 +264,9 @@ const AddToComparePartButton = (props: {
   haveAdded: boolean;
   orderCompareAdd: any;
   buyProductCode: string;
+  isSold: boolean;
 }) => {
-  const { haveAdded, orderCompareAdd, buyProductCode } = props;
+  const { haveAdded, orderCompareAdd, buyProductCode, isSold } = props;
   return (
     <div
       className="add-to-compare-part-button"
@@ -277,7 +280,7 @@ const AddToComparePartButton = (props: {
       <span className="svg-container">
         <Svg />
       </span>
-      {haveAdded ? "Added" : <span>Add to compare</span>}
+      {haveAdded ? "Added" : <span data-sold={isSold}>Add to compare</span>}
     </div>
   );
 };

@@ -6,11 +6,15 @@
     .mb({
       padding-bottom: 64 *@px;
     });
+
     @perLineWidth: 208 *@px + 30 *@px;
     @perLineGap: 32 *@px;
     > .title-container:first-child {
       > h1:first-child {
         font-size: 32 * @px;
+        .mb({
+          font-size: 22 * @px;
+        });
         text-align: center;
         padding: 30 * @px 0;
         .pc({padding: 64 * @px;});
