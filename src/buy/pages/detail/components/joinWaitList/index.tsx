@@ -68,6 +68,9 @@ export function JoinWaitList(props: { buyProductCode: string }) {
             maskClosable={true}
             footer={null}
             closable={true}
+            onCancel={() => {
+              setShowModal(false)
+            }}
           >
             <div>
               <h3>Get notified when this item is back in stock</h3>
