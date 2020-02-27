@@ -235,7 +235,7 @@ const RenderContentImg = (props: any) => {
   const [containerWidth, setContainerWidth] = useState(0);
   const { buyProductImgPc } = props;
   const afterCalcSize = 100;
-  const zoomSize = 6;
+  const zoomSize = 4;
   if (buyProductImgPc && buyProductImgPc.length) {
     return (
       <div
