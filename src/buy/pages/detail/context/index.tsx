@@ -99,7 +99,7 @@ export function ProductDetailContextProvider(props: any) {
 // interface
 export interface IProductDetailContext extends IContextActions, IContextValue {
   productDetailContextValue: IContextState;
-  productDetailContextDispatch: (action: IReducerAction) => void;
+  productDetailContextDispatch: (action: IReducerAction) =>void;
 }
 
 // @actions
@@ -356,7 +356,14 @@ function useGetAction(
         loadingDispatchName: storeDetailActionTypes.setLoadingObjectStatus,
         loadingObjectKey: "addProductWaitList",
         promiseFunc: () => {
-          return addProductWaitList(info);
+          const res = addProductWaitList(info)
+          res.then(() => {
+            Message.success('Succeed to join waitlist.')
+          })
+          res.catch(() => {
+            Message.success('Failed to join waitlist, please try again.')
+          })
+          return res;
         }
       });
     }, [dispatch])

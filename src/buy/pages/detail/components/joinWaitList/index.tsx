@@ -30,7 +30,7 @@ export function JoinWaitList(props: { buyProductCode: string }) {
       renderFormEle: () => <Input />
     },
     {
-      label: "Phone",
+      label: "Phone number ( Optional )",
       id: "phone",
       rules: [
         {
@@ -61,14 +61,16 @@ export function JoinWaitList(props: { buyProductCode: string }) {
         >
           Join waitlist
           <Modal
+            width={"90%"}
             visible={showModal}
             title={""}
-            className=""
+            className="join-wait-list"
             maskClosable={true}
             footer={null}
             closable={true}
           >
             <div>
+              <h3>Get notified when this item is back in stock</h3>
               <FormWrapper
                 formConfig={formConfig}
                 onSubmit={(formValues: any) => {

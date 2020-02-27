@@ -124,6 +124,6 @@ export async function addProductWaitList(info: {
   email?: string;
   phone?: string;
 }) {
-  const res = await ajax.post("/buy/product/waitlist/add", info);
+  const res = await ajax.post("/buy/order/waitlist/add", info);
   return res;
 }
