@@ -27,7 +27,7 @@ export const ShoppingCartPage: React.FC<IProps> = props => {
   const { shoppingCartList } = storeShoppingCartContextValue;
   // local发起请求
   useEffect(() => {
-    // getShoppingCart();
+    getShoppingCart();
   }, [getShoppingCart]);
 
   useEffect(() => {

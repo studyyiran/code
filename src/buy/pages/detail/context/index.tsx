@@ -99,7 +99,7 @@ export function ProductDetailContextProvider(props: any) {
 // interface
 export interface IProductDetailContext extends IContextActions, IContextValue {
   productDetailContextValue: IContextState;
-  productDetailContextDispatch: (action: IReducerAction) =>void;
+  productDetailContextDispatch: (action: IReducerAction) => void;
 }
 
 // @actions
@@ -152,13 +152,15 @@ function useGetAction(
       // 判断去重
       if (
         state.productHistoryCodeList &&
-        state.productHistoryCodeList.some((code: string) => {
+        (state.productHistoryCodeList.some((code: string) => {
           return Boolean(
             !state.productHistoryList.find(item => {
               return item.buyProductCode === code;
             })
           );
-        })
+        }) ||
+          state.productHistoryCodeList.length !==
+            state.productHistoryList.length)
       ) {
         const res = await getProductHistory(state.productHistoryCodeList);
         // 1 赋值
@@ -350,23 +352,26 @@ function useGetAction(
       },
       [dispatch]
     ),
-    addProductWaitList: useCallback(async function(info) {
-      return actionsWithCatchAndLoading({
-        dispatch,
-        loadingDispatchName: storeDetailActionTypes.setLoadingObjectStatus,
-        loadingObjectKey: "addProductWaitList",
-        promiseFunc: () => {
-          const res = addProductWaitList(info)
-          res.then(() => {
-            Message.success('Succeed to join waitlist.')
-          })
-          res.catch(() => {
-            Message.success('Failed to join waitlist, please try again.')
-          })
-          return res;
-        }
-      });
-    }, [dispatch])
+    addProductWaitList: useCallback(
+      async function(info) {
+        return actionsWithCatchAndLoading({
+          dispatch,
+          loadingDispatchName: storeDetailActionTypes.setLoadingObjectStatus,
+          loadingObjectKey: "addProductWaitList",
+          promiseFunc: () => {
+            const res = addProductWaitList(info);
+            res.then(() => {
+              Message.success("Succeed to join waitlist.");
+            });
+            res.catch(() => {
+              Message.success("Failed to join waitlist, please try again.");
+            });
+            return res;
+          }
+        });
+      },
+      [dispatch]
+    )
   };
   return actions;
 }
