@@ -4,6 +4,8 @@
   .compare-page {
     padding-bottom: 160 * @px;
     .mb({
+      @padding-value: 3vw;
+      padding: 15 *@px @padding-value 0 @padding-value;
       padding-bottom: 64 *@px;
     });
 
@@ -35,12 +37,13 @@
       grid-template-columns: repeat(5, @perLineWidth);
       justify-content: space-between;
       .mb({
-        @padding-value： 25 *@px;
-        padding: 15 *@px @padding-value 0;
-        @perLineGap: 25 *@px;
-        @perLineWidth: (100vw - 1 * @padding-value - @perLineGap) / 2;
+        @padding-value: 3vw;
+        @perLineGap: 2vw;
+        @perLineWidth: (100vw  - 2 * @padding-value - @perLineGap) / 2 ;
         grid-template-columns: repeat(4, @perLineWidth);
         grid-column-gap: @perLineGap;
+        //width: 100vw - 14 * @padding-value;
+        //width: 4 * @perLineWidth + 3 * @perLineGap;
       });
       //grid-column-gap: @perLineGap;
     }

@@ -235,7 +235,7 @@ const RenderContentImg = (props: any) => {
   const [containerWidth, setContainerWidth] = useState(0);
   const { buyProductImgPc } = props;
   const afterCalcSize = 100;
-  const zoomSize = 4;
+  const zoomSize = 6;
   if (buyProductImgPc && buyProductImgPc.length) {
     return (
       <div
@@ -268,10 +268,9 @@ const RenderContentImg = (props: any) => {
                   height: "100%"
                 },
                 enlargedImageContainerStyle: {
-                  width: "1px",
-                  height: "3000",
                   transformOrigin: "0 0 0",
-                  transform: "scale(2)",
+                  left: "-250%",
+                  transform: "scale(2.5)",
                   marginLeft: "0px",
                   zIndex: 99999
                 },
