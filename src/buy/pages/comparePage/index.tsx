@@ -204,7 +204,9 @@ export const ComparePage: React.FC<IProps> = props => {
   });
   return (
     <div className="compare-page">
-      {isLoading && isLoading.orderCompareGet ? <LoadingMask visible={true} /> : null}
+      {isLoading && isLoading.orderCompareGet ? (
+        <LoadingMask visible={true} />
+      ) : null}
       <div className="title-container">
         <h1>Compare up to 4 phones</h1>
       </div>
@@ -304,8 +306,8 @@ const RenderContentImg = (props: any) => {
                   height: "100%"
                 },
                 enlargedImageContainerStyle: {
-                  top: '0px',
-                  left: '0px',
+                  top: "0px",
+                  left: "0px",
                   marginLeft: "0px",
                   zIndex: 99999
                 },
@@ -433,6 +435,7 @@ const RenderTitleList = ({ children }: { children?: any }) => {
 
 const RenderListItem = (props: any) => {
   const { rowInfo, columnInfo } = props;
+  console.log(rowInfo);
   const renderBy = (value: string) => {
     return (
       <RenderByCondition
@@ -447,7 +450,12 @@ const RenderListItem = (props: any) => {
     columnInfo &&
     columnInfo.buyProductCode
   ) {
-    return <div className={"grid-block"}>All Pass</div>;
+    return (
+      <div className={"grid-block"}>
+        {renderBy(rowInfo.title)}
+        <div>All Pass</div>
+      </div>
+    );
   }
   if (columnInfo && rowInfo && rowInfo.key && columnInfo[rowInfo.key]) {
     const value =

@@ -39,7 +39,9 @@
     .mb({padding-bottom: 60 * @px;});
     > .title-container:first-child {
       > h1:first-child {
-        font-size: 32 * @px;
+        .mb({
+          font-size: 22 * @px;
+        });
         text-align: center;
         padding: 30 * @px 0;
         .pc({padding: 64 * @px;});
@@ -72,15 +74,25 @@
             font-size: 18 * @f;
             font-weight: @boldWeight;
             margin: 20 * @px auto 30 * @px;
+            .mb({
+              font-size: 14 * @f;
+              margin: 20 * @px auto 10 * @px;
+            });
           }
           .empty-img {
             margin: auto;
             display: block;
             padding: 50 * @px 0 0;
             width: 260 * @px;
+            .mb({
+              width: 160 * @px;
+            });
           }
           a {
             font-size: 18 * @f;
+            .mb({
+              font-size: 14 *@f;
+            });
             color: rgba(26, 180, 231, 1);
           }
         }
