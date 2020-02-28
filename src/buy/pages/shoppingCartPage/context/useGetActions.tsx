@@ -181,7 +181,15 @@ export function useStoreShoppingCartGetActions(
           type: storeShoppingCartReducerTypes.setShoppingCartList,
           value: hehe
         });
-        const res = await storeShoppingCartServer.orderCompareAdd(code);
+        try {
+          const res = await storeShoppingCartServer.orderCompareAdd(code);
+        } catch(e) {
+          switch (e.code) {
+            case 10070:
+              Message.error('Failed to add to compare.')
+              break
+          }
+        }
         const res2 = getShoppingCart();
         const res3 = orderCompareGet();
       } else {
