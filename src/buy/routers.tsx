@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Switch, Route, Router } from "react-router-dom";
+import { Switch, Route, Router, Redirect } from "react-router-dom";
 import Footer from "./components/footer";
 import Header from "./components/header";
 import hocDocumentTitle from "./components/documentTitle";
@@ -22,6 +22,7 @@ export default function ContextProviderWrapper() {
     <Router history={routerHistory}>
       <RenderWithOriginData originData={originData}>
         <Switch>
+          <Redirect path="/detail" to="/buy-phone" />
           {routerConfig.map(
             (
               { path, Component, exact, ...otherConfig }: any,
