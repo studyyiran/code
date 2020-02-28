@@ -35,11 +35,11 @@ export function JoinWaitList(props: { buyProductCode: string }) {
       rules: [
         {
           required: false,
-          pattern: /^[0-9]\d{10,10}$/,
+          pattern: /\d{10}/,
           message: "Please input a valid phone number."
         }
       ],
-      renderFormEle: () => <Input />
+      renderFormEle: () => <Input maxLength={10}/>
     },
     {
       renderFormEle: () => (
