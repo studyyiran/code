@@ -32,7 +32,7 @@ export function AddCart() {
         ComponentPc={<span onClick={onGoCart}>Cart</span>}
         ComponentMb={null}
       />
-      {listLength > 0 ? <span className="point">{listLength}</span> : null}
+      {listLength > 0 ? <span className="point" onClick={onGoCart}>{listLength}</span> : null}
       <Modal
         visible={showCartModal}
         title={""}
