@@ -53,16 +53,18 @@ export function useStoreShoppingCartGetActions(
       const cache = storeShoppingCartServer.getShoppingCart();
       promiseStop.current.getShoppingCart = cache;
       let res;
+      let myError;
       try {
         res = await promiseStop.current.getShoppingCart;
       } catch (e) {
-        if (e && e.code === 10071) {
-          Message.error(
+        myError = e;
+      }
+      if (promiseStop.current.getShoppingCart === cache) {
+        if (myError && myError.code === 10071) {
+          Message.warn(
             "Please activate the cookie of your browser before using the shopping cart."
           );
         }
-      }
-      if (promiseStop.current.getShoppingCart === cache) {
         dispatch({
           type: storeShoppingCartReducerTypes.setShoppingCartList,
           value: res
