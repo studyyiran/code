@@ -25,10 +25,20 @@ export const ComparePage: React.FC<IProps> = props => {
     orderCompareDelete,
     storeShoppingCartContextValue
   } = storeShoppingCartContext;
-  const { compareInfoList, isLoading } = storeShoppingCartContextValue;
+  const {
+    compareInfoList,
+    isLoading,
+    shoppingCartList
+  } = storeShoppingCartContextValue;
   useEffect(() => {
-    orderCompareGet();
-  }, [orderCompareGet]);
+    if (
+      shoppingCartList &&
+      shoppingCartList.list &&
+      shoppingCartList.list.length
+    ) {
+      orderCompareGet();
+    }
+  }, [orderCompareGet, shoppingCartList]);
 
   const [currentCode, setCurrentCode] = useState("");
 
@@ -263,7 +273,7 @@ const RenderContentImg = (props: any) => {
           </span>
         ) : null}
         <RenderByCondition
-          ComponentPc={() => {
+          ComponentPc={(() => {
             const zoomSize = 4;
             return (
               <ReactImageMagnify
@@ -299,8 +309,8 @@ const RenderContentImg = (props: any) => {
                 }}
               />
             );
-          }}
-          ComponentMb={() => {
+          })()}
+          ComponentMb={(() => {
             const zoomSize = 8;
             return (
               <ReactImageMagnify
@@ -335,7 +345,7 @@ const RenderContentImg = (props: any) => {
                 }}
               />
             );
-          }}
+          })()}
         />
 
         {index !== buyProductImgPc.length - 1 ? (
