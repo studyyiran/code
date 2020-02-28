@@ -91,9 +91,9 @@ const brands = [
     id: 5
   },
   {
-    iconName: "Others",
+    iconName: "",
     iconUrl: "",
-    id: "others"
+    id: ""
   }
 ];
 

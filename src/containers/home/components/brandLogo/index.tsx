@@ -15,16 +15,20 @@ export function BrandLogo(props: any) {
       props.history.push(`/sell-other-phone`);
     }
   }
-  return (
-    <div className="comp-brand-logo canclick" onClick={clickHandler}>
-      <div className="border">
-        {iconUrl ? (
-          <img src={iconUrl} />
-        ) : (
-          <span>Other</span>
-        )}
+  if (iconName) {
+    return (
+      <div className="comp-brand-logo canclick" onClick={clickHandler}>
+        <div className="border">
+          {iconUrl ? <img src={iconUrl} /> : <span>Other</span>}
+        </div>
+        <span className="name">{iconName}</span>
       </div>
-      <span className="name">{iconName}</span>
-    </div>
-  );
+    );
+  } else {
+    return (
+      <div className="comp-brand-logo canclick">
+        <div className="border" style={{border: 'none'}}></div>
+      </div>
+    );
+  }
 }
