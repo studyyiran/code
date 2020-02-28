@@ -122,7 +122,23 @@ export function useStoreShoppingCartGetActions(
     async code => {
       const max = 4;
       if (state.compareInfoList.length < max) {
-        console.log(state.compareInfoList);
+        // 先触发立刻更新
+        let hehe = state.shoppingCartList
+        try {
+          hehe.list = hehe.list.map((item) => {
+            const {product} = item
+            if (product.buyProductCode === code) {
+              item.isCompare = true
+            }
+            return item
+          })
+        } catch(e) {
+          console.error(e)
+        }
+        dispatch({
+          type: storeShoppingCartReducerTypes.setShoppingCartList,
+          value: hehe,
+        })
         const res = await storeShoppingCartServer.orderCompareAdd(code);
         const res2 = getShoppingCart();
         const res3 = orderCompareGet();
