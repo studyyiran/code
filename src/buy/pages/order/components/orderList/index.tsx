@@ -17,7 +17,9 @@ export default function OrderList(props: any) {
   const {
     productDetailContextValue
   } = productDetailContext as IProductDetailContext;
-  const { productDetail, partsInfo } = productDetailContextValue;
+  const { productDetailByCode, partsInfo } = productDetailContextValue;
+  let productDetail =
+    (productDetailByCode ? productDetailByCode.detail : ({} as any)) || {};
   const orderInfoContext = useContext(OrderInfoContext);
   const { orderInfoContextValue } = orderInfoContext as IOrderInfoContext;
   const { subOrders, taxInfo } = orderInfoContextValue;

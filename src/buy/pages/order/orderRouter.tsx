@@ -17,7 +17,8 @@ export default function OrderRouter(props: any) {
   const {
     productDetailContextValue
   } = productDetailContext as IProductDetailContext;
-  const { productDetail } = productDetailContextValue;
+  const { productDetailByCode } = productDetailContextValue;
+  let productDetail = (productDetailByCode ? productDetailByCode.detail : {} as any) || {}
   const {
     orderInfoContextValue,
     getInfoByOrderDetailId,

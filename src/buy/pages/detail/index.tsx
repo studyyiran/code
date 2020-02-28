@@ -35,14 +35,15 @@ export default function ProductDetail(props: any) {
   } = productDetailContext as IProductDetailContext;
 
   const {
-    productDetail,
+    productDetailByCode,
     similiarPhoneList,
     partsInfo,
     reviewListInfo,
-    productDetailByCode,
     similiarPhoneListByCode
   } = productDetailContextValue;
-
+  let productDetail =
+    (productDetailByCode ? productDetailByCode.detail : ({} as any)) || {};
+  console.log(productDetailByCode);
   // 执行ssr
   useClientRepair(detailSsrRule);
   const {
@@ -58,7 +59,6 @@ export default function ProductDetail(props: any) {
     userInfo,
     buyProductStatus
   } = productDetail;
-
   const modelName = useWhenUrlChange("modelName");
   const [containerWidth, setContainerWidth] = useState(0);
   const [containerTopPos, setContainerTopPos] = useState(0);
@@ -115,13 +115,24 @@ export default function ProductDetail(props: any) {
   //   resetProductInfo,
   //   variant
   // ]);
+  const { variant } = getUrlAllParams();
+  useEffect(() => {
+    if (!buyProductCode) {
+      getProductDetailByCode(modelName);
+    }
+  }, [
+    buyProductCode,
+    getProductDetailByCode,
+    modelName,
+    resetProductInfo,
+    variant
+  ]);
 
   useEffect(() => {
-    getProductDetailByCode(modelName);
     return () => {
       resetProductInfo();
     };
-  }, [getProductDetailByCode, resetProductInfo, modelName]);
+  }, [resetProductInfo]);
 
   // 设置title
   useEffect(() => {
