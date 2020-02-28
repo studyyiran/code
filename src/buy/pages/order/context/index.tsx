@@ -1,14 +1,11 @@
-import React, {
-  createContext,
-  useReducer,
-} from "react";
+import React, { createContext, useReducer } from "react";
 import { IReducerAction } from "buy/common/interface/index.interface";
-import {
-  getFromCacheStore,
-  saveToCache
-} from "buy/common/utils/util";
+import { getFromCacheStore, saveToCache } from "buy/common/utils/util";
 import { IProductDetail } from "../../detail/context/interface";
-import {orderInfoContextActions, useOrderInfoGetAction} from "./useOrderInfoGetAction";
+import {
+  orderInfoContextActions,
+  useOrderInfoGetAction
+} from "./useOrderInfoGetAction";
 
 export const OrderInfoContext = createContext({});
 const storeName = "OrderInfo";
@@ -69,12 +66,14 @@ export interface IOrderInfoState {
   };
   invoiceSameAddr: boolean;
   orderInfo: any;
+  orderSource: string;
 }
 
 // @provider
 export function OrderInfoContextProvider(props: any) {
   const initState: IOrderInfoState = {
     subOrders: [],
+    orderSource: "",
     pendingStatus: false,
     taxInfo: {},
     userExpress: "",
@@ -95,7 +94,10 @@ export function OrderInfoContextProvider(props: any) {
     ...initState,
     ...getFromCacheStore(storeName)
   });
-  const action: orderInfoContextActions = useOrderInfoGetAction(state, dispatch);
+  const action: orderInfoContextActions = useOrderInfoGetAction(
+    state,
+    dispatch
+  );
 
   const propsValue: IOrderInfoContext = {
     ...action,
@@ -124,6 +126,7 @@ export const orderInfoReducerTypes = {
   resetPayInfo: "resetPayInfo",
   setPendingStatus: "setPendingStatus",
   setCheckOrderInfo: "setCheckOrderInfo",
+  setOrderSource: "setOrderSource",
   setOrderInfo: "setOrderInfo"
 };
 
@@ -133,6 +136,13 @@ function reducer(state: IOrderInfoState, action: IReducerAction) {
   let newState = { ...state };
   // 现在直接替换掉
   switch (type) {
+    case orderInfoReducerTypes.setOrderSource: {
+      newState = {
+        ...newState,
+        orderSource: value
+      };
+      break;
+    }
     case orderInfoReducerTypes.setCheckOrderInfo: {
       newState = {
         ...newState,
@@ -260,6 +270,7 @@ function reducer(state: IOrderInfoState, action: IReducerAction) {
     "userInfo",
     "userExpress",
     "orderInfo",
+    "orderSource",
     "payInfo"
     // "invoiceSameAddr",
     // "invoiceInfo"

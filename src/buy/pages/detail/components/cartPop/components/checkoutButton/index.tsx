@@ -1,8 +1,12 @@
-import React, {useContext} from "react";
-import {IOrderInfoContext, OrderInfoContext, orderInfoReducerTypes} from "../../../../../order/context";
-import {constProductType} from "../../../../../../common/constValue";
-import {locationHref} from "../../../../../../common/utils/routerHistory";
-import {IOtherProduct} from "../../index";
+import React, { useContext } from "react";
+import {
+  IOrderInfoContext,
+  OrderInfoContext,
+  orderInfoReducerTypes
+} from "../../../../../order/context";
+import { constProductType } from "../../../../../../common/constValue";
+import { locationHref } from "../../../../../../common/utils/routerHistory";
+import { IOtherProduct } from "../../index";
 
 export function CheckOutButton(props: {
   buyProductId: string;
@@ -12,7 +16,13 @@ export function CheckOutButton(props: {
   children?: any;
   entry: any;
 }) {
-  const { buyProductId, needProtection, otherProductList, children, entry } = props;
+  const {
+    buyProductId,
+    needProtection,
+    otherProductList,
+    children,
+    entry
+  } = props;
   const orderInfoContext = useContext(OrderInfoContext);
   const { orderInfoContextDispatch } = orderInfoContext as IOrderInfoContext;
   return (
@@ -24,8 +34,7 @@ export function CheckOutButton(props: {
           return {
             productId: item.productId,
             needProtection: false,
-            productType: item.productType as string,
-            orderSource: entry,
+            productType: item.productType as string
           };
         });
         // 1 他会xx
@@ -33,12 +42,15 @@ export function CheckOutButton(props: {
           type: orderInfoReducerTypes.addSubOrder,
           value: [
             {
-              orderSource: entry,
               productId: buyProductId,
               needProtection,
               productType: constProductType.PRODUCT
             }
           ].concat(otherProductInfo)
+        });
+        orderInfoContextDispatch({
+          type: orderInfoReducerTypes.setOrderSource,
+          value: entry
         });
         if (props.onClick) {
           props.onClick();

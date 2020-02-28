@@ -190,6 +190,7 @@ export function useOrderInfoGetAction(
                 }) as any).rateId
               : ""
           },
+          orderSource: state.orderSource,
           subOrders: state.subOrders
         },
         true
@@ -199,6 +200,7 @@ export function useOrderInfoGetAction(
       state.expressInfo,
       state.invoiceInfo,
       state.invoiceSameAddr,
+      state.orderSource,
       state.subOrders,
       state.userExpress
     ]
@@ -310,8 +312,6 @@ export function useOrderInfoGetAction(
       partsInfo,
       productDetail,
       state.expressInfo,
-      state.invoiceInfo,
-      state.invoiceSameAddr,
       state.subOrders,
       state.userExpress,
       state.userInfo

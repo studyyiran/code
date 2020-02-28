@@ -239,7 +239,6 @@ const RenderContentImg = (props: any) => {
   const [containerWidth, setContainerWidth] = useState(0);
   const { buyProductImgPc } = props;
   const afterCalcSize = 100;
-  const zoomSize = 4;
   if (buyProductImgPc && buyProductImgPc.length) {
     return (
       <div
@@ -264,73 +263,79 @@ const RenderContentImg = (props: any) => {
           </span>
         ) : null}
         <RenderByCondition
-          ComponentPc={
-            <ReactImageMagnify
-              {...{
-                enlargedImageContainerDimensions: {
-                  width: "100%",
-                  height: "100%"
-                },
-                enlargedImageContainerStyle: {
-                  transformOrigin: "0 0 0",
-                  left: "-250%",
-                  transform: "scale(2.5)",
-                  marginLeft: "0px",
-                  zIndex: 99999
-                },
-                imageStyle: {
-                  objectFit: "cover"
-                },
-                enlargedImageStyle: {
-                  objectFit: "cover"
-                },
-                smallImage: {
-                  // isFluidWidth: true,
-                  width: containerWidth,
-                  height: containerWidth,
-                  src: buyProductImgPc[index]
-                },
-                largeImage: {
-                  src: buyProductImgPc[index],
-                  width: containerWidth * zoomSize,
-                  height: containerWidth * zoomSize
-                }
-              }}
-            />
-          }
-          ComponentMb={
-            <ReactImageMagnify
-              {...{
-                enlargedImageContainerDimensions: {
-                  width: "100%",
-                  height: "100%"
-                },
-                enlargedImageContainerStyle: {
-                  top: "0px",
-                  left: "0px",
-                  marginLeft: "0px",
-                  zIndex: 99999
-                },
-                imageStyle: {
-                  objectFit: "cover"
-                },
-                enlargedImageStyle: {
-                  objectFit: "cover"
-                },
-                smallImage: {
-                  // isFluidWidth: true,
-                  width: containerWidth,
-                  height: containerWidth,
-                  src: buyProductImgPc[index]
-                },
-                largeImage: {
-                  src: buyProductImgPc[index],
-                  width: containerWidth * zoomSize,
-                  height: containerWidth * zoomSize
-                }
-              }}
-            />
-          }
+          ComponentPc={() => {
+            const zoomSize = 4;
+            return (
+              <ReactImageMagnify
+                {...{
+                  enlargedImageContainerDimensions: {
+                    width: "100%",
+                    height: "100%"
+                  },
+                  enlargedImageContainerStyle: {
+                    transformOrigin: "0 0 0",
+                    left: "-250%",
+                    transform: "scale(2.5)",
+                    marginLeft: "0px",
+                    zIndex: 99999
+                  },
+                  imageStyle: {
+                    objectFit: "cover"
+                  },
+                  enlargedImageStyle: {
+                    objectFit: "cover"
+                  },
+                  smallImage: {
+                    // isFluidWidth: true,
+                    width: containerWidth,
+                    height: containerWidth,
+                    src: buyProductImgPc[index]
+                  },
+                  largeImage: {
+                    src: buyProductImgPc[index],
+                    width: containerWidth * zoomSize,
+                    height: containerWidth * zoomSize
+                  }
+                }}
+              />
+            );
+          }}
+          ComponentMb={() => {
+            const zoomSize = 8;
+            return (
+              <ReactImageMagnify
+                {...{
+                  enlargedImageContainerDimensions: {
+                    width: "100%",
+                    height: "100%"
+                  },
+                  enlargedImageContainerStyle: {
+                    top: "0px",
+                    left: "0px",
+                    marginLeft: "0px",
+                    zIndex: 99999
+                  },
+                  imageStyle: {
+                    objectFit: "cover"
+                  },
+                  enlargedImageStyle: {
+                    objectFit: "cover"
+                  },
+                  smallImage: {
+                    // isFluidWidth: true,
+                    width: containerWidth,
+                    height: containerWidth,
+                    src: buyProductImgPc[index]
+                  },
+                  largeImage: {
+                    src: buyProductImgPc[index],
+                    width: containerWidth * zoomSize,
+                    height: containerWidth * zoomSize
+                  }
+                }}
+              />
+            );
+          }}
         />
 
         {index !== buyProductImgPc.length - 1 ? (
