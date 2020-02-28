@@ -8,6 +8,7 @@ import { getLocationUrl } from "../../common/utils/util";
 import { ProductDetailContext } from "../detail/context";
 import RouterLink from "../../common-modules/components/routerLink";
 import LoadingMask from "../productList/components/loading";
+import {useIsCurrentPage} from "../../common/useHook";
 
 interface IProps {
   history?: any;
@@ -25,7 +26,12 @@ export const ShoppingCartPage: React.FC<IProps> = props => {
     deleteSoldShoppingCart
   } = storeShoppingCartContext as IStoreShoppingCartContext;
   // 从context中获取值
-  const { shoppingCartList, isLoading } = storeShoppingCartContextValue;
+  const { shoppingCartList, isLoading, isCookieOpen } = storeShoppingCartContextValue;
+  const isCurrentPage = useIsCurrentPage('/cart')
+  if (isCurrentPage && !isCookieOpen) {
+    locationHref("/buy-phone")
+    // locationHref('', 'back')
+  }
   // local发起请求
   useEffect(() => {
     getShoppingCart();
