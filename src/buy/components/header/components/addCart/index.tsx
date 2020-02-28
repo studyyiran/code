@@ -16,7 +16,11 @@ export function AddCart() {
     storeShoppingCartContextValue,
     setShowCartModal
   } = storeShoppingCartContext;
-  const { shoppingCartList, showCartModal } = storeShoppingCartContextValue;
+  const {
+    isCookieOpen,
+    shoppingCartList,
+    showCartModal
+  } = storeShoppingCartContextValue;
   // 这块没折腾明白
   const listLength =
     shoppingCartList && shoppingCartList.list && shoppingCartList.list.length;
@@ -32,7 +36,11 @@ export function AddCart() {
         ComponentPc={<span onClick={onGoCart}>Cart</span>}
         ComponentMb={null}
       />
-      {listLength > 0 ? <span className="point" onClick={onGoCart}>{listLength}</span> : null}
+      {listLength > 0 ? (
+        <span className="point" onClick={onGoCart}>
+          {listLength}
+        </span>
+      ) : null}
       <Modal
         visible={showCartModal}
         title={""}
@@ -46,47 +54,53 @@ export function AddCart() {
         }}
       >
         <h1 className="title">Your cart</h1>
-        <div
-          className="product-item-container"
-          style={
-            detailList && detailList.length > 2
-              ? { overflowY: "scroll" }
-              : { overflowY: "auto" }
-          }
-        >
-          {(detailList || []).map(item => {
-            if (item && item.product) {
-              return <Line {...item.product} />;
-            } else {
-              return null;
-            }
-          })}
-        </div>
+        {isCookieOpen ? (
+          <>
+            <div
+              className="product-item-container"
+              style={
+                detailList && detailList.length > 2
+                  ? { overflowY: "scroll" }
+                  : { overflowY: "auto" }
+              }
+            >
+              {(detailList || []).map(item => {
+                if (item && item.product) {
+                  return <Line {...item.product} />;
+                } else {
+                  return null;
+                }
+              })}
+            </div>
 
-        <div className="total-container">
-          <div>
-            <h1>{listLength} items</h1>
-          </div>
-          <div>
-            <h1>
-              Total:{" "}
-              {currencyTrans(
-                shoppingCartList && shoppingCartList.cartTotalPrice
-              )}
-            </h1>
-          </div>
-        </div>
-        <div
-          className="long-button canclick"
-          onClick={() => {
-            setShowCartModal(false);
-            window.setTimeout(() => {
-              locationHref(getLocationUrl("shoppingcart"));
-            }, 0);
-          }}
-        >
-          View cart
-        </div>
+            <div className="total-container">
+              <div>
+                <h1>{listLength} items</h1>
+              </div>
+              <div>
+                <h1>
+                  Total:{" "}
+                  {currencyTrans(
+                    shoppingCartList && shoppingCartList.cartTotalPrice
+                  )}
+                </h1>
+              </div>
+            </div>
+            <div
+              className="long-button canclick"
+              onClick={() => {
+                setShowCartModal(false);
+                window.setTimeout(() => {
+                  locationHref(getLocationUrl("shoppingcart"));
+                }, 0);
+              }}
+            >
+              View cart
+            </div>
+          </>
+        ) : (
+          <div>emptyempty</div>
+        )}
       </Modal>
     </span>
   );
