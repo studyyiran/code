@@ -8,6 +8,7 @@ import {
 import { Message } from "../../../components/message";
 import { GlobalSettingContext, IGlobalSettingContext } from "../../../context";
 import { actionsWithCatchAndLoading } from "../../../common/utils/util";
+import { ProductDetailContext } from "../../detail/context";
 
 // @actions
 export interface IStoreShoppingCartActions {
@@ -15,6 +16,7 @@ export interface IStoreShoppingCartActions {
   getCompareInfoList: () => any;
   addCompareList: (value: string) => any;
   addShoppingCart: (code: string) => any;
+  addIntoCartList: (id: string) => any;
   deleteShoppingCart: (code: string) => any;
   deleteSoldShoppingCart: () => any;
   mergeShoppingCart: () => any;
@@ -33,6 +35,9 @@ export function useStoreShoppingCartGetActions(
     getShoppingCart: null as any
   });
   const globalSettingContext = useContext(GlobalSettingContext);
+  const productDetailContext = useContext(ProductDetailContext);
+
+  const { getProductDetailByCode } = productDetailContext;
   const {
     globalSettingContextValue
   } = globalSettingContext as IGlobalSettingContext;
@@ -91,16 +96,18 @@ export function useStoreShoppingCartGetActions(
             const res = await storeShoppingCartServer.addShoppingCart(id);
           } catch (e) {
             switch (e.code) {
-              case "10066":
+              case 10066:
                 // 正在交易中
                 // 刷新页面
+                getProductDetailByCode();
                 Message.error(
                   "The product is sold out, failed to add to cart."
                 );
                 break;
-              case "10067":
+              case 10067:
                 // 已经出售
                 // 重定向。
+                getProductDetailByCode();
                 Message.error("Product not found.");
                 break;
             }
@@ -116,7 +123,7 @@ export function useStoreShoppingCartGetActions(
       //   value: res
       // });
     },
-    [dispatch, getShoppingCart]
+    [dispatch, getProductDetailByCode, getShoppingCart]
   );
 
   const deleteShoppingCart = useCallback(
@@ -201,6 +208,24 @@ export function useStoreShoppingCartGetActions(
     [dispatch]
   );
 
+  const addIntoCartList = useCallback(
+    async value => {
+      if (isMobile) {
+        await addShoppingCart(value);
+        setShowCartModal(true);
+      } else {
+        setShowCartModal(true);
+        await addShoppingCart(value);
+      }
+      // if (value && state.cartList.length < 10) {
+      //   dispatch({
+      //     type: storeDetailActionTypes.addCartList,
+      //     value: [value]
+      //   });
+      // }
+    },
+    [addShoppingCart, isMobile, setShowCartModal]
+  );
   return {
     getShoppingCart,
     addCompareList,
@@ -212,6 +237,7 @@ export function useStoreShoppingCartGetActions(
     addShoppingCart,
     orderCompareGet,
     orderCompareAdd,
-    orderCompareDelete
+    orderCompareDelete,
+    addIntoCartList
   };
 }

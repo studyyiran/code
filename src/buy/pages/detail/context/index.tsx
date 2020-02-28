@@ -112,7 +112,6 @@ interface IContextActions {
   getSimiliarByCode: (code: string) => any;
   getPartsBySkuId: (id: string) => any;
   resetProductInfo: () => any;
-  addIntoCartList: (id: string) => any;
   addProductHistoryCodeList: (code: string) => any;
   getReviewScore: () => any;
   getProductHistory: () => any;
@@ -182,25 +181,7 @@ function useGetAction(
         });
       }
     }, [dispatch, state.productHistoryCodeList, state.productHistoryList]),
-    addIntoCartList: useCallback(
-      async value => {
-        if (isMobile) {
-          await addShoppingCart(value);
-          setShowCartModal(true);
-        } else {
-          setShowCartModal(true);
-          await addShoppingCart(value);
-        }
-
-        // if (value && state.cartList.length < 10) {
-        //   dispatch({
-        //     type: storeDetailActionTypes.addCartList,
-        //     value: [value]
-        //   });
-        // }
-      },
-      [addShoppingCart, isMobile, setShowCartModal]
-    ),
+    
     getReviewScore: useCallback(async () => {
       const res: any = await getReviewScore();
       if (res) {

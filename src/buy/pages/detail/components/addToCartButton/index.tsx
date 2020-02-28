@@ -24,12 +24,14 @@ export function AddToCartButton(props: IProps) {
   // 引入context
   const productDetailContext = useContext(ProductDetailContext);
   const storeShoppingCartContext = useContext(StoreShoppingCartContext);
-  const { storeShoppingCartContextValue } = storeShoppingCartContext;
+  const {
+    storeShoppingCartContextValue,
+    addIntoCartList
+  } = storeShoppingCartContext;
   const { shoppingCartList, isLoading } = storeShoppingCartContextValue;
   const {
     productDetailContextValue,
-    productDetailContextDispatch,
-    addIntoCartList
+    productDetailContextDispatch
   } = productDetailContext;
   // 从context中获取值
   let haveAdd = false;
