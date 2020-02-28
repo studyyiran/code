@@ -12,6 +12,7 @@ import VideoComponent from "../../components/video";
 // @ts-ignore
 import ReactImageMagnify from "react-image-magnify";
 import { CartPop } from "../detail/components/cartPop";
+import LoadingMask from "../productList/components/loading";
 
 interface IProps {
   history?: any;
@@ -24,7 +25,7 @@ export const ComparePage: React.FC<IProps> = props => {
     orderCompareDelete,
     storeShoppingCartContextValue
   } = storeShoppingCartContext;
-  const { compareInfoList } = storeShoppingCartContextValue;
+  const { compareInfoList, isLoading } = storeShoppingCartContextValue;
   useEffect(() => {
     orderCompareGet();
   }, [orderCompareGet]);
@@ -203,6 +204,7 @@ export const ComparePage: React.FC<IProps> = props => {
   });
   return (
     <div className="compare-page">
+      {isLoading && isLoading.orderCompareGet ? <LoadingMask visible={true} /> : null}
       <div className="title-container">
         <h1>Compare up to 4 phones</h1>
       </div>
@@ -212,7 +214,7 @@ export const ComparePage: React.FC<IProps> = props => {
         setShowModal={() => {
           setCurrentCode("");
         }}
-        productDetail={current ? current.product : {} as any}
+        productDetail={current ? current.product : ({} as any)}
         partsInfo={current && current.skuReleated ? current.skuReleated : []}
       />
 

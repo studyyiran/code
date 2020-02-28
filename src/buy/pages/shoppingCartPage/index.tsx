@@ -24,7 +24,7 @@ export const ShoppingCartPage: React.FC<IProps> = props => {
     deleteSoldShoppingCart
   } = storeShoppingCartContext as IStoreShoppingCartContext;
   // 从context中获取值
-  const { shoppingCartList } = storeShoppingCartContextValue;
+  const { shoppingCartList, isLoading } = storeShoppingCartContextValue;
   // local发起请求
   useEffect(() => {
     getShoppingCart();
@@ -33,7 +33,6 @@ export const ShoppingCartPage: React.FC<IProps> = props => {
   useEffect(() => {
     getProductHistory();
   }, [getProductHistory]);
-
   // 渲染
   function renderList() {
     if (

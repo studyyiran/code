@@ -7,7 +7,7 @@ import {
 } from "./index";
 import { Message } from "../../../components/message";
 import { GlobalSettingContext, IGlobalSettingContext } from "../../../context";
-import {actionsWithCatchAndLoading} from "../../../common/utils/util";
+import { actionsWithCatchAndLoading } from "../../../common/utils/util";
 import { ProductDetailContext } from "../../detail/context";
 
 // @actions
@@ -52,12 +52,14 @@ export function useStoreShoppingCartGetActions(
       // 解决了多个ajax的race问题。只遵循最后一个发起的ajax
       const cache = storeShoppingCartServer.getShoppingCart();
       promiseStop.current.getShoppingCart = cache;
-      let res
+      let res;
       try {
         res = await promiseStop.current.getShoppingCart;
-      } catch(e) {
+      } catch (e) {
         if (e && e.code === 10071) {
-          Message.error('Please activate the cookie of your browser before using the shopping cart.')
+          Message.error(
+            "Please activate the cookie of your browser before using the shopping cart."
+          );
         }
       }
       if (promiseStop.current.getShoppingCart === cache) {
@@ -116,7 +118,7 @@ export function useStoreShoppingCartGetActions(
                 // 重定向。
                 getProductDetailByCode();
                 Message.error("Product not found.");
-                window.location.href = '/buy-phone'
+                window.location.href = "/buy-phone";
                 break;
             }
             console.error(e);
@@ -183,15 +185,24 @@ export function useStoreShoppingCartGetActions(
         });
         try {
           const res = await storeShoppingCartServer.orderCompareAdd(code);
-        } catch(e) {
+        } catch (e) {
           switch (e.code) {
             case 10070:
-              Message.error('Failed to add to compare.')
-              break
+              Message.error("Failed to add to compare.");
+              break;
           }
         }
         const res2 = getShoppingCart();
-        const res3 = orderCompareGet();
+        actionsWithCatchAndLoading({
+          needError: false,
+          dispatch,
+          loadingDispatchName:
+            storeShoppingCartReducerTypes.setLoadingObjectStatus,
+          loadingObjectKey: "orderCompareGet",
+          promiseFunc: async () => {
+            const res = await orderCompareGet();
+          }
+        });
       } else {
         Message.error(`You can only compare up to ${max} phones`);
       }
