@@ -144,7 +144,7 @@ const Line = (props: any) => {
         ) : null}
         {lineTwo ? <span className="attr">{lineTwo}</span> : null}
         <span className="condition">Condition {buyProductLevel}</span>
-        <span className="id">Product ID #{buyProductCode}</span>
+        <span className="id">ID: {buyProductCode}</span>
       </div>
     </div>
   );
