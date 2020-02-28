@@ -52,7 +52,14 @@ export function useStoreShoppingCartGetActions(
       // 解决了多个ajax的race问题。只遵循最后一个发起的ajax
       const cache = storeShoppingCartServer.getShoppingCart();
       promiseStop.current.getShoppingCart = cache;
-      const res = await promiseStop.current.getShoppingCart;
+      let res
+      try {
+        res = await promiseStop.current.getShoppingCart;
+      } catch(e) {
+        if (e && e.code === 10071) {
+          Message.error('Please activate the cookie of your browser before using the shopping cart.')
+        }
+      }
       if (promiseStop.current.getShoppingCart === cache) {
         dispatch({
           type: storeShoppingCartReducerTypes.setShoppingCartList,
