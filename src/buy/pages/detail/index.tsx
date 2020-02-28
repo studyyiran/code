@@ -175,7 +175,6 @@ export default function ProductDetail(props: any) {
           lastCode.current !== buyProductId
         ) {
           lastCode.current = buyProductId;
-          debugger;
           dataReport(
             Object.assign(bqvParams, {
               event: "productPageViewed",

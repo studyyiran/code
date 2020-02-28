@@ -170,7 +170,7 @@ function FullyFunctionalPart({
                   <li className="bg-check" key={title}>
                     {img ? <img src={require(`./res/${img}`)} /> : null}
                     <label>{title}</label>
-                    {content ? <span>{content}</span> : null}
+                    {content ? <span style={{marginLeft: '6px'}}>{content}</span> : null}
                   </li>
                 );
               })}
@@ -187,7 +187,7 @@ function FullyFunctionalPart({
                       <li className="bg-check" key={title}>
                         {img ? <img src={require(`./res/${img}`)} /> : null}
                         <label>{title}</label>
-                        {content ? <span>{content}</span> : null}
+                        {content ? <span style={{marginLeft: '6px'}}>{content}</span> : null}
                       </li>
                     );
                   })}

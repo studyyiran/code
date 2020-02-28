@@ -155,7 +155,7 @@ export function useStoreShoppingCartGetActions(
         loadingObjectKey: "deleteShoppingCart",
         promiseFunc: async () => {
           const res = await storeShoppingCartServer.deleteShoppingCart(id);
-          const res2 = getShoppingCart();
+          const res2 = await getShoppingCart();
         }
       });
       
