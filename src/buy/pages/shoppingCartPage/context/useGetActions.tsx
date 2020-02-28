@@ -7,7 +7,7 @@ import {
 } from "./index";
 import { Message } from "../../../components/message";
 import { GlobalSettingContext, IGlobalSettingContext } from "../../../context";
-import { actionsWithCatchAndLoading } from "../../../common/utils/util";
+import {actionsWithCatchAndLoading} from "../../../common/utils/util";
 import { ProductDetailContext } from "../../detail/context";
 
 // @actions
@@ -109,6 +109,7 @@ export function useStoreShoppingCartGetActions(
                 // 重定向。
                 getProductDetailByCode();
                 Message.error("Product not found.");
+                window.location.href = '/buy-phone'
                 break;
             }
             console.error(e);
