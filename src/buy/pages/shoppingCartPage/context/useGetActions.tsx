@@ -147,15 +147,34 @@ export function useStoreShoppingCartGetActions(
 
   const deleteShoppingCart = useCallback(
     async id => {
-      const res = await storeShoppingCartServer.deleteShoppingCart(id);
-      const res2 = getShoppingCart();
+      actionsWithCatchAndLoading({
+        needError: false,
+        dispatch,
+        loadingDispatchName:
+        storeShoppingCartReducerTypes.setLoadingObjectStatus,
+        loadingObjectKey: "deleteShoppingCart",
+        promiseFunc: async () => {
+          const res = await storeShoppingCartServer.deleteShoppingCart(id);
+          const res2 = getShoppingCart();
+        }
+      });
+      
     },
     [getShoppingCart]
   );
 
   const deleteSoldShoppingCart = useCallback(async () => {
-    const res = await storeShoppingCartServer.deleteSoldShoppingCart();
-    const res2 = getShoppingCart();
+    actionsWithCatchAndLoading({
+      needError: false,
+      dispatch,
+      loadingDispatchName:
+      storeShoppingCartReducerTypes.setLoadingObjectStatus,
+      loadingObjectKey: "deleteSoldShoppingCart",
+      promiseFunc: async () => {
+        const res1 = await storeShoppingCartServer.deleteSoldShoppingCart();
+        const res2 = await getShoppingCart();
+      }
+    });
   }, [getShoppingCart]);
 
   const mergeShoppingCart = useCallback(async () => {
@@ -227,9 +246,18 @@ export function useStoreShoppingCartGetActions(
 
   const orderCompareDelete = useCallback(
     async code => {
-      const res = await storeShoppingCartServer.orderCompareDelete(code);
-      const res2 = getShoppingCart();
-      const res3 = orderCompareGet();
+      actionsWithCatchAndLoading({
+        needError: false,
+        dispatch,
+        loadingDispatchName:
+        storeShoppingCartReducerTypes.setLoadingObjectStatus,
+        loadingObjectKey: "orderCompareDelete",
+        promiseFunc: async () => {
+          const res = await storeShoppingCartServer.orderCompareDelete(code);
+          const res2 = getShoppingCart();
+          const res3 = await orderCompareGet();
+        }
+      });
     },
     [getShoppingCart, orderCompareGet]
   );

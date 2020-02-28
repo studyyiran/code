@@ -7,6 +7,7 @@ import { locationHref } from "../../common/utils/routerHistory";
 import { getLocationUrl } from "../../common/utils/util";
 import { ProductDetailContext } from "../detail/context";
 import RouterLink from "../../common-modules/components/routerLink";
+import LoadingMask from "../productList/components/loading";
 
 interface IProps {
   history?: any;
@@ -102,6 +103,7 @@ export const ShoppingCartPage: React.FC<IProps> = props => {
         <div className="title-container">
           <h1>Shopping Cart</h1>
         </div>
+        <LoadingMask visible={isLoading.deleteShoppingCart || isLoading.deleteSoldShoppingCart} />
         <div className="content">
           {shoppingCartList &&
           shoppingCartList.list &&

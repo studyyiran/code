@@ -214,12 +214,10 @@ export const ComparePage: React.FC<IProps> = props => {
   });
   return (
     <div className="compare-page">
-      {isLoading && isLoading.orderCompareGet ? (
-        <LoadingMask visible={true} />
-      ) : null}
       <div className="title-container">
         <h1>Compare up to 4 phones</h1>
       </div>
+      <LoadingMask visible={isLoading.orderCompareGet || isLoading.orderCompareDelete} />
       <CartPop
         entry={"comparepage"}
         showModal={Boolean(current)}
