@@ -62,7 +62,7 @@ export function useStoreShoppingCartGetActions(
       if (promiseStop.current.getShoppingCart === cache) {
         if (myError && myError.code === 10071) {
           Message.warn(
-            "Please activate the cookie of your browser before using the shopping cart."
+            "Please set up the browser to allow sites to save and read cookie data to enable shopping cart."
           );
         }
         dispatch({

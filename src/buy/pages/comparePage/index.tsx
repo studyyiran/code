@@ -304,6 +304,8 @@ const RenderContentImg = (props: any) => {
                   height: "100%"
                 },
                 enlargedImageContainerStyle: {
+                  top: '0px',
+                  left: '0px',
                   marginLeft: "0px",
                   zIndex: 99999
                 },
