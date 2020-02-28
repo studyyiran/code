@@ -74,7 +74,7 @@ export const ComparePage: React.FC<IProps> = props => {
       } else if (type === "Battery") {
         if (
           columnArr.find((item: any) => {
-            return item.buyProductBatteryLife;
+            return item && item.product && item.product.buyProductBatteryLife;
           })
         ) {
           if (columnIndex === 0) {
@@ -113,7 +113,7 @@ export const ComparePage: React.FC<IProps> = props => {
         if (type === "Battery") {
           if (
             columnArr.find((item: any) => {
-              return item.buyProductBatteryLife;
+              return item && item.product && item.product.buyProductBatteryLife;
             })
           ) {
             return <RenderListItem rowInfo={rowInfo} columnInfo={columnInfo} />;
