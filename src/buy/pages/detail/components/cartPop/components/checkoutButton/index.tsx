@@ -24,7 +24,8 @@ export function CheckOutButton(props: {
           return {
             productId: item.productId,
             needProtection: false,
-            productType: item.productType as string
+            productType: item.productType as string,
+            orderSource: entry,
           };
         });
         // 1 他会xx
@@ -32,6 +33,7 @@ export function CheckOutButton(props: {
           type: orderInfoReducerTypes.addSubOrder,
           value: [
             {
+              orderSource: entry,
               productId: buyProductId,
               needProtection,
               productType: constProductType.PRODUCT
