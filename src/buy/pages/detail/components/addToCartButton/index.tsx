@@ -55,7 +55,7 @@ export function AddToCartButton(props: IProps) {
     shoppingCartList &&
     shoppingCartList.list &&
     shoppingCartList.list.length &&
-    shoppingCartList.list.length >= 20;
+    shoppingCartList.list.length >= shoppingCartList.maxShoppingCount;
   if (haveAdd) {
     return (
       <div className="long-button add-to-cart-out-button added">

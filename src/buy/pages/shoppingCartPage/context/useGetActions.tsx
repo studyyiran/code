@@ -107,6 +107,13 @@ export function useStoreShoppingCartGetActions(
             const res = await storeShoppingCartServer.addShoppingCart(id);
           } catch (e) {
             switch (e.code) {
+              case 10065:
+                // 正在交易中
+                // 刷新页面
+                Message.error(
+                  "Cart limit reached. Please clear your cart."
+                );
+                break;
               case 10066:
                 // 正在交易中
                 // 刷新页面

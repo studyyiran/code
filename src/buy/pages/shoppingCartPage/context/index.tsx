@@ -39,7 +39,7 @@ export interface IShoppingCartInfo {
   }[];
   cartTotalPrice: number;
   totalCount: number;
-  
+  maxShoppingCount: number;
 }
 // store state
 export interface IStoreShoppingCartState {
@@ -90,10 +90,10 @@ export function StoreShoppingCartContextProvider(props: any) {
         //2 清空cookie
         document.cookie = `${constValue.SHOPPINGCART}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;`;
         getShoppingCart();
-        orderCompareGet();
+        // orderCompareGet();
       } else {
         getShoppingCart();
-        orderCompareGet();
+        // orderCompareGet();
       }
     }, 10)
   }, [getShoppingCart, mergeShoppingCart, tokenInfo]);
