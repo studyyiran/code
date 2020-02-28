@@ -103,7 +103,7 @@ export const ShoppingCartPage: React.FC<IProps> = props => {
         <div className="title-container">
           <h1>Shopping Cart</h1>
         </div>
-        <LoadingMask visible={isLoading.deleteShoppingCart || isLoading.deleteSoldShoppingCart} />
+        <LoadingMask visible={isLoading.deleteShoppingCart || isLoading.deleteSoldShoppingCart} style={{color: 'white'}} />
         <div className="content">
           {shoppingCartList &&
           shoppingCartList.list &&

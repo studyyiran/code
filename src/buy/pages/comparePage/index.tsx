@@ -217,7 +217,7 @@ export const ComparePage: React.FC<IProps> = props => {
       <div className="title-container">
         <h1>Compare up to 4 phones</h1>
       </div>
-      <LoadingMask visible={isLoading.orderCompareGet || isLoading.orderCompareDelete} />
+      <LoadingMask visible={isLoading.orderCompareGet || isLoading.orderCompareDelete} style={{color: 'white'}} />
       <CartPop
         entry={"comparepage"}
         showModal={Boolean(current)}

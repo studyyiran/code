@@ -61,9 +61,16 @@ export function useStoreShoppingCartGetActions(
       }
       if (promiseStop.current.getShoppingCart === cache) {
         if (myError && myError.code === 10071) {
-          Message.warn(
-            "Please set up the browser to allow sites to save and read cookie data to enable shopping cart."
-          );
+          Message.warn("Please enable cookies to use the shopping cart.");
+          dispatch({
+            type: storeShoppingCartReducerTypes.setIsCookieOpen,
+            value: false
+          });
+        } else {
+          dispatch({
+            type: storeShoppingCartReducerTypes.setIsCookieOpen,
+            value: true
+          });
         }
         dispatch({
           type: storeShoppingCartReducerTypes.setShoppingCartList,
@@ -110,9 +117,7 @@ export function useStoreShoppingCartGetActions(
               case 10065:
                 // 正在交易中
                 // 刷新页面
-                Message.error(
-                  "Cart limit reached. Please clear your cart."
-                );
+                Message.error("Cart limit reached. Please clear your cart.");
                 break;
               case 10066:
                 // 正在交易中
@@ -151,31 +156,29 @@ export function useStoreShoppingCartGetActions(
         needError: false,
         dispatch,
         loadingDispatchName:
-        storeShoppingCartReducerTypes.setLoadingObjectStatus,
+          storeShoppingCartReducerTypes.setLoadingObjectStatus,
         loadingObjectKey: "deleteShoppingCart",
         promiseFunc: async () => {
           const res = await storeShoppingCartServer.deleteShoppingCart(id);
           const res2 = await getShoppingCart();
         }
       });
-      
     },
-    [getShoppingCart]
+    [dispatch, getShoppingCart]
   );
 
   const deleteSoldShoppingCart = useCallback(async () => {
     actionsWithCatchAndLoading({
       needError: false,
       dispatch,
-      loadingDispatchName:
-      storeShoppingCartReducerTypes.setLoadingObjectStatus,
+      loadingDispatchName: storeShoppingCartReducerTypes.setLoadingObjectStatus,
       loadingObjectKey: "deleteSoldShoppingCart",
       promiseFunc: async () => {
         const res1 = await storeShoppingCartServer.deleteSoldShoppingCart();
         const res2 = await getShoppingCart();
       }
     });
-  }, [getShoppingCart]);
+  }, [dispatch, getShoppingCart]);
 
   const mergeShoppingCart = useCallback(async () => {
     const res = await storeShoppingCartServer.mergeShoppingCart();
@@ -183,10 +186,18 @@ export function useStoreShoppingCartGetActions(
   }, [getShoppingCart]);
 
   const orderCompareGet = useCallback(async () => {
-    const res = await storeShoppingCartServer.orderCompareGet();
-    dispatch({
-      type: storeShoppingCartReducerTypes.setCompareInfoList,
-      value: res
+    actionsWithCatchAndLoading({
+      needError: false,
+      dispatch,
+      loadingDispatchName: storeShoppingCartReducerTypes.setLoadingObjectStatus,
+      loadingObjectKey: "orderCompareGet",
+      promiseFunc: async () => {
+        const res = await storeShoppingCartServer.orderCompareGet();
+        dispatch({
+          type: storeShoppingCartReducerTypes.setCompareInfoList,
+          value: res
+        });
+      }
     });
   }, [dispatch]);
 
@@ -250,16 +261,16 @@ export function useStoreShoppingCartGetActions(
         needError: false,
         dispatch,
         loadingDispatchName:
-        storeShoppingCartReducerTypes.setLoadingObjectStatus,
+          storeShoppingCartReducerTypes.setLoadingObjectStatus,
         loadingObjectKey: "orderCompareDelete",
         promiseFunc: async () => {
           const res = await storeShoppingCartServer.orderCompareDelete(code);
-          const res2 = getShoppingCart();
+          const res2 = await getShoppingCart();
           const res3 = await orderCompareGet();
         }
       });
     },
-    [getShoppingCart, orderCompareGet]
+    [dispatch, getShoppingCart, orderCompareGet]
   );
 
   const setShowCartModal = useCallback(

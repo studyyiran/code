@@ -5,10 +5,7 @@ export const Message = {
     message.success(info);
   },
   warn: (content: string) => {
-    message.warn({
-      duration: 5,
-      content
-    });
+    message.warn(content, 5);
   },
   error: (info: any) => {
     let errorMessage = "";

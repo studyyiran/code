@@ -45,11 +45,12 @@ export interface IShoppingCartInfo {
 export interface IStoreShoppingCartState {
   shoppingCartList: IShoppingCartInfo;
   compareInfoList: {
-    product: IProductDetail,
-    skuReleated: IProductDetail[],
+    product: IProductDetail;
+    skuReleated: IProductDetail[];
   }[];
   showCartModal: boolean;
   isLoading: any;
+  isCookieOpen: boolean;
 }
 
 // interface
@@ -70,6 +71,7 @@ export function StoreShoppingCartContextProvider(props: any) {
     compareInfoList: [],
     showCartModal: false,
     isLoading: {},
+    isCookieOpen: true
   };
   const [state, dispatch] = useReducer(
     useReducerMiddleware(reducer),
@@ -95,7 +97,7 @@ export function StoreShoppingCartContextProvider(props: any) {
         getShoppingCart();
         // orderCompareGet();
       }
-    }, 10)
+    }, 10);
   }, [getShoppingCart, mergeShoppingCart, tokenInfo]);
   useEffect(() => {
     loginHandler();
@@ -114,7 +116,8 @@ export const storeShoppingCartReducerTypes = {
   setShoppingCartList: "setShoppingCartList",
   setCompareInfoList: "setCompareInfoList",
   setShowCartModal: "setShowCartModal",
-  setLoadingObjectStatus: "setLoadingObjectStatus"
+  setLoadingObjectStatus: "setLoadingObjectStatus",
+  setIsCookieOpen: "setIsCookieOpen"
 };
 
 // reducer
@@ -122,6 +125,13 @@ function reducer(state: IStoreShoppingCartState, action: IReducerAction) {
   const { type, value } = action;
   let newState = { ...state };
   switch (type) {
+    case storeShoppingCartReducerTypes.setIsCookieOpen: {
+      newState = {
+        ...newState,
+        isCookieOpen: value
+      };
+      break;
+    }
     case storeShoppingCartReducerTypes.setLoadingObjectStatus: {
       newState = {
         ...newState,
