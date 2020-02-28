@@ -99,7 +99,12 @@ export function AddCart() {
             </div>
           </>
         ) : (
-          <div>emptyempty</div>
+          <div className="not-cookie-container">
+            <img className="empty-img" src={require("./res/notcookie.svg")} />
+            <p className="tips">
+              Please enable cookies to use the shopping cart.
+            </p>
+          </div>
         )}
       </Modal>
     </span>

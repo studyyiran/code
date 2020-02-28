@@ -45,7 +45,7 @@
       }
     });
     .two-line-flex {
-      .canclick();
+      //.canclick();
       align-self: stretch;
       display: flex;
       justify-content: space-between;
@@ -140,6 +140,9 @@
     }
     
     .render-cart-shopping-item {
+      .mb({
+        padding-bottom: 10 *@px;
+      });
       //
       a {
         position: relative;
@@ -242,7 +245,10 @@
       justify-content: space-between;
     }
     .add-to-cart-button {
+      justify-self: end;
+      align-self: start;
       .mb({
+        align-self: flex-end;
         text-align: right !important;
       });
       &[data-select="true"] {
