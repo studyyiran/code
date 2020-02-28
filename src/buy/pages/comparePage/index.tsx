@@ -440,7 +440,6 @@ const RenderTitleList = ({ children }: { children?: any }) => {
 
 const RenderListItem = (props: any) => {
   const { rowInfo, columnInfo } = props;
-  console.log(rowInfo);
   const renderBy = (value: string) => {
     return (
       <RenderByCondition

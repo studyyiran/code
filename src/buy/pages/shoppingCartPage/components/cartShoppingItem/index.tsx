@@ -57,7 +57,6 @@ export function CartShoppingItem(props: IProps) {
     buyProductCode,
     buyProductStatus,
   } = productDetail;
-  console.log(productDetail);
   const isSold = buyProductStatus === "INTRANSACTION";
   const otherProductSubTotal = otherProductList
     .map(({ buyPrice }) => Number(buyPrice))

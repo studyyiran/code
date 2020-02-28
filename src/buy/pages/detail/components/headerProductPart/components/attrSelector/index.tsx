@@ -96,7 +96,6 @@ export const AttrSelector: React.FC<IProps> = ({ productDetailByCode }) => {
       );
     }
   }
-  console.log(after);
   const config = after.map(item => {
     const { name: fatherName, values, tags } = item;
     return {

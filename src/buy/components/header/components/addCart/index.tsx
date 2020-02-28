@@ -103,7 +103,6 @@ const Line = (props: any) => {
     buyTags,
     buyProductStatus
   } = props;
-  console.log(props);
   const [lineOne, lineTwo] = getDescArr(buyProductBQV, buyProductName);
   return (
     <div className="product-item">

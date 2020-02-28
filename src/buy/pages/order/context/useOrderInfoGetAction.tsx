@@ -223,7 +223,6 @@ export function useOrderInfoGetAction(
           },
           subOrders: state.subOrders
         };
-        console.log(JSON.stringify(obj));
         // 发起
         try {
           orderProcessRecord(info, state.userInfo);

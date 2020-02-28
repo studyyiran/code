@@ -39,7 +39,6 @@ describe("test 倒计时", () => {
         if (count === 0) {
           expect(res).toEqual(["0", "0", "0", "01"]);
         } else if (count === 1) {
-          console.log(res);
           expect(res).toEqual(["0", "0", "0", "02"]);
           done();
         }

@@ -4,7 +4,6 @@ interface IProps {
   tag?: string;
 }
 export const OnSaleTag: React.FC<IProps> = (props: IProps) => {
-  console.log(props);
   if (props.tag) {
     switch (props.tag) {
       case "ON_SALE":

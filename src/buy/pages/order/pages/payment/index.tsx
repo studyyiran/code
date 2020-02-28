@@ -135,8 +135,6 @@ function PaymentInner(props: any) {
 
   const paypalPay = useCallback(
     (amount: any, info: any) => {
-      console.log("start paypalPay");
-      console.log(info);
       // @ts-ignore
       paypal
         .Buttons({
@@ -153,14 +151,12 @@ function PaymentInner(props: any) {
                 return actions.resolve();
               })
               .catch(() => {
-                console.log("2222");
                 setShowLoadingMask(false);
                 return actions.reject();
               });
           },
           onCancel: function() {
             setShowLoadingMask(false);
-            console.log("onCancel");
             // setInputChangeStatus(false);
           },
           createOrder: function(data: any, actions: any) {
@@ -229,10 +225,8 @@ function PaymentInner(props: any) {
 
   // 渲染paypal
   useEffect(() => {
-    console.log("run");
     // 只有有价格才是有效的
     function clear() {
-      console.log("clear");
       if (timeRef.current) {
         window.clearTimeout(timeRef.current);
       }
@@ -366,7 +360,6 @@ function PaymentInner(props: any) {
             // 1 检测表单
             postHandler()
               .then(() => {
-                console.log(buyerVerificationToken);
                 // 2 发起后端调用
                 createOrderHandler({
                   creditCardInfo: {

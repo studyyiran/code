@@ -106,7 +106,6 @@ const ProductCard = ({ info }: any) => {
     userInfo,
     buyTags
   } = info;
-  console.log(info);
   return (
     <div className="product-card">
       <InnerDivImage imgUrl={buyProductImgM[0]} lazyload={false} />

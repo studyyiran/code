@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import "./index.less";
 import { Affix } from "antd";
 
@@ -143,6 +143,7 @@ export default function ProductDetail(props: any) {
     getReviewScore();
   }, [getReviewScore]);
 
+  const lastCode = useRef("");
   useEffect(() => {
     // 只有有商品属性 并且有页面id的时候.并且相等.才进行上报操作
     if (productDetail) {
@@ -155,41 +156,51 @@ export default function ProductDetail(props: any) {
         buyProductBQV,
         skuId
       } = productDetail;
-      let bqvParams: any = {};
-      if (buyProductBQV) {
-        buyProductBQV.forEach((item: any) => {
-          if (item && item.bpName) {
-            if (item.bpName.toLowerCase() === "color") {
-              bqvParams.colour = item.bpvName;
-            } else {
-              bqvParams[item.bpName.toLowerCase()] = item.bpvName;
+      if (buyProductId) {
+        let bqvParams: any = {};
+        if (buyProductBQV) {
+          buyProductBQV.forEach((item: any) => {
+            if (item && item.bpName) {
+              if (item.bpName.toLowerCase() === "color") {
+                bqvParams.colour = item.bpvName;
+              } else {
+                bqvParams[item.bpName.toLowerCase()] = item.bpvName;
+              }
             }
-          }
-        });
-      }
-      dataReport(
-        Object.assign(bqvParams, {
-          event: "productPageViewed",
-          manufacturer: brandDisplayName, //update this
-          model: productDisplayName, //update this
-          condition: buyLevel, //update this
-          productID: String(buyProductId), //update this
-          price: Number(buyPrice), //update this
-          protectionPlan: false, //update this
-          ecommerce: {
-            currencyCode: "USD",
-            detail: {
-              products: [
-                {
-                  sku: String(skuId),
-                  name: productDisplayName,
-                  price: Number(buyPrice)
+          });
+        }
+        if (
+          !lastCode ||
+          !lastCode.current ||
+          lastCode.current !== buyProductId
+        ) {
+          lastCode.current = buyProductId;
+          debugger;
+          dataReport(
+            Object.assign(bqvParams, {
+              event: "productPageViewed",
+              manufacturer: brandDisplayName, //update this
+              model: productDisplayName, //update this
+              condition: buyLevel, //update this
+              productID: String(buyProductId), //update this
+              price: Number(buyPrice), //update this
+              protectionPlan: false, //update this
+              ecommerce: {
+                currencyCode: "USD",
+                detail: {
+                  products: [
+                    {
+                      sku: String(skuId),
+                      name: productDisplayName,
+                      price: Number(buyPrice)
+                    }
+                  ]
                 }
-              ]
-            }
-          }
-        })
-      );
+              }
+            })
+          );
+        }
+      }
     }
   }, [productDetail]);
 
