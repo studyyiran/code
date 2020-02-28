@@ -29,6 +29,9 @@ export function useStoreShoppingCartGetActions(
   state: IStoreShoppingCartState,
   dispatch: (action: IReducerAction) => void
 ): IStoreShoppingCartActions {
+  const promiseStop = useRef({
+    getShoppingCart: null as any
+  });
   const globalSettingContext = useContext(GlobalSettingContext);
   const {
     globalSettingContextValue
@@ -41,11 +44,16 @@ export function useStoreShoppingCartGetActions(
   }
   const getShoppingCart = useCallback(
     async function() {
-      const res = await storeShoppingCartServer.getShoppingCart();
-      dispatch({
-        type: storeShoppingCartReducerTypes.setShoppingCartList,
-        value: res
-      });
+      // 解决了多个ajax的race问题。只遵循最后一个发起的ajax
+      const cache = storeShoppingCartServer.getShoppingCart();
+      promiseStop.current.getShoppingCart = cache;
+      const res = await promiseStop.current.getShoppingCart;
+      if (promiseStop.current.getShoppingCart === cache) {
+        dispatch({
+          type: storeShoppingCartReducerTypes.setShoppingCartList,
+          value: res
+        });
+      }
     },
     [dispatch]
   );
@@ -123,22 +131,22 @@ export function useStoreShoppingCartGetActions(
       const max = 4;
       if (state.compareInfoList.length < max) {
         // 先触发立刻更新
-        let hehe = state.shoppingCartList
+        let hehe = state.shoppingCartList;
         try {
-          hehe.list = hehe.list.map((item) => {
-            const {product} = item
+          hehe.list = hehe.list.map(item => {
+            const { product } = item;
             if (product.buyProductCode === code) {
-              item.isCompare = true
+              item.isCompare = true;
             }
-            return item
-          })
-        } catch(e) {
-          console.error(e)
+            return item;
+          });
+        } catch (e) {
+          console.error(e);
         }
         dispatch({
           type: storeShoppingCartReducerTypes.setShoppingCartList,
-          value: hehe,
-        })
+          value: hehe
+        });
         const res = await storeShoppingCartServer.orderCompareAdd(code);
         const res2 = getShoppingCart();
         const res3 = orderCompareGet();
@@ -146,7 +154,13 @@ export function useStoreShoppingCartGetActions(
         Message.error(`You can only compare up to ${max} phones`);
       }
     },
-    [getShoppingCart, orderCompareGet, state.compareInfoList]
+    [
+      dispatch,
+      getShoppingCart,
+      orderCompareGet,
+      state.compareInfoList.length,
+      state.shoppingCartList
+    ]
   );
 
   const orderCompareDelete = useCallback(
