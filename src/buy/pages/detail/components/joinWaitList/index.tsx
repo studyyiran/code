@@ -35,7 +35,7 @@ export function JoinWaitList(props: { buyProductCode: string }) {
       rules: [
         {
           required: false,
-          pattern: /^[1-9]\d{0,9}$/,
+          pattern: /^[0-9]\d{10,10}$/,
           message: "Please input a valid phone number."
         }
       ],
