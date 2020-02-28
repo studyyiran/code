@@ -8,7 +8,6 @@ import { getLocationUrl } from "../../common/utils/util";
 import { ProductDetailContext } from "../detail/context";
 import RouterLink from "../../common-modules/components/routerLink";
 import LoadingMask from "../productList/components/loading";
-import {useIsCurrentPage} from "../../common/useHook";
 
 interface IProps {
   history?: any;
@@ -26,12 +25,11 @@ export const ShoppingCartPage: React.FC<IProps> = props => {
     deleteSoldShoppingCart
   } = storeShoppingCartContext as IStoreShoppingCartContext;
   // 从context中获取值
-  const { shoppingCartList, isLoading, isCookieOpen } = storeShoppingCartContextValue;
-  const isCurrentPage = useIsCurrentPage('/cart')
-  if (isCurrentPage && !isCookieOpen) {
-    locationHref("/buy-phone")
-    // locationHref('', 'back')
-  }
+  const {
+    shoppingCartList,
+    isLoading,
+    isCookieOpen
+  } = storeShoppingCartContextValue;
   // local发起请求
   useEffect(() => {
     getShoppingCart();
@@ -103,13 +101,47 @@ export const ShoppingCartPage: React.FC<IProps> = props => {
       );
     }
   }
+  if (!isCookieOpen) {
+    return (
+      <div className="shopping-cart-page">
+        <div className="title-container">
+          <h1>Shopping Cart</h1>
+        </div>
+        <div className="content">
+          <div className="list-container">
+            <div className="empty">
+              <img className="empty-img" src={require("./res/notcookie.svg")} />
+              <p className="tips">Please enable cookies to use the shopping cart.</p>
+              <RouterLink to={"buy-phone"}>Continue browsing ></RouterLink>
+            </div>
+          </div>
+        </div>
+        <div className="go-back-button-container">
+          <div
+            className="go-back-button"
+            onClick={() => {
+              locationHref("", "back");
+            }}
+          >
+            <img src={require("./res/arrow_left.svg")} />
+            <span>Go Back</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
   if (shoppingCartList && shoppingCartList.list) {
     return (
       <div className="shopping-cart-page">
         <div className="title-container">
           <h1>Shopping Cart</h1>
         </div>
-        <LoadingMask visible={isLoading.deleteShoppingCart || isLoading.deleteSoldShoppingCart} style={{color: 'white'}} />
+        <LoadingMask
+          visible={
+            isLoading.deleteShoppingCart || isLoading.deleteSoldShoppingCart
+          }
+          style={{ color: "white" }}
+        />
         <div className="content">
           {shoppingCartList &&
           shoppingCartList.list &&

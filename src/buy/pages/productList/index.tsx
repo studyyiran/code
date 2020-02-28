@@ -296,7 +296,7 @@ function RenderList(props: { productList: any[] }): any {
         count++;
       }
       renderArr.push(
-        <PhoneProductCard key={"phone" + index} {...productInfo} />
+        <PhoneProductCard key={"phone" + index} {...productInfo} mbIndex={index} />
       );
     });
     return renderArr;

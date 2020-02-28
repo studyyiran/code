@@ -82,7 +82,7 @@ export default function PhoneProductCard(props: any) {
         </InnerDivImage>
       ) : (
         <RenderByCondition
-          ComponentMb={<InnerDivImage imgUrl={productImg} />}
+          ComponentMb={<InnerDivImage imgUrl={props.mbIndex === 0 ? props.buyProductImgPc : productImg} />}
           ComponentPc={
             <div className="img-scale-container">
               <InnerDivImage imgUrl={productImg} />
