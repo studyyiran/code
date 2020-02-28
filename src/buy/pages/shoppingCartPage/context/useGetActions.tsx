@@ -81,14 +81,33 @@ export function useStoreShoppingCartGetActions(
   const addShoppingCart = useCallback(
     async id => {
       return actionsWithCatchAndLoading({
+        needError: false,
         dispatch,
         loadingDispatchName:
           storeShoppingCartReducerTypes.setLoadingObjectStatus,
         loadingObjectKey: "addShoppingCart",
         promiseFunc: async () => {
-          const res = await storeShoppingCartServer.addShoppingCart(id);
+          try {
+            const res = await storeShoppingCartServer.addShoppingCart(id);
+          } catch (e) {
+            switch (e.code) {
+              case "10066":
+                // 正在交易中
+                // 刷新页面
+                Message.error(
+                  "The product is sold out, failed to add to cart."
+                );
+                break;
+              case "10067":
+                // 已经出售
+                // 重定向。
+                Message.error("Product not found.");
+                break;
+            }
+            console.error(e);
+          }
           const res2 = await getShoppingCart();
-          return Promise.all([res, res2]);
+          // return Promise.all([res, res2]);
         }
       });
 

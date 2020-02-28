@@ -22,6 +22,7 @@ import {
   getBuyDetailPath,
   getFromCacheStore,
   getProductListPath,
+  getUrlAllParams,
   safeEqual,
   saveToCache
 } from "buy/common/utils/util";
@@ -105,7 +106,7 @@ export interface IProductDetailContext extends IContextActions, IContextValue {
 // @actions
 interface IContextActions {
   getProductDetail: (id: string) => void;
-  getProductDetailByCode: (codeDetail: ICodeDetail) => void;
+  getProductDetailByCode: (modelName?: string) => void;
   getProductDetailByIdAndCondition: (codeDetail: ICodeAndId) => void;
   getSimiliarPhoneList: (id: string) => any;
   getSimiliarByCode: (code: string) => any;
@@ -147,6 +148,7 @@ function useGetAction(
   } = globalSettingContext as IGlobalSettingContext;
   const { isMobile } = globalSettingContextValue;
 
+  const { variant } = getUrlAllParams();
   const actions: IContextActions = {
     getProductHistory: useCallback(async () => {
       // 判断去重
@@ -244,11 +246,12 @@ function useGetAction(
       [dispatch]
     ),
     getProductDetailByCode: useCallback(
-      async function(codeDetail) {
+      async function(modelName) {
         try {
-          const res: IProductDetailGetWithCode = await getProductDetailByCode(
-            codeDetail
-          );
+          const res: IProductDetailGetWithCode = await getProductDetailByCode({
+            buyProductCode: variant || "",
+            modelDisplayName: modelName || ""
+          });
           if (res) {
             dispatch({
               type: storeDetailActionTypes.setProductDetailByCode,
@@ -267,7 +270,7 @@ function useGetAction(
           console.error(e);
         }
       },
-      [dispatch]
+      [dispatch, variant]
     ),
     getProductDetailByIdAndCondition: useCallback(
       async function(codeDetail) {

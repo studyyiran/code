@@ -60,7 +60,6 @@ export default function ProductDetail(props: any) {
   } = productDetail;
 
   const modelName = useWhenUrlChange("modelName");
-  const { variant } = getUrlAllParams();
   const [containerWidth, setContainerWidth] = useState(0);
   const [containerTopPos, setContainerTopPos] = useState(0);
 
@@ -118,24 +117,11 @@ export default function ProductDetail(props: any) {
   // ]);
 
   useEffect(() => {
-    if (variant) {
-      getProductDetailByCode({
-        buyProductCode: variant,
-        modelDisplayName: ""
-      });
-    } else {
-      if (modelName) {
-        getProductDetailByCode({
-          buyProductCode: "",
-          modelDisplayName: modelName
-        });
-      }
-    }
-
+    getProductDetailByCode(modelName);
     return () => {
       resetProductInfo();
     };
-  }, [getProductDetailByCode, modelName, resetProductInfo, variant]);
+  }, [getProductDetailByCode, resetProductInfo, modelName]);
 
   // 设置title
   useEffect(() => {
