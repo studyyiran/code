@@ -96,7 +96,7 @@ export const ShoppingCartPage: React.FC<IProps> = props => {
         <div className="empty">
           <img className="empty-img" src={require("./res/empty.svg")} />
           <p className="tips">Your shopping cart is empty</p>
-          <RouterLink to={"buy-phone"}>Continue browsing ></RouterLink>
+          <RouterLink to={"/buy-phone"}>Continue browsing ></RouterLink>
         </div>
       );
     }
@@ -112,7 +112,7 @@ export const ShoppingCartPage: React.FC<IProps> = props => {
             <div className="empty">
               <img className="empty-img" src={require("./res/notcookie.svg")} />
               <p className="tips">Please enable cookies to use the shopping cart.</p>
-              <RouterLink to={"buy-phone"}>Continue browsing ></RouterLink>
+              <RouterLink to={"/buy-phone"}>Continue browsing ></RouterLink>
             </div>
           </div>
         </div>

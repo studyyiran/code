@@ -2,7 +2,8 @@ import React, {
   createContext,
   useEffect,
   useCallback,
-  useContext
+  useContext,
+  useMemo
 } from "react";
 import { IReducerAction } from "buy/common/interface/index.interface";
 import {
@@ -43,7 +44,6 @@ export const StoreDetail = "StoreDetail";
 
 // state
 interface IContextState {
-  productDetail: IProductDetail;
   productDetailByCode: IProductDetailGetWithCode;
   similiarPhoneList: any[];
   similiarPhoneListByCode: any[];
@@ -57,7 +57,6 @@ interface IContextState {
 // @provider
 export function ProductDetailContextProvider(props: any) {
   const initState: IContextState = {
-    productDetail: {} as any,
     similiarPhoneList: [],
     similiarPhoneListByCode: [],
     reviewListInfo: {} as any,
@@ -65,7 +64,7 @@ export function ProductDetailContextProvider(props: any) {
     productHistoryCodeList: [],
     productHistoryList: [],
     isLoading: {},
-    productDetailByCode: {} as any
+    productDetailByCode: { detail: { buyProductCode: "" } } as any
   };
   const [state, dispatch, useClientRepair] = useGetOriginData(
     reducer,
@@ -77,7 +76,11 @@ export function ProductDetailContextProvider(props: any) {
   );
   const action = useGetAction(state, dispatch);
   const { getPartsBySkuId } = action;
-  const { skuId } = state.productDetail;
+  const skuId =
+    state &&
+    state.productDetailByCode &&
+    state.productDetailByCode.detail &&
+    state.productDetailByCode.detail.skuId;
 
   // 在detail页面的时候需要拉取配件信息
   // 在后续order过程中.需要拉取配件信息
@@ -147,7 +150,9 @@ function useGetAction(
   } = globalSettingContext as IGlobalSettingContext;
   const { isMobile } = globalSettingContextValue;
 
-  const { variant } = getUrlAllParams();
+  
+  const { productDetailByCode } = state;
+
   const actions: IContextActions = {
     getProductHistory: useCallback(async () => {
       // 判断去重
@@ -181,7 +186,7 @@ function useGetAction(
         });
       }
     }, [dispatch, state.productHistoryCodeList, state.productHistoryList]),
-    
+
     getReviewScore: useCallback(async () => {
       const res: any = await getReviewScore();
       if (res) {
@@ -193,102 +198,100 @@ function useGetAction(
     }, [dispatch]),
     resetProductInfo: useCallback(() => {
       dispatch({
-        type: storeDetailActionTypes.setProductDetail,
-        value: {}
-      });
-      dispatch({
         type: storeDetailActionTypes.setProductDetailByCode,
         value: {}
       });
     }, [dispatch]),
-    getProductDetail: useCallback(
-      async function(productId) {
-        function redirect() {
-          if (window.location.href.indexOf("detail-preview") === -1) {
-            locationHref(getProductListPath());
-          }
+    getProductDetail: useCallback(async function(productId) {
+      function redirect() {
+        if (window.location.href.indexOf("detail-preview") === -1) {
+          locationHref(getProductListPath());
         }
-        try {
-          const res: IProductDetail = await getProductDetail(productId);
-          if (!res) {
-            redirect();
-          }
-          if (res) {
-            dispatch({
-              type: storeDetailActionTypes.setProductDetail,
-              value: res
-            });
-          }
-        } catch (e) {
-          console.error(e);
+      }
+      try {
+        const res: IProductDetail = await getProductDetail(productId);
+        if (!res) {
           redirect();
         }
+      } catch (e) {
+        console.error(e);
+        redirect();
+      }
+    }, []),
+    getProductDetailByCode: useCallback(
+      async function(modelName) {
+        const { variant } = getUrlAllParams();
+        return actionsWithCatchAndLoading({
+          dispatch,
+          needError: false,
+          loadingDispatchName: storeDetailActionTypes.setLoadingObjectStatus,
+          loadingObjectKey: "getProductDetailByCode",
+          promiseFunc: async () => {
+            let res: IProductDetailGetWithCode;
+            if (variant) {
+              res = await getProductDetailByCode({
+                buyProductCode: variant || "",
+                modelDisplayName: ""
+              });
+            } else {
+              res = await getProductDetailByCode({
+                buyProductCode: "",
+                modelDisplayName: modelName || ""
+              });
+            }
+            if (res) {
+              dispatch({
+                type: storeDetailActionTypes.setProductDetailByCode,
+                value: res
+              });
+            } else {
+              locationHref(getProductListPath());
+            }
+          }
+        });
       },
       [dispatch]
     ),
-    getProductDetailByCode: useCallback(
-      async function(modelName) {
-        try {
-          const res: IProductDetailGetWithCode = await getProductDetailByCode({
-            buyProductCode: variant || "",
-            modelDisplayName: modelName || ""
-          });
-          if (res) {
-            dispatch({
-              type: storeDetailActionTypes.setProductDetailByCode,
-              value: res
-            });
-            if (res.detail) {
-              dispatch({
-                type: storeDetailActionTypes.setProductDetail,
-                value: res.detail
-              });
-            }
-          } else {
-            locationHref(getProductListPath());
-          }
-        } catch (e) {
-          console.error(e);
-        }
-      },
-      [dispatch, variant]
-    ),
     getProductDetailByIdAndCondition: useCallback(
       async function(codeDetail) {
-        try {
-          const res: IProductDetailGetWithCode = await getProductDetailByIdAndCondition(
-            codeDetail
-          );
-          if (res) {
-            dispatch({
-              type: storeDetailActionTypes.setProductDetailByCode,
-              value: res
-            });
-            if (res.detail) {
-              dispatch({
-                type: storeDetailActionTypes.setProductDetail,
-                value: res.detail
-              });
-              if (res.detail.buyProductCode) {
-                let url = getBuyDetailPath(
-                  res.detail.productDisplayName,
-                  res.detail.buyProductCode
-                );
-                // 这边插入一个难看的命令式 做伪的url变化
-                locationHref(url);
-              }
-            }
-            if (res.sameProduct) {
-              Message.error(
-                "Product not found, please try other color, storage or condition"
+        actionsWithCatchAndLoading({
+          dispatch,
+          loadingDispatchName: storeDetailActionTypes.setLoadingObjectStatus,
+          loadingObjectKey: "getProductDetailByIdAndCondition",
+          promiseFunc: async () => {
+            try {
+              const res: IProductDetailGetWithCode = await getProductDetailByIdAndCondition(
+                codeDetail
               );
+              if (res) {
+                dispatch({
+                  type: storeDetailActionTypes.setProductDetailByCode,
+                  value: res
+                });
+                if (res.detail) {
+                  if (res.detail.buyProductCode) {
+                    let url = getBuyDetailPath(
+                      res.detail.productDisplayName,
+                      res.detail.buyProductCode
+                    );
+                    // 这边插入一个难看的命令式 做伪的url变化
+                    locationHref(url);
+                  }
+                }
+                if (res.sameProduct) {
+                  Message.error(
+                    "Product not found, please try other color, storage or condition"
+                  );
+                }
+              } else {
+                locationHref(getProductListPath());
+              }
+            } catch (e) {
+              console.error(e);
             }
-          } else {
-            locationHref(getProductListPath());
           }
-        } catch (e) {
-          console.error(e);
-        }
+        })
+       
       },
       [dispatch]
     ),
@@ -362,7 +365,6 @@ function useGetAction(
 
 // action types
 export const storeDetailActionTypes = {
-  setProductDetail: "setProductDetail",
   setProductDetailByCode: "setProductDetailByCode",
   setSimiliarPhoneList: "setSimiliarPhoneList",
   setSimiliarPhoneByCode: "setSimiliarPhoneByCode",
@@ -441,13 +443,6 @@ function reducer(state: IContextState, action: IReducerAction) {
       newState = {
         ...newState,
         similiarPhoneListByCode: value
-      };
-      break;
-    }
-    case storeDetailActionTypes.setProductDetail: {
-      newState = {
-        ...newState,
-        productDetail: value
       };
       break;
     }

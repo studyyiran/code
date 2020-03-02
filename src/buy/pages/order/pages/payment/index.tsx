@@ -46,6 +46,15 @@ function PaymentInner(props: any) {
 
   // 计算总价
   const { calcTotalPrice } = useGetTotalPrice();
+  const [canInit, setCanInit] = useState(false);
+
+  useEffect(() => {
+    if (!isServer()) {
+      window.setTimeout(() => {
+        setCanInit(true);
+      }, 2000);
+    }
+  }, []);
 
   const { invoiceSameAddr, userInfo, invoiceInfo } = orderInfoContextValue;
 
@@ -238,7 +247,7 @@ function PaymentInner(props: any) {
     }
     if (totalPrice && !isServer() && paymentType === "PAYPAL") {
       // 根据形势整合数据
-      if (addressInfo) {
+      if (addressInfo && canInit) {
         (timeRef.current as any) = window.setTimeout(() => {
           paypalPay(totalPrice, addressInfo);
         }, 400);
@@ -246,7 +255,7 @@ function PaymentInner(props: any) {
       }
     }
     return clear;
-  }, [addressInfo, paymentType, paypalPay, totalPrice]);
+  }, [addressInfo, canInit, paymentType, paypalPay, totalPrice]);
 
   // function getCreditValue(key: string) {
   //   return payInfo &&
@@ -257,6 +266,7 @@ function PaymentInner(props: any) {
   // }
   return (
     <div className="payment-page">
+      <LoadingMask visible={!canInit} />
       <section className="address">
         <h2 className="order-common-less-title">Billing Address</h2>
         <p>Select the address that matches your card or payment method.</p>
@@ -342,13 +352,15 @@ function PaymentInner(props: any) {
                 <span>PayPal</span>
                 <PayCardImages showPaypal={true} />
                 {/*<div className="img-container">*/}
-                  {/*<img src={require("./res/paypal.png")} />*/}
+                {/*<img src={require("./res/paypal.png")} />*/}
                 {/*</div>*/}
               </header>
             </Checkbox>
           </div>
         </div>
-        <p className="phone-call">Trouble placing your order? Call or text 972-833-0136 for help</p>
+        <p className="phone-call">
+          Trouble placing your order? Call or text 972-833-0136 for help
+        </p>
       </section>
       {paymentType === "CREDIT_CARD" ? (
         <PayForm
@@ -376,7 +388,7 @@ function PaymentInner(props: any) {
               })
               .catch(() => {
                 setShowLoadingMask(false);
-              })
+              });
           }}
         />
       ) : (

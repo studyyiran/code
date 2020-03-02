@@ -9,6 +9,7 @@ import { Message } from "../../../components/message";
 import { GlobalSettingContext, IGlobalSettingContext } from "../../../context";
 import { actionsWithCatchAndLoading } from "../../../common/utils/util";
 import { ProductDetailContext } from "../../detail/context";
+import {locationHref} from "../../../common/utils/routerHistory";
 
 // @actions
 export interface IStoreShoppingCartActions {
@@ -117,13 +118,13 @@ export function useStoreShoppingCartGetActions(
               case 10065:
                 // 正在交易中
                 // 刷新页面
-                Message.error("Cart limit reached. Please clear your cart.");
+                Message.warn("Cart limit reached. Please clear your cart.");
                 break;
               case 10066:
                 // 正在交易中
                 // 刷新页面
                 getProductDetailByCode();
-                Message.error(
+                Message.warn(
                   "The product is sold out, failed to add to cart."
                 );
                 break;
@@ -131,8 +132,10 @@ export function useStoreShoppingCartGetActions(
                 // 已经出售
                 // 重定向。
                 getProductDetailByCode();
-                Message.error("Product not found.");
-                window.location.href = "/buy-phone";
+                Message.warn("Product not found.");
+                window.setTimeout(() => {
+                  window.location.href = "/buy-phone";
+                }, 1000)
                 break;
             }
             console.error(e);
@@ -227,7 +230,7 @@ export function useStoreShoppingCartGetActions(
         } catch (e) {
           switch (e.code) {
             case 10070:
-              Message.error("Failed to add to compare.");
+              Message.warn("Failed to add to compare.");
               break;
           }
         }
@@ -243,7 +246,7 @@ export function useStoreShoppingCartGetActions(
           }
         });
       } else {
-        Message.error(`You can only compare up to ${max} phones`);
+        Message.warn(`You can only compare up to ${max} phones`);
       }
     },
     [

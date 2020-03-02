@@ -39,7 +39,8 @@ export function useOrderInfoGetAction(
     productDetailContextValue,
     getProductDetail
   } = productDetailContext as IProductDetailContext;
-  const { productDetail, partsInfo } = productDetailContextValue;
+  const { productDetailByCode, partsInfo } = productDetailContextValue;
+  let productDetail = (productDetailByCode ? productDetailByCode.detail : {} as any) || {}
   // 数据上报计算
   const { calcTotalPrice, getShippingPrice } = useGetTotalPrice(state);
   // subOrders -> productId -> getProductDetail -> parts

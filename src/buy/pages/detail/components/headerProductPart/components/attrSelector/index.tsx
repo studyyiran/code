@@ -157,13 +157,14 @@ export const RenderSelectList: React.FC<IProps2> = ({
     getProductDetailByIdAndCondition,
     resetProductInfo
   } = productDetailContext as IProductDetailContext;
-  const { productDetail } = productDetailContextValue;
+  const { productDetailByCode } = productDetailContextValue;
+  let productDetail = (productDetailByCode ? productDetailByCode.detail : {} as any) || {}
   const { buyProductCode } = productDetail;
   const [currentSelect, setCurrentSelect] = useState("");
 
   useEffect(() => {
     if (currentSelect) {
-      resetProductInfo();
+      // resetProductInfo();
       window.scrollTo(0, 0);
       if (!isNaN(Number(currentSelect))) {
         getProductDetailByIdAndCondition({
@@ -176,6 +177,7 @@ export const RenderSelectList: React.FC<IProps2> = ({
           condition: currentSelect
         });
       }
+      setCurrentSelect("")
     }
   }, [
     buyProductCode,
