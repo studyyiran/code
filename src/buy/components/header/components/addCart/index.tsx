@@ -156,7 +156,6 @@ const Line = (props: any) => {
             <h2>{lineOne}</h2>
             <h2 className="price">
               {currencyTrans(buyProductPrice)}
-              <OnSaleTag tag={buyTags} />
             </h2>
           </div>
         ) : null}

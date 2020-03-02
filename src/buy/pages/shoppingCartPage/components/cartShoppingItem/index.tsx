@@ -15,7 +15,6 @@ import { RenderByCondition } from "../../../../components/RenderByCondition";
 import { InnerDivImage } from "../../../detail/components/innerDivImage";
 import Svg from "../../../../components/svg";
 import { getDescArr } from "../../../detail/util";
-import { OnSaleTag } from "../../../detail/components/onSaleTag";
 import {
   IShoppingCartInfo,
   IStoreShoppingCartContext,
