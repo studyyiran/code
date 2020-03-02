@@ -17,6 +17,10 @@ export function NewBuyNotice(props: any): any {
   let dataList: any = [];
 
   function getTopData() {
+    ajax.post('/api/sub_order/lastest', {}).then(res => {
+    // ajax.post('https://qa-gateway.uptradeit.com/api/sub_order/lastest', {}).then(res => {
+      console.log(res)
+    })
     ajax.post(BUY_ORDER_LASTEST).then(res => {
       dataList =
         res && res.data && res.data.data
