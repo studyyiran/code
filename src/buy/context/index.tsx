@@ -40,13 +40,13 @@ export function GlobalSettingContextProvider(props: any) {
   );
   const action: IContextActions = useGetAction(state, dispatch);
   useEffect(() => {
-    window.addEventListener(
-      "resize",
-      () => {
-        action.setIsMobile();
-      },
-      false
-    );
+    // window.addEventListener(
+    //   "resize",
+    //   () => {
+    //     action.setIsMobile();
+    //   },
+    //   false
+    // );
     action.setIsMobile();
   }, []);
 
