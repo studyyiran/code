@@ -6,7 +6,7 @@ import React, {
   useState
 } from "react";
 import { IReducerAction } from "buy/common/interface/index.interface";
-import { promisify } from "buy/common/utils/util";
+import {isServer, promisify} from "buy/common/utils/util";
 import ajax from "buy/common/utils/ajax";
 import { useGetOriginData } from "../common/useHook/useGetOriginData";
 import { getBlackFiveTime } from "./globalSetting/server";
@@ -40,13 +40,17 @@ export function GlobalSettingContextProvider(props: any) {
   );
   const action: IContextActions = useGetAction(state, dispatch);
   useEffect(() => {
-    // window.addEventListener(
-    //   "resize",
-    //   () => {
-    //     action.setIsMobile();
-    //   },
-    //   false
-    // );
+    if (!isServer()) {
+      // if (window.addEventListener) {
+      //   window.addEventListener(
+      //     "resize",
+      //     () => {
+      //       action.setIsMobile();
+      //     },
+      //     false
+      //   );
+      // }
+    }
     action.setIsMobile();
   }, []);
 

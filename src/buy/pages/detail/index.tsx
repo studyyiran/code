@@ -39,7 +39,8 @@ export default function ProductDetail(props: any) {
     similiarPhoneList,
     partsInfo,
     reviewListInfo,
-    similiarPhoneListByCode
+    similiarPhoneListByCode,
+    isLoading
   } = productDetailContextValue;
   let productDetail =
     (productDetailByCode ? productDetailByCode.detail : ({} as any)) || {};
@@ -76,10 +77,6 @@ export default function ProductDetail(props: any) {
     }
   }, [buyProductCode, getSimiliarByCode]);
 
-  const pId =
-    productDetailByCode &&
-    productDetailByCode.detail &&
-    productDetailByCode.detail.buyProductId;
   useEffect(() => {
     if (buyProductCode) {
       getSimiliarPhoneList(buyProductCode);
@@ -230,7 +227,12 @@ export default function ProductDetail(props: any) {
     );
   }
 
-  if (buyProductId) {
+  if (
+    (isLoading && isLoading.getProductDetailByCode) ||
+    (isLoading && isLoading.getProductDetailByIdAndCondition)
+  ) {
+    return <DetailLoading />;
+  } else if (buyProductCode) {
     return (
       <div className="product-detail-page">
         <div
@@ -295,6 +297,6 @@ export default function ProductDetail(props: any) {
       </div>
     );
   } else {
-    return <DetailLoading />;
+    return null;
   }
 }

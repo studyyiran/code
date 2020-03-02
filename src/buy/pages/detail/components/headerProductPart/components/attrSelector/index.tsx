@@ -164,7 +164,6 @@ export const RenderSelectList: React.FC<IProps2> = ({
 
   useEffect(() => {
     if (currentSelect) {
-      debugger
       // resetProductInfo();
       window.scrollTo(0, 0);
       if (!isNaN(Number(currentSelect))) {

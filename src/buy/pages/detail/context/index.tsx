@@ -221,61 +221,77 @@ function useGetAction(
     getProductDetailByCode: useCallback(
       async function(modelName) {
         const { variant } = getUrlAllParams();
-        let res: IProductDetailGetWithCode;
-        if (variant) {
-          res = await getProductDetailByCode({
-            buyProductCode: variant || "",
-            modelDisplayName: ""
-          });
-        } else {
-          res = await getProductDetailByCode({
-            buyProductCode: "",
-            modelDisplayName: modelName || ""
-          });
-        }
-        if (res) {
-          dispatch({
-            type: storeDetailActionTypes.setProductDetailByCode,
-            value: res
-          });
-        } else {
-          locationHref(getProductListPath());
-        }
+        return actionsWithCatchAndLoading({
+          dispatch,
+          needError: false,
+          loadingDispatchName: storeDetailActionTypes.setLoadingObjectStatus,
+          loadingObjectKey: "getProductDetailByCode",
+          promiseFunc: async () => {
+            let res: IProductDetailGetWithCode;
+            if (variant) {
+              res = await getProductDetailByCode({
+                buyProductCode: variant || "",
+                modelDisplayName: ""
+              });
+            } else {
+              res = await getProductDetailByCode({
+                buyProductCode: "",
+                modelDisplayName: modelName || ""
+              });
+            }
+            if (res) {
+              dispatch({
+                type: storeDetailActionTypes.setProductDetailByCode,
+                value: res
+              });
+            } else {
+              locationHref(getProductListPath());
+            }
+          }
+        });
       },
       [dispatch]
     ),
     getProductDetailByIdAndCondition: useCallback(
       async function(codeDetail) {
-        try {
-          const res: IProductDetailGetWithCode = await getProductDetailByIdAndCondition(
-            codeDetail
-          );
-          if (res) {
-            dispatch({
-              type: storeDetailActionTypes.setProductDetailByCode,
-              value: res
-            });
-            if (res.detail) {
-              if (res.detail.buyProductCode) {
-                let url = getBuyDetailPath(
-                  res.detail.productDisplayName,
-                  res.detail.buyProductCode
-                );
-                // 这边插入一个难看的命令式 做伪的url变化
-                locationHref(url);
-              }
-            }
-            if (res.sameProduct) {
-              Message.error(
-                "Product not found, please try other color, storage or condition"
+        actionsWithCatchAndLoading({
+          dispatch,
+          loadingDispatchName: storeDetailActionTypes.setLoadingObjectStatus,
+          loadingObjectKey: "getProductDetailByIdAndCondition",
+          promiseFunc: async () => {
+            try {
+              const res: IProductDetailGetWithCode = await getProductDetailByIdAndCondition(
+                codeDetail
               );
+              if (res) {
+                dispatch({
+                  type: storeDetailActionTypes.setProductDetailByCode,
+                  value: res
+                });
+                if (res.detail) {
+                  if (res.detail.buyProductCode) {
+                    let url = getBuyDetailPath(
+                      res.detail.productDisplayName,
+                      res.detail.buyProductCode
+                    );
+                    // 这边插入一个难看的命令式 做伪的url变化
+                    locationHref(url);
+                  }
+                }
+                if (res.sameProduct) {
+                  Message.error(
+                    "Product not found, please try other color, storage or condition"
+                  );
+                }
+              } else {
+                locationHref(getProductListPath());
+              }
+            } catch (e) {
+              console.error(e);
             }
-          } else {
-            locationHref(getProductListPath());
           }
-        } catch (e) {
-          console.error(e);
-        }
+        })
+       
       },
       [dispatch]
     ),
