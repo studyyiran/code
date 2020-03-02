@@ -49,7 +49,7 @@ export default function Brand(props: any) {
   }
   const staticProcessSelect = [
     {
-      content: "Paid in 1-2 days after inspection complete",
+      content: "Paid next day after inspection complete",
       render: () => {
         return (
           <div className="comp-top-tag">
