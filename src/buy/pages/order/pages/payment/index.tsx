@@ -266,6 +266,7 @@ function PaymentInner(props: any) {
   // }
   return (
     <div className="payment-page">
+      <LoadingMask visible={!canInit} />
       <section className="address">
         <h2 className="order-common-less-title">Billing Address</h2>
         <p>Select the address that matches your card or payment method.</p>
