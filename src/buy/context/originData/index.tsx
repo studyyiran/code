@@ -37,7 +37,7 @@ export function OriginDataContextProvider(props: any) {
   // 注入初始值到originData上
   const initState: IContextState = {
     originData: props.originData || { storeList: [], ssrConfig: {} },
-    needClientRepair: false // 是否开启回补逻辑,改为true用于本地客户端开发
+    needClientRepair: true // 是否开启回补逻辑,改为true用于本地客户端开发
   };
   const [state, dispatch] = useReducer(
     useReducerMiddleware(reducer),

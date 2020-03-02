@@ -1,5 +1,5 @@
 import { StoreDetail } from "./context";
-import { getProductDetail, getSimiliar } from "./server";
+import { getProductDetailByCode } from "./server";
 import { getDescArr } from "./util";
 import { ISsrFileStore } from "../../common/interface/index.interface";
 import { IProductDetail } from "./context/interface";
@@ -20,18 +20,19 @@ export const detailSsrRule = async (url: string) => {
     }
   };
   const arr = url.split("/");
+  console.log(arr);
+  ;
   if (arr && arr.length) {
-    const productId = Number(arr[arr.length - 1]);
-    if (productId !== NaN) {
-      if (String(productId).indexOf("token") !== -1) {
-        // 调用全新接口,获取数据,借用detail的渲染字段
-      } else {
+    const modalName = String(arr[arr.length - 1]);
+    if (modalName) {
+      {
         // 调用常规的接口
-        const productDetail: IProductDetail = await getProductDetail(
-          String(productId)
-        );
+        const productDetail: IProductDetail = await getProductDetailByCode({
+          modelDisplayName: modalName,
+          buyProductCode: ""
+        });
         if (productDetail) {
-          store.storeData.productId = String(productId);
+          // store.storeData.productId = String(productId);
           // @ts-ignore
           store.storeData.productDetail = productDetail;
           const {
@@ -79,12 +80,14 @@ export const detailSsrRule = async (url: string) => {
           } catch (e) {}
         }
       }
-      const similiarPhoneList: any = await getSimiliar("");
-      if (similiarPhoneList) {
-        store.storeData.similiarPhoneList = similiarPhoneList;
-      }
+      // const similiarPhoneList: any = await getSimiliar("");
+      // if (similiarPhoneList) {
+      //   store.storeData.similiarPhoneList = similiarPhoneList;
+      // }
     }
   }
+  console.log(store)
+  debugger
   ssrRes.storeList.push(store);
   return ssrRes;
 };
