@@ -9,6 +9,7 @@ import { Message } from "../../../components/message";
 import { GlobalSettingContext, IGlobalSettingContext } from "../../../context";
 import { actionsWithCatchAndLoading } from "../../../common/utils/util";
 import { ProductDetailContext } from "../../detail/context";
+import {locationHref} from "../../../common/utils/routerHistory";
 
 // @actions
 export interface IStoreShoppingCartActions {
@@ -132,7 +133,9 @@ export function useStoreShoppingCartGetActions(
                 // 重定向。
                 getProductDetailByCode();
                 Message.warn("Product not found.");
-                window.location.href = "/buy-phone";
+                window.setTimeout(() => {
+                  window.location.href = "/buy-phone";
+                }, 1000)
                 break;
             }
             console.error(e);
