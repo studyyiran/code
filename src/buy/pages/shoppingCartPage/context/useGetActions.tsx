@@ -117,13 +117,13 @@ export function useStoreShoppingCartGetActions(
               case 10065:
                 // 正在交易中
                 // 刷新页面
-                Message.error("Cart limit reached. Please clear your cart.");
+                Message.warn("Cart limit reached. Please clear your cart.");
                 break;
               case 10066:
                 // 正在交易中
                 // 刷新页面
                 getProductDetailByCode();
-                Message.error(
+                Message.warn(
                   "The product is sold out, failed to add to cart."
                 );
                 break;
@@ -131,7 +131,7 @@ export function useStoreShoppingCartGetActions(
                 // 已经出售
                 // 重定向。
                 getProductDetailByCode();
-                Message.error("Product not found.");
+                Message.warn("Product not found.");
                 window.location.href = "/buy-phone";
                 break;
             }
@@ -227,7 +227,7 @@ export function useStoreShoppingCartGetActions(
         } catch (e) {
           switch (e.code) {
             case 10070:
-              Message.error("Failed to add to compare.");
+              Message.warn("Failed to add to compare.");
               break;
           }
         }
@@ -243,7 +243,7 @@ export function useStoreShoppingCartGetActions(
           }
         });
       } else {
-        Message.error(`You can only compare up to ${max} phones`);
+        Message.warn(`You can only compare up to ${max} phones`);
       }
     },
     [
