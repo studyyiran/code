@@ -114,6 +114,7 @@ export function AddCart() {
 const Line = (props: any) => {
   const {
     buyProductImgPc,
+    buyProductImgM,
     buyProductName,
     buyProductCode,
     buyProductPrice,
@@ -144,10 +145,10 @@ const Line = (props: any) => {
       ) : null}
       <RenderByCondition
         ComponentMb={
-          <InnerDivImage lazyload={false} imgUrl={buyProductImgPc} />
+          <InnerDivImage lazyload={false} imgUrl={buyProductImgM} />
         }
         ComponentPc={
-          <InnerDivImage lazyload={false} imgUrl={buyProductImgPc} />
+          <InnerDivImage lazyload={false} imgUrl={buyProductImgM} />
         }
       />
       <div className="content-container">

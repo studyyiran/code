@@ -31,6 +31,8 @@ export default function PhoneProductCard(props: any) {
     buyProductBQV,
     buyProductStatus,
     buyTags,
+    needRenderTagaByServer,
+    getProductDetailByCode,
   } = props;
   const imgUrl = require("buy/common/static/pic.png");
   const [lineOne, lineTwo] = getDescArr(buyProductBQV, buyProductName);
@@ -59,8 +61,7 @@ export default function PhoneProductCard(props: any) {
     //       Sale Pending
     //     </span>
     //   );
-    // } else {
-    //   return null;
+    // } else { return null;
     // }
   }
 
@@ -69,6 +70,10 @@ export default function PhoneProductCard(props: any) {
       onClick={(e: any) => {
         if (isSoldOut(buyProductStatus)) {
           e.preventDefault();
+        } else {
+          if (getProductDetailByCode) {
+            getProductDetailByCode("", buyProductCode)
+          }
         }
       }}
       to={`${getBuyDetailPath(buyProductName, buyProductCode)}`}

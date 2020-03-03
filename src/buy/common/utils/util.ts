@@ -300,9 +300,9 @@ export async function callBackWhenPassAllFunc(arr: any[], callBack: any) {
   }
 }
 
-export function getUrlAllParams() {
+export function getUrlAllParams(urlHref?: string) {
   if (!isServer()) {
-    let url = decodeURI(window.location.href);
+    let url = decodeURI(urlHref || window.location.href);
     let res = {} as any;
     let url_data = url.split("?").length > 1 ? url.split("?")[1] : null;
     if (!url_data) return {};

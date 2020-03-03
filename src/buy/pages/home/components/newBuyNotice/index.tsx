@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import "./index.less";
 import Svg from "../../../../components/svg";
-import { ajax, BUY_ORDER_LASTEST } from "../../../../api/api";
+import { ajax, BUY_ORDER_LASTEST, BUY_ORDER_SELL_LASTEST } from "../../../../api/api";
 import { InnerDivImage } from "../../../detail/components/innerDivImage";
 
 export function NewBuyNotice(props: any): any {
@@ -17,49 +17,52 @@ export function NewBuyNotice(props: any): any {
   let dataIndex = 0;
   let dataList: any = [];
   async function getTopData() {
+    let list1 = [];
+    let list2 = [];
     const res = await ajax.post(BUY_ORDER_LASTEST);
-    dataList =
+    list1 =
       res && res.data && res.data.data
-        ? res.data.data.map((d: any) => {
-            d.productPicPC = d.productPicPC
-              ? d.productPicPC
-              : require("../../img/certified.png");
-            d.productPicM = d.productPicM
-              ? d.productPicM
-              : require("../../img/certified.png");
-            d.content = `${d.customer} placed an order for ${d.productName}`;
-            return d;
-          }).filter((item: any, index: number) => {
-            return index < 5
-        })
-        : [];
-    if (props && props.both) {
-      // const res2 = await ajax.post("/api/sub_order/lastest", {});
-      const res2 = await ajax.post(
-        "https://qa-gateway.uptradeit.com/api/sub_order/lastest",
-        {}
-      );
-      if (res && res2.data && res2.data.data && res2.data.data.length) {
-        
-        dataList = dataList.concat(
-          res2.data.data
+        ? res.data.data
+            .map((d: any) => {
+              d.productPicPC = d.productPicPC
+                ? d.productPicPC
+                : require("../../img/certified.png");
+              d.productPicM = d.productPicM
+                ? d.productPicM
+                : require("../../img/certified.png");
+              d.content = `${d.customer} placed an order for ${d.productName}`;
+              return d;
+            })
             .filter((item: any, index: number) => {
               return index < 5;
             })
-            .map((item: any) => {
-              return {
-                content: item.orderInfo,
-                city: item.city,
-                orderTime: item.orderTime,
-                productPicPC: item.productPic,
-                productPicM: item.productPic
-              };
-            })
-        );
+        : [];
+    if (props && props.both) {
+      const res2 = await ajax.post(BUY_ORDER_SELL_LASTEST);
+      if (res && res2.data && res2.data.data && res2.data.data.length) {
+        list2 = res2.data.data
+          .filter((item: any, index: number) => {
+            return index < 5;
+          })
+          .map((item: any) => {
+            return {
+              content: item.orderInfo,
+              city: item.city,
+              orderTime: item.orderTime,
+              productPicPC: item.productPic,
+              productPicM: item.productPic
+            };
+          });
       }
-      console.log(res2);
     }
-    console.log(dataList)
+    for (let i = 0; i < list1.length + list2.length; i++) {
+      if (list1 && list1[i]) {
+        dataList.push(list1[i])
+      }
+      if (list2 && list2[i]) {
+        dataList.push(list2[i])
+      }
+    }
     if (dataList && dataList.length) {
       setChooseData(dataList[dataIndex]);
     } else {
