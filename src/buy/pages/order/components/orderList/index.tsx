@@ -17,12 +17,12 @@ export default function OrderList(props: any) {
   const {
     productDetailContextValue
   } = productDetailContext as IProductDetailContext;
-  const { productDetailByCode, partsInfo } = productDetailContextValue;
-  let productDetail =
-    (productDetailByCode ? productDetailByCode.detail : ({} as any)) || {};
+  const { orderProductDetail, partsInfo } = productDetailContextValue;
   const orderInfoContext = useContext(OrderInfoContext);
   const { orderInfoContextValue } = orderInfoContext as IOrderInfoContext;
   const { subOrders, taxInfo } = orderInfoContextValue;
+  console.log('here')
+  console.log(subOrders)
   const {
     totalProductPrice,
     totalProtections,
@@ -31,7 +31,7 @@ export default function OrderList(props: any) {
   } = useGetTotalPrice();
 
   function renderList() {
-    if (!productDetail || !productDetail.buyProductId) {
+    if (!orderProductDetail || !orderProductDetail.buyProductId) {
       return null;
     }
     return (
@@ -54,8 +54,8 @@ export default function OrderList(props: any) {
               // 这是商品
               return (
                 <PhoneInfo
-                  key={productDetail.buyProductId}
-                  {...productDetail}
+                  key={orderProductDetail.buyProductId}
+                  {...orderProductDetail}
                 />
               );
             } else if (

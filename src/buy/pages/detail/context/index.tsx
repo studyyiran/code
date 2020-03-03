@@ -44,6 +44,7 @@ export const StoreDetail = "StoreDetail";
 
 // state
 interface IContextState {
+  orderProductDetail: IProductDetail;
   productDetailByCode: IProductDetailGetWithCode;
   similiarPhoneList: any[];
   similiarPhoneListByCode: any[];
@@ -57,6 +58,7 @@ interface IContextState {
 // @provider
 export function ProductDetailContextProvider(props: any) {
   const initState: IContextState = {
+    orderProductDetail: {} as any,
     similiarPhoneList: [],
     similiarPhoneListByCode: [],
     reviewListInfo: {} as any,
@@ -77,10 +79,11 @@ export function ProductDetailContextProvider(props: any) {
   const action = useGetAction(state, dispatch);
   const { getPartsBySkuId } = action;
   const skuId =
-    state &&
-    state.productDetailByCode &&
-    state.productDetailByCode.detail &&
-    state.productDetailByCode.detail.skuId;
+    (state &&
+      state.productDetailByCode &&
+      state.productDetailByCode.detail &&
+      state.productDetailByCode.detail.skuId) ||
+    (state && state.orderProductDetail && state.orderProductDetail.skuId);
 
   // 在detail页面的时候需要拉取配件信息
   // 在后续order过程中.需要拉取配件信息
@@ -150,7 +153,6 @@ function useGetAction(
   } = globalSettingContext as IGlobalSettingContext;
   const { isMobile } = globalSettingContextValue;
 
-  
   const { productDetailByCode } = state;
 
   const actions: IContextActions = {
@@ -210,8 +212,11 @@ function useGetAction(
       }
       try {
         const res: IProductDetail = await getProductDetail(productId);
-        if (!res) {
-          redirect();
+        if (res) {
+          dispatch({
+            type: storeDetailActionTypes.setProductDetail,
+            value: res
+          });
         }
       } catch (e) {
         console.error(e);
@@ -245,7 +250,7 @@ function useGetAction(
                 value: res
               });
             } else {
-              locationHref(getProductListPath());
+              window.location.href = "/buy-phone";
             }
           }
         });
@@ -290,8 +295,7 @@ function useGetAction(
               console.error(e);
             }
           }
-        })
-       
+        });
       },
       [dispatch]
     ),
@@ -365,6 +369,7 @@ function useGetAction(
 
 // action types
 export const storeDetailActionTypes = {
+  setProductDetail: "setProductDetail",
   setProductDetailByCode: "setProductDetailByCode",
   setSimiliarPhoneList: "setSimiliarPhoneList",
   setSimiliarPhoneByCode: "setSimiliarPhoneByCode",
@@ -443,6 +448,13 @@ function reducer(state: IContextState, action: IReducerAction) {
       newState = {
         ...newState,
         similiarPhoneListByCode: value
+      };
+      break;
+    }
+    case storeDetailActionTypes.setProductDetail: {
+      newState = {
+        ...newState,
+        orderProductDetail: value
       };
       break;
     }

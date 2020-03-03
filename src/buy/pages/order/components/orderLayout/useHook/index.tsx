@@ -21,9 +21,8 @@ export default function useGetTotalPrice(
   const {
     productDetailContextValue
   } = productDetailContext as IProductDetailContext;
-  const { productDetailByCode, partsInfo } = productDetailContextValue;
-  let productDetail =
-    (productDetailByCode ? productDetailByCode.detail : ({} as any)) || {};
+  const { orderProductDetail, partsInfo } = productDetailContextValue;
+
   const orderInfoContext = useContext(OrderInfoContext);
   const { orderInfoContextValue } = orderInfoContext as IOrderInfoContext;
   const { subOrders, taxInfo, userExpress, expressInfo } =
@@ -35,8 +34,8 @@ export default function useGetTotalPrice(
       const { productType, productId } = item;
       if (productType === constProductType.PRODUCT) {
         // 首先计算手机.// 从detail中获取值
-        if (productDetail && productDetail.buyPrice) {
-          total = total + Number(productDetail.buyPrice);
+        if (orderProductDetail && orderProductDetail.buyPrice) {
+          total = total + Number(orderProductDetail.buyPrice);
         }
       } else if (productType) {
         // 计算配件

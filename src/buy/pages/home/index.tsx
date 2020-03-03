@@ -16,6 +16,7 @@ import {
 import { useContext, useEffect } from "react";
 import { IOurHomeContext, OurHomeContext } from "./context";
 import { ourHomeSsrRule } from "./ssr";
+import { NewBuyNotice } from "./components/newBuyNotice";
 
 export default function HomeWrapper(props: any) {
   function clickBrandHandler(value: any) {}
@@ -287,7 +288,7 @@ class Home extends React.Component<any, any> {
         </div>
 
         <div className="line">&nbsp;</div>
-
+        {/*<NewBuyNotice both={true} />*/}
         <HomeCardDataList
           type={"buy"}
           titleList={this.props.buyListTitle}

@@ -39,8 +39,7 @@ export function useOrderInfoGetAction(
     productDetailContextValue,
     getProductDetail
   } = productDetailContext as IProductDetailContext;
-  const { productDetailByCode, partsInfo } = productDetailContextValue;
-  let productDetail = (productDetailByCode ? productDetailByCode.detail : {} as any) || {}
+  const { orderProductDetail, partsInfo } = productDetailContextValue;
   // 数据上报计算
   const { calcTotalPrice, getShippingPrice } = useGetTotalPrice(state);
   // subOrders -> productId -> getProductDetail -> parts
@@ -247,7 +246,7 @@ export function useOrderInfoGetAction(
                       const { productId, needProtection, productType } = item;
                       let subOrderInfo;
                       if (productType === constProductType.PRODUCT) {
-                        subOrderInfo = productDetail;
+                        subOrderInfo = orderProductDetail;
                       } else if (productType) {
                         subOrderInfo = partsInfo.find(item =>
                           safeEqual(item.buyProductId, productId)
@@ -291,7 +290,7 @@ export function useOrderInfoGetAction(
           .catch(e => {
             if (e && safeEqual(10011, e.code)) {
               // 报错弹框
-              soldOutTips(productDetail);
+              soldOutTips(orderProductDetail);
             } else if (e) {
               Message.error(e.resultMessage);
             }
@@ -310,7 +309,7 @@ export function useOrderInfoGetAction(
       dispatch,
       orderProcessRecord,
       partsInfo,
-      productDetail,
+      orderProductDetail,
       state.expressInfo,
       state.subOrders,
       state.userExpress,

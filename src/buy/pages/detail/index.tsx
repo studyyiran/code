@@ -227,10 +227,7 @@ export default function ProductDetail(props: any) {
     );
   }
 
-  if (
-    (isLoading && isLoading.getProductDetailByCode) ||
-    (isLoading && isLoading.getProductDetailByIdAndCondition)
-  ) {
+  if (isLoading && isLoading.getProductDetailByIdAndCondition) {
     return <DetailLoading />;
   } else if (buyProductCode) {
     return (
@@ -297,6 +294,6 @@ export default function ProductDetail(props: any) {
       </div>
     );
   } else {
-    return null;
+    return <DetailLoading />;
   }
 }
