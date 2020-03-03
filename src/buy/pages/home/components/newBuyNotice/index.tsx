@@ -18,7 +18,6 @@ export function NewBuyNotice(props: any): any {
 
   function getTopData() {
     ajax.post('/api/sub_order/lastest', {}).then(res => {
-    // ajax.post('https://qa-gateway.uptradeit.com/api/sub_order/lastest', {}).then(res => {
       console.log(res)
     })
     ajax.post(BUY_ORDER_LASTEST).then(res => {
@@ -53,7 +52,7 @@ export function NewBuyNotice(props: any): any {
     getTopData();
 
     window.setInterval(() => {
-      if (dataList && dataList.length >= 12) {
+      if (dataList && dataList.length) {
         dataIndex++;
         if (dataIndex >= dataList.length) {
           dataIndex = 0;

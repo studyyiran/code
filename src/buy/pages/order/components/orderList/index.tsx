@@ -23,6 +23,8 @@ export default function OrderList(props: any) {
   const orderInfoContext = useContext(OrderInfoContext);
   const { orderInfoContextValue } = orderInfoContext as IOrderInfoContext;
   const { subOrders, taxInfo } = orderInfoContextValue;
+  console.log('here')
+  console.log(subOrders)
   const {
     totalProductPrice,
     totalProtections,
