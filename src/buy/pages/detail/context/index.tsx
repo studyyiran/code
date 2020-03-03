@@ -44,6 +44,7 @@ export const StoreDetail = "StoreDetail";
 
 // state
 interface IContextState {
+  orderProductDetail: IProductDetail;
   productDetailByCode: IProductDetailGetWithCode;
   similiarPhoneList: any[];
   similiarPhoneListByCode: any[];
@@ -57,6 +58,7 @@ interface IContextState {
 // @provider
 export function ProductDetailContextProvider(props: any) {
   const initState: IContextState = {
+    orderProductDetail: {} as any,
     similiarPhoneList: [],
     similiarPhoneListByCode: [],
     reviewListInfo: {} as any,
@@ -210,8 +212,11 @@ function useGetAction(
       }
       try {
         const res: IProductDetail = await getProductDetail(productId);
-        if (!res) {
-          redirect();
+        if (res) {
+          dispatch({
+            type: storeDetailActionTypes.setProductDetail,
+            value: res
+          });
         }
       } catch (e) {
         console.error(e);
@@ -365,6 +370,7 @@ function useGetAction(
 
 // action types
 export const storeDetailActionTypes = {
+  setProductDetail: "setProductDetail",
   setProductDetailByCode: "setProductDetailByCode",
   setSimiliarPhoneList: "setSimiliarPhoneList",
   setSimiliarPhoneByCode: "setSimiliarPhoneByCode",
@@ -443,6 +449,13 @@ function reducer(state: IContextState, action: IReducerAction) {
       newState = {
         ...newState,
         similiarPhoneListByCode: value
+      };
+      break;
+    }
+    case storeDetailActionTypes.setProductDetail: {
+      newState = {
+        ...newState,
+        orderProductDetail: value
       };
       break;
     }

@@ -17,8 +17,7 @@ export default function OrderRouter(props: any) {
   const {
     productDetailContextValue
   } = productDetailContext as IProductDetailContext;
-  const { productDetailByCode } = productDetailContextValue;
-  let productDetail = (productDetailByCode ? productDetailByCode.detail : {} as any) || {}
+  const { orderProductDetail } = productDetailContextValue;
   const {
     orderInfoContextValue,
     getInfoByOrderDetailId,
@@ -63,15 +62,15 @@ export default function OrderRouter(props: any) {
     }
     // 商品已经销售掉了
     if (
-      productDetail &&
-      productDetail.buyProductStatus &&
-      productDetail.buyProductStatus === "INTRANSACTION"
+      orderProductDetail &&
+      orderProductDetail.buyProductStatus &&
+      orderProductDetail.buyProductStatus === "INTRANSACTION"
     ) {
       // 弹框
-      soldOutTips(productDetail);
+      soldOutTips(orderProductDetail);
     }
     return () => {};
-  }, [path, productDetail, props.location, subOrders, url]);
+  }, [path, orderProductDetail, props.location, subOrders, url]);
 
   function handleNext(currentPath: string) {
     const findTarget = routerConfig.findIndex(({ relativePath }) => {
