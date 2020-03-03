@@ -288,7 +288,7 @@ class Home extends React.Component<any, any> {
         </div>
 
         <div className="line">&nbsp;</div>
-        <NewBuyNotice />
+        {/*<NewBuyNotice />*/}
         <HomeCardDataList
           type={"buy"}
           titleList={this.props.buyListTitle}

@@ -11,7 +11,8 @@ export function NewBuyNotice(props: any): any {
     city: "",
     orderTime: "",
     productPicPC: "",
-    productPicM: ""
+    productPicM: "",
+    content: "",
   });
   let dataIndex = 0;
   let dataList: any = [];
@@ -30,20 +31,22 @@ export function NewBuyNotice(props: any): any {
               d.productPicM = d.productPicM
                 ? d.productPicM
                 : require("../../img/certified.png");
+              d.content =`${d.customer} placed an order for ${d.productName}` 
               return d;
             })
           : [];
-      if (dataList.length < 12) {
+      if (dataList && dataList.length) {
+        setChooseData(dataList[dataIndex]);
+      } else {
         setChooseData({
           customer: "",
           productName: "",
           city: "",
           orderTime: "",
           productPicPC: "",
-          productPicM: ""
+          productPicM: "",
+          content: ""
         });
-      } else {
-        setChooseData(dataList[dataIndex]);
       }
     });
   }
@@ -65,6 +68,7 @@ export function NewBuyNotice(props: any): any {
           city: "",
           orderTime: "",
           productPicPC: "",
+          content: "",
           productPicM: ""
         });
       }
@@ -85,7 +89,7 @@ export function NewBuyNotice(props: any): any {
         <InnerDivImage imgUrl={chooseData.productPicM} />
         <section>
           <h1>
-            {chooseData.customer} placed an order for {chooseData.productName}
+            {chooseData.content}
           </h1>
           <div className="date-container">
             <Svg />
