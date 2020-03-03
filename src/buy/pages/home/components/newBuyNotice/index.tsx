@@ -17,21 +17,25 @@ export function NewBuyNotice(props: any): any {
   let dataIndex = 0;
   let dataList: any = [];
   async function getTopData() {
+    let list1 = [];
+    let list2 = [];
     const res = await ajax.post(BUY_ORDER_LASTEST);
-    dataList =
+    list1 =
       res && res.data && res.data.data
-        ? res.data.data.map((d: any) => {
-            d.productPicPC = d.productPicPC
-              ? d.productPicPC
-              : require("../../img/certified.png");
-            d.productPicM = d.productPicM
-              ? d.productPicM
-              : require("../../img/certified.png");
-            d.content = `${d.customer} placed an order for ${d.productName}`;
-            return d;
-          }).filter((item: any, index: number) => {
-            return index < 5
-        })
+        ? res.data.data
+            .map((d: any) => {
+              d.productPicPC = d.productPicPC
+                ? d.productPicPC
+                : require("../../img/certified.png");
+              d.productPicM = d.productPicM
+                ? d.productPicM
+                : require("../../img/certified.png");
+              d.content = `${d.customer} placed an order for ${d.productName}`;
+              return d;
+            })
+            .filter((item: any, index: number) => {
+              return index < 5;
+            })
         : [];
     if (props && props.both) {
       // const res2 = await ajax.post("/api/sub_order/lastest", {});
@@ -40,26 +44,30 @@ export function NewBuyNotice(props: any): any {
         {}
       );
       if (res && res2.data && res2.data.data && res2.data.data.length) {
-        
-        dataList = dataList.concat(
-          res2.data.data
-            .filter((item: any, index: number) => {
-              return index < 5;
-            })
-            .map((item: any) => {
-              return {
-                content: item.orderInfo,
-                city: item.city,
-                orderTime: item.orderTime,
-                productPicPC: item.productPic,
-                productPicM: item.productPic
-              };
-            })
-        );
+        list2 = res2.data.data
+          .filter((item: any, index: number) => {
+            return index < 5;
+          })
+          .map((item: any) => {
+            return {
+              content: item.orderInfo,
+              city: item.city,
+              orderTime: item.orderTime,
+              productPicPC: item.productPic,
+              productPicM: item.productPic
+            };
+          });
+        for (let i = 0; i < list1.length + list2.length; i++) {
+          if (list1 && list1[i]) {
+            dataList.push(list1[i])
+          }
+          if (list2 && list2[i]) {
+            dataList.push(list2[i])
+          }
+        }
       }
-      console.log(res2);
     }
-    console.log(dataList)
+    console.log(dataList);
     if (dataList && dataList.length) {
       setChooseData(dataList[dataIndex]);
     } else {

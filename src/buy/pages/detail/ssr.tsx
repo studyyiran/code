@@ -7,7 +7,6 @@ import { getUrlAllParams } from "../../common/utils/util";
 
 export const detailSsrRule = async (url: string, href: string) => {
   console.log(href);
-  debugger;
   const ssrRes: ISsrFileStore = {
     ssrConfig: {
       ssrTitle: ""
