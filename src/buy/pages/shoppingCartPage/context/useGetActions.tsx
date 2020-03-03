@@ -62,7 +62,7 @@ export function useStoreShoppingCartGetActions(
       }
       if (promiseStop.current.getShoppingCart === cache) {
         if (myError && myError.code === 10071) {
-          Message.warn("Please enable cookies to use the shopping cart.");
+          // Message.warn("Please enable cookies to use the shopping cart.");
           dispatch({
             type: storeShoppingCartReducerTypes.setIsCookieOpen,
             value: false
