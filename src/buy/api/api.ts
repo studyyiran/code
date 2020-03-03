@@ -42,3 +42,4 @@ export const GET_HOME_PAGE_SELL_BRANDS = getRootApi('/api/home/sell/brand');
 export const GET_HOME_PAGE_BUY_PRODUCTS = getRootApi('/api/home/buy/product');
 export const GET_HOME_PAGE_SELL_PRODUCTS = getRootApi('/api/home/sell/product');
 export const BUY_ORDER_LASTEST = getRootApi('/api/buy/order/lastest');
+export const BUY_ORDER_SELL_LASTEST = getRootApi('/api/sub_order/lastest');

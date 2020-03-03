@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import "./index.less";
 import Svg from "../../../../components/svg";
-import { ajax, BUY_ORDER_LASTEST } from "../../../../api/api";
+import { ajax, BUY_ORDER_LASTEST, BUY_ORDER_SELL_LASTEST } from "../../../../api/api";
 import { InnerDivImage } from "../../../detail/components/innerDivImage";
 
 export function NewBuyNotice(props: any): any {
@@ -38,7 +38,7 @@ export function NewBuyNotice(props: any): any {
             })
         : [];
     if (props && props.both) {
-      const res2 = await ajax.post("/api/sub_order/lastest", {});
+      const res2 = await ajax.post(BUY_ORDER_SELL_LASTEST);
       if (res && res2.data && res2.data.data && res2.data.data.length) {
         list2 = res2.data.data
           .filter((item: any, index: number) => {
