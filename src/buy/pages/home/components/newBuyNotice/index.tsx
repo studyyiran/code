@@ -53,17 +53,16 @@ export function NewBuyNotice(props: any): any {
               productPicM: item.productPic
             };
           });
-        for (let i = 0; i < list1.length + list2.length; i++) {
-          if (list1 && list1[i]) {
-            dataList.push(list1[i])
-          }
-          if (list2 && list2[i]) {
-            dataList.push(list2[i])
-          }
-        }
       }
     }
-    console.log(dataList);
+    for (let i = 0; i < list1.length + list2.length; i++) {
+      if (list1 && list1[i]) {
+        dataList.push(list1[i])
+      }
+      if (list2 && list2[i]) {
+        dataList.push(list2[i])
+      }
+    }
     if (dataList && dataList.length) {
       setChooseData(dataList[dataIndex]);
     } else {
