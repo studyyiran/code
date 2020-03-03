@@ -112,7 +112,7 @@ export interface IProductDetailContext extends IContextActions, IContextValue {
 // @actions
 interface IContextActions {
   getProductDetail: (id: string) => void;
-  getProductDetailByCode: (modelName?: string) => void;
+  getProductDetailByCode: (modelName?: string, modalCode?: string) => void;
   getProductDetailByIdAndCondition: (codeDetail: ICodeAndId) => void;
   getSimiliarPhoneList: (id: string) => any;
   getSimiliarByCode: (code: string) => any;
@@ -224,7 +224,7 @@ function useGetAction(
       }
     }, []),
     getProductDetailByCode: useCallback(
-      async function(modelName) {
+      async function(modelName, modalCode) {
         const { variant } = getUrlAllParams();
         return actionsWithCatchAndLoading({
           dispatch,
@@ -235,7 +235,7 @@ function useGetAction(
             let res: IProductDetailGetWithCode;
             if (variant) {
               res = await getProductDetailByCode({
-                buyProductCode: variant || "",
+                buyProductCode: modalCode || variant || "",
                 modelDisplayName: ""
               });
             } else {

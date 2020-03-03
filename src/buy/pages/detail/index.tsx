@@ -274,6 +274,7 @@ export default function ProductDetail(props: any) {
         <>
           <ReviewListPart reviewListInfo={reviewListInfo} />
           <RenderSimilar
+            getProductDetailByCode={getProductDetailByCode}
             similiarPhoneList={similiarPhoneList}
             history={props.history}
           />

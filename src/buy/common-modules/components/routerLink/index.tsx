@@ -9,14 +9,17 @@ export default function RouterLink(props: {
   children?: any;
   target?: any;
   className?: any;
+  needRenderTagaByServer?: any;
 }) {
-  const { isBuy, onClick, to, ...other } = props;
+  const { isBuy, onClick, to, needRenderTagaByServer, ...other } = props;
   function renderRenderA() {
     return (
       <a
         href={`${to}`}
         onClick={() => {
-          clickUrlHandler();
+          if (!needRenderTagaByServer) {
+            clickUrlHandler();
+          }
           onClick && onClick();
         }}
         {...other}
@@ -27,7 +30,7 @@ export default function RouterLink(props: {
   function renderRenderLink() {
     return <Link onClick={onClick} {...other} to={to} />;
   }
-  if (isServer()) {
+  if (isServer() || needRenderTagaByServer) {
     return renderRenderA();
   } else {
     const { LOCATIONENV } = window as any;

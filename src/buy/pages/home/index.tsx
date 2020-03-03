@@ -288,7 +288,7 @@ class Home extends React.Component<any, any> {
         </div>
 
         <div className="line">&nbsp;</div>
-        {/*<NewBuyNotice both={true} />*/}
+        <NewBuyNotice both={true} />
         <HomeCardDataList
           type={"buy"}
           titleList={this.props.buyListTitle}

@@ -10,11 +10,12 @@ import { getProductListPath } from "../../../../common/utils/util";
 interface IProps {
   similiarPhoneList: any[];
   history: any;
+  getProductDetailByCode?: any;
   children?: any;
 }
 
 export const RenderSimilar: React.FC<IProps> = props => {
-  const { similiarPhoneList, children } = props;
+  const { similiarPhoneList, children, getProductDetailByCode } = props;
   // 哪怕有ts,也不能相信他一定有值.
   if (similiarPhoneList && similiarPhoneList.length) {
     return (
@@ -44,6 +45,7 @@ export const RenderSimilar: React.FC<IProps> = props => {
               {similiarPhoneList.map((item, index) => {
                 return (
                   <PhoneProductCard
+                    getProductDetailByCode={getProductDetailByCode}
                     key={index}
                     {...item}
                     history={props.history}
@@ -64,6 +66,7 @@ export const RenderSimilar: React.FC<IProps> = props => {
               {similiarPhoneList.map((item, index) => {
                 return (
                   <PhoneProductCard
+                    getProductDetailByCode={getProductDetailByCode}
                     key={index}
                     {...item}
                     history={props.history}
