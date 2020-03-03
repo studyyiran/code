@@ -44,6 +44,7 @@ export const RenderSimilar: React.FC<IProps> = props => {
               {similiarPhoneList.map((item, index) => {
                 return (
                   <PhoneProductCard
+                    needRenderTagaByServer={true}
                     key={index}
                     {...item}
                     history={props.history}
@@ -64,6 +65,7 @@ export const RenderSimilar: React.FC<IProps> = props => {
               {similiarPhoneList.map((item, index) => {
                 return (
                   <PhoneProductCard
+                    needRenderTagaByServer={true}
                     key={index}
                     {...item}
                     history={props.history}

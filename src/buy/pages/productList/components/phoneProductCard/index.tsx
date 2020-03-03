@@ -31,6 +31,7 @@ export default function PhoneProductCard(props: any) {
     buyProductBQV,
     buyProductStatus,
     buyTags,
+    needRenderTagaByServer,
   } = props;
   const imgUrl = require("buy/common/static/pic.png");
   const [lineOne, lineTwo] = getDescArr(buyProductBQV, buyProductName);
@@ -66,6 +67,7 @@ export default function PhoneProductCard(props: any) {
 
   return (
     <RouterLink
+      needRenderTagaByServer={needRenderTagaByServer}
       onClick={(e: any) => {
         if (isSoldOut(buyProductStatus)) {
           e.preventDefault();
