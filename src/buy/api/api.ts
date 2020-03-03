@@ -19,13 +19,13 @@ export const ajax = axios;
 
 // 下面是所有api提取
 export const getRootApi = function (urlRoot: string) {
-  let apiRoot = 'http://qa-gateway-801477214.us-east-2.elb.amazonaws.com';
+  let apiRoot = 'https://qa-gateway-801477214.us-east-2.elb.amazonaws.com';
   switch (process.env.REACT_APP_SERVER_ENV) {
     case "QA":
-      apiRoot = "http://qa-gateway-801477214.us-east-2.elb.amazonaws.com";
+      apiRoot = "https://qa-gateway-801477214.us-east-2.elb.amazonaws.com";
       break;
     case "UAT":
-      apiRoot = "http://demo-gateway-1613913116.us-east-2.elb.amazonaws.com";
+      apiRoot = "https://demo-gateway-1613913116.us-east-2.elb.amazonaws.com";
       break;
     case "PUB":
       apiRoot = "https://api-gateway.uptradeit.com";
