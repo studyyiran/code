@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "./index.less";
 import Svg from "../../../../components/svg";
 import { ajax, BUY_ORDER_LASTEST } from "../../../../api/api";
@@ -12,46 +12,70 @@ export function NewBuyNotice(props: any): any {
     orderTime: "",
     productPicPC: "",
     productPicM: "",
-    content: "",
+    content: ""
   });
   let dataIndex = 0;
   let dataList: any = [];
-
-  function getTopData() {
-    ajax.post('/api/sub_order/lastest', {}).then(res => {
-      console.log(res)
-    })
-    ajax.post(BUY_ORDER_LASTEST).then(res => {
-      dataList =
-        res && res.data && res.data.data
-          ? res.data.data.map((d: any) => {
-              d.productPicPC = d.productPicPC
-                ? d.productPicPC
-                : require("../../img/certified.png");
-              d.productPicM = d.productPicM
-                ? d.productPicM
-                : require("../../img/certified.png");
-              d.content =`${d.customer} placed an order for ${d.productName}` 
-              return d;
+  async function getTopData() {
+    const res = await ajax.post(BUY_ORDER_LASTEST);
+    dataList =
+      res && res.data && res.data.data
+        ? res.data.data.map((d: any) => {
+            d.productPicPC = d.productPicPC
+              ? d.productPicPC
+              : require("../../img/certified.png");
+            d.productPicM = d.productPicM
+              ? d.productPicM
+              : require("../../img/certified.png");
+            d.content = `${d.customer} placed an order for ${d.productName}`;
+            return d;
+          }).filter((item: any, index: number) => {
+            return index < 5
+        })
+        : [];
+    if (props && props.both) {
+      // const res2 = await ajax.post("/api/sub_order/lastest", {});
+      const res2 = await ajax.post(
+        "https://qa-gateway.uptradeit.com/api/sub_order/lastest",
+        {}
+      );
+      if (res && res2.data && res2.data.data && res2.data.data.length) {
+        
+        dataList = dataList.concat(
+          res2.data.data
+            .filter((item: any, index: number) => {
+              return index < 5;
             })
-          : [];
-      if (dataList && dataList.length) {
-        setChooseData(dataList[dataIndex]);
-      } else {
-        setChooseData({
-          customer: "",
-          productName: "",
-          city: "",
-          orderTime: "",
-          productPicPC: "",
-          productPicM: "",
-          content: ""
-        });
+            .map((item: any) => {
+              return {
+                content: item.orderInfo,
+                city: item.city,
+                orderTime: item.orderTime,
+                productPicPC: item.productPic,
+                productPicM: item.productPic
+              };
+            })
+        );
       }
-    });
+      console.log(res2);
+    }
+    console.log(dataList)
+    if (dataList && dataList.length) {
+      setChooseData(dataList[dataIndex]);
+    } else {
+      setChooseData({
+        customer: "",
+        productName: "",
+        city: "",
+        orderTime: "",
+        productPicPC: "",
+        productPicM: "",
+        content: ""
+      });
+    }
   }
 
-  function intervalInit() {
+  const intervalInit = useCallback(() => {
     getTopData();
 
     window.setInterval(() => {
@@ -78,19 +102,17 @@ export function NewBuyNotice(props: any): any {
     window.setInterval(() => {
       getTopData();
     }, 60 * 60 * 1000);
-  }
+  }, []);
 
   useEffect(() => {
     intervalInit();
-  }, []);
-  return chooseData && chooseData.customer ? (
+  }, [intervalInit]);
+  return chooseData && chooseData.content ? (
     <div className="notice-container">
       <div className="comp-new-buy-notice">
         <InnerDivImage imgUrl={chooseData.productPicM} />
         <section>
-          <h1>
-            {chooseData.content}
-          </h1>
+          <h1>{chooseData.content}</h1>
           <div className="date-container">
             <Svg />
             <span>{chooseData.orderTime}</span>
