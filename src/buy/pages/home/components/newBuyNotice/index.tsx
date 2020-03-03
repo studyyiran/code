@@ -38,11 +38,7 @@ export function NewBuyNotice(props: any): any {
             })
         : [];
     if (props && props.both) {
-      // const res2 = await ajax.post("/api/sub_order/lastest", {});
-      const res2 = await ajax.post(
-        "https://qa-gateway.uptradeit.com/api/sub_order/lastest",
-        {}
-      );
+      const res2 = await ajax.post("/api/sub_order/lastest", {});
       if (res && res2.data && res2.data.data && res2.data.data.length) {
         list2 = res2.data.data
           .filter((item: any, index: number) => {
