@@ -27,7 +27,7 @@ export function BrandLogo(props: any) {
     );
   } else {
     return (
-      <div className="comp-brand-logo canclick" onClick={clickHandler}>
+      <div className="comp-brand-logo canclick">
         <div className="border" style={{ border: "none", background: 'none', cursor: 'initial' }}></div>
         <span className="name"></span>
       </div>
