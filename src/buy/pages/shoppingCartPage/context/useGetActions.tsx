@@ -133,9 +133,6 @@ export function useStoreShoppingCartGetActions(
                 // 重定向。
                 getProductDetailByCode();
                 Message.warn("Product not found.");
-                window.setTimeout(() => {
-                  window.location.href = "/buy-phone";
-                }, 1000)
                 break;
             }
             console.error(e);

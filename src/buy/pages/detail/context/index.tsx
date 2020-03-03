@@ -250,7 +250,7 @@ function useGetAction(
                 value: res
               });
             } else {
-              locationHref(getProductListPath());
+              window.location.href = "/buy-phone";
             }
           }
         });
