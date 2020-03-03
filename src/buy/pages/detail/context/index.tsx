@@ -79,10 +79,11 @@ export function ProductDetailContextProvider(props: any) {
   const action = useGetAction(state, dispatch);
   const { getPartsBySkuId } = action;
   const skuId =
-    state &&
-    state.productDetailByCode &&
-    state.productDetailByCode.detail &&
-    state.productDetailByCode.detail.skuId;
+    (state &&
+      state.productDetailByCode &&
+      state.productDetailByCode.detail &&
+      state.productDetailByCode.detail.skuId) ||
+    (state && state.orderProductDetail && state.orderProductDetail.skuId);
 
   // 在detail页面的时候需要拉取配件信息
   // 在后续order过程中.需要拉取配件信息
@@ -152,7 +153,6 @@ function useGetAction(
   } = globalSettingContext as IGlobalSettingContext;
   const { isMobile } = globalSettingContextValue;
 
-  
   const { productDetailByCode } = state;
 
   const actions: IContextActions = {
@@ -295,8 +295,7 @@ function useGetAction(
               console.error(e);
             }
           }
-        })
-       
+        });
       },
       [dispatch]
     ),
