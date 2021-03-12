@@ -79,7 +79,7 @@
     "raven": "^2.6.4",
     "raven-js": "^3.27.1",
     "react": "^16.9.0",
-    "react-dev-utils": "^5.0.1",
+    "react-dev-utils": "^11.0.4",
     "react-dom": "^16.9.0",
     "react-image-magnify": "^2.7.4",
     "react-images": "^1.0.0",
